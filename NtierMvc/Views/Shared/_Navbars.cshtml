@@ -1,0 +1,73 @@
+﻿<div class="navbar navbar-inverse navbar-fixed-top">
+    <div style="margin-left:10px">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            @Html.ActionLink("ERP", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+        </div>
+        @*<div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Employees", "ListAll", "Employees")</li>
+                </ul>
+            </div>*@
+    </div>
+</div>
+
+
+<nav class="navbar sidebar" role="navigation">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-sidebar-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Brand</a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-sidebar-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-text">
+                <li class="active"><a href="#">Home</a></li>
+                @*<li><a href="@Url.Action("ListAll", "Employees")">Employees</a></li>*@
+                <li><a href="#">Management</a></li>
+                <li><a href="#">Front Office</a></li>
+                <li><a href="#">Customer Relationship  Management</a></li>
+                <li><a href="#">Technical</a></li>
+                <li><a href="#">Design - Engineering</a></li>
+                <li><a href="#">Costing</a></li>
+                <li><a href="#">Material Resource Management</a></li>
+                <li><a href="#">Production Planning Control</a></li>
+                <li><a href="#">Quality Control</a></li>
+                <li><a href="#">Stores</a></li>
+                <li><a href="#">Trade Finance</a></li>
+                <li><a href="#">Sales & Taxation</a></li>
+                <li><a href="#">Commercial</a></li>
+                <li><a href="#">Admin</a></li>
+                <li class="dropdown">
+                    <a href="#"class="dropdown-toggle" data-toggle="dropdown">Human Resource Management</a>
+                    <ul class="dropdown-menu forAnimate" role="menu">
+                        <li><a href="@Url.Action("ListAll", "Employees")">Employees</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">Main Gate</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Settings</a>
+                    <ul class="dropdown-menu forAnimate" role="menu">
+                        <li><a href="#">Action</a></li>
+                        <li><a href="#">Another action</a></li>
+                        <li><a href="#">Something else here</a></li>
+                        <li class="divider"></li>
+                        <li><a href="#">Separated link</a></li>
+                        <li class="divider"></li>
+                        <li><a href="#">One more separated link</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
