@@ -1,0 +1,353 @@
+﻿@model NtierMvc.Model.DesignEng.BOMEntity
+
+@{
+    ViewBag.Title = "BOM Entity";
+}
+
+<div ng-controller="ModalController" class="row">
+    <form id="formBOMDetails">
+        <div class="col-md-12">
+            @Html.HiddenFor(m => m.Id)
+            <div class="row">
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label">
+                            Product Name <span class="required">*</span>
+                        </label>
+                        @Html.DropDownListFor(m => m.ProductName, new SelectList(ViewBag.ListProductName, "DataStringValueField", "DataTextField", Model.ProductName), new
+                            {
+                                @class = "form-control requiredValidation clearField",
+                                @id = "ProductNameBOM",
+                                @data_inneraction = "validationCall",
+                                @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                                @onchange = "GetProductNameDetails();"
+                            })
+                        <span class="HideValidMsg">Select Product Name</span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label">
+                            Product No<span class="required">*</span>
+                        </label>
+                        @Html.TextBoxFor(m => m.ProductNo,
+                       new
+                       {
+                           @class = "form-control",
+                           @id = "ProductNoBOM",
+                           @data_inneraction = "validationCall",
+                           @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                           @readonly = "readonly"
+                       })
+
+                        @*@Html.DropDownListFor(m => m.ProductNo, new SelectList(@ViewBag.ListProductNo, "DataStringValueField", "DataTextField", Model.ProductNo),
+                            new
+                            {
+                                @class = "form-control requiredValidation",
+                                @id = "ProductNoBOM",
+                                @data_inneraction = "validationCall",
+                                @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                            })*@
+                        <span class="HideValidMsg"> Select Product No</span>
+                    </div>
+                </div>
+                @*<div class="col-md-2">
+                        <div class="form-group text-left">
+                            <label class="control-label ">
+                                Product Code <span class="required">*</span>
+                            </label>
+                            @Html.DropDownListFor(m => m.ProductCode, new SelectList(ViewBag.ListProductCode, "DataStringValueField", "DataTextField", Model.ProductCode), new
+                       {
+                           @class = "form-control requiredValidation clearField",
+                           @id = "ProductCodeBOM",
+                           @data_inneraction = "validationCall",
+                           @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this);"
+                       })
+                            <span class="HideValidMsg"> Select Product Code</span>
+                        </div>
+                    </div>*@
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label">
+                            PL <span class="required">*</span>
+                        </label>
+                        @Html.DropDownListFor(m => m.PL, new SelectList(@ViewBag.ListPL, "DataStringValueField", "DataTextField", Model.PL),
+                           new
+                           {
+                               @class = "form-control requiredValidation",
+                               @id = "PLBOM",
+                               @data_inneraction = "validationCall",
+                               @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                           })
+                        <span class="HideValidMsg"> Select VendorId</span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label">
+                            Casing Size <span class="required">*</span>
+                        </label>
+                        @Html.DropDownListFor(m => m.CasingSize, new SelectList(ViewBag.ListCasingSize, "DataStringValueField", "DataTextField", Model.CasingSize), new
+                   {
+                       @class = "form-control requiredValidation clearField",
+                       @id = "CasingSizeBOM",
+                       @data_inneraction = "validationCall"
+                   })
+                        <span class="HideValidMsg">Select Casing Size</span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label">
+                            Casing PPF <span class="required">*</span>
+                        </label>
+                        @Html.DropDownListFor(m => m.CasingPPF, new SelectList(ViewBag.ListCasingPPF, "DataStringValueField", "DataTextField", Model.CasingPPF), new
+                   {
+                       @class = "form-control requiredValidation clearField",
+                       @id = "CasingPPFBOM",
+                       @data_inneraction = "validationCall"
+                   })
+                        <span class="HideValidMsg"> Please Select CasingPPF</span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label">
+                            Grade <span class="required">*</span>
+                        </label>
+                        @Html.DropDownListFor(m => m.Grade, new SelectList(ViewBag.ListGrade, "DataStringValueField", "DataTextField", Model.Grade), new
+                  {
+                      @class = "form-control requiredValidation clearField",
+                      @id = "GradeBOM",
+                      @data_inneraction = "validationCall"
+                  })
+                        <span class="HideValidMsg"> Please Select Grade</span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label">
+                            Open Hole Size
+                        </label>
+                        @Html.DropDownListFor(m => m.OpenHoleSize, new SelectList(ViewBag.ListOpenHoleSize, "DataStringValueField", "DataTextField", Model.OpenHoleSize), new
+                  {
+                      @class = "form-control clearField",
+                      @id = "OpenHoleSizeBOM"
+                  })
+                        <span class="HideValidMsg"> Please Select Open Hole Size</span>
+
+                    </div>
+                </div>
+                <div class="col-md-10">
+                    <div class="form-group">
+                        <button style="font-size:18px; margin-left: 235px" type="button" class="btn btn-success btn-sm mt-4" id="searchResults" onclick="SearchForBOM()">Search</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb-4 mt-4">
+                <div class="col-md-12">
+                    <table id="tblBOMDetails" class="table table-hover table-bordered table-striped">
+                        <thead class="table-success">
+                            <tr>
+                                <td>SN</td>
+                                <td>Part Name</td>
+                                <td>Commodity No</td>
+                                <td>Commodity Rev No</td>
+                                <td>Qty</td>
+                                <td>Length</td>
+                                <td>OD</td>
+                                <td>WT</td>
+                                <td>UOM</td>
+                                <td>RMType</td>
+                            </tr>
+                        </thead>
+                        <tbody class="table-primary"></tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="row mt-5 mb-5">
+                <div class="col-md-12" style="background-color: #c6ede5">
+                    <h4 class="control-label" style="margin-left:10px; font-size: 20px">Add BOM Details</h4>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label">
+                            SN <span class="required">*</span>
+                        </label>
+                        @Html.TextBoxFor(m => m.SN, new
+                   {
+                       @class = "form-control requiredValidation",
+                       @id = "SNBOM",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                       @onkeypress = "return AllowNumbers(event)"
+                   })
+                        <span class="HideValidMsg"> Please Enter SN</span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label">
+                            Part Name <span class="required">*</span>
+                        </label>
+                        @Html.TextBoxFor(m => m.PartName, new
+                   {
+                       @class = "form-control requiredValidation",
+                       @id = "PartNameBOM",
+                       @placeholder = "Enter Part Name",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                   })
+                        <span class="HideValidMsg"> Please Enter Part Name</span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label">
+                            Commodity No <span class="required">*</span>
+                        </label>
+                        @Html.TextBoxFor(m => m.CommodityNo, new
+                   {
+                       @class = "form-control requiredValidation col-md-10",
+                       @id = "CommodityNoBOM",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                   })
+                        <span class="HideValidMsg"> Please Enter CommodityNo</span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label">
+                            Commodity Rev No <span class="required">*</span>
+                        </label>
+                        @Html.TextBoxFor(m => m.COMMRevNo, new
+                   {
+                       @class = "form-control requiredValidation",
+                       @id = "COMMRevNo",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                   })
+                        <span class="HideValidMsg">Please Enter Commodity Reverse No</span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label">
+                            Qty <span class="required">*</span>
+                        </label>
+                        @Html.TextBoxFor(m => m.Qty, new
+                   {
+                       @class = "form-control requiredValidation",
+                       @id = "QtyBOM",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                       @onkeypress = "return AllowNumbers(event)"
+                   })
+                        <span class="HideValidMsg">Please Enter Qty</span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label">
+                            Length <span class="required">*</span>
+                        </label>
+                        @Html.TextBoxFor(m => m.Length, new
+                   {
+                       @class = "form-control requiredValidation",
+                       @id = "LengthBOM",
+                       @placeholder = "Enter Length",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                       @onkeypress = "return validateDecimalNumbers(this,event)"
+                   })
+                        <span class="HideValidMsg"> Select Comm No</span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label">
+                            OD <span class="required">*</span>
+                        </label>
+                        @Html.TextBoxFor(m => m.OD, new
+                   {
+                       @class = "form-control requiredValidation ",
+                       @id = "ODBOM",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                       @onkeypress = "return validateDecimalNumbers(this,event)"
+                   })
+                        <span class="HideValidMsg"> Enter OD</span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label">
+                            WT <span class="required">*</span>
+                        </label>
+                        @Html.TextBoxFor(m => m.WT, new
+                   {
+                       @class = "form-control requiredValidation",
+                       @id = "WTBOM",
+                       @placeholder = "Enter WT",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                       @onkeypress = "return validateDecimalNumbers(this,event)"
+                   })
+                        <span class="HideValidMsg">Enter WT</span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label">
+                            UOM <span class="required">*</span>
+                        </label>
+                        @Html.DropDownListFor(m => m.UOM, new SelectList(ViewBag.ListUom, "DataStringValueField", "DataTextField", Model.UOM), new
+                            {
+                                @class = "form-control requiredValidation clearField",
+                                @id = "UOMBOM",
+                                @data_inneraction = "validationCall",
+                                @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                            })
+                        <span class="HideValidMsg"> Select UOM</span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label">
+                            RMTYPE <span class="required">*</span>
+                        </label>
+                        @Html.TextBoxFor(m => m.RMTYPE, new
+                {
+                    @class = "form-control requiredValidation",
+                    @id = "RMTYPEBOM",
+                    @placeholder = "Enter RMTYPEBOM",
+                    @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                })
+                        <span class="HideValidMsg"> Enter RMTYPE</span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label">
+                            Upload
+                        </label>
+                        <input class="form-control" type="file" id="FileUploadBOM" multiple />
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-5">
+                <div class="col-md-12 pt-4 text-center">
+                    <button style="font-size:18px" type="button" class="btn btn-success btn-sm" id="SaveBOMdetails" onclick="SaveBOMDetails()" @*ng-click="SaveBOMDetails()"*@>Save</button>
+                    <button style="font-size:18px" type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<script>
+    $(document).ready(function () {
+        window.SaveBOM = '@Url.Action("SaveBOMDetails", "DesignEng")';
+        window.SaveAndUploadBOMDetails = '@Url.Action("SaveAndUploadBOMDetails", "DesignEng")';
+        window.SearchBOM = '@Url.Action("SearchForBOM", "DesignEng")';
+        window.GetProductNoForProductName = '@Url.Action("GetProductNoForProductName", "DesignEng")';
+
+        $('#divQuoteDetails').hide();
+    });
+
+</script>

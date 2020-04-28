@@ -1,0 +1,76 @@
+﻿@model DVETPrivateITI.Web.Models.LoginModel
+
+@using BotDetect.Web.Mvc;
+@using DVETPrivateITI.Web.Infrastructure;
+
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_LayoutLogin.cshtml";
+}
+
+@section PageStyles
+{
+    <link href="@BotDetect.Web.CaptchaUrls.Absolute.LayoutStyleSheetUrl" rel="stylesheet" type="text/css" />
+}
+@section PageScripts
+    {
+
+    @*<script src="~/Scripts/CustomJs/Common.js?@ViewBag.ReleaseVersion"></script>*@
+}
+
+<div class="col-md-8 mx-auto">
+    <div class="pvt-iti-login-container">
+
+        <div class="pvt_iti_login_titlte"> @DVETPrivateITI.Web.PrivateITIResources.LoginPage.LoginPage.Login @*Login*@</div>
+        @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { role = "form", @id = "login-form" }))
+        {
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        @Html.TextBoxFor(m => m.Username, new { @class = "form-control", @placeholder = "Registration Number", @style = "text-transform:uppercase" })
+                    </div>
+                    <div class="form-group">
+                        @Html.TextBoxFor(m => m.Password, new
+                        {
+                            @type = "password",
+                            @class = "form-control",
+                            @placeholder = "********"
+                        })
+                    </div>
+                    <div class="form-group">
+                        @{ MvcCaptcha loginCaptcha = CaptchaHelper.GetLoginCaptcha();
+                            if (!loginCaptcha.IsSolved || Model == null || Model.ErrorMessage == null || Model.ErrorMessage == "Invalid Username or Password.")
+                            {
+                                <div class="form-group">
+                                    <div>
+                                        @Html.Captcha(loginCaptcha)
+                                    </div>
+                                    <br />
+                                    <div>
+                                        @Html.TextBox("CaptchaCode", null, new { @class = "form-control captchaVal", @placeholder = @DVETPrivateITI.Web.PrivateITIResources.LoginPage.LoginPage.RetypetheaboveCAPTCHAcode @*"Retype the above CAPTCHA code"*@ })
+                                    </div>
+                                </div>
+                            }
+                        }
+                    </div>
+                    <div class="form-group">
+                        <label class="help-block error">
+                            @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+                        </label>
+                    </div>
+                    <div class="form-group text-center">
+                        <button type="submit" class="btn btn-primary d-block w-100">@DVETPrivateITI.Web.PrivateITIResources.LoginPage.LoginPage.Login @*Login*@</button>
+                    </div>
+                    <div class="form-group text-center">
+                        <a href="@Url.Action("ForgotPassword","Account")">@DVETPrivateITI.Web.PrivateITIResources.LoginPage.LoginPage.ForgotPassword @*Forgot Password?*@</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        localStorage.setItem("IsResubmitForm", "false");
+    })
+</script>

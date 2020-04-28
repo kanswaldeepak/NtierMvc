@@ -1,0 +1,519 @@
+﻿@model NtierMvc.Model.ItemEntity
+
+@{
+    ViewBag.Title = "ItemDetails";
+}
+
+<div ng-controller="ModalController" class="row">
+    <form id="formSaveItemDetails">
+        <div class="col-md-12">
+            @Html.HiddenFor(m => m.Id)
+            @Html.HiddenFor(m => m.ExWorkValue)
+            <div class="row">
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label ">
+                            Order Type
+                        </label>
+                        @Html.DropDownListFor(m => m.QuoteType, new SelectList(ViewBag.ListQuoteType, "DataStringValueField", "DataTextField", Model.QuoteType), new
+                   {
+                       @class = "form-control requiredValidation clearField",
+                       @id = "OrderFormQuoteType",
+                       @data_inneraction = "validationCall",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                       @onchange = "GetQuoteNoDetails()"
+                   })
+                        <span class="HideValidMsg"> Select Order Type</span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group text-left">
+                        <label class="control-label ">
+                            So No
+                        </label>
+                        @Html.DropDownListFor(m => m.SoNo, new SelectList(ViewBag.ListSoNo, "DataStringValueField", "DataTextField", Model.SoNo), new
+                   {
+                       @class = "form-control requiredValidation clearField",
+                       @id = "ItemSoNo",
+                       @data_inneraction = "validationCall",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                       @onchange = "GetOrderDetailsFromSO()"
+                   })
+                        <span class="HideValidMsg"> Select Item Number</span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label">
+                            Vendor Id
+                        </label>
+                        @Html.TextBoxFor(m => m.VendorId, new
+                   {
+                       @class = "form-control requiredValidation",
+                       @id = "VendorFormId",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                       @readonly = "readonly"
+                   })
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label">
+                            Vendor Name
+                        </label>
+                        @Html.TextBoxFor(m => m.VendorName, new
+                   {
+                       @class = "form-control requiredValidation",
+                       @id = "VendorFormName",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                       @readonly = "readonly"
+                   })
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label">
+                            PO No
+                        </label>
+                        @Html.TextBoxFor(m => m.PoNo, new
+                   {
+                       @class = "form-control requiredValidation",
+                       @id = "PONo",
+                       @placeholder = " Enter PO No",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                   })
+                        <span class="HideValidMsg"> Enter PO No</span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label">
+                            PO Date
+                        </label>
+                        @Html.TextBoxFor(m => m.PoDate, new
+                   {
+                       @class = "form-control requiredValidation CurrentEndDate",
+                       autocomplete = "off",
+                       @id = "PODate",
+                       @placeholder = "dd/MM/yyyy",
+                       @style = "disabled :disabled",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                   })
+                        <span class="HideValidMsg"> Select PO Date</span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label">
+                            PO Delivery Date
+                        </label>
+                        @Html.TextBoxFor(m => m.PoDeliveryDate, new
+                   {
+                       @class = "form-control requiredValidation NoEndDate",
+                       autocomplete = "off",
+                       @id = "PODeliveryDate",
+                       @placeholder = "dd/MM/yyyy",
+                       @style = "disabled :disabled",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                   })
+                        <span class="HideValidMsg"> Select PO Delivery Date</span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label">
+                            Supply Terms
+                        </label>
+                        @Html.DropDownListFor(m => m.SupplyTerms, new SelectList(ViewBag.ListSupplyTerms, "DataStringValueField", "DataTextField", "Select"), new
+                   {
+                       @class = "form-control requiredValidation clearField",
+                       @id = "SupplyTerms",
+                       @data_inneraction = "validationCall",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                   })
+                        <span class="HideValidMsg"> Enter Supply Terms</span>
+                    </div>
+                </div>
+                <div class="col-md-2"></div>
+                <div class="col-md-2"></div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <blink>
+                            <h3 class="OrderPercentClass m-animate-blink text-center text-success" style="margin-top: 20px;">
+                                @Html.DisplayTextFor(m => m.POPercent)
+                            </h3>
+                        </blink>
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="margin-top:10px; margin-bottom:20px">
+                <div class="col-md-12" style="background-color:black"></div>
+            </div>
+            <div class="row">
+                <div class="col-md-2">
+                    <div class="form-group text-left">
+                        <label class="control-label ">
+                            Quote No
+                        </label>
+                        @Html.DropDownListFor(m => m.QuoteNo, new SelectList(ViewBag.ListQuoteNo, "DataStringValueField", "DataTextField", "Select"), new
+                   {
+                       @class = "form-control requiredValidation clearField",
+                       @id = "QuoteItemFormNo",
+                       @data_inneraction = "validationCall",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                       @onchange = "GetQuoteDetails(); GetQuoteItemSlNos()"
+                   })
+                        <span class="HideValidMsg"> Select Quote Number</span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group text-left">
+                        <label class="control-label ">
+                            Quote Item Sl. No
+                        </label>
+                        @Html.DropDownListFor(m => m.QuotePrepId, new SelectList(ViewBag.ListItems, "DataStringValueField", "DataTextField", "Select"), new
+                   {
+                       @class = "form-control requiredValidation clearField",
+                       @id = "QuotePrepId",
+                       @data_inneraction = "validationCall",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                       @onchange = "GetQuoteItemDetails()"
+                   })
+                        <span class="HideValidMsg"> Select Quote Item Sl Number</span>
+                    </div>
+                </div>
+                <div id="divQuoteDetails" class="col-md-8">
+                    <div class="form-group">
+                        <label class="control-label ">
+                            Item Description
+                        </label>
+                        @*@Html.TextAreaFor(m => m.ItemDescription, 10, 30, new
+                            {
+                                @class = "form-control requiredValidation",
+                                @id = "ItemDescription",
+                                @readonly = "readonly",
+                                @placeholder = " Enter Item Description",
+                                @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                            })*@
+                        <textarea id="ItemDescription" readonly="readonly" rows="10" cols="30" value="" class="col-md-12 form-control" />
+                    </div>
+                </div>
+
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label">
+                            PO SlNo <span class="required">*</span>
+                        </label>
+                        @Html.TextBoxFor(m => m.PoSLNo, new
+                               {
+                                   @class = "form-control requiredValidation",
+                                   @id = "POSlNo",
+                                   @placeholder = " Enter POSlNo",
+                                   @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                               })
+                        <span class="HideValidMsg"> Enter POSlNo</span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label">
+                            PO Qty <span class="required">*</span>
+                        </label>
+                        @Html.TextBoxFor(m => m.PoQty, new
+                   {
+                       @class = "form-control requiredValidation",
+                       @id = "itemPOQty",
+                       @onkeypress = "return AllowNumbers(event); ",
+                       @placeholder = " Enter PO Qty",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                   })
+                        <span class="HideValidMsg"> Enter PO Qty</span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label">
+                            Unit Price <span class="required">*</span>
+                        </label>
+                        @Html.TextBoxFor(m => m.UnitPrice, new
+                   {
+                       @class = "form-control requiredValidation",
+                       @id = "itemUnitPrice",
+                       @placeholder = " Enter Unit Price",
+                       @onkeypress = "return AllowNumbers(event); ",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                   })
+                        <span class="HideValidMsg"> Enter Unit Price</span>
+                    </div>
+                </div>
+
+
+                @*<div class="col-md-2">
+                        <div class="form-group">
+                            <label class="control-label">
+                                Lot Name
+                            </label>
+                            @Html.TextBoxFor(m => m.LotName, new
+                       {
+                           @class = "form-control forSingle",
+                           @id = "LotName",
+                           @placeholder = "Enter Lot Name"
+                       })
+                            <span class="HideValidMsg"> Enter Lot Name</span>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label class="control-label">
+                                Lot Wise Qty
+                            </label>
+                            @Html.TextBoxFor(m => m.LotWiseQty, new
+                       {
+                           @class = "form-control forSingle",
+                           @id = "LotWiseQty",
+                           @onkeypress = "return AllowNumbers(event); ",
+                           @placeholder = " Enter LotWise Qty"
+                       })
+                            <span class="HideValidMsg"> Enter LotWise Qty</span>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label class="control-label">
+                                Lot Wise Date
+                            </label>
+                            @Html.TextBoxFor(m => m.LotWiseDate, new
+                       {
+                           @class = "form-control NoEndDate forSingle",
+                           autocomplete = "off",
+                           @id = "LotWiseDate",
+                           @placeholder = "dd/MM/yyyy",
+                           @style = "disabled :disabled"
+                       })
+                            <span class="HideValidMsg"> Select LotWise Date</span>
+                        </div>
+                    </div>
+                    <div class="col-md-2" hidden>
+                        <div class="form-group">
+                            <label class="control-label">
+                                PO Requirements
+                            </label>
+                            @Html.TextBoxFor(m => m.PoRequirements, new
+                       {
+                           @class = "form-control",
+                           @id = "PORequirements",
+                           @placeholder = " Enter PORequirements",
+                           @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                       })
+                            <span class="HideValidMsg"> Enter PORequirements</span>
+                        </div>
+                    </div>*@
+
+            </div>
+
+            <div class="row">
+                <div class="col-md-12"><a href="#" id="addNew" class="btn btn-info btn-sm mb-2 mt-4">Add Lot Details</a></div>
+                <table id="lotTable" class="table table-responsive table-hover">
+                    <thead>
+                        <tr class="bg-cyan">
+                            <th>Lot Name</th>
+                            <th>Lot Date</th>
+                            <th>Lot Qty</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in ViewBag.LotTable)
+                        {
+                            <tr>
+                                <td>
+                                    <input name="LotName" id="LotName" type="text" value="@item.LotName" class="form-control forSingle" />
+                                    <span class="HideValidMsg"> Enter Lot Name</span>
+                                </td>
+                                <td>
+                                    <input name="LotDate" id="LotWiseDate" type="text" value="@item.LotWiseDate" class="form-control NoEndDate forSingle" readonly="readonly" autocomplete="off" />
+                                    <span class="HideValidMsg"> Enter Lot Wise Date</span>
+                                </td>
+                                <td>
+                                    <input name="LotQty" id="LotWiseQty" type="text" value="@item.LotWiseQty" class="form-control forSingle" />
+                                    <span class="HideValidMsg"> Enter Lot Wise Qty</span>
+                                </td>
+                                <td></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <div class="row">
+                <div class="col-md-12 pt-4 text-center">
+                    @*<button style="font-size:18px" type="button" class="btn btn-success btn-sm" ng-click="SaveItemDetails()">Save</button>*@
+                    <button id="saveItemButton" style="font-size:18px" type="button" class="btn btn-success btn-sm">Save</button>
+                    <button style="font-size:18px" type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
+
+
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<script>
+    $(document).ready(function () {
+        window.VendorDetail = '@Url.Action("GetQuoteVendorDetail", "Technical")';
+        window.SaveItemDetails = '@Url.Action("SaveItemDetails", "Technical")';
+        window.SaveItemDetailList = '@Url.Action("SaveItemDetailList", "Technical")';
+        window.GetPrepQuoteNo = '@Url.Action("GetPrepQuoteNo", "Technical")';
+        window.GetOrderDetailsFromSO = '@Url.Action("GetOrderDetailsFromSO", "Technical")';
+        window.GetItemQuoteDetails = '@Url.Action("GetItemQuoteDetails", "Technical")';
+        window.GetQuoteItemPODetails = '@Url.Action("GetQuoteItemPODetails", "Technical")';
+        window.GetQuoteItemSlNos = '@Url.Action("GetQuoteItemSlNos", "Technical")';
+
+        $('#divQuoteDetails').hide();
+
+        //1. Add new row
+    $("#addNew").click(function (e) {
+        e.preventDefault();
+        var $tableBody = $("#lotTable");
+        var $trLast = $tableBody.find("tr:last");
+        var $trNew = $trLast.clone();
+
+        var suffix = $trNew.find(':input:first').attr('name').match(/\d+/);
+
+        $trNew.find("#LotName").attr('class', 'requiredValidation forSingle form-control');
+        $trNew.find("#LotWiseDate").attr('class', 'form-control NoEndDate forSingle requiredValidation');
+        $trNew.find("#LotWiseQty").attr('class', 'requiredValidation forSingle form-control');
+
+        $trNew.find("td:last").html('<a href="#" class="remove">Remove</a>');
+        $.each($trNew.find(':input'), function (i, val) {
+            // Replaced Name
+            var oldN = $(this).attr('name');
+            var newN = oldN.replace('[' + suffix + ']', '[' + (parseInt(suffix) + 1) + ']');
+            $(this).attr('name', newN);
+            //Replaced value
+            var type = $(this).attr('type');
+            if (type.toLowerCase() == "text") {
+                $(this).attr('value', '');
+            }
+
+            // If you have another Type then replace with default value
+            $(this).removeClass("input-validation-error");
+            //$(this).addClass("requiredValidation");
+
+        });
+        $trLast.after($trNew);
+
+        // Re-assign Validation
+        //var form = $("form")
+        //    .removeData("validator")
+        //    .removeData("unobtrusiveValidation");
+        //$.validator.unobtrusive.parse(form);
+
+
+    // 2. Remove
+                $('.remove').on("click", function (e) {
+                    e.preventDefault();
+                    $(this).parent().parent().remove();
+                });
+
+        $('.NoEndDate').datepicker({
+        format: 'dd/mm/yyyy',
+        autoclose: true,
+        changeMonth: true,
+        changeYear: true,
+        endDate: '',
+    });
+
+    });
+
+});
+
+
+//Collect Multiple Item List For Pass To Controller
+$("#saveItemButton").click(function (e) {
+    e.preventDefault();
+
+    var arr = [];
+    arr.length = 0;
+
+    var frm = $("#formSaveItemDetails");
+    var formData = new FormData(frm[0]);
+
+    var Status = false;
+    Status = GetFormValidationStatus("#formSaveItemDetails");
+
+
+    //var TotalValue = parseInt($('#itemPOQty').val()) * parseInt($('#itemUnitPrice').val());
+    //if (parseInt(TotalValue) != parseInt($('#ExWorkValue').val())) {
+    //    alert('Invalid Entry. Item exceeds ExWork value');
+    //    return;
+    //}
+
+    var $tableBody = $("#lotTable");
+    var $tr = $tableBody.find("tr");
+    var LotQtySum = '0';
+    $.each($tr.find('#LotWiseQty'), function (i, val) {
+        LotQtySum = parseInt(LotQtySum) + parseInt($(this).val());
+    });
+
+
+    if (!Status) {
+        alert("Kindly Fill all mandatory fields");
+        return;
+    }
+    else if (LotQtySum > parseInt($('#itemPOQty').val())) {
+        alert("Lot Qty Exceeds PO Qty.");
+        return;
+    }
+    else if (LotQtySum < parseInt($('#itemPOQty').val())) {
+        alert("Lot Qty Below PO Qty.");
+        return;
+    }
+    else {
+        $.each($("#lotTable tbody tr"), function () {
+
+            arr.push({
+                Id: $("#Id").val(),
+                VendorId: $("#VendorFormId").val(),
+                VendorName: $("#VendorFormName").val(),
+                QuoteNo: $("#QuoteItemFormNo").val(),
+                QuoteType: $("#OrderFormQuoteType").val(),
+                SoNo: $("#ItemSoNo").val(),
+                QuotePrepId: $("#QuotePrepId").val(),
+                SupplyTerms: $("#SupplyTerms").val(),
+                PoSLNo: $("#POSlNo").val(),
+                PoQty: $("#itemPOQty").val(),
+                UnitPrice: $("#itemUnitPrice").val(),
+
+                LotName: $(this).find('td:eq(0) input').val(),
+                LotWiseDate: $(this).find('td:eq(1) input').val(),
+                LotWiseQty: $(this).find('td:eq(2) input').val()
+            });
+        });
+
+        var data = JSON.stringify({
+            ItemDetails: arr
+        });
+
+        $.when(saveButton(data)).then(function (response) {
+            console.log(response);
+        }).fail(function (err) {
+            console.log(err);
+        });
+    }
+});
+
+
+    $('.NoEndDate').datepicker({
+        format: 'dd/mm/yyyy',
+        autoclose: true,
+        changeMonth: true,
+        changeYear: true,
+        endDate: '',
+    });
+    $('.CurrentEndDate').datepicker({
+
+        format: 'dd/mm/yyyy',
+        autoclose: true,
+        changeMonth: true,
+        changeYear: true,
+        endDate: 'today',
+    });
+</script>

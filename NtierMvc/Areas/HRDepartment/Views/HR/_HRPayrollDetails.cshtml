@@ -1,0 +1,322 @@
+﻿@using NtierMvc.Model
+@using NtierMvc.Infrastructure
+
+@model NtierMvc.Model.HR.PayrollEntity
+
+<div class="row mt-1">
+    <div class="col-md-12">
+
+    </div>
+</div>
+
+@*@using (Html.BeginForm("SaveQuotePreparation", "Technical", FormMethod.Post, new { @id = "formSavePayrollDetail" }))
+    {*@
+<div ng-controller="HrController" class="row">
+    <form id="formSavePayrollDetail">
+        <div class="col-md-12 text-left">
+            <div class="row text-center">
+                <div class="col-md-3">
+                    <div class="form-group text-left">
+                        <label class="control-label ">
+                            Department
+                        </label>
+                        @Html.DropDownListFor(m => m.Dept, new SelectList(@ViewBag.ListDepartment, "DataStringValueField", "DataTextField", Model.Dept),
+                         new
+                         {
+                             @class = "form-control clearField",
+                             @id = "Dept",
+                             @data_inneraction = "validationCall",
+                             @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                             @ng_model = "Dept",
+                             @ng_change = "GetEmpNameForDept(Dept)"
+                        })
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group text-left">
+                        <label class="control-label">Emp Name<span class="required">*</span></label>
+                        <select id="EmpName" name="EmpName" ng-model="EmpName" class="form-control requiredValidation ng-pristine ng-untouched ng-valid ng-empty clearField" onfocusout="return ValidateRequiredFieldsOnFocusOut(this)" ng-change="GetEmpCodeForName(EmpName)">
+                            <option data-ng-repeat="eN in ListEmpName" value="{{eN.DataStringValueField}}">{{eN.DataTextField}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group text-left">
+                        <label class="control-label">Emp Code<span class="required">*</span></label>
+                        <select id="EmpId" name="EmpId" ng-model="EmpId" class="form-control requiredValidation ng-pristine ng-untouched ng-valid ng-empty clearField" onfocusout="return ValidateRequiredFieldsOnFocusOut(this)" ng-change="GetMonthlyEmpPayrollData()">
+                            <option data-ng-repeat="eN in ListEmpCode" value="{{eN.DataStringValueField}}">{{eN.DataTextField}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group text-left">
+                                <label class="control-label ">
+                                    Year
+                                </label>
+                                @Html.DropDownListFor(m => m.Year, new SelectList(@ViewBag.Year, "DataStringValueField", "DataTextField", Model.Year),
+                                 new
+                                 {
+                                     @class = "form-control clearField",
+                                     @id = "Year",
+                                     @data_inneraction = "validationCall",
+                                     @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                                     @ng_model = "Year"
+                                 })
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group text-left">
+                                <label class="control-label ">
+                                    Month
+                                </label>
+                                @Html.DropDownListFor(m => m.Month, new SelectList(@ViewBag.Month, "DataStringValueField", "DataTextField", Model.Month),
+                                 new
+                                 {
+                                     @class = "form-control clearField",
+                                     @id = "Month",
+                                     @data_inneraction = "validationCall",
+                                     @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                                     @ng_model = "Month",
+                                     @ng_change = "GetMonthlyEmpPayrollData(Month)"
+                                 })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group text-left">
+                        <label class="control-label">
+                            Basic Pay
+                        </label>
+                        @Html.TextBoxFor(m => m.BasicPay, new
+                   {
+                       @class = "form-control requiredValidation clearField",
+                       @id = "BasicPay",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                       ng_model = "BasicPay"
+                   })
+                        <span class="HideValidMsg">Please Select BasicPay</span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="control-label">
+                            HRA
+                        </label>
+                        @Html.TextBoxFor(m => m.HRA, new
+                   {
+                       @class = "form-control requiredValidation clearField",
+                       @id = "HRA",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                       ng_model = "HRA"
+                   })
+                        <span class="HideValidMsg">Please Select HRA</span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="control-label">
+                            Conveyance
+                        </label>
+                        @Html.TextBoxFor(m => m.Conv, new
+                   {
+                       @class = "form-control requiredValidation clearField",
+                       @id = "Conv",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                       ng_model = "Conv"
+                   })
+                        <span class="HideValidMsg">Please Select Convinience</span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="control-label">
+                            Other Allowance
+                        </label>
+                        @Html.TextBoxFor(m => m.OtherAllow, new
+                   {
+                       @class = "form-control requiredValidation clearField",
+                       @id = "OtherAllow",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                       ng_model = "OtherAllow"
+                   })
+                        <span class="HideValidMsg">Please Select Other Allowance</span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="control-label">
+                            Car Allowance
+                        </label>
+                        @Html.TextBoxFor(m => m.CarAllow, new
+                   {
+                       @class = "form-control requiredValidation clearField",
+                       @id = "CarAllow",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                       ng_model = "CarAllow"
+                   })
+                        <span class="HideValidMsg">Please Enter Car Allow</span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="control-label">
+                            EPF
+                        </label>
+                        @Html.TextBoxFor(m => m.EPF, new
+                   {
+                       @class = "form-control requiredValidation clearField",
+                       @id = "EPF",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                       ng_model = "EPF"
+                   })
+                        <span class="HideValidMsg">Please Select EPF</span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="control-label">
+                            PPF
+                        </label>
+                        @Html.TextBoxFor(m => m.PPF, new
+                   {
+                       @class = "form-control requiredValidation clearField",
+                       @id = "PPF",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                       ng_model = "PPF"
+                   })
+                        <span class="HideValidMsg">Please Enter PPF</span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="control-label">
+                            ESI
+                        </label>
+                        @Html.TextBoxFor(m => m.ESI, new
+                   {
+                       @class = "form-control requiredValidation clearField",
+                       @id = "ESI",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                       ng_model = "ESI"
+                   })
+                        <span class="HideValidMsg">Please Select Material Grade</span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="control-label">
+                            TDS Amount
+                        </label>
+                        @Html.TextBoxFor(m => m.TDSAMT, new
+                   {
+                       @class = "form-control requiredValidation clearField",
+                       @id = "TDSAMT",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                       ng_model = "TDSAMT"
+                   })
+                        <span class="HideValidMsg">Please Select TDSAMT</span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="control-label">
+                            Leave Adjustment
+                        </label>
+                        @Html.TextBoxFor(m => m.leaveAdj, new
+                   {
+                       @class = "form-control requiredValidation clearField",
+                       @id = "leaveAdj",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                       ng_model = "leaveAdj"
+                   })
+                        <span class="HideValidMsg">Please Select Leave Adj</span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="control-label">
+                            Absent
+                        </label>
+                        @Html.TextBoxFor(m => m.Absent, new
+                   {
+                       @class = "form-control requiredValidation clearField",
+                       @id = "Absent",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                       ng_model = "Absent"
+                   })
+                        <span class="HideValidMsg">Please Select Absent</span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="control-label">
+                            Loan Amount
+                        </label>
+                        @Html.TextBoxFor(m => m.LoanAmt, new
+                   {
+                       @class = "form-control requiredValidation clearField",
+                       @id = "LoanAmt",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                       ng_model = "LoanAmt"
+                   })
+                        <span class="HideValidMsg">Please Select LoanAmt</span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="control-label">
+                            Advance
+                        </label>
+                        @Html.TextBoxFor(m => m.Adv, new
+                   {
+                       @class = "form-control requiredValidation clearField",
+                       @id = "Adv",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                       ng_model = "Adv"
+                   })
+                        <span class="HideValidMsg">Please Select Advance</span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="control-label">
+                            Net Pay
+                        </label>
+                        @Html.TextBoxFor(m => m.NetPay, new
+                   {
+                       @class = "form-control requiredValidation clearField",
+                       @id = "NetPay",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                       ng_model = "NetPay"
+                   })
+                        <span class="HideValidMsg">Please Select NetPay</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 pt-4 text-center">
+                @*<button type="button" class="btn btn-success btn-sm" data-dismiss="modal" id="save_results">Save</button>*@
+                <input style="font-size:18px" type="button" class="btn btn-success btn-sm" data-dismiss="modal" id="save_results" value="Save" ng-click="SavePayrollDetails()" />
+            </div>
+        </div>
+    </form>
+</div>
+
+@*}*@
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        window.SavePayrollDetails = '@Url.Action("SavePayrollDetails", "Hr")';
+        });
+</script>
+
+
+

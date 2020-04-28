@@ -1,0 +1,31 @@
+﻿@using NtierMvc.Model
+@using NtierMvc.Infrastructure
+
+<div class="row mt-1">
+    <div class="col-md-12">
+
+    </div>
+</div>
+
+
+<!--Modal Panel-->
+<div id="Panel">
+    <div id="PanelContainer">
+        <div id="PanelBody">
+        </div>
+    </div>
+</div>
+<!--Modal Panel End-->
+
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        window.SavePayroll = '@Url.Action("SavePayroll", "HR")';
+        $('.redBG').removeClass('redBG').addClass('black');
+        });
+
+</script>
+
+
+

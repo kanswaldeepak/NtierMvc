@@ -1,0 +1,413 @@
+﻿@model NtierMvc.Model.DesignEng.ProductRealisation
+
+@{
+    ViewBag.Title = "Product Realisation";
+}
+
+<div ng-controller="ModalController" class="row">
+    <form id="formPRPDetail">
+        <div class="col-md-12">
+            @Html.HiddenFor(m => m.Id)
+            <div class="row">
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label">
+                            Quote Type <span class="required">*</span>
+                        </label>
+                        @Html.DropDownListFor(m => m.QuoteType, new SelectList(ViewBag.ListQuoteType, "DataStringValueField", "DataTextField", Model.QuoteType), new
+                            {
+                                @class = "form-control requiredValidation clearField",
+                                @id = "QuoteTypePRP",
+                                @data_inneraction = "validationCall",
+                                @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                                @onchange = "GetQuoteNos()"
+                            })
+                        <span class="HideValidMsg"> Select Quote Type</span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group text-left">
+                        <label class="control-label ">
+                            Quote Number <span class="required">*</span>
+                        </label>
+                        @Html.DropDownListFor(m => m.QuoteNo, new SelectList(ViewBag.ListQuoteNo, "DataStringValueField", "DataTextField", "Select"), new
+                   {
+                       @class = "form-control requiredValidation clearField",
+                       @id = "QuoteNoPRP",
+                       @data_inneraction = "validationCall",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this);",
+                       @onchange = "GetQuoteDetails()"
+                   })
+                        <span class="HideValidMsg"> Select Quote Number</span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label">
+                            Vendor Id <span class="required">*</span>
+                        </label>
+                        @Html.DropDownListFor(m => m.VendorID, new SelectList(@ViewBag.ListVendorId, "DataStringValueField", "DataTextField", Model.VendorID),
+                           new
+                           {
+                               @class = "form-control requiredValidation",
+                               @id = "VendorIdPRP",
+                               @data_inneraction = "validationCall",
+                               @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                               @readonly = "readonly"
+                           })
+                        <span class="HideValidMsg"> Select VendorId</span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label">
+                            Vendor Name <span class="required">*</span>
+                        </label>
+                        @Html.TextBoxFor(m => m.VendorName, new
+                   {
+                       @class = "form-control requiredValidation",
+                       @id = "VendorNamePRP",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                       @readonly = "readonly"
+                   })
+                        <span class="HideValidMsg"> Select Vendor Name</span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label">
+                            SO No. <span class="required">*</span>
+                        </label>
+                        @Html.DropDownListFor(m => m.SONo, new SelectList(ViewBag.ListSoNo, "DataStringValueField", "DataTextField", Model.SONo), new
+                   {
+                       @class = "form-control clearField",
+                       @id = "SONoPRP",
+                       @data_inneraction = "validationCall",
+                       @onchange = "GetSONoDetails(); GetPlSoNoDetails()"
+                   })
+                        <span class="HideValidMsg">Please Select SoNo</span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label">
+                            PO No <span class="required">*</span>
+                        </label>
+
+                        @Html.TextBoxFor(m => m.PONo, new
+                   {
+                       @class = "form-control",
+                       @id = "PONoPRP",
+                       @placeholder = "File Number",
+                       @readonly = "readonly"
+                   })
+
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label">
+                            PO Date <span class="required">*</span>
+                        </label>
+                        @Html.TextBoxFor(m => m.PODate, new
+                   {
+                       @class = "form-control requiredValidation NoEndDate",
+                       @id = "PODatePRP",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                       @placeholder = " Enter PODate"
+                   })
+                        <span class="HideValidMsg"> Enter PO Date</span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label">
+                            Product Group <span class="required">*</span>
+                        </label>
+                        @Html.TextBoxFor(m => m.ProductGroup, new
+                   {
+                       @class = "form-control requiredValidation",
+                       @id = "ProductGroupPRP",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                       @placeholder = " Enter Product Group"
+                   })
+                        <span class="HideValidMsg"> Select Product Group</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label">
+                            PO SL No <span class="required">*</span>
+                        </label>
+                        @Html.DropDownListFor(m => m.POSlNo, new SelectList(ViewBag.ListPOSlNo, "DataStringValueField", "DataTextField", Model.POSlNo), new
+                        {
+                          @class = "form-control requiredValidation clearField",
+                          @id = "POSlNoPRP",
+                          @data_inneraction = "validationCall",
+                          @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                          @onchange = "GetPoSLNoDetailList()"
+                         })
+                        <span class="HideValidMsg">Select PO Sl No</span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label">
+                            PO Qty <span class="required">*</span>
+                        </label>
+                        @Html.TextBoxFor(m => m.POQty, new
+                   {
+                       @class = "form-control requiredValidation clearFields",
+                       @id = "POQtyPRP",
+                       @placeholder = " Enter POQty",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                   })
+                        <span class="HideValidMsg"> Enter PO No</span>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="form-group">
+                        <label class="control-label">
+                            PO Item Desc <span class="required">*</span>
+                        </label>
+                        @Html.TextAreaFor(m => m.POItemDesc, new
+                   {
+                       @class = "form-control requiredValidation col-md-10 clearFields",
+                       @id = "POItemDescPRP",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                   })
+                        <span class="HideValidMsg">Select PO Item Desc</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2" hidden>
+                    <div class="form-group">
+                        <label class="control-label">
+                            Product Name <span class="required">*</span>
+                        </label>
+                        @Html.DropDownListFor(m => m.ProductName, new SelectList(ViewBag.ListProductName, "DataStringValueField", "DataTextField", Model.ProductName), new
+                   {
+                       @class = "form-control clearField clearFields",
+                       @id = "ProductNamePRP"
+                   })
+                        <span class="HideValidMsg"> Select Product Name</span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="control-label">
+                            Opn Code  <span class="required">*</span>
+                        </label>
+                        @Html.TextAreaFor(m => m.OpnCode, new
+                   {
+                       @class = "form-control col-md-10 clearFields",
+                       @id = "OpnCodePRP",
+                       @disabled = "disabled"
+                   })
+                        <span class="HideValidMsg"> Select Opn Code</span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label">
+                            Product No<span class="required">*</span>
+                        </label>
+                        @Html.TextBoxFor(m => m.ProductNoView, new
+                       {
+                           @class = "form-control col-md-10 clearFields",
+                           @id = "ProductNoViewPRP",
+                           @readonly = "readonly"
+                       })
+                    <div hidden>
+                        @Html.DropDownListFor(m => m.ProductNo, new SelectList(@ViewBag.ListProductNo, "DataStringValueField", "DataTextField", Model.ProductNo),
+                        new
+                        {
+                            @class = "form-control clearFields",
+                            @id = "ProductNoPRP"
+                        })
+                    </div>
+                        
+                        <span class="HideValidMsg"> Select Product No</span>
+                    </div>
+                </div>
+                <div class="col-md-2" hidden>
+                    <div class="form-group text-left">
+                        <label class="control-label ">
+                            Product Code <span class="required">*</span>
+                        </label>
+                        @Html.TextBoxFor(m => m.ProductCode, new
+                       {
+                           @class = "form-control col-md-10 clearFields",
+                           @id = "ProductCodePRP",
+                           @readonly = "readonly"
+                       })
+                        @*@Html.DropDownListFor(m => m.ProductCode, new SelectList(ViewBag.ListProductCode, "DataStringValueField", "DataTextField", Model.ProductCode), new
+                            {
+                                @class = "form-control requiredValidation clearField",
+                                @id = "ProductCodePRP",
+                                @data_inneraction = "validationCall",
+                                @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this);",
+                                @disabled = "disabled"
+                            })*@
+
+                        <span class="HideValidMsg"> Select Product Code</span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label">
+                            PL <span class="required">*</span>
+                        </label>
+                        @Html.TextBoxFor(m => m.PL, new
+                      {
+                          @class = "form-control col-md-10 clearFields",
+                          @id = "PLPRP",
+                          @readonly = "readonly"
+                      })
+                        @*@Html.DropDownListFor(m => m.PL, new SelectList(@ViewBag.ListPL, "DataStringValueField", "DataTextField", Model.PL),
+                            new
+                            {
+                                @class = "form-control requiredValidation",
+                                @id = "PLPRP",
+                                @data_inneraction = "validationCall",
+                                @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                                @disabled = "disabled"
+                            })*@
+                        <span class="HideValidMsg"> Select PL</span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label">
+                            Casing Size <span class="required">*</span>
+                        </label>
+                        @Html.TextBoxFor(m => m.CasingSize, new
+                          {
+                              @class = "form-control col-md-10 clearFields",
+                              @id = "CasingSizePRP",
+                              @readonly = "readonly"
+                          })
+                        @*@Html.DropDownListFor(m => m.CasingSize, new SelectList(ViewBag.ListCasingSize, "DataStringValueField", "DataTextField", Model.CasingSize), new
+                            {
+                                @class = "form-control requiredValidation clearField",
+                                @id = "CasingSizePRP",
+                                @data_inneraction = "validationCall",
+                                @disabled = "disabled"
+                            })*@
+                        <span class="HideValidMsg">Please Select Casing Size</span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label">
+                            Casing PPF <span class="required">*</span>
+                        </label>
+                        @Html.TextBoxFor(m => m.CasingPPF, new
+                        {
+                            @class = "form-control col-md-10 clearFields",
+                            @id = "CasingPPFPRP",
+                            @readonly = "readonly"
+                        })
+                        @*@Html.DropDownListFor(m => m.CasingPPF, new SelectList(ViewBag.ListCasingPPF, "DataStringValueField", "DataTextField", Model.CasingPPF), new
+                   {
+                       @class = "form-control requiredValidation clearField",
+                       @id = "CasingPPFPRP",
+                       @data_inneraction = "validationCall",
+                       @disabled = "disabled"
+                   })*@
+                        <span class="HideValidMsg"> Please Select CasingPPF</span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label">
+                            Grade <span class="required">*</span>
+                        </label>
+                        @Html.TextBoxFor(m => m.Grade, new
+                        {
+                            @class = "form-control col-md-10 clearFields",
+                            @id = "GradePRP",
+                            @readonly = "readonly"
+                        })
+                        @*@Html.DropDownListFor(m => m.Grade, new SelectList(ViewBag.ListGrade, "DataStringValueField", "DataTextField", Model.Grade), new
+                   {
+                       @class = "form-control requiredValidation clearField",
+                       @id = "GradePRP",
+                       @data_inneraction = "validationCall",
+                       @disabled = "disabled"
+                   })*@
+                        <span class="HideValidMsg"> Please Select Grade</span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label">
+                            Open Hole Size
+                        </label>
+                        @Html.TextBoxFor(m => m.OpenHoleSize, new
+                        {
+                            @class = "form-control col-md-10 clearFields",
+                            @id = "OpenHoleSizePRP",
+                            @readonly = "readonly"    
+                        })
+                        @*@Html.DropDownListFor(m => m.OpenHoleSize, new SelectList(ViewBag.ListOpenHoleSize, "DataStringValueField", "DataTextField", Model.OpenHoleSize), new
+                   {
+                       @class = "form-control clearField",
+                       @id = "OpenHoleSizePRP",
+                       @disabled = "disabled"
+                   })*@
+                        <span class="HideValidMsg"> Please Select Open Hole Size</span>
+                    </div>
+                </div>
+                @*<div class="col-md-2">
+                    <div class="form-group">
+                        <a target='_blank' href='' id="UploadFileId"><img height='50px' src='~/Images/pdfIcon.png' /><label> Document </label></a>
+                    </div>
+                </div>*@
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <table id="tblPRPDetails" class="table table-hover table-striped table-sm">
+                        <thead>
+                            <tr>
+                                <td>SN</td>
+                                <td>Part Name</td>
+                                <td>Commodity No</td>
+                                <td>Commodity Rev No</td>
+                                <td>Qty</td>
+                                <td>Length</td>
+                                <td>OD</td>
+                                <td>WT</td>
+                                <td>UOM</td>
+                                <td>RMType</td>
+                                <td>Document</td>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 pt-4 text-center">
+                    <button style="font-size:18px" type="button" class="btn btn-success btn-sm" id="save_results" ng-click="SaveProductRealisationDetails()">Save</button>
+                    <button style="font-size:18px" type="button" class="btn btn-accent btn-sm" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<script>
+    $(document).ready(function () {
+        window.VendorDetail = '@Url.Action("GetQuoteVendorDetail", "Technical", new { Area = "" })';
+        window.SaveProductRealisationDetails = '@Url.Action("SaveProductRealisationDetails", "DesignEng")';
+        window.SearchBOM = '@Url.Action("SearchForBOM", "DesignEng")';
+        window.GetProductDetails = '@Url.Action("GetProductDetails", "DesignEng")';
+        window.GetPoSLNoDetails = '@Url.Action("GetPoSLNoDetails", "DesignEng")';
+
+        $('#divQuoteDetails').hide();
+    });
+
+</script>

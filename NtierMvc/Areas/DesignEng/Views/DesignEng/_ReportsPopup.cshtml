@@ -1,0 +1,254 @@
+﻿
+
+<div class="row">
+    <div class="col-md-2">
+        <div class="form-group">
+            <label class="control-label">
+                Type
+            </label>
+            @Html.DropDownList("QuoteType", new SelectList(ViewBag.ListQuoteType, "DataStringValueField", "DataTextField", "QuoteType"), new
+                            {
+                                @class = "form-control clearField",
+                                @id = "QuoteTypeReport",
+                                @onChange = "getVendorIdFromQuoteType()"
+                            })
+            <span class="HideValidMsg">Select Vendor Type</span>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="form-group">
+            <label class="control-label">
+                Vendor ID
+            </label>
+            @Html.DropDownList("VendorId", new SelectList(ViewBag.ListVendorId, "DataStringValueField", "DataTextField", "VendorId"), new
+                            {
+                                @class = "form-control clearField",
+                                @id = "VendorIdReport",
+                                @multiple = "true"
+                            })
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="form-group">
+            <label class="control-label">
+                So No
+            </label>
+            @Html.DropDownList("SoNo", new SelectList(ViewBag.ListSoNo, "DataStringValueField", "DataTextField", "SoNo"), new
+                            {
+                                @class = "form-control clearField",
+                                @id = "SoNoReport",
+                                @multiple = "true"
+                            })
+        </div>
+    </div>
+
+    <div class="col-md-2">
+        <div class="form-group">
+            <label class="control-label">
+                From Date <span class="required">*</span>
+            </label>
+            <input type="text" id="DateFrom" class="form-control requiredValidation NoEndDate" placeholder="Select From Date" autocomplete="off" />
+
+            <span class="HideValidMsg">Enter From Date</span>
+        </div>
+    </div>
+
+    <div class="col-md-2">
+        <div class="form-group">
+            <label class="control-label">
+                To Date <span class="required">*</span>
+            </label>
+            <input type="text" id="DateTo" class="form-control requiredValidation NoEndDate" placeholder="Select To Date" autocomplete="off" />
+
+            <span class="HideValidMsg">Enter To Date</span>
+        </div>
+    </div>
+
+    @*<div class="col-md-2">
+            <div class="form-group">
+                <label class="control-label">
+
+                </label>
+                <div class="col-md-12">
+                    <button id="DownloadLink" onclick="DownloadExcel(this.value)" class="btn btn-sm btn-link" value="">Download Excel</button>
+                </div>
+
+            </div>
+        </div>*@
+
+</div>
+
+<div class="row mt-2" style="border-top: 1px solid #ccc">
+    <div class="col-md-12">
+        <div class="col-md-6" style="border-right: 1px solid #ccc; height:300px">
+            <table class="table mt-3 table-borderless">
+                <tr>
+                    <td>
+                        <div class="row">
+                            <div class="col-md-4">
+                                @*<h4 style="font-size:15px">Detailed PRP Report</h4>*@
+                                <button id="download" onclick="CreateDocument()" class="btn btn-lg btn-link">Detailed PRP Report.XLSX</button>
+                            </div>
+                            <div class="col-md-4">
+
+                            </div>
+                            <div class="col-md-4">
+                            </div>
+                        </div>
+                    </td>
+                    <td></td>
+
+                </tr>
+            </table>
+
+        </div>
+        <div class="col-md-6">
+
+        </div>
+    </div>
+</div>
+
+
+<script>
+
+    $(function () {
+        
+        $('#SoNoReport').chosen({
+            width: "210px",
+            placeholder_text_single: "Select SoNo",
+            placeholder_text_multiple: "Select SoNos"
+
+        });
+
+        $('#VendorIdReport').chosen({
+            width: "210px",
+            placeholder_text_single: "Select Vendor Id",
+            placeholder_text_multiple: "Select Vendor Ids"
+        });
+
+    });
+
+$("#VendorIdReport").chosen().change(
+        
+    function GetSoNosFromVendorId() {
+        var VendorId = '';
+         var x=document.getElementById("VendorIdReport");
+          for (var i = 0; i < x.options.length; i++) {
+             if(x.options[i].selected ==true){
+                 //alert(x.options[i].value);
+                 VendorId = VendorId + x.options[i].value + ',';
+              }
+          }
+
+        //VendorId = VendorId.slice(0, -1);
+        VendorId = VendorId.substring(0, VendorId.length - 1);
+
+        $.ajax({
+            type: 'POST',
+            url: '/DesignEng/DesignEng/GetSoNosFromVendorId',
+            data: JSON.stringify({ VendorId: VendorId }),
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                $("#SoNoReport").empty();
+                $.each(data, function (i, item) {
+                    $("#SoNoReport").append('<option value="' + item.DataStringValueField + '">' + item.DataTextField + '</option>');
+                });
+                $("#SoNoReport").trigger("chosen:updated");
+
+            },
+            error: function (x, e) {
+                alert('Some Error Occurred');
+            }
+        });
+    }
+);
+
+
+    function getVendorIdFromQuoteType() {
+        var ReportType = $('#QuoteTypeReport').val();
+
+        $.ajax({
+            type: 'POST',
+            url: '/DesignEng/DesignEng/GetVendorIdFromQuoteType',
+            data: JSON.stringify({ ReportType: ReportType }),
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                 $("#VendorIdReport").empty().append('<option Value="">' + "All" + '</option>');
+                $.each(data, function (i, item) {
+                    $("#VendorIdReport").append('<option value="' + item.DataStringValueField + '">' + item.DataTextField + '</option>');
+                });
+                $("#VendorIdReport").trigger("chosen:updated");
+
+            },
+            error: function (x, e) {
+                alert('Some Error Occurred');
+            }
+        });
+    }
+
+    function CreateDocument() {
+        var ReportType = $('#QuoteTypeReport option:selected').text();
+        var dateFrom = $('#DateFrom').val();
+        var dateTo = $('#DateTo').val();
+        //var VendorId = $('#VendorIdReport').val();
+        var SoNo = $('#SoNoReport').val();
+
+        var VendorId = '';
+         var x=document.getElementById("VendorIdReport");
+          for (var i = 0; i < x.options.length; i++) {
+             if(x.options[i].selected ==true){
+                 //alert(x.options[i].value);
+                 VendorId = VendorId + x.options[i].value + ',';
+              }
+        }
+
+        //VendorId = VendorId.slice(0, -1);
+        VendorId = VendorId.substring(0, VendorId.length - 1);
+
+    $.ajax({
+        type: 'POST',
+        url: '/DesignEng/DesignEng/GenerateExcelReport',
+        data: JSON.stringify({ ReportType: ReportType, DateFrom: dateFrom, DateTo: dateTo, VendorId : VendorId, SoNo : SoNo }),
+        contentType: "application/json; charset=utf-8",
+        success: function (data) {
+            if (data != "") {
+                //use window.location.href for redirect to download action for download the file
+                @*window.location.href = '@Url.RouteUrl(new { Area = "DesignEng", Controller = "DesignEng", Action = "Download" })/?fileName=' + data;*@
+
+                //$('#DownloadLink').val(data);
+                //$('#DownloadLink').show();
+            }
+            else {
+                alert('No Records Found');
+            }
+        },
+        error: function (x, e) {
+            alert('Some Error Occurred');
+        }
+    })
+    }
+
+    function DownloadExcel(fileName) {
+
+        $('#DownloadLink').hide();
+        window.location.href = '@Url.RouteUrl(new { Area = "DesignEng", Controller = "DesignEng", Action = "Download" })/?fileName=' + fileName;
+    }
+
+    $('.NoEndDate').datepicker({
+        format: 'dd/mm/yyyy',
+        autoclose: true,
+        changeMonth: true,
+        changeYear: true,
+        endDate: '',
+        orientation: "bottom auto",
+    });
+
+    $('.CurrentEndDate').datepicker({
+        format: 'dd/mm/yyyy',
+        autoclose: true,
+        changeMonth: true,
+        changeYear: true,
+        endDate: 'today',
+    });
+
+</script>

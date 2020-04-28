@@ -1,0 +1,512 @@
+body{ font-family: 'Roboto', sans-serif; font-size:0.83rem; background: #fafafa; color: #2a2a2a; position:relative; }
+ul{ padding:0rem; margin:0rem; }
+li{ list-style:none; } 
+a { color: #69a8e6; }
+a:hover{ text-decoration:none; }
+
+.form-control{ border-radius:0; padding: .270rem .75rem; font-size: 0.8rem; }
+.form-control:focus{ box-shadow:none; border:1px solid #fcb03b; }
+.required{ color:#dd2a2a;}
+.control-label{ font-weight:500; color: #174e80; }
+
+select.form-control:not([size]):not([multiple]){ height: calc(1.9rem + 0px); }
+.card{ border:none; }
+
+.label-text{ background: #eee; padding: 0.5rem 1rem; color: #605b5b; font-weight: 500; display:block; }
+
+/* Input Group Phone */
+.input-group-phone{ display:flex; }
+.input-group-phone span{ align-items:center; justify-content:center;}
+.input-group-phone span.input-std{ width:100px; }
+.input-group-phone span.input-space{ padding:0 0.5rem; }
+.input-group-phone span.input-phone{ width:100%; }
+
+/* Input Group Mobile */
+.input-group-mobile{ display:flex; }
+.input-group-mobile span{ align-items:center; justify-content:center;}
+.input-group-mobile span.input-country-code{ width:60px; }
+.input-group-mobile span.input-space{ padding:0 0.5rem; }
+.input-group-mobile span.input-mobile{ width:100%; }
+
+/* buttons */
+
+.btn{ border-radius: 5px; font-size: 0.8rem; font-weight:500; margin: 0 3px 3px 0; text-transform: uppercase; }
+.btn:focus{ box-shadow:none; }
+.btn-primary, .btn-primary:hover{ background-color:#1f6a9a; border:#1f6a9a; }
+.btn-success{ background-color:#75c07e; border:#75c07e; }
+.btn-warning{ color:#fff; }
+.btn-light , .btn-light:hover{ color: #fff; background-color: #ff6b3cf0; border-color: #ff7347; }
+
+
+/* Breadcrumbs */
+.dva-breadcrumb{ margin: 0rem 0 1rem 0; font-size: 1rem; padding: 0.5rem 1rem; background: #eaf3f8; }
+.dva-breadcrumb .breadcrumb{ font-size: 0.9rem; font-weight: 500; padding: 0; margin-bottom: 0; border-radius: 0; background:transparent; color: #676868; }
+.dva-breadcrumb .breadcrumb a{ color: #f05c3a; text-decoration: underline; }
+.dva-breadcrumb .breadcrumb .breadcrumb-item.active { color: #174e80; }
+.dva-breadcrumb .breadcrumb-item+.breadcrumb-item:before{ color:#676868; }
+
+/* Modals */
+.modal{ z-index: 99999; }
+.modal-backdrop{ z-index: 99990; }
+.modal-content{ border:none; box-shadow: 0 0px 8px 2px rgba(0,0,0,.26); }
+.modal-header{ background: #5595c2; color: #fff; padding: 0.3rem 1rem; border-radius:none; }
+.modal-footer{ padding: 0.5rem 1rem; }
+.modal-full{ width:90%; max-width: 90%; }
+
+/* Badges */
+.badge { padding: .5em .5em; font-size: 0.7rem; font-weight: 500; border-radius: 0rem; color: #fff; }
+.badge-success{ background-color:#91cf76; }
+.badge-warning{ background-color:#f8e617; }
+.badge-danger{ background-color:#fa7e7e; }
+.badge-info{ background-color:#609bc4; }
+
+/* tabs */
+.dva-tabs{ background:#fff; box-shadow: 0 0 15px 1px rgba(113,106,202,.2); }
+.dva-tabs .nav-link{ display:table; color: #878787; width:100%; border-bottom: 1px dashed #eee; }
+.dva-tabs .nav-link:last-child{ border-bottom:none; }
+.dva-tabs .nav-link.active{  color: #333; background-color: #ebf3f8; border-right: 3px solid #535c8b; border-radius: 0; font-weight: 500; }
+.dva-tabs .nav-link.active span.tab-icon{ color:#5595c2; }
+.dva-tabs .nav-link span{ display:table-cell; vertical-align:middle; }
+.dva-tabs .nav-link span.tab-icon{ width:50px; width: 30px; font-size: 1.3rem; }
+
+.dva-tab-common-content{ background:#fff; padding:1rem; box-shadow: 0 0 15px 1px rgba(113,106,202,.2); border-radius: 4px; }
+.dva-page-title{ font-weight: 500; color: #5595c2; font-size: 1.4rem; padding-bottom: 0.5rem; border-bottom: 2px solid #eee;  }
+.dva-page-subtitle{ font-weight: 500; font-size: 1rem; color: #5e7aa5; padding-bottom: 0.5rem; border-bottom: 1px solid #ddd; }
+.no-border-bottom{ border-bottom:none; }
+.dva_notes{ background:#fcfcfc; padding:0.6rem 1rem; border-radius:5px; }
+.dva_notes .dva_notes_head{ font-weight:500; font-size: 1rem; color: #557a93;}
+.dva_notes .dva_notes_body span{ position: relative; display:block; margin: 0.5rem 0; padding: 0 0 0 1.5rem;}
+.dva_notes .dva_notes_body span:before{ content: "\f00c"; font: normal normal normal 14px/1 FontAwesome; position: absolute; left: 0; top: 5px; color: #f09337; }
+
+
+/* Table */
+.dva-table{ }
+.dva-table th{ background: #dae6ee; color: #535c8b; border-bottom: 0 !important; vertical-align: middle !important; }
+.dva-table th , .dva-table td{ padding: 0.50rem 0.75rem; border: 0; vertical-align: middle; }
+.dva-table td{ }
+.dva-table tbody tr:nth-of-type(odd) { background: #fff; }
+.dva-table tbody tr:nth-of-type(even) { background: #f5f8f9; }
+.dva-tborder tr td, .dva-tborder tr th{ border:1px solid #eee; }
+
+.print-icon { font-size: 1.5rem; color: #e93636 !important; }
+
+.table-building-infra th{ background: #fafafa; color: #686868; }
+.table-building-infra th, .table-building-infra td{ padding: 0.55rem 0.75rem; vertical-align: middle; border-top:none; }
+.table-building-infra td{ border-bottom:1px dashed #ddd; }
+.table-building-infra .fileinput{ margin-bottom:0; }
+
+.fee-info-table { border: 1px dashed #eee; }
+.fee-info-table .control-label{ margin-bottom:0; }
+.fee-info-table td{ border-bottom: 1px dashed #eee; padding: 0.55rem 0.75rem; vertical-align: middle; border-top:none; }
+.fee-info-table td.title{ background: #fafafa; width:180px; }
+
+/* Data table */
+.dataTables_wrapper.container-fluid{ padding-right: 0px; padding-left: 0px; }
+table.dataTable.no-footer {
+    border-bottom: none;
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover{ //background:transparent; //border:none; }
+
+
+/* Date Picker */
+.datepicker-dropdown.dropdown-menu{ font-size: 0.8rem; }
+.daterangepicker.dropdown-menu{ font-size: 0.8rem; }
+
+/* Input Addon*/
+.inner-addon { position: relative; }
+.inner-addon .fa { position: absolute; padding: 10px; color: #9f9f9f; pointer-events: none; }
+.left-addon .fa  { left:  0px;}
+.right-addon .fa { right: 0px;}
+.left-addon input  { padding-left:  30px; }
+.right-addon input { padding-right: 30px; }
+
+/* Pvt ITI Institue */
+.form-border.form-group{ border-bottom: 1px dashed #eee; padding: 0.5rem 0; margin:0.5rem 0 }
+.dv-pvt-iti-registration{ background: #fff; padding: 1rem; box-shadow: 0 0 15px 1px rgba(113,106,202,.2); border-radius:5px; }
+.dva-declarations{ display:table; }
+.dva-de-row{ display:table-row; }
+.dva-de-cell{ display:table-cell; vertical-align:middle; padding: 0.4rem 0; border-bottom: 1px dashed #eee; }
+
+.dva_pvt_iti_home{ display:flex; flex-wrap:wrap; justify-content: space-evenly; margin-top:4rem; }
+.dva_pvt_iti_home .pvt-iti-home-link{ min-width: 180px; padding:1rem; box-shadow: 0 0 15px 1px rgba(113,106,202,.2); margin:0 2rem 3.5rem 0; color: #706f6f; font-size: 1rem; text-align:center; }
+.dva_pvt_iti_home .pvt-iti-home-link .icon{ font-size: 1.8rem; width: 60px; margin: -40px auto 0 auto; background: #fff; transition:.3s all ease-out; }
+.dva_pvt_iti_home .pvt-iti-home-link .text{ margin-top: 0.5rem; }
+.dva_pvt_iti_home .green .icon{ border: 1px solid #78d33f; color: #78d33f; }
+.dva_pvt_iti_home .orange .icon{ border: 1px solid #f6c24e; color: #f6c24e; }
+.dva_pvt_iti_home .blue .icon{ border: 1px solid #75bdd9; color: #75bdd9; }
+.dva_pvt_iti_home .pink .icon{ border: 1px solid #e16f94; color: #e16f94; }
+.dva_pvt_iti_home .yellow .icon{ border: 1px solid #f0ea55; color: #f0ea55; }
+.dva_pvt_iti_home .villot .icon{ border: 1px solid #d8abec; color: #d8abec; }
+.dva_pvt_iti_home .meron .icon{ border: 1px solid #817b5e; color: #817b5e; }
+
+/* Pvt ITI Login */
+.pvt-iti-login-container{ width:350px; margin:auto; padding:1rem; background:#fff; box-shadow: 0 0 15px 1px rgba(113,106,202,.2); }
+.pvt_iti_login_titlte{ margin:1rem 0; text-align:center; font-weight:500; font-size:1.2rem; color: #707070; }
+
+.pviti-form-section{ padding: 1rem;  background: #f8f8f8; border-radius: 5px; }
+.dva-sub-title{ display:table; font-size:1rem; color: #606060; font-weight: 500; margin-bottom: 1rem; padding-bottom: 0.4rem; }
+.dva-sub-title span{ display:table-cell; }
+.dva-sub-title .icon{ text-align: center; padding-right:0.5rem; }
+
+.dva-application-home-pbar{ display:table; width: 100%; }
+.dva-application-home-pbar .status-pbar-row{ display:table-row; }
+.dva-application-home-pbar .status-pbar-row .status-pbar-cell:first-child{ width:300px; padding: 0.8rem 0; }
+.dva-application-home-pbar .status-pbar-cell{ display:table-cell; border-bottom: 1px dashed #eee; }
+.dva-application-home-pbar .status-pbar-cell a{ color: #5595c2; font-weight: 500; }
+.dva-application-home-pbar .status-pbar-cell.title{ font-weight: 500; font-size: 1rem; color: #8d8d8d; }
+.as-approved, .as-rejected, .as-pending{ font-size:1.6rem; }
+.as-approved{ color:#59dd7b; }
+.as-rejected{ color:#f26767; }
+.as-pending{ color:#eee260; }
+
+.status-red{ background:#e35555; }
+.status-yellow{ background:#e9b048; }
+.status-villot{ background:#ac75be; }
+.status-blue{ background:#5595c2; }
+.status-green{ background:#39c24a; }
+
+.pviti-info-table { border: 1px dashed #eee; }
+.pviti-info-table .control-label{ margin-bottom:0; }
+.pviti-info-table td{ border-bottom: 1px dashed #eee; padding: 0.55rem 0.75rem; vertical-align: middle; border-top:none; }
+.pviti-info-table td.title{ background: #fafafa; }
+.pviti-info-table td .control-label{color: #174e80; }
+
+.pviti-appstatus{ display:table; width:100%; padding: 0.6rem 1rem; font-weight: 500; font-size: 0.9rem; color: #1b1b1c; }
+.pviti-appstatus span{ display:table-cell; vertical-align:middle; }
+.pviti-appstatus .icon{ font-size: 1.2rem; width: 25px; }
+.pviti-appstatus.warning{ background: #fff8ea; border-left: 4px solid #e9b048; }
+.pviti-appstatus.warning .icon{ color: #e9b048; }
+.pviti-appstatus.primary{ background: #e2f0fa; border-left: 4px solid #5595c2; }
+.pviti-appstatus.primary .icon{ color: #5595c2; }
+.pviti-appstatus.success{ background: #e6f8e8; border-left: 4px solid #39c24a; }
+.pviti-appstatus.success .icon{ color: #39c24a; }
+.pviti-appstatus.danger{ background: #ffecec; border-left: 4px solid #e35555; }
+.pviti-appstatus.danger .icon{ color: #e35555; }
+
+.pviti-app-status{ display:flex; flex-wrap:wrap; }
+.pviti-app-status .pviti-app-link{ width: 175px; margin: 0 1rem 1rem 0; padding: 0.3rem 0.8rem; color: #fff; transition:all 0.8s ease; }
+.pviti-app-link .app-status .icon{ font-size: 1.5rem; }
+.pviti-app-link .app-status .status{ float:right; font-size: 1.5rem; font-weight: 500; }
+.pviti-app-link .app-text{ padding-top: 0.8rem; display: block; font-size: 0.9rem; }
+.pviti-app-link:hover{ transform:scale(0.9);}
+
+.pviti-app-link.green{ background: #91cf76; }
+.pviti-app-link.blue{ background: #609bc4; }
+.pviti-app-link.pink{ background: #d581b4; }
+.pviti-app-link.orange{ background: #f69863; }
+.pviti-app-link.red{ background: #f05d5d; }
+.pviti-app-link.sement{ background: #92a7b6; }
+.pviti-app-link.dark-orange{ background: #e38341; }
+.pviti-app-link.dark{ background:#898787; }
+
+.pviti-appadmin-status{ display:flex; flex-wrap:wrap; }
+.pviti-appadmin-status .pviti-appadmin-link{ width: 180px; margin: 0 1rem 1rem 0; padding: 0.5rem 1rem; color: #fff !important; cursor:pointer; transition:all 0.8s ease; }
+.pviti-appadmin-link .app-status{ }
+.pviti-appadmin-link .app-status .icon{ font-size: 1.5rem; padding: 0.6rem; color:#fff; }
+.pviti-appadmin-link .app-status .status{ float:right; font-size: 2.2rem; }
+.pviti-appadmin-link .app-text{ padding-top: 0.8rem; display: block; font-weight: 500; font-size: 1rem; }
+.pviti-appadmin-link.green{ background: #91cf76; }
+.pviti-appadmin-link.blue{ background: #55aac2; }
+.pviti-appadmin-link.red{ background: #f69863;}
+.pviti-appadmin-link:hover{ transform:scale(1.1);}
+
+.avail_percentage_box{ width: 180px; padding: 1rem 0.5rem; background: #91cf76; color: #fff; font-weight: 500; font-size: 1rem; margin: auto;}
+.avail_percentage_box span{ display:block; text-align:center; }
+
+
+/* Inspectio Agency */
+.pviti-ins-agency-status{ display:flex; flex-wrap:wrap; }
+.pviti-ins-agency-status .pviti-ins-agency-status-list{ width: 175px; margin: 0 1rem 1rem 0; padding: 0.3rem 0.8rem; color: #fff !important; transition:all 0.8s ease; }
+.pviti-ins-agency-status-list .app-status .icon{ font-size: 1.5rem; }
+.pviti-ins-agency-status-list .app-status .status{ float:right; font-size: 1.5rem; font-weight: 500; }
+.pviti-ins-agency-status-list .app-text{ padding-top: 0.8rem; display: block; font-size: 0.9rem; }
+.pviti-ins-agency-status-list:hover{ transform:scale(0.9);}
+.pviti-ins-agency-status-list.green{ background: #91cf76; }
+.pviti-ins-agency-status-list.blue{ background: #609bc4; }
+.pviti-ins-agency-status-list.pink{ background: #d581b4; }
+.pviti-ins-agency-status-list.orange{ background: #f69863; }
+.pviti-ins-agency-status-list.red{ background: #f05d5d; }
+
+.pvt-iti-insp-agency-count-db .badge { font-size:0.8rem; }
+
+.inspection-agency-rating{ width: 200px; text-align: center; border: 1px solid #4faf90; min-height: 80px; padding: 20px; }
+.inspection-agency-rating span.rating{ font-weight: 500; font-size: 2rem; color: #91cf76; }
+.inspection-agency-rating span{ display:block; }
+
+
+/* Flaticon */
+[class^="flaticon-"]:before, [class*=" flaticon-"]:before{ margin-left:0; font-size: inherit; }
+
+
+
+
+/* Header */
+
+.dva-header{ //position:fixed; //top:0; width: 100%; //z-index:99999;}
+
+.dva-menu { background-color: #fff !important; padding: .2rem 0rem;  background:url('../images/header-bg.jpg') no-repeat center; }
+.dva-menu .navbar-brand{ display: flex; align-items: center; }
+.dva-menu .navbar-brand img{ width:75px; }
+.dva-brand-text{ display: flex; justify-content:center; font-size:0.9rem !important; font-weight: 500;font-size: 1rem; color: #79777f; margin-left: 1rem; }
+.dva-menu .nav-item .nav-link {
+    padding-right: 1rem;
+    padding-left: 1rem;
+    padding: 0.5rem 1rem !important;
+    margin-right: 1rem;
+    font-weight: 500;
+    color: #fff;
+    font-size: 0.7rem;
+    border-radius: 5px;
+    background: #174e80;
+    transition: .3s all ease-out;
+}
+.navbar-light .navbar-nav .nav-link:hover { background: #174e80; color:#fff; transform: scale(1.1); }
+
+.dva-menu .nav-item.active .nav-link{ background: #5595c2; color: #fff; }
+.dva-menu .dropdown-menu{ 
+	min-width: 215px;
+    border-radius: 0 0 0.3rem 0.3rem !important;
+    border: 0 !important;
+    padding: 0rem 0;
+    margin-top: 0 !important;
+    background-color: #fff;
+    box-shadow: 0 0 15px 1px rgba(113,106,202,.2);
+}
+.dva-menu .dropdown-menu li{ border-bottom: 1px solid #ddd; }
+.dva-menu .dropdown-menu li:last-child{ border-bottom:none; }
+.dva-menu .dropdown-menu li a {
+    display: block;
+    padding: 0.5rem 0.8rem 0.5rem 0.8rem;
+    color: #3d376f !important;
+	font-size:0.8rem;
+}
+.dva-menu .dropdown-menu li a:hover {
+    display: block;
+    padding: 0.5rem 0.8rem 0.5rem 0.8rem;
+    color: #3d376f !important;
+    font-size: 0.8rem;
+    background-color: #f1f1f6;
+}
+
+.language-select {
+    background-color: #174e80!important;
+    color: #ffffff!important;
+    border-radius: 5px!important;
+    padding: 4px!important;
+    height: 2.1rem!important;
+}
+
+.dva-log-settings{ position:relative; cursor:pointer; }
+.dva-log-settings .caret{ padding-left:0.3rem; }
+.dva-log-settings .dva-log-dropdown{ display:none; position:absolute; right:0; padding: 1rem 0 0 0; }
+.dva-log-settings .dva-log-dropdown ul{ width: 200px; background:#fff; box-shadow: 0 0 15px 1px rgba(113,106,202,.2); border-radius:0.3rem; }
+.dva-log-settings .dva-log-dropdown ul li{ border-bottom:1px dashed #eee;}
+.dva-log-settings .dva-log-dropdown ul li:last-child{ border-bottom:0px solid #eee;}
+.dva-log-settings .dva-log-dropdown ul li a{ padding: 0.6rem 1rem; display: block; color:#706f6f; }
+.dva-log-settings:hover .dva-log-dropdown{ display:block; }
+.dva-log-settings .settings{ color: #646161; font-weight: 500; font-size: 0.9rem; padding-left: 0.4rem; }
+
+.dva-top-indicator{ //padding: 0.7rem 0; background: #174e80; }
+
+/* Breadcrumbs No Layout*/
+.dva-top-indicator .breadcrumb{ font-weight: 500; padding: 0; margin-bottom: 0; border-radius: 0; background:transparent; color: #fff; }
+.dva-top-indicator .breadcrumb a{ color:#fff; }
+.dva-top-indicator .breadcrumb .breadcrumb-item.active { color: #fff; }
+.dva-top-indicator .breadcrumb-item+.breadcrumb-item:before{ color:#fff; }
+
+
+.dva-common-container{ background:#fff; padding:1rem; box-shadow: 0 0 15px 1px rgba(113,106,202,.2); border-radius: 4px; }
+
+/* Home Page */
+.dva-home-container{ display:flex; }
+.homepage-indicator{ //padding: 0.5rem 0; }
+.homepage-indicator .homepage-indicator-text{ color: #fff;font-size: 1rem; text-transform: uppercase; font-weight: 500; }
+.dva-home-left{ margin-right:2rem; width: 100%; background: #fafafb; padding:1rem; font-size: 0.9rem; border-radius: 0.2rem; }
+.dva-home-right{ width:380px; }
+.dva-home-page-menu-section{ box-shadow: 0 0px 16px 0px rgba(0,0,0,.26); padding: 0.5rem 0.5rem; border-radius: 0.1rem; }
+.dva-home-page-menu-section .title{ padding: 0.5rem; color: #3e6386; font-weight: 400; font-size: 1rem; border-bottom: 1px dashed #f3f344;}
+.dva-home-page-menu-section ul{ }
+.dva-home-page-menu-section ul li{ position:relative; border-bottom:1px dashed #eee; padding-left: 2rem; }
+.dva-home-page-menu-section ul li:last-child{ border-bottom:none; }
+.dva-home-page-menu-section ul li a{ padding:0.6rem 0.1rem; display: block; font-weight:400; color:#656565; }
+.dva-home-page-menu-section ul li:before { position:absolute; content: "\f0a4"; font: normal normal normal 18px/1 FontAwesome; top: 14px; left: 7px; color: #f3f344; }
+.dva-home-page-menu-section ul.pdf li:before { position:absolute; content: "\f1c1"; font: normal normal normal 20px/1 FontAwesome; top: 8px; left: 7px; color: #f53b3b; }
+.dva-home-page-menu-section ul.links li:before { position:absolute; content: "\f0c1"; font: normal normal normal 18px/1 FontAwesome; top: 8px; left: 7px; color: #649fc1; }
+.dva-home-page-menu-section ul.ex-links li:before { position:absolute; content: "\f08e"; font: normal normal normal 18px/1 FontAwesome; top: 12px; left: 7px; color: #649fc1;; }
+.dva-home-page-menu-section ul.hover-effect{ }
+
+.dva-home-page-menu-section.latest-news { background: rgba(135, 174, 214,0.9); background-image:url('../images/hero-background4.png'); background-size: cover; }
+.dva-home-page-menu-section.latest-news .title{ color:#fff; }
+.dva-home-page-menu-section.latest-news ul li a{ color:#fff; font-weight:400; }
+
+.dva-home-page-text-container .title h5{ color:#4d5d6b; font-size: 1.1rem; }
+.dva-home-page-text-container .text{ line-height: 1.6; }
+
+.dva-home-menu-container{ display:flex; }
+.dva-home-menu-container ul li{ display:inline-block;}
+.dva-home-menu-container ul li a{ padding: 0.5rem 1rem; display: block; font-weight: 500; color: #fff !important; }
+.dva-home-menu-container ul li.active a{ background: #ec6767; }
+.dva-home-menu-container ul li a:hover{ color:#e38638 !important; transform: scale(1) !important; }
+.dva-home-menu-container ul li.active a:hover{ color: #fff; }
+.navbar-light.bf-home-menu .navbar-toggler{ background: #e0e0e0; border: none; border-radius: 0; }
+
+.dva-header .dva-header-contacts{ display:table; margin-right: 20px; width: 292px; }
+.dva-header .dva-header-contacts div{ display:table-cell; vertical-align: middle; }
+.dva-header .dva-header-contacts div.text{ padding-left:20px; color: #79777f; }
+.dva-header .dva-header-contacts div.text span{ display:block; }
+.dva-header .dva-header-contacts .icon{ font-size:27px; color:#e38638; }
+.dva-header .dva-header-contacts .text .text-title{ font-size: 12px; font-weight: 500; }
+.dva-header .dva-header-contacts .text .text-information{ color: #79777f;  font-size: 12px; }
+.dva-header .dva-header-contacts .text .text-information a{ color:#79777f; text-decoration:none; }
+
+
+/* Overlap */
+.overlap_container {
+    display:none;
+}
+.overlap_container .overlap {
+    opacity: 0.6;
+    background: #000;
+    width: 100%;
+    height: 100%;
+    z-index: 999999;
+    top: 0;
+    left: 0;
+    position: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.overlap_container .overlap img{
+    width:100px;
+} 
+
+/* Radio & Checkbox */
+.dv-radio-inline{ float: left; display: flex; align-items:center; margin-right: 1rem; }
+.dv-radio-block{ display: flex; align-items:center; margin-right: 1rem; }
+.dv-checkbox-block{ display: flex; align-items:center; margin-right: 1rem; }
+@keyframes click-wave {
+  0% {
+    height: 40px;
+    width: 40px;
+    opacity: 0.35;
+    position: relative;
+  }
+  100% {
+    height: 200px;
+    width: 200px;
+    margin-left: -80px;
+    margin-top: -80px;
+    opacity: 0;
+  }
+}
+
+.option-input {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  -o-appearance: none;
+  appearance: none;
+  height: 20px;
+  width: 20px;
+  transition: all 0.15s ease-out 0s;
+  background: #cbd1d8;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  margin-right: 0.5rem;
+  outline: none;
+  z-index: 1000;
+}
+.option-input:hover {
+  background: #9faab7;
+}
+.option-input:checked {
+  background: #91cf76;
+}
+.option-input:checked:before {
+  height: 20px;
+  width: 20px;
+  position: absolute;
+  content: '✔';
+  display: inline-block;
+  font-size: 15px;
+  text-align: center;
+}
+.option-input:checked:after {
+  -webkit-animation: click-wave 0.65s;
+  -moz-animation: click-wave 0.65s;
+  animation: click-wave 0.65s;
+  background: #40e0d0;
+  content: '';
+  display: block;
+  position: relative;
+  z-index: 100;
+}
+.option-input.radio {
+  border-radius: 50%;
+}
+.option-input.radio::after {
+  border-radius: 50%;
+}
+
+
+/* Bi-Focal*/
+
+/* Bifocal Home Menu*/
+.dvet-text-item{  font-size: 1rem; color: #174e80; }
+.bf-home-menu{ padding:0; width:100%; }
+.bf-home-menu .navbar-nav .nav-link { padding-right: 1.5rem; padding-left: 1.5rem; text-transform: uppercase; }
+.bf-home-menu .navbar-nav .dropdown-menu{ background: #1F67A6; font-size: 0.8rem;  margin: 0; border: 0; border-radius: 0; }
+.bf-home-menu .dropdown-item:focus, .dropdown-item:hover { color: #fff !important; background-color: #174e80; }
+.bf-home-menu .ml-auto .dropdown-menu{ left: inherit; right:0; }
+
+.home-sb-collapse-icon { float: right; }
+.home-sb-collapse-icon a{ color: #e05454; font-size: 1.2rem; }
+
+.pvt-iti-home-subtitle{ font-weight:500; color: #3e6386; }
+.pvt-iti-home-list li{ display:table; margin-bottom:1rem; }
+.pvt-iti-home-list li span{ display:table-cell; vertical-align:top; }
+
+/* Home Page Video Gallery */
+.vid-container { position: relative; padding-bottom: 52%; padding-top: 30px;  height: 0;  }
+.vid-container iframe, .vid-container object, .vid-container embed { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+.vid-list-container { width: 260px; overflow: hidden; margin-top: 20px; padding-bottom: 20px; }
+.vid-list { width: 2000px; position: relative; top:0; left: 0; }
+.vid-item { display: block; width: 148px; height: 148px; float: left; margin: 0; padding: 10px; }
+.thumb { /*position: relative;*/ overflow:hidden; height: 84px; }
+.thumb img { width: 100%; position: relative; top: -13px; }
+.vid-item .desc { color: #737373; font-size: 13px; margin-top:5px; }
+.vid-item:hover { background: #eee; cursor: pointer; }
+
+.arrows { position:relative; width: 100%;}
+.admission-video-arrow-left, .trade-video-arrow-left { color: #fff; position: absolute; background: #777; padding: 15px; left: 0px; top: -130px; z-index: 99; cursor: pointer;}
+.admission-video-arrow-right, .trade-video-arrow-right { color: #fff; position: absolute; background: #777; padding: 15px; right: 0px; top: -130px; z-index:100; cursor: pointer;}
+.admission-video-arrow-left, .trade-video-arrow-left:hover { background: #CC181E;}
+.admission-video-arrow-right, .trade-video-arrow-right:hover { background: #CC181E; }
+
+@media (max-width: 624px) {
+	.caption { margin-top: 40px;}
+	.vid-list-container { padding-bottom: 20px; }
+	.arrows { position:relative; margin: 0 auto; width:96px; }
+	.admission-video-arrow-left, .trade-video-arrow-left { left: 0; top: -17px; }
+	.admission-video-arrow-right, .trade-video-arrow-right { right: 0; top: -17px; }
+}
+
+
+@media (max-width: 993px){
+
+	/* Menu
+	.dva-menu .navbar-toggler{ margin-left: auto; }
+	.dva-menu .navbar-brand{ margin-right: auto; }*/
+	
+	/* Home Page */
+	.dva-menu .navbar-brand{ flex-direction: column; align-items: center; width: 100%; }
+	.dva-header .dva-header-contacts{ margin: auto; }
+	.dva-brand-text { font-size: 0.7rem !important; }
+	.dva-home-container{ flex-direction:column; align-items: center; }
+	.dva-home-container .dva-home-left { margin-right: 0; }
+	.dva-home-container .dva-home-right{ margin-left:0; margin-top:1rem; }
+
+}

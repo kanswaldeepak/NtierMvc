@@ -1,0 +1,238 @@
+﻿
+<!DOCTYPE html>
+@using NtierMvc.Model
+@using NtierMvc.Infrastructure
+<html lang="en">
+
+<head>
+    <title>@ViewBag.Title</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i" rel="stylesheet">
+    <link href="~/assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/plugins/flat-icon/flaticon.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/plugins/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/plugins/jquery-datatable/assets/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/plugins/jquery-datatable/assets/css/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/css/custom.css" rel="stylesheet" type="text/css" />
+    @RenderSection("PageStyles", required: false)
+    <!-- Theme Layout Style Start-->
+    <link href="~/assets/css/layout/theme-layout.css" rel="stylesheet" type="text/css" />
+    <!-- Theme Layout Style End-->
+    @RenderSection("PageCustomStyles", required: false)
+    <script src="~/assets/plugins/jquery/jquery.min.js" type="text/javascript"></script>
+    <script src="~/assets/plugins/jasny-bootstrap/js/jasny-bootstrap.min.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.13.0/umd/popper.min.js"></script>
+    <script src="~/assets/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="~/assets/plugins/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js" type="text/javascript"></script>
+    <script src="~/assets/plugins/jquery-datatable/assets/js/jquery.dataTables.min.js" type="text/javascript"></script>
+    <script src="~/assets/plugins/jquery-datatable/assets/js/dataTables.bootstrap4.min.js" type="text/javascript"></script>
+    <script src="~/assets/js/layout/theme-layout.js" type="text/javascript"> </script>
+    <script src="~/assets/js/custom.js" type="text/javascript"></script>
+    @RenderSection("PageScripts", required: false)
+</head>
+
+<body class="mk-sb-minimized">
+    <div class="mk-grid">
+        <header class="dva-header">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light dva-menu">
+                <div class="container-fluid">
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01"
+                            aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">
+                        <img src="~/assets/images/maha_it.png" alt="MahaIT" />
+                        <span class="dva-brand-text">
+                            Maharashtra Information Technology Corporation Limited<br>
+                            (Government of Maharashtra)
+                        </span>
+                    </a>
+                    <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+                        <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+                            <li class="nav-item">
+                                <a class="nav-link" href="@Url.Action("Index", "Home", new { Area="Admin" })">Home </a>
+                            </li>
+                            <!-- <li class="nav-item">
+                                <a class="nav-link" href="#">About Us </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Help </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">FAQ </a>
+                            </li> -->
+                            <li class="nav-item">
+                                <a class="nav-link" href="@Url.Action("ContactUs", "Application",new { Area=""})">Contact Us </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="@Url.Action("SessionLogout","Account",new { Area=""})">Logout </a>
+                            </li>
+                            <!-- <li class="nav-item">
+                                <select class="form-control language-select">
+                                    <option>Select Language</option>
+                                    <option value="0">Marathi</option>
+                                    <option value="1">English</option>
+                                </select>
+                            </li> -->
+                        </ul>
+
+                    </div>
+                </div>
+            </nav>
+        </header>
+
+        <div class="mk-body">
+            <div class="mk-aside-left">
+                <div class="mk-sidebar-menu">
+                    <div class="mk-sidebar-navtitle">
+                        <span class="navtitle">Navigation</span>
+                        <span class="mk-menu-close-mobile"><img src="~/assets/images/menu-toggler-close.png" /></span>
+                    </div>
+                    <ul class="mk-sbmenu-content">
+                        <li>
+                            <a href="@Url.Action("EnquireURN","EnquireURN",new { Area="Admin"})">
+                                <span class="menu-icon fa fa-question-circle" title="Enquire URN"></span>
+                                <span class="menu-text"> Enquire URN</span>
+                            </a>
+                        </li>
+
+                        @if (ERPContext.UserContext != null)
+                        {
+                            var FinanceAdmin = ERPContext.UserContext.UserRoles.Where(U => (U.RoleName == NtierMvc.Model.Constants.ERPFINANCEOFFICERROLENAME)).FirstOrDefault();
+
+                            var adminUsr = ERPContext.UserContext.UserRoles.Where(U => (U.RoleName == NtierMvc.Model.Constants.ERPVTIADMINROLENAME || U.RoleName == NtierMvc.Model.Constants.ERPITIADMINROLENAME)).FirstOrDefault();
+
+                            if (FinanceAdmin != null)
+                            {
+                                <li>
+                                    <a href="@Url.Action("FinanceOfficerPaymentDetails", "FinanceOfficerDetails", new { Area = "Admin" })">
+                                        <span class="menu-icon fa fa-question-circle" title="Enquire URN"></span>
+                                        <span class="menu-text"> Enquire URN</span>
+                                    </a>
+                                </li>
+                            }
+
+                            if (adminUsr != null)
+                            {
+                                <li>
+                                    <a href="@Url.Action("RegistrationsNLOIDetails", "LOINRegistrations", new { Area = "Admin" })">
+                                        <span class="menu-icon fa fa-pencil-square-o" title="Registrations & LOI Count"></span>
+                                        <span class="menu-text"> Registrations & LOI Count</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Action("StatusCheck", "StatusCheck", new { Area = "Admin" })">
+                                        <span class="menu-icon fa fa-check-square-o" title="Status check"></span>
+                                        <span class="menu-text"> Status check</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <span class="menu-icon fa fa-clipboard" title="Issue of Approval lette"></span>
+                                        <span class="menu-text"> Issue of Approval letter</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <span class="menu-icon fa fa-certificate" title="Recommendation of Trade & Units"></span>
+                                        <span class="menu-text"> Recommendation of Trade & Units</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Action("ManageNorms", "ManageNorms", new { Area = "Admin" })">
+                                        <span class="menu-icon fa fa-edit" title="Manage Norms"></span>
+                                        <span class="menu-text"> Manage Norms</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Action("Index", "InspectionStatus", new { Area = "Admin" })">
+                                        <span class="menu-icon fa fa-check-square-o" title="Inspection Status Check"></span>
+                                        <span class="menu-text"> Inspection Status Check</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Action("Index", "InspectionRegistrations", new { Area = "Admin" })">
+                                        <span class="menu-icon fa fa-edit" title="Admin Assign Agency"></span>
+                                        <span class="menu-text"> Admin Assign Agency</span>
+                                    </a>
+                                </li>
+                            }
+                        }
+                    </ul>
+                </div>
+            </div>
+
+            <div class="mk-content-wrapper">
+                <div class="mk-page-bar">
+                    <div>
+                        <span class="mk-menu-toggle"> <img src="~/assets/images/menu-toggler.png" /></span>
+                        <span class="mk-menu-toggle-mobile"><img src="~/assets/images/menu-toggler.png" /></span>
+                    </div>
+                    <div>
+                        <ul class="mk-horizontal-menu">
+                            <li class="">
+                                <!--mk-hm-nav-->
+                                <!-- <i class="flaticon-home-icon-silhouette" style="color: #f05c3a;"></i>  -->Home
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="ml-auto">
+@if (ERPContext.UserContext != null)
+{
+    var adminUsr = ERPContext.UserContext.UserRoles.Where(U => (U.RoleName == NtierMvc.Model.Constants.ERPVTIADMINROLENAME || U.RoleName == NtierMvc.Model.Constants.ERPITIADMINROLENAME || U.RoleName == NtierMvc.Model.Constants.ERPFINANCEOFFICERROLENAME)).FirstOrDefault();
+    <span class="mk-profile"><i class="fa fa-user-circle-o"></i> Welcome ! @ERPContext.UserContext.UserName.ToUpper()</span>
+}
+                       
+                    </div>
+                </div>
+                <div class="mk-page-content">
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            @RenderBody()
+                            @*<div class="dva-common-container customHomeContainer">
+                                
+                            </div>*@
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="mk-footer">
+            <span>© 2017 This is official website of Enterprise Resource Planning. All Rights Reserved.</span>
+            <span><a href="" target="__blank">Powered by ERP</a></span>
+        </footer>
+    </div>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
+    <script>
+		$(document).ready(function () {
+			$('.dt_table').DataTable({
+				dom: 'Bfrtip',
+				buttons: [
+					{
+						extend:    'excelHtml5',
+						text:      '<i class="fa fa-file-excel-o"></i>',
+						titleAttr: 'Download Excel'
+					},
+					{
+						extend:    'pdfHtml5',
+						text:      '<i class="fa fa-file-pdf-o"></i>',
+						titleAttr: 'Download PDF'
+					}
+				]
+			});
+			$('#InstituteTable').hide();
+			$('.InstituteType').change(function(){
+				$('#InstituteTable').show();
+			});
+		});
+    </script>
+</body>
+
+</html>

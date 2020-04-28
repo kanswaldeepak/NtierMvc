@@ -33,6 +33,7 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -40,10 +41,53 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="LoginEntity.cs" />
+    <Compile Include="Account\ActiveSession.cs" />
+    <Compile Include="Account\LoginEntity.cs" />
+    <Compile Include="Account\SessionLoginEntity.cs" />
+    <Compile Include="Admin\ChangePswdEntity.cs" />
+    <Compile Include="Admin\InspectionRegistrations.cs" />
+    <Compile Include="Application\AccreditationRankingEntity.cs" />
+    <Compile Include="Application\AgencyProfileEntity.cs" />
+    <Compile Include="Application\ApplicationComplStatusEntity.cs" />
+    <Compile Include="Application\AuthorizedRepresentative.cs" />
+    <Compile Include="Application\DashBoardChartEntity.cs" />
+    <Compile Include="Application\PaymentGatewayResponse.cs" />
+    <Compile Include="Application\PermanantAffiliationEntity.cs" />
+    <Compile Include="Application\CommonDetailsEntity.cs" />
+    <Compile Include="Application\TrusteeEntity.cs" />
+    <Compile Include="Application\UploadDocumentEntity.cs" />
+    <Compile Include="Application\UserGrievanceEntity.cs" />
+    <Compile Include="BulkUploadEntity.cs" />
+    <Compile Include="ExtensionMethods.cs" />
+    <Compile Include="GateEntryEntity.cs" />
+    <Compile Include="Constants.cs" />
+    <Compile Include="ClarificationEntity.cs" />
+    <Compile Include="DesignEng\BOMEntity.cs" />
+    <Compile Include="DesignEng\ProductRealisationEntity.cs" />
+    <Compile Include="MRM\PRDetailEntity.cs" />
+    <Compile Include="SingleColumnEntity.cs" />
+    <Compile Include="HR\HRLeaveManagementEntity.cs" />
+    <Compile Include="HR\HRPayrollEntity.cs" />
+    <Compile Include="HR\HREmployeeEntity.cs" />
+    <Compile Include="OrderEntity.cs" />
+    <Compile Include="ProductEntity.cs" />
+    <Compile Include="GeographyEntity.cs" />
+    <Compile Include="QuoteAndPrepVM.cs" />
+    <Compile Include="QuotationPreparationEntity.cs" />
+    <Compile Include="QuotationEntity.cs" />
+    <Compile Include="EnquiryEntity.cs" />
+    <Compile Include="Customer\CustomerEntity.cs" />
     <Compile Include="EmployeesEntity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Account\UserEntity.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\NtierMvc.Common\NtierMvc.Common.csproj">
+      <Project>{F8BD4C49-AEEE-4BC7-8446-FCB4E070D7CB}</Project>
+      <Name>NtierMvc.Common</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

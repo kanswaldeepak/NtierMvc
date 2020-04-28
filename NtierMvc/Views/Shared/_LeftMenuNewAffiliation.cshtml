@@ -1,0 +1,520 @@
+﻿@using NtierMvc.Infrastructure
+@using NtierMvc.Model
+
+<ul class="m-menu__nav m-menu__nav--dropdown-submenu-arrow mahait-aside-menu-nav">
+    <li class="m-menu__item fixed-toogle-menu hide-mobile-section" aria-haspopup="true">
+        <div class="m-menu__link">
+            <div id="m_header_menu" class="m-header-menu m-aside-header-menu-mobile m-aside-header-menu-mobile--offcanvas m-header-menu--skin-light m-header-menu--submenu-skin-light m-aside-header-menu-mobile--skin-dark m-aside-header-menu-mobile--submenu-skin-dark ">
+                <div class="m-stack__item m-brand m-brand--skin-dark Desktop-Toggle-menu">
+                    <div class="m-stack m-stack--ver m-stack--general">
+                        <div class="m-stack__item m-stack__item--middle m-brand__tools">
+                            <a href="javascript:;" id="m_aside_left_minimize_toggle" class="m-brand__icon m-brand__toggler m-brand__toggler--left m--visible-desktop-inline-block">
+                                <span></span>
+                            </a>
+                            <a id="m_aside_header_topbar_mobile_toggle" href="javascript:;" class="m-brand__icon m--visible-tablet-and-mobile-inline-block">
+                                <i class="flaticon-more"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <span class="m-menu__link-text side-toggle-bar"><a href="@Url.Action("Home", "Application", new { Area = "" })" style="color:white;"><b>Home</b></a></span>
+        </div>
+    </li>
+    <li class="m-menu__item active" aria-haspopup="true">
+        <a href="@Url.Action("Home", "Application", new { Area = "" })" class="m-menu__link">
+            <i class="m-menu__link-icon flaticon-line-graph flaticon-color-change"></i><span class="m-menu__link-title"><span class="m-menu__link-wrap"><span class="m-menu__link-text">Dashboard</span></span></span>
+        </a>
+    </li>
+    @if (ERPContext.UserContext != null && ERPContext.UserContext.IsFormEditAllowed)
+    {
+        <li class="m-menu__item m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover">
+            <a href="#" class="m-menu__link m-menu__toggle">
+                <i class="m-menu__link-icon flaticon-tabs flaticon-color-change"></i>
+                <span class="m-menu__link-text">Institute Details</span>
+                <i class="m-menu__ver-arrow la la-angle-right"></i>
+            </a>
+            <div class="m-menu__submenu">
+                <span class="m-menu__arrow"></span>
+                <ul class="m-menu__subnav">
+                    <li class="m-menu__item m-menu__item" aria-haspopup="true" m-menu-submenu-toggle="hover">
+                        <a href="@Url.Action("PromotingOrgDetails", "Application", new { Area = "" })" class="m-menu__link m-menu__toggle">
+                            <i class="m-menu__link-icon flaticon-placeholder-1 flaticon-color-change"><span></span></i>
+                            <span class="m-menu__link-text">Promoting Organization Details</span>
+                        </a>
+                    </li>
+                    <li class="m-menu__item m-menu__item" aria-haspopup="true" m-menu-submenu-toggle="hover">
+                        <a href="@Url.Action("PromotersDetails", "InstitutePromotersDetails", new { Area = "" })" class="m-menu__link m-menu__toggle">
+                            <i class="m-menu__link-icon flaticon-presentation flaticon-color-change"><span></span></i>
+                            <span class="m-menu__link-text">Promoters Details</span>
+                        </a>
+                    </li>
+                    <li class="m-menu__item m-menu__item" aria-haspopup="true" m-menu-submenu-toggle="hover">
+                        <a href="@Url.Action("ProposedInstituteDetails", "Application", new { Area = "" })" class="m-menu__link m-menu__toggle">
+                            <i class="m-menu__link-icon flaticon-profile flaticon-color-change"><span></span></i>
+                            <span class="m-menu__link-text">Institute Details</span>
+                        </a>
+                    </li>
+
+
+
+
+                    @*if (ERPContext.UserContext != null && ERPContext.UserContext.UserRoles[0].RoleId == 1)
+                        {
+                        if (ERPContext.UserContext.AffiliationType == AffiliationType.NEW)
+                        {*@
+
+                    @if ((ERPContext.UserContext != null && (ERPContext.UserContext.AffiliationType == AffiliationType.NEW || ERPContext.UserContext.AffiliationType == AffiliationType.NEW_AUTONOMOUS)))
+                    {
+                        <li class="m-menu__item m-menu__item" aria-haspopup="true" m-menu-submenu-toggle="hover">
+                            <a href="@Url.Action("ProposedCourse", "InstituteCourses", new { Area = "" })" class="m-menu__link m-menu__toggle">
+                                <i class="m-menu__link-icon flaticon-graph flaticon-color-change"><span></span></i>
+                                <span class="m-menu__link-text">Proposed Courses and Program</span>
+                            </a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="m-menu__item m-menu__item" aria-haspopup="true" m-menu-submenu-toggle="hover">
+                            <a href="@Url.Action("ExistingCourse", "InstituteCourses", new { Area = "" })" class="m-menu__link m-menu__toggle">
+                                <i class="m-menu__link-icon flaticon-graph flaticon-color-change"><span></span></i>
+                                <span class="m-menu__link-text">Existing Courses and Program</span>
+                            </a>
+                        </li>
+                    }
+
+                    @if ((ERPContext.UserContext != null && (ERPContext.UserContext.AffiliationType == AffiliationType.EXTENSION_FACULTY)))
+                    {
+                        <li class="m-menu__item m-menu__item" aria-haspopup="true" m-menu-submenu-toggle="hover">
+                            <a href="@Url.Action("CourseExtension", "InstituteCourses", new { Area = "" })" class="m-menu__link m-menu__toggle">
+                                <i class="m-menu__link-icon flaticon-graph flaticon-color-change"><span></span></i>
+                                <span class="m-menu__link-text">Extension of Courses and Program</span>
+                            </a>
+                        </li>
+                    }
+
+                    @if ((ERPContext.UserContext != null && (ERPContext.UserContext.AffiliationType == AffiliationType.NEW || ERPContext.UserContext.AffiliationType == AffiliationType.NEW_AUTONOMOUS)))
+                    {
+                        <li class="m-menu__item m-menu__item" aria-haspopup="true" m-menu-submenu-toggle="hover">
+                            <a href="@Url.Action("ProposedSubjects", "InstituteSubjects", new { Area = "" })" class="m-menu__link m-menu__toggle">
+                                <i class="m-menu__link-icon flaticon-placeholder-1 flaticon-color-change"><span></span></i>
+                                <span class="m-menu__link-text">Proposed Subjects Details</span>
+                            </a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="m-menu__item m-menu__item" aria-haspopup="true" m-menu-submenu-toggle="hover">
+                            <a href="@Url.Action("ExistingSubjects", "InstituteSubjects", new { Area = "" })" class="m-menu__link m-menu__toggle">
+                                <i class="m-menu__link-icon flaticon-placeholder-1 flaticon-color-change"><span></span></i>
+                                <span class="m-menu__link-text">Existing Subjects Details</span>
+                            </a>
+                        </li>
+                    }
+
+                    <li class="m-menu__item m-menu__item" aria-haspopup="true" m-menu-submenu-toggle="hover">
+                        <a href="@Url.Action("HSCExamCenter", "Application", new { Area = "" })" class="m-menu__link m-menu__toggle">
+                            <i class="m-menu__link-icon flaticon-presentation flaticon-color-change"><span></span></i>
+                            <span class="m-menu__link-text">HSC Exam Center</span>
+                        </a>
+                    </li>
+
+                    <li class="m-menu__item m-menu__item" aria-haspopup="true" m-menu-submenu-toggle="hover">
+                        <a href="@Url.Action("FundsAvailability", "Application", new { Area = "" })" class="m-menu__link m-menu__toggle">
+                            <i class="m-menu__link-icon flaticon-placeholder-1 flaticon-color-change"><span></span></i>
+                            <span class="m-menu__link-text">Funds Availability</span>
+                        </a>
+                    </li>
+                    <li class="m-menu__item m-menu__item" aria-haspopup="true" m-menu-submenu-toggle="hover">
+                        <a href="@Url.Action("Index", "Bank", new { Area = "" })" class="m-menu__link m-menu__toggle">
+                            <i class="m-menu__link-icon flaticon-placeholder-1 flaticon-color-change"><span></span></i>
+                            <span class="m-menu__link-text">Bank Account Details</span>
+                        </a>
+                    </li>
+                    <li class="m-menu__item m-menu__item" aria-haspopup="true" m-menu-submenu-toggle="hover">
+                        <a href="@Url.Action("CurrentYearFinancial", "CurrentYearFinancial", new { Area = "" })" class="m-menu__link m-menu__toggle">
+                            <i class="m-menu__link-icon flaticon-presentation flaticon-color-change"><span></span></i>
+                            <span class="m-menu__link-text">Current Financial Year Details</span>
+                        </a>
+                    </li>
+
+                    @if (ERPContext.UserContext != null
+&& ERPContext.UserContext.AffiliationType != AffiliationType.NEW
+&& ERPContext.UserContext.AffiliationType != AffiliationType.NEW_AUTONOMOUS
+)
+                    {
+                        <li class="m-menu__item m-menu__item" aria-haspopup="true" m-menu-submenu-toggle="hover">
+                            <a href="@Url.Action("AccreditationRankingDetails ", "Application", new { Area = "" })" class="m-menu__link m-menu__toggle">
+                                <i class="m-menu__link-icon flaticon-profile flaticon-color-change"><span></span></i>
+                                <span class="m-menu__link-text">Accrediation Details</span>
+                            </a>
+                        </li>
+                    }
+
+                    @if (ERPContext.UserContext != null
+                           && (ERPContext.UserContext.AffiliationType == AffiliationType.NEW
+                            || ERPContext.UserContext.AffiliationType == AffiliationType.NEW_AUTONOMOUS)
+                            )
+                    {
+                        <li class="m-menu__item m-menu__item" aria-haspopup="true" m-menu-submenu-toggle="hover">
+                            <a href="@Url.Action("VicinityDetails", "Vicinity", new { Area = "" })" class="m-menu__link m-menu__toggle">
+                                <i class="m-menu__link-icon flaticon-profile flaticon-color-change"><span></span></i>
+                                <span class="m-menu__link-text">Vicinity Institute Details</span>
+                            </a>
+                        </li>
+                        <li class="m-menu__item m-menu__item" aria-haspopup="true" m-menu-submenu-toggle="hover">
+                            <a href="@Url.Action("FacultywiseCount", "VicinityFacultywiseCount", new { Area = "" })" class="m-menu__link m-menu__toggle">
+                                <i class="m-menu__link-icon flaticon-profile flaticon-color-change"><span></span></i>
+                                <span class="m-menu__link-text">Faculty wise Count for Vicinity Institutes</span>
+                            </a>
+                        </li>
+                    }
+
+                    @if (ERPContext.UserContext != null)
+                    {
+                        if (ERPContext.UserContext.AffiliationType == AffiliationType.CONT_AUTONOMOUS
+                        || ERPContext.UserContext.AffiliationType == AffiliationType.NEW_AUTONOMOUS
+                            )
+                        {
+                            <li class="m-menu__item m-menu__item" aria-haspopup="true" m-menu-submenu-toggle="hover">
+                                <a href="@Url.Action("Index", "Expenditure", new { Area = "" })" class="m-menu__link m-menu__toggle">
+                                    <i class="m-menu__link-icon flaticon-presentation flaticon-color-change"><span></span></i>
+                                    <span class="m-menu__link-text">Expenditure Details</span>
+                                </a>
+                            </li>
+                        }
+                    }
+
+
+                    @if (ERPContext.UserContext != null)
+                    {
+                        if (ERPContext.UserContext.AffiliationType == AffiliationType.CONTINUATION
+                            || ERPContext.UserContext.AffiliationType == AffiliationType.CONT_AUTONOMOUS
+                            )
+                        {
+                            <li class="m-menu__item m-menu__item" aria-haspopup="true" m-menu-submenu-toggle="hover">
+                                <a href="@Url.Action("ContinualAffiliation", "ContinualAffiliation", new { Area = "" })" class="m-menu__link m-menu__toggle">
+                                    <i class="m-menu__link-icon flaticon-placeholder-1 flaticon-color-change"><span></span></i>
+                                    <span class="m-menu__link-text">Continual Affiliation Related Details</span>
+                                </a>
+                            </li>
+                        }
+
+                        else if (ERPContext.UserContext.AffiliationType == AffiliationType.PERMANENT)
+                        {
+                            <li class="m-menu__item m-menu__item" aria-haspopup="true" m-menu-submenu-toggle="hover">
+                                <a href="@Url.Action("PermanantAffiliation", "ContinualAffiliation", new { Area = "" })" class="m-menu__link m-menu__toggle">
+                                    <i class="m-menu__link-icon flaticon-placeholder-1 flaticon-color-change"><span></span></i>
+                                    <span class="m-menu__link-text">Permanent Affiliation Related Details</span>
+                                </a>
+                            </li>
+                        }
+                        else if (ERPContext.UserContext.AffiliationType == AffiliationType.EXTENSION_UNIT)
+                        {
+                            <li class="m-menu__item m-menu__item" aria-haspopup="true" m-menu-submenu-toggle="hover">
+                                <a href="@Url.Action("CourseForUnitExtension", "ContinualAffiliation", new { Area = "" })" class="m-menu__link m-menu__toggle">
+                                    <i class="m-menu__link-icon flaticon-placeholder-1 flaticon-color-change"><span></span></i>
+                                    <span class="m-menu__link-text">Extension Of Unit Related Details</span>
+                                </a>
+                            </li>
+                        }
+                        else
+                        {
+
+                        }
+
+                    }
+
+                </ul>
+            </div>
+        </li>
+        <li class="m-menu__item m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover">
+            <a href="#" class="m-menu__link m-menu__toggle">
+                <i class="m-menu__link-icon flaticon-map flaticon-color-change"></i>
+                <span class="m-menu__link-text">Infrastructure Details</span>
+                <i class="m-menu__ver-arrow la la-angle-right"></i>
+            </a>
+            <div class="m-menu__submenu">
+                <span class="m-menu__arrow"></span>
+                <ul class="m-menu__subnav">
+                    <li class="m-menu__item m-menu__item" aria-haspopup="true" m-menu-submenu-toggle="hover">
+                        <a href="@Url.Action("LandDetail", "LandDetail", new { Area = "" })" class="m-menu__link m-menu__toggle">
+                            <i class="m-menu__link-icon flaticon-line-graph flaticon-color-change"><span></span></i>
+                            <span class="m-menu__link-text">Land Details</span>
+                        </a>
+                    </li>
+                    <li class="m-menu__item m-menu__item" aria-haspopup="true" m-menu-submenu-toggle="hover">
+                        <a href="@Url.Action("BuildingDetails", "BuildingDetails", new { Area = "" })" class="m-menu__link m-menu__toggle">
+                            <i class="m-menu__link-icon flaticon-placeholder-1 flaticon-color-change"><span></span></i>
+                            <span class="m-menu__link-text">Building Details</span>
+                        </a>
+                    </li>
+                    <li class="m-menu__item m-menu__item" aria-haspopup="true" m-menu-submenu-toggle="hover">
+                        <a href="@Url.Action("BuildingAreaTypeDetails", "AreaTypes", new { Area = "" })" class="m-menu__link m-menu__toggle">
+                            <i class="m-menu__link-icon flaticon-presentation flaticon-color-change"><span></span></i>
+                            <span class="m-menu__link-text">Building Area Types Details</span>
+                        </a>
+                    </li>
+
+                    <li class="m-menu__item m-menu__item" aria-haspopup="true" m-menu-submenu-toggle="hover">
+                        <a href="@Url.Action("CellDetails", "Cell", new { Area = "" })" class="m-menu__link m-menu__toggle">
+                            <i class="m-menu__link-icon flaticon-profile flaticon-color-change"><span></span></i>
+                            <span class="m-menu__link-text">Cell Details</span>
+                        </a>
+                    </li>
+                    <li class="m-menu__item m-menu__item" aria-haspopup="true" m-menu-submenu-toggle="hover">
+                        <a href="@Url.Action("LibraryDetails", "Infrastructure", new { Area = "" })" class="m-menu__link m-menu__toggle">
+                            <i class="m-menu__link-icon flaticon-profile flaticon-color-change"><span></span></i>
+                            <span class="m-menu__link-text">Library Details</span>
+                        </a>
+                    </li>
+                    <li class="m-menu__item m-menu__item" aria-haspopup="true" m-menu-submenu-toggle="hover">
+                        <a href="@Url.Action("LaboratoryDetails", "Lab", new { Area = "" })" class="m-menu__link m-menu__toggle">
+                            <i class="m-menu__link-icon flaticon-graph flaticon-color-change"><span></span></i>
+                            <span class="m-menu__link-text">Laboratory Details</span>
+                        </a>
+                    </li>
+                    <li class="m-menu__item m-menu__item" aria-haspopup="true" m-menu-submenu-toggle="hover">
+                        <a href="@Url.Action("ComputerLabDetails", "Lab", new { Area = "" })" class="m-menu__link m-menu__toggle">
+                            <i class="m-menu__link-icon flaticon-graph flaticon-color-change"><span></span></i>
+                            <span class="m-menu__link-text">Computer Lab Details</span>
+                        </a>
+                    </li>
+                    <li class="m-menu__item m-menu__item" aria-haspopup="true" m-menu-submenu-toggle="hover">
+                        <a href="@Url.Action("HostelDetails", "HostelDetails", new { Area = "" })" class="m-menu__link m-menu__toggle">
+                            <i class="m-menu__link-icon flaticon-graph flaticon-color-change"><span></span></i>
+                            <span class="m-menu__link-text">Hostel Details</span>
+                        </a>
+                    </li>
+                    <li class="m-menu__item m-menu__item" aria-haspopup="true" m-menu-submenu-toggle="hover">
+                        <a href="@Url.Action("SportPGDetails", "SportPG", new { Area = "" })" class="m-menu__link m-menu__toggle">
+                            <i class="m-menu__link-icon flaticon-graph flaticon-color-change"><span></span></i>
+                            <span class="m-menu__link-text">Sports Details</span>
+                        </a>
+                    </li>
+                    <li class="m-menu__item m-menu__item" aria-haspopup="true" m-menu-submenu-toggle="hover">
+                        <a href="@Url.Action("FurnitureDetail", "Furniture", new { Area = "" })" class="m-menu__link m-menu__toggle">
+                            <i class="m-menu__link-icon flaticon-graph flaticon-color-change"><span></span></i>
+                            <span class="m-menu__link-text">Furniture Details</span>
+                        </a>
+                    </li>
+                    <li class="m-menu__item m-menu__item" aria-haspopup="true" m-menu-submenu-toggle="hover">
+                        <a href="@Url.Action("OtherInfraDetailsChkLst", "IntraFacility", new { Area = "" })" class="m-menu__link m-menu__toggle">
+                            <i class="m-menu__link-icon flaticon-graph flaticon-color-change"><span></span></i>
+                            <span class="m-menu__link-text">Other Infrastructure Details Check List</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+        <li class="m-menu__item m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover">
+            <a href="#" class="m-menu__link m-menu__toggle">
+                <i class="m-menu__link-icon flaticon-map flaticon-color-change"></i>
+                <span class="m-menu__link-text">Staff Details</span>
+                <i class="m-menu__ver-arrow la la-angle-right"></i>
+            </a>
+            <div class="m-menu__submenu">
+                <span class="m-menu__arrow"></span>
+                <ul class="m-menu__subnav">
+                    <li class="m-menu__item m-menu__item" aria-haspopup="true" m-menu-submenu-toggle="hover">
+                        <a href="@Url.Action("SanctionPost", "SanctionPost", new { Area = "" })" class="m-menu__link m-menu__toggle">
+                            <i class="m-menu__link-icon flaticon-line-graph flaticon-color-change"><span></span></i>
+                            <span class="m-menu__link-text">Sanctioned Post Details</span>
+                        </a>
+                    </li>
+                    <li class="m-menu__item m-menu__item" aria-haspopup="true" m-menu-submenu-toggle="hover">
+                        <a href="@Url.Action("StaffStrength", "QualStrength", new { Area = "" })" class="m-menu__link m-menu__toggle">
+                            <i class="m-menu__link-icon flaticon-placeholder-1 flaticon-color-change"><span></span></i>
+                            <span class="m-menu__link-text">Staff Strength Details</span>
+                        </a>
+                    </li>
+                    <li class="m-menu__item m-menu__item" aria-haspopup="true" m-menu-submenu-toggle="hover">
+                        <a href="@Url.Action("PersonalDetail", "PersonalDetail", new { Area = "" })" class="m-menu__link m-menu__toggle">
+                            <i class="m-menu__link-icon flaticon-presentation flaticon-color-change"><span></span></i>
+                            <span class="m-menu__link-text">Staff Profile Details</span>
+                        </a>
+                    </li>
+
+                    <li class="m-menu__item m-menu__item" aria-haspopup="true" m-menu-submenu-toggle="hover">
+                        <a href="@Url.Action("Manage", "InstituteStatutoryBody", new { Area = "" })" class="m-menu__link m-menu__toggle">
+                            <i class="m-menu__link-icon flaticon-graph flaticon-color-change"><span></span></i>
+                            <span class="m-menu__link-text">Statutory Body Details</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+
+        if (ERPContext.UserContext != null)
+        {
+            if (ERPContext.UserContext.AffiliationType == AffiliationType.CONT_AUTONOMOUS
+            || ERPContext.UserContext.AffiliationType == AffiliationType.NEW_AUTONOMOUS
+                )
+            {
+                <li class="m-menu__item m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover">
+                    <a href="#" class="m-menu__link m-menu__toggle">
+                        <i class="m-menu__link-icon flaticon-map flaticon-color-change"></i>
+                        <span class="m-menu__link-text">Other Details</span>
+                        <i class="m-menu__ver-arrow la la-angle-right"></i>
+                    </a>
+                    <div class="m-menu__submenu">
+                        <span class="m-menu__arrow"></span>
+                        <ul class="m-menu__subnav">
+                            <li class="m-menu__item m-menu__item" aria-haspopup="true" m-menu-submenu-toggle="hover">
+                                <a href="@Url.Action("StudentsAchievements", "StudentsAchievements", new { Area = "" })" class="m-menu__link m-menu__toggle">
+                                    <i class="m-menu__link-icon flaticon-line-graph flaticon-color-change"><span></span></i>
+                                    <span class="m-menu__link-text">
+                                        Student Achievements
+                                    </span>
+                                </a>
+                            </li>
+                            <li class="m-menu__item m-menu__item" aria-haspopup="true" m-menu-submenu-toggle="hover">
+                                <a href="@Url.Action("SupplyAutonomy", "SupplyInfoIV", new { Area = "" })" class="m-menu__link m-menu__toggle">
+                                    <i class="m-menu__link-icon flaticon-line-graph flaticon-color-change"><span></span></i>
+                                    <span class="m-menu__link-text">Supply of Information based in Criteria</span>
+                                </a>
+                            </li>
+                            <li class="m-menu__item m-menu__item" aria-haspopup="true" m-menu-submenu-toggle="hover">
+                                <a href="@Url.Action("ImplementationAutonomy", "ImplemetationAutonomyV", new { Area = "" })" class="m-menu__link m-menu__toggle">
+                                    <i class="m-menu__link-icon flaticon-line-graph flaticon-color-change"><span></span></i>
+                                    <span class="m-menu__link-text">Implementation of Autonomy</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+            }
+        }
+        <li class="m-menu__item m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover">
+            <a href="#" class="m-menu__link m-menu__toggle">
+                <i class="m-menu__link-icon flaticon-map flaticon-color-change"></i>
+                <span class="m-menu__link-text">Declaration</span>
+                <i class="m-menu__ver-arrow la la-angle-right"></i>
+            </a>
+            <div class="m-menu__submenu">
+                <span class="m-menu__arrow"></span>
+                <ul class="m-menu__subnav">
+                    <li class="m-menu__item m-menu__item" aria-haspopup="true" m-menu-submenu-toggle="hover">
+                        <a href="@Url.Action("Index", "ProgramListChecker", new { Area = "" })" class="m-menu__link m-menu__toggle">
+                            <i class="m-menu__link-icon flaticon-presentation flaticon-color-change"><span></span></i>
+                            <span class="m-menu__link-text">Check List</span>
+                        </a>
+                    </li>
+                    <li class="m-menu__item m-menu__item" aria-haspopup="true" m-menu-submenu-toggle="hover">
+                        <a href="@Url.Action("ViewUploadedDocument", "UploadDocument", new { Area = "" })" class="m-menu__link m-menu__toggle">
+                            <i class="m-menu__link-icon flaticon-presentation flaticon-color-change"><span></span></i>
+                            <span class="m-menu__link-text">Document Details</span>
+                        </a>
+                    </li>
+                    <li class="m-menu__item m-menu__item" aria-haspopup="true" m-menu-submenu-toggle="hover">
+                        <a href="@Url.Action("LoadPage", "ApplicationSummary", new { Area = "" })" class="m-menu__link m-menu__toggle">
+                            <i class="m-menu__link-icon flaticon-presentation flaticon-color-change"><span></span></i>
+                            <span class="m-menu__link-text">Form Summary</span>
+                        </a>
+                    </li>
+                    <li class="m-menu__item m-menu__item" aria-haspopup="true" m-menu-submenu-toggle="hover">
+                        <a href="@Url.Action("Index", "Undertaking", new { Area = "" })" class="m-menu__link m-menu__toggle">
+                            <i class="m-menu__link-icon flaticon-placeholder-1 flaticon-color-change"><span></span></i>
+                            <span class="m-menu__link-text">Self Declaration</span>
+                        </a>
+                    </li>
+                    <li class="m-menu__item m-menu__item" aria-haspopup="true" m-menu-submenu-toggle="hover">
+                        <a href="@Url.Action("LoadPage", "ApplicationSummary", new { Area = "" })" class="m-menu__link m-menu__toggle">
+                            <i class="m-menu__link-icon flaticon-profile flaticon-color-change"><span></span></i>
+                            <span class="m-menu__link-text">Print Form</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+
+    }
+    else
+    {
+        <li class="m-menu__item m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover">
+            <a href="#" class="m-menu__link m-menu__toggle">
+                <i class="m-menu__link-icon flaticon-map flaticon-color-change"></i>
+                <span class="m-menu__link-text">Application Form </span>
+                <i class="m-menu__ver-arrow la la-angle-right"></i>
+            </a>
+            <div class="m-menu__submenu">
+                <span class="m-menu__arrow"></span>
+                <ul class="m-menu__subnav">
+                    <li class="m-menu__item m-menu__item" aria-haspopup="true" m-menu-submenu-toggle="hover">
+                        <a target="_blank" href="@Url.Action("LoadPage", "ApplicationSummary", new { Area = "" })" class="m-menu__link m-menu__toggle">
+                            <i class="m-menu__link-icon flaticon-presentation flaticon-color-change"><span></span></i>
+                            <span class="m-menu__link-text">Applicaiton Form</span>
+                        </a>
+                    </li>                               
+                </ul>
+            </div>
+        </li>
+    }
+
+    <li class="m-menu__item m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover">
+        <a href="#" class="m-menu__link m-menu__toggle">
+            <i class="m-menu__link-icon flaticon-map flaticon-color-change"></i>
+            <span class="m-menu__link-text">Fee</span>
+            <i class="m-menu__ver-arrow la la-angle-right"></i>
+        </a>
+        <div class="m-menu__submenu">
+            <span class="m-menu__arrow"></span>
+            <ul class="m-menu__subnav">
+                <li class="m-menu__item m-menu__item" aria-haspopup="true" m-menu-submenu-toggle="hover">
+                    <a href="@Url.Action("GetFeeToPay", "Fee", new { Area = "" })" class="m-menu__link m-menu__toggle">
+                        <i class="m-menu__link-icon flaticon-line-graph flaticon-color-change"><span></span></i>
+                        <span class="m-menu__link-text">Fee For Payment</span>
+                    </a>
+                </li>
+                <li class="m-menu__item m-menu__item" aria-haspopup="true" m-menu-submenu-toggle="hover">
+                    <a href="@Url.Action("", "", new { Area = "" })" class="m-menu__link m-menu__toggle">
+                        <i class="m-menu__link-icon flaticon-line-graph flaticon-color-change"><span></span></i>
+                        <span class="m-menu__link-text">Payment History</span>
+                    </a>
+                </li>
+                <li class="m-menu__item m-menu__item" aria-haspopup="true" m-menu-submenu-toggle="hover">
+                    <a href="@Url.Action("", "", new { Area = "" })" class="m-menu__link m-menu__toggle">
+                        <i class="m-menu__link-icon flaticon-line-graph flaticon-color-change"><span></span></i>
+                        <span class="m-menu__link-text">Transaction Details</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </li>
+
+
+    <li class="m-menu__item m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover">
+        <a href="#" class="m-menu__link m-menu__toggle">
+            <i class="m-menu__link-icon flaticon-map flaticon-color-change"></i>
+            <span class="m-menu__link-text">Reports</span>
+            <i class="m-menu__ver-arrow la la-angle-right"></i>
+        </a>
+        <div class="m-menu__submenu">
+            <span class="m-menu__arrow"></span>
+            <ul class="m-menu__subnav">
+                <li class="m-menu__item m-menu__item" aria-haspopup="true" m-menu-submenu-toggle="hover">
+                    <a href="@Url.Action("ViewInspectionRemark", "InstituteInspection", new { Area = "InstituteInspection"})" class="m-menu__link m-menu__toggle">
+                        <i class="m-menu__link-icon flaticon-presentation flaticon-color-change"><span></span></i>
+                        <span class="m-menu__link-text">Section wise Remarks Given By Inspection Committee</span>
+                    </a>
+                </li>
+                <li class="m-menu__item m-menu__item" aria-haspopup="true" m-menu-submenu-toggle="hover">
+                    <a href="@Url.Action("GenericReport", "InstituteList", new { Area = "InstituteInspection" , ReportCode = "FinalRemarks" })" class="m-menu__link m-menu__toggle">
+                        <i class="m-menu__link-icon flaticon-presentation flaticon-color-change"><span></span></i>
+                        <span class="m-menu__link-text">Final Recommendations </span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </li>
+
+
+
+
+
+
+
+
+
+</ul>
+

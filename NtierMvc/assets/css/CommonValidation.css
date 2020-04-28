@@ -1,0 +1,16 @@
+﻿.CustomRequiredCSS {
+    margin-top: 4px;
+    color: red;
+    font-weight: 500;
+    color: red;
+    display: block/*;
+    border: 1px solid #e45252 !important;*/
+}
+
+.fieldreq {
+    /*border-color: red !important;*/
+}
+
+.HideValidMsg {
+    display: none;
+}

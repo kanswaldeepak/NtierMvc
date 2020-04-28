@@ -1,0 +1,105 @@
+﻿@model DVETPrivateITI.Web.Models.LoginModel
+
+@using BotDetect.Web.Mvc;
+@using DVETPrivateITI.Web.Infrastructure;
+@{
+    ViewBag.Title = "LoginAsMSSDS";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section PageStyles
+{
+    <link href="@BotDetect.Web.CaptchaUrls.Absolute.LayoutStyleSheetUrl" rel="stylesheet" type="text/css" />
+}
+@section PageScripts
+    {
+
+    @*<script src="~/Scripts/CustomJs/Common.js?@ViewBag.ReleaseVersion"></script>*@
+}
+<div class="col-md-12 mx-auto">
+    <div class="pvt-iti-login-container">
+
+        <div class="pvt_iti_login_titlte">Register  With MSSDS</div>
+        @using (Html.BeginForm("LoginAsMSSDS", "Account", new { }, FormMethod.Post, new { role = "form", @id = "formMSSDS" }))
+        {
+            <div class="row">
+                <div class="col-md-12">
+                    <label class="control-label">Enter User ID as granted by MSSDS	Portal <span class="required">*</span></label>
+                    <div class="form-group">
+                        @Html.TextBoxFor(m => m.Username, new { @class = "form-control", @id = "userId", @placeholder = "Enter User ID as granted by MSSDS	Portal" })
+                        <span style="display:none;font-size:11px;color:red;" id="spnuser_id">Enter UserId of MSSDS</span>
+                        <span style="display:none;font-size:11px;color:red;" id="spnuser_idInvalid">Enter UserId of MSSDS</span>
+                    </div>
+
+                    <div class="form-group submit">
+                        <button type="button" id="btnSubmitGetNo" class="btn btn-primary d-block w-100">Submit</button>
+                    </div>
+                    <div class="mobile_Number" style="display:none">
+                        <label class="control-label">Registered Mobile Number With MSSDS</label>
+                        <div class="form-group mob">
+                            <input type="text" readonly="readonly" id="regMobileNumber" value="9******832" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group otpdiv" style="display:none">
+                        <button type="button" id="btnSubmit" class="btn btn-primary d-block w-100">Send OTP</button>
+                    </div>
+                    <span style="display:none;font-size:11px;color:forestgreen;" id="spnMsg">OTP sent Successfully</span>
+                    <div class="_otp-captha" style="display:none">
+                        <label class="control-label">Enter OTP as sent on Registered Mobile Number<span class="required">*</span></label>
+                        <div class="form-group">
+                            @Html.TextBoxFor(m => m.Username, new { @class = "form-control", @placeholder = "Enter OTP" })
+                        </div>
+                        <div class="form-group">
+                            @{ MvcCaptcha OTPCaptcha = CaptchaHelper.GetOTPCaptcha();
+                                if (!OTPCaptcha.IsSolved || Model == null || Model.ErrorMessage == null || Model.ErrorMessage == "Invalid OTP")
+                                {
+                                    <div class="form-group">
+                                        <div>
+                                            @Html.Captcha(OTPCaptcha)
+                                        </div>
+                                        <br />
+                                        <div>
+                                            @Html.TextBox("CaptchaCode", null, new { @class = "form-control captchaVal", @placeholder = "Retype the above CAPTCHA code" })
+                                        </div>
+                                    </div>
+                                }
+                            }
+                        </div>
+                        <div class="form-group">
+                            <label class="help-block error">
+                                @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+                            </label>
+                        </div>
+                        <div class="form-group text-center">
+                            <button type="button" id="btnSubmitOTP" class="btn btn-primary d-block w-100">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+<script>
+    @*$(document).ready(function () {
+         window.UpdateChairmanStatusUrl = '@Url.Action("GetMSSDSDetails", "Account")';*@
+
+        $('._otp-captha').hide();
+        $('#mobile_Number').hide();
+        $('#btnSubmitGetNo').click(function () {
+            $('.mobile_Number').show();
+            $('.otpdiv').show();
+            $('._otp-captha').hide();
+            $('.submit').hide();
+            $('#spnuser_id').hide();
+        });
+
+    $('#btnSubmit').click(function () {
+        $('#spnMsg').show();
+        $('._otp-captha').show();
+    });
+
+    $(Document).on("click", "#btnSubmitOTP", function(){
+        $('#formMSSDS').submit();
+    })
+</script>
+

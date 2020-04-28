@@ -1,0 +1,136 @@
+	/*
+  	Flaticon icon font: Flaticon
+  	Creation date: 22/01/2018 10:14
+  	*/
+
+@font-face {
+  font-family: "Flaticon";
+  src: url("./Flaticon.eot");
+  src: url("./Flaticon.eot?#iefix") format("embedded-opentype"),
+       url("./Flaticon.woff") format("woff"),
+       url("./Flaticon.ttf") format("truetype"),
+       url("./Flaticon.svg#Flaticon") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  @font-face {
+    font-family: "Flaticon";
+    src: url("./Flaticon.svg#Flaticon") format("svg");
+  }
+}
+
+[class^="flaticon-"]:before, [class*=" flaticon-"]:before,
+[class^="flaticon-"]:after, [class*=" flaticon-"]:after {   
+  font-family: Flaticon;
+        font-size: 20px;
+font-style: normal;
+margin-left: 20px;
+}
+
+.flaticon-three:before { content: "\f100"; }
+.flaticon-projection-screen:before { content: "\f101"; }
+.flaticon-arrow-point-to-down:before { content: "\f102"; }
+.flaticon-navigate-up-arrow:before { content: "\f103"; }
+.flaticon-right-thin-arrowheads:before { content: "\f104"; }
+.flaticon-check:before { content: "\f105"; }
+.flaticon-arrowhead-thin-outline-to-the-left:before { content: "\f106"; }
+.flaticon-delete-1:before { content: "\f107"; }
+.flaticon-arrow-down-sign-to-navigate:before { content: "\f108"; }
+.flaticon-arrow-point-to-right:before { content: "\f109"; }
+.flaticon-ring-1:before { content: "\f10a"; }
+.flaticon-inclined-bell:before { content: "\f10b"; }
+.flaticon-bell-ring-alarm:before { content: "\f10c"; }
+.flaticon-ring:before { content: "\f10d"; }
+.flaticon-bell-1:before { content: "\f10e"; }
+.flaticon-notification:before { content: "\f10f"; }
+.flaticon-rubbish-bin-1:before { content: "\f110"; }
+.flaticon-user-silhouette:before { content: "\f111"; }
+.flaticon-location-pin-1:before { content: "\f112"; }
+.flaticon-book-with-sound:before { content: "\f113"; }
+.flaticon-location-pin:before { content: "\f114"; }
+.flaticon-uploading-archive:before { content: "\f115"; }
+.flaticon-facebook-logo-button:before { content: "\f116"; }
+.flaticon-google-plus-logo-button:before { content: "\f117"; }
+.flaticon-twitter-logo-button:before { content: "\f118"; }
+.flaticon-home-icon-silhouette:before { content: "\f119"; }
+.flaticon-linkedin-button:before { content: "\f11a"; }
+.flaticon-phone-call:before { content: "\f11b"; }
+.flaticon-menu-10:before { content: "\f11c"; }
+.flaticon-delete:before { content: "\f11d"; }
+.flaticon-telephone:before { content: "\f11e"; }
+.flaticon-settings-1:before { content: "\f11f"; }
+.flaticon-upload-2:before { content: "\f120"; }
+.flaticon-link-1:before { content: "\f121"; }
+.flaticon-menu-9:before { content: "\f122"; }
+.flaticon-mail:before { content: "\f123"; }
+.flaticon-menu-8:before { content: "\f124"; }
+.flaticon-man-user:before { content: "\f125"; }
+.flaticon-twitter-logo-silhouette:before { content: "\f126"; }
+.flaticon-black-envelope:before { content: "\f127"; }
+.flaticon-cloud-storage-uploading-option:before { content: "\f128"; }
+.flaticon-google-plus-symbol:before { content: "\f129"; }
+.flaticon-youtube-logo:before { content: "\f12a"; }
+.flaticon-pinterest-logo:before { content: "\f12b"; }
+.flaticon-multiple-users-silhouette:before { content: "\f12c"; }
+.flaticon-magnifier-tool:before { content: "\f12d"; }
+.flaticon-magnifier:before { content: "\f12e"; }
+.flaticon-linkedin-logo:before { content: "\f12f"; }
+.flaticon-rubbish-bin:before { content: "\f130"; }
+.flaticon-youtube-logotype:before { content: "\f131"; }
+.flaticon-zip-download-interface-symbol:before { content: "\f132"; }
+.flaticon-zip-folder-download-interface-symbol:before { content: "\f133"; }
+.flaticon-document-scanning:before { content: "\f134"; }
+.flaticon-facebook-logo:before { content: "\f135"; }
+.flaticon-settings-gears:before { content: "\f136"; }
+.flaticon-rounded-add-button:before { content: "\f137"; }
+.flaticon-cloud-backup-up-arrow:before { content: "\f138"; }
+.flaticon-download-button:before { content: "\f139"; }
+.flaticon-briefcase-download-button-with-downwards-arrow:before { content: "\f13a"; }
+.flaticon-delete-button:before { content: "\f13b"; }
+.flaticon-mail-black-envelope-symbol:before { content: "\f13c"; }
+.flaticon-cloud-computing:before { content: "\f13d"; }
+.flaticon-cloud-computing-4:before { content: "\f13e"; }
+.flaticon-cloudy:before { content: "\f13f"; }
+.flaticon-download-2:before { content: "\f140"; }
+.flaticon-download-1:before { content: "\f141"; }
+.flaticon-download:before { content: "\f142"; }
+.flaticon-upload-1:before { content: "\f143"; }
+.flaticon-upload:before { content: "\f144"; }
+.flaticon-garbage:before { content: "\f145"; }
+.flaticon-power-button-1:before { content: "\f146"; }
+.flaticon-refresh-2:before { content: "\f147"; }
+.flaticon-refresh-1:before { content: "\f148"; }
+.flaticon-refresh:before { content: "\f149"; }
+.flaticon-reply:before { content: "\f14a"; }
+.flaticon-reply-all:before { content: "\f14b"; }
+.flaticon-pinterest:before { content: "\f14c"; }
+.flaticon-bell:before { content: "\f14d"; }
+.flaticon-link:before { content: "\f14e"; }
+.flaticon-menu-7:before { content: "\f14f"; }
+.flaticon-team:before { content: "\f150"; }
+.flaticon-power-button:before { content: "\f151"; }
+.flaticon-settings:before { content: "\f152"; }
+.flaticon-alarm:before { content: "\f153"; }
+.flaticon-unlink:before { content: "\f154"; }
+.flaticon-menu-6:before { content: "\f155"; }
+.flaticon-menu-5:before { content: "\f156"; }
+.flaticon-menu-4:before { content: "\f157"; }
+.flaticon-menu-3:before { content: "\f158"; }
+.flaticon-menu-2:before { content: "\f159"; }
+.flaticon-more-1:before { content: "\f15a"; }
+.flaticon-more:before { content: "\f15b"; }
+.flaticon-cloud-computing-3:before { content: "\f15c"; }
+.flaticon-menu-1:before { content: "\f15d"; }
+.flaticon-login-1:before { content: "\f15e"; }
+.flaticon-login:before { content: "\f15f"; }
+.flaticon-logout-1:before { content: "\f160"; }
+.flaticon-logout:before { content: "\f161"; }
+.flaticon-show:before { content: "\f162"; }
+.flaticon-hide:before { content: "\f163"; }
+.flaticon-cloud:before { content: "\f164"; }
+.flaticon-cloud-computing-2:before { content: "\f165"; }
+.flaticon-cloud-computing-1:before { content: "\f166"; }
+.flaticon-menu:before { content: "\f167"; }
+.flaticon-cloud-computing-5:before { content: "\f168"; }

@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using NtierMvc.Common;
 using NtierMvc.DataAccess.Common;
-using NtierMvc.Model;
+using NtierMvc.Model.Account;
 
 namespace NtierMvc.DataAccess
 {
@@ -76,7 +76,7 @@ namespace NtierMvc.DataAccess
                         dbCommand.CommandText = commandText;
 
                         //Input Parameters
-                        _dataHandler.AddParameterToCommand(dbCommand, "@Id", CsType.String, ParameterDirection.Input, entity.Id);
+                        _dataHandler.AddParameterToCommand(dbCommand, "@Id", CsType.String, ParameterDirection.Input, entity.UserName);
                         _dataHandler.AddParameterToCommand(dbCommand, "@password", CsType.String, ParameterDirection.Input, entity.Password);
                         //_dataHandler.AddParameterToCommand(dbCommand, "@dtmLastLoginDate", CsType.DateTime, ParameterDirection.Input, entity.LastLoginDate);
 
@@ -150,7 +150,7 @@ namespace NtierMvc.DataAccess
                         dbCommand.CommandText = commandText;
 
                         //Input Parameters
-                        _dataHandler.AddParameterToCommand(dbCommand, "@intId", CsType.Int, ParameterDirection.Input, entity.Id);
+                        _dataHandler.AddParameterToCommand(dbCommand, "@intId", CsType.Int, ParameterDirection.Input, entity.UserName);
                         //_dataHandler.AddParameterToCommand(dbCommand, "@chnName", CsType.String, ParameterDirection.Input, entity.Name);
                         //_dataHandler.AddParameterToCommand(dbCommand, "@intAge", CsType.Int, ParameterDirection.Input, entity.Age);
                         //_dataHandler.AddParameterToCommand(dbCommand, "@dtmHiringDate", CsType.DateTime, ParameterDirection.Input, entity.HiringDate);
@@ -312,7 +312,8 @@ namespace NtierMvc.DataAccess
                                 while (reader.Read())
                                 {
                                     var entity = new LoginEntity();
-                                    entity.Id = reader.GetInt32(0);
+                                    entity.UserName = reader.GetString(0);
+                                    //entity.UserName = reader.GetInt32(0);
                                     //entity.Name = reader.GetString(1);
                                     //entity.Age = reader.GetInt32(2);
                                     //entity.HiringDate = reader.GetValue(3) == DBNull.Value ? (DateTime?)null : reader.GetDateTime(3);
@@ -402,7 +403,7 @@ namespace NtierMvc.DataAccess
                                 while (reader.Read())
                                 {
                                     var entity = new LoginEntity();
-                                    entity.Id = reader.GetInt32(0);
+                                    entity.UserName = reader.GetString(0);
                                     //entity.Name = reader.GetString(1);
                                     //entity.Age = reader.GetInt32(2);
                                     //entity.HiringDate = reader.GetValue(3) == DBNull.Value ? (DateTime?)null : reader.GetDateTime(3);
@@ -529,7 +530,7 @@ namespace NtierMvc.DataAccess
                                 while (reader.Read())
                                 {
                                     var entity = new LoginEntity();
-                                    entity.Id = reader.GetInt32(0);
+                                    entity.UserName = reader.GetString(0);
                                     //entity.Name = reader.GetString(1);
                                     //entity.Age = reader.GetInt32(2);
                                     //entity.HiringDate = reader.GetValue(3) == DBNull.Value ? (DateTime?)null : reader.GetDateTime(3);

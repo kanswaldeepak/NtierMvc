@@ -1,0 +1,123 @@
+﻿@model NtierMvc.Model.Account.LoginEntity
+
+@using BotDetect.Web.Mvc;
+@using NtierMvc.Infrastructure;
+
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_NLayoutLoginandRegister.cshtml";
+}
+
+@section PageStyles
+{
+    <link href="@BotDetect.Web.CaptchaUrls.Absolute.LayoutStyleSheetUrl" rel="stylesheet" type="text/css" />
+}
+@section PageScripts
+    {
+
+    @*<script src="~/Scripts/CustomJs/Common.js?@ViewBag.ReleaseVersion"></script>*@
+}
+
+
+<title>Enterprise Resource Planning</title>
+
+
+<style>
+    .BDC_CaptchaImageDiv {
+        margin: 0 !important;
+        padding: 0 !important;
+        display: -moz-inline-stack;
+        display: inline-block !important;
+        vertical-align: top !important;
+        zoom: 1 !important;
+        *display: inline !important;
+    }
+
+    .BDC_CaptchaIconsDiv {
+        text-align: left !important;
+        margin: 0 2px -4px 2px !important;
+        padding: 0 !important;
+        display: -moz-inline-stack;
+        display: inline-block !important;
+        vertical-align: top !important;
+        zoom: 1 !important;
+    }
+</style>
+
+<div class="container login-container">
+    <div class="row">
+
+        <div class="col-md-6 login-form-1">
+            <h5>Enterprise Resource Planning System</h5>
+            <p>Enterprise resource planning (ERP) is defined as the ability to deliver an integrated suite of business applications. ERP tools share a common process and data model, covering broad and deep operational end-to-end processes, such as those found in finance, HR, distribution, manufacturing, service and the supply chain.</p>
+            <p>ERP applications automate and support a range of administrative and operational business processes across multiple industries, including line of business, customer-facing, administrative and the asset management aspects of an enterprise. However, ERP deployments tend to come at a significant price, and the business benefits are difficult to justify and understand.</p>
+
+        </div>
+        <div class="col-md-6 login-form-2">
+            @*<div class="login-logo">
+                <img src="../assets/custom/images/book1.png" alt="" />
+            </div>*@
+            <h3>Login</h3>
+            @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { role = "form", @id = "login-form" }))
+                    {
+                    <div class="form-group">
+                        @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", @placeholder = "User Name", @style = "text-transform:uppercase" })
+                        @*<input type="text" class="form-control" placeholder="REGISTRATION NUMBER" value="" />*@
+                    </div>
+                    <div class="form-group">
+                        @Html.TextBoxFor(m => m.Password, new
+                        {
+                            @type = "password",
+                            @class = "form-control",
+                            @placeholder = "********"
+                        })
+                        @*<input type="password" class="form-control" placeholder="*******" value="" />*@
+                    </div>
+                    <div class="form-group" hidden>
+                        @{ MvcCaptcha loginCaptcha = CaptchaHelper.GetLoginCaptcha();
+                                if (!loginCaptcha.IsSolved || Model == null || Model.ErrorMessage == null || Model.ErrorMessage == "Invalid Username or Password.")
+                                {
+                            <div class="form-group">
+                                <div>
+                                    @Html.Captcha(loginCaptcha)
+                                </div>
+                                <br />
+                                <div>
+                                    @Html.TextBox("CaptchaCode", null, new
+                                   {
+                                       @class = "form-control captchaVal",
+                                       @placeholder = "Retype the above CAPTCHA code" })
+                                </div>
+                            </div>
+                                }
+                        }
+                    </div>
+                    <div class="form-group">
+                        <label class="help-block error">
+                            @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+                        </label>
+                    </div>
+                    <div class="form-group text-center">
+                        @*<a href="dashboard-main.html" class="btnSubmit pl-4 pr-4">Login</a>*@
+                        <button type="submit" class="btnSubmit pl-4 pr-4">Login</button>
+                    </div>
+                    <div class="form-group text-center">
+                        @*<a href="#" class="btnForgetPwd" value="Login">Forget Password?</a>*@
+                        <a class="btnForgetPwd" href="@Url.Action("ForgotPassword","Account")">Forgot Password?</a>
+                    </div>
+                    }
+            <div class="form-group text-center">
+                Don't have an account? <a href="@Url.Action("Registration", "Account",new { Area=""})" class="btnForgetPwd" value="Login">Register Here</a>
+            </div>
+        </div>
+
+        </div>  
+    </div>
+        @*<script src="../assets/vendors/base/vendors.bundle.js" type="text/javascript"></script>
+            <script src="../assets/demo/default/base/scripts.bundle.js" type="text/javascript"></script>*@
+
+        <script type="text/javascript">
+            $(document).ready(function () {
+                localStorage.setItem("IsResubmitForm", "false");
+            })
+        </script>

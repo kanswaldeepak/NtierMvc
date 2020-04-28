@@ -1,0 +1,470 @@
+﻿@model NtierMvc.Model.EnquiryEntity
+
+@{
+    ViewBag.Title = "EnquiryDetails";
+}
+
+<div ng-controller="ModalController">
+    <form id="formSaveEnquiryDetail">
+        @Html.HiddenFor(m => m.EnquiryId)
+        <div class="row">
+            <div class="col-md-4" hidden>
+                <div class="form-group">
+                    <label class="control-label">
+                        User Initial
+                    </label>
+                    @Html.TextBoxFor(m => m.UserInitial, new
+               {
+                   @class = "form-control requiredValidation",
+                   @id = "UserInitial",
+                   @readonly = "readonly"
+               })
+                    @Html.HiddenFor(m => m.UnitNo)
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label class="control-label">
+                        Enquiry Type <span class="required">*</span>
+                    </label>
+                    @Html.DropDownListFor(m => m.QuoteType, new SelectList(@ViewBag.ListQuoteType, "DataStringValueField", "DataTextField", "Export"),
+                    new
+                    {
+                        @class = "form-control requiredValidation",
+                        @id = "QuoteEnquiryFormType",
+                        @name = "QuoteEnquiryType",
+                        @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                        @onchange = "GetQuoteNumbers()"
+                    })
+                    <span class="HideValidMsg">Please Enter QuoteType</span>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label class="control-label">Vendor ID <span class="required">*</span></label>
+                    <div class="input-group">
+                        @Html.DropDownListFor(m => m.VendorId, new SelectList(ViewBag.ListVendorId, "DataStringValueField", "DataTextField", Model.VendorId), new
+                   {
+                       id = "VendorFormId",
+                       @class = "form-control requiredValidation",
+                       data_id = "VendorFormId",
+                       data_select = "VendorFormId",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                       @onchange = "GetVendorDetailsForEnquiry()"
+                   })
+                        <span class="HideValidMsg">Please Select Vendor ID</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label class="control-label">
+                        Vendor Name
+                    </label>
+                    @Html.TextBoxFor(m => m.VendorName, new
+               {
+                   @class = "form-control requiredValidation",
+                   @id = "VendorEnquiryFormName",
+                   @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                   @readonly = "readonly"
+               })
+                    <span class="HideValidMsg">Please Select VendorId</span>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label class="control-label">
+                        City
+                    </label>
+                    @Html.TextBoxFor(m => m.City, new
+               {
+                   @class = "form-control requiredValidation",
+                   @id= "City",
+                   @placeholder = "Select Vendor ID",
+                   @readonly = "readonly"
+               })
+                    <span class="HideValidMsg">Please Select Vendor ID</span>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label class="control-label">
+                        State
+                    </label>
+                    @Html.TextBoxFor(m => m.State, new
+               {
+                   @class = "form-control requiredValidation",
+                   @id= "State",
+                   @placeholder = "Select Vendor ID",
+                   @readonly = "readonly"
+               })
+                    @Html.HiddenFor(m => m.StateId)
+                    <span class="HideValidMsg">Please Select Vendor ID</span>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label class="control-label">
+                        Country <span class="required">*</span>
+                    </label>
+                    @Html.TextBoxFor(m => m.Country, new
+               {
+                   @class = "form-control requiredValidation",
+                   @id= "Country",
+                   @placeholder = "Select Vendor ID",
+                   @readonly = "readonly"
+               })
+                    @Html.HiddenFor(m => m.CountryId)
+                    <span class="HideValidMsg">Please Select Vendor ID</span>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label class="control-label">
+                        Enquiry Reference <span class="required">*</span>
+                    </label>
+                    @Html.TextBoxFor(m => m.EnqRef, new
+               {
+                   @class = "form-control requiredValidation",
+                   @id= "EnqRef",
+                   @placeholder = "Enquiry Reference"
+               })
+                    <span class="HideValidMsg">Please Enter Enquiry Reference</span>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label class="control-label">
+                        Enquiry Date
+                    </label>
+                    @Html.TextBoxFor(m => m.EnqDt, new
+               {
+                   @class = "form-control requiredValidation ApprovalEnqDate",
+                   @id = "EnqDt",
+                   autocomplete = "off",
+                   @placeholder = "dd/MM/yyyy",
+                   @style = "disabled :disabled",
+                   @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+               })
+                    <span class="HideValidMsg">Please Select Enquiry Date</span>
+                </div>
+            </div>
+            @*<div class="col-md-4">
+                <div class="form-group">
+                    <label class="control-label">Enquiry Type</label>
+                    <div class="m-radio-inline">
+                        @Html.TextBoxFor(m => m.EnqType, new
+                       {
+                           @class = "form-control requiredValidation",
+                           @id= "EnqType",
+                           @placeholder = "Select Vendor Name",
+                           @readonly = "readonly",
+                           @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                       })
+                    </div>
+                    <span class="HideValidMsg">Please Select Enquiry Type</span>
+                    @Html.TextBoxFor(m => m.EnqTypeId, new { ng_model = "EnqTypeId", @hidden = "hidden" })
+                </div>
+            </div>*@
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label class="control-label">
+                        Due Date
+                    </label>
+                    @Html.TextBoxFor(m => m.DueDate, new
+               {
+                   @class = "form-control requiredValidation ApprovalDate",
+                   @id = "DueDate",
+                   @placeholder = "dd/MM/yyyy",
+                   @style = "disabled :disabled",
+                   @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+               })
+                    <span class="HideValidMsg">Please Select Enquiry Date</span>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label class="control-label">
+                        Product Group
+                    </label>
+                    @Html.DropDownListFor(m => m.ProdGrp, new SelectList(@ViewBag.ListProdGrp, "DataValueField", "DataTextField", Model.ProdGrp),
+                    new
+                    {
+                        @class = "form-control requiredValidation",
+                        @id = "ProdGrp",
+                        @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                    })
+                    <span class="HideValidMsg">Please Select Product Group</span>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label class="control-label">
+                        Expression of Quote(EOQ) <span class="required">*</span>
+                    </label>
+                    @Html.DropDownListFor(m => m.Eoq, new SelectList(@ViewBag.ListEOQ, "DataValueField", "DataTextField", Model.Eoq),
+                    new
+                    {
+                        @class = "form-control requiredValidation",
+                        @id = "Eoq",
+                        @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                    })
+                    <span class="HideValidMsg">
+                        Please Select Expression of Quote(EOQ)
+                    </span>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label class="control-label">
+                        Enquiry For
+                    </label>
+                    @Html.TextBoxFor(m => m.EnqFor, new
+               {
+                   @class = "form-control requiredValidation",
+                   @id = "EnqFor",
+                   @placeholder = "Enquiry For",
+                   @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+               })
+                    <span class="HideValidMsg">Please Select Enquiry Date</span>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label class="control-label">
+                        Lead Time
+                    </label>
+                    <div class="row">
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(m => m.LeadTime, new
+                       {
+                           @class = "form-control requiredValidation",
+                           @id = "LeadTime",
+                           @placeholder = "Lead Time",
+                           @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                       })
+                        </div>
+                        <div class="col-md-6">
+                            @Html.DropDownListFor(m => m.LeadTimeDuration, new SelectList(@ViewBag.ListLeadTimeDuration, "DataValueField", "DataTextField", Model.LeadTimeDuration),
+                    new
+                    {
+                        @class = "form-control requiredValidation",
+                        @id = "LeadTimeDuration",
+                        @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                    })
+                        </div>
+                    </div>
+                    <span class="HideValidMsg">Please Select Letter Date</span>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label class="control-label">
+                        End User <span class="required">*</span>
+                    </label>
+                    @Html.TextBoxFor(m => m.EndUser, new
+               {
+                   @class = "form-control",
+                   @id = "EndUser",
+                   @placeholder = "End User"
+               })
+                    <span class="HideValidMsg">Please Select End User</span>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label class="control-label">
+                        Api Monogram Requirement
+                    </label>
+                    @Html.DropDownListFor(m => m.ApiMonogramRequirement, new SelectList(@ViewBag.YesNo, "DataValueField", "DataTextField", Model.ApiMonogramRequirement),
+                   new
+                   {
+                       @class = "form-control requiredValidation",
+                       @id = "ApiMonogramRequirement",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                   })
+                    <span class="HideValidMsg">Please Select Api Monogram Requirement</span>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label class="control-label">
+                        Remarks
+                    </label>
+                    @Html.TextBoxFor(m => m.Remarks, new
+               {
+                   @class = "form-control",
+                   @id = "Remarks",
+                   @placeholder = "Remarks"
+               })
+                    <span class="HideValidMsg">Please Select Remarks</span>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label class="control-label">
+                        Reason For Regret
+                    </label>
+                    @Html.TextBoxFor(m => m.ReasonForRegret, new
+               {
+                   @class = "form-control",
+                   @id = "ReasonForRegret",
+                   @placeholder = "Reason For Regret"
+               })
+                    <span class="HideValidMsg">Please Select Reason for Regret</span>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label class="control-label">
+                        Mode of enquiry
+                    </label>
+                    @Html.DropDownListFor(m => m.EnqMode, new SelectList(@ViewBag.ListEnqMode, "DataValueField", "DataTextField", Model.EnqMode),
+                    new
+                    {
+                        @class = "form-control requiredValidation",
+                        @id = "EnqMode",
+                        @data_inneraction = "validationCall",
+                        @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                    })
+                    <span class="HideValidMsg">
+                        Please Enter Mode of enquiry
+                    </span>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label class="control-label">
+                        Enquiry Through
+                    </label>
+                    @Html.DropDownListFor(m => m.EnqThru, new SelectList(@ViewBag.ListEnqThru, "DataValueField", "DataTextField", Model.EnqThru),
+                    new
+                    {
+                        @class = "form-control requiredValidation",
+                        @id = "EnqThru",
+                        @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                    })
+                    <span class="HideValidMsg">Please Select Enquiry Through</span>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label class="control-label">
+                        BG Required
+                    </label>
+                    <div class="row">
+                        <div class="col-md-12">
+                            @Html.DropDownListFor(m => m.EnqBGreq, new SelectList(@ViewBag.YesNo, "DataValueField", "DataTextField", Model.EnqBGreq),
+                            new
+                            {
+                                @class = "form-control requiredValidation",
+                                @id = "EnqBGreq",
+                                @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                            })
+                        </div>
+                    </div>
+                    <span class="HideValidMsg">Please Select Letter Date</span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 pt-4 text-center">
+                <input style="font-size:18px" type="button" class="btn btn-success btn-sm btn-save-EnquiryDetails" id="save_results" ng-click="SaveEnquiry()" value="Save" />
+                <input style="font-size:18px" type="button" class="btn btn-secondary btn-sm" data-dismiss="modal" value="Close" />
+            </div>
+        </div>
+    </form>
+</div>
+
+<script>
+    $(document).ready(function () {
+
+        window.SaveEnquiry = '@Url.Action("SaveEnquiryDetails", "Enquiry")';
+        window.VendorDetailForEnquiry = '@Url.Action("GetVendorDetailForEnquiry", "Enquiry")';
+        window.VendorDetail = '@Url.Action("GetQuoteVendorDetail", "Technical")';
+        window.GetDeliveryItems = '@Url.Action("GetDeliveryItems", "Technical")';
+    });
+
+
+    function GetVendorDetailsForEnquiry() {
+        var VendorId = $("#VendorFormId").val();
+        $.ajax({
+            type: 'POST',
+            url: window.VendorDetailForEnquiry,
+            data: JSON.stringify({ vendorId: VendorId }),
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                debugger;
+                $("#City").val(data.City);
+                $("#State").val(data.State);
+                $("#Country").val(data.Country);
+                $("#EnqType").val(data.EnqType);
+                $("#StateId").val(data.StateId);
+                $("#CountryId").val(data.CountryId);
+                $("#EnqTypeId").val(data.EnqTypeId);
+                $("#VendorEnquiryFormName").val(data.VendorName);
+            },
+            error: function (x, e) {
+                $('#alertmsg').text('Some error is occurred, Please try after some time.');
+                $('#alertmsg').addClass("important red");
+                $('#hostelModal').modal('show');
+            }
+        });
+        
+    }
+    
+    function GetQuoteNumbers() {
+        var QuoteType = $("#QuoteEnquiryFormType").val();
+        $.ajax({
+            type: 'POST',
+            url: window.GetDeliveryItems,
+            data: JSON.stringify({ quotetypeId: QuoteType }),
+            contentType: "application/json; charset=utf-8",
+            success: function (res) {
+                $('#QuoteFormNo').val(res.QuoteNo);
+
+                if (QuoteType == '342')
+                    $('#QuoteTypeNo').val('DQ-' + res.QuoteNo);
+                else if (QuoteType == '343')
+                    $('#QuoteTypeNo').val('EQ-' + res.QuoteNo);
+                else if (QuoteType == '371')
+                    $('#QuoteTypeNo').val('SE-' + res.QuoteNo);
+
+                $("#VendorFormId").empty();
+                if (res.lstVendors.length > 0) {
+                    $.each(res.lstVendors, function (i, item) {
+                        $("#VendorFormId").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
+                    })
+                }
+
+            },
+            error: function (x, e) {
+                $('#spn-Sucess-Failure').text('Some error is occurred, Please try after some time.');
+                $('#spn-Sucess-Failure').addClass("important red");
+                $('#Sucess-Failure').modal('show');
+            }
+        })
+    }
+
+    //LEASE DATE AND EXP LEASE DATE VALIDATION
+    $('.ApprovalDate').datepicker({
+
+        format: 'dd/mm/yyyy',
+        autoclose: true,
+        changeMonth: true,
+        changeYear: true,
+        endDate: '',
+    });
+    $('.ApprovalEnqDate').datepicker({
+
+        format: 'dd/mm/yyyy',
+        autoclose: true,
+        changeMonth: true,
+        changeYear: true,
+        endDate: 'today',
+    });
+</script>
+<script src="~/Scripts/CustomJS/common.js"></script>

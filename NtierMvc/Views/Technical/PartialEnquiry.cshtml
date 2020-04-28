@@ -1,0 +1,315 @@
+﻿@using NtierMvc.Model
+@using NtierMvc.Infrastructure
+@model NtierMvc.Model.EnquiryEntityDetails
+@{
+    ViewBag.Title = "Enquiry Details";
+}
+
+<div class="row mt-3">
+    <div class="col-md-2">
+        <button id="btnAdd" type="button" class="btn btn-outline-primary btn-sm" style="float: left;" ng-click="BindEnquiryPopup()"><i class="fa fa-plus"></i> <b>Add New Enquiry</b></button>
+    </div>
+    <div class="col-md-8">
+        <div class="row text-center">
+            <div class="col-md-2">
+                <label>Vendor Name</label>
+            </div>
+            <div class="col-md-2">
+                <label>Vendor Id</label>
+            </div>
+            <div class="col-md-2">
+                <label>Product Group</label>
+            </div>
+            <div class="col-md-2">
+                <label>EOQ</label>
+            </div>
+            <div class="col-md-2">
+                <label>Month</label>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-2">
+    </div>
+    <div class="col-md-8">
+        <div class="row">
+            <div class="col-md-2">
+                <div class="input-group">
+                    @Html.DropDownList("VendorName", new SelectList(@ViewBag.ListVendorName, "DataStringValueField", "DataTextField", "Select"),
+                           new
+                           {
+                               @class = "form-control",
+                               ng_model= "SearchEnqName"
+                           })
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="input-group">
+                    @Html.DropDownList("VendorId", new SelectList(@ViewBag.ListVendorId, "DataStringValueField", "DataTextField", "Select"),
+                           new
+                           {
+                               @class = "form-control",
+                               ng_model= "SearchEnqVendorID"
+                           })
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="input-group">
+                    @Html.DropDownList("ProductGroup", new SelectList(@ViewBag.ListProdGrp, "DataStringValueField", "DataTextField", "Select"),
+                           new
+                           {
+                               @class = "form-control",
+                               ng_model= "SearchProductGroup"
+                           })
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="input-group">
+                    @Html.DropDownList("EOQ", new SelectList(@ViewBag.ListEOQ, "DataStringValueField", "DataTextField", "Select"),
+                           new
+                           {
+                               @class = "form-control",
+                               ng_model= "SearchEOQ"
+                           })
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="input-group">
+                    @Html.DropDownList("Month", new SelectList(@ViewBag.ListMonth, "DataStringValueField", "DataTextField", "Select"),
+                           new
+                           {
+                               @class = "form-control",
+                               ng_model= "SearchMonth"
+                           })
+                </div>
+            </div>
+            <div class="input-group-btn col-md-2">
+                <button class="btn btn-link" type="button" id="btnSearch" ng-click="FetchEnquiryList()">
+                    <i class="fa fa-search"></i>
+                </button>
+            </div>
+            <div class="col-md-2">
+                <div class="input-group">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="wrapper">
+    <div class="container">
+        <table>
+            <thead class="tblhead">
+                <tr>
+                    <th>
+                        Action
+                        <div class="c1">
+                            Action
+                        </div>
+                    </th>
+                    <th>
+                        Vendor Name
+                        <div class="c2">
+                            Vendor Name
+                        </div>
+                    </th>
+                    <th>
+                        Vendor Type
+                        <div class="c3">
+                            Vendor Type
+                        </div>
+                    </th>
+                    <th>
+                        Country
+                        <div class="c3">
+                            Country
+                        </div>
+                    </th>
+                    <th>
+                        Enq Ref
+                        <div class="c3">
+                            Enq Ref
+                        </div>
+                    </th>
+                    <th>
+                        Enq Date
+                        <div class="c3">
+                            Enq Date
+                        </div>
+                    </th>
+                    <th>
+                        Enq Type
+                        <div class="c3">
+                            Enq Type
+                        </div>
+                    </th>
+                    <th>
+                        Due Date
+                        <div class="c3">
+                            Due Date
+                        </div>
+                    </th>
+                    <th>
+                        Prod Grp
+                        <div class="c3">
+                            Prod Grp
+                        </div>
+                    </th>
+                    <th>
+                        Enq For
+                        <div class="c3">
+                            Enq For
+                        </div>
+                    </th>
+                    <th>
+                        EOQ
+                        <div class="c3">
+                            EOQ
+                        </div>
+                    </th>                   
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="L in AvailableEnquiryList">
+                    <td>
+                        <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="VIEW" ng-click="LoadEnquiryViewPopup(L.EnquiryId)">
+                            <i class="fa fa-eye"></i>
+                        </button>
+                        <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="EDIT" ng-click="LoadEnquiryEditPopup(L.EnquiryId)">
+                            <i class="fa fa-edit"></i>
+                        </button>
+                        <button type="button" class="btn btn-outline-danger btn-sm" data-toggle="tooltip" data-placement="bottom" title="DELETE" ng-click="DeleteEnquiry(L.EnquiryId)">
+                            <i class="fa fa-trash"></i>
+                        </button>
+                    </td>
+                    <td>
+                        {{L.VendorName}}
+                    </td>
+                    <td>
+                        {{L.VendorType}}
+                    </td>
+                    <td>
+                        {{L.Country}}
+                    </td>
+                    <td>
+                        {{L.EnqRef}}
+                    </td>
+                    <td>
+                        {{L.EnqDt}}
+                    </td>
+                    <td>
+                        {{L.EnqType}}
+                    </td>
+                    <td>
+                        {{L.DueDate}}
+                    </td>
+                    <td>
+                        {{L.ProdGrp}}
+                    </td>
+                    <td>
+                        {{L.EnqFor}}
+                    </td>
+                    <td>
+                        {{L.Eoq}}
+                    </td>
+
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td>
+                        <div class="c1">
+                            <div class="row p-0">
+                                <div class="col-md-2 p-0">
+                                    <span class="form-group pull-left page-size form-inline">
+                                        <b>Records per page : &nbsp;&nbsp;</b>
+                                        <select id="ddlEnqPageSize" class="form-control control-color"
+                                                ng-model="enqPageSize"
+                                                ng-change="EnqChangePageSize()">
+                                            <option value="100000">All</option>
+                                            <option value="5">5</option>
+                                            <option value="10">10</option>
+                                            <option value="25">25</option>
+                                            <option value="50">50</option>
+                                            <option value="100">100</option>
+                                        </select>
+                                    </span>
+                                </div>
+                                <div class="col-md-8 pull-right p-0">
+                                    <div class="row p-0">
+                                        <div class="col-md-10 p-0">
+                                           <pagination total-items="enqTotalCount" ng-change="EnqPageChanged()" items-per-page="enqPageSize" direction-links="true" ng-model="enqPageIndex" max-size="maxsize" class="pagination pull-right" boundary-links="true" rotate="false" num-pages="enqNumPages"></pagination>
+                                        </div>
+                                        <div class="col-md-2 p-0">
+                                            <a class="btn btn-primary p-2 pull-right">Page: {{enqPageIndex}} / {{enqNumPages}}</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>
+
+<div class="modal" id="addEnquiryDetails" tabindex="-1" role="dialog">
+    @using (Ajax.BeginForm(actionName: "SaveEnquiryDetails", controllerName: "Enquiry", ajaxOptions: new AjaxOptions
+    {
+        HttpMethod = "POST"
+        // OnSuccess = "BuildingSpaceDetails.UploadFiles"
+    },
+            routeValues: null,
+            htmlAttributes: new { id = "frmEnquiryDetails" }))
+    {
+        <div class="modal-dialog" style="width:80%; max-width: 80%;" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    @*@Html.HiddenFor(m => m.TrnBuildingHdrId)*@
+                    <h5 class="modal-title">Add Enquiry Details</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div id="div-Staff-details" class="modal-body">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" id="btnSubmit" class="btn btn-primary">Save</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+
+<div class="modal fade" id="add_details" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+</div>
+@*<script src="~/Scripts/CustomJS/EnquiryDetails.js"></script>*@
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+
+</script>
+<script type="text/javascript">
+        $(document).ready(function () {
+            window.EnquiryDetailsPopup = '@Url.Action("EnquiryPopup", "Technical")';
+
+            var Data = '@TempData["StatusMsg"]';
+            if (Data === "INSERTED SUCCESSFULLY" || Data === "UPDATED SUCCESSFULLY")
+            {
+                alertNotification(Data);
+            }
+
+        })
+        //$(function () {
+        //    EnquiryDetails.Load();
+        //});
+</script>

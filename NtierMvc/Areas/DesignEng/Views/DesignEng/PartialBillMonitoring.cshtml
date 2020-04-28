@@ -1,0 +1,273 @@
+﻿@model NtierMvc.Model.GateEntryEntity
+@{
+    ViewBag.Title = "Bill Monitoring";
+}
+
+<div class="row mt-3">
+    <div class="col-md-1">
+        <button id="btnBill" type="button" class="btn btn-outline-primary btn-sm" style="float: left;" ng-click="BindVendorsMasterBillPopUp()"><i class="fa fa-plus"></i><b> Add Bill</b></button>
+    </div>
+    <div class="col-md-10">
+        <div class="row">
+            <table class="text-center">
+                <tr>
+                    <td>Type</td>
+                    <td>Vendor Nature</td>
+                    <td>Vendor Name</td>
+                    <td>Function Area</td>
+                    <td>Financial Year</td>
+                    <td>Approval Status</td>
+                </tr>
+                <tr>
+                    <td>
+                        @Html.DropDownList("Type", new SelectList(@ViewBag.ListType, "DataStringValueField", "DataTextField", "Select"),
+                           new
+                           {
+                               @class = "form-control",
+                               ng_model= "SearchType",
+                               @id = "TypeList",
+                               @onchange = "getDdlDetailsForList('TypeList')"
+                           })
+                    </td>
+                    <td>
+                        @Html.DropDownList("VendorNature", new SelectList(@ViewBag.ListVendorNature, "DataStringValueField", "DataTextField", "Select"),
+                                                   new
+                                                   {
+                                                       @class = "form-control",
+                                                       ng_model= "SearchVendorNature",
+                                                       @id = "VendorNatureList",
+                                                       @onchange = "getDdlDetailsForList('VendorNatureList')"
+                                                   })
+                    </td>
+                    <td>
+                        @Html.DropDownList("VendorName", new SelectList(@ViewBag.ListVendorName, "DataStringValueField", "DataTextField", "Select"),
+                           new
+                           {
+                               @class = "form-control",
+                               ng_model= "SearchVendorName",
+                               @id = "VendorNameList",
+                               @onchange = "getDdlDetailsForList('VendorNameList')"
+                           })
+                    </td>
+                    <td>
+                        @Html.DropDownList("FunctionArea", new SelectList(@ViewBag.ListFunctionArea, "DataStringValueField", "DataTextField", "Select"),
+                                                   new
+                                                   {
+                                                       @class = "form-control",
+                                                       ng_model= "SearchFunctionArea",
+                                                       @id = "FunctionAreaList"
+                                                   })
+                    </td>
+                    <td>
+                        @Html.DropDownList("FinancialYear", new SelectList(@ViewBag.ListFinancialYear, "DataStringValueField", "DataTextField", "Select"),
+                           new
+                           {
+                               @class = "form-control",
+                               ng_model= "SearchFinancialYear",
+                               @id= "FinancialYearList"
+                           })
+                    </td>
+                    <td>
+                        @Html.DropDownList("ApprovalStatus", new SelectList(@ViewBag.ListApprovalStatus, "DataStringValueField", "DataTextField", "Select"),
+                           new
+                           {
+                               @class = "form-control",
+                               ng_model= "SearchApprovalStatus",
+                               @id = "ApprovalStatusList"
+                           })
+                    </td>
+                    <td>
+                        <button class="btn btn-link" type="button" id="btnSearch" ng-click="FetchVendorsMasterList()">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="wrapper">
+    <div class="container">
+        <table class="text-center">
+            <thead class="tblhead">
+                <tr>
+                    <th>
+                        Action
+                        <div class="c1">
+                            Action
+                        </div>
+                    </th>
+                    <th>
+                        Type
+                        <div class="c2">
+                            Type
+                        </div>
+                    </th>
+                    <th>
+                        Vendor Nature
+                        <div class="c2">
+                            VendorNature
+                        </div>
+                    </th>
+                    <th>
+                        Vendor Name
+                        <div class="c2">
+                            Vendor Name
+                        </div>
+                    </th>
+                    <th>
+                        Control No
+                        <div class="c2">
+                            Control No
+                        </div>
+                    </th>
+                    <th>
+                        Approval Date
+                        <div class="c2">
+                            Approval Date
+                        </div>
+                    </th>
+                    <th>
+                        Bill No
+                        <div class="c2">
+                            Bill No
+                        </div>
+                    </th>
+                    <th>
+                        Bill Date
+                        <div class="c3">
+                            Bill Date
+                        </div>
+                    </th>
+                    <th>
+                        Currency
+                        <div class="c3">
+                            Currency
+                        </div>
+                    </th>
+                    <th>
+                        Bill Amount
+                        <div class="c3">
+                            Bill Amount
+                        </div>
+                    </th>
+                    <th>
+                        Due Date
+                        <div class="c3">
+                            Due Date
+                        </div>
+                    </th>
+                    <th>
+                        Item Description
+                        <div class="c3">
+                            Item Description
+                        </div>
+                    </th>
+                    <th>
+                        Approval Status
+                        <div class="c3">
+                            Approval Status
+                        </div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="L in BOMList">
+                    <td>
+                        <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="VIEW" ng-click="LoadBillMonitoringViewPopup(L.Id)">
+                            <i class="fa fa-eye"></i>
+                        </button>
+                        <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="EDIT" ng-click="LoadBillMonitoringEditPopup(L.Id)">
+                            <i class="fa fa-edit"></i>
+                        </button>
+                    </td>
+                    <td>
+                        {{L.Type}}
+                    </td>
+                    <td>
+                        {{L.VendorNature}}
+                    </td>
+                    <td>
+                        {{L.VendorName}}
+                    </td>
+                    <td>
+                        {{L.ControlNo}}
+                    </td>
+                    <td>
+                        {{L.ApprovalDate}}
+                    </td>
+                    <td>
+                        {{L.BillNo}}
+                    </td>
+                    <td>
+                        {{L.BillDate}}
+                    </td>
+                    <td>
+                        {{L.Currency}}
+                    </td>
+                    <td>
+                        {{L.BillAmount}}
+                    </td>
+                    <td>
+                        {{L.PaymentDueDate}}
+                    </td>
+                    <td>
+                        {{L.ItemDescription}}
+                    </td>
+                    <td>
+                        {{L.ApprovedStatus}}
+                    </td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td>
+                        <div class="c1">
+                            <div class="row p-0">
+                                <div class="col-md-2 p-0">
+                                    <span class="form-group pull-left page-size form-inline">
+                                        <b>Records per page : &nbsp;&nbsp;</b>
+                                        <select id="ddlBMPageSize" class="form-control control-color"
+                                                ng-model="BMPageSize"
+                                                ng-change="BMChangePageSize()">
+                                            <option value="100000">All</option>
+                                            <option value="5">5</option>
+                                            <option value="10">10</option>
+                                            <option value="25">25</option>
+                                            <option value="50">50</option>
+                                            <option value="100">100</option>
+                                        </select>
+                                    </span>
+                                </div>
+                                <div class="col-md-8 pull-right p-0">
+                                    <div class="row p-0">
+                                        <div class="col-md-10 p-0">
+                                            <pagination total-items="BMTotalCount" ng-change="BMPageChanged()" items-per-page="BMPageSize" direction-links="true" ng-model="BMPageIndex" max-size="maxsize" class="pagination pull-right" boundary-links="true" rotate="false" num-pages="BMNumPages"></pagination>
+                                        </div>
+                                        <div class="col-md-2 p-0">
+                                            <a class="btn btn-primary p-2 pull-right">Page: {{BMPageIndex}} / {{BMNumPages}}</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        window.BillMonitoringPopUp = '@Url.Action("BillMonitoringPopUp", "DesignEng")';
+        window.FetchBillMonitoringList = '@Url.Action("FetchBillMonitoringList", "DesignEng", new {@Area = "DesignEng" })';
+    });
+
+</script>
+
+<script src="~/Scripts/CustomJS/BillMonitoring.js"></script>
+
+

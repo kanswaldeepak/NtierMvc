@@ -1,0 +1,34 @@
+﻿.CustomRequiredCSS {
+    margin-top: 4px;
+    color: red;
+    font-weight: 500;
+    color: red;
+    display: block;
+}
+
+.fieldreq {
+    border-color: red !important;
+}
+
+.HideValidMsg {
+    display: none;
+}
+#DataTextField, #TradeCodeText {
+    border-radius: 0;
+    padding: .270rem .75rem;
+    font-size: 0.8rem;
+    display: block;
+    width: 100%;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-image: none;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+}
+.managenormimg {
+    width: 25px;
+    height: 25px;
+    display:none;
+}

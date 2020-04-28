@@ -30,23 +30,48 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DocumentFormat.OpenXml, Version=2.10.1.0, Culture=neutral, PublicKeyToken=8fb06cb64d019a17, processorArchitecture=MSIL">
+      <HintPath>..\packages\DocumentFormat.OpenXml.2.10.1\lib\net40\DocumentFormat.OpenXml.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Drawing.Design" />
     <Reference Include="System.Web" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApplicationSubmissionStatusEntity.cs" />
+    <Compile Include="BankDetail.cs" />
+    <Compile Include="BaseEntity.cs" />
     <Compile Include="ConfigurationHandler.cs" />
+    <Compile Include="CourseApproverEntity.cs" />
+    <Compile Include="CreateExcelFile.cs" />
+    <Compile Include="DocumentListInspectionEntity.cs" />
+    <Compile Include="DeleteEntity.cs" />
+    <Compile Include="TableRecordsEntity.cs" />
+    <Compile Include="DropDownEntity.cs" />
+    <Compile Include="EmailContent.cs" />
     <Compile Include="ExceptionHandler.cs" />
     <Compile Include="FileHandler.cs" />
+    <Compile Include="FileUploadEntity.cs" />
+    <Compile Include="GenericReportEntity.cs" />
+    <Compile Include="GetLocalIPAddress.cs" />
+    <Compile Include="GetXMLString.cs" />
     <Compile Include="Helper.cs" />
     <Compile Include="LoggingHandler.cs" />
+    <Compile Include="LogoutOption.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

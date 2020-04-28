@@ -1,0 +1,115 @@
+﻿@using NtierMvc.Infrastructure
+@using NtierMvc.Model
+
+<ul class="m-menu__nav m-menu__nav--dropdown-submenu-arrow mahait-aside-menu-nav">
+    <li class="m-menu__item fixed-toogle-menu hide-mobile-section" aria-haspopup="true">
+        <div class="m-menu__link">
+            <div id="m_header_menu" class="m-header-menu m-aside-header-menu-mobile m-aside-header-menu-mobile--offcanvas m-header-menu--skin-light m-header-menu--submenu-skin-light m-aside-header-menu-mobile--skin-dark m-aside-header-menu-mobile--submenu-skin-dark ">
+                <div class="m-stack__item m-brand m-brand--skin-dark Desktop-Toggle-menu">
+                    <div class="m-stack m-stack--ver m-stack--general">
+                        <div class="m-stack__item m-stack__item--middle m-brand__tools">
+                            <a href="javascript:;" id="m_aside_left_minimize_toggle" class="m-brand__icon m-brand__toggler m-brand__toggler--left m--visible-desktop-inline-block">
+                                <span></span>
+                            </a>
+                            <a id="m_aside_header_topbar_mobile_toggle" href="javascript:;" class="m-brand__icon m--visible-tablet-and-mobile-inline-block">
+                                <i class="flaticon-more"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <span class="m-menu__link-text side-toggle-bar"><a href="@Url.Action("Home", "Application", new { Area = "" })" style="color:white;"><b>Home</b></a></span>
+        </div>
+    </li>
+    <li class="m-menu__item active" aria-haspopup="true">
+        <a href="@Url.Action("DashBoardView", "DashBoard", new { Area = "CollegeUniversity" })" class="m-menu__link">
+            @*<i class="m-menu__link-icon flaticon-line-graph flaticon-color-change"></i><span class="m-menu__link-title"><span class="m-menu__link-wrap"><span class="m-menu__link-text">Dashboard</span></span></span>*@
+        </a>
+    </li>
+
+    @if (ERPContext.UserContext != null && ERPContext.UserContext.UserRoles[0].RoleId == 13)  // Asst. Registrar
+    {
+        <li class="m-menu__item m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover">
+            <a href="#" class="m-menu__link m-menu__toggle">
+                <i class="m-menu__link-icon flaticon-tabs flaticon-color-change"></i>
+                <span class="m-menu__link-text">Schemes</span>
+                <i class="m-menu__ver-arrow la la-angle-right"></i>
+            </a>
+            <div class="m-menu__submenu">
+                <span class="m-menu__arrow"></span>
+                <ul class="m-menu__subnav">
+                    <li class="m-menu__item m-menu__item" aria-haspopup="true" m-menu-submenu-toggle="hover">
+                        <a href="@Url.Action("SchemeRegistration", "SchemeRegistration", new { Area = "CollegeUniversity" })" class="m-menu__link m-menu__toggle">
+                            <i class="m-menu__link-icon flaticon-placeholder-1 flaticon-color-change"><span></span></i>
+                            <span class="m-menu__link-text">Schemes Registration</span>
+                        </a>
+                    </li>
+
+                </ul>
+            </div>
+        </li>
+    }
+    <li class="m-menu__item m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover">
+        <a href="#" class="m-menu__link m-menu__toggle">
+            <i class="m-menu__link-icon flaticon-tabs flaticon-color-change"></i>
+            <span class="m-menu__link-text">Travel Requests</span>
+            <i class="m-menu__ver-arrow la la-angle-right"></i>
+        </a>
+        <div class="m-menu__submenu">
+            <span class="m-menu__arrow"></span>
+            <ul class="m-menu__subnav">
+                <li class="m-menu__item m-menu__item" aria-haspopup="true" m-menu-submenu-toggle="hover">
+                    <a href="@Url.Action("WorkFlowList","WorkFlowList",new { Area="CollegeUniversity", @actionCode="Travel"})" class="m-menu__link m-menu__toggle">
+                        <i class="m-menu__link-icon flaticon-placeholder-1 flaticon-color-change"><span></span></i>
+                        <span class="m-menu__link-text">Travel Request (Pending For Approval)</span>
+                    </a>
+                </li>
+
+            </ul>
+        </div>
+    </li>
+    <li class="m-menu__item m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover">
+        <a href="#" class="m-menu__link m-menu__toggle">
+            <i class="m-menu__link-icon flaticon-tabs flaticon-color-change"></i>
+            <span class="m-menu__link-text">Event Attending Request</span>
+            <i class="m-menu__ver-arrow la la-angle-right"></i>
+        </a>
+        <div class="m-menu__submenu">
+            <span class="m-menu__arrow"></span>
+            <ul class="m-menu__subnav">
+                <li class="m-menu__item m-menu__item" aria-haspopup="true" m-menu-submenu-toggle="hover">
+                    <a href="@Url.Action("WorkFlowList","WorkFlowList",new { Area="CollegeUniversity", @actionCode="Attend"})" class="m-menu__link m-menu__toggle">
+                        <i class="m-menu__link-icon flaticon-placeholder-1 flaticon-color-change"><span></span></i>
+                        <span class="m-menu__link-text"> Events Attending Request (Pending For Approval)</span>
+                    </a>
+                </li>
+
+            </ul>
+        </div>
+    </li>
+    <li class="m-menu__item m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover">
+        <a href="#" class="m-menu__link m-menu__toggle">
+            <i class="m-menu__link-icon flaticon-tabs flaticon-color-change"></i>
+            <span class="m-menu__link-text">Event Organzing Request</span>
+            <i class="m-menu__ver-arrow la la-angle-right"></i>
+        </a>
+        <div class="m-menu__submenu">
+            <span class="m-menu__arrow"></span>
+            <ul class="m-menu__subnav">
+                <li class="m-menu__item m-menu__item" aria-haspopup="true" m-menu-submenu-toggle="hover">
+                    <a href="@Url.Action("WorkFlowList","WorkFlowList",new { Area="CollegeUniversity", @actionCode="Organize"})" class="m-menu__link m-menu__toggle">
+                        <i class="m-menu__link-icon flaticon-placeholder-1 flaticon-color-change"><span></span></i>
+                        <span class="m-menu__link-text">Events Organizing Request (Pending For Approval)</span>
+                    </a>
+                </li>
+
+            </ul>
+        </div>
+    </li>
+
+
+
+
+
+</ul>
+

@@ -1,0 +1,53 @@
+﻿body {
+}
+
+.textarea-noresize {
+    resize: none;
+}
+
+.col-shift {
+    min-width: 60px;
+    max-width: 60px;
+    text-align: center;
+}
+
+.lbl-shift {
+    margin-bottom: .0rem;
+    text-align: center;
+}
+
+/*.ddl-trade {
+    min-width: 40%;
+    max-width: 40%;
+}*/
+
+.no-border {
+    border: 0;
+    border-color: #FFF;
+}
+
+.ref-cursor {
+    cursor: pointer;
+}
+
+.ddl-width {
+    width: 250px !important;
+}
+
+.mobile-no {
+    padding: 0px !important;
+    margin: 0px 0px 0px -9px !important;
+}
+
+.country-code {
+    margin: 0px 0px 0px -15px !important;
+    max-width: 26% !important;
+}
+
+.no-text-align {
+    display: inherit;
+}
+
+.sp-required {
+    color: #dc3545;
+}

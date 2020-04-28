@@ -1,0 +1,298 @@
+﻿@model NtierMvc.Model.QuotationEntity
+
+@{
+    ViewBag.Title = "QuotationDetails";
+}
+
+<div ng-controller="ModalController" class="row">
+    <form id="formSaveRevisedQuotationDetail">
+        <div class="col-md-12">
+            @Html.HiddenFor(m => m.Id)
+            <div class="row">
+                <div class="col-md-4" hidden>
+                    <div class="form-group">
+                        <label class="control-label">
+                            User Initial
+                        </label>
+                        @Html.TextBoxFor(m => m.UserInitial, new
+                   {
+                       @class = "form-control requiredValidation",
+                       @id = "UserInitial",
+                       @readonly = "readonly"
+                   })
+                        @Html.HiddenFor(m => m.UnitNo)
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="control-label">
+                            Quote Type <span class="required">*</span>
+                        </label>
+                        @Html.DropDownListFor(m => m.QuoteType, new SelectList(@ViewBag.ListQuoteType, "DataStringValueField", "DataTextField", "Export"),
+                        new
+                        {
+                            @class = "form-control requiredValidation",
+                            @id = "QuoteFormType",
+                            @name = "QuoteType",
+                            @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                            @onchange = "GetQuoteNumbers()"
+                        })
+                        <span class="HideValidMsg">Please Enter QuoteType</span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="control-label">
+                            VendorId
+                        </label>
+                        @Html.DropDownListFor(m => m.VendorId, new SelectList(@ViewBag.ListVendorId, "DataStringValueField", "DataTextField", Model.VendorId),
+                           new
+                           {
+                               @class = "form-control requiredValidation",
+                               @id = "VendorFormId",
+                               @data_inneraction = "validationCall",
+                               @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                               @onchange = "GetVendorDetails()"
+
+                           })
+                        <span class="HideValidMsg">Please Select VendorId</span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="control-label">
+                            Vendor Name
+                        </label>
+                        @Html.TextBoxFor(m => m.VendorName, new
+                   {
+                       @class = "form-control requiredValidation",
+                       @id = "VendorFormName",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                       @readonly = "readonly"
+                   })
+                        <span class="HideValidMsg">Please Select VendorId</span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="control-label">
+                            Country
+                        </label>
+                        @Html.TextBoxFor(m => m.Country, new
+               {
+                   @class = "form-control requiredValidation",
+                   @id= "Country",
+                   @placeholder = "Select Vendor ID",
+                   @readonly = "readonly",
+                   @style = "width = '50%'"
+               })
+                        @Html.TextBoxFor(m => m.CountryId, new { id = "CountryId", @hidden = "hidden" })
+                        <span class="HideValidMsg">Please Select VendorId</span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="control-label">
+                            Quote Number
+                        </label>
+                        @Html.DropDownListFor(m => m.QuoteNo, new SelectList(@ViewBag.ListQuoteNo, "DataStringValueField", "DataTextField", Model.QuoteNo),
+                           new
+                           {
+                               @class = "form-control requiredValidation",
+                               @id = "RevisedFormQuoteNo",
+                               @data_inneraction = "validationCall",
+                               @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                               @onchange = "GetRevisedQuoteNo()"
+
+                           })
+                        <span class="HideValidMsg">Please Select Quote Number</span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="control-label">
+                            Quote Date <span class="required">*</span>
+                        </label>
+                        @Html.TextBoxFor(m => m.QuoteDate, new
+                   {
+                       @class = "form-control requiredValidation ApprovalQuoteDate",
+                       autocomplete = "off",
+                       @id = "QuoteDate",
+                       @placeholder = "dd/MM/yyyy",
+                       @style = "disabled :disabled",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                   })
+                        <span class="HideValidMsg">
+                            Please Select Quote Date
+                        </span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="control-label">
+                            Quote Validity
+                        </label>
+                        @Html.TextBoxFor(m => m.QuoteValidity, new
+                   {
+                       @class = "form-control requiredValidation ApprovalDate",
+                       autocomplete = "off",
+                       @id = "QuoteValidity",
+                       @placeholder = "dd/MM/yyyy",
+                       @style = "disabled :disabled",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                   })
+                        <span class="HideValidMsg">Please Select Quotation Validity</span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="control-label">
+                            Inspection <span class="required">*</span>
+                        </label>
+                        @Html.TextBoxFor(m => m.Inspection, new
+                   {
+                       @class = "form-control requiredValidation",
+                       @id = "Inspection",
+                       @placeholder = "Inspection",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                   })
+                        <span class="HideValidMsg">Please Enter Inspection</span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="control-label">
+                            Revised Quote Number <span class="required">*</span>
+                        </label>
+                        @Html.TextBoxFor(m => m.RevisedQuoteNo, new
+                   {
+                       @class = "form-control requiredValidation",
+                       @id = "RevisedQuoteNo",
+                       @placeholder = "RevisedQuoteNo",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                   })   
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 pt-4 text-center">
+                    <button style="font-size:18px" type="button" class="btn btn-success btn-sm" ng-click="SaveRevisedQuotation()">Save</button>
+                    <button style="font-size:18px" type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<script>
+    $(document).ready(function () {
+        window.VendorDetail = '@Url.Action("GetQuoteVendorDetail", "Technical")';
+        window.SaveRevisedQuotation = '@Url.Action("SaveRevisedQuotationDetails", "Technical")';
+        window.GetQuoteNumbers = '@Url.Action("GetQuoteNumbers", "Technical")';
+        window.GetRevisedQuoteNo = '@Url.Action("GetRevisedQuoteNo", "Technical")';
+    });
+
+    function GetVendorDetails() {
+        var VendorId = $("#VendorFormId").val();
+        $.ajax({
+            type: 'POST',
+            url: window.VendorDetail,
+            data: JSON.stringify({ vendorId: VendorId }),
+            contentType: "application/json; charset=utf-8",
+            success: function (res) {
+                $("#VendorFormName").val(res.quoteEntity.VendorName);
+                $("#Country").val(res.quoteEntity.Country);
+                $("#CountryId").val(res.quoteEntity.CountryId);
+            },
+            error: function (x, e) {
+                $('#spn-Sucess-Failure').text('Some error is occurred, Please try after some time.');
+                $('#spn-Sucess-Failure').addClass("important red");
+                $('#Sucess-Failure').modal('show');
+            }
+        })
+    }
+
+    function GetQuoteNumbers() {
+        var QuoteType = $("#QuoteFormType").val();
+        var QuoteTypeText = $('#QuoteFormType option:selected').text();
+        $.ajax({
+            type: 'POST',
+            url: window.GetQuoteNumbers,
+            data: JSON.stringify({ quotetypeId: QuoteType }),
+            contentType: "application/json; charset=utf-8",
+            success: function (res) {
+                $("#RevisedFormQuoteNo").empty();
+                if (res.lstQuoteNos.length > 0) {
+                    if (QuoteTypeText == 'Domestic') {
+                        $.each(res.lstQuoteNos, function (i, item) {
+                            $("#RevisedFormQuoteNo").append($('<option></option>').val(item.DataStringValueField).html('DQ-'+item.DataTextField));
+                        })
+                    }
+                    else if (QuoteTypeText == 'Export')
+                        $.each(res.lstQuoteNos, function (i, item) {
+                            $("#RevisedFormQuoteNo").append($('<option></option>').val(item.DataStringValueField).html('EQ-' + item.DataTextField));
+                        })
+                    else if (QuoteTypeText == 'Service')
+                        $.each(res.lstQuoteNos, function (i, item) {
+                            $("#RevisedFormQuoteNo").append($('<option></option>').val(item.DataStringValueField).html('SE-' + item.DataTextField));
+                        })
+
+                    if ($('#RevisedFormQuoteNo option:selected').text() != '') {
+                        GetRevisedQuoteNo();
+                    }
+
+                }    
+
+                $("#VendorFormId").empty();
+                if (res.lstVendors.length > 0) {
+                    $.each(res.lstVendors, function (i, item) {
+                        $("#VendorFormId").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
+                    })
+                }
+            },
+            error: function (x, e) {
+                $('#spn-Sucess-Failure').text('Some error is occurred, Please try after some time.');
+                $('#spn-Sucess-Failure').addClass("important red");
+                $('#Sucess-Failure').modal('show');
+            }
+        })
+    }
+
+    function GetRevisedQuoteNo() {
+        var QuoteTypeId = $("#QuoteFormType").val();
+        var QuoteNo = $("#RevisedFormQuoteNo").val();
+        debugger;
+        $.ajax({
+            type: 'POST',
+            url: window.GetRevisedQuoteNo,
+            data: JSON.stringify({ quoteTypeId: QuoteTypeId, quoteNumberId: QuoteNo }),
+            contentType: "application/json; charset=utf-8",
+            success: function (res) {
+                $("#RevisedQuoteNo").val(res);
+            },
+            error: function (x, e) {
+                $("#RevisedQuoteNo").val('');
+                $('#spn-Sucess-Failure').text('Some error is occurred, Please try after some time.');
+                $('#spn-Sucess-Failure').addClass("important red");
+                $('#Sucess-Failure').modal('show');
+            }
+        })
+    }
+
+    $('.ApprovalDate').datepicker({
+
+        format: 'dd/mm/yyyy',
+        autoclose: true,
+        changeMonth: true,
+        changeYear: true,
+        endDate: '',
+    });
+    $('.ApprovalQuoteDate').datepicker({
+
+        format: 'dd/mm/yyyy',
+        autoclose: true,
+        changeMonth: true,
+        changeYear: true,
+        endDate: 'today',
+    });
+</script>
+<script src="~/Scripts/CustomJS/common.js"></script>

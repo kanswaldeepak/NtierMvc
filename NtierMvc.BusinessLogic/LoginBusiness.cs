@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using NtierMvc.Common;
 using NtierMvc.DataAccess;
-using NtierMvc.Model;
+using NtierMvc.Model.Account;
 
 namespace NtierMvc.BusinessLogic
 {

@@ -1,0 +1,551 @@
+﻿@using NtierMvc.Model
+@using NtierMvc.Infrastructure
+@{
+    ViewBag.Title = "Home";
+}
+<div class="col-md-12">
+    <!-- Grid column -->
+    <div class="col-md-12 mt-4">
+        <!--Accordion wrapper-->
+        @*
+        <div class="accordion md-accordion accordion-2" id="accordionEx7" role="tablist" aria-multiselectable="true">
+
+            @if (ERPContext.UserContext != null && ERPContext.UserContext.IsFormEditAllowed)
+            {
+                <!-- Accordion card -->
+                <div class="flex-container">
+
+                    <!-- Card header -->
+                    <div class="flex-container-header" role="tab" id="heading1">
+                        <a data-toggle="collapse" data-parent="#accordionEx7" href="#collapse1" aria-expanded="true" aria-controls="collapse1">
+                            <h6 class="m-subheader__title collpase_header">
+                                Institute Details <i class="fa fa-angle-double-down rotate-icon academics-double-down-icon-alignment"></i>
+                            </h6>
+                        </a>
+                    </div>
+
+                    <!-- Card body -->
+                    <div id="collapse1" class="collapse show" role="tabpanel" aria-labelledby="heading1" data-parent="#accordionEx7">
+                        <div class="card-body mb-1 rgba-grey-light white-text card_body_sizes">
+                            <div class="row mt-3 ml-2">
+                                <div class="col-md-12">
+                                    <div class="hui-app-status">
+                                        <a href="@Url.Action("PromotingOrgDetails", "Application", new { Area = "" })" class="hui-app-link green">
+                                            <div class="apps-status">
+                                                <span class="fa fa-sitemap icons"></span>
+                                            </div>
+                                            <div class="apps-text">Promoting Organization Details</div>
+                                        </a>
+                                        <a href="@Url.Action("PromotersDetails", "InstitutePromotersDetails", new { Area = "" })" class="hui-app-link blue">
+                                            <div class="apps-status">
+                                                <span class="fa fa-user icons"></span>
+                                            </div>
+                                            <div class="apps-text">Promoters Details</div>
+                                        </a>
+                                        <a href="@Url.Action("ProposedInstituteDetails", "Application", new { Area = "" })" class="hui-app-link pink">
+                                            <div class="apps-status">
+                                                <span class="fa fa-building icons"></span>
+                                            </div>
+                                            <div class="apps-text">Institute Details</div>
+                                        </a>
+
+                                        @if (ERPContext.UserContext != null
+                            && ERPContext.UserContext.AffiliationType != AffiliationType.NEW
+                            && ERPContext.UserContext.AffiliationType != AffiliationType.NEW_AUTONOMOUS
+                            )
+                                        {
+                                            <a href="@Url.Action("AccreditationRankingDetails", "Application", new { Area = "" })" class="hui-app-link orange">
+                                                <div class="apps-status">
+                                                    <span class="fa fa-building icons"></span>
+                                                </div>
+                                                <div class="apps-text">Accrediation Details</div>
+                                            </a>
+                                        }
+
+                                        @if (ERPContext.UserContext != null && (ERPContext.UserContext.AffiliationType == AffiliationType.NEW || ERPContext.UserContext.AffiliationType == AffiliationType.NEW_AUTONOMOUS))
+                                        {
+                                            <a href="@Url.Action("ProposedCourse", "InstituteCourses", new { Area = "" })" class="hui-app-link green">
+                                                <div class="apps-status">
+                                                    <span class="fa fa-chalkboard-teacher icons"></span>
+                                                </div>
+                                                <div class="apps-text">Proposed Courses And Programs </div>
+                                            </a>
+                                        }
+                                        else
+                                        {
+                                            <a href="@Url.Action("ExistingCourse", "InstituteCourses", new { Area = "" })" class="hui-app-link green">
+                                                <div class="apps-status">
+                                                    <span class="fa fa-chalkboard-teacher icons"></span>
+                                                </div>
+                                                <div class="apps-text">Existing Courses And Programs </div>
+                                            </a>
+                                        }
+
+                                        @if ((ERPContext.UserContext != null && (ERPContext.UserContext.AffiliationType == AffiliationType.EXTENSION_FACULTY)))
+                                        {
+
+                                            <a href="@Url.Action("CourseExtension", "InstituteCourses", new { Area = "" })" class="hui-app-link green">
+                                                <div class="apps-status">
+                                                    <span class="fa fa-chalkboard-teacher icons"></span>
+                                                </div>
+                                                <div class="apps-text">Extension of Courses And Programs </div>
+                                            </a>
+                                        }
+
+                                        @if ((ERPContext.UserContext != null && (ERPContext.UserContext.AffiliationType == AffiliationType.NEW || ERPContext.UserContext.AffiliationType == AffiliationType.NEW_AUTONOMOUS)))
+                                        {
+                                            <a href="@Url.Action("ProposedSubjects", "InstituteSubjects", new { Area = "" })" class="hui-app-link green">
+                                                <div class="apps-status">
+                                                    <span class="fa fa-chalkboard-teacher icons"></span>
+                                                </div>
+                                                <div class="apps-text">Proposed Subjects Details </div>
+                                            </a>
+                                        }
+                                        else
+                                        {
+                                            <a href="@Url.Action("ExistingSubjects", "InstituteSubjects", new { Area = "" })" class="hui-app-link green">
+                                                <div class="apps-status">
+                                                    <span class="fa fa-chalkboard-teacher icons"></span>
+                                                </div>
+                                                <div class="apps-text">Existing Subjects Details </div>
+                                            </a>
+                                        }
+
+                                        <a href="@Url.Action("HSCExamCenter", "Application", new { Area = "" })" class="hui-app-link red">
+                                            <div class="apps-status">
+                                                <span class="fa fa-comments icons"></span>
+                                            </div>
+                                            <div class="apps-text">HSC Exam Center</div>
+                                        </a>
+
+                                        <a href="@Url.Action("FundsAvailability", "Application", new { Area = "" })" class="hui-app-link pink">
+                                            <div class="apps-status">
+                                                <span class="fa fa-rupee-sign icons"></span>
+                                            </div>
+                                            <div class="apps-text"> Funds Availability</div>
+                                        </a>
+                                        <a href="@Url.Action("Index", "Bank", new { Area = "" })" class="hui-app-link green">
+                                            <div class="apps-status">
+                                                <span class="fa fa-rupee-sign icons"></span>
+                                            </div>
+                                            <div class="apps-text"> Bank Account Details</div>
+                                        </a>
+
+                                        <a href="@Url.Action("CurrentYearFinancial", "CurrentYearFinancial", new { Area = "" })" class="hui-app-link red">
+                                            <div class="apps-status">
+                                                <span class="fa fa-rupee-sign icons"></span>
+                                            </div>
+                                            <div class="apps-text"> Current Financial Year Details</div>
+                                        </a>
+
+
+                                        @if (ERPContext.UserContext != null
+                           && ERPContext.UserContext.AffiliationType != AffiliationType.NEW
+                           && ERPContext.UserContext.AffiliationType != AffiliationType.NEW_AUTONOMOUS
+                           )
+                                        {
+                                            <a href="@Url.Action("AccreditationRankingDetails", "Application", new { Area = "" })" class="hui-app-link orange">
+                                                <div class="apps-status">
+                                                    <span class="fa fa-building icons"></span>
+                                                </div>
+                                                <div class="apps-text">Accrediation Details</div>
+                                            </a>
+                                        }
+                                        @if (ERPContext.UserContext != null
+                           && (ERPContext.UserContext.AffiliationType == AffiliationType.NEW
+                            || ERPContext.UserContext.AffiliationType == AffiliationType.NEW_AUTONOMOUS)
+                            )
+                                        {
+                                            <a href="@Url.Action("VicinityDetails", "Vicinity", new { Area = "" })" class="hui-app-link green">
+                                                <div class="apps-status">
+                                                    <span class="fa fa-building icons"></span>
+                                                </div>
+                                                <div class="apps-text">Vicinity Institute Details</div>
+                                            </a>
+                                            <a href="@Url.Action("FacultywiseCount", "VicinityFacultywiseCount", new { Area = "" })" class="hui-app-link blue">
+                                                <div class="apps-status">
+                                                    <span class="fa fa-sitemap icons"></span>
+                                                </div>
+                                                <div class="apps-text"> Faculty wise Count for Vicinity Institutes</div>
+                                            </a>
+                                        }
+
+                                        @if (ERPContext.UserContext != null)
+                                        {
+                                            if (ERPContext.UserContext.AffiliationType == AffiliationType.CONT_AUTONOMOUS
+                                            || ERPContext.UserContext.AffiliationType == AffiliationType.NEW_AUTONOMOUS
+                                                )
+                                            {
+                                                <a href="@Url.Action("Index", "Expenditure", new { Area = "" })" class="hui-app-link green">
+                                                    <div class="apps-status">
+                                                        <span class="fa fa-rupee-sign icons"></span>
+                                                    </div>
+                                                    <div class="apps-text"> Expenditure Details</div>
+                                                </a>
+                                            }
+                                        }
+
+
+                                        @if (ERPContext.UserContext != null)
+                                        {
+                                            if (ERPContext.UserContext.AffiliationType == AffiliationType.CONTINUATION || ERPContext.UserContext.AffiliationType == AffiliationType.CONT_AUTONOMOUS)
+                                            {
+                                                <a href="@Url.Action("ContinualAffiliation", "ContinualAffiliation", new { Area = "" })" class="hui-app-link red">
+                                                    <div class="apps-status">
+                                                        <span class="fa fa-comments icons"></span>
+                                                    </div>
+                                                    <div class="apps-text">Continual Affiliation Related Details</div>
+                                                </a>
+                                            }
+
+                                            else if (ERPContext.UserContext.AffiliationType == AffiliationType.PERMANENT)
+                                            {
+                                                <a href="@Url.Action("PermanantAffiliation", "ContinualAffiliation", new { Area = "" })" class="hui-app-link blue">
+                                                    <div class="apps-status">
+                                                        <span class="fa fa-comments icons"></span>
+                                                    </div>
+                                                    <div class="apps-text">Permanent Affiliation Related Details</div>
+                                                </a>
+                                            }
+                                            else if (ERPContext.UserContext.AffiliationType == AffiliationType.EXTENSION_UNIT)
+                                            {
+                                                <a href="@Url.Action("CourseForUnitExtension", "ContinualAffiliation", new { Area = "" })" class="hui-app-link orange">
+                                                    <div class="apps-status">
+                                                        <span class="fa fa-comments icons"></span>
+                                                    </div>
+                                                    <div class="apps-text">Extension Of Unit Related Details</div>
+                                                </a>
+                                            }
+                                            else
+                                            {
+
+                                            }
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Accordion card -->
+                <!-- Accordion card -->
+                <div class="flex-container mt-1">
+                    <!-- Card header -->
+                    <div class="flex-container-header" role="tab" id="heading2">
+                        <a data-toggle="collapse" data-parent="#accordionEx7" href="#collapse2" aria-expanded="true" aria-controls="collapse2">
+                            <h6 class="m-subheader__title collpase_header">
+                                Infrastructure Details<i class="fa fa-angle-double-down rotate-icon learning-double-down-icon-alignment"></i>
+                            </h6>
+                        </a>
+                    </div>
+
+                    <!-- Card body -->
+                    <div id="collapse2" class="collapse show" role="tabpanel" aria-labelledby="heading1" data-parent="#accordionEx7">
+                        <div class="card-body mb-1 rgba-grey-light white-text card_body_sizes">
+                            <div class="row mt-3 ml-2">
+                                <div class="col-md-12">
+                                    <div class="hui-app-status">
+                                        <a href="@Url.Action("LandDetail", "LandDetail", new { Area = "" })" class="hui-app-link sement">
+                                            <div class="apps-status">
+                                                <span class="fa fa-map-marker icons"></span>
+                                            </div>
+                                            <div class="apps-text">Land Details </div>
+                                        </a>
+                                        <a href="@Url.Action("BuildingDetails", "BuildingDetails", new { Area = "" })" class="hui-app-link green">
+                                            <div class="apps-status">
+                                                <span class="fa fa-building icons"></span>
+                                            </div>
+                                            <div class="apps-text">Building Details </div>
+                                        </a>
+                                        <a href="@Url.Action("BuildingAreaTypeDetails", "AreaTypes", new { Area = "" })" class="hui-app-link sement">
+                                            <div class="apps-status">
+                                                <span class="fa fa-building icons"></span>
+                                            </div>
+                                            <div class="apps-text">Builiding Area Type Details</div>
+                                        </a>
+                                        <a href="@Url.Action("CellDetails", "Cell", new { Area = "" })" class="hui-app-link dark-orange">
+                                            <div class="apps-status">
+                                                <span class="fa fa-chalkboard-teacher icons"></span>
+                                            </div>
+                                            <div class="apps-text">Cell Details</div>
+                                        </a>
+                                        <a href="@Url.Action("LibraryDetails", "Infrastructure", new { Area = "" })" class="hui-app-link red">
+                                            <div class="apps-status">
+                                                <span class="fa fa-book icons"></span>
+                                            </div>
+                                            <div class="apps-text">Library Details </div>
+                                        </a>
+                                        <a href="@Url.Action("LaboratoryDetails", "Lab", new { Area = "" })" class="hui-app-link blue">
+                                            <div class="apps-status">
+                                                <span class="fa fa-chalkboard-teacher icons"></span>
+                                            </div>
+                                            <div class="apps-text">Laboratory Details</div>
+                                        </a>
+                                        <a href="@Url.Action("ComputerLabDetails", "Lab", new { Area = "" })" class="hui-app-link pink">
+                                            <div class="apps-status">
+                                                <span class="fa fa-chalkboard-teacher icons"></span>
+                                            </div>
+                                            <div class="apps-text">Computer Lab Details</div>
+                                        </a>
+                                        <a href="@Url.Action("HostelDetails", "HostelDetails", new { Area = "" })" class="hui-app-link sement">
+                                            <div class="apps-status">
+                                                <span class="fa fa-building icons"></span>
+                                            </div>
+                                            <div class="apps-text">Hostel Details  </div>
+                                        </a>
+                                        <a href="@Url.Action("SportPGDetails", "SportPG", new { Area = "" })" class="hui-app-link blue">
+                                            <div class="apps-status">
+                                                <span class="fa fa-chalkboard-teacher icons"></span>
+                                            </div>
+                                            <div class="apps-text">Sport Activities Details</div>
+                                        </a>
+                                        <a href="@Url.Action("FurnitureDetail", "Furniture", new { Area = "" })" class="hui-app-link dark-orange">
+                                            <div class="apps-status">
+                                                <span class="fa fa-building icons"></span>
+                                            </div>
+                                            <div class="apps-text">Furniture Details </div>
+                                        </a>
+                                        <a href="@Url.Action("OtherInfraDetailsChkLst", "IntraFacility", new { Area = "" })" class="hui-app-link red">
+                                            <div class="apps-status">
+                                                <span class="fa fa-chalkboard-teacher icons"></span>
+                                            </div>
+                                            <div class="apps-text">Other Infrastructure Details</div>
+                                        </a>
+
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="flex-container mt-1">
+                    <div class="flex-container-header" role="tab" id="heading2">
+                        <a data-toggle="collapse" data-parent="#accordionEx7" href="#collapse3" aria-expanded="true" aria-controls="collapse3">
+                            <h6 class="m-subheader__title collpase_header">
+                                Faculty Staff Details<i class="fa fa-angle-double-down rotate-icon learning-double-down-icon-alignment"></i>
+                            </h6>
+                        </a>
+                    </div>
+                    <div id="collapse3" class="collapse show" role="tabpanel" aria-labelledby="heading1" data-parent="#accordionEx7">
+                        <div class="card-body mb-1 rgba-grey-light white-text card_body_sizes">
+                            <div class="row mt-3 ml-2">
+                                <div class="col-md-12">
+                                    <div class="hui-app-status">
+
+                                        <a href="@Url.Action("SanctionPost", "SanctionPost", new { Area = "" })" class="hui-app-link dark-orange">
+                                            <div class="apps-status">
+                                                <span class="fa fa-building icons"></span>
+                                            </div>
+                                            <div class="apps-text">Sanctioned Post Details</div>
+                                        </a>
+
+                                        <a href="@Url.Action("PersonalDetail", "PersonalDetail", new { Area = "" })" class="hui-app-link sement">
+                                            <div class="apps-status">
+                                                <span class="fa fa-map-marker icons"></span>
+                                            </div>
+                                            <div class="apps-text">Staff Details</div>
+                                        </a>
+                                        <a href="@Url.Action("StaffStrength", "QualStrength", new { Area = "" })" class="hui-app-link pink">
+                                            <div class="apps-status">
+                                                <span class="fa fa-chalkboard-teacher icons"></span>
+                                            </div>
+                                            <div class="apps-text">Staff Strength</div>
+                                        </a>
+
+                                        <a href="@Url.Action("Manage", "InstituteStatutoryBody", new { Area = "" })" class="hui-app-link green">
+                                            <div class="apps-status">
+                                                <span class="fa fa-chalkboard-teacher icons"></span>
+                                            </div>
+                                            <div class="apps-text">Statutory Body Details</div>
+                                        </a>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                if (ERPContext.UserContext != null)
+                {
+                    if (ERPContext.UserContext.AffiliationType == AffiliationType.CONT_AUTONOMOUS
+                    || ERPContext.UserContext.AffiliationType == AffiliationType.NEW_AUTONOMOUS
+                        )
+                    {
+
+                        <div class="flex-container mt-1">
+                            <div class="flex-container-header" role="tab" id="heading2">
+                                <a data-toggle="collapse" data-parent="#accordionEx7" href="#collapse5" aria-expanded="true" aria-controls="collapse5">
+                                    <h6 class="m-subheader__title collpase_header">
+                                        Other Details <i class="fa fa-angle-double-down rotate-icon learning-double-down-icon-alignment"></i>
+                                    </h6>
+                                </a>
+                            </div>
+                            <div id="collapse5" class="collapse show" role="tabpanel" aria-labelledby="heading1" data-parent="#accordionEx7">
+                                <div class="card-body mb-1 rgba-grey-light white-text card_body_sizes">
+                                    <div class="row mt-3 ml-2">
+                                        <div class="col-md-12">
+                                            <div class="hui-app-status">
+
+                                                <a href="@Url.Action("StudentsAchievements", "StudentsAchievements", new { Area = "" })" class="hui-app-link dark-orange">
+                                                    <div class="apps-status">
+                                                        <span class="fa fa-building icons"></span>
+                                                    </div>
+                                                    <div class="apps-text">Student Achievements</div>
+                                                </a>
+
+                                                <a href="@Url.Action("SupplyInfoIV", "SupplyInfoIV", new { Area = "" })" class="hui-app-link sement">
+                                                    <div class="apps-status">
+                                                        <span class="fa fa-map-marker icons"></span>
+                                                    </div>
+                                                    <div class="apps-text">Supply of Information based in Criteria</div>
+                                                </a>
+                                                <a href="@Url.Action("ImplementationAutonomy", "ImplemetationAutonomyV", new { Area = "" })" class="hui-app-link pink">
+                                                    <div class="apps-status">
+                                                        <span class="fa fa-chalkboard-teacher icons"></span>
+                                                    </div>
+                                                    <div class="apps-text">Implementation of Autonomy</div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    }
+                }
+
+                <div class="flex-container mt-1">
+                    <div class="flex-container-header" role="tab" id="heading2">
+                        <a data-toggle="collapse" data-parent="#accordionEx7" href="#collapse6" aria-expanded="true" aria-controls="collapse6">
+                            <h6 class="m-subheader__title collpase_header">
+                                Declaration <i class="fa fa-angle-double-down rotate-icon learning-double-down-icon-alignment"></i>
+                            </h6>
+                        </a>
+                    </div>
+                    <div id="collapse6" class="collapse show" role="tabpanel" aria-labelledby="heading1" data-parent="#accordionEx7">
+                        <div class="card-body mb-1 rgba-grey-light white-text card_body_sizes">
+                            <div class="row mt-3 ml-2">
+                                <div class="col-md-12">
+                                    <div class="hui-app-status">
+                                        <a href="@Url.Action("Index", "ProgramListChecker", new { Area = "" })" class="hui-app-link red">
+                                            <div class="apps-status">
+                                                <span class="fa fa-building icons"></span>
+                                            </div>
+                                            <div class="apps-text">Check List</div>
+                                        </a>
+                                        <a href="@Url.Action("ViewUploadedDocument", "UploadDocument", new { Area = "" })" class="hui-app-link blue">
+                                            <div class="apps-status">
+                                                <span class="fa fa-building icons"></span>
+                                            </div>
+                                            <div class="apps-text">Document Details</div>
+                                        </a>
+
+                                        <a href="@Url.Action("LoadPage", "ApplicationSummary", new { Area = "" })" class="hui-app-link green">
+                                            <div class="apps-status">
+                                                <span class="fa fa-building icons"></span>
+                                            </div>
+                                            <div class="apps-text"> Summary</div>
+                                        </a>
+
+                                        <a href="@Url.Action("Index", "Undertaking", new { Area = "" })" class="hui-app-link sement">
+                                            <div class="apps-status">
+                                                <span class="fa fa-map-marker icons"></span>
+                                            </div>
+                                            <div class="apps-text">Self Declaration</div>
+                                        </a>
+                                        <a href="@Url.Action("LoadPage", "ApplicationSummary", new { Area = "" })" class="hui-app-link pink">
+                                            <div class="apps-status">
+                                                <span class="fa fa-chalkboard-teacher icons"></span>
+                                            </div>
+                                            <div class="apps-text">Print Form</div>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            }
+            else
+            {
+                <div class="flex-container mt-1">
+                    <div class="flex-container-header" role="tab" id="heading2">
+                        <a data-toggle="collapse" data-parent="#accordionEx7" href="#collapse4" aria-expanded="true" aria-controls="collapse4">
+                            <h6 class="m-subheader__title collpase_header">
+                                Application Form <i class="fa fa-angle-double-down rotate-icon learning-double-down-icon-alignment"></i>
+                            </h6>
+                        </a>
+                    </div>
+                    <div id="collapse4" class="collapse show" role="tabpanel" aria-labelledby="heading1" data-parent="#accordionEx7">
+                        <div class="card-body mb-1 rgba-grey-light white-text card_body_sizes">
+                            <div class="row mt-3 ml-2">
+                                <div class="col-md-12">
+                                    <div class="hui-app-status">
+
+                                        <a target="_blank" href="@Url.Action("LoadPage", "ApplicationSummary", new { Area = "" })" class="hui-app-link dark-orange">
+                                            <div class="apps-status">
+                                                <span class="fa fa-building icons"></span>
+                                            </div>
+                                            <div class="apps-text">Form Summary</div>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex-container mt-1">
+                    <div class="flex-container-header" role="tab" id="heading2">
+                        <a data-toggle="collapse" data-parent="#accordionEx7" href="#collapse4" aria-expanded="true" aria-controls="collapse4">
+                            <h6 class="m-subheader__title collpase_header">
+                                Fee <i class="fa fa-angle-double-down rotate-icon learning-double-down-icon-alignment"></i>
+                            </h6>
+                        </a>
+                    </div>
+                    <div id="collapse4" class="collapse show" role="tabpanel" aria-labelledby="heading1" data-parent="#accordionEx7">
+                        <div class="card-body mb-1 rgba-grey-light white-text card_body_sizes">
+                            <div class="row mt-3 ml-2">
+                                <div class="col-md-12">
+                                    <div class="hui-app-status">
+
+                                        <a href="@Url.Action("GetFeeToPay", "Fee", new { Area = "" })" class="hui-app-link dark-orange">
+                                            <div class="apps-status">
+                                                <span class="fa fa-building icons"></span>
+                                            </div>
+                                            <div class="apps-text">Fee For Payment</div>
+                                        </a>
+
+                                        <a href="@Url.Action("", "", new { Area = "" })" class="hui-app-link sement">
+                                            <div class="apps-status">
+                                                <span class="fa fa-map-marker icons"></span>
+                                            </div>
+                                            <div class="apps-text">Payment History</div>
+                                        </a>
+                                        <a href="@Url.Action("", "", new { Area = "" })" class="hui-app-link pink">
+                                            <div class="apps-status">
+                                                <span class="fa fa-chalkboard-teacher icons"></span>
+                                            </div>
+                                            <div class="apps-text">Transaction Details</div>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            }
+
+        </div>*@
+    </div>
+</div>

@@ -1,0 +1,423 @@
+﻿@using NtierMvc.Model
+@using NtierMvc.Infrastructure
+
+@model NtierMvc.Model.HR.EmployeeEntityDetails
+@{
+    ViewBag.Title = "Employee Master";
+}
+
+<div class="row mt-3">
+    <div class="col-md-2">
+        <button id="btnAdd" type="button" class="btn btn-outline-primary btn-sm" style="float: left;" ng-click="BindHREmpPopup()"><i class="fa fa-plus"></i> <b>Add New Employee</b></button>
+    </div>
+    <div class="col-md-8">
+        <div class="row text-center">
+            <div class="col-md-2">
+                <label>Employee Name</label>
+            </div>
+            <div class="col-md-2">
+                <label>Designation</label>
+            </div>
+            <div class="col-md-2">
+                <label>Department</label>
+            </div>
+            <div class="col-md-2">
+                <label></label>
+            </div>
+            <div class="col-md-2">
+                <label></label>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-2">
+    </div>
+    <div class="col-md-8">
+        <div class="row">
+            <div class="col-md-2">
+                <div class="input-group">
+                    @Html.DropDownList("EmployeeName", new SelectList(@ViewBag.ListEmployeeName, "DataStringValueField", "DataTextField", "Select"),
+                           new
+                           {
+                               @class = "form-control",
+                               ng_model= "SearchEmployeeNameId"
+                           })
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="input-group">
+                    @Html.DropDownList("Designation", new SelectList(@ViewBag.ListDesignation, "DataStringValueField", "DataTextField", "Select"),
+                           new
+                           {
+                               @class = "form-control",
+                               ng_model= "SearchDesignation"
+                           })
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="input-group">
+                    @Html.DropDownList("Department", new SelectList(@ViewBag.ListDepartment, "DataStringValueField", "DataTextField", "Select"),
+                           new
+                           {
+                               @class = "form-control",
+                               ng_model= "SearchDepartment"
+                           })
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="input-group">
+                    
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="input-group">
+                    
+                </div>
+            </div>
+            <div class="input-group-btn col-md-2">
+                <button class="btn btn-link" type="button" id="btnSearch" ng-click="FetchEmployeeList()">
+                    <i class="fa fa-search"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-1">
+    <div class="col-md-12">
+        @*<div class="form-group text-right">
+                @if (@ViewBag.PagewiseAccessEntity != null && @ViewBag.PagewiseAccessEntity.IsEditAllowed)
+                {
+                    <button type="button" id="btnSubmit" class="btn btn-primary">Add To List</button>
+                }
+            </div>*@
+    </div>
+</div>
+
+
+<div class="wrapper">
+    <div class="container">
+        <table class="text-center">
+            <thead class="tblhead">
+                <tr>
+                    <th>
+                        Action
+                        <div class="c1">
+                            Action
+                        </div>
+                    </th>
+                    <th>
+                        EmpCode
+                        <div class="c2">
+                            EmpCode
+                        </div>
+                    </th>
+                    <th>
+                        EmpType
+                        <div class="c2">
+                            EmpType
+                        </div>
+                    </th>
+                    <th>
+                        EmpName
+                        <div class="c2">
+                            EmpName
+                        </div>
+                    </th>
+                    <th>
+                        Dept
+                        <div class="c3">
+                            Dept
+                        </div>
+                    </th>
+                    <th>
+                        DateOfBirth
+                        <div class="c3">
+                            DateOfBirth
+                        </div>
+                    </th>
+                    <th>
+                        Unit
+                        <div class="c3">
+                            Unit
+                        </div>
+                    </th>
+                    <th>
+                        DateOfJoining
+                        <div class="c3">
+                            DateOfJoining
+                        </div>
+                    </th>
+                    <th>
+                        Designation
+                        <div class="c3">
+                            Designation
+                        </div>
+                    </th>
+                    @*<th>
+                        Mobile
+                        <div class="c3">
+                            Mobile
+                        </div>
+                    </th>
+                    <th>
+                        Email
+                        <div class="c3">
+                            Email
+                        </div>
+                    </th>*@
+                    <th>
+                        State
+                        <div class="c3">
+                            State
+                        </div>
+                    </th>
+                    <th>
+                        Contact Person
+                        <div class="c3">
+                            Contact Person
+                        </div>
+                    </th>
+                    <th>
+                        Contact No
+                        <div class="c3">
+                            Contact No
+                        </div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="L in AvailableEmployeeList">
+                    <td>
+                        <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="VIEW" ng-click="LoadEmployeeViewPopup(L.Id)">
+                            <i class="fa fa-eye"></i>
+                        </button>
+                        <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="EDIT" ng-click="LoadEmployeeEditPopup(L.Id)">
+                            <i class="fa fa-edit"></i>
+                        </button>
+                        <button type="button" class="btn btn-outline-danger btn-sm" data-toggle="tooltip" data-placement="bottom" title="DELETE" ng-click="DeleteEmployee(L.Id)">
+                            <i class="fa fa-trash"></i>
+                        </button>
+                    </td>
+                    <td>
+                        {{L.EmpCode}}
+                    </td>
+                    <td>
+                        {{L.EmpType}}
+                    </td>
+                    <td>
+                        {{L.EmpName}}
+                    </td>
+                    <td>
+                        {{L.Dept}}
+                    </td>
+                    <td>
+                        {{L.DateOfBirth}}
+                    </td>
+                    <td>
+                        {{L.Unit}}
+                    </td>
+                    <td>
+                        {{L.DateOfJoining}}
+                    </td>
+                    <td>
+                        {{L.Designation}}
+                    </td>
+                    @*<td>
+                        {{L.mob1}}
+                    </td>
+                    <td>
+                        {{L.email}}
+                    </td>*@
+                    <td>
+                        {{L.State}}
+                    </td>
+                    <td>
+                        {{L.EmergContPerson}}
+                    </td>
+                    <td>
+                        {{L.EmergContNo}}
+                    </td>
+                    <td>
+                        {{L.EmpImage}}
+                    </td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td>
+                        <div class="c1">
+                            <div class="row p-0">
+                                <div class="col-md-2 p-0">                                    
+                                    <span class="form-group pull-left page-size form-inline">
+                                        <b>Records per page : &nbsp;&nbsp;</b>
+                                        <select id="ddlHrEmpPageSize" class="form-control control-color"
+                                                ng-model="HrEmpPageSize"
+                                                ng-change="HrEmpChangePageSize()">
+                                            <option value="100000">All</option>
+                                            <option value="5">5</option>
+                                            <option value="10">10</option>
+                                            <option value="25">25</option>
+                                            <option value="50">50</option>
+                                            <option value="100">100</option>
+                                        </select>
+                                    </span>
+                                </div>
+                                <div class="col-md-8 pull-right p-0">
+                                    <div class="row p-0">
+                                        <div class="col-md-10 p-0">
+                                            <pagination total-items="HrEmpTotalCount" ng-change="HrEmpPageChanged()" items-per-page="HrEmpPageSize" direction-links="true" ng-model="HrEmpPageIndex" max-size="maxsize" class="pagination pull-right" boundary-links="true" rotate="false" num-pages="HrEmpNumPages"></pagination>
+                                        </div>
+                                        <div class="col-md-2 p-0">
+                                            <a class="btn btn-primary p-2 pull-right">Page: {{HrEmpPageIndex}} / {{HrEmpNumPages}}</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>
+
+<div class="modal" id="addHRDetails" tabindex="-1" role="dialog">
+    @using (Ajax.BeginForm(actionName: "SaveHRDetails", controllerName: "HR", ajaxOptions: new AjaxOptions
+    {
+        HttpMethod = "POST"
+        // OnSuccess = "BuildingSpaceDetails.UploadFiles"
+    },
+            routeValues: null,
+            htmlAttributes: new { id = "frmHRDetails" }))
+    {
+        <div class="modal-dialog" style="width:80%; max-width: 80%;" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    @*@Html.HiddenFor(m => m.TrnBuildingHdrId)*@
+                    <h5 class="modal-title">Add HR Details</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div id="div-Staff-details" class="modal-body">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" id="btnSubmit" class="btn btn-primary">Save</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+
+<div class="modal fade" id="add_details" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+</div>
+
+<div class="modal fade" id="registor-Sucess-Failure" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6 class="modal-title">Notification</h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                &nbsp;&nbsp;<span id="spn-registor-Sucess-Failure"></span><span id="spnUserName" style="font-weight:bold"></span>&nbsp;&nbsp;<span id="spnUserNameMore"></span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" data-dismiss="modal" class="btn btn-primary">OK</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="Sucess-Failure" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6 class="modal-title">Notification</h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group row">
+                                &nbsp;&nbsp;<span id="spn-Sucess-Failure"></span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" data-dismiss="modal" class="btn btn-primary">OK</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        window.HREmpPopup = '@Url.Action("HREmpPopup", "HR")';
+        window.GetEmpPayrollData = '@Url.Action("GetEmpPayrollData", "HR")';
+        window.GetEmpDetailsForPayroll = '@Url.Action("GetEmpDetailsForPayroll", "HR")';
+        window.GetEmpLeaveDetails = '@Url.Action("GetEmpLeaveDetails", "HR")';
+        
+    });
+    
+    //COMPARING MOBILE NUMBER AND ALTERNATIVE MOBILE NUMBER
+    var alterMobileNumber = $('#altrmobileNumber');
+    alterMobileNumber.on('blur', function () {
+        $('#sameMobileNumber').hide();
+        if ($('#mobileNumber').val() == '') {
+        }
+        else {
+            if (alterMobileNumber.val() == $('#mobileNumber').val()) {
+                $('#sameMobileNumber').show();
+                alterMobileNumber.val('');
+            }
+        }
+    });
+
+    $(document).on("blur", ".check_mobileNumber", function () {
+        validateMobileNumberforFirst($(this));
+    })
+
+    function validateMobileNumberforFirst(e) {
+        var mobileNumber = $(e).val();
+        var one1 = String(mobileNumber).charAt(0);
+        var one_as_number1 = Number(one1);
+        if (one1 != "") {
+            if (one_as_number1 < 7) {
+                //$("#spn-Sucess-Failure").text('Mobile Number should start with 7 or 8 or 9')
+                //$("#Sucess-Failure").modal('show');
+                alertNotification('Please Enter valid Mobile Number');
+                $(e).val('');
+            }
+        }
+    }
+
+
+</script>
+
+

@@ -1,0 +1,240 @@
+﻿@using NtierMvc.Model
+@using NtierMvc.Infrastructure
+
+@model NtierMvc.Model.HR.LeaveManagement
+
+<div class="row mt-1">
+    <div class="col-md-12">
+
+    </div>
+</div>
+
+@*@using (Html.BeginForm("SaveQuotePreparation", "Technical", FormMethod.Post, new { @id = "formSavePayrollDetail" }))
+    {*@
+<div ng-controller="HrController" class="row">
+    <form id="formSaveLeaveDetail" style="width:100%">
+        <div class="col-md-12 text-left">
+            <div class="row text-center">
+                <div class="col-md-4">
+                    <div class="form-group text-left">
+                        <label class="control-label ">
+                            Department
+                        </label>
+                        @Html.DropDownListFor(m => m.Dept, new SelectList(@ViewBag.ListDepartment, "DataStringValueField", "DataTextField", Model.Dept),
+                         new
+                         {
+                             @class = "form-control clearField",
+                             @id = "Dept",
+                             @data_inneraction = "validationCall",
+                             @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                             @ng_model = "Dept",
+                             @ng_change = "GetEmpNameForDept(Dept)"
+                        })
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group text-left">
+                        <label class="control-label">Emp Name<span class="required">*</span></label>
+                        <select id="EmpName" name="EmpName" ng-model="EmpName" class="form-control requiredValidation ng-pristine ng-untouched ng-valid ng-empty clearField" onfocusout="return ValidateRequiredFieldsOnFocusOut(this)" ng-change="GetEmpCodeForName(EmpName)">
+                            <option data-ng-repeat="eN in ListEmpName" value="{{eN.DataStringValueField}}">{{eN.DataTextField}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group text-left">
+                        <label class="control-label">Emp Code<span class="required">*</span></label>
+                        <select id="EmpId" name="EmpId" ng-model="EmpId" class="form-control requiredValidation ng-pristine ng-untouched ng-valid ng-empty clearField" onfocusout="return ValidateRequiredFieldsOnFocusOut(this)" ng-change="GetEmpLeaveDetails(EmpId)">
+                            <option data-ng-repeat="eN in ListEmpCode" value="{{eN.DataStringValueField}}">{{eN.DataTextField}}</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group text-left">
+                        <label class="control-label">
+                            Leave Start Date
+                        </label>
+                        @Html.TextBoxFor(m => m.LeaveStartDate, new
+                   {
+                       @class = "form-control requiredValidation clearField CalenderAnyDate",
+                       @placeholder = "dd/MM/yyyy",
+                       @style = "disabled :disabled",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                       @id = "LeaveStartDate",
+                       ng_model = "LeaveStartDate"
+                   })
+                        <span class="HideValidMsg">Please Select Leave Date</span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group text-left">
+                        <label class="control-label">
+                            Leave End Date
+                        </label>
+                        @Html.TextBoxFor(m => m.LeaveEndDate, new
+                   {
+                       @class = "form-control requiredValidation clearField CalenderAnyDate",
+                       @placeholder = "dd/MM/yyyy",
+                       @style = "disabled :disabled",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                       @id = "LeaveEndDate",
+                       ng_model = "LeaveEndDate"
+                   })
+                        <span class="HideValidMsg">Please Select Leave Date</span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="control-label">
+                            Type of Leave
+                        </label>
+                        <br />
+                        <label for="Leave">Leave</label>
+                        @Html.RadioButtonFor(m => m.LeaveType, "Leave", new
+                   {
+                       @class = "requiredValidation clearField",
+                       @id = "LeaveType",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                       ng_model = "LeaveType"
+                   })
+                        <label for="Half Day">Half Day</label>
+                        @Html.RadioButtonFor(m => m.LeaveType, "Half Day", new
+                   {
+                       @class = "requiredValidation clearField",
+                       @id = "LeaveType",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                       ng_model = "LeaveType"
+                   })
+                        <label for="OD">OD</label>
+                        @Html.RadioButtonFor(m => m.LeaveType, "OD", new
+                   {
+                       @class = "requiredValidation clearField",
+                       @id = "LeaveType",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                       ng_model = "LeaveType"
+                   })
+                        <label for="Comp Off">Comp Off</label>
+                        @Html.RadioButtonFor(m => m.LeaveType, "Comp Off", new
+                   {
+                       @class = "requiredValidation clearField",
+                       @id = "LeaveType",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                       ng_model = "LeaveType"
+                   })
+                        <label for="Weekly Off">Weekly Off</label>
+                        @Html.RadioButtonFor(m => m.LeaveType, "Weekly Off", new
+                   {
+                       @class = "requiredValidation clearField",
+                       @id = "LeaveType",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                       ng_model = "LeaveType"
+                   })
+                        <label for="Earned Leave">Earned Leave</label>
+                        @Html.RadioButtonFor(m => m.LeaveType, "Earned Leave", new
+                   {
+                       @class = "requiredValidation clearField",
+                       @id = "LeaveType",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                       ng_model = "LeaveType"
+                   })
+                        <label for="Casual Leave">Casual Leave</label>
+                        @Html.RadioButtonFor(m => m.LeaveType, "Casual Leave", new
+                   {
+                       @class = "clearField",
+                       @id = "LeaveType",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                       ng_model = "LeaveType"
+                   })
+                        <label for="Medical Leave">Medical Leave</label>
+                        @Html.RadioButtonFor(m => m.LeaveType, "Medical Leave", new
+                   {
+                       @class = "clearField",
+                       @id = "LeaveType",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                       ng_model = "LeaveType"
+                   })
+                        <label for="Maternity Leave">Maternity Leave</label>
+                        @Html.RadioButtonFor(m => m.LeaveType, "Maternity Leave", new
+                   {
+                       @class = "clearField",
+                       @id = "LeaveType",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                       ng_model = "LeaveType"
+                   })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 pt-4 text-center">
+                @*<button type="button" class="btn btn-success btn-sm" data-dismiss="modal" id="save_results">Save</button>*@
+                <input style="font-size:18px" type="button" class="btn btn-success btn-sm" data-dismiss="modal" id="save_results" value="Save" ng-click="SaveEmpLeaveDetails()" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="table-responsive">
+                    <table id="tblCustomerDetails" class="table dva-table dva-tborder agencygrid">
+                        <thead>
+                            <tr>
+                                @*<th style="min-width:140px;">View/Edit/Delete</th>*@
+                                <th>S. No.</th>
+                                <th style="min-width:140px;">
+                                    Leave Type
+                                </th>
+                                <th style="min-width:140px;">
+                                    Start Date
+                                </th>
+                                <th style="min-width:140px;">
+                                    End Date
+                                </th>                                
+                            </tr>
+                        </thead>
+                        <tbody>                            
+                            <tr ng-repeat="L in AvailableEmpLeavesList">
+                                <td>
+                                    {{$index+1}}
+                                </td>
+                                <td>
+                                    {{L.LeaveType}}
+                                </td>
+                                <td>
+                                    {{L.LeaveStartDate}}
+                                </td>
+                                <td>
+                                    {{L.LeaveEndDate}}
+                                </td>                                
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+@*}*@
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        window.SaveEmpLeaveDetails = '@Url.Action("SaveEmpLeaveDetails", "Hr")';
+        window.GetEmpLeaveDetails = '@Url.Action("GetEmpLeaveDetails", "Hr")';
+    });
+
+    $('.CalenderAnyDate').datepicker({
+
+        format: 'dd/mm/yyyy',
+        autoclose: true,
+        changeMonth: true,
+        changeYear: true,
+        endDate: '',
+        orientation: "bottom"
+    });
+
+</script>
+
+
+

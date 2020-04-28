@@ -6,9 +6,6 @@ using NtierMvc.Model;
 
 namespace NtierMvc.BusinessLogic
 {
-    /// <summary>
-    /// Purpose: Business Logic Class [EmployeesBusiness] for handling the business constrains on table [HR].[Employees].
-    /// </summary>
     public class EmployeesBusiness : IDisposable
     {
         #region Class Declarations

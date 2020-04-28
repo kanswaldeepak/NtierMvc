@@ -1,0 +1,622 @@
+﻿@model NtierMvc.Model.OrderEntity
+
+@{
+    ViewBag.Title = "OrderDetails";
+}
+
+<div ng-controller="ModalController" class="row">
+    <form id="formSaveOrderDetails">
+        <div class="col-md-12">
+            @Html.HiddenFor(m => m.Id)
+            <div class="row">
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label ">
+                            Quote Type <span class="required">*</span>
+                        </label>
+                        @Html.DropDownListFor(m => m.QuoteType, new SelectList(ViewBag.ListQuoteType, "DataStringValueField", "DataTextField", Model.QuoteType), new
+                            {
+                                @class = "form-control requiredValidation clearField",
+                                @id = "QuoteTypeOrder",
+                                @data_inneraction = "validationCall",
+                                @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                                @onchange = "GetQuoteNos(); GetSONos();"
+                            })
+                        <span class="HideValidMsg"> Select Quote Type</span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label ">
+                            Quote Type Nature <span class="required">*</span>
+                        </label>
+                        @Html.DropDownListFor(m => m.QuoteQtyType, new SelectList(ViewBag.ListQuoteQtyType, "DataStringValueField", "DataTextField", Model.QuoteQtyType), new
+                   {
+                       @class = "form-control requiredValidation clearField",
+                       @id = "QuoteTypeNatureOrder",
+                       @data_inneraction = "validationCall",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                       @onchange = "GetSODetails()"
+                   })
+                        <span class="HideValidMsg"> Select Quote Quantity Type</span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group text-left">
+                        <label class="control-label ">
+                            Quote Number <span class="required">*</span>
+                        </label>
+                        @Html.DropDownListFor(m => m.QuoteNo, new SelectList(ViewBag.ListQuoteNo, "DataStringValueField", "DataTextField", "Select"), new
+                   {
+                       @class = "form-control requiredValidation clearField",
+                       @id = "QuoteNoOrder",
+                       @data_inneraction = "validationCall",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this);",
+                       @onchange = "GetQuoteDetails()"
+                   })
+                        <span class="HideValidMsg"> Select Quote Number</span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label">
+                            SO No. <span class="required">*</span>
+                        </label>
+                        @Html.DropDownListFor(m => m.SoNo, new SelectList(ViewBag.ListSoNo, "DataStringValueField", "DataTextField", Model.SoNo), new
+                   {
+                       @class = "form-control clearField",
+                       @id = "SoNoOrder",
+                       @data_inneraction = "validationCall",
+                       @onchange = "GetSONoDetails()"
+                   })
+                        <span class="HideValidMsg">Please Select SoNo</span>
+                    </div>
+                </div>
+                <div class="col-md-2" hidden>
+                    <div class="form-group">
+                        <label class="control-label">
+                            Quote Nos. <span class="required">*</span>
+                        </label>
+                        @Html.TextBoxFor(m => m.MultiQuoteNos, new
+                   {
+                       @class = "form-control",
+                       @id = "MultiQuoteNos",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                       @placeholder = "Enter Multi Quote Nos"
+                   })
+                        <span class="HideValidMsg"> Select Multi Quote Nos</span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label">
+                            VendorId <span class="required">*</span>
+                        </label>
+                        @Html.DropDownListFor(m => m.VendorId, new SelectList(@ViewBag.ListVendorId, "DataStringValueField", "DataTextField", Model.VendorId),
+                           new
+                           {
+                               @class = "form-control requiredValidation",
+                               @id = "VendorIdOrder",
+                               @data_inneraction = "validationCall",
+                               @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                               @onchange = "GetVendorDetails()",
+                               @readonly = "readonly"
+                           })
+                        <span class="HideValidMsg"> Select VendorId</span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label">
+                            Vendor Name <span class="required">*</span>
+                        </label>
+                        @Html.TextBoxFor(m => m.VendorName, new
+                   {
+                       @class = "form-control requiredValidation",
+                       @id = "VendorNameOrder",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                       @readonly = "readonly"
+                   })
+                        <span class="HideValidMsg"> Select Vendor Name</span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label">
+                            File Number <span class="required">*</span>
+                        </label>
+
+                        @Html.TextBoxFor(m => m.FileNo, new
+                   {
+                       @class = "form-control",
+                       @id = "FileNo",
+                       @placeholder = "File Number"
+                   })
+
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label">
+                            Product Group <span class="required">*</span>
+                        </label>
+                        @Html.DropDownListFor(m => m.ProductGroup, new SelectList(ViewBag.ListProdGrpId, "DataStringValueField", "DataTextField", Model.ProductGroup),
+                           new
+                           {
+                               @class = "form-control requiredValidation",
+                               @id = "ProductGroupOrder",
+                               @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                               @readonly = "readonly"
+                           })
+                        <span class="HideValidMsg"> Enter ProductGroup</span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label">
+                            PO Entity <span class="required">*</span>
+                        </label>
+                        @Html.TextBoxFor(m => m.PoEntity, new
+                   {
+                       @class = "form-control requiredValidation",
+                       @id = "POEntityOrder",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                       @placeholder = " Enter POEntity"
+                   })
+                        <span class="HideValidMsg"> Select POEntity</span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label">
+                            PO Location <span class="required">*</span>
+                        </label>
+                        @Html.TextBoxFor(m => m.PoLocation, new
+                   {
+                       @class = "form-control requiredValidation",
+                       @id = "PoLocationOrder",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                       @placeholder = "PO Location"
+                   })
+                        <span class="HideValidMsg"> Select PO Location</span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label">
+                            PO No <span class="required">*</span>
+                        </label>
+                        @Html.TextBoxFor(m => m.PoNo, new
+                   {
+                       @class = "form-control requiredValidation",
+                       @id = "PoNoOrder",
+                       @placeholder = " Enter PO No",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                   })
+                        <span class="HideValidMsg"> Enter PO No</span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label">
+                            PO Date <span class="required">*</span>
+                        </label>
+                        @Html.TextBoxFor(m => m.PoDate, new
+                   {
+                       @class = "form-control requiredValidation CurrentEndDate",
+                       autocomplete = "off",
+                       @id = "PoDateOrder",
+                       @placeholder = "dd/MM/yyyy",
+                       @style = "disabled :disabled",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                   })
+                        <span class="HideValidMsg"> Select PO Date</span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label">
+                            Date of Receipt of PO <span class="required">*</span>
+                        </label>
+                        @Html.TextBoxFor(m => m.PoDor, new
+                   {
+                       @class = "form-control requiredValidation CurrentEndDate",
+                       autocomplete = "off",
+                       @id = "PoDorOrder",
+                       @placeholder = "dd/MM/yyyy",
+                       @style = "disabled :disabled",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                   })
+                        <span class="HideValidMsg">Select PODor</span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label">
+                            Currency <span class="required">*</span>
+                        </label>
+                        @Html.DropDownListFor(m => m.Curr, new SelectList(@ViewBag.ListCurr, "DataStringValueField", "DataTextField", Model.Curr),
+                        new
+                        {
+                            @class = "form-control requiredValidation",
+                            @id = "CurrencyOrder",
+                            @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                        })
+                        <span class="HideValidMsg">Enter Currency Details</span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label">
+                            Ex Works Value <span class="required">*</span>
+                        </label>
+                        @Html.TextBoxFor(m => m.ExWorkValue, new
+                   {
+                       @class = "form-control requiredValidation",
+                       @id = "ExWorkValueOrder",
+                       @placeholder = "Enter Ex Work Value",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                   })
+                        <span class="HideValidMsg"> Select Ex Work Value</span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label">
+                            PO Delivery Date <span class="required">*</span>
+                        </label>
+                        @Html.TextBoxFor(m => m.PoDeliveryDate, new
+                   {
+                       @class = "form-control requiredValidation NoEndDate",
+                       autocomplete = "off",
+                       @id = "PODeliveryDateOrder",
+                       @placeholder = "dd/MM/yyyy",
+                       @style = "disabled :disabled",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                   })
+                        <span class="HideValidMsg"> Select PO Delivery Date</span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label">
+                            Delivery Terms <span class="required">*</span>
+                        </label>
+                        @Html.TextBoxFor(m => m.DeliveryTerms, new
+                   {
+                       @class = "form-control requiredValidation",
+                       @id = "DeliveryTermsOrder",
+                       @placeholder = "Enter Delivery Terms",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                   })
+                        <span class="HideValidMsg">Enter Delivery Terms</span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label">
+                            Supply Terms <span class="required">*</span>
+                        </label>
+                        @Html.DropDownListFor(m => m.SupplyTerms, new SelectList(ViewBag.ListSupplyTerms, "DataStringValueField", "DataTextField", "Select"), new
+                           {
+                               @class = "form-control requiredValidation clearField",
+                               @id = "SupplyTermsOrder",
+                               @data_inneraction = "validationCall",
+                               @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                           })
+                        <span class="HideValidMsg"> Enter SupplyTerms</span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label">
+                            Consignee Name <span class="required">*</span>
+                        </label>
+                        @Html.TextBoxFor(m => m.ConsigneeName, new
+                   {
+                       @class = "form-control requiredValidation",
+                       @id = "ConsigneeNameOrder",
+                       @placeholder = " Enter ConsigneeName",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                   })
+                        <span class="HideValidMsg"> Enter Consignee Name</span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label">
+                            Consignee Location <span class="required">*</span>
+                        </label>
+                        @Html.TextBoxFor(m => m.ConsigneeLocation, new
+                   {
+                       @class = "form-control requiredValidation",
+                       @id = "ConsigneeLocationOrder",
+                       @placeholder = " Enter ConsigneeLocation",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                   })
+                        <span class="HideValidMsg"> Enter Consignee Location</span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label">
+                            Mode Of Shipment <span class="required">*</span>
+                        </label>
+                        @Html.TextBoxFor(m => m.ModeOfShipment, new
+                   {
+                       @class = "form-control",
+                       @id = "ModeOfShipmentOrder",
+                       @placeholder = " Enter ModeOfShipment",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                   })
+                        <span class="HideValidMsg"> Enter ModeOfShipment</span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label">
+                            Payment Terms <span class="required">*</span>
+                        </label>
+                        @Html.TextBoxFor(m => m.PaymentTerms, new
+                   {
+                       @class = "form-control requiredValidation",
+                       @id = "PaymentTermsOrder",
+                       @placeholder = " Enter PaymentTerms",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                   })
+                        <span class="HideValidMsg"> Enter PaymentTerms</span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label">
+                            Inspection <span class="required">*</span>
+                        </label>
+                        @Html.TextBoxFor(m => m.Inspection, new
+                   {
+                       @class = "form-control requiredValidation",
+                       @id = "InspectionOrder",
+                       @placeholder = "Enter Inspection",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                   })
+                        <span class="HideValidMsg"> Enter Inspection</span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label">
+                            End-User <span class="required">*</span>
+                        </label>
+                        @Html.TextBoxFor(m => m.EndUser, new
+                   {
+                       @class = "form-control requiredValidation",
+                       @id = "EndUserOrder",
+                       @placeholder = "Enter EndUser",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                   })
+                        <span class="HideValidMsg"> Enter End User</span>
+                    </div>
+                </div>
+                <div class="col-md-2" hidden>
+                    <div class="form-group">
+                        <label class="control-label">
+                            File Upload <span class="required">*</span>
+                        </label>
+                        <input class="form-control" type="file" id="FileUploadOrder" multiple />
+                        <span class="HideValidMsg">Select File to Upload</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 pt-4 text-center">
+                    <button style="font-size:18px" type="button" class="btn btn-success btn-sm" id="save_results" ng-click="SaveOrderDetails()">Save</button>
+                    <button style="font-size:18px" type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<script>
+    $(document).ready(function () {
+        window.VendorDetail = '@Url.Action("GetQuoteVendorDetail", "Technical")';
+        window.SaveOrder = '@Url.Action("SaveOrderDetails", "Technical")';
+        window.GetPrepQuoteNo = '@Url.Action("GetPrepQuoteNo", "Technical")';
+        window.GetSONos = '@Url.Action("GetSONos", "Technical")';
+        window.GetOrderDetailsForQuote = '@Url.Action("GetOrderDetailsForQuote", "Technical")';
+
+        $('#divQuoteDetails').hide();
+    });
+
+    function SaveOrderDetails() {
+
+    // Checking whether FormData is available in browser
+    if (window.FormData !== undefined) {
+
+        var fileUpload = $("#FileUploadOrder").get(0);
+        var files = fileUpload.files;
+
+        // Create FormData object
+        var fileData = new FormData();
+
+        // Looping over all files and add it to FormData object
+        for (var i = 0; i < files.length; i++) {
+            fileData.append(files[i].name, files[i]);
+        }
+
+        // Adding More keys to FormData object
+        fileData.append('QuoteType', $('#QuoteTypeOrder').val());
+        fileData.append('QuoteQtyType', $('#QuoteTypeNatureOrder').val());
+        fileData.append('QuoteNo', $('#QuoteNoOrder').val());
+        fileData.append('SoNo', $('#SoNoOrder').val());
+        fileData.append('POEntity', $('#POEntityOrder').val());
+        fileData.append('PoLocation', $('#PoLocationOrder').val());
+        fileData.append('PoDor', $('#PoDorOrder').val());
+        fileData.append('PoNo', $('#PoNoOrder').val());
+        fileData.append('PoDate', $('#PoDateOrder').val());
+        fileData.append('Curr', $('#CurrencyOrder').val());
+        fileData.append('ExWorkValue', $('#ExWorkValueOrder').val());
+        fileData.append('PODeliveryDate', $('#PODeliveryDateOrder').val());
+        fileData.append('DeliveryTerms', $('#DeliveryTermsOrder').val());
+        fileData.append('SupplyTerms', $('#SupplyTermsOrder').val());
+        fileData.append('ProductGroup', $('#ProductGroupOrder').val());
+        fileData.append('ConsigneeName', $('#ConsigneeNameOrder').val());
+        fileData.append('ConsigneeLocation', $('#ConsigneeLocationOrder').val());
+        fileData.append('ModeOfShipment', $('#ModeOfShipmentOrder').val());
+        fileData.append('PaymentTerms', $('#PaymentTermsOrder').val());
+        fileData.append('Inspection', $('#InspectionOrder').val());
+        fileData.append('EndUser', $('#EndUserOrder').val());
+        fileData.append('Inspection', $('#InspectionOrder').val());
+
+        $.ajax({
+            url: window.SaveOrder,
+            type: "POST",
+            contentType: false, // Not to set any content header
+            processData: false, // Not to process data
+            data: fileData,
+            success: function (result) {
+                alert(result);
+            },
+            error: function (err) {
+                alert(err.statusText);
+            }
+        });
+    } else {
+        alert("FormData is not supported.");
+    }
+}
+
+
+    function GetVendorDetails() {
+        var VendorId = $("#VendorIdOrder").val();
+        $.ajax({
+            type: 'POST',
+            url: window.VendorDetail,
+            data: JSON.stringify({ vendorId: VendorId }),
+            contentType: "application/json; charset=utf-8",
+            success: function (res) {
+                $("#VendorNameOrder").val(res.quoteEntity.VendorName);
+                $("#POEntityOrder").val(res.quoteEntity.VendorName);
+                $("#Country").val(res.quoteEntity.Country);
+                $("#CountryId").val(res.quoteEntity.CountryId);
+                $("#GeoArea").val(res.quoteEntity.GeoArea);
+                $("#GeoCode").val(res.quoteEntity.GeoCode);
+                $("#EnqNo").empty();
+                if (res.lstDdEntity.length > 0) {
+                    $.each(res.lstDdEntity, function (i, item) {
+                        $("#EnqNo").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
+                    })
+                }
+
+            },
+            error: function (x, e) {
+                alert('Some error is occurred, Please try after some time.');
+            }
+        })
+    }
+
+    function GetQuoteNos() {
+        var QuoteType = $("#QuoteTypeOrder").val();
+        $.ajax({
+            type: 'POST',
+            url: window.GetPrepQuoteNo,
+            data: JSON.stringify({ quotetypeId: QuoteType }),
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                $("#QuoteNoOrder").empty();
+                if (data.length > 0) {
+                    $.each(data, function (i, item) {
+                        $("#QuoteNoOrder").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
+                    })
+                }
+            },
+            error: function (x, e) {
+                alert('Some error is occurred, Please try after some time.');
+            }
+        })
+    }
+
+    function GetSONos() {
+        var QuoteType = $("#QuoteTypeOrder").val();
+        $.ajax({
+            type: 'POST',
+            url: window.GetSONos,
+            data: JSON.stringify({ quotetypeId: QuoteType }),
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                $("#SoNoOrder").empty();
+                if (data.length > 0) {
+                    $.each(data, function (i, item) {
+                        $("#SoNoOrder").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
+                    })
+                }
+            },
+            error: function (x, e) {
+                alert('Some error is occurred, Please try after some time.');
+            }
+        })
+    }
+
+    var count = 0;
+    function GetQuoteDetails() {
+        var QuoteType = $("#QuoteTypeOrder").val();
+        var QuoteNo = $("#QuoteNoOrder").val();
+        
+        //var MultiQuoteNos = $('#MultiQuoteNos').val();
+        //count = count + 1;
+        //if (count > 1 && $('#MultiQuoteNos').val()!='') {
+        //    MultiQuoteNos = MultiQuoteNos + '/' + $("#QuoteNoOrder option:selected").text();
+        //}
+        //else {
+        //    MultiQuoteNos = $("#QuoteNoOrder option:selected").text();
+        //}
+
+        //if ($("#QuoteNoOrder option:selected").val() != '')
+        //$('#MultiQuoteNos').val(MultiQuoteNos);
+        
+        $.ajax({
+            type: 'POST',
+            url: window.GetOrderDetailsForQuote,
+            data: JSON.stringify({ quoteType: QuoteType, quoteNoId: QuoteNo }),
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                $('#VendorIdOrder').val(data.VendorId);
+                $('#VendorNameOrder').val(data.VendorName);
+                $('#FileNo').val(data.FileNo);
+                //$('#SoNo').val(data.SoNo);
+                $('#ProdGrp').val(data.ProductGroup);
+            },
+            error: function (x, e) {
+                alert('Some error is occurred, Please try after some time.');
+            }
+        })
+    }
+
+    function GetSODetails() {
+        var QuoteQtyType = $("#QuoteTypeNatureOrder option:selected").text();
+
+        if (QuoteQtyType === 'Single') {
+            $("#SoNoOrder").val("");
+            $("#SoNoOrder").prop("disabled",true);
+        }
+        else {
+            $("#SoNoOrder").prop("disabled", false);
+        }
+        
+    }
+
+    $('.NoEndDate').datepicker({
+        format: 'dd/mm/yyyy',
+        autoclose: true,
+        changeMonth: true,
+        changeYear: true,
+        endDate: '',
+    });
+    $('.CurrentEndDate').datepicker({
+
+        format: 'dd/mm/yyyy',
+        autoclose: true,
+        changeMonth: true,
+        changeYear: true,
+        endDate: 'today',
+    });
+</script>
