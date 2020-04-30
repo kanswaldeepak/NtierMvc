@@ -21,11 +21,25 @@ namespace NtierMvc.API.Controllers.Application
         }
 
         [HttpPost]
+        [ResponseType(typeof(PRDetailEntity))]
+        [Route("api/MRMDetail/GetSavedPRDetailsPopup")]
+        public IHttpActionResult GetSavedPRDetailsPopup(PRDetailEntity Model)
+        {
+            return Ok(_repository.GetSavedPRDetailsPopup(Model));
+        }
+
+        [HttpPost]
         [ResponseType(typeof(string))]
         [Route("api/MRMDetail/SavePRDetailsList")]
         public IHttpActionResult SavePRDetailsList(BulkUploadEntity iEntity)
         {
             return Ok(_repository.SavePRDetailsList(iEntity));
+        }
+
+        [Route("api/MRMDetail/GetPRDetailsList")]
+        public IHttpActionResult GetPRDetailsList(int pageIndex, int pageSize, string SearchTypeId = null, string SearchQuoteNo = null, string SearchSONo = null, string SearchVendorId = null, string SearchVendorName = null, string SearchProductGroup = null)
+        {
+            return Ok(_repository.GetPRDetailsList(pageIndex, pageSize, SearchTypeId, SearchQuoteNo, SearchSONo, SearchVendorId, SearchVendorName, SearchProductGroup));
         }
 
     }

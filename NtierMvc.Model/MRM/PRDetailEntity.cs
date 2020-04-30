@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NtierMvc.Common;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -65,6 +66,7 @@ namespace NtierMvc.Model.MRM
         public int UserId { get; set; }
         public int DeptId { get; set; }
         public string ExpectedDeliveryDate { get; set; }
+        public string EntryDate { get; set; }
         public string Status { get; set; }
         public string EntryPerson { get; set; }
         public string ApprovePerson1 { get; set; }
@@ -84,7 +86,7 @@ namespace NtierMvc.Model.MRM
         public string PRcat { get; set; }
         public int Currency { get; set; }
         public int Priority { get; set; }
-        public string CriticalNature { get; set; }
+        //public string CriticalNature { get; set; }
         public int EndUse { get; set; }
         public int EndUseNo { get; set; }
         public int CostCentre { get; set; }
@@ -128,7 +130,26 @@ namespace NtierMvc.Model.MRM
         public string POno { get; set; }
         public string DeliveryDate { get; set; }
         public string ExpectedDeliveryDate { get; set; }
+        public DateTime? EntryDate { get; set; }
+        public DateTime? ApproveDate1 { get; set; }
+        public DateTime? ApproveDate2 { get; set; }
+        public string Status { get; set; }
+        public string EntryPerson { get; set; }
+        public string ApprovePerson1 { get; set; }
+        public string ApprovePerson2 { get; set; }
 
+    }
+
+    public class PRDetailEntityDetails
+    {
+        public PRDetailEntity pEntity { get; set; }
+        public List<PRDetailEntity> lstPREntity { get; set; }
+        public int totalcount { get; set; }
+        public PRDetailEntityDetails()
+        {
+            pEntity = new PRDetailEntity();
+            lstPREntity = new List<PRDetailEntity>();
+        }
     }
 
 }

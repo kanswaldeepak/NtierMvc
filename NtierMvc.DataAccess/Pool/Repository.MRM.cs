@@ -25,6 +25,14 @@ namespace NtierMvc.DataAccess.Pool
             return _dbAccess.GetDataSet(SPName, Params);
         }
 
+        public DataSet GetSavedPRDetailsPopup(PRDetailEntity Model)
+        {
+            var SPName = ConfigurationManager.AppSettings["GetSavedPRDetailsPopup"];
+            var Params = new Dictionary<string, object>();
+            Params.Add("@PRSetno", Model.PRSetno);
+            return _dbAccess.GetDataSet(SPName, Params);
+        }
+
         public string SavePRDetailsList(BulkUploadEntity entity)
         {
             string msgCode = "";
@@ -33,6 +41,22 @@ namespace NtierMvc.DataAccess.Pool
 
 
             return msgCode;
+        }
+
+        public DataSet GetPRDetailsList(int pageIndex, int pageSize, string SearchTypeId = null, string SearchQuoteNo = null, string SearchSONo = null, string SearchVendorId = null, string SearchVendorName = null, string SearchProductGroup = null)
+        {
+            var parms = new Dictionary<string, object>();
+            parms.Add("@pageIndex", pageIndex);
+            parms.Add("@pageSize", pageSize);
+            parms.Add("@SearchTypeId", SearchTypeId);
+            parms.Add("@SearchQuoteNo", SearchQuoteNo);
+            parms.Add("@SearchSONo", SearchSONo);
+            parms.Add("@SearchVendorId", SearchVendorId);
+            parms.Add("@SearchVendorName", SearchVendorName);
+            parms.Add("@SearchProductGroup", SearchProductGroup);
+
+            string spName = ConfigurationManager.AppSettings["GetPRDetailsList"];
+            return _dbAccess.GetDataSet(spName, parms);
         }
 
     }

@@ -81,7 +81,7 @@
             </td>
             <td></td>
             <td>
-                <button class="btn btn-link" type="button" id="btnSearch" ng-click="FetchProductRealisationList()">
+                <button class="btn btn-link" type="button" id="btnSearch" ng-click="FetchPRDetailsList()">
                     <i class="fa fa-search"></i>
                 </button>
             </td>
@@ -100,56 +100,44 @@
                     <tr>
                         <th>
                             Action
-                            <div class="c1">
+                            <div class="c3">
                                 Action
                             </div>
                         </th>
                         <th>
-                            Quote Type
-                            <div class="c2">
-                                Quote Type
-                            </div>
-                        </th>
-                        <th>
-                            Quote No
-                            <div class="c2">
-                                Quote No
-                            </div>
-                        </th>
-                        <th>
-                            SO No
-                            <div class="c2">
-                                SO No
-                            </div>
-                        </th>
-                        <th>
-                            Vendor Name
+                            PR No
                             <div class="c3">
-                                Vendor Name
+                                PR No
                             </div>
                         </th>
                         <th>
-                            Supply Terms
-                            <div class="c3">
-                                Supply Terms
-                            </div>
-                        </th>
-                        <th>
-                            PO No
+                            PR Date
                             <div class="c2">
-                                PO No
+                                PR Date
                             </div>
                         </th>
                         <th>
-                            PO Date
+                            Required From
                             <div class="c2">
-                                PO Date
+                                Required From
                             </div>
                         </th>
                         <th>
-                            PO Delivery Date
+                            Supplier Name
                             <div class="c2">
-                                PO Delivery Date
+                                Supplier Name
+                            </div>
+                        </th>
+                        <th>
+                            Delivery Date
+                            <div class="c2">
+                                Delivery Date
+                            </div>
+                        </th>
+                        <th>
+                            Status
+                            <div class="c2">
+                                Status
                             </div>
                         </th>
                     </tr>
@@ -157,33 +145,27 @@
                 <tbody>
                     <tr ng-repeat="L in PRPList">
                         <td>
-                            <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="VIEW" ng-click="LoadPRPViewPopup(L.SONo)">
+                            <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="VIEW" ng-click="LoadPRDetailsViewPopup(L.PRSetno)">
                                 <i class="fa fa-eye"></i>
                             </button>
                         </td>
                         <td>
-                            {{L.QuoteType}}
+                            {{L.PRno}}
                         </td>
                         <td>
-                            {{L.QuoteNo}}
+                            {{L.PRdate}}
                         </td>
                         <td>
-                            {{L.SONo}}
+                            {{L.ReqFrom}}
                         </td>
                         <td>
-                            {{L.VendorName}}
+                            {{L.ApprovedSupplier1}}
                         </td>
                         <td>
-                            {{L.SupplyTerms}}
+                            {{L.DeliveryDate}}
                         </td>
                         <td>
-                            {{L.PONo}}
-                        </td>
-                        <td>
-                            {{L.PODate}}
-                        </td>
-                        <td>
-                            {{L.PODeliveryDate}}
+                            {{L.Status}}
                         </td>
                     </tr>
                 </tbody>
@@ -231,8 +213,7 @@
 <script type="text/javascript">
 
     $(document).ready(function () {
-        window.PRPPopup = '@Url.Action("PRPPopup", "DesignEng", new { @Area = "DesignEng"})';
-        window.FetchProductRealisationList = '@Url.Action("FetchProductRealisationList", "DesignEng", new { @Area = "DesignEng"})';
+        window.FetchPRDetailsList = '@Url.Action("FetchPRDetailsList", "MRM")';
         window.PRDetailsPopup = '@Url.Action("PRDetailPopup", "MRM")';
         window.SavePRDetailsList = '@Url.Action("SavePRDetailsList", "MRM")';
     });

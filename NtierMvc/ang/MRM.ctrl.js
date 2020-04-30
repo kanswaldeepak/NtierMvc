@@ -14,29 +14,29 @@ angular.module('App').controller("MRMController", function ($scope, $http, $time
     $scope.SearchVendorName = "";
     $scope.SearchProductGroup = "";
 
-    $scope.FetchProductRealisationList = function () {
-        $http.get(window.FetchProductRealisationList+"?pageindex=" + $scope.PRPageIndex + "&pagesize=" + $scope.PRPageSize + "&SearchTypeId=" + $scope.SearchTypeId + "&SearchQuoteNo=" + $scope.SearchQuoteNo + "&SearchSONo=" + $scope.SearchSONo + "&SearchVendorId=" + $scope.SearchVendorId + "&SearchVendorName=" + $scope.SearchVendorName + "&SearchProductGroup=" + $scope.SearchProductGroup).success(function (response) {
-            $scope.PRPList = response.ListPR;
+    $scope.FetchPRDetailsList = function () {
+        $http.get(window.FetchPRDetailsList+"?pageIndex=" + $scope.PRPageIndex + "&pageSize=" + $scope.PRPageSize + "&SearchTypeId=" + $scope.SearchTypeId + "&SearchQuoteNo=" + $scope.SearchQuoteNo + "&SearchSONo=" + $scope.SearchSONo + "&SearchVendorId=" + $scope.SearchVendorId + "&SearchVendorName=" + $scope.SearchVendorName + "&SearchProductGroup=" + $scope.SearchProductGroup).success(function (response) {
+            $scope.PRPList = response.lstPREntity;
             $scope.PRPTotalCount = response.totalcount;
         }, function (error) {
             alert('failed');
         });
     }
 
-    $scope.FetchProductRealisationList();
+    $scope.FetchPRDetailsList();
 
     $scope.PRPageChanged = function () {
-        $scope.FetchProductRealisationList();
+        $scope.FetchPRDetailsList();
     }
 
     $scope.PRChangePageSize = function () {
         $scope.PRPageIndex = 1;
-        $scope.FetchProductRealisationList();
+        $scope.FetchPRDetailsList();
     }
 
     $scope.PRChangePageSize = function () {
         $scope.PRPageIndex = 1;
-        $scope.FetchProductRealisationList();
+        $scope.FetchPRDetailsList();
     }
 
     $scope.BindPRDetailsPopup = function () {
@@ -78,14 +78,14 @@ angular.module('App').controller("MRMController", function ($scope, $http, $time
         //});
     }
 
-    $scope.LoadPRPViewPopup = function (_SoNo) {
+    $scope.LoadPRDetailsViewPopup = function (_PRSetno) {
         var _actionType = "VIEW"
         //var ID = e.target.id;
         $.ajax({
             type: "POST",
-            data: { actionType: _actionType, SoNo: _SoNo },
+            data: { actionType: _actionType, PRSetno: _PRSetno },
             datatype: "JSON",
-            url: window.PRPPopup,
+            url: window.PRDetailsPopup,
             success: function (res) {
                 //Don't Copy this for View 
 
@@ -93,19 +93,17 @@ angular.module('App').controller("MRMController", function ($scope, $http, $time
                 //SetModalBody(res);
                 //HideLoadder();
                 var html = $compile(res)($scope);
-                SetModalTitle("View Product Realisation Details")
+                SetModalTitle("Purchase Requisition")
                 SetModalBody(html);
                 HideLoadder();
                 $('.bs-tooltip-top').css('display', 'none');
-                SetModalWidth("1200px");
+                SetModalWidth("1500px");
                 ShowModal();
 
-                $('#formPRPDetail input[type=radio],input[type=text], select').prop("disabled", true);
+                $('#formPRDetails input[type=radio],input[type=text], select').prop("disabled", true);
                 $('#save_results').css('display', 'none');
                 $('.bs-tooltip-top').css('display', 'none');
-                SetModalWidth("1200px");
-                ShowModal();
-
+                
                 if (!($('.modal.in').length)) {
                     $('.modal-dialog').css({
                         top: '5%',

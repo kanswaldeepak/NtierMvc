@@ -51,6 +51,19 @@ namespace NtierMvc.Areas.MRM.Controllers
             return PartialView(objVNB);
         }
 
+        public JsonResult FetchPRDetailsList(string pageIndex, string pageSize, string SearchTypeId = null, string SearchQuoteNo = null, string SearchSONo = null, string SearchVendorId = null, string SearchVendorName = null, string SearchProductGroup = null)
+        {
+            SearchTypeId = SearchTypeId == null ? string.Empty : SearchTypeId;
+            SearchQuoteNo = SearchQuoteNo == null ? string.Empty : SearchQuoteNo;
+            SearchSONo = SearchSONo == null ? string.Empty : SearchSONo;
+            SearchVendorId = SearchVendorId == null ? string.Empty : SearchVendorId;
+            SearchVendorName = SearchVendorName == null ? string.Empty : SearchVendorName;
+            SearchProductGroup = SearchProductGroup == null ? string.Empty : SearchProductGroup;
+
+            PRDetailEntityDetails prEntity = new PRDetailEntityDetails();
+            prEntity = objManager.GetPRDetailsList(Convert.ToInt32(pageIndex), Convert.ToInt32(pageSize), SearchTypeId, SearchQuoteNo, SearchSONo, SearchVendorId, SearchVendorName, SearchProductGroup);
+            return new JsonResult { Data = prEntity, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+        }
 
         [HttpPost]
         public ActionResult BindVendorBillPopup(string actionType, string Id)
@@ -80,7 +93,7 @@ namespace NtierMvc.Areas.MRM.Controllers
             return base.PartialView("~/Areas/DesignEng/Views/DesignEng/_BOMDetails.cshtml");
         }
 
-        public ActionResult PRDetailPopup()
+        public ActionResult PRDetailPopup(string actionType, string PRSetno)
         {
             ViewBag.ListCurrency = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "Currency", "Property", GeneralConstants.ListTypeN);
             ViewBag.ListPriority = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "Priority", "Property", GeneralConstants.ListTypeN);
@@ -115,17 +128,20 @@ namespace NtierMvc.Areas.MRM.Controllers
             var UserDetails = (UserEntity)Session["UserModel"];
             PRDetailEntity prObj = new PRDetailEntity();
             prObj.UserId = UserDetails.UserId;
-            prObj = objManager.GetPRDetailsPopup(prObj);
 
-            prObj.ReqFrom = UserDetails.FirstName + " " + UserDetails.LastName;
-            prObj.PRdate = DateTime.Now.ToShortDateString();
-            prObj.DeptName = UserDetails.DeptName;
-            
+            if (actionType == "VIEW" || actionType == "EDIT")
+            {
+                prObj.PRSetno = Convert.ToInt32(PRSetno);
+                prObj = objManager.GetSavedPRDetailsPopup(prObj);
+            }
+            else if (actionType == "ADD")
+            {
+                prObj = objManager.GetPRDetailsPopup(prObj);
+                prObj.ReqFrom = UserDetails.FirstName + " " + UserDetails.LastName;
+                prObj.PRdate = DateTime.Now.ToShortDateString();
+                prObj.DeptName = UserDetails.DeptName;
+            }
 
-            //prObj.UserId = Convert.ToInt32(Session["UserId"]);
-            //prObj = objManager.GetPRDetailsPopup(prObj);
-            //prObj.ReqFrom = Session["UserName"].ToString();
-            //prObj.PRdate = DateTime.Now.ToShortDateString();
 
             return base.PartialView("~/Areas/MRM/Views/MRM/_PRDetailPopup.cshtml", prObj);
         }
@@ -225,6 +241,9 @@ namespace NtierMvc.Areas.MRM.Controllers
                         newObj.Communicate = item.Communicate;
                         newObj.POno = item.POno;
                         newObj.ExpectedDeliveryDate = item.ExpectedDeliveryDate;
+                        newObj.EntryDate = DateTime.Now;
+                        newObj.Status = item.Status;
+                        newObj.EntryPerson = item.EntryPerson;
 
                         
                         itemListBulk.Add(newObj);

@@ -852,6 +852,8 @@
         }
         else if (DeptNameField == 'Finance') {
             $('#RequestedBy').show();
+            $('#HiddenStatusPRDetails').val('Entry');
+            $('#HiddenEntryPersonPRDetails').val($('#RequestFromPRDetails').val());
         }
 
         window.ChangeEndUseNoForQuoteOrSoNo = '@Url.Action("ChangeEndUseNoForQuoteOrSoNo", "MRM")';
@@ -939,17 +941,7 @@
             e.preventDefault();
             $(this).parent().parent().remove();
         });
-
-        //$('.changeRMDesc').on("change", function (e) {
-        //debugger;
-        //var RMcat = $trNew.find("#RMcatPRDetails option:selected").val();
-
-        //if (RMcat == 'Bar' || RMcat == 'Tube') {
-        //    $trNew.find("#RMdescription").val('Seamless Casing Bar');
-        //}
-
-    //});
-
+        
         $('.NoEndDate').datepicker({
             format: 'dd/mm/yyyy',
             autoclose: true,
@@ -977,22 +969,13 @@ $("#SavePRDetailButton").click(function (e) {
     Status = GetFormValidationStatus("#formPRDetails");
 
     let tableSelected = '#table'+ $('#tableSelected').val();
-
-    //var $tableBody = $("#table"+tableSelected);
-    //var $tr = $tableBody.find("tr");
-    //var LotQtySum = '0';
-    //$.each($tr.find('#LotWiseQty'), function (i, val) {
-    //    LotQtySum = parseInt(LotQtySum) + parseInt($(this).val());
-    //});
-
-
+    
     if (!Status) {
         alert("Kindly Fill all mandatory fields");
         return;
     }
     else {
-        $.each($(tableSelected+" tbody tr"), function () {
-            debugger;
+        $.each($(tableSelected + " tbody tr"), function () {
 
             arr.push({
                 //Id: $("#Id").val(),
@@ -1048,9 +1031,9 @@ $("#SavePRDetailButton").click(function (e) {
                 ApprovedReject:  $('#AcceptRejectPRDetails').val(),
                 Communicate:  $('#CommunicatePRDetails').val(),
                 POno:  $('#PONoPRDetails').val(),
-                ExpectedDeliveryDate:  $('#ExpectedDeliveryDatePRDetails').val()
-
-
+                ExpectedDeliveryDate:  $('#ExpectedDeliveryDatePRDetails').val(),
+                Status:  $('#ExpectedDeliveryDatePRDetails').val(),
+                EntryPerson:  $('#ExpectedDeliveryDatePRDetails').val()
 
             });
         });
@@ -1066,22 +1049,6 @@ $("#SavePRDetailButton").click(function (e) {
         });
     }
 });
-
-//$('#RMCatPRDetails').change(function () {
-
-//    var RMCat = $('#RMCatPRDetails option:selected').text();
-
-//    $('#tableRM tr').each(function(){
-//        $('td', this).each(function (index, val) {
-//            if (RMCat == 'Bar' || RMCat == 'Tube') {
-//                $(this).find(".RMdescription").val('Seamless Casing ' + RMCat);
-//            }
-//            else
-//                $(this).find(".RMdescription").val('');
-//        });
-//    });
-
-//});
 
     //LEASE DATE AND EXP LEASE DATE VALIDATION
     $('.CalenderDate').datepicker({
