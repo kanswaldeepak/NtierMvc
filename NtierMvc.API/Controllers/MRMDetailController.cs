@@ -42,5 +42,13 @@ namespace NtierMvc.API.Controllers.Application
             return Ok(_repository.GetPRDetailsList(pageIndex, pageSize, SearchTypeId, SearchQuoteNo, SearchSONo, SearchVendorId, SearchVendorName, SearchProductGroup));
         }
 
+        [HttpGet]
+        [Route("api/MRMDetail/GetPRTableDetails")]
+        public IHttpActionResult GetPRTableDetails(string PRSetno)
+        {
+            return Ok(_repository.GetPRTableDetails(PRSetno));
+        }
+
+
     }
 }

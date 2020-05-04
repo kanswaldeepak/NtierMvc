@@ -1,7 +1,8 @@
-﻿
+﻿@model NtierMvc.Model.MRM.PRDetailEntity
 @{
     ViewBag.Title = "Purchase Requisition";
 }
+@Html.HiddenFor(m => m.DeptName, new { @id = "HiddenDeptNamePRDetails" })
 
 <div class="row mt-3">
     <table>
@@ -10,74 +11,52 @@
                 <button id="btnPRPDetails" type="button" class="btn btn-outline-primary btn-sm" ng-click="BindPRDetailsPopup()"><i class="fa fa-plus"></i> <b>PR Details</b></button>
             </td>
             <td>
-                <label>Type</label>
+                <label>Vendor Type</label>
             </td>
             <td>
-                <label>Quote No</label>
+                <label>Supplier ID</label>
             </td>
             <td>
-                <label>SO No</label>
+                <label>RM Category</label>
             </td>
             <td>
-                <label>Vendor Id</label>
-            </td>
-            <td>
-                <label>Vendor Name</label>
-            </td>
-            <td>
-                <label>Product Group</label>
+                <label>Delivery Date</label>
             </td>
             <td></td>
         </tr>
         <tr>
             <td></td>
             <td>
-                @Html.DropDownList("QuoteType", new SelectList(@ViewBag.ListQuoteType, "DataStringValueField", "DataTextField", "Select"),
+                @Html.DropDownList("VendorType", new SelectList(@ViewBag.ListVendorType, "DataStringValueField", "DataTextField", "Select"),
                            new
                            {
                                @class = "form-control",
-                               ng_model = "SearchTypeId"
+                               ng_model = "SearchVendorTypeId"
                            })
             </td>
             <td>
-                @Html.DropDownList("QuoteNo", new SelectList(@ViewBag.ListQuoteNo, "DataStringValueField", "DataTextField", "Select"),
+                @Html.DropDownList("SupplierId", new SelectList(@ViewBag.ListSupplierId, "DataStringValueField", "DataTextField", "Select"),
                            new
                            {
                                @class = "form-control",
-                               ng_model = "SearchQuoteNo"
+                               ng_model = "SearchSupplierId"
                            })
             </td>
             <td>
-                @Html.DropDownList("SONo", new SelectList(@ViewBag.ListSONo, "DataStringValueField", "DataTextField", "Select"),
+                @Html.DropDownList("RMCategory", new SelectList(@ViewBag.ListRMCategory, "DataStringValueField", "DataTextField", "Select"),
                            new
                            {
                                @class = "form-control",
-                               ng_model = "SearchSONo"
+                               ng_model = "SearchRMCategory"
                            })
             </td>
             <td>
-                @Html.DropDownList("VendorId", new SelectList(@ViewBag.ListVendorId, "DataStringValueField", "DataTextField", "Select"),
+                @Html.DropDownList("DeliveryDate", new SelectList(@ViewBag.ListDeliveryDate, "DataStringValueField", "DataTextField", "Select"),
                                            new
                                            {
                                                @class = "form-control",
-                                               ng_model = "SearchVendorId"
+                                               ng_model = "SearchDeliveryDate"
                                            })
-            </td>
-            <td>
-                @Html.DropDownList("VendorName", new SelectList(@ViewBag.ListVendorName, "DataStringValueField", "DataTextField", "Select"),
-                           new
-                           {
-                               @class = "form-control",
-                               ng_model = "SearchVendorName"
-                           })
-            </td>
-            <td style="max-width:50px">
-                @Html.DropDownList("ProductGroup", new SelectList(@ViewBag.ListProductGroup, "DataStringValueField", "DataTextField", "Select"),
-                           new
-                           {
-                               @class = "form-control",
-                               ng_model = "SearchProductGroup"
-                           })
             </td>
             <td></td>
             <td>
@@ -135,6 +114,12 @@
                             </div>
                         </th>
                         <th>
+                            Total PR Price
+                            <div class="c2">
+                                Total PR Price
+                            </div>
+                        </th>
+                        <th>
                             Status
                             <div class="c2">
                                 Status
@@ -145,8 +130,12 @@
                 <tbody>
                     <tr ng-repeat="L in PRPList">
                         <td>
-                            <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="VIEW" ng-click="LoadPRDetailsViewPopup(L.PRSetno)">
+                            <button id="btnViewPRDetails" ng-if="L.Status =='Approve1' || L.Status =='Approve2' || L.Status =='Approve3'" type="button" class="btn btn-outline-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="VIEW" ng-click="LoadPRDetailsViewPopup(L.PRSetno)">
                                 <i class="fa fa-eye"></i>
+                            </button>
+
+                            <button id="btnEditPRDetails" ng-if="L.Status =='Entry' || L.Status =='Reject'" type="button" class="btn btn-outline-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="EDIT" ng-click="LoadPRDetailsEditPopup(L.PRSetno)">
+                                <i class="fa fa-pen"></i>
                             </button>
                         </td>
                         <td>
@@ -163,6 +152,9 @@
                         </td>
                         <td>
                             {{L.DeliveryDate}}
+                        </td>
+                        <td>
+                            {{L.TotalPRSetPrice}}
                         </td>
                         <td>
                             {{L.Status}}
@@ -215,7 +207,15 @@
     $(document).ready(function () {
         window.FetchPRDetailsList = '@Url.Action("FetchPRDetailsList", "MRM")';
         window.PRDetailsPopup = '@Url.Action("PRDetailPopup", "MRM")';
+        window.GetPRTableDetails = '@Url.Action("GetPRTableDetails", "MRM")';
         window.SavePRDetailsList = '@Url.Action("SavePRDetailsList", "MRM")';
+
+        var DeptNameField = $('#HiddenDeptNamePRDetails').val();
+        debugger;
+        if (DeptNameField == 'Management' || DeptNameField == 'Stores') {
+            $('#btnEditPRDetails').hide();
+        }
+
     });
 
 

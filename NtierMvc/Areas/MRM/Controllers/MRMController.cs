@@ -34,12 +34,10 @@ namespace NtierMvc.Areas.MRM.Controllers
         public ActionResult MRMMaster()
         {
 
-            ViewBag.ListQuoteType = model.GetMasterTableStringList("DesignPRP", "Id", "QuoteType", "", "", GeneralConstants.ListTypeD);
-            ViewBag.ListQuoteNo = model.GetMasterTableStringList("DesignPRP", "Id", "QuoteNo", "", "", GeneralConstants.ListTypeD);
-            ViewBag.ListSONo = model.GetMasterTableStringList("DesignPRP", "Id", "SONo", "", "", GeneralConstants.ListTypeD);
-            ViewBag.ListVendorId = model.GetMasterTableStringList("DesignPRP", "Id", "VendorID", "", "", GeneralConstants.ListTypeD);
-            ViewBag.ListVendorName = model.GetMasterTableStringList("DesignPRP", "Id", "VendorID", "", "", GeneralConstants.ListTypeD);
-            ViewBag.ListProductGroup = model.GetMasterTableStringList("Master.Product", "Id", "ProductName", "", "", GeneralConstants.ListTypeD);
+            ViewBag.ListVendorType = model.GetMasterTableStringList("Master.Vendor", "Id", "VendorType", "", "", GeneralConstants.ListTypeD);
+            ViewBag.ListSupplierId = model.GetMasterTableStringList("DesignPRP", "Id", "QuoteNo", "", "", GeneralConstants.ListTypeD);
+            ViewBag.ListRMCategory = model.GetMasterTableStringList("Master.RMCategory", "Id", "CategoryName", "", "", GeneralConstants.ListTypeD);
+            ViewBag.ListDeliveryDate = model.GetMasterTableStringList("PurchaseRequest", "DeliveryDate", "DeliveryDate", "", "", GeneralConstants.ListTypeD);
 
             return View();
         }
@@ -47,8 +45,10 @@ namespace NtierMvc.Areas.MRM.Controllers
         [HttpGet]
         public ActionResult PRPlanning()
         {
-            GateEntryEntity objVNB = new GateEntryEntity();
-            return PartialView(objVNB);
+            PRDetailEntity prObj = new PRDetailEntity();
+            var UserDetails = (UserEntity)Session["UserModel"];
+            prObj.DeptName = UserDetails.DeptName;
+            return PartialView(prObj);
         }
 
         public JsonResult FetchPRDetailsList(string pageIndex, string pageSize, string SearchTypeId = null, string SearchQuoteNo = null, string SearchSONo = null, string SearchVendorId = null, string SearchVendorName = null, string SearchProductGroup = null)
@@ -244,16 +244,17 @@ namespace NtierMvc.Areas.MRM.Controllers
                         newObj.EntryDate = DateTime.Now;
                         newObj.Status = item.Status;
                         newObj.EntryPerson = item.EntryPerson;
+                        newObj.TotalPRSetPrice = item.TotalPRSetPrice;
 
-                        
+
                         itemListBulk.Add(newObj);
                     }
 
-
+                    string result = string.Empty;
                     ExtensionMethods lsttodt = new ExtensionMethods();
                     objBU.DataRecordTable = lsttodt.ToDataTable(itemListBulk);
-
-                    string result = objManager.SavePRDetailsList(objBU);
+                    objBU.IdentityNo = PRDetails[0].PRSetno;
+                    result = objManager.SavePRDetailsList(objBU);
 
                     string data = string.Empty;
                     if (!string.IsNullOrEmpty(result) && (result == GeneralConstants.Inserted || result == GeneralConstants.Updated))
@@ -269,7 +270,7 @@ namespace NtierMvc.Areas.MRM.Controllers
                     return new JsonResult { Data = data, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
 
                 }
-                return Json("Unable to save Item Details! Please Provice correct information", JsonRequestBehavior.AllowGet);
+                return Json("Unable to save Item Details! Please Provide correct information", JsonRequestBehavior.AllowGet);
             }
             catch (Exception)
             {
@@ -277,5 +278,12 @@ namespace NtierMvc.Areas.MRM.Controllers
             }
         }
 
+        public JsonResult GetPRTableDetails(string PRSetno)
+        {
+            List<PRDetailEntityBulkSave> prObjList = new List<PRDetailEntityBulkSave>();
+            prObjList = objManager.GetPRTableDetails(PRSetno);
+
+            return new JsonResult { Data = prObjList, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+        }
     }
 }

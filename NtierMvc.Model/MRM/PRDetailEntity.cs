@@ -28,7 +28,7 @@ namespace NtierMvc.Model.MRM
         public string RMcode { get; set; }
         public int RMcat { get; set; }
         public string RMdescription { get; set; }
-        public int RMgrade { get; set; }
+        public string RMgrade { get; set; }
         public string RMHardness { get; set; }
         public string PSLlevel { get; set; }
         public int UOM { get; set; }
@@ -40,6 +40,7 @@ namespace NtierMvc.Model.MRM
         public int PRqty { get; set; }
         public string UnitPrice { get; set; }
         public string TotalPrice { get; set; }
+        public string TotalPRSetPrice { get; set; }
         public string ReqDlyDate { get; set; }
         public int SupplyTerms { get; set; }
         public string DlyTerms { get; set; }
@@ -71,6 +72,7 @@ namespace NtierMvc.Model.MRM
         public string EntryPerson { get; set; }
         public string ApprovePerson1 { get; set; }
         public string ApprovePerson2 { get; set; }
+        public string EntryType { get; set; }
     }
 
     public class PRDetailEntityBulkSave
@@ -94,7 +96,7 @@ namespace NtierMvc.Model.MRM
         public string RMcode { get; set; }
         public int RMcat { get; set; }
         public string RMdescription { get; set; }
-        public int RMgrade { get; set; }
+        public string RMgrade { get; set; }
         public string RMHardness { get; set; }
         public string PSLlevel { get; set; }
         public int UOM { get; set; }
@@ -106,6 +108,7 @@ namespace NtierMvc.Model.MRM
         public int PRqty { get; set; }
         public string UnitPrice { get; set; }
         public string TotalPrice { get; set; }
+        public string TotalPRSetPrice { get; set; }
         public string ReqDlyDate { get; set; }
         public int SupplyTerms { get; set; }
         public string DlyTerms { get; set; }

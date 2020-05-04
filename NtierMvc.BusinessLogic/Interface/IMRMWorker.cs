@@ -11,5 +11,7 @@ namespace NtierMvc.BusinessLogic.Interface
         string SavePRDetailsList(BulkUploadEntity bEntity);
 
         PRDetailEntityDetails GetPRDetailsList(int pageIndex, int pageSize, string SearchTypeId = null, string SearchQuoteNo = null, string SearchSONo = null, string SearchVendorId = null, string SearchVendorName = null, string SearchProductGroup = null);
+
+        List<PRDetailEntity> GetPRTableDetails(string PRSetno);
     }
 }

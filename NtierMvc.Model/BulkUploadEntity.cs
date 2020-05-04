@@ -10,5 +10,7 @@ namespace NtierMvc.Model
         public DataTable DataRecordTable { get; set; }
         public string DestinationTable { get; set; }
         public string TableName { get; set; }
+        public string EntryType { get; set; }
+        public int IdentityNo { get; set; }
     }
 }
