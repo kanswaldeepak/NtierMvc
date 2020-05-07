@@ -33,12 +33,13 @@ namespace NtierMvc.Areas.MRM.Controllers
         [HttpGet]
         public ActionResult MRMMaster()
         {
-
             ViewBag.ListVendorType = model.GetMasterTableStringList("Master.Vendor", "Id", "VendorType", "", "", GeneralConstants.ListTypeD);
-            ViewBag.ListSupplierId = model.GetMasterTableStringList("DesignPRP", "Id", "QuoteNo", "", "", GeneralConstants.ListTypeD);
+            ViewBag.ListSupplierId = "";
             ViewBag.ListRMCategory = model.GetMasterTableStringList("Master.RMCategory", "Id", "CategoryName", "", "", GeneralConstants.ListTypeD);
             ViewBag.ListDeliveryDate = model.GetMasterTableStringList("PurchaseRequest", "DeliveryDate", "DeliveryDate", "", "", GeneralConstants.ListTypeD);
 
+            var UserDetails = (UserEntity)Session["UserModel"];
+            ViewBag.DeptName = UserDetails.DeptName;
             return View();
         }
 
@@ -46,8 +47,6 @@ namespace NtierMvc.Areas.MRM.Controllers
         public ActionResult PRPlanning()
         {
             PRDetailEntity prObj = new PRDetailEntity();
-            var UserDetails = (UserEntity)Session["UserModel"];
-            prObj.DeptName = UserDetails.DeptName;
             return PartialView(prObj);
         }
 
@@ -60,8 +59,10 @@ namespace NtierMvc.Areas.MRM.Controllers
             SearchVendorName = SearchVendorName == null ? string.Empty : SearchVendorName;
             SearchProductGroup = SearchProductGroup == null ? string.Empty : SearchProductGroup;
 
+            var UserDetails = (UserEntity)Session["UserModel"];
+
             PRDetailEntityDetails prEntity = new PRDetailEntityDetails();
-            prEntity = objManager.GetPRDetailsList(Convert.ToInt32(pageIndex), Convert.ToInt32(pageSize), SearchTypeId, SearchQuoteNo, SearchSONo, SearchVendorId, SearchVendorName, SearchProductGroup);
+            prEntity = objManager.GetPRDetailsList(Convert.ToInt32(pageIndex), Convert.ToInt32(pageSize), UserDetails.DeptName, SearchTypeId, SearchQuoteNo, SearchSONo, SearchVendorId, SearchVendorName, SearchProductGroup);
             return new JsonResult { Data = prEntity, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 
@@ -133,6 +134,12 @@ namespace NtierMvc.Areas.MRM.Controllers
             {
                 prObj.PRSetno = Convert.ToInt32(PRSetno);
                 prObj = objManager.GetSavedPRDetailsPopup(prObj);
+                ViewBag.DeptName = UserDetails.DeptName;
+
+                if(prObj.Status == "Entry")
+                    prObj.ApprovePerson1Sign = UserDetails.SignImage;
+                else if (prObj.Status == "Approve1")
+                    prObj.ApprovePerson2Sign = UserDetails.SignImage;
             }
             else if (actionType == "ADD")
             {
@@ -140,6 +147,7 @@ namespace NtierMvc.Areas.MRM.Controllers
                 prObj.ReqFrom = UserDetails.FirstName + " " + UserDetails.LastName;
                 prObj.PRdate = DateTime.Now.ToShortDateString();
                 prObj.DeptName = UserDetails.DeptName;
+                prObj.EntryPersonSign = UserDetails.SignImage;
             }
 
 
@@ -197,6 +205,8 @@ namespace NtierMvc.Areas.MRM.Controllers
                     List<PRDetailEntityBulkSave> itemListBulk = new List<PRDetailEntityBulkSave>();
                     prList = PRDetails.OfType<PRDetailEntity>().ToList();
 
+                    var UserDetails = (UserEntity)Session["UserModel"];
+
                     foreach (var item in prList)
                     {
                         PRDetailEntityBulkSave newObj = new PRDetailEntityBulkSave();
@@ -243,7 +253,7 @@ namespace NtierMvc.Areas.MRM.Controllers
                         newObj.ExpectedDeliveryDate = item.ExpectedDeliveryDate;
                         newObj.EntryDate = DateTime.Now;
                         newObj.Status = item.Status;
-                        newObj.EntryPerson = item.EntryPerson;
+                        newObj.EntryPerson = UserDetails.UserId.ToString();
                         newObj.TotalPRSetPrice = item.TotalPRSetPrice;
 
 
@@ -276,6 +286,15 @@ namespace NtierMvc.Areas.MRM.Controllers
             {
                 return Json("Unable to save your Item Details! Please try again later.", JsonRequestBehavior.AllowGet);
             }
+        }
+
+        public JsonResult UpdateApproveReject(string PRSetno, string Status)
+        {
+            string msgCode = string.Empty;
+            var UserDetails = (UserEntity)Session["UserModel"];
+            msgCode = objManager.UpdateApproveReject(PRSetno, Status, UserDetails.UserId.ToString());
+
+            return new JsonResult { Data = msgCode, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 
         public JsonResult GetPRTableDetails(string PRSetno)

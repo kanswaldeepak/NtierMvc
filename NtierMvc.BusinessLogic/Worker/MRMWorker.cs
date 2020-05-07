@@ -12,24 +12,6 @@ namespace NtierMvc.BusinessLogic.Worker
     {
         Repository _repository = new Repository();
 
-        //public EmployeeEntity DT2Cust(DataTable dtRecord)
-        //{
-        //    EmployeeEntity oCust = new EmployeeEntity();
-        //    try
-        //    {
-        //        if (dtRecord.Rows.Count > 0)
-        //        {
-        //            oCust.UnitNo = Convert.ToString(dtRecord.Rows[0]["Id"]);
-        //            oCust.UserInitial = Convert.ToString(dtRecord.Rows[0]["UserName"]);
-        //        }
-        //    }
-        //    catch (Exception Ex)
-        //    {
-        //        NtierMvc.DataAccess.ExceptionLogging.SendExcepToDB(Ex);
-        //    }
-        //    return oCust;
-        //}
-
         public PRDetailEntity GetPRDetailsPopup(PRDetailEntity Model)
         {
             try
@@ -94,12 +76,17 @@ namespace NtierMvc.BusinessLogic.Worker
                     Model.POno = dr1.IsNull("POno") ? "" : Convert.ToString(dr1["POno"]);
                     Model.DeliveryDate = dr1.IsNull("DeliveryDate") ? "" : Convert.ToString(dr1["DeliveryDate"]);
                     Model.ExpectedDeliveryDate = dr1.IsNull("ExpectedDeliveryDate") ? "" : Convert.ToString(dr1["ExpectedDeliveryDate"]);
-                    Model.EntryDate = dr1.IsNull("EntryDate") ? "" : Convert.ToString(dr1["EntryDate"]);
-                    Model.Status = dr1.IsNull("Status") ? "" : Convert.ToString(dr1["Status"]);
-                    Model.EntryPerson = dr1.IsNull("EntryPerson") ? "" : Convert.ToString(dr1["EntryPerson"]);
+                    Model.EntryDate = dr1.IsNull("EntryDate") ? "" : Convert.ToString(dr1["EntryDate"]);                    
                     Model.UOM = dr1.IsNull("UOM") ? 0 : Convert.ToInt32(dr1["UOM"]);
                     Model.PaymentTerms = dr1.IsNull("PaymentTerms") ? "" : Convert.ToString(dr1["PaymentTerms"]);
                     Model.SupplyTerms = dr1.IsNull("SupplyTerms") ? 0 : Convert.ToInt32(dr1["SupplyTerms"]);
+                    Model.Status = dr1.IsNull("Status") ? "" : Convert.ToString(dr1["Status"]);
+                    Model.EntryPerson = dr1.IsNull("EntryPerson") ? "" : Convert.ToString(dr1["EntryPerson"]);
+                    Model.ApprovePerson1 = dr1.IsNull("ApprovePerson1") ? "" : Convert.ToString(dr1["ApprovePerson1"]);
+                    Model.ApprovePerson2 = dr1.IsNull("ApprovePerson2") ? "" : Convert.ToString(dr1["ApprovePerson2"]);
+                    Model.EntryPersonSign = dr1.IsNull("EntryPersonSign") ? "" : Convert.ToString(dr1["EntryPersonSign"]);
+                    Model.ApprovePerson1Sign = dr1.IsNull("ApprovePerson1Sign") ? "" : Convert.ToString(dr1["ApprovePerson1Sign"]);
+                    Model.ApprovePerson2Sign = dr1.IsNull("ApprovePerson2Sign") ? "" : Convert.ToString(dr1["ApprovePerson2Sign"]);
 
                     //RMdescription
                     //RMgrade
@@ -152,7 +139,7 @@ namespace NtierMvc.BusinessLogic.Worker
             return result;
         }
 
-        public PRDetailEntityDetails GetPRDetailsList(int pageIndex, int pageSize, string SearchTypeId = null, string SearchQuoteNo = null, string SearchSONo = null, string SearchVendorId = null, string SearchVendorName = null, string SearchProductGroup = null)
+        public PRDetailEntityDetails GetPRDetailsList(int pageIndex, int pageSize, string DeptName, string SearchTypeId = null, string SearchQuoteNo = null, string SearchSONo = null, string SearchVendorId = null, string SearchVendorName = null, string SearchProductGroup = null)
         {
             try
             {
@@ -182,6 +169,7 @@ namespace NtierMvc.BusinessLogic.Worker
                                 obj.TotalPRSetPrice = dr1.IsNull("TotalPRSetPrice") ? "" : Convert.ToString(dr1["TotalPRSetPrice"]);
                                 obj.DeliveryDate = dr1.IsNull("DeliveryDate") ? string.Empty : Convert.ToString(dr1["DeliveryDate"]);
                                 obj.Status = dr1.IsNull("Status") ? string.Empty : Convert.ToString(dr1["Status"]);
+                                obj.DeptName = DeptName;
 
                                 prDetailEntity.lstPREntity.Add(obj);
                             }
@@ -248,6 +236,21 @@ namespace NtierMvc.BusinessLogic.Worker
                 NtierMvc.DataAccess.ExceptionLogging.SendExcepToDB(ex);
             }
             return newList;
+        }
+
+        public string UpdateApproveReject(string PRSetNo, string Status, string UserId)
+        {
+            string msgCode = "";
+            try
+            {
+                msgCode = _repository.UpdateApproveReject(PRSetNo, Status, UserId);
+            }
+            catch (Exception ex)
+            {
+                NtierMvc.DataAccess.ExceptionLogging.SendExcepToDB(ex);
+                throw;
+            }
+            return msgCode;
         }
 
     }

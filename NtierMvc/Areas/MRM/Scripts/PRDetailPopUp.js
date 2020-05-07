@@ -5,10 +5,30 @@ $(document).ready(function () {
 
 })
 
-function ApproveReject(value) {
+function funcApproveReject(value) {
 
-    //$('#ApproveRejectPRDetails').attr('options:selected', value);
     $('#ApproveRejectPRDetails option:selected').text(value);
+    var PRSetNo = $('#HiddenPRSetno').val();
+    var Status = value + $('#HiddenStatusPRDetails').val();
+
+    //if ((Status == 'Approve1' && $('#StoreEx').prop("checked") == false) || (Status == 'Approve2' && $('#ApproverSign').prop("checked") == false)) {
+    //    alert("Kindly tick Signature Checkbox");
+    //    return;
+    //}
+
+    $.ajax({
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json',
+        type: 'POST',
+        url: window.UpdateApproveReject,
+        data: JSON.stringify({ PRSetNo: PRSetNo, Status: Status}),
+        success: function (res) {
+            alert(res);
+        },
+        error: function () {
+            alert(res);
+        }
+    })
 }
 
 function RMCatChange() {
@@ -61,13 +81,24 @@ function CalcTotal(ob) {
     trob.find(".RMTotalPrice").val(Math.round(qty * unitprice));
 }
 
-function showRequestedSign(id) {
+function showRequestedSign(id,level) {
+
+    if (id == 'StoreEx' || id == 'ApproverSign') {
+        $('#btnApprove').show();
+        $('#btnReject').show();
+
+        $('#HiddenStatusPRDetails').val(level);
+    }
 
     if ($('#' + id).is(':checked')) {
         $('#img' + id).show();
     }
-    else
+    else {
         $('#img' + id).hide();
+
+        $('#btnApprove').hide();
+        $('#btnReject').hide();
+    }
 
     //if (type == 'RequestedBy') {
     //    if ($("#RequestedBy input[type=checkbox]").prop(":checked"))
@@ -308,6 +339,10 @@ function SavePRDetails(e) {
         alert("Kindly Fill all mandatory fields");
         return;
     }
+    else if ( $('#RequestedBy').prop("checked") == false) {
+        alert("Kindly tick Requested By Checkbox");
+        return;
+    }
     else {
         $.each($(tableSelected + " tbody tr"), function () {
             arr.push({
@@ -366,7 +401,6 @@ function SavePRDetails(e) {
                 POno: $('#PONoPRDetails').val(),
                 ExpectedDeliveryDate: $('#ExpectedDeliveryDatePRDetails').val(),
                 Status: $('#HiddenStatusPRDetails').val(),
-                EntryPerson: $('#HiddenEntryPersonPRDetails').val(),
                 TotalPRSetPrice: TotalPRSetPrice
 
 

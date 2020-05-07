@@ -73,13 +73,13 @@ namespace NtierMvc.Areas.MRM.Models
             return result;
         }
 
-        public PRDetailEntityDetails GetPRDetailsList(int pageIndex, int pageSize, string SearchTypeId = null, string SearchQuoteNo = null, string SearchSONo = null, string SearchVendorId = null, string SearchVendorName = null, string SearchProductGroup = null)
+        public PRDetailEntityDetails GetPRDetailsList(int pageIndex, int pageSize, string DeptName, string SearchTypeId = null, string SearchQuoteNo = null, string SearchSONo = null, string SearchVendorId = null, string SearchVendorName = null, string SearchProductGroup = null)
         {
             var baseAddress = "MRMDetail";
             PRDetailEntityDetails prDetails = new PRDetailEntityDetails();
             using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
             {
-                HttpResponseMessage response = client.GetAsync(baseAddress + "/GetPRDetailsList?pageIndex=" + pageIndex + "&pageSize=" + pageSize + "&SearchTypeId=" + SearchTypeId + "&SearchQuoteNo=" + SearchQuoteNo + "&SearchSONo=" + SearchSONo + "&SearchVendorId=" + SearchVendorId + "&SearchVendorName=" + SearchVendorName + "&SearchProductGroup=" + SearchProductGroup).Result;
+                HttpResponseMessage response = client.GetAsync(baseAddress + "/GetPRDetailsList?pageIndex=" + pageIndex + "&pageSize=" + pageSize + "&DeptName=" + DeptName + "&SearchTypeId=" + SearchTypeId + "&SearchQuoteNo=" + SearchQuoteNo + "&SearchSONo=" + SearchSONo + "&SearchVendorId=" + SearchVendorId + "&SearchVendorName=" + SearchVendorName + "&SearchProductGroup=" + SearchProductGroup).Result;
                 if (response.IsSuccessStatusCode)
                 {
                     var data = response.Content.ReadAsStringAsync().Result;
@@ -87,6 +87,23 @@ namespace NtierMvc.Areas.MRM.Models
                 }
             }
             return prDetails;
+        }
+
+        public string UpdateApproveReject(string PRSetno, string Status, string UserId)
+        {
+            string result = "0";
+            var baseAddress = "MRMDetail";
+            string[] param = { PRSetno, Status, UserId };
+            using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
+            {
+                HttpResponseMessage response = client.PostAsJsonAsync(baseAddress + "/UpdateApproveReject", param).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    var data = response.Content.ReadAsStringAsync().Result;
+                    result = JsonConvert.DeserializeObject<string>(data);
+                }
+            }
+            return result;
         }
 
     }

@@ -37,9 +37,9 @@ namespace NtierMvc.API.Controllers.Application
         }
 
         [Route("api/MRMDetail/GetPRDetailsList")]
-        public IHttpActionResult GetPRDetailsList(int pageIndex, int pageSize, string SearchTypeId = null, string SearchQuoteNo = null, string SearchSONo = null, string SearchVendorId = null, string SearchVendorName = null, string SearchProductGroup = null)
+        public IHttpActionResult GetPRDetailsList(int pageIndex, int pageSize, string DeptName, string SearchTypeId = null, string SearchQuoteNo = null, string SearchSONo = null, string SearchVendorId = null, string SearchVendorName = null, string SearchProductGroup = null)
         {
-            return Ok(_repository.GetPRDetailsList(pageIndex, pageSize, SearchTypeId, SearchQuoteNo, SearchSONo, SearchVendorId, SearchVendorName, SearchProductGroup));
+            return Ok(_repository.GetPRDetailsList(pageIndex, pageSize, DeptName, SearchTypeId, SearchQuoteNo, SearchSONo, SearchVendorId, SearchVendorName, SearchProductGroup));
         }
 
         [HttpGet]
@@ -49,6 +49,13 @@ namespace NtierMvc.API.Controllers.Application
             return Ok(_repository.GetPRTableDetails(PRSetno));
         }
 
+        [HttpPost]
+        [Route("api/MRMDetail/UpdateApproveReject")]
+        [ResponseType(typeof(string))]
+        public IHttpActionResult UpdateApproveReject(string[] param)
+        {
+            return Ok(_repository.UpdateApproveReject(param[0], param[1], param[2]));
+        }
 
     }
 }

@@ -2,7 +2,6 @@
 @{
     ViewBag.Title = "Purchase Requisition";
 }
-@Html.HiddenFor(m => m.DeptName, new { @id = "HiddenDeptNamePRDetails" })
 
 <div class="row mt-3">
     <table>
@@ -130,11 +129,11 @@
                 <tbody>
                     <tr ng-repeat="L in PRPList">
                         <td>
-                            <button id="btnViewPRDetails" ng-if="L.Status =='Approve1' || L.Status =='Approve2' || L.Status =='Approve3'" type="button" class="btn btn-outline-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="VIEW" ng-click="LoadPRDetailsViewPopup(L.PRSetno)">
+                            <button id="btnViewPRDetails" ng-if="(((L.Status =='Approve1' || L.Status =='Approve2' || L.Status =='Reject1' || L.Status =='Reject2') && L.DeptName != 'Finance') || (L.Status =='Entry' && (L.DeptName == 'Management' || L.DeptName == 'Stores')))" type="button" class="btn btn-outline-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="VIEW" ng-click="LoadPRDetailsViewPopup(L.PRSetno)">
                                 <i class="fa fa-eye"></i>
                             </button>
 
-                            <button id="btnEditPRDetails" ng-if="L.Status =='Entry' || L.Status =='Reject'" type="button" class="btn btn-outline-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="EDIT" ng-click="LoadPRDetailsEditPopup(L.PRSetno)">
+                            <button id="btnEditPRDetails" ng-if="((L.Status =='Entry' || L.Status =='Reject1' || L.Status =='Reject2') && (L.DeptName == 'Finance'))" type="button" class="btn btn-outline-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="EDIT" ng-click="LoadPRDetailsEditPopup(L.PRSetno)">
                                 <i class="fa fa-pen"></i>
                             </button>
                         </td>
@@ -210,14 +209,16 @@
         window.GetPRTableDetails = '@Url.Action("GetPRTableDetails", "MRM")';
         window.SavePRDetailsList = '@Url.Action("SavePRDetailsList", "MRM")';
 
-        var DeptNameField = $('#HiddenDeptNamePRDetails').val();
-        debugger;
-        if (DeptNameField == 'Management' || DeptNameField == 'Stores') {
-            $('#btnEditPRDetails').hide();
-        }
-
     });
 
+    var DeptName = '@ViewBag.DeptName';
+
+    if (DeptName == 'Finance') {
+        $('#btnPRPDetails').show();
+    }
+    else {
+        $('#btnPRPDetails').hide();
+    }
 
 </script>
 

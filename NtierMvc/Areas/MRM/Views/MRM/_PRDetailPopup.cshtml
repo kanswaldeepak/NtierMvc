@@ -7,7 +7,7 @@
 @Html.HiddenFor(m => m.DeptName, new { @id = "HiddenDeptNamePRDetails" })
 @Html.HiddenFor(m => m.PRSetno, new { @id = "HiddenPRSetno" })
 @Html.HiddenFor(m => m.Status, new { @id = "HiddenStatusPRDetails" })
-@Html.HiddenFor(m => m.EntryPerson, new { @id = "HiddenEntryPersonPRDetails" })
+@*@Html.HiddenFor(m => m.EntryPerson, new { @id = "HiddenEntryPersonPRDetails" })*@
 @Html.HiddenFor(m => m.ApprovePerson1, new { @id = "HiddenApprovePerson1PRDetails" })
 @Html.HiddenFor(m => m.ApprovePerson2, new { @id = "HiddenApprovePerson2PRDetails" })
 
@@ -683,32 +683,31 @@
                 </tr>
                 <tr>
                     <td class="text-center">
-                        <img id="imgRequestedBy" src="~/Images/Sign/SanjaySign.jpg" alt="Signature" width="50px" height="50px" />
+                        <img id="imgRequestedBy" src="~/Images/Sign/@Model.EntryPersonSign" alt="Signature" width="50px" height="50px" />
                     </td>
                     <td class="text-center">
-                        <img id="imgStoreEx" src="~/Images/Sign/DarshaniSign.jpg" alt="Signature" width="50px" height="50px" />
+                        <img id="imgStoreEx" src="~/Images/Sign/@Model.ApprovePerson1Sign" alt="Signature" width="50px" height="50px" />
                     </td>
                     <td class="text-center">
-                        <img id="imgApproverSign" src="~/Images/Sign/AsmitaSign.jpg" alt="Signature" width="50px" height="50px" />
+                        <img id="imgApproverSign" src="~/Images/Sign/@Model.ApprovePerson2Sign" alt="Signature" width="50px" height="50px" />
                     </td>
                 </tr>
                 <tr>
                     <td class="text-center">
-
                         <input type="checkbox" id="RequestedBy" onchange="showRequestedSign('RequestedBy')" />
                         <label id="lblRequestedBy">Requested By</label>
                     </td>
                     <td class="text-center">
-                        <input type="checkbox" id="StoreEx" onchange="showRequestedSign('StoreEx')" />
+                        <input type="checkbox" id="StoreEx" onchange="showRequestedSign('StoreEx','1')" />
                         <label id="lblStoreEx">Sign of Store Executive</label>
                     </td>
                     <td class="text-center">
-                        <input type="checkbox" id="ApproverSign" onchange="showRequestedSign('ApproverSign')" />
+                        <input type="checkbox" id="ApproverSign" onchange="showRequestedSign('ApproverSign','2')" />
                         <label id="lblApproverSign">Sign of Approver</label>
                     </td>
                     <td>
-                        <button id="btnApprove" onclick="ApproveReject('Approved')" class="btn btn-info btn-md">Approved</button>
-                        <button id="btnReject" onclick="ApproveReject('Rejected')" class="btn btn-info btn-md ml-2">Rejected</button>
+                        <button id="btnApprove" onclick="funcApproveReject('Approve')" class="btn btn-info btn-md">Approved</button>
+                        <button id="btnReject" onclick="funcApproveReject('Reject')" class="btn btn-info btn-md ml-2">Rejected</button>
                     </td>
                 </tr>
             </table>
@@ -813,52 +812,12 @@
         </div>
     </form>
 </div>
-@* } *@
 
 <script>
 
     $(document).ready(function () {
 
-        var DeptNameField = $('#HiddenDeptNamePRDetails').val();
-
-            $('#RequestedBy').hide();
-            $('#StoreEx').hide();
-            $('#ApproverSign').hide();
-
-            $('#imgRequestedBy').hide();
-            $('#imgStoreEx').hide();
-            $('#imgApproverSign').hide();
-
-            $('#btnApprove').hide();
-            $('#btnReject').hide();
-            $('#imgPurchaseExecSign').hide();
-            $('#lblPurchaseExecSign').hide();
-
-        if (DeptNameField == 'Management') {
-            $('#imgRequestedBy').show();
-            $('#imgStoreEx').show();
-            $('#imgApproverSign').hide();
-
-            $('#RequestedBy').hide();
-            $('#StoreEx').hide();
-            //$('#RequestedBy').prop('checked', true);
-            //$('#StoreEx').prop('checked', true);
-        }
-        else if (DeptNameField == 'Stores') {
-            //$('#RequestedBy').prop('checked', true);
-            $('#RequestedBy').hide();
-            $('#ApproverSign').hide();
-
-            $('#imgRequestedBy').show();
-            $('#imgStoreEx').hide();
-            $('#imgApproverSign').hide();
-        }
-        else if (DeptNameField == 'Finance') {
-            $('#RequestedBy').show();
-            $('#HiddenStatusPRDetails').val('Entry');
-            $('#HiddenEntryPersonPRDetails').val($('#RequestFromPRDetails').val());
-        }
-
+        window.UpdateApproveReject = '@Url.Action("UpdateApproveReject", "MRM")';       
         window.ChangeEndUseNoForQuoteOrSoNo = '@Url.Action("ChangeEndUseNoForQuoteOrSoNo", "MRM")';
         window.ChangeEndUseNoForNonPO = '@Url.Action("ChangeEndUseNoForNonPO", "MRM")';
         window.ChangeRMCat = '@Url.Action("ChangeRMCat", "MRM")';
@@ -872,6 +831,52 @@
         $('#tableC').hide();
         $('#tableO').hide();
 
+        var DeptNameField = '@ViewBag.DeptName';
+
+        $('#RequestedBy').hide();
+        $('#StoreEx').hide();
+        $('#ApproverSign').hide();
+
+        $('#imgRequestedBy').hide();
+        $('#imgStoreEx').hide();
+        $('#imgApproverSign').hide();
+
+        $('#btnApprove').hide();
+        $('#btnReject').hide();
+        $('#imgPurchaseExecSign').hide();
+        $('#lblPurchaseExecSign').hide();
+
+        if (DeptNameField == 'Management') {
+            $('#imgRequestedBy').show();
+            $('#imgStoreEx').show();
+            $('#imgApproverSign').hide();
+
+            $('#RequestedBy').hide();
+            $('#StoreEx').hide();
+            $('#ApproverSign').show();
+            //$('#RequestedBy').prop('checked', true);
+            //$('#StoreEx').prop('checked', true);
+            $('#HiddenStatusPRDetails').val('Approve2');
+        }
+        else if (DeptNameField == 'Stores') {
+            //$('#RequestedBy').prop('checked', true);
+            $('#RequestedBy').hide();
+            $('#ApproverSign').hide();
+            $('#StoreEx').show();
+
+            $('#imgRequestedBy').show();
+            $('#imgStoreEx').hide();
+            $('#imgApproverSign').hide();
+
+            $('#HiddenStatusPRDetails').val('Approve1');
+        }
+        else if (DeptNameField == 'Finance') {
+            $('#RequestedBy').show();
+            $('#HiddenStatusPRDetails').val('Entry');
+        }
+
+
+    });
 
     //LEASE DATE AND EXP LEASE DATE VALIDATION
     $('.CalenderDate').datepicker({

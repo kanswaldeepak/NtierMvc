@@ -38,7 +38,7 @@ angular.module('App').controller("MRMController", function ($scope, $http, $time
         $scope.PRPageIndex = 1;
         $scope.FetchPRDetailsList();
     }
-
+    
     $scope.BindPRDetailsPopup = function () {
         var _actionType = "ADD"
         $.ajax({
@@ -48,7 +48,7 @@ angular.module('App').controller("MRMController", function ($scope, $http, $time
             url: window.PRDetailsPopup,
             success: function (html) {
                 html = $compile(html)($scope);
-                SetModalTitle("View Purchase Requisition")
+                SetModalTitle("Add Purchase Requisition");
                 SetModalBody(html);
                 HideLoadder();
                 SetModalWidth("1500px");
@@ -87,7 +87,7 @@ angular.module('App').controller("MRMController", function ($scope, $http, $time
             url: window.PRDetailsPopup,
             success: function (res) {
                 var html = $compile(res)($scope);
-                SetModalTitle("Edit Purchase Requisition")
+                SetModalTitle("Edit Purchase Requisition");
                 SetModalBody(html);
                 HideLoadder();
                 SetModalWidth("1500px");
@@ -182,7 +182,7 @@ angular.module('App').controller("MRMController", function ($scope, $http, $time
                 //Don't Copy this for View 
 
                 var html = $compile(res)($scope);
-                SetModalTitle("Purchase Requisition")
+                SetModalTitle("View Purchase Requisition")
                 SetModalBody(html);
                 HideLoadder();
                 $('.bs-tooltip-top').css('display', 'none');
@@ -234,8 +234,8 @@ angular.module('App').controller("MRMController", function ($scope, $http, $time
                 })
 
                 $('#formPRDetails input[type=radio],input[type=text], select').prop("disabled", true);
-                $('#save_results').css('display', 'none');
-                $('.bs-tooltip-top').css('display', 'none');
+                $('#SavePRDetailButton').css('display', 'none');
+
 
                 if (!($('.modal.in').length)) {
                     $('.modal-dialog').css({
