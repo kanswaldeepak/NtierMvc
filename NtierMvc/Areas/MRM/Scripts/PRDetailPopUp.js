@@ -83,11 +83,31 @@ function CalcTotal(ob) {
 
 function showRequestedSign(id,level) {
 
-    if (id == 'StoreEx' || id == 'ApproverSign') {
+    if (id == 'ApproverSign') {
         $('#btnApprove').show();
         $('#btnReject').show();
 
         $('#HiddenStatusPRDetails').val(level);
+    }
+
+    if (id == 'StoreEx') {
+        var PRSetNo = $('#HiddenPRSetno').val();
+        var Status = 'Approve1';
+
+        $.ajax({
+            url: window.UpdateApproveReject,
+            type: 'POST',
+            data: JSON.stringify({ PRSetNo: PRSetNo, Status: Status }),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (data) {
+                alert(data);
+            },
+            error: function (x, e) {
+                alert('Some error is occurred, Please try after some time.');
+            }
+
+        })
     }
 
     if ($('#' + id).is(':checked')) {
@@ -344,6 +364,7 @@ function SavePRDetails(e) {
         return;
     }
     else {
+        
         $.each($(tableSelected + " tbody tr"), function () {
             arr.push({
                 //Id: $("#Id").val(),
@@ -396,13 +417,13 @@ function SavePRDetails(e) {
                 Certificates: $('#PRDetailsCertificates').val(),
                 ApprovedSupplier1: $('#PRApprovedSupplier1').val(),
                 ApprovedSupplier2: $('#PRApprovedSupplier2').val(),
-                ApprovedReject: $('#AcceptRejectPRDetails').val(),
+                PRFavouredOn: $('#PRDetailsPRFavouredOn').val(),
+                //ApprovedReject: $('#AcceptRejectPRDetails').val(),
                 Communicate: $('#CommunicatePRDetails').val(),
                 POno: $('#PONoPRDetails').val(),
                 ExpectedDeliveryDate: $('#ExpectedDeliveryDatePRDetails').val(),
                 Status: $('#HiddenStatusPRDetails').val(),
                 TotalPRSetPrice: TotalPRSetPrice
-
 
             });
         });

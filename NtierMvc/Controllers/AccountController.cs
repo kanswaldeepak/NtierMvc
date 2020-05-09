@@ -262,6 +262,7 @@ namespace NtierMvc.Controllers
             //ViewBag.FunctionalArea = model.GetTaxonomyDropDownItems("", "Functional Area");
             ViewBag.GenderType = model.GetTaxonomyDropDownItems("", "Gender");
             ViewBag.GenderTitle = model.GetTaxonomyDropDownItems("", "Title");
+            ViewBag.ListDepartment = model.GetDropDownList("Master.Department", GeneralConstants.ListTypeD, "Id", "DeptName", "", "");
             return View();
         }
 

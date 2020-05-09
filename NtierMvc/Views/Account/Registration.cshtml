@@ -1,6 +1,5 @@
 ﻿@model NtierMvc.Model.Account.UserEntity
-@using NtierMvc.Model
-@using NtierMvc.Infrastructure
+
 @{
     ViewBag.Title = "Registration";
     Layout = "~/Views/Shared/_NLayoutLoginandRegister.cshtml";
@@ -313,20 +312,19 @@
                         </div>
                         <div class="col-md-2">
                             <div class="form-group">
-                                <label class="control-label">Designation  <span class="required">*</span></label>
-                                @Html.TextBoxFor(m => m.Designation, new
-                                {
-                                 @class = "form-control requiredValidation",
-                                 @placeholder = "DESIGNATION",
-                                    @style = "text-transform:uppercase",
-                                    @id = "Designation",
-                                    @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
-                                })<label class="HideValidMsg">Fields is Required *</label>
+                                <label class="control-label">Department<span class="required">*</span></label>
+                                @Html.DropDownListFor(m => m.Department, new SelectList(@ViewBag.ListDepartment, "DataStringValueField", "DataTextField", "Select"), new
+                               {
+                                   @class = "form-control requiredValidation",
+                                   @id = "Designation",
+                                   @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                               })
+                                <label class="HideValidMsg">Fields is Required *</label>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label class="control-label">Std Code - LandLine No <span data-skin="dark" data-toggle="m-tooltip" data-placement="top" title="" data-original-title="(All communication shall be sent on this Mobile Number through SMS)"><i class="fa fa-info-circle"></i></span><span class="required">*</span></label>
+                                <label class="control-label"> Std Code - LandLine No <span data-skin="dark" data-toggle="m-tooltip" data-placement="top" title="" data-original-title="(All communication shall be sent on this Mobile Number through SMS)"><i class="fa fa-info-circle"></i></span><span class="required">*</span></label>
                                 <div class="row">
                                     <div class="col-md-4 pr-2">
                                         @Html.TextBoxFor(m => m.STDCodeL, new
@@ -577,7 +575,7 @@
     //});
 
     $("#applicationType").change(function () {
-        debugger;
+
         $(".bifo-designation").hide();
         $(".resolution-authorized").hide();
         var applicationFor = $('#applicationType').val();

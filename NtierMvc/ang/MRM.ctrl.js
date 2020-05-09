@@ -53,7 +53,7 @@ angular.module('App').controller("MRMController", function ($scope, $http, $time
                 HideLoadder();
                 SetModalWidth("1500px");
                 ShowModal();
-
+                
                 if (!($('.modal.in').length)) {
                     $('.modal-dialog').css({
                         top: '5%',

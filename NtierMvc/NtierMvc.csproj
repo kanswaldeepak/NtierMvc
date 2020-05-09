@@ -960,6 +960,7 @@
     <Content Include="Images\MailIcon.png" />
     <Content Include="Images\PDF.jpg" />
     <Content Include="Images\pdfIcon.png" />
+    <Content Include="Images\Sign\Sudhir.jpg" />
     <Content Include="Images\Sign\AsmitaSign.jpg" />
     <Content Include="Images\Sign\DarshaniSign.jpg" />
     <Content Include="Images\Sign\preeti.jpg" />

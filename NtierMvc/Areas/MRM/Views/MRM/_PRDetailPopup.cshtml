@@ -679,7 +679,15 @@
                             @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
                         })
                     </td>
-                    <td></td>
+                    <td>
+                        @Html.TextBoxFor(m => m.PRFavouredOn, new
+                        {
+                            @class = "form-control requiredValidation",
+                            @id = "PRDetailsPRFavouredOn",
+                            @placeholder = "PR Favoured On",
+                            @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                        })
+                    </td>
                 </tr>
                 <tr>
                     <td class="text-center">
@@ -722,20 +730,20 @@
                 <div class="col-md-12">
                     <table class="table table-bordered">
                         @*<tr>
-                                <td></td>
-                                <td>
-                                    Status of PR
-                                </td>
-                                <td>
-                                    @Html.DropDownListFor(m => m.ApprovedReject, new SelectList(@ViewBag.ListAcceptReject, "DataStringValueField", "DataTextField", "Select"), new
-                               {
-                                   @class = "form-control ml-2 requiredValidation clearField",
-                                   @id = "ApproveRejectPRDetails",
-                                   @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
-                               })
-                                </td>
-                                <td></td>
-                            </tr>*@
+            <td></td>
+            <td>
+                Status of PR
+            </td>
+            <td>
+                @Html.DropDownListFor(m => m.ApprovedReject, new SelectList(@ViewBag.ListAcceptReject, "DataStringValueField", "DataTextField", "Select"), new
+           {
+               @class = "form-control ml-2 requiredValidation clearField",
+               @id = "ApproveRejectPRDetails",
+               @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+           })
+            </td>
+            <td></td>
+        </tr>*@
                         <tr>
                             <td></td>
                             <td>
@@ -744,7 +752,7 @@
                             <td>
                                 @Html.DropDownListFor(m => m.Communicate, new SelectList(@ViewBag.ListCommunicate, "DataStringValueField", "DataTextField", "Select"), new
                                 {
-                                    @class = "form-control ml-2 requiredValidation clearField",
+                                    @class = "form-control ml-2 clearField",
                                     @id = "CommunicatePRDetails",
                                     @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
                                 })
@@ -759,8 +767,23 @@
                             <td>
                                 @Html.TextBoxFor(m => m.POno, new
                                 {
-                                    @class = "form-control ml-3 requiredValidation",
+                                    @class = "form-control ml-3",
                                     @id = "PONoPRDetails",
+                                    @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                                })
+                            </td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>
+                                PR Requested On
+                            </td>
+                            <td>
+                                @Html.DropDownListFor(m => m.PRRequestedOn, new SelectList(ViewBag.ListPRRequestedOn, "DataStringValueField", "DataTextField", "Select"), new
+                                {
+                                    @class = "form-control ml-2 requiredValidation clearField",
+                                    @id = "PRDetailsPRRequestedOn",
                                     @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
                                 })
                             </td>
@@ -774,7 +797,7 @@
                             <td>
                                 @Html.TextBoxFor(m => m.ExpectedDeliveryDate, new
                                 {
-                                    @class = "form-control ml-3 requiredValidation CalenderDate",
+                                    @class = "form-control ml-3 CalenderDate",
                                     @placeholder = "dd/MM/yyyy",
                                     autocomplete = "off",
                                     @id = "ExpectedDeliveryDatePRDetails",
@@ -787,7 +810,7 @@
                             <td></td>
                             <td class="text-right"></td>
                             <td class="text-center">
-                                <img id="imgPurchaseExecSign" src="~/Images/Sign/preeti.jpg" alt="Signature" width="50px" height="50px" />
+                                <img id="imgPurchaseExecSign" src="~/Images/Sign/@ViewBag.PurchaseRequest" alt="Signature" width="50px" height="50px" />
                             </td>
                             <td></td>
                         </tr>
@@ -831,9 +854,9 @@
         $('#tableC').hide();
         $('#tableO').hide();
 
-        var DeptNameField = '@ViewBag.DeptName';
+        var DeptNameField = '@ViewBag.DeptName.ToString()';
 
-        $('#RequestedBy').hide();
+        $('#RequestedBy').show();
         $('#StoreEx').hide();
         $('#ApproverSign').hide();
 
@@ -845,7 +868,7 @@
         $('#btnReject').hide();
         $('#imgPurchaseExecSign').hide();
         $('#lblPurchaseExecSign').hide();
-
+        
         if (DeptNameField == 'Management') {
             $('#imgRequestedBy').show();
             $('#imgStoreEx').show();
@@ -860,18 +883,30 @@
         }
         else if (DeptNameField == 'Stores') {
             //$('#RequestedBy').prop('checked', true);
-            $('#RequestedBy').hide();
-            $('#ApproverSign').hide();
-            $('#StoreEx').show();
+            if ($('#HiddenStatusPRDetails').val() == '') {
+                $('#RequestedBy').show();
+                $('#imgRequestedBy').hide();
+                $('#StoreEx').hide();
+                $('#lblStoreEx').hide();
+            }
+            else {
+                $('#imgRequestedBy').show();
+            }
 
-            $('#imgRequestedBy').show();
             $('#imgStoreEx').hide();
+            $('#ApproverSign').hide();
             $('#imgApproverSign').hide();
-
             $('#HiddenStatusPRDetails').val('Approve1');
         }
-        else if (DeptNameField == 'Finance') {
-            $('#RequestedBy').show();
+        else if (DeptNameField == 'Purchase') {
+            $('#imgRequestedBy').show();
+            $('#imgStoreEx').show();
+            $('#imgApproverSign').show();
+            $('#imgPurchaseExecSign').show();
+            $('#lblPurchaseExecSign').show();
+            $('#HiddenStatusPRDetails').val('PurchaseApprove');
+        }
+        else {
             $('#HiddenStatusPRDetails').val('Entry');
         }
 

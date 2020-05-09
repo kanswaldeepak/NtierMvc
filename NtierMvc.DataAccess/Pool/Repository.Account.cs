@@ -211,7 +211,7 @@ namespace NtierMvc.DataAccess.Pool
             parms.Add("@MobileNumber", objUser.MobileNumber);
             parms.Add("@AlternativeMobileNumber", objUser.AlternativeMobileNumber);
             parms.Add("@EmailID", objUser.EmailID);
-            parms.Add("@Designation", objUser.Designation);
+            parms.Add("@Department", objUser.Department);
             parms.Add("@STDCodeL", objUser.STDCodeL);
             parms.Add("@LandLineNumber1", objUser.LandLineNumber1);
             ////end////

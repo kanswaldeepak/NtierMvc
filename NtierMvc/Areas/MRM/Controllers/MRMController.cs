@@ -107,6 +107,7 @@ namespace NtierMvc.Areas.MRM.Controllers
             ViewBag.ListAcceptReject = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "AcceptReject", "Property", GeneralConstants.ListTypeN);
             ViewBag.ListCommunicate = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "YesNo", "Property", GeneralConstants.ListTypeN);
             ViewBag.ListEndUseNo = "";
+            ViewBag.ListPRRequestedOn = "";
 
             if (Session["CommonDetails"] != null)
             {
@@ -127,6 +128,8 @@ namespace NtierMvc.Areas.MRM.Controllers
             }
 
             var UserDetails = (UserEntity)Session["UserModel"];
+            ViewBag.DeptName = UserDetails.DeptName;
+
             PRDetailEntity prObj = new PRDetailEntity();
             prObj.UserId = UserDetails.UserId;
 
@@ -134,12 +137,16 @@ namespace NtierMvc.Areas.MRM.Controllers
             {
                 prObj.PRSetno = Convert.ToInt32(PRSetno);
                 prObj = objManager.GetSavedPRDetailsPopup(prObj);
-                ViewBag.DeptName = UserDetails.DeptName;
-
+                
                 if(prObj.Status == "Entry")
                     prObj.ApprovePerson1Sign = UserDetails.SignImage;
                 else if (prObj.Status == "Approve1")
                     prObj.ApprovePerson2Sign = UserDetails.SignImage;
+                else if (prObj.Status == "Approve2")
+                    ViewBag.PurchaseRequest = UserDetails.SignImage;
+
+
+                ViewBag.ListPRRequestedOn = "";
             }
             else if (actionType == "ADD")
             {
@@ -255,8 +262,14 @@ namespace NtierMvc.Areas.MRM.Controllers
                         newObj.Status = item.Status;
                         newObj.EntryPerson = UserDetails.UserId.ToString();
                         newObj.TotalPRSetPrice = item.TotalPRSetPrice;
+                        newObj.PRFavouredOn = item.PRFavouredOn;
 
-
+                        if (item.DeptName == "Stores")
+                        {
+                            newObj.ApproveDate1 = DateTime.Now;
+                            newObj.Status = "Approve1";
+                            newObj.ApprovePerson1 = UserDetails.UserId.ToString();
+                        }
                         itemListBulk.Add(newObj);
                     }
 

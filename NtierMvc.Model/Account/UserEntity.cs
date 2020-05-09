@@ -65,6 +65,7 @@ namespace NtierMvc.Model.Account
         public FileUploadEntity PassportPhoto { get; set; }
         public string GenderTitleID { get; set; }
         public string DeptName { get; set; }
+        public string Department { get; set; }
         public string Permission { get; set; }
         public string SignImage { get; set; }
     }
