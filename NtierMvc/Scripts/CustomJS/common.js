@@ -572,7 +572,8 @@ function mandatoryFile(f) {
 
 //  CANCEL CONFIRMATION
 $(document).on("click", ".cancelcnfrm", function () {
-    var _result = confirm("Are you sure? You might lose data in the form if not saved.");
+    //var _result = confirm("Are you sure? You might lose data in the form if not saved.");
+    _result = true;
     return _result;
 });
 

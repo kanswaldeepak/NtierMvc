@@ -129,7 +129,7 @@
                 <tbody>
                     <tr ng-repeat="L in PRPList">
                         <td>
-                            <button id="btnViewPRDetails" ng-if="(((L.Status =='Approve1' || L.Status =='Approve2' || L.Status =='Reject1' || L.Status =='Reject2') && L.DeptName != 'Finance') || (L.Status =='Entry' && (L.DeptName == 'Management' || L.DeptName == 'Stores')))" type="button" class="btn btn-outline-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="VIEW" ng-click="LoadPRDetailsViewPopup(L.PRSetno)">
+                            <button id="btnViewPRDetails" ng-if="(((L.Status =='Approved1' || L.Status =='Approved2' || L.Status =='Reject1' || L.Status =='Reject2') && L.DeptName != 'Finance') || (L.Status =='Entry' && (L.DeptName == 'Management' || L.DeptName == 'Stores')))" type="button" class="btn btn-outline-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="VIEW" ng-click="LoadPRDetailsViewPopup(L.PRSetno)">
                                 <i class="fa fa-eye"></i>
                             </button>
 

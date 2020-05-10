@@ -89,11 +89,11 @@ namespace NtierMvc.Areas.MRM.Models
             return prDetails;
         }
 
-        public string UpdateApproveReject(string PRSetno, string Status, string UserId)
+        public string UpdateApproveReject(string PRSetno, string Status, string UserId, string PRFavouredOn)
         {
             string result = "0";
             var baseAddress = "MRMDetail";
-            string[] param = { PRSetno, Status, UserId };
+            string[] param = { PRSetno, Status, UserId, PRFavouredOn };
             using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
             {
                 HttpResponseMessage response = client.PostAsJsonAsync(baseAddress + "/UpdateApproveReject", param).Result;

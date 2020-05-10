@@ -7,23 +7,31 @@ $(document).ready(function () {
 
 function funcApproveReject(value) {
 
-    $('#ApproveRejectPRDetails option:selected').text(value);
-    var PRSetNo = $('#HiddenPRSetno').val();
+    //$('#ApproveRejectPRDetails option:selected').text(value);
+    var PRSetNo = $('#HiddenPRSetno').val();    
     var Status = value + $('#HiddenStatusPRDetails').val();
+    var PRFavouredOn = $('#PRDetailsPRFavouredOn').val();
 
     //if ((Status == 'Approve1' && $('#StoreEx').prop("checked") == false) || (Status == 'Approve2' && $('#ApproverSign').prop("checked") == false)) {
     //    alert("Kindly tick Signature Checkbox");
     //    return;
     //}
 
+    if (PRFavouredOn == '' || PRFavouredOn == undefined) {
+
+        alert('PRFavouredOn is mandatory');
+        return;
+    }
+
     $.ajax({
         contentType: 'application/json; charset=utf-8',
         dataType: 'json',
         type: 'POST',
         url: window.UpdateApproveReject,
-        data: JSON.stringify({ PRSetNo: PRSetNo, Status: Status}),
+        data: JSON.stringify({ PRSetNo: PRSetNo, Status: Status, PRFavouredOn: PRFavouredOn}),
         success: function (res) {
-            alert(res);
+            if(res=='Updated Successfully')
+            alert('Approved Successfully');
         },
         error: function () {
             alert(res);

@@ -274,8 +274,7 @@ namespace NtierMvc.Controllers
                 HttpCookie authCookie = Request.Cookies[ConfigurationManager.AppSettings["CookieURL"].ToString()];
                 if (authCookie != null)
                 {
-                    var decryptedObject = AesCipher.Decrypt(authCookie.Value,
-                        ConfigurationManager.AppSettings["CookieEncryptionKey"]);
+                    var decryptedObject = AesCipher.Decrypt(authCookie.Value,ConfigurationManager.AppSettings["CookieEncryptionKey"]);
                     var user = JsonConvert.DeserializeObject<UserEntity>(decryptedObject);
                     SessionLoginEntity objSessionLogin = new SessionLoginEntity();
                     objSessionLogin.SessionId = user.SessionId;

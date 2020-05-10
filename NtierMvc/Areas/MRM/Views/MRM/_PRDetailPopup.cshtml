@@ -4,6 +4,7 @@
 }
 
 <input type="text" id="tableSelected" hidden />
+<input type="text" id="HiddenLoggedInDeptName" hidden />
 @Html.HiddenFor(m => m.DeptName, new { @id = "HiddenDeptNamePRDetails" })
 @Html.HiddenFor(m => m.PRSetno, new { @id = "HiddenPRSetno" })
 @Html.HiddenFor(m => m.Status, new { @id = "HiddenStatusPRDetails" })
@@ -682,7 +683,7 @@
                     <td>
                         @Html.TextBoxFor(m => m.PRFavouredOn, new
                         {
-                            @class = "form-control requiredValidation",
+                            @class = "form-control",
                             @id = "PRDetailsPRFavouredOn",
                             @placeholder = "PR Favoured On",
                             @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
@@ -714,8 +715,8 @@
                         <label id="lblApproverSign">Sign of Approver</label>
                     </td>
                     <td>
-                        <button id="btnApprove" onclick="funcApproveReject('Approve')" class="btn btn-info btn-md">Approved</button>
-                        <button id="btnReject" onclick="funcApproveReject('Reject')" class="btn btn-info btn-md ml-2">Rejected</button>
+                        <button id="btnApprove" onclick="funcApproveReject('Approved')" class="btn btn-info btn-md">Approve</button>
+                        <button id="btnReject" onclick="funcApproveReject('Rejected')" class="btn btn-info btn-md ml-2">Reject</button>
                     </td>
                 </tr>
             </table>
@@ -868,7 +869,7 @@
         $('#btnReject').hide();
         $('#imgPurchaseExecSign').hide();
         $('#lblPurchaseExecSign').hide();
-        
+
         if (DeptNameField == 'Management') {
             $('#imgRequestedBy').show();
             $('#imgStoreEx').show();
@@ -876,10 +877,16 @@
 
             $('#RequestedBy').hide();
             $('#StoreEx').hide();
-            $('#ApproverSign').show();
+
+            let Status = $('#HiddenStatusPRDetails').val();
+            if (Status == 'Approved1') {
+                $('#ApproverSign').show();
+            }
+            $('#PRDetailsPRFavouredOn').removeAttr('disabled');
+            $('#PRDetailsPRFavouredOn').attr('class', 'form-control');
             //$('#RequestedBy').prop('checked', true);
             //$('#StoreEx').prop('checked', true);
-            $('#HiddenStatusPRDetails').val('Approve2');
+            $('#HiddenStatusPRDetails').val('Approved2');
         }
         else if (DeptNameField == 'Stores') {
             //$('#RequestedBy').prop('checked', true);
@@ -890,13 +897,16 @@
                 $('#lblStoreEx').hide();
             }
             else {
+                $('#RequestedBy').hide();
+                $('#StoreEx').show();
+                $('#lblStoreEx').show();
                 $('#imgRequestedBy').show();
             }
 
             $('#imgStoreEx').hide();
             $('#ApproverSign').hide();
             $('#imgApproverSign').hide();
-            $('#HiddenStatusPRDetails').val('Approve1');
+            $('#HiddenStatusPRDetails').val('Approved1');
         }
         else if (DeptNameField == 'Purchase') {
             $('#imgRequestedBy').show();
@@ -931,3 +941,4 @@
         endDate: 'today',
     });
 </script>
+

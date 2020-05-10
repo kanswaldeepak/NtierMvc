@@ -140,9 +140,9 @@ namespace NtierMvc.Areas.MRM.Controllers
                 
                 if(prObj.Status == "Entry")
                     prObj.ApprovePerson1Sign = UserDetails.SignImage;
-                else if (prObj.Status == "Approve1")
+                else if (prObj.Status == "Approved1")
                     prObj.ApprovePerson2Sign = UserDetails.SignImage;
-                else if (prObj.Status == "Approve2")
+                else if (prObj.Status == "Approved2")
                     ViewBag.PurchaseRequest = UserDetails.SignImage;
 
 
@@ -267,7 +267,7 @@ namespace NtierMvc.Areas.MRM.Controllers
                         if (item.DeptName == "Stores")
                         {
                             newObj.ApproveDate1 = DateTime.Now;
-                            newObj.Status = "Approve1";
+                            newObj.Status = "Approved1";
                             newObj.ApprovePerson1 = UserDetails.UserId.ToString();
                         }
                         itemListBulk.Add(newObj);
@@ -301,11 +301,11 @@ namespace NtierMvc.Areas.MRM.Controllers
             }
         }
 
-        public JsonResult UpdateApproveReject(string PRSetno, string Status)
+        public JsonResult UpdateApproveReject(string PRSetno, string Status, string PRFavouredOn)
         {
             string msgCode = string.Empty;
             var UserDetails = (UserEntity)Session["UserModel"];
-            msgCode = objManager.UpdateApproveReject(PRSetno, Status, UserDetails.UserId.ToString());
+            msgCode = objManager.UpdateApproveReject(PRSetno, Status, UserDetails.UserId.ToString(), PRFavouredOn);
 
             return new JsonResult { Data = msgCode, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }

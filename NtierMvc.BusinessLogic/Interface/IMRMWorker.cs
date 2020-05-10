@@ -14,6 +14,6 @@ namespace NtierMvc.BusinessLogic.Interface
 
         List<PRDetailEntity> GetPRTableDetails(string PRSetno);
 
-        string UpdateApproveReject(string PRSetNo, string Status, string UserId);
+        string UpdateApproveReject(string[] param);
     }
 }

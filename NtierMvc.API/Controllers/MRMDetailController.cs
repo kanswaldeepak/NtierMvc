@@ -54,7 +54,7 @@ namespace NtierMvc.API.Controllers.Application
         [ResponseType(typeof(string))]
         public IHttpActionResult UpdateApproveReject(string[] param)
         {
-            return Ok(_repository.UpdateApproveReject(param[0], param[1], param[2]));
+            return Ok(_repository.UpdateApproveReject(param));
         }
 
     }

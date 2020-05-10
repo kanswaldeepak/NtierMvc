@@ -81,14 +81,15 @@ namespace NtierMvc.DataAccess.Pool
             return _dbAccess.GetDataSet(spName, parms);
         }
 
-        public string UpdateApproveReject(string PRSetNo, string Status, string UserId)
+        public string UpdateApproveReject(string[] param)
         {
             string spName = ConfigurationManager.AppSettings["UpdateApproveReject"];
             string msgCode = "";
             var parms = new Dictionary<string, object>();
-            parms.Add("@PRSetNo", PRSetNo);
-            parms.Add("@Status", Status);
-            parms.Add("@UserId", UserId);
+            parms.Add("@PRSetNo", param[0]);
+            parms.Add("@Status", param[1]);
+            parms.Add("@UserId", param[2]);
+            parms.Add("@PRFavouredOn", param[3]);
             _dbAccess.ExecuteNonQuery(spName, parms, "@o_MsgCode", out msgCode);
             return msgCode;
 

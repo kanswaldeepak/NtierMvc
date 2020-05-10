@@ -238,12 +238,12 @@ namespace NtierMvc.BusinessLogic.Worker
             return newList;
         }
 
-        public string UpdateApproveReject(string PRSetNo, string Status, string UserId)
+        public string UpdateApproveReject(string[] param)
         {
             string msgCode = "";
             try
             {
-                msgCode = _repository.UpdateApproveReject(PRSetNo, Status, UserId);
+                msgCode = _repository.UpdateApproveReject(param);
             }
             catch (Exception ex)
             {
