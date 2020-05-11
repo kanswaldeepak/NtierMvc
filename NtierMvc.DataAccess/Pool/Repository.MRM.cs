@@ -87,9 +87,24 @@ namespace NtierMvc.DataAccess.Pool
             string msgCode = "";
             var parms = new Dictionary<string, object>();
             parms.Add("@PRSetNo", param[0]);
-            parms.Add("@Status", param[1]);
+            parms.Add("@SignStatus", param[1]);
             parms.Add("@UserId", param[2]);
             parms.Add("@PRFavouredOn", param[3]);
+            parms.Add("@PRStatus", param[4]);
+            _dbAccess.ExecuteNonQuery(spName, parms, "@o_MsgCode", out msgCode);
+            return msgCode;
+
+        }
+
+        public string SavePurchaseDetails(string[] param)
+        {
+            string spName = ConfigurationManager.AppSettings["SavePurchaseDetails"];
+            string msgCode = "";
+            var parms = new Dictionary<string, object>();
+            parms.Add("@PRSetNo", param[0]);
+            parms.Add("@Communicate", param[1]);
+            parms.Add("@PONo", param[2]);
+            parms.Add("@PRRequestedOn", param[3]);
             _dbAccess.ExecuteNonQuery(spName, parms, "@o_MsgCode", out msgCode);
             return msgCode;
 

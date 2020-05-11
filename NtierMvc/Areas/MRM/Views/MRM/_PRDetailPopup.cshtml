@@ -7,7 +7,8 @@
 <input type="text" id="HiddenLoggedInDeptName" hidden />
 @Html.HiddenFor(m => m.DeptName, new { @id = "HiddenDeptNamePRDetails" })
 @Html.HiddenFor(m => m.PRSetno, new { @id = "HiddenPRSetno" })
-@Html.HiddenFor(m => m.Status, new { @id = "HiddenStatusPRDetails" })
+@Html.HiddenFor(m => m.SignStatus, new { @id = "HiddenSignStatusPRDetails" })
+@Html.HiddenFor(m => m.PRStatus, new { @id = "HiddenPRStatusPRDetails" })
 @*@Html.HiddenFor(m => m.EntryPerson, new { @id = "HiddenEntryPersonPRDetails" })*@
 @Html.HiddenFor(m => m.ApprovePerson1, new { @id = "HiddenApprovePerson1PRDetails" })
 @Html.HiddenFor(m => m.ApprovePerson2, new { @id = "HiddenApprovePerson2PRDetails" })
@@ -819,7 +820,7 @@
                             <td></td>
                             <td class="text-right"></td>
                             <td class="text-center">
-                                <label id="lblPurchaseExecSign"> Sign of Purchase Executed </label>
+                                <label id="lblPurchaseExecSign"> Sign of Purchase Executive </label>
                             </td>
                             <td></td>
                         </tr>
@@ -830,6 +831,7 @@
             <div class="row">
                 <div class="col-md-12 pt-4 text-center">
                     <button id="SavePRDetailButton" style="font-size:18px" type="button" class="btn btn-success btn-sm" onclick="SavePRDetails(event)">Save</button>
+                    <button id="btnSavePurchase" style="font-size:18px" type="button" class="btn btn-success btn-sm" onclick="SavePurchase(event)">Save</button>
                     <button style="font-size:18px" type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
                 </div>
             </div>
@@ -845,6 +847,7 @@
         window.ChangeEndUseNoForQuoteOrSoNo = '@Url.Action("ChangeEndUseNoForQuoteOrSoNo", "MRM")';
         window.ChangeEndUseNoForNonPO = '@Url.Action("ChangeEndUseNoForNonPO", "MRM")';
         window.ChangeRMCat = '@Url.Action("ChangeRMCat", "MRM")';
+        windows.SavePurchase = '@Url.Action("SavePurchaseDetails", "MRM")';
 
         $('#QuoteTypeDiv').hide();
 
@@ -855,7 +858,6 @@
         $('#tableC').hide();
         $('#tableO').hide();
 
-        var DeptNameField = '@ViewBag.DeptName.ToString()';
 
         $('#RequestedBy').show();
         $('#StoreEx').hide();
@@ -869,7 +871,11 @@
         $('#btnReject').hide();
         $('#imgPurchaseExecSign').hide();
         $('#lblPurchaseExecSign').hide();
-
+        $('#btnSavePurchase').hide();
+        $('#HiddenPRStatusPRDetails').val('UnderProcess');
+        $('#PRDetailsPRFavouredOn').attr('disabled','true');
+        
+        var DeptNameField = '@ViewBag.DeptName.ToString()';
         if (DeptNameField == 'Management') {
             $('#imgRequestedBy').show();
             $('#imgStoreEx').show();
@@ -878,7 +884,7 @@
             $('#RequestedBy').hide();
             $('#StoreEx').hide();
 
-            let Status = $('#HiddenStatusPRDetails').val();
+            let Status = $('#HiddenSignStatusPRDetails').val();
             if (Status == 'Approved1') {
                 $('#ApproverSign').show();
             }
@@ -886,11 +892,11 @@
             $('#PRDetailsPRFavouredOn').attr('class', 'form-control');
             //$('#RequestedBy').prop('checked', true);
             //$('#StoreEx').prop('checked', true);
-            $('#HiddenStatusPRDetails').val('Approved2');
+            $('#HiddenSignStatusPRDetails').val('Approved2');
         }
         else if (DeptNameField == 'Stores') {
             //$('#RequestedBy').prop('checked', true);
-            if ($('#HiddenStatusPRDetails').val() == '') {
+            if ($('#HiddenSignStatusPRDetails').val() == '') {
                 $('#RequestedBy').show();
                 $('#imgRequestedBy').hide();
                 $('#StoreEx').hide();
@@ -898,15 +904,15 @@
             }
             else {
                 $('#RequestedBy').hide();
+                $('#imgRequestedBy').show();
                 $('#StoreEx').show();
                 $('#lblStoreEx').show();
-                $('#imgRequestedBy').show();
             }
 
             $('#imgStoreEx').hide();
             $('#ApproverSign').hide();
             $('#imgApproverSign').hide();
-            $('#HiddenStatusPRDetails').val('Approved1');
+            $('#HiddenSignStatusPRDetails').val('Approved1');
         }
         else if (DeptNameField == 'Purchase') {
             $('#imgRequestedBy').show();
@@ -914,10 +920,17 @@
             $('#imgApproverSign').show();
             $('#imgPurchaseExecSign').show();
             $('#lblPurchaseExecSign').show();
-            $('#HiddenStatusPRDetails').val('PurchaseApprove');
+
+            $('#CommunicatePRDetails').removeAttr('disabled');
+            $('#PONoPRDetails').removeAttr('disabled');
+            $('#PRDetailsPRRequestedOn').removeAttr('disabled');
+            $('#ExpectedDeliveryDatePRDetails').removeAttr('disabled');
+            $('#btnSavePurchase').show();
+
+            $('#HiddenSignStatusPRDetails').val('PurchaseApprove');
         }
         else {
-            $('#HiddenStatusPRDetails').val('Entry');
+            $('#HiddenSignStatusPRDetails').val('Entry');
         }
 
 

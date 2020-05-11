@@ -89,14 +89,31 @@ namespace NtierMvc.Areas.MRM.Models
             return prDetails;
         }
 
-        public string UpdateApproveReject(string PRSetno, string Status, string UserId, string PRFavouredOn)
+        public string UpdateApproveReject(string PRSetno, string Status, string UserId, string PRFavouredOn, string PRStatus)
         {
             string result = "0";
             var baseAddress = "MRMDetail";
-            string[] param = { PRSetno, Status, UserId, PRFavouredOn };
+            string[] param = { PRSetno, Status, UserId, PRFavouredOn, PRStatus };
             using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
             {
                 HttpResponseMessage response = client.PostAsJsonAsync(baseAddress + "/UpdateApproveReject", param).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    var data = response.Content.ReadAsStringAsync().Result;
+                    result = JsonConvert.DeserializeObject<string>(data);
+                }
+            }
+            return result;
+        }
+
+        public string SavePurchaseDetails(string PRSetno, string Communicate, string PONo, string PRRequestedOn)
+        {
+            string result = "0";
+            var baseAddress = "MRMDetail";
+            string[] param = { PRSetno, Communicate, PONo, PRRequestedOn };
+            using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
+            {
+                HttpResponseMessage response = client.PostAsJsonAsync(baseAddress + "/SavePurchaseDetails", param).Result;
                 if (response.IsSuccessStatusCode)
                 {
                     var data = response.Content.ReadAsStringAsync().Result;

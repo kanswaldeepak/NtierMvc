@@ -17,6 +17,7 @@ namespace NtierMvc.Model.MRM
         public string ReqTo { get; set; }
         public int QuoteType { get; set; }
         public string DeptName { get; set; }
+        public string LogInDeptName { get; set; }
         public string PRcat { get; set; }
         public int Currency { get; set; }
         public int Priority { get; set; }
@@ -68,7 +69,8 @@ namespace NtierMvc.Model.MRM
         public int DeptId { get; set; }
         public string ExpectedDeliveryDate { get; set; }
         public string EntryDate { get; set; }
-        public string Status { get; set; }
+        public string SignStatus { get; set; }
+        public string PRStatus { get; set; }
         public string EntryPerson { get; set; }
         public string ApprovePerson1 { get; set; }
         public string ApprovePerson2 { get; set; }
@@ -141,7 +143,8 @@ namespace NtierMvc.Model.MRM
         public DateTime? EntryDate { get; set; }
         public DateTime? ApproveDate1 { get; set; }
         public DateTime? ApproveDate2 { get; set; }
-        public string Status { get; set; }
+        public string SignStatus { get; set; }
+        public string PRStatus { get; set; }
         public string EntryPerson { get; set; }
         public string ApprovePerson1 { get; set; }
         public string ApprovePerson2 { get; set; }

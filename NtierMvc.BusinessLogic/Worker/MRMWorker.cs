@@ -80,13 +80,15 @@ namespace NtierMvc.BusinessLogic.Worker
                     Model.UOM = dr1.IsNull("UOM") ? 0 : Convert.ToInt32(dr1["UOM"]);
                     Model.PaymentTerms = dr1.IsNull("PaymentTerms") ? "" : Convert.ToString(dr1["PaymentTerms"]);
                     Model.SupplyTerms = dr1.IsNull("SupplyTerms") ? 0 : Convert.ToInt32(dr1["SupplyTerms"]);
-                    Model.Status = dr1.IsNull("Status") ? "" : Convert.ToString(dr1["Status"]);
+                    Model.SignStatus = dr1.IsNull("SignStatus") ? "" : Convert.ToString(dr1["SignStatus"]);
+                    Model.PRStatus = dr1.IsNull("PRStatus") ? "" : Convert.ToString(dr1["PRStatus"]);
                     Model.EntryPerson = dr1.IsNull("EntryPerson") ? "" : Convert.ToString(dr1["EntryPerson"]);
                     Model.ApprovePerson1 = dr1.IsNull("ApprovePerson1") ? "" : Convert.ToString(dr1["ApprovePerson1"]);
                     Model.ApprovePerson2 = dr1.IsNull("ApprovePerson2") ? "" : Convert.ToString(dr1["ApprovePerson2"]);
                     Model.EntryPersonSign = dr1.IsNull("EntryPersonSign") ? "" : Convert.ToString(dr1["EntryPersonSign"]);
                     Model.ApprovePerson1Sign = dr1.IsNull("ApprovePerson1Sign") ? "" : Convert.ToString(dr1["ApprovePerson1Sign"]);
                     Model.ApprovePerson2Sign = dr1.IsNull("ApprovePerson2Sign") ? "" : Convert.ToString(dr1["ApprovePerson2Sign"]);
+                    Model.PRFavouredOn = dr1.IsNull("PRFavouredOn") ? "" : Convert.ToString(dr1["PRFavouredOn"]);
 
                     //RMdescription
                     //RMgrade
@@ -168,8 +170,10 @@ namespace NtierMvc.BusinessLogic.Worker
                                 obj.ApprovedSupplier1 = dr1.IsNull("ApprovedSupplier1") ? string.Empty : Convert.ToString(dr1["ApprovedSupplier1"]);
                                 obj.TotalPRSetPrice = dr1.IsNull("TotalPRSetPrice") ? "" : Convert.ToString(dr1["TotalPRSetPrice"]);
                                 obj.DeliveryDate = dr1.IsNull("DeliveryDate") ? string.Empty : Convert.ToString(dr1["DeliveryDate"]);
-                                obj.Status = dr1.IsNull("Status") ? string.Empty : Convert.ToString(dr1["Status"]);
-                                obj.DeptName = DeptName;
+                                obj.SignStatus = dr1.IsNull("SignStatus") ? string.Empty : Convert.ToString(dr1["SignStatus"]);
+                                obj.PRStatus = dr1.IsNull("PRStatus") ? string.Empty : Convert.ToString(dr1["PRStatus"]);
+                                obj.LogInDeptName = DeptName;
+                                obj.DeptName = dr1.IsNull("DeptName") ? string.Empty : Convert.ToString(dr1["DeptName"]); ;
 
                                 prDetailEntity.lstPREntity.Add(obj);
                             }
@@ -244,6 +248,21 @@ namespace NtierMvc.BusinessLogic.Worker
             try
             {
                 msgCode = _repository.UpdateApproveReject(param);
+            }
+            catch (Exception ex)
+            {
+                NtierMvc.DataAccess.ExceptionLogging.SendExcepToDB(ex);
+                throw;
+            }
+            return msgCode;
+        }
+
+        public string SavePurchaseDetails(string[] param)
+        {
+            string msgCode = "";
+            try
+            {
+                msgCode = _repository.SavePurchaseDetails(param);
             }
             catch (Exception ex)
             {

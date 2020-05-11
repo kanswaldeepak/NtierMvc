@@ -129,13 +129,20 @@
                 <tbody>
                     <tr ng-repeat="L in PRPList">
                         <td>
-                            <button id="btnViewPRDetails" ng-if="(((L.Status =='Approved1' || L.Status =='Approved2' || L.Status =='Reject1' || L.Status =='Reject2') && L.DeptName != 'Finance') || (L.Status =='Entry' && (L.DeptName == 'Management' || L.DeptName == 'Stores')))" type="button" class="btn btn-outline-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="VIEW" ng-click="LoadPRDetailsViewPopup(L.PRSetno)">
+                            <button id="btnViewPRDetails" ng-if="((L.SignStatus =='Entry' || L.SignStatus =='Approved1' || L.SignStatus =='Rejected1' || L.SignStatus =='Approved2' || L.SignStatus =='Rejected2') && L.DeptName != L.LogInDeptName)" type="button" class="btn btn-outline-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="VIEW" ng-click="LoadPRDetailsViewPopup(L.PRSetno)">
                                 <i class="fa fa-eye"></i>
                             </button>
-
-                            <button id="btnEditPRDetails" ng-if="((L.Status =='Entry' || L.Status =='Reject1' || L.Status =='Reject2') && (L.DeptName == 'Finance'))" type="button" class="btn btn-outline-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="EDIT" ng-click="LoadPRDetailsEditPopup(L.PRSetno)">
-                                <i class="fa fa-pen"></i>
-                            </button>
+                            <span ng-if="L.SignStatus == 'Approved1' && L.DeptName == 'Stores' && L.LogInDeptName == 'Stores'">
+                                <button id="btnEditPRDetails" type="button" class="btn btn-outline-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="EDIT" ng-click="LoadPRDetailsEditPopup(L.PRSetno)">
+                                    <i class="fa fa-pen"></i>
+                                </button>
+                            </span>
+                            <span ng-if="((L.SignStatus =='Entry' || L.SignStatus =='Rejected1' || L.SignStatus =='Rejected2') && (L.DeptName == L.LogInDeptName))">
+                                <button id="btnEditPRDetails" type="button" class="btn btn-outline-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="EDIT" ng-click="LoadPRDetailsEditPopup(L.PRSetno)">
+                                    <i class="fa fa-pen"></i>
+                                </button>
+                            </span>
+                            
                         </td>
                         <td>
                             {{L.PRno}}
@@ -156,7 +163,7 @@
                             {{L.TotalPRSetPrice}}
                         </td>
                         <td>
-                            {{L.Status}}
+                            {{L.PRStatus}}
                         </td>
                     </tr>
                 </tbody>

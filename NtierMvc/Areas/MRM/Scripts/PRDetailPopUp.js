@@ -1,16 +1,38 @@
 ﻿
 $(document).ready(function () {
 
+})
 
+$('.btnSavePurchase').click(function () {
+    var PRSetNo = $('#HiddenPRSetno').val();
+    var Communicate = $('#CommunicatePRDetails').val();
+    var PONo = $('#PONoPRDetails').val();
+    var PRRequestedOn = $('#PRDetailsPRRequestedOn').val();
+    var ExpectedDeliveryDate = $('#ExpectedDeliveryDatePRDetails').val();
+
+    $.ajax({
+        url: windows.SavePurchase,
+        type: 'POST',
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json',
+        data: JSON.stringify({ PRSetNo: PRSetNo, Communicate: Communicate, PONo: PONo, PRRequestedOn: PRRequestedOn, ExpectedDeliveryDate: ExpectedDeliveryDate }),
+        success: function (res) {
+            alert(res);
+        },
+        error: function () {
+            alert(res);
+        }
+    })
 
 })
 
 function funcApproveReject(value) {
 
     //$('#ApproveRejectPRDetails option:selected').text(value);
-    var PRSetNo = $('#HiddenPRSetno').val();    
-    var Status = value + $('#HiddenStatusPRDetails').val();
+    var PRSetNo = $('#HiddenPRSetno').val();
+    var SignStatus = $('#HiddenSignStatusPRDetails').val();
     var PRFavouredOn = $('#PRDetailsPRFavouredOn').val();
+    var PRStatus = value;
 
     //if ((Status == 'Approve1' && $('#StoreEx').prop("checked") == false) || (Status == 'Approve2' && $('#ApproverSign').prop("checked") == false)) {
     //    alert("Kindly tick Signature Checkbox");
@@ -18,7 +40,6 @@ function funcApproveReject(value) {
     //}
 
     if (PRFavouredOn == '' || PRFavouredOn == undefined) {
-
         alert('PRFavouredOn is mandatory');
         return;
     }
@@ -28,7 +49,7 @@ function funcApproveReject(value) {
         dataType: 'json',
         type: 'POST',
         url: window.UpdateApproveReject,
-        data: JSON.stringify({ PRSetNo: PRSetNo, Status: Status, PRFavouredOn: PRFavouredOn}),
+        data: JSON.stringify({ PRSetNo: PRSetNo, SignStatus: SignStatus, PRFavouredOn: PRFavouredOn, PRStatus: PRStatus}),
         success: function (res) {
             if(res=='Updated Successfully')
             alert('Approved Successfully');
@@ -430,7 +451,8 @@ function SavePRDetails(e) {
                 Communicate: $('#CommunicatePRDetails').val(),
                 POno: $('#PONoPRDetails').val(),
                 ExpectedDeliveryDate: $('#ExpectedDeliveryDatePRDetails').val(),
-                Status: $('#HiddenStatusPRDetails').val(),
+                SignStatus: $('#HiddenSignStatusPRDetails').val(),
+                PRStatus: $('#HiddenPRStatusPRDetails').val(),
                 TotalPRSetPrice: TotalPRSetPrice
 
             });

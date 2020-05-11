@@ -57,5 +57,13 @@ namespace NtierMvc.API.Controllers.Application
             return Ok(_repository.UpdateApproveReject(param));
         }
 
+        [HttpPost]
+        [Route("api/MRMDetail/SavePurchaseDetails")]
+        [ResponseType(typeof(string))]
+        public IHttpActionResult SavePurchaseDetails(string[] param)
+        {
+            return Ok(_repository.SavePurchaseDetails(param));
+        }
+
     }
 }
