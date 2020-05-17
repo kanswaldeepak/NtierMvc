@@ -1370,5 +1370,64 @@ namespace NtierMvc.DataAccess.Pool
             return DataTableToList(_dbAccess.GetDataTable(spName, parms));
         }
 
+        public DataTable GetDataTableForDocument(string ListType, string TableName, string[] DataColumn, string[] DataParam, string[] RequiredColumn)
+        {
+            var parms = new Dictionary<string, object>();
+            var spName = ConfigurationManager.AppSettings["GetBaseDataForDocument"];
+
+            parms.Add("@ListType", ListType);
+            parms.Add("@TableName", TableName);
+
+            if (DataColumn.ElementAtOrDefault(0) != null)
+            {
+                parms.Add("@DataColumn1", DataColumn[0]);
+                parms.Add("@DataParam1", DataParam[0]);
+            }
+            if (DataColumn.ElementAtOrDefault(1) != null)
+            {
+                parms.Add("@DataColumn2", DataColumn[1]);
+                parms.Add("@DataParam2", DataParam[1]);
+            }
+            if (DataColumn.ElementAtOrDefault(2) != null)
+            {
+                parms.Add("@DataColumn3", DataColumn[2]);
+                parms.Add("@DataParam3", DataParam[2]);
+            }
+            if (DataColumn.ElementAtOrDefault(3) != null)
+            {
+                parms.Add("@DataColumn4", DataColumn[3]);
+                parms.Add("@DataParam4", DataParam[3]);
+            }
+            if (DataColumn.ElementAtOrDefault(4) != null)
+            {
+                parms.Add("@DataColumn5", DataColumn[4]);
+                parms.Add("@DataParam5", DataParam[4]);
+            }
+            
+            parms.Add("@RequiredColumn1", RequiredColumn[0]);
+            parms.Add("@RequiredColumn2", RequiredColumn[1]);
+            if (RequiredColumn.ElementAtOrDefault(2) != null)
+                parms.Add("@RequiredColumn3", RequiredColumn[2]);
+            if (RequiredColumn.ElementAtOrDefault(3) != null)
+                parms.Add("@RequiredColumn4", RequiredColumn[3]);
+            if (RequiredColumn.ElementAtOrDefault(4) != null)
+                parms.Add("@RequiredColumn5", RequiredColumn[4]);
+            if (RequiredColumn.ElementAtOrDefault(5) != null)
+                parms.Add("@RequiredColumn6", RequiredColumn[5]);
+            if (RequiredColumn.ElementAtOrDefault(6) != null)
+                parms.Add("@RequiredColumn7", RequiredColumn[6]);
+            if (RequiredColumn.ElementAtOrDefault(7) != null)
+                parms.Add("@RequiredColumn8", RequiredColumn[7]);
+            if (RequiredColumn.ElementAtOrDefault(8) != null)
+                parms.Add("@RequiredColumn9", RequiredColumn[8]);
+            if (RequiredColumn.ElementAtOrDefault(9) != null)
+                parms.Add("@RequiredColumn10", RequiredColumn[9]);
+            if (RequiredColumn.ElementAtOrDefault(10) != null)
+                parms.Add("@RequiredColumn11", RequiredColumn[10]);
+
+            var dt = _dbAccess.GetDataTable(spName, parms);
+            return dt;
+        }
+
     }
 }

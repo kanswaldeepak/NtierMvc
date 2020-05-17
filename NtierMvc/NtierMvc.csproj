@@ -1129,6 +1129,7 @@
     <Content Include="Areas\MRM\Views\MRM\PRPlanning.cshtml" />
     <Content Include="Areas\MRM\Views\MRM\_PRDetailPopup.cshtml" />
     <Content Include="App_Data\Documents\Excel\Example.xlsx" />
+    <Content Include="App_Data\Documents\Excel\PR_Mackarel.xlsx" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\CustomJS\common.js" />

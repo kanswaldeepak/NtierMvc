@@ -127,5 +127,7 @@ namespace NtierMvc.BusinessLogic.Interface
 
         List<DropDownEntity> GetSONoQuoteNoList(string EndUse, string quoteType);
 
+        DataTable GetDataTableForDocument(string ListType, string TableName, string[] DataColumn, string[] DataParam, string[] RequiredColumn);
+
     }
 }

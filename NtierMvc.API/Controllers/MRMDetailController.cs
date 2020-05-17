@@ -65,5 +65,19 @@ namespace NtierMvc.API.Controllers.Application
             return Ok(_repository.SavePurchaseDetails(param));
         }
 
+        [HttpGet]
+        [Route("api/MRMDetail/GetPRListForDocument")]
+        public IHttpActionResult GetPRListForDocument(string PRSetNo)
+        {
+            return Ok(_repository.GetPRListForDocument(PRSetNo));
+        }
+
+        [HttpGet]
+        [Route("api/MRMDetail/GetPRDataForDocument")]
+        public IHttpActionResult GetPRDataForDocument(string PRSetNo)
+        {
+            return Ok(_repository.GetPRDataForDocument(PRSetNo));
+        }
+
     }
 }

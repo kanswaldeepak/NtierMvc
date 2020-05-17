@@ -95,9 +95,9 @@
                             </div>
                         </th>
                         <th>
-                            Required From
+                            Requested by
                             <div class="c2">
-                                Required From
+                                Requested by
                             </div>
                         </th>
                         <th>
@@ -124,17 +124,30 @@
                                 Status
                             </div>
                         </th>
+                        <th>
+                            Download
+                            <div class="c2">
+                                Download
+                            </div>
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr ng-repeat="L in PRPList">
                         <td>
-                            <button id="btnViewPRDetails" ng-if="((L.SignStatus =='Entry' || L.SignStatus =='Approved1' || L.SignStatus =='Rejected1' || L.SignStatus =='Approved2' || L.SignStatus =='Rejected2') && L.DeptName != L.LogInDeptName)" type="button" class="btn btn-outline-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="VIEW" ng-click="LoadPRDetailsViewPopup(L.PRSetno)">
-                                <i class="fa fa-eye"></i>
-                            </button>
+                            <span ng-if="((L.SignStatus =='Entry' || L.SignStatus =='Approved1' || L.SignStatus =='Rejected1' || L.SignStatus =='Approved2' || L.SignStatus =='Rejected2') && L.DeptName != L.LogInDeptName && L.PRStatus != 'Approved')">
+                                <button id="btnViewPRDetails" type="button" class="btn btn-outline-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="VIEW" ng-click="LoadPRDetailsViewPopup(L.PRSetno)">
+                                    <i class="fa fa-eye"></i>
+                                </button>
+                            </span>
                             <span ng-if="L.SignStatus == 'Approved1' && L.DeptName == 'Stores' && L.LogInDeptName == 'Stores'">
                                 <button id="btnEditPRDetails" type="button" class="btn btn-outline-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="EDIT" ng-click="LoadPRDetailsEditPopup(L.PRSetno)">
                                     <i class="fa fa-pen"></i>
+                                </button>
+                            </span>
+                            <span ng-if="L.PRStatus == 'Approved' && L.LogInDeptName == 'Purchase' && L.PurchasePerson!=''">
+                                <button id="btnViewPRDetails" type="button" class="btn btn-outline-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="VIEW" ng-click="LoadPRDetailsViewPopup(L.PRSetno)">
+                                    <i class="fa fa-eye"></i>
                                 </button>
                             </span>
                             <span ng-if="((L.SignStatus =='Entry' || L.SignStatus =='Rejected1' || L.SignStatus =='Rejected2') && (L.DeptName == L.LogInDeptName))">
@@ -142,7 +155,7 @@
                                     <i class="fa fa-pen"></i>
                                 </button>
                             </span>
-                            
+
                         </td>
                         <td>
                             {{L.PRno}}
@@ -164,6 +177,9 @@
                         </td>
                         <td>
                             {{L.PRStatus}}
+                        </td>
+                        <td>
+                            <button class="btn btn-link btn-sm" value="{{L.PRSetno}}" onclick="CreateDocument(this)">Download</button>
                         </td>
                     </tr>
                 </tbody>
@@ -215,6 +231,7 @@
         window.PRDetailsPopup = '@Url.Action("PRDetailPopup", "MRM")';
         window.GetPRTableDetails = '@Url.Action("GetPRTableDetails", "MRM")';
         window.SavePRDetailsList = '@Url.Action("SavePRDetailsList", "MRM")';
+        window.CreateDownloadDocument = '@Url.Action("CreateDownloadDocument", "MRM")';
 
     });
 
@@ -225,7 +242,31 @@
     }
     else {
         $('#btnPRPDetails').hide();
-    }
+        }
+
+
+function CreateDocument(e) {
+
+    var PRSetNo = e.value;
+
+    $.ajax({
+        type: 'POST',
+        url: window.CreateDownloadDocument,
+        data: JSON.stringify({ PRSetNo: PRSetNo }),
+        contentType: "application/json; charset=utf-8",
+        success: function (data) {            
+            if (data.fileName != "") {
+                window.location.href = '@Url.RouteUrl(new { Controller = "MRM", Action = "Download" })/?fileName=' + data.fileName;
+            }
+            else {
+                alert(data.errorMessage);
+            }
+        },
+        error: function (x, e) {
+            alert(data);
+        }
+    })
+}
 
 </script>
-
+@*<img src="~/Images/Sign/Ravi.jpg" />*@

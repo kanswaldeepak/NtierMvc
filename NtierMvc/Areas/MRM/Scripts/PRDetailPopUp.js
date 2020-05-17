@@ -3,7 +3,8 @@ $(document).ready(function () {
 
 })
 
-$('.btnSavePurchase').click(function () {
+function funcSavePurchaseDetails() {
+
     var PRSetNo = $('#HiddenPRSetno').val();
     var Communicate = $('#CommunicatePRDetails').val();
     var PONo = $('#PONoPRDetails').val();
@@ -11,7 +12,7 @@ $('.btnSavePurchase').click(function () {
     var ExpectedDeliveryDate = $('#ExpectedDeliveryDatePRDetails').val();
 
     $.ajax({
-        url: windows.SavePurchase,
+        url: window.SavePurchaseDetails,
         type: 'POST',
         contentType: 'application/json; charset=utf-8',
         dataType: 'json',
@@ -23,8 +24,7 @@ $('.btnSavePurchase').click(function () {
             alert(res);
         }
     })
-
-})
+}
 
 function funcApproveReject(value) {
 
@@ -116,17 +116,18 @@ function showRequestedSign(id,level) {
         $('#btnApprove').show();
         $('#btnReject').show();
 
-        $('#HiddenStatusPRDetails').val(level);
+        //$('#HiddenStatusPRDetails').val(level);
     }
 
     if (id == 'StoreEx') {
         var PRSetNo = $('#HiddenPRSetno').val();
-        var Status = 'Approve1';
+        var PRStatus = $('#HiddenPRStatusPRDetails').val();
+        var SignStatus = 'Approved' + level;
 
         $.ajax({
             url: window.UpdateApproveReject,
             type: 'POST',
-            data: JSON.stringify({ PRSetNo: PRSetNo, Status: Status }),
+            data: JSON.stringify({ PRSetNo: PRSetNo, SignStatus: SignStatus, PRStatus: PRStatus }),
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (data) {

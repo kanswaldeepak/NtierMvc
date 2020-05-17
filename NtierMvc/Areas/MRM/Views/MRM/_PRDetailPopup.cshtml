@@ -144,16 +144,17 @@
                 <div class="col-md-12">
                     <div class="form-inline">
                         <div class="form-group">
-                            <label for="RequestFrom">Request From :</label>
+                            <label for="RequestFrom" style="font-size: large;">Request by :</label>
                             @Html.TextBoxFor(m => m.ReqFrom, new
                                    {
                                        @class = "form-control ml-3 requiredValidation",
                                        @id = "RequestFromPRDetails",
                                        @readonly = "readonly",
+                                       @style = "font-size: large",
                                        @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
                                    })
                         </div>
-                        <div class="form-group mt-4" style="margin-left: 755px">
+                        <div class="form-group mt-4" style="margin-left: 670px">
                             <label for="RequestTo" style="font-size: large;">Request To :</label>
                             @Html.TextBoxFor(m => m.ReqTo, new
                                    {
@@ -732,20 +733,20 @@
                 <div class="col-md-12">
                     <table class="table table-bordered">
                         @*<tr>
-            <td></td>
-            <td>
-                Status of PR
-            </td>
-            <td>
-                @Html.DropDownListFor(m => m.ApprovedReject, new SelectList(@ViewBag.ListAcceptReject, "DataStringValueField", "DataTextField", "Select"), new
-           {
-               @class = "form-control ml-2 requiredValidation clearField",
-               @id = "ApproveRejectPRDetails",
-               @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
-           })
-            </td>
-            <td></td>
-        </tr>*@
+                                <td></td>
+                                <td>
+                                    Status of PR
+                                </td>
+                                <td>
+                                    @Html.DropDownListFor(m => m.ApprovedReject, new SelectList(@ViewBag.ListAcceptReject, "DataStringValueField", "DataTextField", "Select"), new
+                               {
+                                   @class = "form-control ml-2 requiredValidation clearField",
+                                   @id = "ApproveRejectPRDetails",
+                                   @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                               })
+                                </td>
+                                <td></td>
+                            </tr>*@
                         <tr>
                             <td></td>
                             <td>
@@ -782,9 +783,9 @@
                                 PR Requested On
                             </td>
                             <td>
-                                @Html.DropDownListFor(m => m.PRRequestedOn, new SelectList(ViewBag.ListPRRequestedOn, "DataStringValueField", "DataTextField", "Select"), new
+                                @Html.TextBoxFor(m => m.PRdate, new
                                 {
-                                    @class = "form-control ml-2 requiredValidation clearField",
+                                    @class = "form-control ml-2 clearField",
                                     @id = "PRDetailsPRRequestedOn",
                                     @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
                                 })
@@ -831,7 +832,7 @@
             <div class="row">
                 <div class="col-md-12 pt-4 text-center">
                     <button id="SavePRDetailButton" style="font-size:18px" type="button" class="btn btn-success btn-sm" onclick="SavePRDetails(event)">Save</button>
-                    <button id="btnSavePurchase" style="font-size:18px" type="button" class="btn btn-success btn-sm" onclick="SavePurchase(event)">Save</button>
+                    <button id="btnSavePurchase" style="font-size:18px" type="button" class="btn btn-success btn-sm" onclick="funcSavePurchaseDetails()">Save</button>
                     <button style="font-size:18px" type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
                 </div>
             </div>
@@ -843,11 +844,11 @@
 
     $(document).ready(function () {
 
-        window.UpdateApproveReject = '@Url.Action("UpdateApproveReject", "MRM")';       
+        window.UpdateApproveReject = '@Url.Action("UpdateApproveReject", "MRM")';
         window.ChangeEndUseNoForQuoteOrSoNo = '@Url.Action("ChangeEndUseNoForQuoteOrSoNo", "MRM")';
         window.ChangeEndUseNoForNonPO = '@Url.Action("ChangeEndUseNoForNonPO", "MRM")';
         window.ChangeRMCat = '@Url.Action("ChangeRMCat", "MRM")';
-        windows.SavePurchase = '@Url.Action("SavePurchaseDetails", "MRM")';
+        window.SavePurchaseDetails = '@Url.Action("SavePurchaseDetails", "MRM")';
 
         $('#QuoteTypeDiv').hide();
 
@@ -874,7 +875,7 @@
         $('#btnSavePurchase').hide();
         $('#HiddenPRStatusPRDetails').val('UnderProcess');
         $('#PRDetailsPRFavouredOn').attr('disabled','true');
-        
+
         var DeptNameField = '@ViewBag.DeptName.ToString()';
         if (DeptNameField == 'Management') {
             $('#imgRequestedBy').show();
@@ -883,13 +884,19 @@
 
             $('#RequestedBy').hide();
             $('#StoreEx').hide();
+            $('#PRDetailsPRFavouredOn').attr('class', 'form-control');
 
             let Status = $('#HiddenSignStatusPRDetails').val();
             if (Status == 'Approved1') {
                 $('#ApproverSign').show();
+                $('#PRDetailsPRFavouredOn').removeAttr('disabled');
             }
-            $('#PRDetailsPRFavouredOn').removeAttr('disabled');
-            $('#PRDetailsPRFavouredOn').attr('class', 'form-control');
+            else if (Status == 'Approved2') {
+                $('#imgApproverSign').show();
+                $('#PRDetailsPRFavouredOn').attr('disabled','true');
+            }
+
+
             //$('#RequestedBy').prop('checked', true);
             //$('#StoreEx').prop('checked', true);
             $('#HiddenSignStatusPRDetails').val('Approved2');
@@ -915,6 +922,7 @@
             $('#HiddenSignStatusPRDetails').val('Approved1');
         }
         else if (DeptNameField == 'Purchase') {
+            $('#RequestedBy').hide();
             $('#imgRequestedBy').show();
             $('#imgStoreEx').show();
             $('#imgApproverSign').show();
@@ -923,7 +931,7 @@
 
             $('#CommunicatePRDetails').removeAttr('disabled');
             $('#PONoPRDetails').removeAttr('disabled');
-            $('#PRDetailsPRRequestedOn').removeAttr('disabled');
+            //$('#PRDetailsPRRequestedOn').removeAttr('disabled');
             $('#ExpectedDeliveryDatePRDetails').removeAttr('disabled');
             $('#btnSavePurchase').show();
 

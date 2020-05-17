@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.IO;
+using System.Web;
 using System.Web.Mvc;
 using NtierMvc.Infrastructure;
 using NtierMvc.Areas.MRM.Models;
@@ -15,6 +16,8 @@ using NtierMvc.Model.Application;
 using NtierMvc.Model.MRM;
 using NtierMvc.Model.Account;
 using System.Data;
+using System.Configuration;
+using DocumentFormat.OpenXml.Spreadsheet;
 
 namespace NtierMvc.Areas.MRM.Controllers
 {
@@ -137,8 +140,8 @@ namespace NtierMvc.Areas.MRM.Controllers
             {
                 prObj.PRSetno = Convert.ToInt32(PRSetno);
                 prObj = objManager.GetSavedPRDetailsPopup(prObj);
-                
-                if(prObj.SignStatus == "Entry")
+
+                if (prObj.SignStatus == "Entry")
                     prObj.ApprovePerson1Sign = UserDetails.SignImage;
                 else if (prObj.SignStatus == "Approved1")
                     prObj.ApprovePerson2Sign = UserDetails.SignImage;
@@ -319,14 +322,197 @@ namespace NtierMvc.Areas.MRM.Controllers
             return new JsonResult { Data = prObjList, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 
-        public JsonResult SavePurchaseDetails(string PRSetno, string Communicate, string PONo, string PRRequestedOn)
+        public JsonResult SavePurchaseDetails(string PRSetno, string Communicate, string PONo, string ExpectedDeliveryDate)
         {
             string msgCode = string.Empty;
             var UserDetails = (UserEntity)Session["UserModel"];
-            msgCode = objManager.SavePurchaseDetails(PRSetno, Communicate, PONo, PRRequestedOn);
+            msgCode = objManager.SavePurchaseDetails(PRSetno, Communicate, PONo, ExpectedDeliveryDate, UserDetails.UserId.ToString());
 
             return new JsonResult { Data = msgCode, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
+
+        [HttpPost]
+        public ActionResult CreateDownloadDocument(string PRSetNo)
+        {
+            string FileName = "PR_Mackarel.xlsx";
+            try
+            {
+
+                Microsoft.Office.Interop.Excel.Application excelApp = new Microsoft.Office.Interop.Excel.Application();
+                // open the template in Edit mode
+                string path = System.Web.HttpContext.Current.Server.MapPath("~/App_Data/Documents/Excel/PR_Mackarel.xlsx");
+                Microsoft.Office.Interop.Excel.Workbook xlWorkbook = excelApp.Workbooks.Open(Filename: @path, Editable: true);
+                Microsoft.Office.Interop.Excel.Worksheet ws = (Microsoft.Office.Interop.Excel.Worksheet)xlWorkbook.Sheets["Sheet1"];
+
+                //string[] DataColumns = { "PRSetNo" };
+                //string[] DataParam = { PRSetNo };
+                //string[] RequiredColumn = { };
+
+                //List<string> RC = new List<string>();
+                //RC.Add("PRno");
+                //RC.Add("PRdate");
+                //RC.Add("DeliveryDate");
+                //RC.Add("ApprovedSupplier1");
+                //RC.Add("ApprovedSupplier2");
+                //RC.Add("PRStatus");
+                //RC.Add("Communicate");
+                //RC.Add("POno");
+                //RC.Add("ExpectedDeliveryDate");
+
+                //RequiredColumn = RC.ToArray();
+
+                //DataTable resultData = model.GetDataTableForDocument(GeneralConstants.ListTypeD, "PurchaseRequest", DataColumns, DataParam, RequiredColumn);
+
+                //RC.Clear();
+                //RC.Add("SN");
+                //RC.Add("RMDescription");
+                //RC.Add("OD");
+                //RC.Add("WT");
+                //RC.Add("Len");
+                //RC.Add("QtyReqd");
+                //RC.Add("QtyStock");
+                //RC.Add("PRQty");
+
+                DataTable resultData = objManager.GetPRDataForDocument(PRSetNo);
+                DataTable resultList = objManager.GetPRListForDocument(PRSetNo);
+
+                //Getting Single Fields
+                xlWorkbook.Worksheets[1].Cells.Replace("#PRno", resultData.Rows[0]["PRno"]);
+                xlWorkbook.Worksheets[1].Cells.Replace("#PRdate", resultData.Rows[0]["PRdate"]);
+                xlWorkbook.Worksheets[1].Cells.Replace("#DeliveryDate", resultData.Rows[0]["DeliveryDate"]);
+                xlWorkbook.Worksheets[1].Cells.Replace("#ApprovedSupplier1", resultData.Rows[0]["ApprovedSupplier1"]);
+                xlWorkbook.Worksheets[1].Cells.Replace("#ApprovedSupplier2", resultData.Rows[0]["ApprovedSupplier2"]);
+                xlWorkbook.Worksheets[1].Cells.Replace("#PRStatus", resultData.Rows[0]["PRStatus"]);
+                xlWorkbook.Worksheets[1].Cells.Replace("#Communicate", resultData.Rows[0]["Communicate"]);
+                xlWorkbook.Worksheets[1].Cells.Replace("#POno", resultData.Rows[0]["POno"]);
+                xlWorkbook.Worksheets[1].Cells.Replace("#ExpectedDeliveryDate", resultData.Rows[0]["ExpectedDeliveryDate"]);
+
+                ////////////////For Image////////////////////
+                #region Image
+                Microsoft.Office.Interop.Excel.Range cells = xlWorkbook.Worksheets[1].Cells;
+
+                //ReqBy
+                Microsoft.Office.Interop.Excel.Range matchReqBy = cells.Find("#RequestedBySign", LookAt: Microsoft.Office.Interop.Excel.XlLookAt.xlPart) as Microsoft.Office.Interop.Excel.Range;
+                xlWorkbook.Worksheets[1].Cells.Replace("#RequestedBySign", "");
+
+                string matchAdd = matchReqBy != null ? matchReqBy.Address : null;
+                if (matchReqBy != null)
+                {
+                    Microsoft.Office.Interop.Excel.Range oRange = (Microsoft.Office.Interop.Excel.Range)ws.Cells[matchReqBy.Row, matchReqBy.Column];
+                    float Left = (float)((double)oRange.Left);
+                    float Top = (float)((double)oRange.Top);
+                    const float ImageSize = 32;
+                    string filePath = Path.Combine(Server.MapPath("~/Images/Sign/"), resultData.Rows[0]["RequestedBySign"].ToString());
+                    if (System.IO.File.Exists(filePath))
+                        ws.Shapes.AddPicture(filePath, Microsoft.Office.Core.MsoTriState.msoFalse, Microsoft.Office.Core.MsoTriState.msoCTrue, Left, Top, ImageSize, ImageSize);
+                }
+
+                //Store
+                Microsoft.Office.Interop.Excel.Range matchStore = cells.Find("#StoreSign", LookAt: Microsoft.Office.Interop.Excel.XlLookAt.xlPart) as Microsoft.Office.Interop.Excel.Range;
+                xlWorkbook.Worksheets[1].Cells.Replace("#StoreSign", "");
+
+                string matchStoreAdd = matchStore != null ? matchStore.Address : null;
+                if (matchStoreAdd != null)
+                {
+                    Microsoft.Office.Interop.Excel.Range oRange = (Microsoft.Office.Interop.Excel.Range)ws.Cells[matchStore.Row, matchStore.Column];
+                    float Left = (float)((double)oRange.Left);
+                    float Top = (float)((double)oRange.Top);
+                    const float ImageSize = 32;
+                    string filePath = Path.Combine(Server.MapPath("~/Images/Sign/"), resultData.Rows[0]["StoreSign"].ToString());
+                    if (System.IO.File.Exists(filePath))
+                        ws.Shapes.AddPicture(filePath, Microsoft.Office.Core.MsoTriState.msoFalse, Microsoft.Office.Core.MsoTriState.msoCTrue, Left, Top, ImageSize, ImageSize);
+                }
+
+                //Approver
+                Microsoft.Office.Interop.Excel.Range matchApprove = cells.Find("#ApproverSign", LookAt: Microsoft.Office.Interop.Excel.XlLookAt.xlPart) as Microsoft.Office.Interop.Excel.Range;
+                xlWorkbook.Worksheets[1].Cells.Replace("#ApproverSign", "");
+
+                string matchApproveAdd = matchApprove != null ? matchApprove.Address : null;
+                if (matchApproveAdd != null)
+                {
+                    Microsoft.Office.Interop.Excel.Range oRange = (Microsoft.Office.Interop.Excel.Range)ws.Cells[matchApprove.Row, matchApprove.Column];
+                    float Left = (float)((double)oRange.Left);
+                    float Top = (float)((double)oRange.Top);
+                    const float ImageSize = 32;
+                    string filePath = Path.Combine(Server.MapPath("~/Images/Sign/"), resultData.Rows[0]["ApproverSign"].ToString());
+                    if (System.IO.File.Exists(filePath))
+                        ws.Shapes.AddPicture(filePath, Microsoft.Office.Core.MsoTriState.msoFalse, Microsoft.Office.Core.MsoTriState.msoCTrue, Left, Top, ImageSize, ImageSize);
+                }
+
+                //Purchase
+                Microsoft.Office.Interop.Excel.Range matchPurchase = cells.Find("#PurchaseSign", LookAt: Microsoft.Office.Interop.Excel.XlLookAt.xlPart) as Microsoft.Office.Interop.Excel.Range;
+                xlWorkbook.Worksheets[1].Cells.Replace("#PurchaseSign", "");
+
+                string matchPurchaseAdd = matchPurchase != null ? matchPurchase.Address : null;
+                if (matchPurchaseAdd != null)
+                {
+                    Microsoft.Office.Interop.Excel.Range oRange = (Microsoft.Office.Interop.Excel.Range)ws.Cells[matchPurchase.Row, matchPurchase.Column];
+                    float Left = (float)((double)oRange.Left);
+                    float Top = (float)((double)oRange.Top);
+                    const float ImageSize = 32;
+                    string filePath = Path.Combine(Server.MapPath("~/Images/Sign/"), resultData.Rows[0]["PurchaseSign"].ToString());
+                    if (System.IO.File.Exists(filePath))
+                        ws.Shapes.AddPicture(filePath, Microsoft.Office.Core.MsoTriState.msoFalse, Microsoft.Office.Core.MsoTriState.msoCTrue, Left, Top, ImageSize, ImageSize);
+                }
+                #endregion
+                ////////////////For Image////////////////////
+
+
+                Microsoft.Office.Interop.Excel.Range c1 = (Microsoft.Office.Interop.Excel.Range)ws.Cells[11, 1];
+                Microsoft.Office.Interop.Excel.Range c2 = (Microsoft.Office.Interop.Excel.Range)ws.Cells[(resultList.Rows.Count - 2) + 11, resultList.Columns.Count];
+                Microsoft.Office.Interop.Excel.Range range = ws.get_Range(c1, c2);
+                range.Insert(Microsoft.Office.Interop.Excel.XlInsertShiftDirection.xlShiftDown);
+
+                object[,] arr = new object[resultList.Rows.Count, resultList.Columns.Count];
+                for (int r = 0; r <= resultList.Rows.Count - 1; r++)
+                {
+                    DataRow dr = resultList.Rows[r];
+                    for (int c = 0; c < resultList.Columns.Count; c++)
+                    {
+                        arr[r, c] = dr[c];
+                    }
+                }
+
+
+                Microsoft.Office.Interop.Excel.Range c3 = (Microsoft.Office.Interop.Excel.Range)ws.Cells[11, 1];
+                Microsoft.Office.Interop.Excel.Range c4 = (Microsoft.Office.Interop.Excel.Range)ws.Cells[(resultList.Rows.Count - 1) + 11, resultList.Columns.Count];
+                Microsoft.Office.Interop.Excel.Range range1 = ws.get_Range(c3, c4);
+                //ws.get_Range(c3, c4).Cells.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignLeft;
+                //range1.EntireRow.Font.Bold = true;
+                range1.Value = arr;
+
+                string fullPath = Path.Combine(Server.MapPath("~/temp"), FileName);
+                xlWorkbook.SaveAs(fullPath);
+                xlWorkbook.Close();
+                excelApp.Quit();
+            }
+            catch (Exception ex)
+            {
+                var response = ex.Message;
+            }
+
+            return Json(new { fileName = FileName, errorMessage = "Error While Generating Excel. Contact Support." });
+        }
+
+        public ActionResult Download(string fileName)
+        {
+            string fullPath = Path.Combine(Server.MapPath("~/temp"), fileName);
+
+            if (System.IO.File.Exists(fullPath))
+            {
+                ////Get the temp folder and file path in server
+                byte[] fileByteArray = System.IO.File.ReadAllBytes(fullPath);
+                System.IO.File.Delete(fullPath);
+                return File(fileByteArray, "application/vnd.ms-excel", fileName);
+
+            }
+
+            else
+                return Json(new { data = "", errorMessage = "Error While Generating Excel. Contact Support." }, JsonRequestBehavior.AllowGet);
+
+
+        }
+
 
     }
 }

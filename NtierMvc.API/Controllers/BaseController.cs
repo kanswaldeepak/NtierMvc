@@ -583,5 +583,13 @@ namespace NtierMvc.API.Controllers
             return Ok(_repository.GetSONoQuoteNoList(EndUse, quoteType));
         }
 
+        [HttpGet]
+        [Route("api/Base/GetDataTableForDocument")]
+        public IHttpActionResult GetDataTableForDocument([FromBody] string ListType, string TableName, string[] DataColumn, string[] DataParam, string[] RequiredColumn)
+        {
+            return Ok(_repository.GetDataTableForDocument(ListType, TableName, DataColumn, DataParam, RequiredColumn));
+        }
+
+
     }
 }

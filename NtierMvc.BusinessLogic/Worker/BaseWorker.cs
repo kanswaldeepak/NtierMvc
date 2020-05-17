@@ -1549,5 +1549,12 @@ namespace NtierMvc.BusinessLogic.Worker
             return objList;
         }
 
+        public DataTable GetDataTableForDocument(string ListType, string TableName, string[] DataColumn, string[] DataParam, string[] RequiredColumn)
+        {
+            DataTable dt = objData.GetDataTableForDocument(ListType, TableName, DataColumn, DataParam, RequiredColumn);
+            return dt;
+        }
+
+
     }
 }

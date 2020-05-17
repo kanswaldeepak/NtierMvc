@@ -104,11 +104,32 @@ namespace NtierMvc.DataAccess.Pool
             parms.Add("@PRSetNo", param[0]);
             parms.Add("@Communicate", param[1]);
             parms.Add("@PONo", param[2]);
-            parms.Add("@PRRequestedOn", param[3]);
+            parms.Add("@ExpectedDeliveryDate", param[3]);
+            parms.Add("@UserId", param[4]);
             _dbAccess.ExecuteNonQuery(spName, parms, "@o_MsgCode", out msgCode);
             return msgCode;
 
         }
 
+        public DataTable GetPRListForDocument(string PRSetNo)
+        {
+            var parms = new Dictionary<string, object>();
+            var spName = ConfigurationManager.AppSettings["GetListForPRDocument"];
+
+            parms.Add("@PRSetNo", PRSetNo);
+            var dt = _dbAccess.GetDataTable(spName, parms);
+            return dt;
+        }
+
+        public DataTable GetPRDataForDocument(string PRSetNo)
+        {
+            var parms = new Dictionary<string, object>();
+            var spName = ConfigurationManager.AppSettings["GetPRDataForDocument"];
+
+            parms.Add("@PRSetNo", PRSetNo);
+            var dt = _dbAccess.GetDataTable(spName, parms);
+            return dt;
+        }
+
     }
-}
+    }

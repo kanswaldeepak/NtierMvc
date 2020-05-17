@@ -1,6 +1,7 @@
 ﻿using NtierMvc.Model;
 using NtierMvc.Model.MRM;
 using System.Collections.Generic;
+using System.Data;
 
 namespace NtierMvc.BusinessLogic.Interface
 {
@@ -16,5 +17,7 @@ namespace NtierMvc.BusinessLogic.Interface
 
         string UpdateApproveReject(string[] param);
         string SavePurchaseDetails(string[] param);
+        DataTable GetPRListForDocument(string PRSetNo);
+        DataTable GetPRDataForDocument(string PRSetNo);
     }
 }

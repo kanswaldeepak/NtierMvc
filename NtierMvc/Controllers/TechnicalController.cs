@@ -17,6 +17,7 @@ using OfficeOpenXml;
 using System.Text;
 using System.Data.SqlClient;
 using System.Reflection;
+using System.Configuration;
 
 namespace NtierMvc.Controllers
 {
@@ -387,7 +388,8 @@ namespace NtierMvc.Controllers
             {
                 Microsoft.Office.Interop.Excel.Application excelApp = new Microsoft.Office.Interop.Excel.Application();
                 // open the template in Edit mode
-                Microsoft.Office.Interop.Excel.Workbook xlWorkbook = excelApp.Workbooks.Open(Filename: @"~/App_Data/Documents/Excel/Example.xlsx", Editable: true);
+                string path = System.Web.HttpContext.Current.Server.MapPath("~/App_Data/Documents/Excel/Example.xlsx");
+                Microsoft.Office.Interop.Excel.Workbook xlWorkbook = excelApp.Workbooks.Open(Filename: @path, Editable: true);
                 Microsoft.Office.Interop.Excel.Worksheet ws = (Microsoft.Office.Interop.Excel.Worksheet)xlWorkbook.Sheets["Sheet1"];
 
 
@@ -477,7 +479,9 @@ namespace NtierMvc.Controllers
 
                 Microsoft.Office.Interop.Excel.Application excelApp = new Microsoft.Office.Interop.Excel.Application();
                 // open the template in Edit mode
-                Microsoft.Office.Interop.Excel.Workbook xlWorkbook = excelApp.Workbooks.Open(Filename: @"C:/D/Example.xlsx", Editable: true);
+                string path = System.Web.HttpContext.Current.Server.MapPath("~/App_Data/Documents/Excel/Example.xlsx");
+                //string path = System.IO.Path.GetFullPath(ConfigurationManager.AppSettings["QuotePrepExcel"]);
+                Microsoft.Office.Interop.Excel.Workbook xlWorkbook = excelApp.Workbooks.Open(Filename: @path, Editable: true);
                 Microsoft.Office.Interop.Excel.Worksheet ws = (Microsoft.Office.Interop.Excel.Worksheet)xlWorkbook.Sheets["Sheet1"];
 
 

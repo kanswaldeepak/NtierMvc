@@ -5,6 +5,7 @@ using NtierMvc.Model;
 using NtierMvc.Model.MRM;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Net.Http;
 
 namespace NtierMvc.Areas.MRM.Models
@@ -106,11 +107,11 @@ namespace NtierMvc.Areas.MRM.Models
             return result;
         }
 
-        public string SavePurchaseDetails(string PRSetno, string Communicate, string PONo, string PRRequestedOn)
+        public string SavePurchaseDetails(string PRSetno, string Communicate, string PONo, string ExpectedDeliveryDate, string UserId)
         {
             string result = "0";
             var baseAddress = "MRMDetail";
-            string[] param = { PRSetno, Communicate, PONo, PRRequestedOn };
+            string[] param = { PRSetno, Communicate, PONo, ExpectedDeliveryDate, UserId };
             using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
             {
                 HttpResponseMessage response = client.PostAsJsonAsync(baseAddress + "/SavePurchaseDetails", param).Result;
@@ -121,6 +122,38 @@ namespace NtierMvc.Areas.MRM.Models
                 }
             }
             return result;
+        }
+
+        public DataTable GetPRListForDocument(string PRSetNo)
+        {
+            DataTable lstTable = new DataTable();
+            var baseAddress = "MRMDetail";
+            using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
+            {
+                HttpResponseMessage response = client.GetAsync(baseAddress + "/GetPRListForDocument?PRSetNo=" + PRSetNo).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    var data = response.Content.ReadAsStringAsync().Result;
+                    lstTable = JsonConvert.DeserializeObject<DataTable>(data);
+                }
+            }
+            return lstTable;
+        }
+
+        public DataTable GetPRDataForDocument(string PRSetNo)
+        {
+            DataTable lstTable = new DataTable();
+            var baseAddress = "MRMDetail";
+            using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
+            {
+                HttpResponseMessage response = client.GetAsync(baseAddress + "/GetPRDataForDocument?PRSetNo=" + PRSetNo).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    var data = response.Content.ReadAsStringAsync().Result;
+                    lstTable = JsonConvert.DeserializeObject<DataTable>(data);
+                }
+            }
+            return lstTable;
         }
 
     }

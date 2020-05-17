@@ -80,6 +80,7 @@ namespace NtierMvc.Model.MRM
         public string EntryType { get; set; }
         public string PRRequestedOn { get; set; }
         public string PRFavouredOn { get; set; }
+        public string PurchasePerson { get; set; }
     }
 
     public class PRDetailEntityBulkSave

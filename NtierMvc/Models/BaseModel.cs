@@ -1287,6 +1287,22 @@ namespace NtierMvc.Models
             }
             return lstDropDownEntity;
         }
+        
+        public DataTable GetDataTableForDocument(string ListType, string TableName, string[] DataColumn, string[] DataParam, string[] RequiredColumn)
+        {
+            DataTable lstTable = new DataTable();
+            var baseAddress = "Base";
+            using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
+            {
+                HttpResponseMessage response = client.GetAsync(baseAddress + "/GetDataTableForDocument?ListType=" + ListType + "&TableName=" + TableName + "&DataColumn=" + DataColumn + "&DataParam=" + DataParam + "&RequiredColumn=" + RequiredColumn).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    var data = response.Content.ReadAsStringAsync().Result;
+                    lstTable = JsonConvert.DeserializeObject<DataTable>(data);
+                }
+            }
+            return lstTable;
+        }
 
     }
 }
