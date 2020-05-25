@@ -64,6 +64,7 @@
     <Compile Include="ClarificationEntity.cs" />
     <Compile Include="DesignEng\BOMEntity.cs" />
     <Compile Include="DesignEng\ProductRealisationEntity.cs" />
+    <Compile Include="MRM\PODetailEntity.cs" />
     <Compile Include="MRM\PRDetailEntity.cs" />
     <Compile Include="SingleColumnEntity.cs" />
     <Compile Include="HR\HRLeaveManagementEntity.cs" />

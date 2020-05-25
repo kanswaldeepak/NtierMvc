@@ -1,4 +1,4 @@
-﻿@*@using NtierMvc.Model*@
+﻿
 @model NtierMvc.Model.QuotationPreparationEntity
 
 @*<script src="~/ang/PdfFile/pdfmake.js"></script>
@@ -329,16 +329,24 @@
                         <div class="form-group text-left">
                             <label class="control-label"> Download Type :</label>
                             <div class="col-md-12">
-                                <table>
+                                <table class="table-borderless">
                                     <tr>
                                         <td>
-                                            <input type="radio" id="ddlDownload" name="ddlDownload" value="xlsx"> <img src="~/Images/excel.png" height="40" />
+                                            <input style="height:40px" type="image" class="img-thumbnail" src="~/Images/excel.png" alt="Generate Quote" onclick="CreateDocument('xlsx') " />
                                         </td>
                                         <td>
-                                            <input type="radio" id="ddlDownload" name="ddlDownload" value="docx"> <img src="~/Images/doc.png" height="40" />
+                                            <input style="height:40px" type="image" class="img-thumbnail" src="~/Images/doc.png" alt="Generate Quote" onclick="CreateDocument('docx') " />
                                         </td>
                                         <td>
-                                            <input type="radio" id="ddlDownload" name="ddlDownload" value="pdf"> <img src="~/Images/PDF.jpg" height="40" />
+                                            <input style="height:40px" type="image" class="img-thumbnail" src="~/Images/PDF.jpg" alt="Generate Quote" onclick="CreateDocument('pdf') " />
+
+                                            @*<input type="radio" id="ddlDownload" name="ddlDownload" value="xlsx"> <img src="~/Images/excel.png" height="40" />
+            </td>
+            <td>
+                <input type="radio" id="ddlDownload" name="ddlDownload" value="docx"> <img src="~/Images/doc.png" height="40" />
+            </td>
+            <td>
+                <input type="radio" id="ddlDownload" name="ddlDownload" value="pdf"> <img src="~/Images/PDF.jpg" height="40" />*@
                                         </td>
                                     </tr>
                                 </table>
@@ -354,7 +362,7 @@
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <input style="font-size:18px" type="button" class="btn btn-info btn-sm" value="Generate Quote" onclick="CreateDocument()" />
+                        @*<input style="font-size:18px" type="button" class="btn btn-info btn-sm" value="Generate Quote" onclick="CreateDocument()" />*@
                     </div>
                 </div>
 
@@ -705,7 +713,7 @@ function GetProductDetails() {
                         $('#ViewEnqSrNo').text($("#EnqSrNo").val());
                         $('#ViewItemNo').text($('#ItemNo').val());
                         $('#ViewQuantity').text($('#Qty').val());
-                        debugger;
+
                         $('#ViewNetWeight').val(item.NetWeight);
                         $('#ViewGrossWeight').val(item.GrossWeight);
 
@@ -747,13 +755,12 @@ function GetProductDetails() {
 
 }
 
-function CreateDocument() {
-    var DownloadType = $("#ddlDownload").val();
+function CreateDocument(dwnldtype) {
+    var DownloadType = dwnldtype;
     var QuoteType = $("#QuotePrepFormType").val();
     var QuoteNumber = $("#QuotePrepFormNo").val();
     var QuoteTypeText = $("#QuotePrepFormType option:selected").text();
 
-    debugger;
     if (DownloadType == '' || QuoteType == '' || QuoteNumber == '') {
         alert("Kindly Select DownloadType, QuoteType and QuoteNumber");
         return;
@@ -768,16 +775,14 @@ function CreateDocument() {
             //alert("Dowloaded Successfully" + data);
             if (data.fileName != "") {
                 //use window.location.href for redirect to download action for download the file
-                window.location.href = '@Url.RouteUrl(new { Controller = "Technical", Action = "Download" })/?fileName=' + data.fileName;
+                //window.location.href = '@Url.RouteUrl(new { Controller = "Technical", Action = "Download" })/?fileName=' + data.fileName;
             }
             else {
                 alert(data.errorMessage);
             }
         },
         error: function (x, e) {
-            $('#spn-Sucess-Failure').text('Some error is occurred, Please try after some time.');
-            $('#spn-Sucess-Failure').addClass("important red");
-            $('#Sucess-Failure').modal('show');
+            alert('Some error is occurred, Please try after some time.');
         }
     })
 }

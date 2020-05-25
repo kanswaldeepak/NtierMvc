@@ -260,5 +260,44 @@ angular.module('App').controller("MRMController", function ($scope, $http, $time
         })
     }
 
+    $scope.BindPODetailsPopup = function () {
+        var _actionType = "ADD"
+        $.ajax({
+            type: "POST",
+            data: { actionType: _actionType },
+            datatype: "JSON",
+            url: window.PODetailsPopup,
+            success: function (html) {
+                html = $compile(html)($scope);
+                SetModalTitle("Add Purchase Requisition");
+                SetModalBody(html);
+                HideLoadder();
+                SetModalWidth("1500px");
+                ShowModal();
+
+                if (!($('.modal.in').length)) {
+                    $('.modal-dialog').css({
+                        top: '5%',
+                        left: '0%'
+                    });
+                }
+                $('#ModalPopup').modal({
+                    backdrop: false,
+                    show: true
+                });
+
+                $('.modal-dialog').draggable({
+                    handle: ".modal-body"
+                });
+
+            },
+            error: function (r) {
+                HideLoadder();
+                alert(window.ErrorMsg);
+            }
+        })
+        //});
+    }
+
 })
 //EOF

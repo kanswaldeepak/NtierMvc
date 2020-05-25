@@ -1,13 +1,13 @@
-﻿@model NtierMvc.Model.MRM.PRDetailEntity
+﻿
 @{
-    ViewBag.Title = "Purchase Requisition";
+    ViewBag.Title = "Purchase Order";
 }
 
 <div class="row mt-3">
     <table>
         <tr>
             <td>
-                <button id="btnPRPDetails" type="button" class="btn btn-outline-primary btn-sm" ng-click="BindPRDetailsPopup()"><i class="fa fa-plus"></i> <b>PR Details</b></button>
+                <button id="btnPODetails" type="button" class="btn btn-outline-primary btn-sm" ng-click="BindPODetailsPopup()"><i class="fa fa-plus"></i> <b>PO Details</b></button>
             </td>
             <td>
                 <label>Vendor Type</label>
@@ -25,38 +25,38 @@
         </tr>
         <tr>
             <td></td>
-            <td>
-                @Html.DropDownList("VendorType", new SelectList(@ViewBag.ListVendorType, "DataStringValueField", "DataTextField", "Select"),
-                           new
-                           {
-                               @class = "form-control",
-                               ng_model = "SearchVendorTypeId"
-                           })
-            </td>
-            <td>
-                @Html.DropDownList("SupplierId", new SelectList(@ViewBag.ListSupplierId, "DataStringValueField", "DataTextField", "Select"),
-                           new
-                           {
-                               @class = "form-control",
-                               ng_model = "SearchSupplierId"
-                           })
-            </td>
-            <td>
-                @Html.DropDownList("RMCategory", new SelectList(@ViewBag.ListRMCategory, "DataStringValueField", "DataTextField", "Select"),
-                           new
-                           {
-                               @class = "form-control",
-                               ng_model = "SearchRMCategory"
-                           })
-            </td>
-            <td>
-                @Html.DropDownList("DeliveryDate", new SelectList(@ViewBag.ListDeliveryDate, "DataStringValueField", "DataTextField", "Select"),
-                                           new
-                                           {
-                                               @class = "form-control",
-                                               ng_model = "SearchDeliveryDate"
-                                           })
-            </td>
+            @*<td>
+                    @Html.DropDownList("VendorType", new SelectList(@ViewBag.ListVendorType, "DataStringValueField", "DataTextField", "Select"),
+                               new
+                               {
+                                   @class = "form-control",
+                                   ng_model = "SearchVendorTypeId"
+                               })
+                </td>
+                <td>
+                    @Html.DropDownList("SupplierId", new SelectList(@ViewBag.ListSupplierId, "DataStringValueField", "DataTextField", "Select"),
+                               new
+                               {
+                                   @class = "form-control",
+                                   ng_model = "SearchSupplierId"
+                               })
+                </td>
+                <td>
+                    @Html.DropDownList("RMCategory", new SelectList(@ViewBag.ListRMCategory, "DataStringValueField", "DataTextField", "Select"),
+                               new
+                               {
+                                   @class = "form-control",
+                                   ng_model = "SearchRMCategory"
+                               })
+                </td>
+                <td>
+                    @Html.DropDownList("DeliveryDate", new SelectList(@ViewBag.ListDeliveryDate, "DataStringValueField", "DataTextField", "Select"),
+                                               new
+                                               {
+                                                   @class = "form-control",
+                                                   ng_model = "SearchDeliveryDate"
+                                               })
+                </td>*@
             <td></td>
             <td>
                 <button class="btn btn-link" type="button" id="btnSearch" ng-click="FetchPRDetailsList()">
@@ -226,11 +226,9 @@
 <script type="text/javascript">
 
     $(document).ready(function () {
-        window.FetchPRDetailsList = '@Url.Action("FetchPRDetailsList", "MRM")';
-        window.PRDetailsPopup = '@Url.Action("PRDetailPopup", "MRM")';
-        window.GetPRTableDetails = '@Url.Action("GetPRTableDetails", "MRM")';
-        window.SavePRDetailsList = '@Url.Action("SavePRDetailsList", "MRM")';
-        window.CreateDownloadDocument = '@Url.Action("CreateDownloadDocument", "MRM")';
+        window.FetchPODetailsList = '@Url.Action("FetchPODetailsList", "MRM")';
+        window.PODetailsPopup = '@Url.Action("PODetailsPopup", "MRM")';
+        window.GetPRDetailsFromPRSetNo = '@Url.Action("GetPRTableDetails", "MRM")';
 
     });
 
@@ -244,29 +242,6 @@
         }
 
 
-function CreateDocument(e) {
-
-    var PRSetNo = e.value;
-
-    $.ajax({
-        type: 'POST',
-        url: window.CreateDownloadDocument,
-        data: JSON.stringify({ PRSetNo: PRSetNo }),
-        contentType: "application/json; charset=utf-8",
-        success: function (data) {
-            
-            if (data.fileName != "") {
-                @*window.location.href = '@Url.RouteUrl(new { Controller = "MRM", Action = "Download" })/?fileName=' + data.fileName;*@
-            }
-            else {
-                alert(data.errorMessage);
-            }
-        },
-        error: function (x, e) {
-            alert(data);
-        }
-    })
-}
 
 </script>
-<script src="~/Areas/MRM/Scripts/PRDetailPopUp.js"></script>
+<script src="~/Areas/MRM/Scripts/PODetailPopUp.js"></script>

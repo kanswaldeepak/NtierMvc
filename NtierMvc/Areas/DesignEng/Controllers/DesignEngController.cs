@@ -442,7 +442,7 @@ namespace NtierMvc.Areas.DesignEng.Controllers
             var downloadFileName = "Detailed_PRP_Report" + DateTime.Now.ToString("ddMMyyyyHHmmss");
             try
             {
-                var path = ConfigurationManager.AppSettings["ReportsCreateExcelPRP"];
+                var path = Server.MapPath(ConfigurationManager.AppSettings["ReportsCreateExcelPRP"]);
                 var fileName = "Detailed_PRP_Report" + DateTime.Now.ToString("ddMMyyyyHHmmss") + ".xlsx";
                 if (Directory.Exists(path) == false)
                 {
@@ -462,7 +462,6 @@ namespace NtierMvc.Areas.DesignEng.Controllers
                 else
                     fileName = "";
                 
-
                 return new JsonResult { Data = fileName, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
             }
             catch (Exception ex)
@@ -474,7 +473,7 @@ namespace NtierMvc.Areas.DesignEng.Controllers
 
         private void openFile(string fileName)
         {
-            string fullPath = Path.Combine(ConfigurationManager.AppSettings["ReportsCreateExcelPRP"].ToString(), fileName);
+            string fullPath = Path.Combine(Server.MapPath(ConfigurationManager.AppSettings["ReportsCreateExcelPRP"]), fileName);
             var excelApp = new Excel.Application();
             excelApp.Visible = true;
 
@@ -485,8 +484,6 @@ namespace NtierMvc.Areas.DesignEng.Controllers
                 Excel.Workbook sheet = books.Open(fullPath, 0, true, 5, "", "", true, Microsoft.Office.Interop.Excel.XlPlatform.xlWindows, "\t", false, false, 0, true, 1, Microsoft.Office.Interop.Excel.XlCorruptLoad.xlExtractData);
                 System.IO.File.Delete(fullPath);
             }
-
-            
         }
 
         [HttpGet]

@@ -1,23 +1,18 @@
 ﻿using NtierMvc.Common;
-using NtierMvc.Models;
+using NtierMvc.Infrastructure;
 using NtierMvc.Model;
+using NtierMvc.Models;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
-using NtierMvc.Infrastructure;
-using System.Data;
-using iTextSharp.text;
-using iTextSharp.text.pdf;
-using System.Linq;
-using Microsoft.Ajax.Utilities;
-using Syncfusion.XlsIO;
-using System.IO;
-using OfficeOpenXml;
-using System.Text;
-using System.Data.SqlClient;
-using System.Reflection;
-using System.Configuration;
+using Excel = Microsoft.Office.Interop.Excel;
 
 namespace NtierMvc.Controllers
 {
@@ -370,7 +365,7 @@ namespace NtierMvc.Controllers
             }
 
             quoteNoForFileName = quoteNoForFileName + "-" + quoteNumberId + ".xlsx";
-            string fullPath = Path.Combine(Server.MapPath("~/temp"), quoteNoForFileName);
+            string fullPath = Path.Combine(Server.MapPath(ConfigurationManager.AppSettings["TempFolder"].ToString()), quoteNoForFileName);
             string fileName = "", FileQuoteNo = "";
 
             if(downloadTypeId == "xlsx")
@@ -378,7 +373,9 @@ namespace NtierMvc.Controllers
             else if(downloadTypeId == "docs")
                 fileName = GenerateDoc(downloadTypeId, quoteTypeId, quoteNumberId, quoteNoForFileName, fullPath, fileName);
 
-            return Json(new { fileName = fileName, errorMessage = "Error While Generating Excel. Contact Support." });
+            Download(fileName);
+            //return Json(new { fileName = fileName, errorMessage = "Error While Generating Excel. Contact Support." });
+            return new JsonResult { Data = fileName, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
 
         }
 
@@ -388,7 +385,7 @@ namespace NtierMvc.Controllers
             {
                 Microsoft.Office.Interop.Excel.Application excelApp = new Microsoft.Office.Interop.Excel.Application();
                 // open the template in Edit mode
-                string path = System.Web.HttpContext.Current.Server.MapPath("~/App_Data/Documents/Excel/Example.xlsx");
+                string path = System.Web.HttpContext.Current.Server.MapPath(ConfigurationManager.AppSettings["QuotePrepExcel"]);
                 Microsoft.Office.Interop.Excel.Workbook xlWorkbook = excelApp.Workbooks.Open(Filename: @path, Editable: true);
                 Microsoft.Office.Interop.Excel.Worksheet ws = (Microsoft.Office.Interop.Excel.Worksheet)xlWorkbook.Sheets["Sheet1"];
 
@@ -479,7 +476,7 @@ namespace NtierMvc.Controllers
 
                 Microsoft.Office.Interop.Excel.Application excelApp = new Microsoft.Office.Interop.Excel.Application();
                 // open the template in Edit mode
-                string path = System.Web.HttpContext.Current.Server.MapPath("~/App_Data/Documents/Excel/Example.xlsx");
+                string path = System.Web.HttpContext.Current.Server.MapPath(ConfigurationManager.AppSettings["QuotePrepExcel"]);
                 //string path = System.IO.Path.GetFullPath(ConfigurationManager.AppSettings["QuotePrepExcel"]);
                 Microsoft.Office.Interop.Excel.Workbook xlWorkbook = excelApp.Workbooks.Open(Filename: @path, Editable: true);
                 Microsoft.Office.Interop.Excel.Worksheet ws = (Microsoft.Office.Interop.Excel.Worksheet)xlWorkbook.Sheets["Sheet1"];
@@ -564,106 +561,41 @@ namespace NtierMvc.Controllers
             return fileName;
         }
 
-        public ActionResult Download(string fileName)
+        private void Download(string fileName)
         {
-            string fullPath = Path.Combine(Server.MapPath("~/temp"), fileName);
+            //Do not delete commented text
+            //string fullPath = Path.Combine(Server.MapPath(ConfigurationManager.AppSettings["TempFolder"]), fileName);
+
+            //if (System.IO.File.Exists(fullPath))
+            //{
+            //    ////Get the temp folder and file path in server
+            //    byte[] fileByteArray = System.IO.File.ReadAllBytes(fullPath);
+            //    System.IO.File.Delete(fullPath);
+            //    return File(fileByteArray, "application/vnd.ms-excel", fileName);
+
+            //}
+
+            //else
+            //    return Json(new { data = "", errorMessage = "Error While Generating Excel. Contact Support." }, JsonRequestBehavior.AllowGet);
+
+            //string fullPath = Path.Combine(Server.MapPath(ConfigurationManager.AppSettings["TempFolder"]), fileName);
+
+            string fullPath = Path.Combine(Server.MapPath(ConfigurationManager.AppSettings["TempFolder"]), fileName);
+            var excelApp = new Excel.Application();
+            excelApp.Visible = true;
 
             if (System.IO.File.Exists(fullPath))
             {
                 ////Get the temp folder and file path in server
-                byte[] fileByteArray = System.IO.File.ReadAllBytes(fullPath);
+                Excel.Workbooks books = excelApp.Workbooks;
+                Excel.Workbook sheet = books.Open(fullPath, 0, true, 5, "", "", false, Microsoft.Office.Interop.Excel.XlPlatform.xlWindows, "\t", true, false, 0, true, 1, Microsoft.Office.Interop.Excel.XlCorruptLoad.xlNormalLoad);
                 System.IO.File.Delete(fullPath);
-                return File(fileByteArray, "application/vnd.ms-excel", fileName);
-
+                //return Json(new { data = "", errorMessage = "" }, JsonRequestBehavior.AllowGet);
             }
-
-            else
-                return Json(new { data = "", errorMessage = "Error While Generating Excel. Contact Support." }, JsonRequestBehavior.AllowGet);
-
+            //else
+            //    return Json(new { data = "", errorMessage = "Error While Generating Excel. Contact Support." }, JsonRequestBehavior.AllowGet);
 
         }
-
-        #region To Create Excel
-        //private void CreateandDownloadExcel()
-        //{
-        //    List<ProductEntity> pEntity = new List<ProductEntity>();
-        //    ExcelPackage pck = new ExcelPackage();
-        //    ExcelWorksheet ws = pck.Workbook.Worksheets.Add("Reports");
-
-        //    ws.Cells["A2"].Value = "ABC/        /2019/ONGC/XYZ";
-        //    ws.Cells["A5"].Value = "M/s.";
-        //    ws.Cells["E5"].Value = "Commercial (Priced) Bid";
-        //    ws.Cells["A9"].Value = "Re : Enquiry No. _______________________";
-        //    ws.Cells["A11"].Value = "Quote No. ABC/EQ-1000/19 dated 01-01-2020";
-        //    ws.Cells["A13"].Value = "Dear Sir,";
-        //    ws.Cells["A16"].Value = "With reference to the above Tender enquiry dt._________ and clarification dt. ___________, we quote the following stores for your kind consideration.";
-        //    ws.Cells[16, 1, 16, 3].Merge = true;
-
-        //    ws.Cells["A18"].Value = "Item No.";
-        //    ws.Cells["B18"].Value = "Enquiry Ref. No";
-        //    ws.Cells["C18"].Value = "Qty.";
-        //    ws.Cells["E18"].Value = "Description";
-        //    ws.Cells["F19"].Value = "Unit Price US$";
-        //    ws.Cells["D21"].Value = "Total Price US$";
-        //    ws.Cells["C24"].Value = "Total Estimated ";
-        //    ws.Cells["C25"].Value = "Net Weight:         Kgs.";
-        //    ws.Cells["C26"].Value = "Gross Weight:      Kgs.";
-        //    ws.Cells["C25"].Value = "Volume:              Cu.M";
-        //    ws.Cells["B30"].Value = "NOTES:";
-        //    ws.Cells["B30"].Style.Font.Bold = true;
-        //    ws.Cells["C31"].Value = "The quoted goods are manufactured  at our plant located at Gurgaon, Haryana, INDIA.";
-
-        //    ws.Cells["B32"].Value = "1"; ws.Cells["C32"].Value = "The all equipment shall be supplied new and unused.";
-        //    ws.Cells["B32"].Value = "2"; ws.Cells["C32"].Value = "Copy of our API Certificate No. 5CT-0437  dtd  17.12.2012 valid till 13.04.2016 is enclosed with the Quotation.";
-        //    ws.Cells["B33"].Value = "3"; ws.Cells["C33"].Value = "Copy of our ISO Certificate No. 9001:2008 dtd. 05.01.2013 for Quality Management System, valid till 03.01.2016 is enclosed .";
-        //    ws.Cells["B34"].Value = "4"; ws.Cells["C34"].Value = "Copy of our ISO Certificate No. 14001:2004 dtd. 05.01.2013 for Environment Management System, valid till 03.01.2016 is enclosed.";
-        //    ws.Cells["B35"].Value = "5"; ws.Cells["C35"].Value = "Copy of our OHSAS Certificate No. 18001:2007 dtd. 05.01.2013 for Occupational Health & Safety Management System, valid till 03.01.2016 is enclosed.";
-        //    ws.Cells["B36"].Value = "6"; ws.Cells["C36"].Value = "API certificate No.10D-0001of our associate Laxmi Udyog dtd. April 03, 2010 valid upto September 03, 2013 is enclosed.";
-        //    ws.Cells["C37"].Style.Font.Bold = true;
-        //    ws.Cells["B37"].Value = "7"; ws.Cells["C37"].Value = "Delivery:";
-        //    ws.Cells["B38"].Value = "8"; ws.Cells["C38"].Value = "Subject to force majeure and conditions outside BOTIL’s control the goods offered will be ready for dispatch within ___________ Weeks, Ex-Works  Bhora Kalan, Bilaspur - Pataudi Road, Off. NH-8, MS-60, Gurgaon, Haryana, INDIA., after receipt of your formal Purchase Order and letter of credit in acceptable form.";
-        //    ws.Cells["B39"].Value = ""; ws.Cells["C39"].Value = "Please allow additional 2 weeks beyond quoted ex-works delivery for Transportation from BOTIL Plant to Port of Export, India , Customs handling and Sea-frieght formalities. (F.O.B. Port of Export, India Delivery: _______ Weeks)";
-        //    ws.Cells["B40"].Value = ""; ws.Cells["C40"].Value = "Validity:";
-        //    ws.Cells["C40"].Style.Font.Bold = true;
-        //    ws.Cells["B41"].Value = "9"; ws.Cells["C41"].Value = "Quoted prices are valid for 3 Months from the closing date of tender and shall be firm through delivery thereafter, for orders placed within validity of quote.";
-        //    ws.Cells["B42"].Value = ""; ws.Cells["C42"].Value = "Transit/Marine Insurance :";
-        //    ws.Cells["B43"].Value = "10"; ws.Cells["C43"].Value = "Transit insurance has to be arranged by Customer, being the quote is on F.O.B. basis.";
-        //    ws.Cells["C43"].Style.Font.Bold = true;
-        //    ws.Cells["B45"].Value = ""; ws.Cells["C45"].Value = "Fumigation :";
-        //    ws.Cells["C45"].Style.Font.Bold = true;
-        //    ws.Cells["B46"].Value = "11"; ws.Cells["C46"].Value = "Please note the charges for fumigation of boxes is mandatory & payable extra as applicable at the time of shipment. Charges for fumigation  has been included in quote.";
-        //    ws.Cells["B47"].Value = ""; ws.Cells["C47"].Value = "Legalisation:";
-        //    ws.Cells["C47"].Style.Font.Bold = true;
-        //    ws.Cells["B48"].Value = "12"; ws.Cells["C48"].Value = "Please note the charges for Legalisation of Shipping documents is not included. If it is required then the same will be payable extra and quote will be furnished upon your advice for this requirement.";
-        //    ws.Cells["B50"].Value = ""; ws.Cells["C50"].Value = "Prices:";
-        //    ws.Cells["C50"].Style.Font.Bold = true;
-        //    ws.Cells["B51"].Value = "13"; ws.Cells["C51"].Value = "The unit Ex-works prices are exclusive of Third Party Inspection Agency and other charges are quoted in USD, with other charges shown separately for delivery on F.O.B. Port of Export, India.";
-        //    ws.Cells["B52"].Value = ""; ws.Cells["C52"].Value = "The quoted prices are nett payable to BOTIL OIL TOOLS INDIA PVT. LTD. and no discount / commission is included nor payable.";
-        //    ws.Cells["A54"].Value = "In case of any clarification please feel free to contact us.";
-        //    ws.Cells["A56"].Value = "Thanks & regards,";
-        //    //ws.Cells["B32"].Value = "1"; ws.Cells["C32"].Value = "";
-
-
-
-        //    //int rowStart = 7;
-        //    //foreach (var item in pEntity)
-        //    //{
-        //    //    ws.Cells[string.Format("A{0}", rowStart)].Value = item.Id;
-        //    //    ws.Cells[string.Format("B{0}", rowStart)].Value = item.Pos1;
-        //    //    ws.Cells[string.Format("C{0}", rowStart)].Value = item.Pos2;
-        //    //    ws.Cells[string.Format("D{0}", rowStart)].Value = item.Pos3;
-        //    //    ws.Cells[string.Format("E{0}", rowStart)].Value = item.Pos4;
-        //    //    rowStart++;
-        //    //}
-
-        //    ws.Cells["A:AZ"].AutoFitColumns();
-        //    Response.Clear();
-        //    Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-        //    Response.AddHeader("content-disposition", "attachment: filename=" + "NewReport.xlsx");
-        //    Response.BinaryWrite(pck.GetAsByteArray());
-        //    Response.End();
-        //}
-        #endregion
 
         public ActionResult GetProductNameForProductType(int productTypeId)
         {
