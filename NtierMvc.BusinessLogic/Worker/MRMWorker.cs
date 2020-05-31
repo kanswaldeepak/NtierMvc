@@ -141,6 +141,20 @@ namespace NtierMvc.BusinessLogic.Worker
             return result;
         }
 
+        public string SavePODetailsList(BulkUploadEntity entity)
+        {
+            string result = string.Empty;
+            try
+            {
+                result = _repository.SavePODetailsList(entity);
+            }
+            catch (Exception Ex)
+            {
+                NtierMvc.DataAccess.ExceptionLogging.SendExcepToDB(Ex);
+            }
+            return result;
+        }
+
         public PRDetailEntityDetails GetPRDetailsList(int pageIndex, int pageSize, string DeptName, string SearchTypeId = null, string SearchQuoteNo = null, string SearchSONo = null, string SearchVendorId = null, string SearchVendorName = null, string SearchProductGroup = null)
         {
             try
@@ -230,6 +244,10 @@ namespace NtierMvc.BusinessLogic.Worker
                         Model.PRqty = dr1.IsNull("PRqty") ? 0 : Convert.ToInt32(dr1["PRqty"]);
                         Model.UnitPrice = dr1.IsNull("UnitPrice") ? "" : Convert.ToString(dr1["UnitPrice"]);
                         Model.TotalPrice = dr1.IsNull("TotalPrice") ? "" : Convert.ToString(dr1["TotalPrice"]);
+
+                        Model.EntryPersonSign = dr1.IsNull("EntryPersonSign") ? "" : Convert.ToString(dr1["EntryPersonSign"]);
+                        Model.ApprovePerson1Sign = dr1.IsNull("ApprovePerson1Sign") ? "" : Convert.ToString(dr1["ApprovePerson1Sign"]);
+                        Model.ApprovePerson2Sign = dr1.IsNull("ApprovePerson2Sign") ? "" : Convert.ToString(dr1["ApprovePerson2Sign"]);
 
                         newList.Add(Model);
                     }

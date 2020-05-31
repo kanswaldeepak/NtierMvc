@@ -156,5 +156,22 @@ namespace NtierMvc.Areas.MRM.Models
             return lstTable;
         }
 
+        public string SavePODetailsList(BulkUploadEntity objBU)
+        {
+            string result = "0";
+            var baseAddress = "MRMDetail";
+            using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
+            {
+                HttpResponseMessage response = client.PostAsJsonAsync(baseAddress + "/SavePODetailsList", objBU).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    var data = response.Content.ReadAsStringAsync().Result;
+                    result = JsonConvert.DeserializeObject<string>(data);
+                }
+            }
+            return result;
+        }
+
+
     }
 }

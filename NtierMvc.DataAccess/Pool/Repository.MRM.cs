@@ -51,7 +51,7 @@ namespace NtierMvc.DataAccess.Pool
                 string spName = ConfigurationManager.AppSettings["DeletePurchaseRequestDetails"];
                 var parms = new Dictionary<string, object>();
                 parms.Add("@PRSetno", entity.IdentityNo);
-                _dbAccess.ExecuteNonQuery(spName, parms, "@o_MsgCode", out msgCode);                
+                _dbAccess.ExecuteNonQuery(spName, parms, "@o_MsgCode", out msgCode);
             }
 
             msgCode = _dbAccess.BulkUpload(entity.DataRecordTable, entity.DestinationTable);
@@ -131,5 +131,24 @@ namespace NtierMvc.DataAccess.Pool
             return dt;
         }
 
+        public string SavePODetailsList(BulkUploadEntity entity)
+        {
+            string msgCode = "";
+            entity.DestinationTable = "RMPO";
+
+            if (!string.IsNullOrEmpty(entity.IdentityNo.ToString()) && entity.IdentityNo != 0)
+            {
+                string spName = ConfigurationManager.AppSettings["DeleteRMPODetails"];
+                var parms = new Dictionary<string, object>();
+                parms.Add("@PRSetno", entity.IdentityNo);
+                _dbAccess.ExecuteNonQuery(spName, parms, "@o_MsgCode", out msgCode);
+            }
+
+            msgCode = _dbAccess.BulkUpload(entity.DataRecordTable, entity.DestinationTable);
+
+            return msgCode;
+        }
+
+
     }
-    }
+}

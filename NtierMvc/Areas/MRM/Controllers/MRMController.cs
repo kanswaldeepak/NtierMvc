@@ -572,38 +572,96 @@ namespace NtierMvc.Areas.MRM.Controllers
             var UserDetails = (UserEntity)Session["UserModel"];
             ViewBag.DeptName = UserDetails.DeptName;
 
-            PODetailEntity prObj = new PODetailEntity();
-            prObj.UserId = UserDetails.UserId;
+            PODetailEntity poObj = new PODetailEntity();
+            poObj.UserId = UserDetails.UserId;
 
             if (actionType == "VIEW" || actionType == "EDIT")
             {
-                prObj.PRSetno = Convert.ToInt32(PRSetno);
-                //prObj = objManager.GetSavedPRDetailsPopup(prObj);
+                poObj.PRSetno = Convert.ToInt32(PRSetno);
 
-                if (prObj.SignStatus == "Entry")
-                    prObj.ApprovePerson1Sign = UserDetails.SignImage;
-                else if (prObj.SignStatus == "Approved1")
-                    prObj.ApprovePerson2Sign = UserDetails.SignImage;
-                else if (prObj.SignStatus == "Approved2")
+                if (poObj.SignStatus == "Entry")
+                    poObj.ApprovePerson1Sign = UserDetails.SignImage;
+                else if (poObj.SignStatus == "Approved1")
+                    poObj.ApprovePerson2Sign = UserDetails.SignImage;
+                else if (poObj.SignStatus == "Approved2")
                     ViewBag.PurchaseRequest = UserDetails.SignImage;
 
-
-                ViewBag.ListPRRequestedOn = "";
             }
             else if (actionType == "ADD")
-            {
-                //prObj = objManager.GetPRDetailsPopup(prObj);
-                prObj.ReqFrom = UserDetails.FirstName + " " + UserDetails.LastName;                
-                prObj.DeptName = UserDetails.DeptName;
-                prObj.EntryPersonSign = UserDetails.SignImage;
-            }
+                poObj.POdate = DateTime.Now.ToShortDateString();
 
-
-            return base.PartialView("~/Areas/MRM/Views/MRM/_PODetailsPopup.cshtml", prObj);
+            return base.PartialView("~/Areas/MRM/Views/MRM/_PODetailsPopup.cshtml", poObj);
         }
 
-       
+        [HttpPost]
+        public ActionResult SavePODetailsList(PODetailEntity[] PODetails)
+        {
+            model = new BaseModel();
 
+            try
+            {
+                if (PODetails != null)
+                {
+                    BulkUploadEntity objBU = new BulkUploadEntity();
+                    objBU.DataRecordTable = new DataTable();
+
+                    List<PODetailEntity> prList = new List<PODetailEntity>();
+                    List<PODetailEntityBulkSave> itemListBulk = new List<PODetailEntityBulkSave>();
+                    prList = PODetails.OfType<PODetailEntity>().ToList();
+
+                    var UserDetails = (UserEntity)Session["UserModel"];
+
+                    foreach (var item in prList)
+                    {
+                        PODetailEntityBulkSave newObj = new PODetailEntityBulkSave();
+
+                        newObj.PRno = item.PRno;
+                        newObj.PONo = item.PONo;
+                        newObj.PRSetno = item.PRSetno;
+                        newObj.POdate = item.POdate;
+                        newObj.SN = item.SN;
+                        newObj.RMdescription = item.RMdescription;
+                        newObj.QtyReqd = item.QtyReqd;
+                        newObj.QtyStock = item.QtyStock;
+                        newObj.PRqty = item.PRqty;
+                        newObj.UnitPrice = item.UnitPrice;
+                        newObj.TotalPrice = item.TotalPrice;
+                        newObj.WorkNo = item.WorkNo;
+                        newObj.DeliveryTime = item.DeliveryTime;
+                        newObj.POValidity = item.POValidity;
+
+                        newObj.TotalPRSetPrice = item.TotalPRSetPrice;
+
+                        itemListBulk.Add(newObj);
+                    }
+
+                    string result = string.Empty;
+                    ExtensionMethods lsttodt = new ExtensionMethods();
+                    objBU.DataRecordTable = lsttodt.ToDataTable(itemListBulk);
+                    objBU.IdentityNo = PODetails[0].PRSetno;
+                    result = objManager.SavePODetailsList(objBU);
+
+                    string data = string.Empty;
+                    if (!string.IsNullOrEmpty(result) && (result == GeneralConstants.Inserted || result == GeneralConstants.Updated))
+                    {
+                        //Payment Gateway
+                        data = GeneralConstants.SavedSuccess;
+                    }
+                    else
+                    {
+                        data = GeneralConstants.NotSavedError + " Reason: " + result;
+                    }
+
+                    return new JsonResult { Data = data, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+
+                }
+                return Json("Unable to save Item Details! Please Provide correct information", JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception)
+            {
+                return Json("Unable to save your Item Details! Please try again later.", JsonRequestBehavior.AllowGet);
+            }
+        }
 
     }
 }

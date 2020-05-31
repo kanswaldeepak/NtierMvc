@@ -368,9 +368,9 @@ namespace NtierMvc.Controllers
             string fullPath = Path.Combine(Server.MapPath(ConfigurationManager.AppSettings["TempFolder"].ToString()), quoteNoForFileName);
             string fileName = "", FileQuoteNo = "";
 
-            if(downloadTypeId == "xlsx")
+            if (downloadTypeId == "xlsx")
                 fileName = GenerateExcel(downloadTypeId, quoteTypeId, quoteNumberId, quoteNoForFileName, fullPath, fileName);
-            else if(downloadTypeId == "docs")
+            else if (downloadTypeId == "docs")
                 fileName = GenerateDoc(downloadTypeId, quoteTypeId, quoteNumberId, quoteNoForFileName, fullPath, fileName);
 
             Download(fileName);
@@ -919,7 +919,7 @@ namespace NtierMvc.Controllers
             OrderEntity oEntity = new OrderEntity();
             oEntity = objManager.GetQuoteOrderDetails(quoteType, quoteNoId);
             List<DropDownEntity> soNo = new List<DropDownEntity>();
-            soNo = model.GetDropDownList("Orders", GeneralConstants.ListTypeD, "SoNo", "SoNo",quoteType,"QuoteType","","",quoteNoId,"QuoteNo");
+            soNo = model.GetDropDownList("Orders", GeneralConstants.ListTypeD, "SoNo", "SoNo", quoteType, "QuoteType", "", "", quoteNoId, "QuoteNo");
             var result = new { oEntity, soNo };
             return new JsonResult { Data = result, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
@@ -1009,7 +1009,7 @@ namespace NtierMvc.Controllers
                     }
                     else
                     {
-                        data = GeneralConstants.NotSavedError + " Reason: " +result;
+                        data = GeneralConstants.NotSavedError + " Reason: " + result;
                     }
 
                     return new JsonResult { Data = data, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
@@ -1390,7 +1390,7 @@ namespace NtierMvc.Controllers
         public ActionResult GetQuoteItemSlNos(string quoteType, string quoteNo)
         {
             List<DropDownEntity> QuoteItemSlNoList = new List<DropDownEntity>();
-            QuoteItemSlNoList = model.GetDropDownList("QuotePreparationTbl", GeneralConstants.ListTypeD, "Id", "ItemNo", quoteNo, "QuoteNo","","", quoteType, "QuoteType");
+            QuoteItemSlNoList = model.GetDropDownList("QuotePreparationTbl", GeneralConstants.ListTypeD, "Id", "ItemNo", quoteNo, "QuoteNo", "", "", quoteType, "QuoteType");
 
             return new JsonResult { Data = QuoteItemSlNoList, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
@@ -1420,7 +1420,7 @@ namespace NtierMvc.Controllers
         {
             List<DropDownEntity> lstSoNos = new List<DropDownEntity>();
 
-            lstSoNos = model.GetDropDownList("Orders", GeneralConstants.ListTypeD, "SoNo", "SoNo", "QuoteType", quotetypeId, "", "", "QuoteNo",quoteNoId);
+            lstSoNos = model.GetDropDownList("Orders", GeneralConstants.ListTypeD, "SoNo", "SoNo", "QuoteType", quotetypeId, "", "", "QuoteNo", quoteNoId);
             return new JsonResult { Data = lstSoNos, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
 
         }
@@ -1459,6 +1459,7 @@ namespace NtierMvc.Controllers
 
             //return new JsonResult { Data = msgCode, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
+
 
     }
 

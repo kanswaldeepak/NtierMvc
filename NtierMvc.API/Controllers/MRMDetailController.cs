@@ -79,5 +79,13 @@ namespace NtierMvc.API.Controllers.Application
             return Ok(_repository.GetPRDataForDocument(PRSetNo));
         }
 
+        [HttpPost]
+        [ResponseType(typeof(string))]
+        [Route("api/MRMDetail/SavePODetailsList")]
+        public IHttpActionResult SavePODetailsList(BulkUploadEntity iEntity)
+        {
+            return Ok(_repository.SavePODetailsList(iEntity));
+        }
+
     }
 }

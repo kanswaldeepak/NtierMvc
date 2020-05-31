@@ -19,5 +19,7 @@ namespace NtierMvc.BusinessLogic.Interface
         string SavePurchaseDetails(string[] param);
         DataTable GetPRListForDocument(string PRSetNo);
         DataTable GetPRDataForDocument(string PRSetNo);
+        string SavePODetailsList(BulkUploadEntity bEntity);
+
     }
 }

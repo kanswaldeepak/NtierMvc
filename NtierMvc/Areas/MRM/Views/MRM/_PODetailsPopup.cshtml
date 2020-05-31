@@ -1,17 +1,17 @@
 ﻿@model NtierMvc.Model.MRM.PODetailEntity
 @{
-    ViewBag.Title = "PR Details";
+    ViewBag.Title = "PO Details";
 }
 
 <input type="text" id="tableSelected" hidden />
 <input type="text" id="HiddenLoggedInDeptName" hidden />
-@Html.HiddenFor(m => m.DeptName, new { @id = "HiddenDeptNamePRDetails" })
+@Html.HiddenFor(m => m.DeptName, new { @id = "HiddenDeptNamePODetails" })
 @Html.HiddenFor(m => m.PRSetno, new { @id = "HiddenPRSetno" })
-@Html.HiddenFor(m => m.SignStatus, new { @id = "HiddenSignStatusPRDetails" })
-@Html.HiddenFor(m => m.PRStatus, new { @id = "HiddenPRStatusPRDetails" })
-@*@Html.HiddenFor(m => m.EntryPerson, new { @id = "HiddenEntryPersonPRDetails" })*@
-@Html.HiddenFor(m => m.ApprovePerson1, new { @id = "HiddenApprovePerson1PRDetails" })
-@Html.HiddenFor(m => m.ApprovePerson2, new { @id = "HiddenApprovePerson2PRDetails" })
+@Html.HiddenFor(m => m.SignStatus, new { @id = "HiddenSignStatusPODetails" })
+@Html.HiddenFor(m => m.PRStatus, new { @id = "HiddenPRStatusPODetails" })
+@*@Html.HiddenFor(m => m.EntryPerson, new { @id = "HiddenEntryPersonPODetails" })*@
+@Html.HiddenFor(m => m.ApprovePerson1, new { @id = "HiddenApprovePerson1PODetails" })
+@Html.HiddenFor(m => m.ApprovePerson2, new { @id = "HiddenApprovePerson2PODetails" })
 
 <div class="row">
     <div class="col-md-3">
@@ -111,86 +111,41 @@
 </div>
 
 <div ng-controller="MRMController" class="row">
-    <form id="formPRDetails" class="mt-5">
+    <form id="formPODetails" class="mt-5">
         <div class="col-md-12">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="form-inline pull-right">
+                    <div class="form-inline pull-left">
                         <div class="form-group">
                             <label for="PRNo">PR No :</label>
                             @Html.DropDownListFor(m => m.PRno, new SelectList(@ViewBag.ListPRno, "DataStringValueField", "DataTextField", "Select"), new
                                 {
                                     @class = "form-control ml-2 requiredValidation clearField",
-                                    @id = "PRnoPRDetails",
+                                    @id = "PRNoPODetails",
                                     @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
-                                    @onchange= "FetchtPRDetailsFromPRSetNo()"
+                                    @onchange = "FetchtPRDetailsFromPRSetNo()"
                                 })
                         </div>
+                        <div class="form-group" style="margin-left:650px">
+                            <label for="PONo">PO No :</label>
+                            @Html.TextBoxFor(m => m.PONo, new
+                       {
+                           @class = "form-control ml-3 mr-2 requiredValidation",
+                           @id = "PONoPODetails",   
+                           @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                       })
+                        </div>
                         <div class="form-group ml-4">
-                            <label for="PRDate">PO Date :</label>
+                            <label for="PODate">PO Date :</label>
                             @Html.TextBoxFor(m => m.POdate, new
                        {
-                           @class = "form-control ml-3 mr-2 requiredValidation",
-                           @id = "PODatePRDetails",
-                           @readonly = "readonly",
-                           @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
-                       })
-                        </div>
-
-                    </div>
-                </div>
-                <div class="col-md-12">
-                    <div class="form-inline pull-right">
-                        <div class="form-group">
-                            <label for="QuoteNo">Vendor Quote No. :</label>
-                            @Html.TextBoxFor(m => m.QuoteNo, new
-                       {
                            @class = "form-control ml-3 requiredValidation",
-                           @id = "QuoteNoPRDetails",
-                           @readonly = "readonly",
-                           @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
-                       })
-                        </div>
-                        <div class="form-group ml-4">
-                            <label for="QuoteDate">Vendor Quote Date :</label>
-                            @Html.TextBoxFor(m => m.QuoteDate, new
-                       {
-                           @class = "form-control ml-3 mr-2 requiredValidation",
-                           @id = "QuoteDatePRDetails",
+                           @id = "PODatePODetails",
                            @readonly = "readonly",
                            @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
                        })
                         </div>
 
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="form-inline">
-                        <div class="form-group">
-                            <label for="RequestFrom" style="font-size: large;">Request by :</label>
-                            @Html.TextBoxFor(m => m.ReqFrom, new
-                                   {
-                                       @class = "form-control ml-3 requiredValidation",
-                                       @id = "RequestFromPRDetails",
-                                       @readonly = "readonly",
-                                       @style = "font-size: large",
-                                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
-                                   })
-                        </div>
-                        <div class="form-group mt-4" style="margin-left: 670px">
-                            <label for="RequestTo" style="font-size: large;">Request To :</label>
-                            @Html.TextBoxFor(m => m.ReqTo, new
-                                   {
-                                       @class = "form-control ml-3 requiredValidation",
-                                       @id = "RequestToPRDetails",
-                                       @readonly = "readonly",
-                                       @Value = "Purchase",
-                                       @style = "font-size: large",
-                                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
-                                   })
-                        </div>
                     </div>
                 </div>
             </div>
@@ -199,119 +154,36 @@
                     <div class="form-inline pull-right">
                         <div class="form-group mt-4">
                             <div class="custom-control custom-radio custom-control-inline">
-                                <input type="radio" class="custom-control-input" id="RadioListRM" name="multiRL" value="RM" onchange="RadioListChange()">
+                                <input type="radio" class="custom-control-input RadioList" id="RadioListRM" name="multiRL" value="RM" onchange="RadioListChange()">
                                 <label class="custom-control-label h5" for="RadioListRM">RM</label>
                             </div>
 
                             <div class="custom-control custom-radio custom-control-inline">
-                                <input type="radio" class="custom-control-input" id="RadioListBOI" name="multiRL" value="BOI" onchange="RadioListChange()">
+                                <input type="radio" class="custom-control-input RadioList" id="RadioListBOI" name="multiRL" value="BOI" onchange="RadioListChange()">
                                 <label class="custom-control-label h5" for="RadioListBOI">Bought Out Items</label>
                             </div>
 
                             <div class="custom-control custom-radio custom-control-inline">
-                                <input type="radio" class="custom-control-input" id="RadioListJW" name="multiRL" value="JW" onchange="RadioListChange()">
+                                <input type="radio" class="custom-control-input RadioList" id="RadioListJW" name="multiRL" value="JW" onchange="RadioListChange()">
                                 <label class="custom-control-label h5" for="RadioListJW">Job Work</label>
                             </div>
                             <div class="custom-control custom-radio custom-control-inline">
-                                <input type="radio" class="custom-control-input" id="RadioListGI" name="multiRL" value="GI" onchange="RadioListChange()">
+                                <input type="radio" class="custom-control-input RadioList" id="RadioListGI" name="multiRL" value="GI" onchange="RadioListChange()">
                                 <label class="custom-control-label h5" for="RadioListGI">General Items</label>
                             </div>
                             <div class="custom-control custom-radio custom-control-inline">
-                                <input type="radio" class="custom-control-input" id="RadioListC" name="multiRL" value="C" onchange="RadioListChange()">
+                                <input type="radio" class="custom-control-input RadioList" id="RadioListC" name="multiRL" value="C" onchange="RadioListChange()">
                                 <label class="custom-control-label h5" for="RadioListC">Consumables</label>
                             </div>
                             <div class="custom-control custom-radio custom-control-inline">
-                                <input type="radio" class="custom-control-input" id="RadioListCG" name="multiRL" value="CG" onchange="RadioListChange()">
+                                <input type="radio" class="custom-control-input RadioList" id="RadioListCG" name="multiRL" value="CG" onchange="RadioListChange()">
                                 <label class="custom-control-label h5" for="RadioListCG">Capital Goods</label>
                             </div>
                             <div class="custom-control custom-radio custom-control-inline">
-                                <input type="radio" class="custom-control-input" id="RadioListO" name="multiRL" value="O" onchange="RadioListChange()">
+                                <input type="radio" class="custom-control-input RadioList" id="RadioListO" name="multiRL" value="O" onchange="RadioListChange()">
                                 <label class="custom-control-label h5" for="RadioListO">Others</label>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row mt-5">
-                <div class="col-md-12">
-                    <div class="form-inline">
-                        <div class="form-group">
-                            <label for="CurrencyPRDetails">Curr</label>
-                            @Html.DropDownListFor(m => m.Currency, new SelectList(@ViewBag.ListCurrency, "DataStringValueField", "DataTextField", "Select"), new
-                                {
-                                    @class = "form-control ml-2 requiredValidation clearField",
-                                    @id = "CurrencyPRDetails",
-                                    @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
-                                })
-                        </div>
-                        <div class="form-group ml-3">
-                            <label for="PriorityPRDetails">Priority</label>
-                            @Html.DropDownListFor(m => m.Priority, new SelectList(@ViewBag.ListPriority, "DataStringValueField", "DataTextField", "Select"), new
-                                {
-                                    @class = "form-control ml-2 requiredValidation clearField",
-                                    @id = "PriorityPRDetails",
-                                    @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
-                                })
-                        </div>
-                        <div class="form-group ml-3">
-                            <label for="EndUsePRDetails">End Use</label>
-                            @Html.DropDownListFor(m => m.EndUse, new SelectList(@ViewBag.ListEndUse, "DataStringValueField", "DataTextField", "Select"), new
-                                {
-                                    @class = "form-control ml-2 requiredValidation clearField",
-                                    @id = "EndUsePRDetails",
-                                    @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
-                                    @onchange = "changeEndUseNo()"
-                                })
-                        </div>
-                        <div class="form-group ml-3" id="QuoteTypeDiv">
-                            <label for="QuoteTypePRDetails">Quote Type</label>
-                            @Html.DropDownListFor(m => m.QuoteType, new SelectList(@ViewBag.ListQuoteType, "DataStringValueField", "DataTextField", "Select"), new
-                                {
-                                    @class = "form-control ml-2 clearField",
-                                    @id = "QuoteTypePRDetails",
-                                    @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
-                                    @onchange = "changeQuoteType()"
-                                })
-                        </div>
-                        <div class="form-group ml-3">
-                            <label for="EndUseNoPRDetails">End Use No</label>
-                            @Html.DropDownListFor(m => m.EndUseNo, new SelectList(@ViewBag.ListEndUseNo, "DataStringValueField", "DataTextField", "Select"), new
-                                {
-                                    @class = "form-control ml-2 clearField",
-                                    @id = "EndUseNoPRDetails",
-                                    @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
-                                })
-                        </div>
-                        <div class="form-group ml-3">
-                            <label for="CostCentrePRDetails">Cost Centre</label>
-                            @Html.DropDownListFor(m => m.CostCentre, new SelectList(@ViewBag.ListCostCache, "DataStringValueField", "DataTextField", "Select"), new
-                                {
-                                    @class = "form-control ml-2 requiredValidation clearField",
-                                    @id = "CostCentrePRDetails",
-                                    @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
-                                })
-                        </div>
-                        <div class="form-group ml-3">
-                            <label for="RMCatPRDetails">RM-Cat</label>
-                            @Html.DropDownListFor(m => m.RMcat, new SelectList(@ViewBag.ListRMcat, "DataStringValueField", "DataTextField", "Select"), new
-                                {
-                                    @class = "form-control ml-2 clearField",
-                                    @id = "RMCatPRDetails",
-                                    @onchange = "RMCatChange()",
-                                    @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
-                                })
-                        </div>
-                        <div class="form-group ml-3">
-                            <label for="UOMPRDetails">UOM</label>
-                            @Html.DropDownListFor(m => m.UOM, new SelectList(@ViewBag.ListUOM, "DataStringValueField", "DataTextField", "All"), new
-                                {
-                                    @class = "form-control ml-2 requiredValidation clearField",
-                                    @id = "UOMPRDetails",
-                                    @type = "select",
-                                    @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
-                                })
-                        </div>
-
                     </div>
                 </div>
             </div>
@@ -326,43 +198,25 @@
                     <table class="table table-bordered tableRadio" id="tableRM">
                         <thead>
                             <tr>
-                                <td width="5%">
+                                <td>
                                     SN
                                 </td>
-                                <td width="15%">
+                                <td>
                                     RM Description
                                 </td>
-                                <td width="7%">
-                                    RM Grade
-                                </td>
-                                <td width="7%">
-                                    RM Hardness
-                                </td>
-                                <td width="6%">
-                                    PSL Level
-                                </td>
-                                <td width="7%">
-                                    OD
-                                </td>
-                                <td width="7%">
-                                    Wall Thickness
-                                </td>
-                                <td width="7%">
-                                    Length
-                                </td>
-                                <td width="7%">
+                                <td>
                                     Qty Required (Nos)
                                 </td>
-                                <td width="7%">
+                                <td>
                                     Qty in Stock (Nos)
                                 </td>
-                                <td width="7%">
+                                <td>
                                     Purchase Qty (Nos)
                                 </td>
-                                <td width="7%">
+                                <td>
                                     Unit Price
                                 </td>
-                                <td width="7%">
+                                <td>
                                     Total Price
                                 </td>
                             </tr>
@@ -425,8 +279,8 @@
                                     SN
                                 </td>
                                 @*<td>
-                                        RM Code
-                                    </td>*@
+                                RM Code
+                            </td>*@
                                 <td>
                                     RM Description
                                 </td>
@@ -465,8 +319,8 @@
                                     SN
                                 </td>
                                 @*<td>
-                                        RM Code
-                                    </td>*@
+                                RM Code
+                            </td>*@
                                 <td>
                                     Item Description
                                 </td>
@@ -530,8 +384,8 @@
                                     Total Price
                                 </td>
                                 @*<td width="16%">
-                                        Required Dly. Date
-                                    </td>*@
+                                Required Dly. Date
+                            </td>*@
                                 <td style="width: 5%;">
                                     HSN
                                 </td>
@@ -562,8 +416,8 @@
                                     Total Price
                                 </td>
                                 @*<td width="16%">
-                                        Required Dly. Date
-                                    </td>*@
+                                Required Dly. Date
+                            </td>*@
                                 <td style="width: 5%;">
                                     HSN
                                 </td>
@@ -594,8 +448,8 @@
                                     Total Price
                                 </td>
                                 @*<td width="16%">
-                                        Required Dly. Date
-                                    </td>*@
+                                Required Dly. Date
+                            </td>*@
                                 <td style="width: 5%;">
                                     HSN
                                 </td>
@@ -611,238 +465,77 @@
 
             </div>
 
-
             <div class="row">
-                <hr style="width:100%" />
-                <h4 class="control-label" style="margin-left:10px; font-size: 20px">Terms and conditions</h4>
                 <hr style="width:100%" />
             </div>
 
             <table class="table">
                 <tr>
-                    <td>
-                        Delivery Date
-                    </td>
-                    <td>
-                        @Html.TextBoxFor(m => m.DeliveryDate, new
-                           {
-                               @class = "form-control requiredValidation CalenderDate",
-                               autocomplete = "off",
-                               @id = "DeliveryDatePRDetails",
-                               @placeholder = "dd/MM/yyyy",
-                               @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
-                           })
-                    </td>
                     <td class="text-right">
-                        Supply Terms
+                        Work Construction No
                     </td>
                     <td>
-                        @Html.DropDownListFor(m => m.SupplyTerms, new SelectList(@ViewBag.ListSupplyTerms, "DataStringValueField", "DataTextField", "Select"),
-                        new
-                            {
-                                @class = "form-control ml-2 requiredValidation clearField",
-                                @id = "SupplyTermsPRDetails",
-                                @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
-                            })
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        Delivery Terms
-                    </td>
-                    <td>
-                        @Html.TextBoxFor(m => m.DeliveryTerms, new
+                        @Html.TextBoxFor(m => m.WorkNo, new
                         {
                             @class = "form-control requiredValidation",
-                            @id = "PRDetailsDeliveryTerms",
+                            @id = "PODetailsWorkNo",
                             @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
                         })
                     </td>
+                </tr>
+                <tr>
                     <td class="text-right">
-                        Payment Terms
+                        Delivery Time
                     </td>
                     <td>
-                        @Html.TextBoxFor(m => m.PaymentTerms, null, new
+                        @Html.TextBoxFor(m => m.DeliveryTime, new
                         {
                             @class = "form-control requiredValidation",
-                            @id = "PRDetailsPaymentTerms",
+                            @id = "PODetailsDeliveryTime",
                             @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
                         })
                     </td>
                 </tr>
                 <tr>
-                    <td>
-                        Certificates
+                    <td class="text-right">
+                        PO Validity
                     </td>
                     <td>
-                        @Html.TextBoxFor(m => m.Certificates, new
+                        @Html.TextBoxFor(m => m.POValidity, new
                         {
                             @class = "form-control requiredValidation",
-                            @id = "PRDetailsCertificates",
-                            @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
-                        })
-                    </td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>
-                        Approved Suppliers
-                    </td>
-                    <td>
-                        @Html.TextBoxFor(m => m.ApprovedSupplier1, new
-                        {
-                            @class = "form-control requiredValidation",
-                            @id = "PRApprovedSupplier1",
-                            @placeholder = "Enter Approved Supplier 1",
-                            @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
-                        })
-                    </td>
-                    <td>
-                        @Html.TextBoxFor(m => m.ApprovedSupplier2, new
-                        {
-                            @class = "form-control requiredValidation",
-                            @id = "PRApprovedSupplier2",
-                            @placeholder = "Enter Approved Supplier 2",
-                            @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
-                        })
-                    </td>
-                    <td>
-                        @Html.TextBoxFor(m => m.PRFavouredOn, new
-                        {
-                            @class = "form-control",
-                            @id = "PRDetailsPRFavouredOn",
-                            @placeholder = "PR Favoured On",
+                            @id = "PODetailsPOValidity",
                             @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
                         })
                     </td>
                 </tr>
                 <tr>
                     <td class="text-center">
-                        <img id="imgRequestedBy" src="~/Images/Sign/@Model.EntryPersonSign" alt="Signature" width="50px" height="50px" />
+                        <img id="imgRequestedBy" src="" alt="Signature" width="50px" height="50px" />
                     </td>
                     <td class="text-center">
-                        <img id="imgStoreEx" src="~/Images/Sign/@Model.ApprovePerson1Sign" alt="Signature" width="50px" height="50px" />
+                        <img id="imgStoreEx" src="" alt="Signature" width="50px" height="50px" />
                     </td>
                     <td class="text-center">
-                        <img id="imgApproverSign" src="~/Images/Sign/@Model.ApprovePerson2Sign" alt="Signature" width="50px" height="50px" />
+                        <img id="imgApproverSign" src="" alt="Signature" width="50px" height="50px" />
                     </td>
                 </tr>
                 <tr>
                     <td class="text-center">
-                        <input type="checkbox" id="RequestedBy" onchange="showRequestedSign('RequestedBy')" />
-                        <label id="lblRequestedBy">Requested By</label>
+                        <label id="lblRequestedBy">Purchase Department</label>
                     </td>
                     <td class="text-center">
-                        <input type="checkbox" id="StoreEx" onchange="showRequestedSign('StoreEx','1')" />
-                        <label id="lblStoreEx">Sign of Store Executive</label>
+                        <label id="lblStoreEx">Plant Head</label>
                     </td>
                     <td class="text-center">
-                        <input type="checkbox" id="ApproverSign" onchange="showRequestedSign('ApproverSign','2')" />
-                        <label id="lblApproverSign">Sign of Approver</label>
-                    </td>
-                    <td>
-                        <button id="btnApprove" onclick="funcApproveReject('Approved')" class="btn btn-info btn-md">Approve</button>
-                        <button id="btnReject" onclick="funcApproveReject('Rejected')" class="btn btn-info btn-md ml-2">Reject</button>
+                        <label id="lblApproverSign">Management</label>
                     </td>
                 </tr>
             </table>
 
             <div class="row">
-                <h4 class="col-md-12 control-label m-0 text-white" style="margin: 5px;font-size: 20px;line-height: 40px; background-color: #36A3F7">
-                    To be filled by Purchase Deptt.
-                </h4>
-            </div>
-
-            <div class="row">
-                <div class="col-md-12">
-                    <table class="table table-bordered">
-                        @*<tr>
-                                <td></td>
-                                <td>
-                                    Status of PR
-                                </td>
-                                <td>
-                                    @Html.DropDownListFor(m => m.ApprovedReject, new SelectList(@ViewBag.ListAcceptReject, "DataStringValueField", "DataTextField", "Select"), new
-                               {
-                                   @class = "form-control ml-2 requiredValidation clearField",
-                                   @id = "ApproveRejectPRDetails",
-                                   @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
-                               })
-                                </td>
-                                <td></td>
-                            </tr>*@
-                        <tr>
-                            <td></td>
-                            <td>
-                                Did you communicate the status to requested department?
-                            </td>
-                            <td>
-                                @Html.DropDownListFor(m => m.Communicate, new SelectList(@ViewBag.ListCommunicate, "DataStringValueField", "DataTextField", "Select"), new
-                                {
-                                    @class = "form-control ml-2 clearField",
-                                    @id = "CommunicatePRDetails",
-                                    @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
-                                })
-                            </td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td>
-                                P.O. No.
-                            </td>
-                            <td>
-                                @Html.TextBoxFor(m => m.POno, new
-                                {
-                                    @class = "form-control ml-3",
-                                    @id = "PONoPRDetails",
-                                    @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
-                                })
-                            </td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td>
-                                Expected Delivery Date
-                            </td>
-                            <td>
-                                @Html.TextBoxFor(m => m.ExpectedDeliveryDate, new
-                                {
-                                    @class = "form-control ml-3 CalenderDate",
-                                    @placeholder = "dd/MM/yyyy",
-                                    autocomplete = "off",
-                                    @id = "ExpectedDeliveryDatePRDetails",
-                                    @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
-                                })
-                            </td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td class="text-right"></td>
-                            <td class="text-center">
-                                <img id="imgPurchaseExecSign" src="~/Images/Sign/@ViewBag.PurchaseRequest" alt="Signature" width="50px" height="50px" />
-                            </td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td class="text-right"></td>
-                            <td class="text-center">
-                                <label id="lblPurchaseExecSign"> Sign of Purchase Executive </label>
-                            </td>
-                            <td></td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-
-            <div class="row">
                 <div class="col-md-12 pt-4 text-center">
-                    <button id="SavePRDetailButton" style="font-size:18px" type="button" class="btn btn-success btn-sm" onclick="SavePRDetails(event)">Save</button>
-                    <button id="btnSavePurchase" style="font-size:18px" type="button" class="btn btn-success btn-sm" onclick="funcSavePurchaseDetails()">Save</button>
+                    <button id="SavePODetails" style="font-size:18px" type="button" class="btn btn-success btn-sm" onclick="SaveDetailsForPO(event)">Save</button>
                     <button style="font-size:18px" type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
                 </div>
             </div>
@@ -858,9 +551,6 @@
         window.ChangeEndUseNoForQuoteOrSoNo = '@Url.Action("ChangeEndUseNoForQuoteOrSoNo", "MRM")';
         window.ChangeEndUseNoForNonPO = '@Url.Action("ChangeEndUseNoForNonPO", "MRM")';
         window.ChangeRMCat = '@Url.Action("ChangeRMCat", "MRM")';
-        window.SavePurchaseDetails = '@Url.Action("SavePurchaseDetails", "MRM")';
-
-        $('#QuoteTypeDiv').hide();
 
         $('#tableRM').hide();
         $('#tableBOI').hide();
@@ -868,90 +558,7 @@
         $('#tableGI').hide();
         $('#tableC').hide();
         $('#tableO').hide();
-
-
-        $('#RequestedBy').show();
-        $('#StoreEx').hide();
-        $('#ApproverSign').hide();
-
-        $('#imgRequestedBy').hide();
-        $('#imgStoreEx').hide();
-        $('#imgApproverSign').hide();
-
-        $('#btnApprove').hide();
-        $('#btnReject').hide();
-        $('#imgPurchaseExecSign').hide();
-        $('#lblPurchaseExecSign').hide();
-        $('#btnSavePurchase').hide();
-        $('#HiddenPRStatusPRDetails').val('UnderProcess');
-        $('#PRDetailsPRFavouredOn').attr('disabled','true');
-
-        var DeptNameField = '@ViewBag.DeptName.ToString()';
-        if (DeptNameField == 'Management') {
-            $('#imgRequestedBy').show();
-            $('#imgStoreEx').show();
-            $('#imgApproverSign').hide();
-
-            $('#RequestedBy').hide();
-            $('#StoreEx').hide();
-            $('#PRDetailsPRFavouredOn').attr('class', 'form-control');
-
-            let Status = $('#HiddenSignStatusPRDetails').val();
-            if (Status == 'Approved1') {
-                $('#ApproverSign').show();
-                $('#PRDetailsPRFavouredOn').removeAttr('disabled');
-            }
-            else if (Status == 'Approved2') {
-                $('#imgApproverSign').show();
-                $('#PRDetailsPRFavouredOn').attr('disabled','true');
-            }
-
-
-            //$('#RequestedBy').prop('checked', true);
-            //$('#StoreEx').prop('checked', true);
-            $('#HiddenSignStatusPRDetails').val('Approved2');
-        }
-        else if (DeptNameField == 'Stores') {
-            //$('#RequestedBy').prop('checked', true);
-            if ($('#HiddenSignStatusPRDetails').val() == '') {
-                $('#RequestedBy').show();
-                $('#imgRequestedBy').hide();
-                $('#StoreEx').hide();
-                $('#lblStoreEx').hide();
-            }
-            else {
-                $('#RequestedBy').hide();
-                $('#imgRequestedBy').show();
-                $('#StoreEx').show();
-                $('#lblStoreEx').show();
-            }
-
-            $('#imgStoreEx').hide();
-            $('#ApproverSign').hide();
-            $('#imgApproverSign').hide();
-            $('#HiddenSignStatusPRDetails').val('Approved1');
-        }
-        else if (DeptNameField == 'Purchase') {
-            $('#RequestedBy').hide();
-            $('#imgRequestedBy').show();
-            $('#imgStoreEx').show();
-            $('#imgApproverSign').show();
-            $('#imgPurchaseExecSign').show();
-            $('#lblPurchaseExecSign').show();
-
-            $('#CommunicatePRDetails').removeAttr('disabled');
-            $('#PONoPRDetails').removeAttr('disabled');
-            //$('#PRDetailsPRRequestedOn').removeAttr('disabled');
-            $('#ExpectedDeliveryDatePRDetails').removeAttr('disabled');
-            $('#btnSavePurchase').show();
-
-            $('#HiddenSignStatusPRDetails').val('PurchaseApprove');
-        }
-        else {
-            $('#HiddenSignStatusPRDetails').val('Entry');
-        }
-
-
+        
     });
 
     //LEASE DATE AND EXP LEASE DATE VALIDATION
@@ -972,4 +579,5 @@
         endDate: 'today',
     });
 </script>
+
 

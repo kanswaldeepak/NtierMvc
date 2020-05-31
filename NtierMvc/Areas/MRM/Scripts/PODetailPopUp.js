@@ -1,31 +1,40 @@
 ﻿
-$(document).ready(function () {
-
-})
-
 function FetchtPRDetailsFromPRSetNo() {
-    var PRSetno = $('#PRnoPRDetails').val();
+    var PRSetno = $('#PRNoPODetails').val();
 
     $.ajax({
         url: window.GetPRDetailsFromPRSetNo,
         type: 'POST',
         contentType: 'application/json; charset=utf-8',
         dataType: 'json',
-        data: JSON.stringify({ PRSetno: PRSetno}),
+        data: JSON.stringify({ PRSetno: PRSetno }),
         success: function (data) {
 
             if (data.length > 0) {
                 $("#HiddenPRSetno").val(data[0].PRSetno);
                 $('#RadioList' + data[0].PRcat).prop("checked", true);
+                $('.RadioList').attr("disabled", true);
+                $('#tableSelected').val(data[0].PRcat);
                 $('#table' + data[0].PRcat + ' tbody tr:first').remove();
 
                 switch (data[0].PRcat) {
                     case 'RM':
                         $('#tableRM').show();
                         $.each(data, function (i, item) {
-                            $('#tableRM > tbody:last-child').append('<tr><td>' + item.SN + '</td><td>' + item.RMdescription + '</td><td>' + item.RMgrade + '</td><td>' + item.RMHardness + '</td><td>' + item.PSLlevel + '</td><td>' + item.OD + '</td><td>' + item.WT + '</td><td>' + item.Len + '</td><td>' + item.QtyReqd + '</td><td>' + item.QtyStock + '</td><td>' + item.PRqty + '</td><td>' + item.UnitPrice + '</td><td>' + item.TotalPrice + '</td></tr>');
+                            $('#tableRM > tbody:last-child').append('<tr><td><span>' + item.SN + '</span></td><td><span>' + item.RMdescription + '</span></td><td><span>' + item.QtyReqd + '</span></td><td><span>' + item.QtyStock + '</span></td><td><span>' + item.PRqty + '</span></td><td><span>' + item.UnitPrice + '</span></td><td><span>' + item.TotalPrice + '</span></td><td><a href="#" class="removePO">Remove</a></td></tr>');
+
+                            $('#imgRequestedBy').attr("src", "/Images/Sign/" + item.EntryPersonSign);
+                            $('#imgStoreEx').attr("src", "/Images/Sign/" + item.ApprovePerson1Sign);
+                            $('#imgApproverSign').attr("src", "/Images/Sign/" + item.ApprovePerson2Sign);
 
                         })
+
+
+                        $('.removePO').on("click", function (e) {
+                            e.preventDefault();
+                            $(this).parent().parent().remove();
+                        })
+
                         break;
                     case 'BOI':
                         $('.tableBOI').show();
@@ -58,10 +67,10 @@ function FetchtPRDetailsFromPRSetNo() {
 function funcSavePurchaseDetails() {
 
     var PRSetNo = $('#HiddenPRSetno').val();
-    var Communicate = $('#CommunicatePRDetails').val();
-    var PONo = $('#PONoPRDetails').val();
-    var PRRequestedOn = $('#PRDetailsPRRequestedOn').val();
-    var ExpectedDeliveryDate = $('#ExpectedDeliveryDatePRDetails').val();
+    var Communicate = $('#CommunicatePODetails').val();
+    var PONo = $('#PONoPODetails').val();
+    var PRRequestedOn = $('#PODetailsPRRequestedOn').val();
+    var ExpectedDeliveryDate = $('#ExpectedDeliveryDatePODetails').val();
 
     $.ajax({
         url: window.SavePurchaseDetails,
@@ -78,45 +87,11 @@ function funcSavePurchaseDetails() {
     })
 }
 
-function funcApproveReject(value) {
-
-    //$('#ApproveRejectPRDetails option:selected').text(value);
-    var PRSetNo = $('#HiddenPRSetno').val();
-    var SignStatus = $('#HiddenSignStatusPRDetails').val();
-    var PRFavouredOn = $('#PRDetailsPRFavouredOn').val();
-    var PRStatus = value;
-
-    //if ((Status == 'Approve1' && $('#StoreEx').prop("checked") == false) || (Status == 'Approve2' && $('#ApproverSign').prop("checked") == false)) {
-    //    alert("Kindly tick Signature Checkbox");
-    //    return;
-    //}
-
-    if (PRFavouredOn == '' || PRFavouredOn == undefined) {
-        alert('PRFavouredOn is mandatory');
-        return;
-    }
-
-    $.ajax({
-        contentType: 'application/json; charset=utf-8',
-        dataType: 'json',
-        type: 'POST',
-        url: window.UpdateApproveReject,
-        data: JSON.stringify({ PRSetNo: PRSetNo, SignStatus: SignStatus, PRFavouredOn: PRFavouredOn, PRStatus: PRStatus}),
-        success: function (res) {
-            if(res=='Updated Successfully')
-            alert('Approved Successfully');
-        },
-        error: function () {
-            alert(res);
-        }
-    })
-}
-
 function RMCatChange() {
 
-    var RMCat = $('#RMCatPRDetails option:selected').text();
+    var RMCat = $('#RMCatPODetails option:selected').text();
 
-    $('#tableRM tr:last').each(function(){
+    $('#tableRM tr:last').each(function () {
         $('td', this).each(function (index, val) {
             if (RMCat == 'Bar') {
                 $(this).find(".RMdescription").val('Seamless Solid ' + RMCat);
@@ -137,7 +112,7 @@ function saveButton(data) {
         contentType: 'application/json; charset=utf-8',
         dataType: 'json',
         type: 'POST',
-        url: window.SavePRDetailsList,
+        url: window.SavePODetailsList,
         data: data,
         success: function (result) {
             alert(result);
@@ -148,32 +123,18 @@ function saveButton(data) {
     });
 }
 
-
-function CalcTotal(ob) {
-    let trob = $(ob).closest('tr');
-    let qty = parseFloat($.trim(trob.find(".RMPRqty").val()));
-    if (!qty || isNaN(qty)) {
-        qty = 0;
-    }
-    let unitprice = parseFloat($.trim(trob.find(".RMUnitPrice").val()));
-    if (!unitprice || isNaN(unitprice)) {
-        unitprice = 0;
-    }
-    trob.find(".RMTotalPrice").val(Math.round(qty * unitprice));
-}
-
-function showRequestedSign(id,level) {
+function showRequestedSign(id, level) {
 
     if (id == 'ApproverSign') {
         $('#btnApprove').show();
         $('#btnReject').show();
 
-        //$('#HiddenStatusPRDetails').val(level);
+        //$('#HiddenStatusPODetails').val(level);
     }
 
     if (id == 'StoreEx') {
         var PRSetNo = $('#HiddenPRSetno').val();
-        var PRStatus = $('#HiddenPRStatusPRDetails').val();
+        var PRStatus = $('#HiddenPRStatusPODetails').val();
         var SignStatus = 'Approved' + level;
 
         $.ajax({
@@ -202,87 +163,6 @@ function showRequestedSign(id,level) {
         $('#btnReject').hide();
     }
 
-    //if (type == 'RequestedBy') {
-    //    if ($("#RequestedBy input[type=checkbox]").prop(":checked"))
-    //        $('#imgRequestedSign').show();
-    //    else
-    //        $('#imgRequestedSign').hide();
-    //}
-
-    //if (type == 'StoreEx') {
-    //    if ($("#StoreEx input[type=checkbox]").prop(":checked"))
-    //        $('#imgStoreExSign').show();
-    //    else
-    //        $('#imgStoreExSign').hide();
-    //}
-
-    //if (type == 'ApproverSign') {
-    //    if ($("#ApproverSign input[type=checkbox]").prop(":checked"))
-    //        $('#imgApproverSign').show();
-    //    else
-    //        $('#imgApproverSign').hide();
-    //}
-
-}
-
-function changeEndUseNo() {
-    var EndUse = $('#EndUsePRDetails option:selected').text();
-
-    if (EndUse == 'SONo' || EndUse == 'QuoteNo') {
-
-        $('#QuoteTypeDiv').show();
-        $('#QuoteTypePRDetails').val('');
-
-    }
-    else if (EndUse == 'Non-PO') {
-        $('#QuoteTypeDiv').hide();
-
-        $.ajax({
-            type: 'POST',
-            url: window.ChangeEndUseNoForNonPO,
-            data: JSON.stringify({ EndUse: EndUse }),
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            success: function (data) {
-                $('#EndUseNoPRDetails').empty();
-                $.each(data, function (i, item) {
-                    $("#EndUseNoPRDetails").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
-                })
-
-            },
-            error: function (x, e) {
-                alert('Some error is occurred, Please try after some time.');
-            }
-        })
-    }
-}
-
-function changeQuoteType() {
-
-    var EndUse = $('#EndUsePRDetails option:selected').text();
-    var QuoteType = $('#QuoteTypePRDetails').val();
-
-    //if (EndUse == "SONo")
-    //    EndUse = 'SoNo';
-    //else if (EndUse == "QuoteNo")
-    //    EndUse = 'QuoteNo';
-
-    $.ajax({
-        type: 'POST',
-        url: window.ChangeEndUseNoForQuoteOrSoNo,
-        data: JSON.stringify({ EndUse: EndUse, quoteType: QuoteType }),
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        success: function (data) {
-            $('#EndUseNoPRDetails').empty();
-            $.each(data, function (i, item) {
-                $("#EndUseNoPRDetails").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
-            })
-        },
-        error: function (x, e) {
-            alert('Some error is occurred, Please try after some time.');
-        }
-    })
 }
 
 function RadioListChange() {
@@ -305,9 +185,9 @@ function RadioListChange() {
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (data) {
-            $('#RMCatPRDetails').empty();
+            $('#RMCatPODetails').empty();
             $.each(data, function (i, item) {
-                $("#RMCatPRDetails").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
+                $("#RMCatPODetails").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
             })
 
         },
@@ -416,24 +296,24 @@ function addNewRM(e) {
 
 };
 
-function SavePRDetails(e) {
+function SaveDetailsForPO(e) {
     e.preventDefault();
 
     var arr = [];
     arr.length = 0;
 
-    var frm = $("#formPRDetails");
+    var frm = $("#formPODetails");
     var formData = new FormData(frm[0]);
 
     var Status = false;
-    Status = GetFormValidationStatus("#formPRDetails");
+    Status = GetFormValidationStatus("#formPODetails");
 
     let tableSelected = '#table' + $('#tableSelected').val();
     let TotalPRSetPrice = 0;
 
     $.each($(tableSelected + " tbody tr"), function () {
 
-        TotalPRSetPrice = TotalPRSetPrice + Math.round($(this).find('td:eq(12) input').val());
+        TotalPRSetPrice = TotalPRSetPrice + Math.round($(this).find('td:eq(6) input').val());
     });
 
 
@@ -441,78 +321,34 @@ function SavePRDetails(e) {
         alert("Kindly Fill all mandatory fields");
         return;
     }
-    else if ( $('#RequestedBy').prop("checked") == false) {
-        alert("Kindly tick Requested By Checkbox");
-        return;
-    }
     else {
-        
+
         $.each($(tableSelected + " tbody tr"), function () {
             arr.push({
                 //Id: $("#Id").val(),
-                PRSetNo: $("#HiddenPRSetno").val(),
-                PRNO: $("#PRNoPRDetails").val(),
-                ReqFrom: $("#RequestFromPRDetails").val(),
-                ReqTo: $("#RequestToPRDetails").val(),
-                DeptName: $("#HiddenDeptNamePRDetails").val(),
-                PRCat: $("#tableSelected").val(),
-                Currency: $("#CurrencyPRDetails").val(),
-                Priority: $("#PriorityPRDetails").val(),
-                EndUse: $("#EndUsePRDetails").val(),
-                EndUseNo: $("#EndUseNoPRDetails").val(),
-                CostCentre: $("#CostCentrePRDetails").val(),
-                RMcat: $("#RMCatPRDetails").val(),
-                UOM: $("#UOMPRDetails").val(),
+                PRno: $("#PRNoPODetails").val(),
+                PRSetno: $('#PRNoPODetails').val(),
+                PONo: $("#PONoPODetails").val(),
+                POdate: $("#PODatePODetails").val(),
+                
+                SN: $(this).find('td:eq(0) span').text(),
+                RMdescription: $(this).find('td:eq(1) span').text(),
+                QtyReqd: $(this).find('td:eq(2) span').text(),
+                QtyStock: $(this).find('td:eq(3) span').text(),
+                PRqty: $(this).find('td:eq(4) span').text(),
+                UnitPrice: $(this).find('td:eq(5) span').text(),
+                TotalPrice: $(this).find('td:eq(6) span').text(),
 
-                SN: $(this).find('td:eq(0) label').text(),
-                RMdescription: $(this).find('td:eq(1) input').val(),
-                RMgrade: $(this).find('td:eq(2) input').val(),
-                RMHardness: $(this).find('td:eq(3) input').val(),
-                PSLlevel: $(this).find('td:eq(4) select').val(),
-                OD: $(this).find('td:eq(5) input').val(),
-                WT: $(this).find('td:eq(6) input').val(),
-                LEN: $(this).find('td:eq(7) input').val(),
-                QtyReqd: $(this).find('td:eq(8) input').val(),
-                QtyStock: $(this).find('td:eq(9) input').val(),
-                PRqty: $(this).find('td:eq(10) input').val(),
-                UnitPrice: $(this).find('td:eq(11) input').val(),
-                TotalPrice: $(this).find('td:eq(12) input').val(),
-
-                //SN: $('.RMSN').val(),
-                //RMdescription: $('.RMdescription').val(),
-                //RMgrade: $('.RMgrade').val(),
-                //RMHardness: $('.RMHardness').val(),
-                //PSLlevel: $('.RMPSLlevel').val(),
-                //OD: $('.RMOD').val(),
-                //WT: $('.RMWT').val(),
-                //LEN: $('.RMLen').val(),
-                //QtyReqd: $('.RMQtyReqd').val(),
-                //QtyStock: $('.RMQtyStock').val(),
-                //PRqty: $('.RMPRqty').val(),
-                //UnitPrice: $('.RMUnitPrice').val(),
-                //TotalPrice: $('.RMTotalPrice').val(),
-
-                DeliveryDate: $('#DeliveryDatePRDetails').val(),
-                SupplyTerms: $('#SupplyTermsPRDetails').val(),
-                DeliveryTerms: $('#PRDetailsDeliveryTerms').val(),
-                PaymentTerms: $('#PRDetailsPaymentTerms').val(),
-                Certificates: $('#PRDetailsCertificates').val(),
-                ApprovedSupplier1: $('#PRApprovedSupplier1').val(),
-                ApprovedSupplier2: $('#PRApprovedSupplier2').val(),
-                PRFavouredOn: $('#PRDetailsPRFavouredOn').val(),
-                //ApprovedReject: $('#AcceptRejectPRDetails').val(),
-                Communicate: $('#CommunicatePRDetails').val(),
-                POno: $('#PONoPRDetails').val(),
-                ExpectedDeliveryDate: $('#ExpectedDeliveryDatePRDetails').val(),
-                SignStatus: $('#HiddenSignStatusPRDetails').val(),
-                PRStatus: $('#HiddenPRStatusPRDetails').val(),
+                WorkNo: $('#PODetailsWorkNo').val(),
+                DeliveryTime: $('#PODetailsDeliveryTime').val(),
+                POValidity: $('#PODetailsPOValidity').val(),
                 TotalPRSetPrice: TotalPRSetPrice
 
             });
         });
 
         var data = JSON.stringify({
-            PRDetails: arr
+            PODetails: arr
         });
 
         $.when(saveButton(data)).then(function (response) {

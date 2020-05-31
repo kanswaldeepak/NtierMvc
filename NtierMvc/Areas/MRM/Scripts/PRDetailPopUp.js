@@ -364,17 +364,17 @@ function addNewRM(e) {
 
 };
 
-function SavePRDetails(e) {
+function SavePODetails(e) {
     e.preventDefault();
 
     var arr = [];
     arr.length = 0;
 
-    var frm = $("#formPRDetails");
+    var frm = $("#formPODetails");
     var formData = new FormData(frm[0]);
 
     var Status = false;
-    Status = GetFormValidationStatus("#formPRDetails");
+    Status = GetFormValidationStatus("#formPODetails");
 
     let tableSelected = '#table' + $('#tableSelected').val();
     let TotalPRSetPrice = 0;
