@@ -312,7 +312,7 @@ namespace NtierMvc.Areas.MRM.Controllers
 
         public JsonResult GetPRTableDetails(string PRSetno)
         {
-            List<PRDetailEntityBulkSave> prObjList = new List<PRDetailEntityBulkSave>();
+            List<PRDetailEntity> prObjList = new List<PRDetailEntity>();
             prObjList = objManager.GetPRTableDetails(PRSetno);
 
             return new JsonResult { Data = prObjList, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
@@ -626,6 +626,8 @@ namespace NtierMvc.Areas.MRM.Controllers
                         newObj.PRqty = item.PRqty;
                         newObj.UnitPrice = item.UnitPrice;
                         newObj.TotalPrice = item.TotalPrice;
+                        newObj.Discount = item.Discount;
+                        newObj.FinalPrice = item.FinalPrice;
                         newObj.WorkNo = item.WorkNo;
                         newObj.DeliveryTime = item.DeliveryTime;
                         newObj.POValidity = item.POValidity;

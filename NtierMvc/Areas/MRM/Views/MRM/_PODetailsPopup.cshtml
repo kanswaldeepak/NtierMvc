@@ -219,58 +219,15 @@
                                 <td>
                                     Total Price
                                 </td>
+                                <td>
+                                    Discount
+                                </td>
+                                <td>
+                                    Final Price
+                                </td>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr>
-                                <td width="5%">
-                                    <label class="RMSN">1</label>
-                                </td>
-                                <td>
-                                    <input name="RMdescription" type="text" class="form-control RMdescription" />
-                                </td>
-                                <td>
-                                    <input name="RMgrade" type="text" class="form-control RMgrade" />
-                                </td>
-                                <td>
-                                    <input name="RMHardness" type="text" class="form-control RMHardness" />
-                                </td>
-                                <td width="3%">
-                                    <select name="PSLlevel" class="form-control RMPSLlevel">
-                                        <option value="1">I</option>
-                                        <option value="2">II</option>
-                                    </select>
-                                    @*<input name="PSLlevel" type="text" class="form-control PSLlevel" />*@
-                                </td>
-                                <td>
-                                    <input name="OD" type="text" class="form-control RMOD" onkeypress="return validateDecimalNumbers(this, event);" />
-                                </td>
-                                <td>
-                                    <input name="WT" type="text" class="form-control RMWT" onkeypress="return validateDecimalNumbers(this, event);" />
-                                </td>
-                                <td>
-                                    <input name="Len" type="text" class="form-control RMLen" onkeypress="return validateDecimalNumbers(this, event);" />
-                                </td>
-                                <td>
-                                    <input name="QtyReqd" type="text" class="form-control RMQtyReqd" onkeypress="return AllowNumbers(event);" />
-                                </td>
-                                <td>
-                                    <input name="QtyStock" type="text" class="form-control RMQtyStock" onkeypress="return AllowNumbers(event);" />
-                                </td>
-                                <td>
-                                    <input name="PRqty" type="text" class="form-control RMPRqty" onkeypress="return AllowNumbers(event);" onkeyup="CalcTotal(this)" />
-                                </td>
-                                <td>
-                                    <input name="UnitPrice" type="text" class="form-control RMUnitPrice" onkeyup="CalcTotal(this);" onkeypress="return validateDecimalNumbers(this, event);" />
-                                </td>
-                                <td>
-                                    <input name="TotalPrice" type="text" readonly="readonly" class="form-control RMTotalPrice" />
-                                </td>
-                                <td>
-                                    <a href="#" id="addNewRM" class="btn btn-info btn-sm" onclick="addNewRM(event)">Add Row</a>
-                                </td>
-                            </tr>
-                        </tbody>
+                        <tbody></tbody>
                     </table>
                     <table class="table tableRadio" id="tableBOI">
                         <thead>

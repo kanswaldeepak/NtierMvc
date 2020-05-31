@@ -27,17 +27,17 @@ namespace NtierMvc.Areas.MRM.Models
             return Model;
         }
 
-        public List<PRDetailEntityBulkSave> GetPRTableDetails(string PRSetno)
+        public List<PRDetailEntity> GetPRTableDetails(string PRSetno)
         {
             var baseAddress = "MRMDetail";
-            List<PRDetailEntityBulkSave> tableList = new List<PRDetailEntityBulkSave>();
+            List<PRDetailEntity> tableList = new List<PRDetailEntity>();
             using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
             {
                 HttpResponseMessage response = client.GetAsync(baseAddress + "/GetPRTableDetails?PRSetno=" + PRSetno).Result;
                 if (response.IsSuccessStatusCode)
                 {
                     var data = response.Content.ReadAsStringAsync().Result;
-                    tableList = JsonConvert.DeserializeObject<List<PRDetailEntityBulkSave>>(data);
+                    tableList = JsonConvert.DeserializeObject<List<PRDetailEntity>>(data);
                 }
             }
             return tableList;

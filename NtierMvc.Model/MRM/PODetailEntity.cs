@@ -22,6 +22,8 @@ namespace NtierMvc.Model.MRM
         public int PRqty { get; set; }
         public string UnitPrice { get; set; }
         public string TotalPrice { get; set; }
+        public string Discount { get; set; }
+        public string FinalPrice { get; set; }
         public string TotalPRSetPrice { get; set; }
         public string POValidity { get; set; }
         public string DeliveryTime { get; set; }
@@ -47,6 +49,8 @@ namespace NtierMvc.Model.MRM
         public int PRqty { get; set; }
         public string UnitPrice { get; set; }
         public string TotalPrice { get; set; }
+        public string Discount { get; set; }
+        public string FinalPrice { get; set; }
         public string WorkNo { get; set; }
         public string DeliveryTime { get; set; }
         public string POValidity { get; set; }

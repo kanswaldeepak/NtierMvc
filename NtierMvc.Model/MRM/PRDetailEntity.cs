@@ -149,9 +149,6 @@ namespace NtierMvc.Model.MRM
         public string EntryPerson { get; set; }
         public string ApprovePerson1 { get; set; }
         public string ApprovePerson2 { get; set; }
-        public string EntryPersonSign { get; set; }
-        public string ApprovePerson1Sign { get; set; }
-        public string ApprovePerson2Sign { get; set; }
         public string PRFavouredOn { get; set; }
 
     }

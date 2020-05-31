@@ -80,7 +80,7 @@ function RMCatChange() {
 }
 
 //After Click Save Button Pass All Data View To Controller For Save Database
-function saveButton(data) {
+function saveButtonPRDetail(data) {
     return $.ajax({
         contentType: 'application/json; charset=utf-8',
         dataType: 'json',
@@ -364,7 +364,7 @@ function addNewRM(e) {
 
 };
 
-function SavePODetails(e) {
+function SavePRDetails(e) {
     e.preventDefault();
 
     var arr = [];
@@ -463,7 +463,7 @@ function SavePODetails(e) {
             PRDetails: arr
         });
 
-        $.when(saveButton(data)).then(function (response) {
+        $.when(saveButtonPRDetail(data)).then(function (response) {
             console.log(response);
         }).fail(function (err) {
             console.log(err);
