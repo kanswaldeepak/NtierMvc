@@ -303,6 +303,61 @@ namespace NtierMvc.BusinessLogic.Worker
             return dt;
         }
 
+        public PODetailEntityDetails GetPODetailsList(int pageIndex, int pageSize)
+        {
+            try
+            {
+                PODetailEntityDetails poDetailEntity = new PODetailEntityDetails();
+                poDetailEntity.lstPOEntity = new List<PODetailEntity>();
+
+                DataSet ds = _repository.GetPODetailsList(pageIndex, pageSize);
+
+                if (ds.Tables.Count > 0)
+                {
+                    DataTable dt1 = ds.Tables[0];
+                    DataTable dt2 = ds.Tables[1];
+
+                    if (dt1 != null && dt1.Rows.Count > 0)
+                    {
+                        if (dt1.Rows.Count > 0)
+                        {
+                            foreach (DataRow dr1 in dt1.Rows)
+                            {
+                                PODetailEntity obj = new PODetailEntity();
+                                obj.PRSetno = dr1.IsNull("PRSetno") ? 0 : Convert.ToInt32(dr1["PRSetno"]);
+                                obj.PRno = dr1.IsNull("PRno") ? string.Empty : Convert.ToString(dr1["PRno"]);
+
+                                obj.PONo = dr1.IsNull("PONo") ? string.Empty : Convert.ToString(dr1["PONo"]);
+                                obj.POdate = dr1.IsNull("POdate") ? string.Empty : Convert.ToString(dr1["POdate"]);
+                                obj.WorkNo = dr1.IsNull("WorkNo") ? string.Empty : Convert.ToString(dr1["WorkNo"]);
+                                obj.DeliveryTime = dr1.IsNull("DeliveryTime") ? string.Empty : Convert.ToString(dr1["DeliveryTime"]);
+                                obj.POValidity = dr1.IsNull("POValidity") ? string.Empty : Convert.ToString(dr1["POValidity"]);
+                                obj.TotalPRSetPrice = dr1.IsNull("TotalPRSetPrice") ? "" : Convert.ToString(dr1["TotalPRSetPrice"]);
+                               
+                                poDetailEntity.lstPOEntity.Add(obj);
+                            }
+                        }
+                    }
+
+
+                    if (dt2.Rows.Count > 0)
+                    {
+                        foreach (DataRow dr2 in dt2.Rows)
+                        {
+                            poDetailEntity.totalcount = dr2.IsNull("totalCount") ? 0 : Convert.ToInt32(dr2["totalCount"]);
+                        }
+                    }
+                }
+                return poDetailEntity;
+            }
+            catch (Exception Ex)
+            {
+                NtierMvc.DataAccess.ExceptionLogging.SendExcepToDB(Ex);
+                throw Ex;
+            }
+        }
+
+
     }
 
 }

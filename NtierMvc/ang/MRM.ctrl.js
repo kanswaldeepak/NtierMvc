@@ -261,6 +261,39 @@ angular.module('App').controller("MRMController", function ($scope, $http, $time
         })
     }
 
+
+    //Purchase Order Starts
+    $scope.POTotalCount = 0;
+    $scope.POPageIndex = 1;
+    $scope.POPageSize = "50";
+    
+    $scope.FetchPODetailsList = function () {
+        $http.get(window.FetchPODetailsList + "?pageIndex=" + $scope.PRPageIndex + "&pageSize=" + $scope.PRPageSize).success(function (response) {
+            $scope.POList = response.lstPOEntity;
+            $scope.POTotalCount = response.totalcount;
+        }, function (error) {
+            alert('failed');
+        });
+    }
+
+    $scope.FetchPODetailsList();
+
+    $scope.POPageChanged = function () {
+        $scope.FetchPODetailsList();
+    }
+
+    $scope.POChangePageSize = function () {
+        $scope.POPageIndex = 1;
+        $scope.FetchPODetailsList();
+    }
+
+    $scope.POChangePageSize = function () {
+        $scope.POPageIndex = 1;
+        $scope.FetchPODetailsList();
+    }
+
+
+
     $scope.BindPODetailsPopup = function () {
         var _actionType = "ADD"
         $.ajax({

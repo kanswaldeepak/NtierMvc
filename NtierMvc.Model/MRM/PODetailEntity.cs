@@ -60,12 +60,12 @@ namespace NtierMvc.Model.MRM
     public class PODetailEntityDetails
     {
         public PODetailEntity pEntity { get; set; }
-        public List<PODetailEntity> lstPREntity { get; set; }
+        public List<PODetailEntity> lstPOEntity { get; set; }
         public int totalcount { get; set; }
         public PODetailEntityDetails()
         {
             pEntity = new PODetailEntity();
-            lstPREntity = new List<PODetailEntity>();
+            lstPOEntity = new List<PODetailEntity>();
         }
     }
 

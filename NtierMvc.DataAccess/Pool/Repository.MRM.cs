@@ -149,6 +149,21 @@ namespace NtierMvc.DataAccess.Pool
             return msgCode;
         }
 
+        public DataSet GetPODetailsList(int pageIndex, int pageSize)
+        {
+            var parms = new Dictionary<string, object>();
+            parms.Add("@pageIndex", pageIndex);
+            parms.Add("@pageSize", pageSize);
+            //parms.Add("@SearchTypeId", SearchTypeId);
+            //parms.Add("@SearchQuoteNo", SearchQuoteNo);
+            //parms.Add("@SearchSONo", SearchSONo);
+            //parms.Add("@SearchVendorId", SearchVendorId);
+            //parms.Add("@SearchVendorName", SearchVendorName);
+            //parms.Add("@SearchProductGroup", SearchProductGroup);
+
+            string spName = ConfigurationManager.AppSettings["GetPODetailsList"];
+            return _dbAccess.GetDataSet(spName, parms);
+        }
 
     }
 }

@@ -665,5 +665,19 @@ namespace NtierMvc.Areas.MRM.Controllers
             }
         }
 
+        public JsonResult FetchPODetailsList(string pageIndex, string pageSize)
+        {
+            //SearchTypeId = SearchTypeId == null ? string.Empty : SearchTypeId;
+            //SearchQuoteNo = SearchQuoteNo == null ? string.Empty : SearchQuoteNo;
+            //SearchSONo = SearchSONo == null ? string.Empty : SearchSONo;
+            //SearchVendorId = SearchVendorId == null ? string.Empty : SearchVendorId;
+            //SearchVendorName = SearchVendorName == null ? string.Empty : SearchVendorName;
+            //SearchProductGroup = SearchProductGroup == null ? string.Empty : SearchProductGroup;
+
+            PODetailEntityDetails prEntity = new PODetailEntityDetails();
+            prEntity = objManager.GetPODetailsList(Convert.ToInt32(pageIndex), Convert.ToInt32(pageSize));
+            return new JsonResult { Data = prEntity, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+        }
+
     }
 }

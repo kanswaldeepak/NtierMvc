@@ -59,7 +59,7 @@
                 </td>*@
             <td></td>
             <td>
-                <button class="btn btn-link" type="button" id="btnSearch" ng-click="FetchPRDetailsList()">
+                <button class="btn btn-link" type="button" id="btnSearch" ng-click="FetchPODetailsList()">
                     <i class="fa fa-search"></i>
                 </button>
             </td>
@@ -89,39 +89,45 @@
                             </div>
                         </th>
                         <th>
-                            PR Date
+                            PO No
                             <div class="c2">
-                                PR Date
+                                PO No
                             </div>
                         </th>
                         <th>
-                            Requested by
+                            PRSet No
                             <div class="c2">
-                                Requested by
+                                PRSet No
                             </div>
                         </th>
                         <th>
-                            Supplier Name
+                            PO Date
                             <div class="c2">
-                                Supplier Name
+                                PO Date
                             </div>
                         </th>
                         <th>
-                            Delivery Date
+                            Work No
                             <div class="c2">
-                                Delivery Date
+                                Work No
                             </div>
                         </th>
                         <th>
-                            Total PR Price
+                            DeliveryTime
                             <div class="c2">
-                                Total PR Price
+                                DeliveryTime
                             </div>
                         </th>
                         <th>
-                            Status
+                            POValidity
                             <div class="c2">
-                                Status
+                                POValidity
+                            </div>
+                        </th>
+                        <th>
+                            TotalPRSetPrice
+                            <div class="c2">
+                                TotalPRSetPrice
                             </div>
                         </th>
                         <th>
@@ -133,50 +139,53 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="L in PRPList">
+                    <tr ng-repeat="L in POList">
                         <td>
-                            <span ng-if="((L.SignStatus =='Entry' || L.SignStatus =='Approved1' || L.SignStatus =='Rejected1' || L.SignStatus =='Approved2' || L.SignStatus =='Rejected2') && L.DeptName != L.LogInDeptName && L.PRStatus != 'Approved')">
-                                <button id="btnViewPRDetails" type="button" class="btn btn-outline-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="VIEW" ng-click="LoadPRDetailsViewPopup(L.PRSetno)">
-                                    <i class="fa fa-eye"></i>
-                                </button>
-                            </span>
-                            <span ng-if="L.SignStatus == 'Approved1' && L.DeptName == 'Stores' && L.LogInDeptName == 'Stores'">
-                                <button id="btnEditPRDetails" type="button" class="btn btn-outline-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="EDIT" ng-click="LoadPRDetailsEditPopup(L.PRSetno)">
-                                    <i class="fa fa-pen"></i>
-                                </button>
-                            </span>
-                            <span ng-if="L.PRStatus == 'Approved' && L.LogInDeptName == 'Purchase' && L.PurchasePerson!=''">
-                                <button id="btnViewPRDetails" type="button" class="btn btn-outline-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="VIEW" ng-click="LoadPRDetailsViewPopup(L.PRSetno)">
-                                    <i class="fa fa-eye"></i>
-                                </button>
-                            </span>
-                            <span ng-if="((L.SignStatus =='Entry' || L.SignStatus =='Rejected1' || L.SignStatus =='Rejected2') && (L.DeptName == L.LogInDeptName))">
-                                <button id="btnEditPRDetails" type="button" class="btn btn-outline-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="EDIT" ng-click="LoadPRDetailsEditPopup(L.PRSetno)">
-                                    <i class="fa fa-pen"></i>
-                                </button>
-                            </span>
+                            @*<span ng-if="((L.SignStatus =='Entry' || L.SignStatus =='Approved1' || L.SignStatus =='Rejected1' || L.SignStatus =='Approved2' || L.SignStatus =='Rejected2') && L.DeptName != L.LogInDeptName && L.PRStatus != 'Approved')">
+                <button id="btnViewPRDetails" type="button" class="btn btn-outline-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="VIEW" ng-click="LoadPRDetailsViewPopup(L.PRSetno)">
+                    <i class="fa fa-eye"></i>
+                </button>
+            </span>
+            <span ng-if="L.SignStatus == 'Approved1' && L.DeptName == 'Stores' && L.LogInDeptName == 'Stores'">
+                <button id="btnEditPRDetails" type="button" class="btn btn-outline-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="EDIT" ng-click="LoadPRDetailsEditPopup(L.PRSetno)">
+                    <i class="fa fa-pen"></i>
+                </button>
+            </span>
+            <span ng-if="L.PRStatus == 'Approved' && L.LogInDeptName == 'Purchase' && L.PurchasePerson!=''">
+                <button id="btnViewPRDetails" type="button" class="btn btn-outline-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="VIEW" ng-click="LoadPRDetailsViewPopup(L.PRSetno)">
+                    <i class="fa fa-eye"></i>
+                </button>
+            </span>
+            <span ng-if="((L.SignStatus =='Entry' || L.SignStatus =='Rejected1' || L.SignStatus =='Rejected2') && (L.DeptName == L.LogInDeptName))">
+                <button id="btnEditPRDetails" type="button" class="btn btn-outline-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="EDIT" ng-click="LoadPRDetailsEditPopup(L.PRSetno)">
+                    <i class="fa fa-pen"></i>
+                </button>
+            </span>*@
 
                         </td>
                         <td>
                             {{L.PRno}}
                         </td>
                         <td>
-                            {{L.PRdate}}
+                            {{L.PONo}}
                         </td>
                         <td>
-                            {{L.ReqFrom}}
+                            {{L.PRSetno}}
                         </td>
                         <td>
-                            {{L.ApprovedSupplier1}}
+                            {{L.POdate}}
                         </td>
                         <td>
-                            {{L.DeliveryDate}}
+                            {{L.WorkNo}}
+                        </td>
+                        <td>
+                            {{L.DeliveryTime}}
+                        </td>
+                        <td>
+                            {{L.POValidity}}
                         </td>
                         <td>
                             {{L.TotalPRSetPrice}}
-                        </td>
-                        <td>
-                            {{L.PRStatus}}
                         </td>
                         <td>
                             <button class="btn btn-link btn-sm" value="{{L.PRSetno}}" onclick="CreateDocument(this)">Download</button>
@@ -191,9 +200,9 @@
                                     <div class="col-md-2 p-0">
                                         <span class="form-group pull-left page-size form-inline">
                                             <b>Records per page : &nbsp;&nbsp;</b>
-                                            <select id="ddlPRPageSize" class="form-control control-color"
-                                                    ng-model="PRPageSize"
-                                                    ng-change="PRChangePageSize()">
+                                            <select id="ddlPOPageSize" class="form-control control-color"
+                                                    ng-model="POPageSize"
+                                                    ng-change="POChangePageSize()">
                                                 <option value="100000">All</option>
                                                 <option value="5">5</option>
                                                 <option value="10">10</option>
@@ -206,10 +215,10 @@
                                     <div class="col-md-8 pull-right p-0">
                                         <div class="row p-0">
                                             <div class="col-md-10 p-0">
-                                                <pagination total-items="PRPTotalCount" ng-change="PRPageChanged()" items-per-page="PRPageSize" direction-links="true" ng-model="PRPageIndex" max-size="maxsize" class="pagination pull-right" boundary-links="true" rotate="false" num-pages="PRNumPages"></pagination>
+                                                <pagination total-items="POTotalCount" ng-change="POPageChanged()" items-per-page="POPageSize" direction-links="true" ng-model="POPageIndex" max-size="maxsize" class="pagination pull-right" boundary-links="true" rotate="false" num-pages="PONumPages"></pagination>
                                             </div>
                                             <div class="col-md-2 p-0">
-                                                <a class="btn btn-primary p-2 pull-right">Page: {{PRPageIndex}} / {{PRNumPages}}</a>
+                                                <a class="btn btn-primary p-2 pull-right">Page: {{POPageIndex}} / {{PONumPages}}</a>
                                             </div>
                                         </div>
                                     </div>

@@ -87,5 +87,11 @@ namespace NtierMvc.API.Controllers.Application
             return Ok(_repository.SavePODetailsList(iEntity));
         }
 
+        [Route("api/MRMDetail/GetPODetailsList")]
+        public IHttpActionResult GetPODetailsList(int pageIndex, int pageSize)
+        {
+            return Ok(_repository.GetPODetailsList(pageIndex, pageSize));
+        }
+
     }
 }

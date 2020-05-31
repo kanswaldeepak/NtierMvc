@@ -172,6 +172,21 @@ namespace NtierMvc.Areas.MRM.Models
             return result;
         }
 
+        public PODetailEntityDetails GetPODetailsList(int pageIndex, int pageSize)
+        {
+            var baseAddress = "MRMDetail";
+            PODetailEntityDetails prDetails = new PODetailEntityDetails();
+            using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
+            {
+                HttpResponseMessage response = client.GetAsync(baseAddress + "/GetPODetailsList?pageIndex=" + pageIndex + "&pageSize=" + pageSize).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    var data = response.Content.ReadAsStringAsync().Result;
+                    prDetails = JsonConvert.DeserializeObject<PODetailEntityDetails>(data);
+                }
+            }
+            return prDetails;
+        }
 
     }
 }
