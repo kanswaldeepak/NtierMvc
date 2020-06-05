@@ -330,13 +330,14 @@ namespace NtierMvc.Areas.MRM.Controllers
         [HttpPost]
         public ActionResult CreateDownloadDocument(string PRSetNo)
         {
-            string FileName = "PR_Mackarel.xlsx";
+            string FileName = "";
             try
             {
 
                 Microsoft.Office.Interop.Excel.Application excelApp = new Microsoft.Office.Interop.Excel.Application();
                 // open the template in Edit mode
                 string path = System.Web.HttpContext.Current.Server.MapPath(ConfigurationManager.AppSettings["PRExcel"]);
+                FileName = Path.GetFileName(path);
                 Microsoft.Office.Interop.Excel.Workbook xlWorkbook = excelApp.Workbooks.Open(Filename: @path, Editable: true);
                 Microsoft.Office.Interop.Excel.Worksheet ws = (Microsoft.Office.Interop.Excel.Worksheet)xlWorkbook.Sheets["Sheet1"];
 
@@ -454,8 +455,8 @@ namespace NtierMvc.Areas.MRM.Controllers
                 ////////////////For Image////////////////////
 
 
-                Microsoft.Office.Interop.Excel.Range c1 = (Microsoft.Office.Interop.Excel.Range)ws.Cells[9, 1];
-                Microsoft.Office.Interop.Excel.Range c2 = (Microsoft.Office.Interop.Excel.Range)ws.Cells[(resultList.Rows.Count - 2) + 9, resultList.Columns.Count];
+                Microsoft.Office.Interop.Excel.Range c1 = (Microsoft.Office.Interop.Excel.Range)ws.Cells[10, 1];
+                Microsoft.Office.Interop.Excel.Range c2 = (Microsoft.Office.Interop.Excel.Range)ws.Cells[(resultList.Rows.Count - 2) + 10, resultList.Columns.Count];
                 Microsoft.Office.Interop.Excel.Range range = ws.get_Range(c1, c2);
                 range.Insert(Microsoft.Office.Interop.Excel.XlInsertShiftDirection.xlShiftDown);
 
@@ -473,8 +474,6 @@ namespace NtierMvc.Areas.MRM.Controllers
                 Microsoft.Office.Interop.Excel.Range c3 = (Microsoft.Office.Interop.Excel.Range)ws.Cells[9, 1];
                 Microsoft.Office.Interop.Excel.Range c4 = (Microsoft.Office.Interop.Excel.Range)ws.Cells[(resultList.Rows.Count - 1) + 9, resultList.Columns.Count];
                 Microsoft.Office.Interop.Excel.Range range1 = ws.get_Range(c3, c4);
-                //ws.get_Range(c3, c4).Cells.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignLeft;
-                //range1.EntireRow.Font.Bold = true;
                 range1.Value = arr;
 
                 string fullPath = Path.Combine(Server.MapPath(ConfigurationManager.AppSettings["TempFolder"]), FileName);
@@ -588,7 +587,11 @@ namespace NtierMvc.Areas.MRM.Controllers
 
             }
             else if (actionType == "ADD")
+            {
+                poObj.CompShortName = ConfigurationManager.AppSettings["CompanyShortName"];
+                poObj = objManager.GetPODetailsForPopup(poObj);
                 poObj.POdate = DateTime.Now.ToShortDateString();
+            }
 
             return base.PartialView("~/Areas/MRM/Views/MRM/_PODetailsPopup.cshtml", poObj);
         }
@@ -615,12 +618,15 @@ namespace NtierMvc.Areas.MRM.Controllers
                     {
                         PODetailEntityBulkSave newObj = new PODetailEntityBulkSave();
 
-                        newObj.PRno = item.PRno;
-                        newObj.PONo = item.PONo;
                         newObj.PRSetno = item.PRSetno;
+                        newObj.PONo = item.PONo;
+                        newObj.POSetno = item.POSetno;
                         newObj.POdate = item.POdate;
                         newObj.SN = item.SN;
                         newObj.RMdescription = item.RMdescription;
+                        newObj.RMgrade = item.RMgrade;
+                        newObj.RMHardness = item.RMHardness;
+                        newObj.PSLlevel = item.PSLlevel;
                         newObj.QtyReqd = item.QtyReqd;
                         newObj.QtyStock = item.QtyStock;
                         newObj.PRqty = item.PRqty;
@@ -629,7 +635,7 @@ namespace NtierMvc.Areas.MRM.Controllers
                         newObj.Discount = item.Discount;
                         newObj.FinalPrice = item.FinalPrice;
                         newObj.WorkNo = item.WorkNo;
-                        newObj.DeliveryTime = item.DeliveryTime;
+                        newObj.DeliveryDate = item.DeliveryDate;
                         newObj.POValidity = item.POValidity;
 
                         newObj.TotalPRSetPrice = item.TotalPRSetPrice;
@@ -677,6 +683,138 @@ namespace NtierMvc.Areas.MRM.Controllers
             PODetailEntityDetails prEntity = new PODetailEntityDetails();
             prEntity = objManager.GetPODetailsList(Convert.ToInt32(pageIndex), Convert.ToInt32(pageSize));
             return new JsonResult { Data = prEntity, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+        }
+
+        [HttpPost]
+        public ActionResult CreateDocumentForPO(string PRSetNo)
+        {
+            string FileName = "";
+            try
+            {
+                Microsoft.Office.Interop.Excel.Application excelApp = new Microsoft.Office.Interop.Excel.Application();
+                // open the template in Edit mode
+                string path = System.Web.HttpContext.Current.Server.MapPath(ConfigurationManager.AppSettings["POExcelFile"]);
+                FileName = Path.GetFileName(path);
+                Microsoft.Office.Interop.Excel.Workbook xlWorkbook = excelApp.Workbooks.Open(Filename: @path, Editable: true);
+                Microsoft.Office.Interop.Excel.Worksheet ws = (Microsoft.Office.Interop.Excel.Worksheet)xlWorkbook.Sheets["Sheet1"];
+
+                DataTable resultData = objManager.GetPODetailForDocument(PRSetNo);
+                DataTable resultList = objManager.GetPOListDataForDocument(PRSetNo);
+
+                //Getting Single Fields
+                xlWorkbook.Worksheets[1].Cells.Replace("#PRno", resultData.Rows[0]["PRno"]);
+                xlWorkbook.Worksheets[1].Cells.Replace("#PONo", resultData.Rows[0]["PONo"]);
+                xlWorkbook.Worksheets[1].Cells.Replace("#POSetno", resultData.Rows[0]["POSetno"]);
+                xlWorkbook.Worksheets[1].Cells.Replace("#POdate", resultData.Rows[0]["POdate"]);
+                xlWorkbook.Worksheets[1].Cells.Replace("#WorkNo", resultData.Rows[0]["WorkNo"]);
+                xlWorkbook.Worksheets[1].Cells.Replace("#DeliveryTime", resultData.Rows[0]["DeliveryTime"]);
+                xlWorkbook.Worksheets[1].Cells.Replace("#POValidity", resultData.Rows[0]["POValidity"]);
+
+                ////////////////For Image////////////////////
+                #region Image
+                Microsoft.Office.Interop.Excel.Range cells = xlWorkbook.Worksheets[1].Cells;
+
+                //ReqBy
+                Microsoft.Office.Interop.Excel.Range matchReqBy = cells.Find("#RequestedBySign", LookAt: Microsoft.Office.Interop.Excel.XlLookAt.xlPart) as Microsoft.Office.Interop.Excel.Range;
+                xlWorkbook.Worksheets[1].Cells.Replace("#RequestedBySign", "");
+
+                string matchAdd = matchReqBy != null ? matchReqBy.Address : null;
+                if (matchReqBy != null)
+                {
+                    Microsoft.Office.Interop.Excel.Range oRange = (Microsoft.Office.Interop.Excel.Range)ws.Cells[matchReqBy.Row, matchReqBy.Column];
+                    float Left = (float)((double)oRange.Left);
+                    float Top = (float)((double)oRange.Top);
+                    const float ImageSize = 40;
+                    string filePath = Path.Combine(Server.MapPath(ConfigurationManager.AppSettings["SignImagePath"]), resultData.Rows[0]["RequestedBySign"].ToString());
+                    if (System.IO.File.Exists(filePath))
+                        ws.Shapes.AddPicture(filePath, Microsoft.Office.Core.MsoTriState.msoFalse, Microsoft.Office.Core.MsoTriState.msoCTrue, Left, Top, ImageSize, ImageSize);
+                }
+
+                //Store
+                Microsoft.Office.Interop.Excel.Range matchStore = cells.Find("#StoreSign", LookAt: Microsoft.Office.Interop.Excel.XlLookAt.xlPart) as Microsoft.Office.Interop.Excel.Range;
+                xlWorkbook.Worksheets[1].Cells.Replace("#StoreSign", "");
+
+                string matchStoreAdd = matchStore != null ? matchStore.Address : null;
+                if (matchStoreAdd != null)
+                {
+                    Microsoft.Office.Interop.Excel.Range oRange = (Microsoft.Office.Interop.Excel.Range)ws.Cells[matchStore.Row, matchStore.Column];
+                    float Left = (float)((double)oRange.Left);
+                    float Top = (float)((double)oRange.Top);
+                    const float ImageSize = 40;
+                    string filePath = Path.Combine(Server.MapPath(ConfigurationManager.AppSettings["SignImagePath"]), resultData.Rows[0]["StoreSign"].ToString());
+                    if (System.IO.File.Exists(filePath))
+                        ws.Shapes.AddPicture(filePath, Microsoft.Office.Core.MsoTriState.msoFalse, Microsoft.Office.Core.MsoTriState.msoCTrue, Left, Top, ImageSize, ImageSize);
+                }
+
+                //Approver
+                Microsoft.Office.Interop.Excel.Range matchApprove = cells.Find("#ApproverSign", LookAt: Microsoft.Office.Interop.Excel.XlLookAt.xlPart) as Microsoft.Office.Interop.Excel.Range;
+                xlWorkbook.Worksheets[1].Cells.Replace("#ApproverSign", "");
+
+                string matchApproveAdd = matchApprove != null ? matchApprove.Address : null;
+                if (matchApproveAdd != null)
+                {
+                    Microsoft.Office.Interop.Excel.Range oRange = (Microsoft.Office.Interop.Excel.Range)ws.Cells[matchApprove.Row, matchApprove.Column];
+                    float Left = (float)((double)oRange.Left);
+                    float Top = (float)((double)oRange.Top);
+                    const float ImageSize = 40;
+                    string filePath = Path.Combine(Server.MapPath(ConfigurationManager.AppSettings["SignImagePath"]), resultData.Rows[0]["ApproverSign"].ToString());
+                    if (System.IO.File.Exists(filePath))
+                        ws.Shapes.AddPicture(filePath, Microsoft.Office.Core.MsoTriState.msoFalse, Microsoft.Office.Core.MsoTriState.msoCTrue, Left, Top, ImageSize, ImageSize);
+                }
+
+                //Purchase
+                Microsoft.Office.Interop.Excel.Range matchPurchase = cells.Find("#PurchaseSign", LookAt: Microsoft.Office.Interop.Excel.XlLookAt.xlPart) as Microsoft.Office.Interop.Excel.Range;
+                xlWorkbook.Worksheets[1].Cells.Replace("#PurchaseSign", "");
+
+                string matchPurchaseAdd = matchPurchase != null ? matchPurchase.Address : null;
+                if (matchPurchaseAdd != null)
+                {
+                    Microsoft.Office.Interop.Excel.Range oRange = (Microsoft.Office.Interop.Excel.Range)ws.Cells[matchPurchase.Row, matchPurchase.Column];
+                    float Left = (float)((double)oRange.Left);
+                    float Top = (float)((double)oRange.Top);
+                    const float ImageSize = 40;
+                    string filePath = Path.Combine(Server.MapPath(ConfigurationManager.AppSettings["SignImagePath"]), resultData.Rows[0]["PurchaseSign"].ToString());
+                    if (System.IO.File.Exists(filePath))
+                        ws.Shapes.AddPicture(filePath, Microsoft.Office.Core.MsoTriState.msoFalse, Microsoft.Office.Core.MsoTriState.msoCTrue, Left, Top, ImageSize, ImageSize);
+                }
+                #endregion
+                ////////////////For Image////////////////////
+
+
+                Microsoft.Office.Interop.Excel.Range c1 = (Microsoft.Office.Interop.Excel.Range)ws.Cells[10, 1];
+                Microsoft.Office.Interop.Excel.Range c2 = (Microsoft.Office.Interop.Excel.Range)ws.Cells[(resultList.Rows.Count - 2) + 10, resultList.Columns.Count];
+                Microsoft.Office.Interop.Excel.Range range = ws.get_Range(c1, c2);
+                range.Insert(Microsoft.Office.Interop.Excel.XlInsertShiftDirection.xlShiftDown);
+
+                object[,] arr = new object[resultList.Rows.Count, resultList.Columns.Count];
+                for (int r = 0; r <= resultList.Rows.Count - 1; r++)
+                {
+                    DataRow dr = resultList.Rows[r];
+                    for (int c = 0; c < resultList.Columns.Count; c++)
+                    {
+                        arr[r, c] = dr[c];
+                    }
+                }
+
+
+                Microsoft.Office.Interop.Excel.Range c3 = (Microsoft.Office.Interop.Excel.Range)ws.Cells[10, 1];
+                Microsoft.Office.Interop.Excel.Range c4 = (Microsoft.Office.Interop.Excel.Range)ws.Cells[(resultList.Rows.Count - 1) + 10, resultList.Columns.Count];
+                Microsoft.Office.Interop.Excel.Range range1 = ws.get_Range(c3, c4);
+                range1.Value = arr;
+
+                string fullPath = Path.Combine(Server.MapPath(ConfigurationManager.AppSettings["TempFolder"]), FileName);
+                xlWorkbook.SaveAs(fullPath);
+                xlWorkbook.Close();
+                excelApp.Quit();
+
+                Download(FileName);
+            }
+            catch (Exception ex)
+            {
+                var response = ex.Message;
+            }
+
+            return Json(new { fileName = FileName, errorMessage = "Error While Generating Excel. Contact Support." });
         }
 
     }

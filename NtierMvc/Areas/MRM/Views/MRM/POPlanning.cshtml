@@ -7,7 +7,7 @@
     <table>
         <tr>
             <td>
-                <button id="btnPODetails" type="button" class="btn btn-outline-primary btn-sm" ng-click="BindPODetailsPopup()"><i class="fa fa-plus"></i> <b>PO Details</b></button>
+                <button id="btnPODetails" type="button" class="btn btn-outline-primary btn-sm" ng-click="BindPODetailsPopup()"><i class="fa fa-plus"></i> <b>New Vendor PO</b></button>
             </td>
             <td>
                 <label>Vendor Type</label>
@@ -83,12 +83,6 @@
                             </div>
                         </th>
                         <th>
-                            PR No
-                            <div class="c3">
-                                PR No
-                            </div>
-                        </th>
-                        <th>
                             PO No
                             <div class="c2">
                                 PO No
@@ -113,9 +107,9 @@
                             </div>
                         </th>
                         <th>
-                            DeliveryTime
+                            Delivery Date
                             <div class="c2">
-                                DeliveryTime
+                                Delivery Date
                             </div>
                         </th>
                         <th>
@@ -164,9 +158,6 @@
 
                         </td>
                         <td>
-                            {{L.PRno}}
-                        </td>
-                        <td>
                             {{L.PONo}}
                         </td>
                         <td>
@@ -179,7 +170,7 @@
                             {{L.WorkNo}}
                         </td>
                         <td>
-                            {{L.DeliveryTime}}
+                            {{L.DeliveryDate}}
                         </td>
                         <td>
                             {{L.POValidity}}
@@ -188,7 +179,7 @@
                             {{L.TotalPRSetPrice}}
                         </td>
                         <td>
-                            <button class="btn btn-link btn-sm" value="{{L.PRSetno}}" onclick="CreateDocument(this)">Download</button>
+                            <button class="btn btn-link btn-sm" value="{{L.PRSetno}}" onclick="CreateDocumentForPODetail(this)">Download</button>
                         </td>
                     </tr>
                 </tbody>
@@ -239,6 +230,7 @@
         window.PODetailsPopup = '@Url.Action("PODetailsPopup", "MRM")';
         window.GetPRDetailsFromPRSetNo = '@Url.Action("GetPRTableDetails", "MRM")';
         window.SavePODetailsList = '@Url.Action("SavePODetailsList", "MRM")';
+        window.CreateDocumentForPO = '@Url.Action("CreateDocumentForPO", "MRM")';
 
     });
 
@@ -251,7 +243,30 @@
         $('#btnPRPDetails').hide();
         }
 
+    
+function CreateDocumentForPODetail(e) {
 
+    var PRSetNo = e.value;
+
+    $.ajax({
+        type: 'POST',
+        url: window.CreateDocumentForPO,
+        data: JSON.stringify({ PRSetNo: PRSetNo }),
+        contentType: "application/json; charset=utf-8",
+        success: function (data) {
+
+            if (data.fileName != "") {
+                Console.log(data.fileName);
+            }
+            else {
+                alert(data.errorMessage);
+            }
+        },
+        error: function (x, e) {
+            alert(data);
+        }
+    })
+}
 
 </script>
 <script src="~/Areas/MRM/Scripts/PODetailPopUp.js"></script>

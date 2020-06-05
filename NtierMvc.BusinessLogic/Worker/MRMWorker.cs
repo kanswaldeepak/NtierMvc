@@ -325,12 +325,11 @@ namespace NtierMvc.BusinessLogic.Worker
                             {
                                 PODetailEntity obj = new PODetailEntity();
                                 obj.PRSetno = dr1.IsNull("PRSetno") ? 0 : Convert.ToInt32(dr1["PRSetno"]);
-                                obj.PRno = dr1.IsNull("PRno") ? string.Empty : Convert.ToString(dr1["PRno"]);
-
+                                
                                 obj.PONo = dr1.IsNull("PONo") ? string.Empty : Convert.ToString(dr1["PONo"]);
                                 obj.POdate = dr1.IsNull("POdate") ? string.Empty : Convert.ToString(dr1["POdate"]);
                                 obj.WorkNo = dr1.IsNull("WorkNo") ? string.Empty : Convert.ToString(dr1["WorkNo"]);
-                                obj.DeliveryTime = dr1.IsNull("DeliveryTime") ? string.Empty : Convert.ToString(dr1["DeliveryTime"]);
+                                obj.DeliveryDate = dr1.IsNull("DeliveryDate") ? string.Empty : Convert.ToString(dr1["DeliveryDate"]);
                                 obj.POValidity = dr1.IsNull("POValidity") ? string.Empty : Convert.ToString(dr1["POValidity"]);
                                 obj.TotalPRSetPrice = dr1.IsNull("TotalPRSetPrice") ? "" : Convert.ToString(dr1["TotalPRSetPrice"]);
                                
@@ -357,7 +356,40 @@ namespace NtierMvc.BusinessLogic.Worker
             }
         }
 
+        public PODetailEntity GetPODetailsForPopup(PODetailEntity Model)
+        {
+            try
+            {
+                DataSet ds = _repository.GetPODetailsForPopup(Model);
 
+                if (ds.Tables[0] != null && ds.Tables[0].Rows.Count > 0)
+                {
+                    DataTable dt1 = ds.Tables[0];
+                    DataRow dr1 = dt1.Rows[0];
+
+                    Model.PONo = dr1.IsNull("PONo") ? "" : Convert.ToString(dr1["PONo"]);
+                    Model.POSetno = dr1.IsNull("POSetno") ? "" : Convert.ToString(dr1["POSetno"]);
+                }
+            }
+
+            catch (Exception ex)
+            {
+                NtierMvc.DataAccess.ExceptionLogging.SendExcepToDB(ex);
+            }
+            return Model;
+        }
+
+        public DataTable GetPODetailForDocument(string PRSetNo)
+        {
+            DataTable dt = _repository.GetPODetailForDocument(PRSetNo);
+            return dt;
+        }
+
+        public DataTable GetPOListDataForDocument(string PRSetNo)
+        {
+            DataTable dt = _repository.GetPOListDataForDocument(PRSetNo);
+            return dt;
+        }
     }
 
 }

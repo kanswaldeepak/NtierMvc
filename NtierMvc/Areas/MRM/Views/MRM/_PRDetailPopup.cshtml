@@ -813,7 +813,7 @@
                             <td></td>
                             <td class="text-right"></td>
                             <td class="text-center">
-                                <img id="imgPurchaseExecSign" src="~/Images/Sign/@ViewBag.PurchaseRequest" alt="Signature" width="50px" height="50px" />
+                                <img id="imgPurchaseExecSign" src="/Images/Sign/@ViewBag.PurchaseRequest" alt="Signature" width="50px" height="50px" />
                             </td>
                             <td></td>
                         </tr>
@@ -874,7 +874,8 @@
         $('#lblPurchaseExecSign').hide();
         $('#btnSavePurchase').hide();
         $('#HiddenPRStatusPRDetails').val('UnderProcess');
-        $('#PRDetailsPRFavouredOn').attr('disabled','true');
+        $('#PRDetailsPRFavouredOn').attr('disabled', 'true');
+        $('#SavePRDetailButton').show();
 
         var DeptNameField = '@ViewBag.DeptName.ToString()';
         if (DeptNameField == 'Management') {
@@ -916,9 +917,21 @@
                 $('#lblStoreEx').show();
             }
 
-            $('#imgStoreEx').hide();
             $('#ApproverSign').hide();
             $('#imgApproverSign').hide();
+            debugger;
+            let updateStoreSign = '@Model.ApprovePerson1Sign';
+
+            if (updateStoreSign != '') {
+                $('#imgStoreEx').show();
+                $('#StoreEx').prop('checked', true);
+            }
+            else {
+                $('#imgStoreEx').hide();
+                $('#StoreEx').prop('checked',false);
+            }
+                
+
             $('#HiddenSignStatusPRDetails').val('Approved1');
         }
         else if (DeptNameField == 'Purchase') {
@@ -933,6 +946,7 @@
             $('#PONoPRDetails').removeAttr('disabled');
             //$('#PRDetailsPRRequestedOn').removeAttr('disabled');
             $('#ExpectedDeliveryDatePRDetails').removeAttr('disabled');
+            $('#SavePRDetailButton').hide();
             $('#btnSavePurchase').show();
 
             $('#HiddenSignStatusPRDetails').val('PurchaseApprove');

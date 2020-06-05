@@ -165,5 +165,33 @@ namespace NtierMvc.DataAccess.Pool
             return _dbAccess.GetDataSet(spName, parms);
         }
 
+        public DataSet GetPODetailsForPopup(PODetailEntity Model)
+        {
+            var SPName = ConfigurationManager.AppSettings["GetPODetailsForPopup"];
+            var Params = new Dictionary<string, object>();
+            Params.Add("@CompShortName", Model.CompShortName);
+            return _dbAccess.GetDataSet(SPName, Params);
+        }
+
+        public DataTable GetPODetailForDocument(string PRSetNo)
+        {
+            var parms = new Dictionary<string, object>();
+            var spName = ConfigurationManager.AppSettings["GetPODetailForDocument"];
+
+            parms.Add("@PRSetNo", PRSetNo);
+            var dt = _dbAccess.GetDataTable(spName, parms);
+            return dt;
+        }
+
+        public DataTable GetPOListDataForDocument(string PRSetNo)
+        {
+            var parms = new Dictionary<string, object>();
+            var spName = ConfigurationManager.AppSettings["GetPOListDataForDocument"];
+
+            parms.Add("@PRSetNo", PRSetNo);
+            var dt = _dbAccess.GetDataTable(spName, parms);
+            return dt;
+        }
+
     }
 }

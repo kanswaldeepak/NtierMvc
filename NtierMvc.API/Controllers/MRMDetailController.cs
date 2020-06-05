@@ -93,5 +93,27 @@ namespace NtierMvc.API.Controllers.Application
             return Ok(_repository.GetPODetailsList(pageIndex, pageSize));
         }
 
+        [HttpPost]
+        [ResponseType(typeof(PRDetailEntity))]
+        [Route("api/MRMDetail/GetPODetailsForPopup")]
+        public IHttpActionResult GetPODetailsForPopup(PODetailEntity Model)
+        {
+            return Ok(_repository.GetPODetailsForPopup(Model));
+        }
+
+        [HttpGet]
+        [Route("api/MRMDetail/GetPODetailForDocument")]
+        public IHttpActionResult GetPODetailForDocument(string PRSetNo)
+        {
+            return Ok(_repository.GetPODetailForDocument(PRSetNo));
+        }
+
+        [HttpGet]
+        [Route("api/MRMDetail/GetPOListDataForDocument")]
+        public IHttpActionResult GetPOListDataForDocument(string PRSetNo)
+        {
+            return Ok(_repository.GetPOListDataForDocument(PRSetNo));
+        }
+
     }
 }

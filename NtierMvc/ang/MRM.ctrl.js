@@ -303,7 +303,7 @@ angular.module('App').controller("MRMController", function ($scope, $http, $time
             url: window.PODetailsPopup,
             success: function (html) {
                 html = $compile(html)($scope);
-                SetModalTitle("Add Purchase Requisition");
+                SetModalTitle("Purchase Order");
                 SetModalBody(html);
                 HideLoadder();
                 SetModalWidth("1500px");

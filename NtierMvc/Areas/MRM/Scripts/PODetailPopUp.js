@@ -1,6 +1,4 @@
 ﻿
-
-
 function CalcTotalWithDiscount(ob) {
     let trob = $(ob).closest('tr');
     let totPrice = parseFloat($.trim(trob.find(".PORMTPrice").text()));
@@ -17,7 +15,7 @@ function CalcTotalWithDiscount(ob) {
 }
 
 function FetchtPRDetailsFromPRSetNo() {
-    var PRSetno = $('#PRNoPODetails').val();
+    var PRSetno = $('#PRSetNoPODetails').val();
 
     $.ajax({
         url: window.GetPRDetailsFromPRSetNo,
@@ -40,7 +38,7 @@ function FetchtPRDetailsFromPRSetNo() {
                         $('#tableRM tbody').empty();
 
                         $.each(data, function (i, item) {
-                            $('#tableRM > tbody:last-child').append('<tr><td><span>' + item.SN + '</span></td><td><span>' + item.RMdescription + '</span></td><td><span>' + item.QtyReqd + '</span></td><td><span>' + item.QtyStock + '</span></td><td><span>' + item.PRqty + '</span></td><td><span>' + item.UnitPrice + '</span></td><td><span class="PORMTPrice">' + item.TotalPrice + '</span></td><td><input name="PORMDiscount" type="text" class="form-control PORMDiscount" value="" onkeyup="CalcTotalWithDiscount(this)" /></td><td><input name="TotalPrice" type="text" readonly="readonly" class="form-control PORMFinalPrice" value="' + item.TotalPrice + '" /></td><td><a href="#" class="removePO">Remove</a></td></tr>');
+                            $('#tableRM > tbody:last-child').append('<tr><td><span>' + item.SN + '</span></td><td><span>' + item.RMdescription + '</span></td><td><span>' + item.RMgrade + '<span></td><td><span>' + item.RMHardness + '<span></td><td><span>' + item.PSLlevel + '<span></td><td><span>' + item.OD + '<span></td><td><span>' + item.WT + '</span></td><td><span>' + item.Len +'</span></td><td><span>' + item.QtyReqd + '</span></td><td><span>' + item.QtyStock + '</span></td><td><span>' + item.PRqty + '</span></td><td><span>' + item.UnitPrice + '</span></td><td><span class="PORMTPrice">' + item.TotalPrice + '</span></td><td><input name="PORMDiscount" type="text" class="form-control PORMDiscount col-md-6" value="" onkeyup="CalcTotalWithDiscount(this)" /></td><td><input name="TotalPrice" type="text" readonly="readonly" class="form-control PORMFinalPrice" value="' + item.TotalPrice + '" /></td><td><a href="#" class="removePO">Remove</a></td></tr>');
 
                             $('#imgRequestedBy').attr("src", "/Images/Sign/" + item.EntryPersonSign);
                             $('#imgStoreEx').attr("src", "/Images/Sign/" + item.ApprovePerson1Sign);
@@ -117,7 +115,7 @@ function SaveDetailsForPO(e) {
 
     $.each($(tableSelected + " tbody tr"), function () {
 
-        TotalPRSetPrice = TotalPRSetPrice + Math.round($(this).find('td:eq(8) input').val());
+        TotalPRSetPrice = TotalPRSetPrice + Math.round($(this).find('td:eq(14) input').val());
     });
 
 
@@ -130,23 +128,26 @@ function SaveDetailsForPO(e) {
         $.each($(tableSelected + " tbody tr"), function () {
             arr.push({
                 //Id: $("#Id").val(),
-                PRno: $("#PRNoPODetails").val(),
-                PRSetno: $('#PRNoPODetails').val(),
+                PRSetno: $('#PRSetNoPODetails').val(),
                 PONo: $("#PONoPODetails").val(),
+                POSetno: $('#HiddenPOSetno').val(),
                 POdate: $("#PODatePODetails").val(),
                 
                 SN: $(this).find('td:eq(0) span').text(),
                 RMdescription: $(this).find('td:eq(1) span').text(),
-                QtyReqd: $(this).find('td:eq(2) span').text(),
-                QtyStock: $(this).find('td:eq(3) span').text(),
-                PRqty: $(this).find('td:eq(4) span').text(),
-                UnitPrice: $(this).find('td:eq(5) span').text(),
-                TotalPrice: $(this).find('td:eq(6) span').text(),
-                Discount: $(this).find('td:eq(7) input').val(),
-                FinalPrice: $(this).find('td:eq(8) input').val(),
+                RMgrade: $(this).find('td:eq(2) span').text(),
+                RMHardness: $(this).find('td:eq(3) span').text(),
+                PSLlevel: $(this).find('td:eq(4) span').text(),
+                QtyReqd: $(this).find('td:eq(8) span').text(),
+                QtyStock: $(this).find('td:eq(9) span').text(),
+                PRqty: $(this).find('td:eq(10) span').text(),
+                UnitPrice: $(this).find('td:eq(11) span').text(),
+                TotalPrice: $(this).find('td:eq(12) span').text(),
+                Discount: $(this).find('td:eq(13) input').val(),
+                FinalPrice: $(this).find('td:eq(14) input').val(),
 
                 WorkNo: $('#PODetailsWorkNo').val(),
-                DeliveryTime: $('#PODetailsDeliveryTime').val(),
+                DeliveryDate: $('#PODetailsDeliveryDate').val(),
                 POValidity: $('#PODetailsPOValidity').val(),
                 TotalPRSetPrice: TotalPRSetPrice
 

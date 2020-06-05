@@ -7,6 +7,7 @@
 <input type="text" id="HiddenLoggedInDeptName" hidden />
 @Html.HiddenFor(m => m.DeptName, new { @id = "HiddenDeptNamePODetails" })
 @Html.HiddenFor(m => m.PRSetno, new { @id = "HiddenPRSetno" })
+@Html.HiddenFor(m => m.POSetno, new { @id = "HiddenPOSetno" })
 @Html.HiddenFor(m => m.SignStatus, new { @id = "HiddenSignStatusPODetails" })
 @Html.HiddenFor(m => m.PRStatus, new { @id = "HiddenPRStatusPODetails" })
 @*@Html.HiddenFor(m => m.EntryPerson, new { @id = "HiddenEntryPersonPODetails" })*@
@@ -118,10 +119,10 @@
                     <div class="form-inline pull-left">
                         <div class="form-group">
                             <label for="PRNo">PR No :</label>
-                            @Html.DropDownListFor(m => m.PRno, new SelectList(@ViewBag.ListPRno, "DataStringValueField", "DataTextField", "Select"), new
+                            @Html.DropDownListFor(m => m.PRSetno, new SelectList(@ViewBag.ListPRno, "DataStringValueField", "DataTextField", "Select"), new
                                 {
                                     @class = "form-control ml-2 requiredValidation clearField",
-                                    @id = "PRNoPODetails",
+                                    @id = "PRSetNoPODetails",
                                     @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
                                     @onchange = "FetchtPRDetailsFromPRSetNo()"
                                 })
@@ -131,7 +132,7 @@
                             @Html.TextBoxFor(m => m.PONo, new
                        {
                            @class = "form-control ml-3 mr-2 requiredValidation",
-                           @id = "PONoPODetails",   
+                           @id = "PONoPODetails",
                            @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
                        })
                         </div>
@@ -205,6 +206,24 @@
                                     RM Description
                                 </td>
                                 <td>
+                                    RM Grade
+                                </td>
+                                <td>
+                                    RM Hardness
+                                </td>
+                                <td>
+                                    PSL Level
+                                </td>
+                                <td>
+                                    OD
+                                </td>
+                                <td>
+                                    WT
+                                </td>
+                                <td>
+                                    Len
+                                </td>
+                                <td>
                                     Qty Required (Nos)
                                 </td>
                                 <td>
@@ -236,8 +255,8 @@
                                     SN
                                 </td>
                                 @*<td>
-                                RM Code
-                            </td>*@
+                                        RM Code
+                                    </td>*@
                                 <td>
                                     RM Description
                                 </td>
@@ -276,8 +295,8 @@
                                     SN
                                 </td>
                                 @*<td>
-                                RM Code
-                            </td>*@
+                                        RM Code
+                                    </td>*@
                                 <td>
                                     Item Description
                                 </td>
@@ -341,8 +360,8 @@
                                     Total Price
                                 </td>
                                 @*<td width="16%">
-                                Required Dly. Date
-                            </td>*@
+                                        Required Dly. Date
+                                    </td>*@
                                 <td style="width: 5%;">
                                     HSN
                                 </td>
@@ -373,8 +392,8 @@
                                     Total Price
                                 </td>
                                 @*<td width="16%">
-                                Required Dly. Date
-                            </td>*@
+                                        Required Dly. Date
+                                    </td>*@
                                 <td style="width: 5%;">
                                     HSN
                                 </td>
@@ -405,8 +424,8 @@
                                     Total Price
                                 </td>
                                 @*<td width="16%">
-                                Required Dly. Date
-                            </td>*@
+                                        Required Dly. Date
+                                    </td>*@
                                 <td style="width: 5%;">
                                     HSN
                                 </td>
@@ -429,7 +448,7 @@
             <table class="table">
                 <tr>
                     <td class="text-right">
-                        Work Construction No
+                        Work Instruction
                     </td>
                     <td>
                         @Html.TextBoxFor(m => m.WorkNo, new
@@ -442,14 +461,15 @@
                 </tr>
                 <tr>
                     <td class="text-right">
-                        Delivery Time
+                        Delivery Date
                     </td>
                     <td>
-                        @Html.TextBoxFor(m => m.DeliveryTime, new
+                        @Html.TextBoxFor(m => m.DeliveryDate, new
                         {
-                            @class = "form-control requiredValidation",
-                            @id = "PODetailsDeliveryTime",
-                            @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                           @class = "form-control ml-3 requiredValidation CalenderDate",
+                           @id = "PODetailsDeliveryDate",
+                           @readonly = "readonly",
+                           @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
                         })
                     </td>
                 </tr>
@@ -515,13 +535,13 @@
         $('#tableGI').hide();
         $('#tableC').hide();
         $('#tableO').hide();
-        
+
     });
 
     //LEASE DATE AND EXP LEASE DATE VALIDATION
     $('.CalenderDate').datepicker({
 
-        format: 'dd/mm/yyyy',
+        format: 'dd-mm-yyyy',
         autoclose: true,
         changeMonth: true,
         changeYear: true,
@@ -529,7 +549,7 @@
     });
     $('.CalenderTillTodayDate').datepicker({
 
-        format: 'dd/mm/yyyy',
+        format: 'dd-mm-yyyy',
         autoclose: true,
         changeMonth: true,
         changeYear: true,

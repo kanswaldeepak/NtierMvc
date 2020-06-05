@@ -188,5 +188,52 @@ namespace NtierMvc.Areas.MRM.Models
             return prDetails;
         }
 
+        public PODetailEntity GetPODetailsForPopup(PODetailEntity Model)
+        {
+            var baseAddress = "MRMDetail";
+            using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
+            {
+                HttpResponseMessage response = client.PostAsJsonAsync(baseAddress + "/GetPODetailsForPopup", Model).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    var data = response.Content.ReadAsStringAsync().Result;
+                    Model = JsonConvert.DeserializeObject<PODetailEntity>(data);
+                }
+            }
+            return Model;
+        }
+
+        public DataTable GetPODetailForDocument(string PRSetNo)
+        {
+            DataTable lstTable = new DataTable();
+            var baseAddress = "MRMDetail";
+            using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
+            {
+                HttpResponseMessage response = client.GetAsync(baseAddress + "/GetPODetailForDocument?PRSetNo=" + PRSetNo).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    var data = response.Content.ReadAsStringAsync().Result;
+                    lstTable = JsonConvert.DeserializeObject<DataTable>(data);
+                }
+            }
+            return lstTable;
+        }
+
+        public DataTable GetPOListDataForDocument(string PRSetNo)
+        {
+            DataTable lstTable = new DataTable();
+            var baseAddress = "MRMDetail";
+            using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
+            {
+                HttpResponseMessage response = client.GetAsync(baseAddress + "/GetPOListDataForDocument?PRSetNo=" + PRSetNo).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    var data = response.Content.ReadAsStringAsync().Result;
+                    lstTable = JsonConvert.DeserializeObject<DataTable>(data);
+                }
+            }
+            return lstTable;
+        }
+
     }
 }

@@ -235,14 +235,15 @@
     });
 
     var DeptName = '@ViewBag.DeptName';
-
-    if (DeptName != 'Management') {
-        $('#btnPRPDetails').show();
+    
+    if (DeptName == 'Management' || DeptName == 'Purchase') {
+        $('#btnPRPDetails').hide();
+        $('#btnPRPDetails').attr('disabled',true);
     }
     else {
-        $('#btnPRPDetails').hide();
-        }
-
+        $('#btnPRPDetails').show();
+        $('#btnPRPDetails').attr('disabled',false);
+    }
 
 function CreateDocument(e) {
 
