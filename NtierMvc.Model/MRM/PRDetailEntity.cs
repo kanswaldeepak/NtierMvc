@@ -47,7 +47,6 @@ namespace NtierMvc.Model.MRM
         public string DlyTerms { get; set; }
         public string PaymentTerms { get; set; }
         public string HSCode { get; set; }
-        public string Supplier1 { get; set; }
         public string Supplier2 { get; set; }
         public string Vendor1 { get; set; }
         public string Vendor2 { get; set; }
@@ -122,7 +121,6 @@ namespace NtierMvc.Model.MRM
         public string DlyTerms { get; set; }
         public string PaymentTerms { get; set; }
         public string HSCode { get; set; }
-        public string Supplier1 { get; set; }
         public string Supplier2 { get; set; }
         public string Vendor1 { get; set; }
         public string Vendor2 { get; set; }

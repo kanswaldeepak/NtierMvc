@@ -56,13 +56,13 @@
                                                    @class = "form-control",
                                                    ng_model = "SearchDeliveryDate"
                                                })
-                </td>*@
+                </td>
             <td></td>
             <td>
                 <button class="btn btn-link" type="button" id="btnSearch" ng-click="FetchPODetailsList()">
                     <i class="fa fa-search"></i>
                 </button>
-            </td>
+            </td>*@
         </tr>
     </table>
 
@@ -256,7 +256,7 @@ function CreateDocumentForPODetail(e) {
         success: function (data) {
 
             if (data.fileName != "") {
-                Console.log(data.fileName);
+                console.log(data.fileName);
             }
             else {
                 alert(data.errorMessage);

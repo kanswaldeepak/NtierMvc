@@ -1,5 +1,6 @@
 ﻿
 function CalcTotalWithDiscount(ob) {
+    
     let trob = $(ob).closest('tr');
     let totPrice = parseFloat($.trim(trob.find(".PORMTPrice").text()));
     if (!totPrice || isNaN(totPrice)) {
@@ -9,9 +10,9 @@ function CalcTotalWithDiscount(ob) {
     if (!discnt || isNaN(discnt)) {
         discnt = 0;
     }
-
-    let disctVal = Math.round(totPrice * discnt / 100);
-    trob.find(".PORMFinalPrice").val(Math.round(totPrice - disctVal));
+    
+    let disctVal = ((totPrice / 100) * discnt).toFixed(2);
+    trob.find(".PORMFinalPrice").val((Math.round(((totPrice - disctVal) * 1000) / 10) / 100).toFixed(2));
 }
 
 function FetchtPRDetailsFromPRSetNo() {

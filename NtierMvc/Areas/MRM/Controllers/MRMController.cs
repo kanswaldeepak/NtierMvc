@@ -95,6 +95,7 @@ namespace NtierMvc.Areas.MRM.Controllers
 
         public ActionResult PRDetailPopup(string actionType, string PRSetno)
         {
+            ViewBag.ListSupplier = model.GetMasterTableStringList("Clientele_Master", "Id", "VendorId", "", "", GeneralConstants.ListTypeN);
             ViewBag.ListCurrency = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "Currency", "Property", GeneralConstants.ListTypeN);
             ViewBag.ListPriority = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "Priority", "Property", GeneralConstants.ListTypeN);
             ViewBag.ListRMcat = model.GetMasterTableStringList("Master.RMCategory", "CategoryName", "CategoryName", "", "", GeneralConstants.ListTypeN);
@@ -706,9 +707,19 @@ namespace NtierMvc.Areas.MRM.Controllers
                 xlWorkbook.Worksheets[1].Cells.Replace("#PONo", resultData.Rows[0]["PONo"]);
                 xlWorkbook.Worksheets[1].Cells.Replace("#POSetno", resultData.Rows[0]["POSetno"]);
                 xlWorkbook.Worksheets[1].Cells.Replace("#POdate", resultData.Rows[0]["POdate"]);
+                xlWorkbook.Worksheets[1].Cells.Replace("#PRdate", resultData.Rows[0]["PRdate"]);
                 xlWorkbook.Worksheets[1].Cells.Replace("#WorkNo", resultData.Rows[0]["WorkNo"]);
-                xlWorkbook.Worksheets[1].Cells.Replace("#DeliveryTime", resultData.Rows[0]["DeliveryTime"]);
+                xlWorkbook.Worksheets[1].Cells.Replace("#DeliveryDate", resultData.Rows[0]["DeliveryDate"]);
                 xlWorkbook.Worksheets[1].Cells.Replace("#POValidity", resultData.Rows[0]["POValidity"]);
+                xlWorkbook.Worksheets[1].Cells.Replace("#Curr", resultData.Rows[0]["Currency"]);
+                xlWorkbook.Worksheets[1].Cells.Replace("#EntryPerson", resultData.Rows[0]["EntryPerson"]);
+                xlWorkbook.Worksheets[1].Cells.Replace("#ApprovePerson1", resultData.Rows[0]["ApprovePerson1"]);
+                xlWorkbook.Worksheets[1].Cells.Replace("#ApprovePerson2", resultData.Rows[0]["ApprovePerson2"]);
+                xlWorkbook.Worksheets[1].Cells.Replace("#Supp1Name", resultData.Rows[0]["Supp1Name"]);
+                xlWorkbook.Worksheets[1].Cells.Replace("#Supp1Address", resultData.Rows[0]["Supp1Address"]);
+                xlWorkbook.Worksheets[1].Cells.Replace("#Supp1ContactPerson", resultData.Rows[0]["Supp1ContactPerson"]);
+                xlWorkbook.Worksheets[1].Cells.Replace("#Supp1ContactNo", resultData.Rows[0]["Supp1ContactNo"]);
+                xlWorkbook.Worksheets[1].Cells.Replace("#Supp1Email", resultData.Rows[0]["Supp1Email"]);
 
                 ////////////////For Image////////////////////
                 #region Image
@@ -781,11 +792,12 @@ namespace NtierMvc.Areas.MRM.Controllers
                 ////////////////For Image////////////////////
 
 
-                Microsoft.Office.Interop.Excel.Range c1 = (Microsoft.Office.Interop.Excel.Range)ws.Cells[10, 1];
-                Microsoft.Office.Interop.Excel.Range c2 = (Microsoft.Office.Interop.Excel.Range)ws.Cells[(resultList.Rows.Count - 2) + 10, resultList.Columns.Count];
+                Microsoft.Office.Interop.Excel.Range c1 = (Microsoft.Office.Interop.Excel.Range)ws.Cells[15, 1];
+                Microsoft.Office.Interop.Excel.Range c2 = (Microsoft.Office.Interop.Excel.Range)ws.Cells[(resultList.Rows.Count - 2) + 15, resultList.Columns.Count];
                 Microsoft.Office.Interop.Excel.Range range = ws.get_Range(c1, c2);
                 range.Insert(Microsoft.Office.Interop.Excel.XlInsertShiftDirection.xlShiftDown);
 
+                double CubMtr = 0;
                 object[,] arr = new object[resultList.Rows.Count, resultList.Columns.Count];
                 for (int r = 0; r <= resultList.Rows.Count - 1; r++)
                 {
@@ -794,11 +806,14 @@ namespace NtierMvc.Areas.MRM.Controllers
                     {
                         arr[r, c] = dr[c];
                     }
+                    CubMtr = CubMtr + Convert.ToDouble(dr[7]);
                 }
 
+                xlWorkbook.Worksheets[1].Cells.Replace("#TotalValue", CubMtr);
+                //xlWorkbook.Worksheets[1].Cells.Replace("#TotalValueWords", NtierMvc.Common.Helper.words(CubMtr, true));
 
-                Microsoft.Office.Interop.Excel.Range c3 = (Microsoft.Office.Interop.Excel.Range)ws.Cells[10, 1];
-                Microsoft.Office.Interop.Excel.Range c4 = (Microsoft.Office.Interop.Excel.Range)ws.Cells[(resultList.Rows.Count - 1) + 10, resultList.Columns.Count];
+                Microsoft.Office.Interop.Excel.Range c3 = (Microsoft.Office.Interop.Excel.Range)ws.Cells[15, 1];
+                Microsoft.Office.Interop.Excel.Range c4 = (Microsoft.Office.Interop.Excel.Range)ws.Cells[(resultList.Rows.Count - 1) + 15, resultList.Columns.Count];
                 Microsoft.Office.Interop.Excel.Range range1 = ws.get_Range(c3, c4);
                 range1.Value = arr;
 
@@ -816,6 +831,8 @@ namespace NtierMvc.Areas.MRM.Controllers
 
             return Json(new { fileName = FileName, errorMessage = "Error While Generating Excel. Contact Support." });
         }
+
+
 
     }
 }
