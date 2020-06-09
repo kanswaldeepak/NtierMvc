@@ -133,6 +133,8 @@ function SaveDetailsForPO(e) {
                 PONo: $("#PONoPODetails").val(),
                 POSetno: $('#HiddenPOSetno').val(),
                 POdate: $("#PODatePODetails").val(),
+                PORevNo: $("#PODetailsPORevNo").val(),
+                ItemCategory: $("#PODetailsItemCategory").val(),
                 
                 SN: $(this).find('td:eq(0) span').text(),
                 RMdescription: $(this).find('td:eq(1) span').text(),

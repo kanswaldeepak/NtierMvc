@@ -29,6 +29,8 @@ namespace NtierMvc.Model.MRM
         public string FinalPrice { get; set; }
         public string TotalPRSetPrice { get; set; }
         public string POValidity { get; set; }
+        public string PORevNo { get; set; }
+        public string ItemCategory { get; set; }
         public string DeliveryDate { get; set; }
         public int UserId { get; set; }
         public string SignStatus { get; set; }
@@ -59,6 +61,8 @@ namespace NtierMvc.Model.MRM
         public string Discount { get; set; }
         public string FinalPrice { get; set; }
         public string WorkNo { get; set; }
+        public string PORevNo { get; set; }
+        public string ItemCategory { get; set; }
         public string DeliveryDate { get; set; }
         public string POValidity { get; set; }
         public string TotalPRSetPrice { get; set; }

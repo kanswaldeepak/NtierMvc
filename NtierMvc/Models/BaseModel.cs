@@ -1304,5 +1304,111 @@ namespace NtierMvc.Models
             return lstTable;
         }
 
+        public string NumberToWords(string rawnumber)
+        {
+            int inputNum = 0;
+            int dig1, dig2, dig3, level = 0, lasttwo, threeDigits;
+            string dollars, cents;
+            try
+            {
+                string[] Splits = new string[2];
+                Splits = rawnumber.Split('.');   //notice that it is ' and not "
+                inputNum = Convert.ToInt32(Splits[0]);
+                dollars = "";
+                cents = Splits[1];
+                if (cents.Length == 1)
+                {
+                    cents += "0";   // 12.5 is twelve and 50/100, not twelve and 5/100
+                }
+            }
+            catch
+            {
+                cents = "00";
+                inputNum = Convert.ToInt32(rawnumber);
+                dollars = "";
+            }
+
+            string x = "";
+
+            //they had zero for ones and tens but that gave ninety zero for 90
+            string[] ones = { "", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen" };
+            string[] tens = { "", "ten", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety" };
+            string[] thou = { "", "thousand", "million", "billion", "trillion", "quadrillion", "quintillion" };
+
+            bool isNegative = false;
+            if (inputNum < 0)
+            {
+                isNegative = true;
+                inputNum *= -1;
+            }
+            if (inputNum == 0)
+            {
+                return "zero and cents " + cents;
+            }
+
+            string s = inputNum.ToString();
+
+            while (s.Length > 0)
+            {
+                //Get the three rightmost characters
+                x = (s.Length < 3) ? s : s.Substring(s.Length - 3, 3);
+
+                // Separate the three digits
+                threeDigits = int.Parse(x);
+                lasttwo = threeDigits % 100;
+                dig1 = threeDigits / 100;
+                dig2 = lasttwo / 10;
+                dig3 = (threeDigits % 10);
+
+                // append a "thousand" where appropriate
+                if (level > 0 && dig1 + dig2 + dig3 > 0)
+                {
+                    dollars = thou[level] + " " + dollars;
+                    dollars = dollars.Trim();
+                }
+
+                // check that the last two digits is not a zero
+                if (lasttwo > 0)
+                {
+                    if (lasttwo < 20)
+                    {
+                        // if less than 20, use "ones" only
+                        dollars = ones[lasttwo] + " " + dollars;
+                    }
+                    else
+                    {
+                        // otherwise, use both "tens" and "ones" array
+                        dollars = tens[dig2] + " " + ones[dig3] + " " + dollars;
+                    }
+                    if (s.Length < 3)
+                    {
+                        if (isNegative) { dollars = "negative " + dollars; }
+                        //return dollars + " and " + cents + "/100";
+                        return dollars + " and cents " + cents;
+                    }
+                }
+
+                // if a hundreds part is there, translate it
+                if (dig1 > 0)
+                {
+                    dollars = ones[dig1] + " hundred " + dollars;
+                    s = (s.Length - 3) > 0 ? s.Substring(0, s.Length - 3) : "";
+                    level++;
+                }
+                else
+                {
+                    if (s.Length > 3)
+                    {
+                        s = s.Substring(0, s.Length - 3);
+                        level++;
+                    }
+                }
+            }
+
+            if (isNegative) { dollars = "negative " + dollars; }
+            return dollars + " and cents " + cents;
+
+        }
+
     }
 }

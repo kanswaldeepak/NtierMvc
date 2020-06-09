@@ -1367,7 +1367,7 @@ namespace NtierMvc.DataAccess.Pool
             parms.Add("@NoType", EndUse);
             parms.Add("@quoteTypeId", quoteType);
             var spName = ConfigurationManager.AppSettings["GetSONoQuoteNoList"];
-            return DataTableToList(_dbAccess.GetDataTable(spName, parms));
+            return DataTableToStringList(_dbAccess.GetDataTable(spName, parms));
         }
 
         public DataTable GetDataTableForDocument(string ListType, string TableName, string[] DataColumn, string[] DataParam, string[] RequiredColumn)

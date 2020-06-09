@@ -230,6 +230,7 @@ namespace NtierMvc.Areas.MRM.Controllers
                         newObj.Currency = item.Currency;
                         newObj.Priority = item.Priority;
                         newObj.EndUse = item.EndUse;
+                        newObj.QuoteType = item.QuoteType;
                         newObj.EndUseNo = item.EndUseNo;
                         newObj.CostCentre = item.CostCentre;
                         newObj.RMcat = item.RMcat;
@@ -637,6 +638,8 @@ namespace NtierMvc.Areas.MRM.Controllers
                         newObj.FinalPrice = item.FinalPrice;
                         newObj.WorkNo = item.WorkNo;
                         newObj.DeliveryDate = item.DeliveryDate;
+                        newObj.PORevNo = item.PORevNo;
+                        newObj.ItemCategory = item.ItemCategory;
                         newObj.POValidity = item.POValidity;
 
                         newObj.TotalPRSetPrice = item.TotalPRSetPrice;
@@ -709,8 +712,12 @@ namespace NtierMvc.Areas.MRM.Controllers
                 xlWorkbook.Worksheets[1].Cells.Replace("#POdate", resultData.Rows[0]["POdate"]);
                 xlWorkbook.Worksheets[1].Cells.Replace("#PRdate", resultData.Rows[0]["PRdate"]);
                 xlWorkbook.Worksheets[1].Cells.Replace("#WorkNo", resultData.Rows[0]["WorkNo"]);
+                xlWorkbook.Worksheets[1].Cells.Replace("#QuoteNo", resultData.Rows[0]["QuoteNo"]);
+                xlWorkbook.Worksheets[1].Cells.Replace("#QuoteDate", resultData.Rows[0]["QuoteDate"]);
                 xlWorkbook.Worksheets[1].Cells.Replace("#DeliveryDate", resultData.Rows[0]["DeliveryDate"]);
                 xlWorkbook.Worksheets[1].Cells.Replace("#POValidity", resultData.Rows[0]["POValidity"]);
+                xlWorkbook.Worksheets[1].Cells.Replace("#PORevNo", resultData.Rows[0]["PORevNo"]);
+                xlWorkbook.Worksheets[1].Cells.Replace("#ItemCategory", resultData.Rows[0]["ItemCategory"]);
                 xlWorkbook.Worksheets[1].Cells.Replace("#Curr", resultData.Rows[0]["Currency"]);
                 xlWorkbook.Worksheets[1].Cells.Replace("#EntryPerson", resultData.Rows[0]["EntryPerson"]);
                 xlWorkbook.Worksheets[1].Cells.Replace("#ApprovePerson1", resultData.Rows[0]["ApprovePerson1"]);
@@ -792,8 +799,8 @@ namespace NtierMvc.Areas.MRM.Controllers
                 ////////////////For Image////////////////////
 
 
-                Microsoft.Office.Interop.Excel.Range c1 = (Microsoft.Office.Interop.Excel.Range)ws.Cells[15, 1];
-                Microsoft.Office.Interop.Excel.Range c2 = (Microsoft.Office.Interop.Excel.Range)ws.Cells[(resultList.Rows.Count - 2) + 15, resultList.Columns.Count];
+                Microsoft.Office.Interop.Excel.Range c1 = (Microsoft.Office.Interop.Excel.Range)ws.Cells[11, 1];
+                Microsoft.Office.Interop.Excel.Range c2 = (Microsoft.Office.Interop.Excel.Range)ws.Cells[(resultList.Rows.Count - 2) + 11, resultList.Columns.Count];
                 Microsoft.Office.Interop.Excel.Range range = ws.get_Range(c1, c2);
                 range.Insert(Microsoft.Office.Interop.Excel.XlInsertShiftDirection.xlShiftDown);
 
@@ -810,10 +817,11 @@ namespace NtierMvc.Areas.MRM.Controllers
                 }
 
                 xlWorkbook.Worksheets[1].Cells.Replace("#TotalValue", CubMtr);
-                //xlWorkbook.Worksheets[1].Cells.Replace("#TotalValueWords", NtierMvc.Common.Helper.words(CubMtr, true));
+                string TotalWords = model.NumberToWords(CubMtr.ToString());
+                xlWorkbook.Worksheets[1].Cells.Replace("#ValueInWords", TotalWords);
 
-                Microsoft.Office.Interop.Excel.Range c3 = (Microsoft.Office.Interop.Excel.Range)ws.Cells[15, 1];
-                Microsoft.Office.Interop.Excel.Range c4 = (Microsoft.Office.Interop.Excel.Range)ws.Cells[(resultList.Rows.Count - 1) + 15, resultList.Columns.Count];
+                Microsoft.Office.Interop.Excel.Range c3 = (Microsoft.Office.Interop.Excel.Range)ws.Cells[11, 1];
+                Microsoft.Office.Interop.Excel.Range c4 = (Microsoft.Office.Interop.Excel.Range)ws.Cells[(resultList.Rows.Count - 1) + 11, resultList.Columns.Count];
                 Microsoft.Office.Interop.Excel.Range range1 = ws.get_Range(c3, c4);
                 range1.Value = arr;
 

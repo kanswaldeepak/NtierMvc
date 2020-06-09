@@ -192,9 +192,9 @@ function changeEndUseNo() {
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (data) {
-                $('#EndUseNoPRDetails').empty();
+                $('#EndUseNosPRDetails').empty();
                 $.each(data, function (i, item) {
-                    $("#EndUseNoPRDetails").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
+                    $("#EndUseNosPRDetails").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
                 })
 
             },
@@ -222,9 +222,9 @@ function changeQuoteType() {
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (data) {
-            $('#EndUseNoPRDetails').empty();
+            $('#EndUseNosPRDetails').empty();
             $.each(data, function (i, item) {
-                $("#EndUseNoPRDetails").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
+                $("#EndUseNosPRDetails").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
             })
         },
         error: function (x, e) {
@@ -407,7 +407,8 @@ function SavePRDetails(e) {
                 Currency: $("#CurrencyPRDetails").val(),
                 Priority: $("#PriorityPRDetails").val(),
                 EndUse: $("#EndUsePRDetails").val(),
-                EndUseNo: $("#EndUseNoPRDetails").val(),
+                QuoteType: $("#QuoteTypePRDetails").val(),
+                EndUseNo: $("#EndUseNosPRDetails").val(),
                 CostCentre: $("#CostCentrePRDetails").val(),
                 RMcat: $("#RMCatPRDetails").val(),
                 UOM: $("#UOMPRDetails").val(),

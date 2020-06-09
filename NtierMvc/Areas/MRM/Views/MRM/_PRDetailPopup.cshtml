@@ -249,11 +249,11 @@
                                 })
                         </div>
                         <div class="form-group ml-3">
-                            <label for="EndUseNoPRDetails">End Use No</label>
+                            <label for="EndUseNosPRDetails">End Use No</label>
                             @Html.DropDownListFor(m => m.EndUseNo, new SelectList(@ViewBag.ListEndUseNo, "DataStringValueField", "DataTextField", "Select"), new
                                 {
                                     @class = "form-control ml-2 clearField",
-                                    @id = "EndUseNoPRDetails",
+                                    @id = "EndUseNosPRDetails",
                                     @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
                                 })
                         </div>
@@ -917,10 +917,10 @@
 
             $('#ApproverSign').hide();
             $('#imgApproverSign').hide();
-            debugger;
+            let approvePerson1 = '@Model.ApprovePerson1';
             let updateStoreSign = '@Model.ApprovePerson1Sign';
 
-            if (updateStoreSign != '') {
+            if (approvePerson1!='' && updateStoreSign != '') {
                 $('#imgStoreEx').show();
                 $('#StoreEx').prop('checked', true);
             }
@@ -929,10 +929,10 @@
                 $('#StoreEx').prop('checked',false);
             }
 
-
             $('#HiddenSignStatusPRDetails').val('Approved1');
         }
         else if (DeptNameField == 'Purchase') {
+            debugger;
             $('#RequestedBy').hide();
             $('#imgRequestedBy').show();
             $('#imgStoreEx').show();
