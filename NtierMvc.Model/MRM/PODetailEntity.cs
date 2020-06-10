@@ -40,6 +40,14 @@ namespace NtierMvc.Model.MRM
         public string ApprovePerson1Sign { get; set; }
         public string ApprovePerson2Sign { get; set; }
         public string CompShortName { get; set; }
+        public string GeneralCondition { get; set; }
+        public string POQMSRequirement { get; set; }
+        public string POQuality { get; set; }
+        public string POPackForward { get; set; }
+        public string ModeOfPayment { get; set; }
+        public string PaymentTerms { get; set; }
+        public string ModeOfTransport { get; set; }
+        public string AnyOtherRequirements { get; set; }
     }
 
     public class PODetailEntityBulkSave
@@ -66,6 +74,14 @@ namespace NtierMvc.Model.MRM
         public string DeliveryDate { get; set; }
         public string POValidity { get; set; }
         public string TotalPRSetPrice { get; set; }
+        public string GeneralCondition { get; set; }
+        public string POQMSRequirement { get; set; }
+        public string POQuality { get; set; }
+        public string POPackForward { get; set; }
+        public string ModeOfPayment { get; set; }
+        public string PaymentTerms { get; set; }
+        public string ModeOfTransport { get; set; }
+        public string AnyOtherRequirements { get; set; }
     }
 
     public class PODetailEntityDetails

@@ -458,6 +458,17 @@
                             @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
                         })
                     </td>
+                    <td class="text-right">
+                        General Condition
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(m => m.GeneralCondition, new
+                        {
+                            @class = "form-control requiredValidation",
+                            @id = "PODetailsGeneralCondition",
+                            @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                        })
+                    </td>
                 </tr>
                 <tr>
                     <td class="text-right">
@@ -472,8 +483,30 @@
                            @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
                         })
                     </td>
+                    <td class="text-right">
+                        Quality Management System Requirements
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(m => m.POQMSRequirement, new
+                        {
+                           @class = "form-control ml-3 requiredValidation",
+                           @id = "PODetailsPOQMSRequirement",
+                           @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                        })
+                    </td>
                 </tr>
                 <tr>
+                    <td class="text-right">
+                        Quality
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(m => m.POQuality, new
+                        {
+                            @class = "form-control requiredValidation",
+                            @id = "PODetailsPOQuality",
+                            @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                        })
+                    </td>
                     <td class="text-right">
                         PO Validity
                     </td>
@@ -488,6 +521,17 @@
                 </tr>
                 <tr>
                     <td class="text-right">
+                        Packing & Forwarding
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(m => m.POPackForward, new
+                        {
+                            @class = "form-control requiredValidation",
+                            @id = "PODetailsPOPackForward",
+                            @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                        })
+                    </td>
+                    <td class="text-right">
                         PO Reverse No
                     </td>
                     <td>
@@ -501,6 +545,17 @@
                 </tr>
                 <tr>
                     <td class="text-right">
+                        Mode of Payment
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(m => m.ModeOfPayment, new
+                        {
+                            @class = "form-control requiredValidation",
+                            @id = "PODetailsModeOfPayment",
+                            @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                        })
+                    </td>
+                    <td class="text-right">
                         Item Category
                     </td>
                     <td>
@@ -508,6 +563,43 @@
                         {
                             @class = "form-control requiredValidation",
                             @id = "PODetailsItemCategory",
+                            @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                        })
+                    </td>
+                </tr>
+                <tr>
+                    <td class="text-right">
+                        Payment Terms
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(m => m.PaymentTerms, new
+                        {
+                            @class = "form-control requiredValidation",
+                            @id = "PODetailsPaymentTerms",
+                            @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                        })
+                    </td>
+                    <td class="text-right">
+                        Mode of Transport
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(m => m.ModeOfTransport, new
+                        {
+                            @class = "form-control requiredValidation",
+                            @id = "PODetailsModeOfTransport",
+                            @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                        })
+                    </td>
+                </tr>
+                <tr>
+                    <td class="text-right">
+                        Any Other Requirements
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(m => m.AnyOtherRequirements, new
+                        {
+                            @class = "form-control requiredValidation",
+                            @id = "PODetailsAnyOtherRequirements",
                             @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
                         })
                     </td>

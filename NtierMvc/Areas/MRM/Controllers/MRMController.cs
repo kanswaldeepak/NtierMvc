@@ -641,6 +641,14 @@ namespace NtierMvc.Areas.MRM.Controllers
                         newObj.PORevNo = item.PORevNo;
                         newObj.ItemCategory = item.ItemCategory;
                         newObj.POValidity = item.POValidity;
+                        newObj.GeneralCondition = item.GeneralCondition;
+                        newObj.POQMSRequirement = item.POQMSRequirement;
+                        newObj.POQuality = item.POQuality;
+                        newObj.POPackForward = item.POPackForward;
+                        newObj.ModeOfPayment = item.ModeOfPayment;
+                        newObj.PaymentTerms = item.PaymentTerms;
+                        newObj.ModeOfTransport = item.ModeOfTransport;
+                        newObj.AnyOtherRequirements = item.AnyOtherRequirements;
 
                         newObj.TotalPRSetPrice = item.TotalPRSetPrice;
 
@@ -727,6 +735,15 @@ namespace NtierMvc.Areas.MRM.Controllers
                 xlWorkbook.Worksheets[1].Cells.Replace("#Supp1ContactPerson", resultData.Rows[0]["Supp1ContactPerson"]);
                 xlWorkbook.Worksheets[1].Cells.Replace("#Supp1ContactNo", resultData.Rows[0]["Supp1ContactNo"]);
                 xlWorkbook.Worksheets[1].Cells.Replace("#Supp1Email", resultData.Rows[0]["Supp1Email"]);
+
+                xlWorkbook.Worksheets[1].Cells.Replace("#GeneralCondition", resultData.Rows[0]["GeneralCondition"]);
+                xlWorkbook.Worksheets[1].Cells.Replace("#POQMSRequirement", resultData.Rows[0]["POQMSRequirement"]);
+                xlWorkbook.Worksheets[1].Cells.Replace("#POQuality", resultData.Rows[0]["POQuality"]);
+                xlWorkbook.Worksheets[1].Cells.Replace("#POPackForward", resultData.Rows[0]["POPackForward"]);
+                xlWorkbook.Worksheets[1].Cells.Replace("#ModeOfPayment", resultData.Rows[0]["ModeOfPayment"]);
+                xlWorkbook.Worksheets[1].Cells.Replace("#PaymentTerms", resultData.Rows[0]["PaymentTerms"]);
+                xlWorkbook.Worksheets[1].Cells.Replace("#ModeOfTransport", resultData.Rows[0]["ModeOfTransport"]);
+                xlWorkbook.Worksheets[1].Cells.Replace("#AnyOtherRequirements", resultData.Rows[0]["AnyOtherRequirements"]);
 
                 ////////////////For Image////////////////////
                 #region Image
