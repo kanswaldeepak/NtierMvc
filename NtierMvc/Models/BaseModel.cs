@@ -1346,6 +1346,17 @@ namespace NtierMvc.Models
                 return "zero and cents " + cents;
             }
 
+            string cent = cents.ToString();
+            while (cent.Length > 0)
+            {
+                threeDigits = int.Parse(cent);
+                lasttwo = threeDigits % 100;
+                dig1 = threeDigits / 100;
+                dig2 = lasttwo / 10;
+                cents = tens[dig2] + " " + ones[dig1];
+                cent = cent.Substring(0, cent.Length - 2);
+            }
+
             string s = inputNum.ToString();
 
             while (s.Length > 0)
