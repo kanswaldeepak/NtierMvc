@@ -729,7 +729,7 @@ namespace NtierMvc.Areas.MRM.Controllers
                 xlWorkbook.Worksheets[1].Cells.Replace("#Curr", resultData.Rows[0]["Currency"]);
                 xlWorkbook.Worksheets[1].Cells.Replace("#EntryPerson", resultData.Rows[0]["EntryPerson"]);
                 xlWorkbook.Worksheets[1].Cells.Replace("#ApprovePerson1", resultData.Rows[0]["ApprovePerson1"]);
-                xlWorkbook.Worksheets[1].Cells.Replace("#ApprovePerson2", resultData.Rows[0]["ApprovePerson2"]);
+                xlWorkbook.Worksheets[1].Cells.Replace("#ApprovePerson2", resultData.Rows[0]["ApprovePerson2"]);                
                 xlWorkbook.Worksheets[1].Cells.Replace("#Supp1Name", resultData.Rows[0]["Supp1Name"]);
                 xlWorkbook.Worksheets[1].Cells.Replace("#Supp1Address", resultData.Rows[0]["Supp1Address"]);
                 xlWorkbook.Worksheets[1].Cells.Replace("#Supp1ContactPerson", resultData.Rows[0]["Supp1ContactPerson"]);
