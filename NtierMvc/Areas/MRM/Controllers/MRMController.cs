@@ -538,20 +538,10 @@ namespace NtierMvc.Areas.MRM.Controllers
         [HttpPost]
         public ActionResult PODetailsPopup(string actionType, string PRSetno)
         {
-            ViewBag.ListPRno = model.GetMasterTableStringList("PurchaseRequest", "PRSetNo", "PRNo", "", "", GeneralConstants.ListTypeD);
-            ViewBag.ListCurrency = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "Currency", "Property", GeneralConstants.ListTypeN);
-            ViewBag.ListPriority = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "Priority", "Property", GeneralConstants.ListTypeN);
-            ViewBag.ListRMcat = model.GetMasterTableStringList("Master.RMCategory", "CategoryName", "CategoryName", "", "", GeneralConstants.ListTypeN);
-            ViewBag.ListUOM = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "UOM", "Property", GeneralConstants.ListTypeN);
-            ViewBag.ListEndUse = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "EndUse", "Property", GeneralConstants.ListTypeN);
-            ViewBag.ListCostCache = model.GetMasterTableStringList("Master.Department", "Id", "DeptName", "", "", GeneralConstants.ListTypeN);
-            ViewBag.ListQuoteType = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "QuoteType", "Property", GeneralConstants.ListTypeN);
-            ViewBag.ListSupplyTerms = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "SupplyTerms", "Property", GeneralConstants.ListTypeN);
-            ViewBag.ListAcceptReject = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "AcceptReject", "Property", GeneralConstants.ListTypeN);
-            ViewBag.ListCommunicate = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "YesNo", "Property", GeneralConstants.ListTypeN);
-            ViewBag.ListEndUseNo = "";
-            ViewBag.ListPRRequestedOn = "";
+            var UserDetails = (UserEntity)Session["UserModel"];
 
+            ViewBag.ListPRno = model.GetMasterTableStringList("PurchaseRequest", "PRSetNo", "PRNo", UserDetails.DeptName, "DeptName", GeneralConstants.ListTypeD);
+          
             if (Session["CommonDetails"] != null)
             {
                 var CommonDetails = (CommonDetailsEntity)Session["CommonDetails"];
@@ -570,7 +560,6 @@ namespace NtierMvc.Areas.MRM.Controllers
                 ViewBag.Notation = CommonDetails.Notation;
             }
 
-            var UserDetails = (UserEntity)Session["UserModel"];
             ViewBag.DeptName = UserDetails.DeptName;
 
             PODetailEntity poObj = new PODetailEntity();
@@ -664,7 +653,6 @@ namespace NtierMvc.Areas.MRM.Controllers
                     string data = string.Empty;
                     if (!string.IsNullOrEmpty(result) && (result == GeneralConstants.Inserted || result == GeneralConstants.Updated))
                     {
-                        //Payment Gateway
                         data = GeneralConstants.SavedSuccess;
                     }
                     else
@@ -735,6 +723,7 @@ namespace NtierMvc.Areas.MRM.Controllers
                 xlWorkbook.Worksheets[1].Cells.Replace("#Supp1ContactPerson", resultData.Rows[0]["Supp1ContactPerson"]);
                 xlWorkbook.Worksheets[1].Cells.Replace("#Supp1ContactNo", resultData.Rows[0]["Supp1ContactNo"]);
                 xlWorkbook.Worksheets[1].Cells.Replace("#Supp1Email", resultData.Rows[0]["Supp1Email"]);
+                xlWorkbook.Worksheets[1].Cells.Replace("#website", resultData.Rows[0]["Website"]);
 
                 xlWorkbook.Worksheets[1].Cells.Replace("#GeneralCondition", resultData.Rows[0]["GeneralCondition"]);
                 xlWorkbook.Worksheets[1].Cells.Replace("#POQMSRequirement", resultData.Rows[0]["POQMSRequirement"]);
@@ -816,8 +805,8 @@ namespace NtierMvc.Areas.MRM.Controllers
                 ////////////////For Image////////////////////
 
 
-                Microsoft.Office.Interop.Excel.Range c1 = (Microsoft.Office.Interop.Excel.Range)ws.Cells[11, 1];
-                Microsoft.Office.Interop.Excel.Range c2 = (Microsoft.Office.Interop.Excel.Range)ws.Cells[(resultList.Rows.Count - 2) + 11, resultList.Columns.Count];
+                Microsoft.Office.Interop.Excel.Range c1 = (Microsoft.Office.Interop.Excel.Range)ws.Cells[12, 1];
+                Microsoft.Office.Interop.Excel.Range c2 = (Microsoft.Office.Interop.Excel.Range)ws.Cells[(resultList.Rows.Count - 2) + 12, resultList.Columns.Count];
                 Microsoft.Office.Interop.Excel.Range range = ws.get_Range(c1, c2);
                 range.Insert(Microsoft.Office.Interop.Excel.XlInsertShiftDirection.xlShiftDown);
 
@@ -837,8 +826,8 @@ namespace NtierMvc.Areas.MRM.Controllers
                 string TotalWords = model.NumberToWords(CubMtr.ToString());
                 xlWorkbook.Worksheets[1].Cells.Replace("#ValueInWords", TotalWords);
 
-                Microsoft.Office.Interop.Excel.Range c3 = (Microsoft.Office.Interop.Excel.Range)ws.Cells[11, 1];
-                Microsoft.Office.Interop.Excel.Range c4 = (Microsoft.Office.Interop.Excel.Range)ws.Cells[(resultList.Rows.Count - 1) + 11, resultList.Columns.Count];
+                Microsoft.Office.Interop.Excel.Range c3 = (Microsoft.Office.Interop.Excel.Range)ws.Cells[12, 1];
+                Microsoft.Office.Interop.Excel.Range c4 = (Microsoft.Office.Interop.Excel.Range)ws.Cells[(resultList.Rows.Count - 1) + 12, resultList.Columns.Count];
                 Microsoft.Office.Interop.Excel.Range range1 = ws.get_Range(c3, c4);
                 range1.Value = arr;
 

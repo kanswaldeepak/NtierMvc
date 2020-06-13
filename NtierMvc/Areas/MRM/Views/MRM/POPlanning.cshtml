@@ -76,24 +76,24 @@
             <table>
                 <thead class="tblhead">
                     <tr>
-                        <th>
+                        @*<th>
                             Action
                             <div class="c3">
                                 Action
                             </div>
-                        </th>
+                        </th>*@
                         <th>
                             PO No
                             <div class="c2">
                                 PO No
                             </div>
                         </th>
-                        <th>
+                        @*<th>
                             PRSet No
                             <div class="c2">
                                 PRSet No
                             </div>
-                        </th>
+                        </th>*@
                         <th>
                             PO Date
                             <div class="c2">
@@ -134,35 +134,13 @@
                 </thead>
                 <tbody>
                     <tr ng-repeat="L in POList">
-                        <td>
-                            @*<span ng-if="((L.SignStatus =='Entry' || L.SignStatus =='Approved1' || L.SignStatus =='Rejected1' || L.SignStatus =='Approved2' || L.SignStatus =='Rejected2') && L.DeptName != L.LogInDeptName && L.PRStatus != 'Approved')">
-                <button id="btnViewPRDetails" type="button" class="btn btn-outline-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="VIEW" ng-click="LoadPRDetailsViewPopup(L.PRSetno)">
-                    <i class="fa fa-eye"></i>
-                </button>
-            </span>
-            <span ng-if="L.SignStatus == 'Approved1' && L.DeptName == 'Stores' && L.LogInDeptName == 'Stores'">
-                <button id="btnEditPRDetails" type="button" class="btn btn-outline-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="EDIT" ng-click="LoadPRDetailsEditPopup(L.PRSetno)">
-                    <i class="fa fa-pen"></i>
-                </button>
-            </span>
-            <span ng-if="L.PRStatus == 'Approved' && L.LogInDeptName == 'Purchase' && L.PurchasePerson!=''">
-                <button id="btnViewPRDetails" type="button" class="btn btn-outline-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="VIEW" ng-click="LoadPRDetailsViewPopup(L.PRSetno)">
-                    <i class="fa fa-eye"></i>
-                </button>
-            </span>
-            <span ng-if="((L.SignStatus =='Entry' || L.SignStatus =='Rejected1' || L.SignStatus =='Rejected2') && (L.DeptName == L.LogInDeptName))">
-                <button id="btnEditPRDetails" type="button" class="btn btn-outline-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="EDIT" ng-click="LoadPRDetailsEditPopup(L.PRSetno)">
-                    <i class="fa fa-pen"></i>
-                </button>
-            </span>*@
-
-                        </td>
+                     
                         <td>
                             {{L.PONo}}
                         </td>
-                        <td>
+                        @*<td>
                             {{L.PRSetno}}
-                        </td>
+                        </td>*@
                         <td>
                             {{L.POdate}}
                         </td>
@@ -179,7 +157,9 @@
                             {{L.TotalPRSetPrice}}
                         </td>
                         <td>
-                            <button class="btn btn-link btn-sm" value="{{L.PRSetno}}" onclick="CreateDocumentForPODetail(this)">Download</button>
+                            <button class="btn btn-link btn-sm" value="{{L.PRSetno}}" onclick="CreateDocumentForPODetail(this)">
+                                <img src="~/Images/excel.png" height="30px" />
+                            </button>
                         </td>
                     </tr>
                 </tbody>

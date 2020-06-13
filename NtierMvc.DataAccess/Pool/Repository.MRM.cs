@@ -138,15 +138,23 @@ namespace NtierMvc.DataAccess.Pool
 
             if (!string.IsNullOrEmpty(entity.IdentityNo.ToString()) && entity.IdentityNo != 0)
             {
-                string spName = ConfigurationManager.AppSettings["DeleteRMPODetails"];
+                string spName = ConfigurationManager.AppSettings["FindPRSetNoDetails"];
                 var parms = new Dictionary<string, object>();
                 parms.Add("@PRSetno", entity.IdentityNo);
                 _dbAccess.ExecuteNonQuery(spName, parms, "@o_MsgCode", out msgCode);
             }
 
-            msgCode = _dbAccess.BulkUpload(entity.DataRecordTable, entity.DestinationTable);
+            if (msgCode == "Duplicate")
+            {
+                msgCode = "Duplicate Record Found";
+                return msgCode;
+            }
+            else
+            {
+                msgCode = _dbAccess.BulkUpload(entity.DataRecordTable, entity.DestinationTable);
+                return msgCode;
+            }
 
-            return msgCode;
         }
 
         public DataSet GetPODetailsList(int pageIndex, int pageSize)

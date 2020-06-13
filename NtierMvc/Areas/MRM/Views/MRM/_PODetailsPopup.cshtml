@@ -477,19 +477,19 @@
                     <td>
                         @Html.TextBoxFor(m => m.DeliveryDate, new
                         {
-                           @class = "form-control ml-3 requiredValidation CalenderDate",
+                           @class = "form-control requiredValidation CalenderDate",
                            @id = "PODetailsDeliveryDate",
                            @readonly = "readonly",
                            @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
                         })
                     </td>
                     <td class="text-right">
-                        Quality Management System Requirements
+                        QMS Requirements
                     </td>
                     <td>
                         @Html.TextBoxFor(m => m.POQMSRequirement, new
                         {
-                           @class = "form-control ml-3 requiredValidation",
+                           @class = "form-control requiredValidation",
                            @id = "PODetailsPOQMSRequirement",
                            @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
                         })
@@ -532,7 +532,7 @@
                         })
                     </td>
                     <td class="text-right">
-                        PO Reverse No
+                        PO Revise No
                     </td>
                     <td>
                         @Html.TextBoxFor(m => m.PORevNo, new

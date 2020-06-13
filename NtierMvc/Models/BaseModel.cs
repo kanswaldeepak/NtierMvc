@@ -1331,9 +1331,9 @@ namespace NtierMvc.Models
             string x = "";
 
             //they had zero for ones and tens but that gave ninety zero for 90
-            string[] ones = { "", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen" };
-            string[] tens = { "", "ten", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety" };
-            string[] thou = { "", "thousand", "million", "billion", "trillion", "quadrillion", "quintillion" };
+            string[] ones = { "", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen" };
+            string[] tens = { "", "Ten", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety" };
+            string[] thou = { "", "Thousand", "Million", "Billion", "Trillion", "Quadrillion", "Quintillion" };
 
             bool isNegative = false;
             if (inputNum < 0)
@@ -1343,7 +1343,7 @@ namespace NtierMvc.Models
             }
             if (inputNum == 0)
             {
-                return "zero and cents " + cents;
+                return "Zero and Cents " + cents;
             }
 
             string cent = cents.ToString();
@@ -1393,16 +1393,16 @@ namespace NtierMvc.Models
                     }
                     if (s.Length < 3)
                     {
-                        if (isNegative) { dollars = "negative " + dollars; }
+                        if (isNegative) { dollars = "Negative " + dollars; }
                         //return dollars + " and " + cents + "/100";
-                        return dollars + " and cents " + cents;
+                        return dollars + " and Cents " + cents;
                     }
                 }
 
                 // if a hundreds part is there, translate it
                 if (dig1 > 0)
                 {
-                    dollars = ones[dig1] + " hundred " + dollars;
+                    dollars = ones[dig1] + " Hundred " + dollars;
                     s = (s.Length - 3) > 0 ? s.Substring(0, s.Length - 3) : "";
                     level++;
                 }
@@ -1416,8 +1416,8 @@ namespace NtierMvc.Models
                 }
             }
 
-            if (isNegative) { dollars = "negative " + dollars; }
-            return dollars + " and cents " + cents;
+            if (isNegative) { dollars = "Negative " + dollars; }
+            return dollars + " and Cents " + cents;
 
         }
 
