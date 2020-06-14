@@ -13,6 +13,15 @@ namespace NtierMvc.Controllers
     [SessionExpire]
     public class GateEntryController : Controller
     {
+        private GateEntryManager objManager;
+        BaseModel model;
+
+        public GateEntryController()
+        {
+            model = new BaseModel();
+            objManager = new GateEntryManager();
+        }
+
         public ActionResult Index()
         {
             return View();
@@ -21,7 +30,6 @@ namespace NtierMvc.Controllers
         [HttpGet]
         public ActionResult GateEntryMaster()
         {
-            BaseModel model = new BaseModel();
             ViewBag.ListType = model.GetMasterTableStringList("Master.Taxonomy", "DropDownId", "DropDownValue", "QuoteType", "Property", GeneralConstants.ListTypeD);
             ViewBag.ListVendorNature = "";
             ViewBag.ListVendorName = "";
@@ -42,8 +50,7 @@ namespace NtierMvc.Controllers
         [HttpPost]
         public ActionResult InboundPopUp(string actionType)
         {
-            BaseModel model = new BaseModel();
-            ViewBag.ListType = model.GetMasterTableStringList("Master.Taxonomy", "DropDownId", "DropDownValue", "QuoteType", "Property", GeneralConstants.ListTypeD);
+            ViewBag.ListPONo = model.GetMasterTableStringList("RMPO", "POSetno", "PONo", "", "", GeneralConstants.ListTypeD);
             ViewBag.ListVendorNature = model.GetMasterTableStringList("Master.Vendor", "Id", "VendorNature", "", "", GeneralConstants.ListTypeN);
             ViewBag.ListVendorId = model.GetMasterTableStringList("Clientele_Master", "Id", "VendorId", "", "", GeneralConstants.ListTypeN);
             ViewBag.ListEndUse = model.GetMasterTableStringList("Master.Taxonomy", "DropDownId", "DropDownValue", "EndUse", "Property", GeneralConstants.ListTypeN);
@@ -85,8 +92,6 @@ namespace NtierMvc.Controllers
         [HttpPost]
         public ActionResult SaveGateEntry(GateEntryEntity objGE)
         {
-            BaseModel model = new BaseModel();
-            GateEntryManager objManager = new GateEntryManager();
             ViewBag.ListVendorNature = model.GetMasterTableStringList("Master.Vendor", "Id", "VendorNature", "", "", GeneralConstants.ListTypeN);
 
 
@@ -157,7 +162,6 @@ namespace NtierMvc.Controllers
             SearchCurrency = SearchCurrency == "-1" ? string.Empty : SearchCurrency;
             SearchApprovalStatus = SearchApprovalStatus == "-1" ? string.Empty : SearchApprovalStatus;
 
-            GateEntryManager objManager = new GateEntryManager();
             GateEntryEntityDetails vbmDetail = new GateEntryEntityDetails();
             vbmDetail = objManager.GetGateEntryList(Convert.ToInt32(pageIndex), Convert.ToInt32(pageSize), SearchType, SearchVendorNature, SearchVendorName, SearchBillNo, SearchBillDate, SearchItemDescription, SearchCurrency, SearchApprovalStatus);
             return new JsonResult { Data = vbmDetail, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
@@ -180,6 +184,13 @@ namespace NtierMvc.Controllers
 
         }
 
+        public JsonResult GetDetailsForGateEntry(string POSetno)
+        {
+            List<GateEntryEntity> poObjList = new List<GateEntryEntity>();
+            poObjList = objManager.GetPOTableDetailsForGateEntry(POSetno);
+
+            return new JsonResult { Data = poObjList, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+        }
 
     }
 }

@@ -1,6 +1,8 @@
 ﻿@model NtierMvc.Model.GateEntryEntity
 @{
-    ViewBag.Title = "Inbound";
+                /**/
+
+                ViewBag.Title = "Inbound";
 }
 
 <div class="row mt-3">
@@ -24,7 +26,7 @@
                            new
                            {
                                @class = "form-control",
-                               ng_model= "SearchType",
+                               ng_model = "SearchType",
                                @id = "TypeList",
                                @onchange = "getDdlDetailsForList('TypeList')"
                            })
@@ -34,7 +36,7 @@
                                                    new
                                                    {
                                                        @class = "form-control",
-                                                       ng_model= "SearchVendorNature",
+                                                       ng_model = "SearchVendorNature",
                                                        @id = "VendorNatureList",
                                                        @onchange = "getDdlDetailsForList('VendorNatureList')"
                                                    })
@@ -44,7 +46,7 @@
                            new
                            {
                                @class = "form-control",
-                               ng_model= "SearchVendorName",
+                               ng_model = "SearchVendorName",
                                @id = "VendorNameList",
                                @onchange = "getDdlDetailsForList('VendorNameList')"
                            })
@@ -54,7 +56,7 @@
                                                    new
                                                    {
                                                        @class = "form-control",
-                                                       ng_model= "SearchFunctionArea",
+                                                       ng_model = "SearchFunctionArea",
                                                        @id = "FunctionAreaList"
                                                    })
                     </td>
@@ -63,8 +65,8 @@
                            new
                            {
                                @class = "form-control",
-                               ng_model= "SearchFinancialYear",
-                               @id= "FinancialYearList"
+                               ng_model = "SearchFinancialYear",
+                               @id = "FinancialYearList"
                            })
                     </td>
                     <td>
@@ -72,7 +74,7 @@
                            new
                            {
                                @class = "form-control",
-                               ng_model= "SearchApprovalStatus",
+                               ng_model = "SearchApprovalStatus",
                                @id = "ApprovalStatusList"
                            })
                     </td>
@@ -268,6 +270,4 @@
     });
 
 </script>
-
-
-
+<script src="~/Scripts/CustomJS/Inbound.js"></script>

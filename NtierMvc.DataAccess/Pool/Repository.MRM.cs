@@ -154,7 +154,6 @@ namespace NtierMvc.DataAccess.Pool
                 msgCode = _dbAccess.BulkUpload(entity.DataRecordTable, entity.DestinationTable);
                 return msgCode;
             }
-
         }
 
         public DataSet GetPODetailsList(int pageIndex, int pageSize)

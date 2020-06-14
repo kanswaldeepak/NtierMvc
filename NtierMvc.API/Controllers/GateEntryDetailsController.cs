@@ -35,6 +35,13 @@ namespace NtierMvc.API.Controllers.Application
             return Ok(_repository.GetGateEntryList(Convert.ToInt32(pageIndex), Convert.ToInt32(pageSize), SearchType, SearchVendorNature, SearchVendorName, SearchBillNo, SearchBillDate, SearchItemDescription, SearchCurrency, SearchApprovalStatus));
         }
 
+        [HttpGet]
+        [Route("api/GateEntryDetails/GetPOTableDetailsForGateEntry")]
+        public IHttpActionResult GetPOTableDetailsForGateEntry(string POSetno)
+        {
+            return Ok(_repository.GetPOTableDetailsForGateEntry(POSetno));
+        }
+
 
     }
 }

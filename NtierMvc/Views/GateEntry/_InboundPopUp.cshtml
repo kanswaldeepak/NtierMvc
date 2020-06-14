@@ -9,264 +9,214 @@
         <div class="col-md-12">
             @Html.HiddenFor(m => m.Id)
             @*<div class="row mb-2">
-                <div class="col-md-12" style="background-color: lightblue;">
-                    <h4 class="control-label mt-2" style="margin-left:10px; font-size: 22px">Material Entry</h4>
-                </div>
-            </div>*@
+                    <div class="col-md-12" style="background-color: lightblue;">
+                        <h4 class="control-label mt-2" style="margin-left:10px; font-size: 22px">Material Entry</h4>
+                    </div>
+                </div>*@
             <div class="row">
                 <div class="col-md-2">
                     <div class="form-group">
                         <label class="control-label">
-                            Type <span class="required">*</span>
+                            PO No 
                         </label>
-                        @Html.DropDownListFor(m => m.Type, new SelectList(@ViewBag.ListType, "DataStringValueField", "DataTextField", Model.Type),
+                        @Html.DropDownListFor(m => m.VendorPONO, new SelectList(@ViewBag.ListPONo, "DataStringValueField", "DataTextField", Model.Type),
                            new
                            {
-                               @class = "form-control requiredValidation clearField applyDisabled",
-                               @id = "Type",
+                               @class = "form-control requiredValidation clearField",
+                               @id = "GEVendorPONO",
                                @data_inneraction = "validationCall",
                                @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
-                               @onchange = "changeEndUseNo()"
+                               @onchange = "GetDetailForGateEntry()"
                            })
-                        <span class="HideValidMsg"> Select End Use</span>
-                    </div>
-                </div>
-                <div class="col-md-2">
-                    <div class="form-group">
-                        <label class="control-label ">
-                            Vendor Nature <span class="required">*</span>
-                        </label>
-                        @Html.DropDownListFor(m => m.VendorNatureId, new SelectList(ViewBag.ListVendorNature, "DataStringValueField", "DataTextField", Model.VendorNatureId), new
-                            {
-                                @class = "form-control requiredValidation clearField applyDisabled",
-                                @id = "VendorNatureId",
-                                @data_inneraction = "validationCall",
-                                @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
-                                @onchange = "getVendorIDs()"
-                            })
-                        <span class="HideValidMsg"> Please Select Vendor Nature</span>
-                    </div>
-                </div>
-                <div class="col-md-2">
-                    <div class="form-group">
-                        <label class="control-label ">
-                            Vendor Id <span class="required">*</span>
-                        </label>
-                        @Html.DropDownListFor(m => m.VendorId, new SelectList(ViewBag.ListVendorId, "DataStringValueField", "DataTextField", Model.VendorId), new
-                   {
-                       @class = "form-control requiredValidation clearField applyDisabled",
-                       @id = "VendorId",
-                       @data_inneraction = "validationCall",
-                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
-                       @onchange = "getVendorDetails()"
-                   })
-                        <span class="HideValidMsg"> Please Select Vendor Id</span>
+                        <span class="HideValidMsg">Select PO No</span>
                     </div>
                 </div>
                 <div class="col-md-2">
                     <div class="form-group">
                         <label class="control-label">
-                            Vendor Name <span class="required">*</span>
+                            PO Date 
                         </label>
-                        @Html.TextBoxFor(m => m.VendorName, new
+                        @Html.TextBoxFor(m => m.POdate, new
+                       {
+                           @class = "form-control ml-3 requiredValidation applyDisabled",
+                           @id = "GEPODate",
+                           @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                       })
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label ">
+                            Work Instruction 
+                        </label>
+                        @Html.TextBoxFor(m => m.WorkNo, new
+                       {
+                           @class = "form-control ml-3 requiredValidation applyDisabled",
+                           @id = "GEWorkNo",
+                           @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                       })
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label ">
+                            General Condition 
+                        </label>
+                        @Html.TextBoxFor(m => m.GeneralCondition, new
+                       {
+                           @class = "form-control ml-3 requiredValidation applyDisabled",
+                           @id = "GEGeneralCondition",
+                           @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                       })
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label">
+                            Delivery Date 
+                        </label>
+                        @Html.TextBoxFor(m => m.DeliveryDate, new
                    {
                        @class = "form-control requiredValidation clearField applyDisabled",
-                       @id= "VendorName",
+                       @id = "GEDeliveryDate",
                        @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
-                       @readonly = "true",
-                       @placeholder = "Select VendorId"
+                       @readonly = "true"
                    })
-                        <span class="HideValidMsg">Please Enter VendorId</span>
                     </div>
                 </div>
                 <div class="col-md-2">
                     <div class="form-group text-left">
                         <label class="control-label ">
-                            City <span class="required">*</span>
+                            QMS Requirements 
                         </label>
-                        @Html.TextBoxFor(m => m.City, new
+                        @Html.TextBoxFor(m => m.QMSRequirement, new
                    {
                        @class = "form-control requiredValidation clearField applyDisabled",
-                       @id= "City",
+                       @id = "GEQMSRequirement",
                        @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
-                       @readonly = "true",
-                       @placeholder = "Select VendorId"
+                       @readonly = "true"
                    })
-                        <span class="HideValidMsg">Please Enter City</span>
                     </div>
                 </div>
                 <div class="col-md-2">
                     <div class="form-group">
                         <label class="control-label">
-                            End Use <span class="required">*</span>
+                            Quality 
                         </label>
-                        @Html.DropDownListFor(m => m.EndUse, new SelectList(@ViewBag.ListEndUse, "DataStringValueField", "DataTextField", Model.EndUse),
-                           new
-                           {
-                               @class = "form-control requiredValidation clearField applyDisabled",
-                               @id = "EndUse",
-                               @data_inneraction = "validationCall",
-                               @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
-                               @onchange = "changeEndUseNo()"
-                           })
-                        <span class="HideValidMsg">Select End Use</span>
-                    </div>
-                </div>
-                <div class="col-md-2">
-                    <div class="form-group">
-                        <label class="control-label">
-                            End Use No <span class="required">*</span>
-                        </label>
-                        @Html.DropDownListFor(m => m.EndUseNo, new SelectList(@ViewBag.ListEndUseNo, "DataStringValueField", "DataTextField", Model.EndUseNo),
-                           new
-                           {
-                               @class = "form-control requiredValidation clearField applyDisabled",
-                               @id = "EndUseNo",
-                               @readonly = "true"
-                           })
-                        <span class="HideValidMsg"> Select End Use No</span>
-                    </div>
-                </div>
-                <div class="col-md-2">
-                    <div class="form-group">
-                        <label class="control-label">
-                            Functional Area <span class="required">*</span>
-                        </label>
-                        @Html.DropDownListFor(m => m.FunctionalAreaId, new SelectList(@ViewBag.ListDepartment, "DataStringValueField", "DataTextField", Model.FunctionalAreaId),
-                           new
-                           {
-                               @class = "form-control requiredValidation clearField applyDisabled",
-                               @id = "FunctionalAreaId",
-                               @data_inneraction = "validationCall",
-                               @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
-                           })
-                        <span class="HideValidMsg"> Select Functional Area</span>
-                    </div>
-                </div>
-                <div class="col-md-2">
-                    <div class="form-group">
-                        <label class="control-label">
-                            VendorPO NO <span class="required">*</span>
-                        </label>
-                        @Html.TextBoxFor(m => m.VendorPONO, new
+                        @Html.TextBoxFor(m => m.Quality, new
                    {
                        @class = "form-control requiredValidation clearField applyDisabled",
-                       @id = "VendorPONO",
-                       @placeholder = "Enter VendorPONO"
-                   })
-                        <span class="HideValidMsg"> Select Vendor PONO</span>
-                    </div>
-                </div>
-                <div class="col-md-2">
-                    <div class="form-group">
-                        <label class="control-label">
-                            VendorPO Date <span class="required">*</span>
-                        </label>
-                        @Html.TextBoxFor(m => m.VendorPODate, new
-                   {
-                       @class = "form-control requiredValidation clearField applyDisabled NoEndDate",
-                       autocomplete = "off",
-                       @id = "VendorPODate",
-                       @placeholder = "dd/MM/yyyy",
-                       @style = "disabled :disabled",
-                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
-                   })
-                        <span class="HideValidMsg"> Select VendorPO Date</span>
-                    </div>
-                </div>
-                <div class="col-md-2">
-                    <div class="form-group">
-                        <label class="control-label">
-                            Supply Type <span class="required">*</span>
-                        </label>
-                        @Html.DropDownListFor(m => m.SupplyType, new SelectList(@ViewBag.ListSupplyType, "DataStringValueField", "DataTextField", Model.SupplyType),
-                           new
-                           {
-                               @class = "form-control requiredValidation clearField applyDisabled",
-                               @id = "SupplyType"
-                           })
-                        <span class="HideValidMsg"> Select SupplyType</span>
-                    </div>
-                </div>
-                <div class="col-md-2">
-                    <div class="form-group">
-                        <label class="control-label">
-                            Bill No <span class="required">*</span>
-                        </label>
-                        @Html.TextBoxFor(m => m.BillNo, new
-                   {
-                       @class = "form-control requiredValidation clearField applyDisabled",
-                       @id = "BillNo",
-                       @placeholder = "Enter Bill No",
-                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
-                   })
-                        <span class="HideValidMsg">Enter Bill No</span>
-                    </div>
-                </div>
-                <div class="col-md-2">
-                    <div class="form-group">
-                        <label class="control-label">
-                            Bill Date <span class="required">*</span>
-                        </label>
-                        @Html.TextBoxFor(m => m.BillDate, new
-                   {
-                       @class = "form-control requiredValidation clearField applyDisabled NoEndDate",
-                       autocomplete = "off",
-                       @id = "BillDate",
-                       @placeholder = "dd/MM/yyyy",
-                       @style = "disabled :disabled",
-                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
-                   })
-                        <span class="HideValidMsg"> Select Bill Date</span>
-                    </div>
-                </div>
-                <div class="col-md-2">
-                    <div class="form-group">
-                        <label class="control-label">
-                            Currency <span class="required">*</span>
-                        </label>
-                        @Html.DropDownListFor(m => m.Currency, new SelectList(ViewBag.ListCurrency, "DataStringValueField", "DataTextField", Model.Currency), new
-                           {
-                               @class = "form-control requiredValidation clearField applyDisabled",
-                               @id = "Currency",
-                               @data_inneraction = "validationCall",
-                               @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
-                           })
-                        <span class="HideValidMsg"> Select Currency</span>
-                    </div>
-                </div>
-                <div class="col-md-2">
-                    <div class="form-group">
-                        <label class="control-label">
-                            Bill Amount <span class="required">*</span>
-                        </label>
-                        @Html.TextBoxFor(m => m.BillAmount, new
-                   {
-                       @class = "form-control requiredValidation clearField applyDisabled requiredValidation",
-                       @id = "BillAmount",
-                       @placeholder = "Enter Bill Amount",
+                       @id = "GEQuality",
                        @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
-                           @onkeypress = "return AllowNumbers(event); "
+                       @readonly = "true"
                    })
-                        <span class="HideValidMsg">Enter Bill Amount</span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label">
+                            PO Validity 
+                        </label>
+                        @Html.TextBoxFor(m => m.POValidity, new
+                   {
+                       @class = "form-control requiredValidation clearField applyDisabled",
+                       @id = "GEPOValidity",
+                       @readonly = "true"
+                   })
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label">
+                            Packaging &amp; Forwarding 
+                        </label>
+                        @Html.TextBoxFor(m => m.PackForward, new
+                   {
+                       @class = "form-control requiredValidation clearField applyDisabled",
+                       @id = "GEPackForward",
+                       @readonly = "true"
+                   })
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label">
+                            PO Revise No 
+                        </label>
+                        @Html.TextBoxFor(m => m.PORevNo, new
+                   {
+                       @class = "form-control requiredValidation clearField applyDisabled",
+                       @id = "GEPORevNo",
+                       @readonly = "true"
+                   })
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label">
+                            Mode Of Payment 
+                        </label>
+                        @Html.TextBoxFor(m => m.ModeOfPayment, new
+                   {
+                       @class = "form-control requiredValidation clearField applyDisabled",
+                       @id = "GEModeOfPayment",
+                       @readonly = "true"
+                   })
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label">
+                            Item Category 
+                        </label>
+                        @Html.TextBoxFor(m => m.ItemCategory, new
+                    {
+                        @class = "form-control requiredValidation clearField applyDisabled",
+                        @id = "GEItemCategory",
+                        @readonly = "true"
+                    })
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label">
+                            Payment Terms 
+                        </label>
+                        @Html.TextBoxFor(m => m.PaymentTerms, new
+                   {
+                       @class = "form-control requiredValidation clearField applyDisabled",
+                       @id = "GEPaymentTerms",
+                        @readonly = "true"
+                   })
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label">
+                            Mode Of Transport 
+                        </label>
+                        @Html.TextBoxFor(m => m.ModeOfTransport, new
+                   {
+                       @class = "form-control requiredValidation clearField applyDisabled",
+                       @id = "GEModeOfTransport",
+                        @readonly = "true"
+                   })
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label">
+                            Any Other Requirements 
+                        </label>
+                        @Html.TextBoxFor(m => m.AnyOtherRequirements, new
+                   {
+                       @class = "form-control requiredValidation clearField applyDisabled",
+                       @id = "GEAnyOtherRequirements",
+                        @readonly = "true"
+                   })
                     </div>
                 </div>
 
-                @*<div class="col-md-2">
-                <div class="form-group">
-                    <label class="control-label">
-                        Unit Rate <span class="required">*</span>
-                    </label>
-                    @Html.TextBoxFor(m => m.UnitRate, new
-               {
-                   @class = "form-control requiredValidation clearField applyDisabled",
-                   @id = "UnitRate",
-                   @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
-                   @onkeypress = "return AllowNumbers(event); ",
-               })
-                    <span class="HideValidMsg"> Select Unit Rate</span>
-                </div>
-            </div>*@
                 <div class="col-md-2">
                     <div class="form-group">
                         <label class="control-label">
@@ -358,18 +308,303 @@
                     </div>
                 </div>
                 <div class="col-md-12">
-                    <table class="table table-bordered table-sm table-striped text-center">
-                        <thead>
-                            <tr>
-                                <td>SN</td>
-                                <td>Qty</td>
-                                <td>ItemDesc</td>
-                            </tr>
-                        </thead>
-                        <tbody></tbody>
-                    </table>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-inline pull-right">
+                                <div class="form-group mt-4">
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" class="custom-control-input RadioList" id="RadioListRM" name="multiRL" value="RM" onchange="RadioListChange()">
+                                        <label class="custom-control-label h5" for="RadioListRM">RM</label>
+                                    </div>
+
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" class="custom-control-input RadioList" id="RadioListBOI" name="multiRL" value="BOI" onchange="RadioListChange()">
+                                        <label class="custom-control-label h5" for="RadioListBOI">Bought Out Items</label>
+                                    </div>
+
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" class="custom-control-input RadioList" id="RadioListJW" name="multiRL" value="JW" onchange="RadioListChange()">
+                                        <label class="custom-control-label h5" for="RadioListJW">Job Work</label>
+                                    </div>
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" class="custom-control-input RadioList" id="RadioListGI" name="multiRL" value="GI" onchange="RadioListChange()">
+                                        <label class="custom-control-label h5" for="RadioListGI">General Items</label>
+                                    </div>
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" class="custom-control-input RadioList" id="RadioListC" name="multiRL" value="C" onchange="RadioListChange()">
+                                        <label class="custom-control-label h5" for="RadioListC">Consumables</label>
+                                    </div>
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" class="custom-control-input RadioList" id="RadioListCG" name="multiRL" value="CG" onchange="RadioListChange()">
+                                        <label class="custom-control-label h5" for="RadioListCG">Capital Goods</label>
+                                    </div>
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" class="custom-control-input RadioList" id="RadioListO" name="multiRL" value="O" onchange="RadioListChange()">
+                                        <label class="custom-control-label h5" for="RadioListO">Others</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <hr style="width:100%" />
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+
+                            <table class="table table-bordered tableRadio" id="tableRM">
+                                <thead>
+                                    <tr>
+                                        <td>
+                                            SN
+                                        </td>
+                                        <td>
+                                            RM Description
+                                        </td>
+                                        <td>
+                                            RM Grade
+                                        </td>
+                                        <td>
+                                            RM Hardness
+                                        </td>
+                                        <td>
+                                            PSL Level
+                                        </td>
+                                        <td>
+                                            OD
+                                        </td>
+                                        <td>
+                                            WT
+                                        </td>
+                                        <td>
+                                            Len
+                                        </td>
+                                        <td>
+                                            Qty Required (Nos)
+                                        </td>
+                                        <td>
+                                            Qty in Stock (Nos)
+                                        </td>
+                                        <td>
+                                            Purchase Qty (Nos)
+                                        </td>
+                                        <td>
+                                            Unit Price
+                                        </td>
+                                        <td>
+                                            Total Price
+                                        </td>
+                                        <td>
+                                            Discount
+                                        </td>
+                                        <td>
+                                            Final Price
+                                        </td>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                            <table class="table tableRadio" id="tableBOI">
+                                <thead>
+                                    <tr>
+                                        <td>
+                                            SN
+                                        </td>
+                                        @*<td>
+                                                RM Code
+                                            </td>*@
+                                        <td>
+                                            RM Description
+                                        </td>
+                                        <td>
+                                            RM Grade
+                                        </td>
+                                        <td>
+                                            PS Level
+                                        </td>
+                                        <td>
+                                            Qty Required (Nos)
+                                        </td>
+                                        <td>
+                                            Qty in Stock (Nos)
+                                        </td>
+                                        <td>
+                                            Purchase Qty (Nos)
+                                        </td>
+                                        <td>
+                                            Unit Price
+                                        </td>
+                                        <td>
+                                            Total Price
+                                        </td>
+                                        <td>
+                                            HSN
+                                        </td>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                            <table class="table tableRadio" id="tableJW">
+                                <thead>
+                                    <tr>
+                                        <td>
+                                            SN
+                                        </td>
+                                        @*<td>
+                                                RM Code
+                                            </td>*@
+                                        <td>
+                                            Item Description
+                                        </td>
+                                        <td>
+                                            RM Grade
+                                        </td>
+                                        <td>
+                                            JW Qty (Nos)
+                                        </td>
+                                        <td>
+                                            Unit Price
+                                        </td>
+                                        <td>
+                                            Total Price
+                                        </td>
+                                        <td>
+                                            WIP No
+                                        </td>
+                                        <td>
+                                            DRG No
+                                        </td>
+                                        <td>
+                                            Opn Code
+                                        </td>
+                                        <td>
+                                            Process Name
+                                        </td>
+                                        <td>
+                                            EDR
+                                        </td>
+                                        <td>
+                                            OPN Time
+                                        </td>
+                                        <td>
+                                            HSN
+                                        </td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <table class="tableRadio" id="tableGI" style="width: 70%;">
+                                <thead>
+                                    <tr>
+                                        <td style="width: 6%;">
+                                            SN
+                                        </td>
+                                        <td style="width: 36%;">
+                                            Item Description
+                                        </td>
+                                        <td style="width: 8%;">
+                                            Qty (Nos)
+                                        </td>
+                                        <td style="width: 10%;">
+                                            Unit Price
+                                        </td>
+                                        <td style="width: 11%;">
+                                            Total Price
+                                        </td>
+                                        @*<td width="16%">
+                                                Required Dly. Date
+                                            </td>*@
+                                        <td style="width: 5%;">
+                                            HSN
+                                        </td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <table class="tableRadio" id="tableC" style="width: 70%;">
+                                <thead>
+                                    <tr>
+                                        <td style="width: 6%;">
+                                            SN
+                                        </td>
+                                        <td style="width: 36%;">
+                                            Item Description
+                                        </td>
+                                        <td style="width: 8%;">
+                                            Qty (Nos)
+                                        </td>
+                                        <td style="width: 10%;">
+                                            Unit Price
+                                        </td>
+                                        <td style="width: 11%;">
+                                            Total Price
+                                        </td>
+                                        @*<td width="16%">
+                                                Required Dly. Date
+                                            </td>*@
+                                        <td style="width: 5%;">
+                                            HSN
+                                        </td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <table class="tableRadio" id="tableO" style="width: 70%;">
+                                <thead>
+                                    <tr>
+                                        <td style="width: 6%;">
+                                            SN
+                                        </td>
+                                        <td style="width: 36%;">
+                                            Item Description
+                                        </td>
+                                        <td style="width: 8%;">
+                                            Qty (Nos)
+                                        </td>
+                                        <td style="width: 10%;">
+                                            Unit Price
+                                        </td>
+                                        <td style="width: 11%;">
+                                            Total Price
+                                        </td>
+                                        @*<td width="16%">
+                                                Required Dly. Date
+                                            </td>*@
+                                        <td style="width: 5%;">
+                                            HSN
+                                        </td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+                        <hr style="width:100%" />
+                    </div>
+
                 </div>
-            </div>            
+            </div>
             <div class="row">
                 <div class="col-md-12 pt-4 text-center">
                     <button style="font-size:18px" type="button" class="btn btn-success btn-sm" id="save_results" ng-click="SaveInboundDetails()">Save</button>
@@ -382,13 +617,17 @@
 <script>
     $(document).ready(function () {
         window.SaveGateEntry = '@Url.Action("SaveGateEntry", "GateEntry")';
-        window.GetVendorIds = '@Url.Action("GetVendorIds", "GateEntry")';
-        window.GetVendorDetails = '@Url.Action("GetVendorDetails", "GateEntry")';
-        window.ChangeEndUseNo = '@Url.Action("ChangeEndUseNo", "GateEntry")';
+        window.GetDetailsForGateEntry = '@Url.Action("GetDetailsForGateEntry", "GateEntry")';
 
+        $('#tableRM').hide();
+        $('#tableBOI').hide();
+        $('#tableJW').hide();
+        $('#tableGI').hide();
+        $('#tableC').hide();
+        $('#tableO').hide();
 
-        $('#divQuoteDetails').hide();
     });
+
 
     $('.NoEndDate').datepicker({
         format: 'dd/mm/yyyy',

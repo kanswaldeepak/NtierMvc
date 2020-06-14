@@ -988,16 +988,16 @@ angular.module('App').controller("MainController", function ($scope, $http, $tim
     $scope.SearchCurrency = "";
     $scope.SearchApprovalStatus = "";
 
-    $scope.FetchVendorsMasterList = function () {
-        $http.get(window.FetchInboundList+"?pageindex=" + $scope.INBPageIndex + "&pageSize=" + $scope.INBPageSize + "&SearchType=" + $scope.SearchType + "&SearchVendorNature=" + $scope.SearchVendorNature + "&SearchVendorName=" + $scope.SearchVendorName + "&SearchBillNo=" + $scope.SearchBillNo + "&SearchBillDate=" + $scope.SearchBillDate + "&SearchItemDescription=" + $scope.SearchItemDescription + "&SearchCurrency=" + $scope.SearchCurrency + "&SearchApprovalStatus=" + $scope.SearchApprovalStatus).success(function (response) {
-            $scope.InboundList = response.lstVBM;
-            $scope.INBTotalCount = response.totalcount;
-        }, function (error) {
-            alert('failed');
-        });
-    }
+    //$scope.FetchVendorsMasterList = function () {
+    //    $http.get(window.FetchInboundList+"?pageindex=" + $scope.INBPageIndex + "&pageSize=" + $scope.INBPageSize + "&SearchType=" + $scope.SearchType + "&SearchVendorNature=" + $scope.SearchVendorNature + "&SearchVendorName=" + $scope.SearchVendorName + "&SearchBillNo=" + $scope.SearchBillNo + "&SearchBillDate=" + $scope.SearchBillDate + "&SearchItemDescription=" + $scope.SearchItemDescription + "&SearchCurrency=" + $scope.SearchCurrency + "&SearchApprovalStatus=" + $scope.SearchApprovalStatus).success(function (response) {
+    //        $scope.InboundList = response.lstVBM;
+    //        $scope.INBTotalCount = response.totalcount;
+    //    }, function (error) {
+    //        alert('failed');
+    //    });
+    //}
 
-    $scope.FetchVendorsMasterList();
+    //$scope.FetchVendorsMasterList();
 
     $scope.INBPageChanged = function () {
         $scope.FetchVendorsMasterList();

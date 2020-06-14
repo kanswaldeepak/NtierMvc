@@ -98,5 +98,64 @@ namespace NtierMvc.BusinessLogic.Worker
         }
 
 
+        public List<GateEntryEntity> GetPOTableDetailsForGateEntry(string POSetno)
+        {
+            List<GateEntryEntity> newList = new List<GateEntryEntity>();
+
+            try
+            {
+                DataSet ds = _repository.GetPOTableDetailsForGateEntry(POSetno);
+
+                if (ds.Tables[0] != null && ds.Tables[0].Rows.Count > 0)
+                {
+                    DataTable dt1 = ds.Tables[0];
+
+                    foreach (DataRow dr1 in dt1.Rows)
+                    {
+                        GateEntryEntity Model = new GateEntryEntity();
+
+                        Model.PONo = dr1.IsNull("PONo") ? "" : Convert.ToString(dr1["PONo"]);
+                        Model.POdate = dr1.IsNull("POdate") ? "" : Convert.ToString(dr1["POdate"]);
+                        Model.PRCat = dr1.IsNull("PRCat") ? "" : Convert.ToString(dr1["PRCat"]);
+                        Model.POValidity = dr1.IsNull("POValidity") ? "" : Convert.ToString(dr1["POValidity"]);
+                        Model.WorkNo = dr1.IsNull("WorkNo") ? "" : Convert.ToString(dr1["WorkNo"]);
+                        Model.GeneralCondition = dr1.IsNull("GeneralCondition") ? "" : Convert.ToString(dr1["GeneralCondition"]);
+                        Model.DeliveryDate = dr1.IsNull("DeliveryDate") ? "" : Convert.ToString(dr1["DeliveryDate"]);
+                        Model.QMSRequirement = dr1.IsNull("POQMSRequirement") ? "" : Convert.ToString(dr1["POQMSRequirement"]);
+                        Model.Quality = dr1.IsNull("POQuality") ? "" : Convert.ToString(dr1["POQuality"]);
+                        Model.PackForward = dr1.IsNull("POPackForward") ? "" : Convert.ToString(dr1["POPackForward"]);
+                        Model.PORevNo = dr1.IsNull("PORevNo") ? "" : Convert.ToString(dr1["PORevNo"]);
+                        Model.ModeOfPayment = dr1.IsNull("ModeOfPayment") ? "" : Convert.ToString(dr1["ModeOfPayment"]);
+                        Model.ItemCategory = dr1.IsNull("ItemCategory") ? "" : Convert.ToString(dr1["ItemCategory"]);
+                        Model.PaymentTerms = dr1.IsNull("PaymentTerms") ? "" : Convert.ToString(dr1["PaymentTerms"]);
+                        Model.ModeOfTransport = dr1.IsNull("ModeOfTransport") ? "" : Convert.ToString(dr1["ModeOfTransport"]);
+                        Model.AnyOtherRequirements = dr1.IsNull("AnyOtherRequirements") ? "" : Convert.ToString(dr1["AnyOtherRequirements"]);
+                        Model.SN = dr1.IsNull("SN") ? 0 : Convert.ToInt32(dr1["SN"]);
+                        Model.RMdescription = dr1.IsNull("RMdescription") ? "" : Convert.ToString(dr1["RMdescription"]);
+                        Model.RMgrade = dr1.IsNull("RMgrade") ? "" : Convert.ToString(dr1["RMgrade"]);
+                        Model.RMHardness = dr1.IsNull("RMHardness") ? "" : Convert.ToString(dr1["RMHardness"]);
+                        Model.PSLlevel = dr1.IsNull("PSLlevel") ? "" : Convert.ToString(dr1["PSLlevel"]);
+                        Model.QtyReqd = dr1.IsNull("QtyReqd") ? 0 : Convert.ToInt32(dr1["QtyReqd"]);
+                        Model.QtyStock = dr1.IsNull("QtyStock") ? 0 : Convert.ToInt32(dr1["QtyStock"]);
+                        Model.PRqty = dr1.IsNull("PRqty") ? 0 : Convert.ToInt32(dr1["PRqty"]);
+                        Model.UnitPrice = dr1.IsNull("UnitPrice") ? "" : Convert.ToString(dr1["UnitPrice"]);
+                        Model.TotalPrice = dr1.IsNull("TotalPrice") ? "" : Convert.ToString(dr1["TotalPrice"]);
+                        Model.Discount = dr1.IsNull("Discount") ? "" : Convert.ToString(dr1["Discount"]);
+                        Model.FinalPrice = dr1.IsNull("FinalPrice") ? "" : Convert.ToString(dr1["FinalPrice"]);
+
+
+                        newList.Add(Model);
+                    }
+                }
+            }
+
+            catch (Exception ex)
+            {
+                NtierMvc.DataAccess.ExceptionLogging.SendExcepToDB(ex);
+            }
+            return newList;
+        }
+
+
     }
 }

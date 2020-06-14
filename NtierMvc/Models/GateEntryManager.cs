@@ -78,6 +78,21 @@ namespace NtierMvc.Model
             return vbmEnt;
         }
 
+        public List<GateEntryEntity> GetPOTableDetailsForGateEntry(string POSetno)
+        {
+            var baseAddress = "GateEntryDetails";
+            List<GateEntryEntity> tableList = new List<GateEntryEntity>();
+            using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
+            {
+                HttpResponseMessage response = client.GetAsync(baseAddress + "/GetPOTableDetailsForGateEntry?POSetno=" + POSetno).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    var data = response.Content.ReadAsStringAsync().Result;
+                    tableList = JsonConvert.DeserializeObject<List<GateEntryEntity>>(data);
+                }
+            }
+            return tableList;
+        }
 
     }
 }

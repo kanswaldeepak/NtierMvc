@@ -1142,6 +1142,7 @@
     <Content Include="Scripts\CustomJS\common.js" />
     <Content Include="Scripts\CustomJS\Customer.js" />
     <Content Include="Scripts\CustomJS\CustomerDetails.js" />
+    <Content Include="Scripts\CustomJS\Inbound.js" />
     <Content Include="Scripts\CustomJS\MyCustomJS.js" />
     <Content Include="Scripts\CustomJS\QuotationDetails.js" />
     <Content Include="Scripts\CustomJS\EnquiryDetails.js" />

@@ -84,7 +84,15 @@ namespace NtierMvc.DataAccess.Pool
             string spName = ConfigurationManager.AppSettings["GetGateEntryList"];
             return _dbAccess.GetDataSet(spName, parms);
         }
-        
+
+        public DataSet GetPOTableDetailsForGateEntry(string POSetno)
+        {
+            var SPName = ConfigurationManager.AppSettings["GetPOTableDetailsForGateEntry"];
+            var Params = new Dictionary<string, object>();
+            Params.Add("@POSetno", POSetno);
+            return _dbAccess.GetDataSet(SPName, Params);
+        }
+
         #endregion
     }
 }

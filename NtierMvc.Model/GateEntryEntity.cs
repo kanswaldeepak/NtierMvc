@@ -6,6 +6,48 @@ namespace NtierMvc.Model
     public class GateEntryEntity
     {
         public int Id { get; set; }
+
+
+        public int PRSetno { get; set; }
+        public string POSetno { get; set; }
+        public string PONo { get; set; }
+        public string POdate { get; set; }
+        public string PRCat { get; set; }
+        public string WorkNo { get; set; }
+        public int SN { get; set; }
+        public string RMdescription { get; set; }
+        public string RMgrade { get; set; }
+        public string RMHardness { get; set; }
+        public string PSLlevel { get; set; }
+        public int QtyReqd { get; set; }
+        public int QtyStock { get; set; }
+        public int PRqty { get; set; }
+        public string UnitPrice { get; set; }
+        public string TotalPrice { get; set; }
+        public string Discount { get; set; }
+        public string FinalPrice { get; set; }
+        public string TotalPRSetPrice { get; set; }
+        public string POValidity { get; set; }
+        public string PORevNo { get; set; }
+        public string ItemCategory { get; set; }
+        public string DeliveryDate { get; set; }
+        public int UserId { get; set; }
+        public string SignStatus { get; set; }
+        public string PRStatus { get; set; }
+        public string ApprovePerson1 { get; set; }
+        public string ApprovePerson2 { get; set; }
+        
+        public string GeneralCondition { get; set; }
+        public string QMSRequirement { get; set; }
+        public string Quality { get; set; }
+        public string PackForward { get; set; }
+        public string ModeOfPayment { get; set; }
+        public string PaymentTerms { get; set; }
+        public string ModeOfTransport { get; set; }
+        public string AnyOtherRequirements { get; set; }
+
+
+
         public string UserInitial { get; set; }
         public string UnitNo { get; set; }
         public string VendorNatureId { get; set; }

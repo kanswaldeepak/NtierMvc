@@ -41,11 +41,11 @@ function FetchtPRDetailsFromPRSetNo() {
                         $.each(data, function (i, item) {
                             $('#tableRM > tbody:last-child').append('<tr><td><span>' + item.SN + '</span></td><td><span>' + item.RMdescription + '</span></td><td><span>' + item.RMgrade + '<span></td><td><span>' + item.RMHardness + '<span></td><td><span>' + item.PSLlevel + '<span></td><td><span>' + item.OD + '<span></td><td><span>' + item.WT + '</span></td><td><span>' + item.Len +'</span></td><td><span>' + item.QtyReqd + '</span></td><td><span>' + item.QtyStock + '</span></td><td><span>' + item.PRqty + '</span></td><td><span>' + item.UnitPrice + '</span></td><td><span class="PORMTPrice">' + item.TotalPrice + '</span></td><td><input name="PORMDiscount" type="text" class="form-control PORMDiscount col-md-6" value="" onkeyup="CalcTotalWithDiscount(this)" /></td><td><input name="TotalPrice" type="text" readonly="readonly" class="form-control PORMFinalPrice" value="' + item.TotalPrice + '" /></td><td><a href="#" class="removePO">Remove</a></td></tr>');
 
-                            $('#imgRequestedBy').attr("src", "/Images/Sign/" + item.EntryPersonSign);
-                            $('#imgStoreEx').attr("src", "/Images/Sign/" + item.ApprovePerson1Sign);
-                            $('#imgApproverSign').attr("src", "/Images/Sign/" + item.ApprovePerson2Sign);
-
                         })
+
+                        $('#imgRequestedBy').attr("src", "/Images/Sign/" + data[0].EntryPersonSign);
+                        $('#imgStoreEx').attr("src", "/Images/Sign/" + data[0].ApprovePerson1Sign);
+                        $('#imgApproverSign').attr("src", "/Images/Sign/" + data[0].ApprovePerson2Sign);
 
 
                         $('.removePO').on("click", function (e) {

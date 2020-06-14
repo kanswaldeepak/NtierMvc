@@ -53,7 +53,7 @@
     <Compile Include="Interface\IMRMWorker.cs" />
     <Compile Include="Interface\IDesignWorker.cs" />
     <Compile Include="Interface\IHrWorker.cs" />
-    <Compile Include="Interface\IVendorsMasterBillWorker.cs" />
+    <Compile Include="Interface\IGateEntryWorker.cs" />
     <Compile Include="Interface\ITechnicalWorker.cs" />
     <Compile Include="Interface\IQuotationWorker.cs" />
     <Compile Include="Interface\IEnquiryWorker.cs" />
