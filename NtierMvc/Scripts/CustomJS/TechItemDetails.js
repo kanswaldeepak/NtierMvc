@@ -16,7 +16,7 @@ function saveButton(data) {
 
             $.ajax({
                 type: 'POST',
-                url: '/Technical/GetOrderDetailsFromSO',
+                url: window.GetOrderDetailsFromSO,
                 data: JSON.stringify({ SoNo: SoNoItem, quoteTypeId: quoteTypeId }),
                 contentType: "application/json; charset=utf-8",
                 success: function (data) {
@@ -87,7 +87,7 @@ function GetQuoteNos() {
     })
 }
 
-function GetOrderDetailsFromSO() {
+function GetItemOrderDetailsFromSO() {
     var SoNoItem = $("#ItemSoNo").val();
     var quoteTypeId = $("#OrderFormQuoteType").val();
 
@@ -206,7 +206,7 @@ function GetQuoteDetails() {
     })
 }
 
-function GetQuoteItemSlNos() {
+function GetQuoteOrderItemSlNos() {
     var QuoteType = $("#OrderFormQuoteType").val();
     var QuoteNo = $("#QuoteItemFormNo").val();
 

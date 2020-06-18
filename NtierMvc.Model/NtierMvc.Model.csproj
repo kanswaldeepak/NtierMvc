@@ -59,6 +59,7 @@
     <Compile Include="Application\UserGrievanceEntity.cs" />
     <Compile Include="BulkUploadEntity.cs" />
     <Compile Include="ExtensionMethods.cs" />
+    <Compile Include="BillMonitoringEntity.cs" />
     <Compile Include="GateEntryEntity.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="ClarificationEntity.cs" />

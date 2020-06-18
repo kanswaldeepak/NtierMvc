@@ -340,7 +340,7 @@ namespace NtierMvc.Areas.DesignEng.Controllers
             ViewBag.ListCostCentre = "";
             ViewBag.ListApproveStatus = model.GetMasterTableStringList("ApproveStatus", "Id", "Status", "", "", GeneralConstants.ListTypeN);
 
-            GateEntryEntity vmbE = new GateEntryEntity();
+            BillMonitoringEntity vmbE = new BillMonitoringEntity();
             vmbE.UnitNo = Session["UserId"].ToString();
 
             if (actionType == "VIEW" || actionType == "EDIT")
@@ -367,7 +367,7 @@ namespace NtierMvc.Areas.DesignEng.Controllers
         }
 
         [HttpPost]
-        public ActionResult SaveBillMonitoringDetails(GateEntryEntity vmbE)
+        public ActionResult SaveBillMonitoringDetails(BillMonitoringEntity vmbE)
         {
             string result = objManager.SaveBillMonitoringDetails(vmbE);
 

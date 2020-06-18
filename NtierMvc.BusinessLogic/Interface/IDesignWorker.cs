@@ -23,8 +23,8 @@ namespace NtierMvc.BusinessLogic.Interface
         
         string SaveBOMDetails(BOMEntity bomE);
         string SaveProductRealisationDetails(ProductRealisation objPRP);
-        GateEntryEntity BillDetailsPopup(GateEntryEntity objBill);
-        string SaveBillMonitoringDetails(GateEntryEntity objBill);
+        BillMonitoringEntity BillDetailsPopup(BillMonitoringEntity objBill);
+        string SaveBillMonitoringDetails(BillMonitoringEntity objBill);
         DataTable GetDataTablePRPData(string ReportType, string DateFrom, string DateTo, string VendorId = null, string SoNo = null);
 
         List<ProductRealisation> GetPoSLNoDetails(string POSlNo = null);

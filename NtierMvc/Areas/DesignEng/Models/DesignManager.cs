@@ -93,7 +93,7 @@ namespace NtierMvc.Areas.DesignEng.Models
             return result;
         }
 
-        public GateEntryEntity BillDetailsPopup(GateEntryEntity Model)
+        public BillMonitoringEntity BillDetailsPopup(BillMonitoringEntity Model)
         {
             var baseAddress = "DesignDetails";
             using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
@@ -102,13 +102,13 @@ namespace NtierMvc.Areas.DesignEng.Models
                 if (response.IsSuccessStatusCode)
                 {
                     var data = response.Content.ReadAsStringAsync().Result;
-                    Model = JsonConvert.DeserializeObject<GateEntryEntity>(data);
+                    Model = JsonConvert.DeserializeObject<BillMonitoringEntity>(data);
                 }
             }
             return Model;
         }
 
-        public string SaveBillMonitoringDetails(GateEntryEntity vmbE)
+        public string SaveBillMonitoringDetails(BillMonitoringEntity vmbE)
         {
             string result = "0";
             var baseAddress = "DesignDetails";

@@ -54,7 +54,7 @@ namespace NtierMvc.API.Controllers.Application
         [HttpPost]
         [ResponseType(typeof(string))]
         [Route("api/DesignDetails/BillDetailsPopup")]
-        public IHttpActionResult BillDetailsPopup(GateEntryEntity viewModel)
+        public IHttpActionResult BillDetailsPopup(BillMonitoringEntity viewModel)
         {
             return Ok(_repository.BillDetailsPopup(viewModel));
         }
@@ -62,7 +62,7 @@ namespace NtierMvc.API.Controllers.Application
         [HttpPost]
         [ResponseType(typeof(string))]
         [Route("api/DesignDetails/SaveBillMonitoringDetails")]
-        public IHttpActionResult SaveBillMonitoringDetails(GateEntryEntity viewModel)
+        public IHttpActionResult SaveBillMonitoringDetails(BillMonitoringEntity viewModel)
         {
             return Ok(_repository.SaveBillMonitoringDetails(viewModel));
         }

@@ -289,7 +289,7 @@ namespace NtierMvc.BusinessLogic.Worker
         }
 
 
-        public GateEntryEntity BillDetailsPopup(GateEntryEntity obj)
+        public BillMonitoringEntity BillDetailsPopup(BillMonitoringEntity obj)
         {
             try
             {
@@ -344,7 +344,7 @@ namespace NtierMvc.BusinessLogic.Worker
             return obj;
         }
 
-        public string SaveBillMonitoringDetails(GateEntryEntity entity)
+        public string SaveBillMonitoringDetails(BillMonitoringEntity entity)
         {
             string result = string.Empty;
             try

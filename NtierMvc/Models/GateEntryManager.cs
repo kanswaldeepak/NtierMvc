@@ -58,16 +58,16 @@ namespace NtierMvc.Model
             return result;
         }
 
-        public GateEntryEntityDetails GetGateEntryList(int pageIndex, int pageSize, string SearchType = null, string SearchVendorNature = null, string SearchVendorName = null, string SearchBillNo = null, string SearchBillDate = null, string SearchItemDescription = null, string SearchCurrency = null, string SearchApprovalStatus = null)
+        public GateEntryEntityDetails FetchInboundList(int pageIndex, int pageSize, string SearchType = null, string SearchVendorNature = null, string SearchVendorName = null, string SearchBillNo = null, string SearchBillDate = null, string SearchItemDescription = null, string SearchCurrency = null, string SearchApprovalStatus = null)
         {
             var baseAddress = "GateEntryDetails";
             GateEntryEntityDetails vbmEnt = new GateEntryEntityDetails();
             using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
             {
-                HttpResponseMessage response = client.GetAsync(baseAddress + "/GetGateEntryList?pageIndex=" 
-                    + pageIndex + "&pageSize=" + pageSize + "&SearchVendorNature=" + SearchVendorNature 
-                    + "&SearchVendorName=" + SearchVendorName + "&SearchBillNo=" + SearchBillNo + "&SearchBillDate=" 
-                    + SearchBillDate + "&SearchItemDescription=" + SearchItemDescription + "&SearchCurrency=" 
+                HttpResponseMessage response = client.GetAsync(baseAddress + "/GetGateEntryList?pageIndex="
+                    + pageIndex + "&pageSize=" + pageSize + "&SearchVendorNature=" + SearchVendorNature
+                    + "&SearchVendorName=" + SearchVendorName + "&SearchBillNo=" + SearchBillNo + "&SearchBillDate="
+                    + SearchBillDate + "&SearchItemDescription=" + SearchItemDescription + "&SearchCurrency="
                     + SearchCurrency + "&SearchApprovalStatus=" + SearchApprovalStatus).Result;
                 if (response.IsSuccessStatusCode)
                 {
@@ -78,21 +78,25 @@ namespace NtierMvc.Model
             return vbmEnt;
         }
 
-        public List<GateEntryEntity> GetPOTableDetailsForGateEntry(string POSetno)
+
+        public GateEntryEntityDetails GetPOTableDetailsForGateEntry(string PRSetno)
         {
             var baseAddress = "GateEntryDetails";
-            List<GateEntryEntity> tableList = new List<GateEntryEntity>();
+            GateEntryEntityDetails tableList = new GateEntryEntityDetails();
             using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
             {
-                HttpResponseMessage response = client.GetAsync(baseAddress + "/GetPOTableDetailsForGateEntry?POSetno=" + POSetno).Result;
+                HttpResponseMessage response = client.GetAsync(baseAddress + "/GetPOTableDetailsForGateEntry?POSetno=" + PRSetno).Result;
                 if (response.IsSuccessStatusCode)
                 {
                     var data = response.Content.ReadAsStringAsync().Result;
-                    tableList = JsonConvert.DeserializeObject<List<GateEntryEntity>>(data);
+                    tableList = JsonConvert.DeserializeObject<GateEntryEntityDetails>(data);
                 }
             }
             return tableList;
         }
+
+        
+
 
     }
 }

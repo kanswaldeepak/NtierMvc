@@ -8,18 +8,18 @@
     <form id="formInbound">
         <div class="col-md-12">
             @Html.HiddenFor(m => m.Id)
-            <div class="row">
-                <hr style="width:100%" />
-                <h4 class="control-label" style="margin-left:10px; font-size: 20px">Order Informations</h4>
-                <hr style="width:100%" />
-            </div>
+            @*<div class="row mb-2">
+                    <div class="col-md-12" style="background-color: lightblue;">
+                        <h4 class="control-label mt-2" style="margin-left:10px; font-size: 22px">Material Entry</h4>
+                    </div>
+                </div>*@
             <div class="row">
                 <div class="col-md-2">
                     <div class="form-group">
                         <label class="control-label">
-                            PO No
+                            PO No 
                         </label>
-                        @Html.DropDownListFor(m => m.VendorPONO, new SelectList(@ViewBag.ListPONo, "DataStringValueField", "DataTextField", Model.VendorPONO),
+                        @Html.DropDownListFor(m => m.VendorPONO, new SelectList(@ViewBag.ListPONo, "DataStringValueField", "DataTextField", Model.Type),
                            new
                            {
                                @class = "form-control requiredValidation clearField",
@@ -34,7 +34,7 @@
                 <div class="col-md-2">
                     <div class="form-group">
                         <label class="control-label">
-                            PO Date
+                            PO Date 
                         </label>
                         @Html.TextBoxFor(m => m.POdate, new
                        {
@@ -47,7 +47,7 @@
                 <div class="col-md-2">
                     <div class="form-group">
                         <label class="control-label ">
-                            Work Instruction
+                            Work Instruction 
                         </label>
                         @Html.TextBoxFor(m => m.WorkNo, new
                        {
@@ -59,8 +59,21 @@
                 </div>
                 <div class="col-md-2">
                     <div class="form-group">
+                        <label class="control-label ">
+                            General Condition 
+                        </label>
+                        @Html.TextBoxFor(m => m.GeneralCondition, new
+                       {
+                           @class = "form-control ml-3 requiredValidation applyDisabled",
+                           @id = "GEGeneralCondition",
+                           @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                       })
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
                         <label class="control-label">
-                            Delivery Date
+                            Delivery Date 
                         </label>
                         @Html.TextBoxFor(m => m.DeliveryDate, new
                    {
@@ -72,9 +85,63 @@
                     </div>
                 </div>
                 <div class="col-md-2">
+                    <div class="form-group text-left">
+                        <label class="control-label ">
+                            QMS Requirements 
+                        </label>
+                        @Html.TextBoxFor(m => m.QMSRequirement, new
+                   {
+                       @class = "form-control requiredValidation clearField applyDisabled",
+                       @id = "GEQMSRequirement",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                       @readonly = "true"
+                   })
+                    </div>
+                </div>
+                <div class="col-md-2">
                     <div class="form-group">
                         <label class="control-label">
-                            PO Revise No
+                            Quality 
+                        </label>
+                        @Html.TextBoxFor(m => m.Quality, new
+                   {
+                       @class = "form-control requiredValidation clearField applyDisabled",
+                       @id = "GEQuality",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                       @readonly = "true"
+                   })
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label">
+                            PO Validity 
+                        </label>
+                        @Html.TextBoxFor(m => m.POValidity, new
+                   {
+                       @class = "form-control requiredValidation clearField applyDisabled",
+                       @id = "GEPOValidity",
+                       @readonly = "true"
+                   })
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label">
+                            Packaging &amp; Forwarding 
+                        </label>
+                        @Html.TextBoxFor(m => m.PackForward, new
+                   {
+                       @class = "form-control requiredValidation clearField applyDisabled",
+                       @id = "GEPackForward",
+                       @readonly = "true"
+                   })
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label">
+                            PO Revise No 
                         </label>
                         @Html.TextBoxFor(m => m.PORevNo, new
                    {
@@ -87,7 +154,20 @@
                 <div class="col-md-2">
                     <div class="form-group">
                         <label class="control-label">
-                            Item Category
+                            Mode Of Payment 
+                        </label>
+                        @Html.TextBoxFor(m => m.ModeOfPayment, new
+                   {
+                       @class = "form-control requiredValidation clearField applyDisabled",
+                       @id = "GEModeOfPayment",
+                       @readonly = "true"
+                   })
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label">
+                            Item Category 
                         </label>
                         @Html.TextBoxFor(m => m.ItemCategory, new
                     {
@@ -100,37 +180,43 @@
                 <div class="col-md-2">
                     <div class="form-group">
                         <label class="control-label">
-                            Mode Of Transport
+                            Payment Terms 
                         </label>
-                        @Html.DropDownListFor(m => m.ModeOfTransport, new SelectList(@ViewBag.ListModeOfTransport, "DataStringValueField", "DataTextField", "Select"), new
-                                {
-                                    @class = "form-control ml-2 requiredValidation clearField",
-                                    @id = "GEModeOfTransport",
-                                    @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
-                                })
+                        @Html.TextBoxFor(m => m.PaymentTerms, new
+                   {
+                       @class = "form-control requiredValidation clearField applyDisabled",
+                       @id = "GEPaymentTerms",
+                        @readonly = "true"
+                   })
                     </div>
                 </div>
                 <div class="col-md-2">
                     <div class="form-group">
                         <label class="control-label">
-                            Gate Control No
+                            Mode Of Transport 
                         </label>
-                        @Html.TextBoxFor(m => m.GateControlNo, new
-                    {
-                        @class = "form-control requiredValidation clearField applyDisabled",
-                        @id = "GEGateControlNo",
+                        @Html.TextBoxFor(m => m.ModeOfTransport, new
+                   {
+                       @class = "form-control requiredValidation clearField applyDisabled",
+                       @id = "GEModeOfTransport",
                         @readonly = "true"
-                    })
+                   })
                     </div>
                 </div>
-            </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label">
+                            Any Other Requirements 
+                        </label>
+                        @Html.TextBoxFor(m => m.AnyOtherRequirements, new
+                   {
+                       @class = "form-control requiredValidation clearField applyDisabled",
+                       @id = "GEAnyOtherRequirements",
+                        @readonly = "true"
+                   })
+                    </div>
+                </div>
 
-            <div class="row">
-                <hr style="width:100%" />
-                <h4 class="control-label" style="margin-left:10px; font-size: 20px">Transport Informations</h4>
-                <hr style="width:100%" />
-            </div>
-            <div class="row">
                 <div class="col-md-2">
                     <div class="form-group">
                         <label class="control-label">
@@ -222,12 +308,6 @@
                     </div>
                 </div>
                 <div class="col-md-12">
-
-                    <div class="row">
-                        <hr style="width:100%" />
-                        <h4 class="control-label" style="margin-left:10px; font-size: 20px">Material Informations</h4>
-                        <hr style="width:100%" />
-                    </div>
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-inline pull-right">
@@ -266,6 +346,11 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="row">
+                        <hr style="width:100%" />
+                    </div>
+
                     <div class="row">
                         <div class="col-md-12">
 
@@ -275,24 +360,48 @@
                                         <td>
                                             SN
                                         </td>
-                                        <td width="35%">
+                                        <td>
                                             RM Description
                                         </td>
                                         <td>
-                                            Quantity
+                                            RM Grade
                                         </td>
                                         <td>
-                                            UOM
+                                            RM Hardness
+                                        </td>
+                                        <td>
+                                            PSL Level
+                                        </td>
+                                        <td>
+                                            OD
+                                        </td>
+                                        <td>
+                                            WT
+                                        </td>
+                                        <td>
+                                            Len
+                                        </td>
+                                        <td>
+                                            Qty Required (Nos)
+                                        </td>
+                                        <td>
+                                            Qty in Stock (Nos)
+                                        </td>
+                                        <td>
+                                            Purchase Qty (Nos)
                                         </td>
                                         <td>
                                             Unit Price
                                         </td>
                                         <td>
+                                            Total Price
+                                        </td>
+                                        <td>
                                             Discount
                                         </td>
                                         <td>
-                                            Total Price
-                                        </td>                                        
+                                            Final Price
+                                        </td>
                                     </tr>
                                 </thead>
                                 <tbody></tbody>
@@ -304,8 +413,8 @@
                                             SN
                                         </td>
                                         @*<td>
-                                RM Code
-                            </td>*@
+                                                RM Code
+                                            </td>*@
                                         <td>
                                             RM Description
                                         </td>
@@ -344,8 +453,8 @@
                                             SN
                                         </td>
                                         @*<td>
-                                RM Code
-                            </td>*@
+                                                RM Code
+                                            </td>*@
                                         <td>
                                             Item Description
                                         </td>
@@ -409,8 +518,8 @@
                                             Total Price
                                         </td>
                                         @*<td width="16%">
-                                Required Dly. Date
-                            </td>*@
+                                                Required Dly. Date
+                                            </td>*@
                                         <td style="width: 5%;">
                                             HSN
                                         </td>
@@ -441,8 +550,8 @@
                                             Total Price
                                         </td>
                                         @*<td width="16%">
-                                Required Dly. Date
-                            </td>*@
+                                                Required Dly. Date
+                                            </td>*@
                                         <td style="width: 5%;">
                                             HSN
                                         </td>
@@ -473,8 +582,8 @@
                                             Total Price
                                         </td>
                                         @*<td width="16%">
-                                Required Dly. Date
-                            </td>*@
+                                                Required Dly. Date
+                                            </td>*@
                                         <td style="width: 5%;">
                                             HSN
                                         </td>

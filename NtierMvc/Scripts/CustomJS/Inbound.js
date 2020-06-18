@@ -22,7 +22,7 @@ function GetDetailForGateEntry() {
                         $('#tableRM tbody').empty();
 
                         $.each(data, function (i, item) {
-                            $('#tableRM > tbody:last-child').append('<tr><td><span>' + item.SN + '</span></td><td><span>' + item.RMdescription + '</span></td><td><span>' + item.RMgrade + '<span></td><td><span>' + item.RMHardness + '<span></td><td><span>' + item.PSLlevel + '<span></td><td><span>' + item.OD + '<span></td><td><span>' + item.WT + '</span></td><td><span>' + item.Len + '</span></td><td><span>' + item.QtyReqd + '</span></td><td><span>' + item.QtyStock + '</span></td><td><span>' + item.PRqty + '</span></td><td><span>' + item.UnitPrice + '</span></td><td><span>' + item.TotalPrice + '</span></td><td><span>' + item.Discount + '</span></td><td><span>' + item.FinalPrice + '</span></td></tr>');
+                            $('#tableRM > tbody:last-child').append('<tr><td><span>' + item.SN + '</span></td><td><span>' + item.RMdescription + '</span></td><td><span>' + item.PRqty + '<span></td><td><span>' + item.UOM + '<span></td><td><span>' + item.UnitPrice + '<span></td><td><span>' + item.Discount + '%</span></td><td><span>' + item.TotalPrice + '</span></td></tr>');
 
                         })
 
@@ -30,18 +30,12 @@ function GetDetailForGateEntry() {
                         $('#GEPODate').val(data[0].POdate);
                         $('#GEPOValidity').val(data[0].POValidity);
                         $('#GEWorkNo').val(data[0].WorkNo);
-                        $('#GEGeneralCondition').val(data[0].GeneralCondition);
                         $('#GEDeliveryDate').val(data[0].DeliveryDate);
-                        $('#GEQMSRequirement').val(data[0].QMSRequirement);
-                        $('#GEQuality').val(data[0].Quality);
                         $('#GEPOValidity').val(data[0].POValidity);
-                        $('#GEPackForward').val(data[0].PackForward);
                         $('#GEPORevNo').val(data[0].PORevNo);
-                        $('#GEModeOfPayment').val(data[0].ModeOfPayment);
                         $('#GEItemCategory').val(data[0].ItemCategory);
-                        $('#GEPaymentTerms').val(data[0].PaymentTerms);
                         $('#GEModeOfTransport').val(data[0].ModeOfTransport);
-                        $('#GEAnyOtherRequirements').val(data[0].AnyOtherRequirements);
+                        $('#GEGateControlNo').val(data[0].GateControlNo);
 
                         break;
                     case 'BOI':

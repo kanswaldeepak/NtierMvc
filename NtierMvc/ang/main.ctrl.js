@@ -22,7 +22,7 @@ angular.module('App').controller("MainController", function ($scope, $http, $tim
         });
     }
     
-    $scope.FetchCustomerList();
+    //$scope.FetchCustomerList();
     
     $scope.CustPageChanged = function () {
         $scope.FetchCustomerList();
@@ -188,15 +188,8 @@ angular.module('App').controller("MainController", function ($scope, $http, $tim
             alert('failed');
         });
     }
-    //$scope.FetchEnquiryList = function () {
-    //    $http({ url: '/Enquiry/FetchEnquiryList', method: 'GET', params: $scope.sdata1 }).success(
-    //        function (res) {
-    //            $scope.AvailableEnquiryList = res;
-    //        }
-    //    ).error(function (res) { showHttpErr(res); });
-    //}
 
-    $scope.FetchEnquiryList();
+    //$scope.FetchEnquiryList();
 
     $scope.EnqPageChanged = function () {
         $scope.FetchEnquiryList();
@@ -358,7 +351,7 @@ angular.module('App').controller("MainController", function ($scope, $http, $tim
         });
     }
 
-    $scope.FetchQuotationList();
+    //$scope.FetchQuotationList();
 
     $scope.QuotPageChanged = function () {
         $scope.FetchQuotationList();
@@ -948,13 +941,13 @@ angular.module('App').controller("MainController", function ($scope, $http, $tim
                 SetModalTitle("Material Entry")
                 SetModalBody(html);
                 HideLoadder();
-                SetModalWidth("1200px");
+                SetModalWidth("1400px");
                 ShowModal();
 
                 if (!($('.modal.in').length)) {
                     $('.modal-dialog').css({
                         top: '5%',
-                        left: '5%'
+                        left: '3%'
                     });
                 }
                 $('#ModalPopup').modal({
@@ -975,7 +968,7 @@ angular.module('App').controller("MainController", function ($scope, $http, $tim
         //});
     }
     
-    //Vendor Master List Starts
+    //Gate Entry List Starts
     $scope.INBTotalCount = 0;
     $scope.INBPageIndex = 1;
     $scope.INBPageSize = "50";
@@ -988,24 +981,22 @@ angular.module('App').controller("MainController", function ($scope, $http, $tim
     $scope.SearchCurrency = "";
     $scope.SearchApprovalStatus = "";
 
-    //$scope.FetchVendorsMasterList = function () {
-    //    $http.get(window.FetchInboundList+"?pageindex=" + $scope.INBPageIndex + "&pageSize=" + $scope.INBPageSize + "&SearchType=" + $scope.SearchType + "&SearchVendorNature=" + $scope.SearchVendorNature + "&SearchVendorName=" + $scope.SearchVendorName + "&SearchBillNo=" + $scope.SearchBillNo + "&SearchBillDate=" + $scope.SearchBillDate + "&SearchItemDescription=" + $scope.SearchItemDescription + "&SearchCurrency=" + $scope.SearchCurrency + "&SearchApprovalStatus=" + $scope.SearchApprovalStatus).success(function (response) {
-    //        $scope.InboundList = response.lstVBM;
-    //        $scope.INBTotalCount = response.totalcount;
-    //    }, function (error) {
-    //        alert('failed');
-    //    });
-    //}
-
-    //$scope.FetchVendorsMasterList();
-
+    $scope.FetchInboundList = function () {
+        $http.get(window.FetchInboundList+"?pageindex=" + $scope.INBPageIndex + "&pageSize=" + $scope.INBPageSize + "&SearchType=" + $scope.SearchType + "&SearchVendorNature=" + $scope.SearchVendorNature + "&SearchVendorName=" + $scope.SearchVendorName + "&SearchBillNo=" + $scope.SearchBillNo + "&SearchBillDate=" + $scope.SearchBillDate + "&SearchItemDescription=" + $scope.SearchItemDescription + "&SearchCurrency=" + $scope.SearchCurrency + "&SearchApprovalStatus=" + $scope.SearchApprovalStatus).success(function (response) {
+            $scope.InboundList = response.lstVBM;
+            $scope.INBTotalCount = response.totalcount;
+        }, function (error) {
+            alert('failed');
+        });
+    }
+    
     $scope.INBPageChanged = function () {
-        $scope.FetchVendorsMasterList();
+        $scope.FetchInboundList();
     }
 
     $scope.INBChangePageSize = function () {
         $scope.INBPageIndex = 1;
-        $scope.FetchVendorsMasterList();
+        $scope.FetchInboundList();
     }
 
 

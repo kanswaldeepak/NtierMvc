@@ -28,12 +28,12 @@ namespace NtierMvc.API.Controllers.Application
             return Ok(_repository.SaveGateEntry(viewModel));
         }
 
-        [HttpGet]
-        [Route("api/GateEntryDetails/GetGateEntryList")]
-        public IHttpActionResult GetGateEntryList(int pageIndex, int pageSize, string SearchType = null, string SearchVendorNature = null, string SearchVendorName = null, string SearchBillNo = null, string SearchBillDate = null, string SearchItemDescription = null, string SearchCurrency = null, string SearchApprovalStatus = null)
-        {
-            return Ok(_repository.GetGateEntryList(Convert.ToInt32(pageIndex), Convert.ToInt32(pageSize), SearchType, SearchVendorNature, SearchVendorName, SearchBillNo, SearchBillDate, SearchItemDescription, SearchCurrency, SearchApprovalStatus));
-        }
+        //[HttpGet]
+        //[Route("api/GateEntryDetails/GetGateEntryList")]
+        //public IHttpActionResult GetGateEntryList(int pageIndex, int pageSize, string SearchType = null, string SearchVendorNature = null, string SearchVendorName = null, string SearchBillNo = null, string SearchBillDate = null, string SearchItemDescription = null, string SearchCurrency = null, string SearchApprovalStatus = null)
+        //{
+        //    return Ok(_repository.GetGateEntryList(Convert.ToInt32(pageIndex), Convert.ToInt32(pageSize), SearchType, SearchVendorNature, SearchVendorName, SearchBillNo, SearchBillDate, SearchItemDescription, SearchCurrency, SearchApprovalStatus));
+        //}
 
         [HttpGet]
         [Route("api/GateEntryDetails/GetPOTableDetailsForGateEntry")]
@@ -42,6 +42,7 @@ namespace NtierMvc.API.Controllers.Application
             return Ok(_repository.GetPOTableDetailsForGateEntry(POSetno));
         }
 
+        
 
     }
 }

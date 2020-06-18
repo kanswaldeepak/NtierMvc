@@ -192,6 +192,8 @@
     <Compile Include="Areas\MRM\Controllers\MRMController.cs" />
     <Compile Include="Areas\MRM\Models\MRMManager.cs" />
     <Compile Include="Areas\MRM\MRMAreaRegistration.cs" />
+    <Compile Include="Areas\Stores\Controllers\StoresController.cs" />
+    <Compile Include="Areas\Stores\StoresAreaRegistration.cs" />
     <Compile Include="Controllers\ApplicationController.cs" />
     <Compile Include="Controllers\TechnicalController.cs" />
     <Compile Include="Controllers\QuotationController.cs" />
@@ -247,6 +249,7 @@
     <Content Include="ang\Angular\ui-bootstrap-tpls-0.13.4.min.js" />
     <Content Include="ang\app.js" />
     <Content Include="ang\config.js" />
+    <Content Include="ang\Stores.ctrl.js" />
     <Content Include="ang\Design.ctrl.js" />
     <Content Include="ang\hr.ctrl.js" />
     <Content Include="ang\modal.ctrl.js" />
@@ -396,6 +399,7 @@
     <Content Include="assets\css\selectize\selectize.default.min.css" />
     <Content Include="assets\css\selectize\selectize.js" />
     <Content Include="assets\css\selectize\selectize.min.js" />
+    <Content Include="assets\css\tableStyle.css" />
     <Content Include="assets\custom\css\custom.css" />
     <Content Include="assets\custom\images\bg-conferenze.jpg" />
     <Content Include="assets\custom\images\book.png" />
@@ -1137,6 +1141,10 @@
     <Content Include="App_Data\Documents\Excel\PR_Mackarel.xlsx" />
     <Content Include="Areas\MRM\Views\MRM\_PODetailsPopup.cshtml" />
     <Content Include="Areas\MRM\Views\MRM\POPlanning.cshtml" />
+    <Content Include="Areas\Stores\Views\web.config" />
+    <Content Include="Areas\Stores\Views\Stores\_InboundStoresPopUp.cshtml" />
+    <Content Include="Areas\Stores\Views\Stores\StoresMaster.cshtml" />
+    <Content Include="Areas\Stores\Views\Stores\PartialStoresInbound.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\CustomJS\common.js" />
@@ -1244,6 +1252,9 @@
     <Folder Include="Areas\HRDepartment\EmployeeImage\" />
     <Folder Include="Areas\HRDepartment\Views\Shared\" />
     <Folder Include="Areas\MRM\Views\Shared\" />
+    <Folder Include="Areas\Stores\Models\" />
+    <Folder Include="Areas\Stores\Scripts\" />
+    <Folder Include="Areas\Stores\Views\Shared\" />
     <Folder Include="assets\custom\js\" />
     <Folder Include="assets\Documents\" />
     <Folder Include="assets\layout\" />

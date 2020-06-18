@@ -37,7 +37,7 @@
                        @id = "ItemSoNo",
                        @data_inneraction = "validationCall",
                        @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
-                       @onchange = "GetOrderDetailsFromSO()"
+                       @onchange = "GetItemOrderDetailsFromSO()"
                    })
                         <span class="HideValidMsg"> Select Item Number</span>
                     </div>
@@ -161,7 +161,7 @@
                        @id = "QuoteItemFormNo",
                        @data_inneraction = "validationCall",
                        @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
-                       @onchange = "GetQuoteDetails(); GetQuoteItemSlNos()"
+                       @onchange = "GetQuoteDetails(); GetQuoteOrderItemSlNos()"
                    })
                         <span class="HideValidMsg"> Select Quote Number</span>
                     </div>

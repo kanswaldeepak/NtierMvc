@@ -583,12 +583,12 @@
                         Mode of Transport
                     </td>
                     <td>
-                        @Html.TextBoxFor(m => m.ModeOfTransport, new
-                        {
-                            @class = "form-control requiredValidation",
-                            @id = "PODetailsModeOfTransport",
-                            @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
-                        })
+                        @Html.DropDownListFor(m => m.ModeOfTransport, new SelectList(@ViewBag.ListModeOfTransport, "DataStringValueField", "DataTextField", "Select"), new
+                                {
+                                    @class = "form-control ml-2 requiredValidation clearField",
+                                    @id = "PODetailsModeOfTransport",
+                                    @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                                })
                     </td>
                 </tr>
                 <tr>

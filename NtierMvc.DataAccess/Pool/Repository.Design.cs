@@ -115,7 +115,7 @@ namespace NtierMvc.DataAccess.Pool
             return msgCode;
         }
 
-        public DataSet BillDetailsPopup(GateEntryEntity Model)
+        public DataSet BillDetailsPopup(BillMonitoringEntity Model)
         {
             var SPName = ConfigurationManager.AppSettings["GetVendorsMasterBillDetails"];
             var Params = new Dictionary<string, object>();
@@ -124,7 +124,7 @@ namespace NtierMvc.DataAccess.Pool
         }
 
 
-        public string SaveBillMonitoringDetails(GateEntryEntity Model)
+        public string SaveBillMonitoringDetails(BillMonitoringEntity Model)
         {
             string msgCode = "";
             var Params = new Dictionary<string, object>();

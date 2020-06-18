@@ -541,7 +541,8 @@ namespace NtierMvc.Areas.MRM.Controllers
             var UserDetails = (UserEntity)Session["UserModel"];
 
             ViewBag.ListPRno = model.GetMasterTableStringList("PurchaseRequest", "PRSetNo", "PRNo", UserDetails.DeptName, "DeptName", GeneralConstants.ListTypeD);
-          
+            ViewBag.ListModeOfTransport = model.GetMasterTableStringList("Master.Taxonomy", "DropDownId", "DropDownValue", "Transport", "Property", GeneralConstants.ListTypeD);
+
             if (Session["CommonDetails"] != null)
             {
                 var CommonDetails = (CommonDetailsEntity)Session["CommonDetails"];
