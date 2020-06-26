@@ -13,10 +13,12 @@ namespace NtierMvc.Model.MRM
         public string POSetno { get; set; }
         public string PONo { get; set; }
         public string POdate { get; set; }
+        public string PRcat { get; set; }
         public string DeptName { get; set; }
         public string WorkNo { get; set; }
         public int SN { get; set; }
         public string RMdescription { get; set; }
+        public string Desc1 { get; set; }
         public string RMgrade { get; set; }
         public string RMHardness { get; set; }
         public string PSLlevel { get; set; }
@@ -40,7 +42,9 @@ namespace NtierMvc.Model.MRM
         public string ApprovePerson1Sign { get; set; }
         public string ApprovePerson2Sign { get; set; }
         public string CompShortName { get; set; }
+        public string SupplyTerms { get; set; }
         public string GeneralCondition { get; set; }
+        public string CostCentre { get; set; }
         public string POQMSRequirement { get; set; }
         public string POQuality { get; set; }
         public string POPackForward { get; set; }
@@ -48,6 +52,10 @@ namespace NtierMvc.Model.MRM
         public string PaymentTerms { get; set; }
         public string ModeOfTransport { get; set; }
         public string AnyOtherRequirements { get; set; }
+
+        public string LotName { get; set; }
+        public string LotDate { get; set; }
+        public string LotQty { get; set; }
     }
 
     public class PODetailEntityBulkSave
@@ -82,6 +90,10 @@ namespace NtierMvc.Model.MRM
         public string PaymentTerms { get; set; }
         public string ModeOfTransport { get; set; }
         public string AnyOtherRequirements { get; set; }
+        public string LotName { get; set; }
+        public string LotDate { get; set; }
+        public string LotQty { get; set; }
+        public string CostCentre { get; set; }
     }
 
     public class PODetailEntityDetails

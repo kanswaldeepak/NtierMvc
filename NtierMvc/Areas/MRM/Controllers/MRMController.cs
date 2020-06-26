@@ -106,6 +106,7 @@ namespace NtierMvc.Areas.MRM.Controllers
             ViewBag.ListSupplyTerms = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "SupplyTerms", "Property", GeneralConstants.ListTypeN);
             ViewBag.ListAcceptReject = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "AcceptReject", "Property", GeneralConstants.ListTypeN);
             ViewBag.ListCommunicate = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "YesNo", "Property", GeneralConstants.ListTypeN);
+            ViewBag.ListPRCat = model.GetMasterTableStringList("Master.Taxonomy", "DropDownValue", "ObjectName", "PRCat", "Property", GeneralConstants.ListTypeN);
             ViewBag.ListEndUseNo = "";
             ViewBag.ListPRRequestedOn = "";
 
@@ -507,7 +508,7 @@ namespace NtierMvc.Areas.MRM.Controllers
                 System.IO.File.Delete(fullPath);
                 //return Json(new { data = "", errorMessage = "" }, JsonRequestBehavior.AllowGet);
             }
-            
+
         }
 
         //Do Not Delete Commented Text Below
@@ -542,6 +543,28 @@ namespace NtierMvc.Areas.MRM.Controllers
 
             ViewBag.ListPRno = model.GetMasterTableStringList("PurchaseRequest", "PRSetNo", "PRNo", UserDetails.DeptName, "DeptName", GeneralConstants.ListTypeD);
             ViewBag.ListModeOfTransport = model.GetMasterTableStringList("Master.Taxonomy", "DropDownId", "DropDownValue", "Transport", "Property", GeneralConstants.ListTypeD);
+            ViewBag.ListPRCat = model.GetMasterTableStringList("Master.Taxonomy", "DropDownValue", "ObjectName", "PRCat", "Property", GeneralConstants.ListTypeN);
+            ViewBag.ListCostCache = model.GetMasterTableStringList("Master.Department", "Id", "DeptName", "", "", GeneralConstants.ListTypeN);
+            ViewBag.ListSupplyType = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "SupplyTerms", "Property", GeneralConstants.ListTypeN);
+
+            List<DropDownEntity> ListPO = new List<DropDownEntity>();
+            DropDownEntity ddl = new DropDownEntity();
+            ddl.DataTextField = "Select"; ddl.DataStringValueField = "";
+            ListPO.Add(ddl);
+
+            DropDownEntity ddl1 = new DropDownEntity();
+            ddl1.DataTextField = ddl1.DataStringValueField = "Rev01";
+            ListPO.Add(ddl1);
+
+            DropDownEntity ddl2 = new DropDownEntity();
+            ddl2.DataTextField = ddl2.DataStringValueField = "Rev02";
+            ListPO.Add(ddl2);
+
+            DropDownEntity ddl3 = new DropDownEntity();
+            ddl3.DataTextField = ddl3.DataStringValueField = "Rev03";
+            ListPO.Add(ddl3);
+
+            ViewBag.ListPORevNo = ListPO;
 
             if (Session["CommonDetails"] != null)
             {
@@ -628,7 +651,6 @@ namespace NtierMvc.Areas.MRM.Controllers
                         newObj.FinalPrice = item.FinalPrice;
                         newObj.WorkNo = item.WorkNo;
                         newObj.DeliveryDate = item.DeliveryDate;
-                        newObj.PORevNo = item.PORevNo;
                         newObj.ItemCategory = item.ItemCategory;
                         newObj.POValidity = item.POValidity;
                         newObj.GeneralCondition = item.GeneralCondition;
@@ -639,6 +661,13 @@ namespace NtierMvc.Areas.MRM.Controllers
                         newObj.PaymentTerms = item.PaymentTerms;
                         newObj.ModeOfTransport = item.ModeOfTransport;
                         newObj.AnyOtherRequirements = item.AnyOtherRequirements;
+
+                        newObj.LotName = item.LotName;
+                        newObj.LotDate = item.LotDate;
+                        newObj.LotQty = item.LotQty;
+                        newObj.CostCentre = item.CostCentre;
+
+                        newObj.PORevNo = item.PORevNo == "" ? "" : item.PONo + item.PORevNo;
 
                         newObj.TotalPRSetPrice = item.TotalPRSetPrice;
 
@@ -718,7 +747,7 @@ namespace NtierMvc.Areas.MRM.Controllers
                 xlWorkbook.Worksheets[1].Cells.Replace("#Curr", resultData.Rows[0]["Currency"]);
                 xlWorkbook.Worksheets[1].Cells.Replace("#EntryPerson", resultData.Rows[0]["EntryPerson"]);
                 xlWorkbook.Worksheets[1].Cells.Replace("#ApprovePerson1", resultData.Rows[0]["ApprovePerson1"]);
-                xlWorkbook.Worksheets[1].Cells.Replace("#ApprovePerson2", resultData.Rows[0]["ApprovePerson2"]);                
+                xlWorkbook.Worksheets[1].Cells.Replace("#ApprovePerson2", resultData.Rows[0]["ApprovePerson2"]);
                 xlWorkbook.Worksheets[1].Cells.Replace("#Supp1Name", resultData.Rows[0]["Supp1Name"]);
                 xlWorkbook.Worksheets[1].Cells.Replace("#Supp1Address", resultData.Rows[0]["Supp1Address"]);
                 xlWorkbook.Worksheets[1].Cells.Replace("#Supp1ContactPerson", resultData.Rows[0]["Supp1ContactPerson"]);

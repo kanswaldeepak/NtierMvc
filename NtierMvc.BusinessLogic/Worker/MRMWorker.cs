@@ -90,32 +90,6 @@ namespace NtierMvc.BusinessLogic.Worker
                     Model.ApprovePerson2Sign = dr1.IsNull("ApprovePerson2Sign") ? "" : Convert.ToString(dr1["ApprovePerson2Sign"]);
                     Model.PRFavouredOn = dr1.IsNull("PRFavouredOn") ? "" : Convert.ToString(dr1["PRFavouredOn"]);
 
-                    //RMdescription
-                    //RMgrade
-                    //RMHardness
-                    //PSLlevel
-                    //OD
-                    //WT
-                    //Len
-                    //QtyReqd
-                    //QtyStock
-                    //PRqty
-                    //UnitPrice
-                    //TotalPrice
-                    //ReqDlyDate
-                    //DlyTerms
-                    //HSCode
-                    //Supplier1
-                    //Supplier2
-                    //Vendor1
-                    //Vendor2
-                    //WIPno
-                    //DRGno
-                    //OPNcode
-                    //ProcessName
-                    //EDR
-                    //OPNtime
-
 
                 }
             }
@@ -233,6 +207,7 @@ namespace NtierMvc.BusinessLogic.Worker
                         Model.SN = dr1.IsNull("SN") ? 0 : Convert.ToInt32(dr1["SN"]);
                         Model.PRSetno = dr1.IsNull("PRSetno") ? 0 : Convert.ToInt32(dr1["PRSetno"]);
                         Model.RMdescription = dr1.IsNull("RMdescription") ? "" : Convert.ToString(dr1["RMdescription"]);
+                        Model.Desc1 = dr1.IsNull("Desc1") ? "" : Convert.ToString(dr1["Desc1"]);
                         Model.RMgrade = dr1.IsNull("RMgrade") ? "" : Convert.ToString(dr1["RMgrade"]);
                         Model.RMHardness = dr1.IsNull("RMHardness") ? "" : Convert.ToString(dr1["RMHardness"]);
                         Model.PSLlevel = dr1.IsNull("PSLlevel") ? "" : Convert.ToString(dr1["PSLlevel"]);

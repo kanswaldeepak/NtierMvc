@@ -20,14 +20,6 @@ namespace NtierMvc.API.Controllers.Application
     {
         IGateEntryWorker _repository = new GateEntryWorker();
         
-        [HttpPost]
-        [ResponseType(typeof(string))]
-        [Route("api/GateEntryDetails/SaveGateEntry")]
-        public IHttpActionResult SaveGateEntry(GateEntryEntity viewModel)
-        {
-            return Ok(_repository.SaveGateEntry(viewModel));
-        }
-
         //[HttpGet]
         //[Route("api/GateEntryDetails/GetGateEntryList")]
         //public IHttpActionResult GetGateEntryList(int pageIndex, int pageSize, string SearchType = null, string SearchVendorNature = null, string SearchVendorName = null, string SearchBillNo = null, string SearchBillDate = null, string SearchItemDescription = null, string SearchCurrency = null, string SearchApprovalStatus = null)
@@ -42,7 +34,13 @@ namespace NtierMvc.API.Controllers.Application
             return Ok(_repository.GetPOTableDetailsForGateEntry(POSetno));
         }
 
-        
+        [HttpPost]
+        [ResponseType(typeof(string))]
+        [Route("api/GateEntryDetails/SaveGateEntryDetails")]
+        public IHttpActionResult SaveGateEntryDetails(BulkUploadEntity iEntity)
+        {
+            return Ok(_repository.SaveGateEntryDetails(iEntity));
+        }
 
     }
 }

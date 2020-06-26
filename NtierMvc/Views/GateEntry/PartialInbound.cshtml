@@ -57,16 +57,7 @@
                                                        ng_model = "SearchFunctionArea",
                                                        @id = "FunctionAreaList"
                                                    })
-                    </td>
-                    <td>
-                        @Html.DropDownList("FinancialYear", new SelectList(@ViewBag.ListFinancialYear, "DataStringValueField", "DataTextField", "Select"),
-                           new
-                           {
-                               @class = "form-control",
-                               ng_model = "SearchFinancialYear",
-                               @id = "FinancialYearList"
-                           })
-                    </td>
+                    </td>                    
                     <td>
                         @Html.DropDownList("ApprovalStatus", new SelectList(@ViewBag.ListApprovalStatus, "DataStringValueField", "DataTextField", "Select"),
                            new
@@ -135,12 +126,6 @@
                         </div>
                     </th>
                     <th>
-                        Bill Date
-                        <div class="c3">
-                            Bill Date
-                        </div>
-                    </th>
-                    <th>
                         Currency
                         <div class="c3">
                             Currency
@@ -199,9 +184,6 @@
                     </td>
                     <td>
                         {{L.BillNo}}
-                    </td>
-                    <td>
-                        {{L.BillDate}}
                     </td>
                     <td>
                         {{L.Currency}}

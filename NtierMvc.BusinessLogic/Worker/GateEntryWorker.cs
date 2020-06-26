@@ -23,12 +23,12 @@ namespace NtierMvc.BusinessLogic.Worker
         
         #endregion
 
-        public string SaveGateEntry(GateEntryEntity entity)
+        public string SaveGateEntryDetails(BulkUploadEntity entity)
         {
             string result = string.Empty;
             try
             {
-                result = _repository.SaveGateEntry(entity);
+                result = _repository.SaveGateEntryDetails(entity);
             }
             catch (Exception Ex)
             {
@@ -139,7 +139,7 @@ namespace NtierMvc.BusinessLogic.Worker
                         //Model.RMHardness = dr1.IsNull("RMHardness") ? "" : Convert.ToString(dr1["RMHardness"]);
                         //Model.PSLlevel = dr1.IsNull("PSLlevel") ? "" : Convert.ToString(dr1["PSLlevel"]);
                         //Model.QtyReqd = dr1.IsNull("QtyReqd") ? 0 : Convert.ToInt32(dr1["QtyReqd"]);                        
-                        //Model.DeliveryDate = dr1.IsNull("DeliveryDate") ? "" : Convert.ToString(dr1["DeliveryDate"]);
+                        Model.DeliveryDate = dr1.IsNull("DeliveryDate") ? "" : Convert.ToString(dr1["DeliveryDate"]);
 
                         //Model.GeneralCondition = dr1.IsNull("GeneralCondition") ? "" : Convert.ToString(dr1["GeneralCondition"]);
                         //Model.QMSRequirement = dr1.IsNull("POQMSRequirement") ? "" : Convert.ToString(dr1["POQMSRequirement"]);

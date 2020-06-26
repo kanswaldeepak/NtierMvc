@@ -171,40 +171,17 @@
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    <div class="form-inline pull-right">
-                        <div class="form-group mt-4">
-                            <div class="custom-control custom-radio custom-control-inline">
-                                <input type="radio" class="custom-control-input" id="RadioListRM" name="multiRL" value="RM" onchange="RadioListChange()">
-                                <label class="custom-control-label h5" for="RadioListRM">RM</label>
-                            </div>
-
-                            <div class="custom-control custom-radio custom-control-inline">
-                                <input type="radio" class="custom-control-input" id="RadioListBOI" name="multiRL" value="BOI" onchange="RadioListChange()">
-                                <label class="custom-control-label h5" for="RadioListBOI">Bought Out Items</label>
-                            </div>
-
-                            <div class="custom-control custom-radio custom-control-inline">
-                                <input type="radio" class="custom-control-input" id="RadioListJW" name="multiRL" value="JW" onchange="RadioListChange()">
-                                <label class="custom-control-label h5" for="RadioListJW">Job Work</label>
-                            </div>
-                            <div class="custom-control custom-radio custom-control-inline">
-                                <input type="radio" class="custom-control-input" id="RadioListGI" name="multiRL" value="GI" onchange="RadioListChange()">
-                                <label class="custom-control-label h5" for="RadioListGI">General Items</label>
-                            </div>
-                            <div class="custom-control custom-radio custom-control-inline">
-                                <input type="radio" class="custom-control-input" id="RadioListC" name="multiRL" value="C" onchange="RadioListChange()">
-                                <label class="custom-control-label h5" for="RadioListC">Consumables</label>
-                            </div>
-                            <div class="custom-control custom-radio custom-control-inline">
-                                <input type="radio" class="custom-control-input" id="RadioListCG" name="multiRL" value="CG" onchange="RadioListChange()">
-                                <label class="custom-control-label h5" for="RadioListCG">Capital Goods</label>
-                            </div>
-                            <div class="custom-control custom-radio custom-control-inline">
-                                <input type="radio" class="custom-control-input" id="RadioListO" name="multiRL" value="O" onchange="RadioListChange()">
-                                <label class="custom-control-label h5" for="RadioListO">Others</label>
-                            </div>
-                        </div>
-                    </div>
+                    <div class="form-group mt-4">
+                        @Html.DropDownListFor(m => m.PRcat, new SelectList(@ViewBag.ListPRCat, "DataStringValueField", "DataTextField", Model.PRcat),
+                            new
+                            {
+                                @class = "form-control requiredValidation clearField",
+                                @id = "PRCatPRDetails",
+                                @data_inneraction = "validationCall",
+                                @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                                @onchange = "RadioListChange()"
+                            })
+                    </div>                    
                 </div>
             </div>
             <div class="row mt-5">
@@ -932,7 +909,6 @@
             $('#HiddenSignStatusPRDetails').val('Approved1');
         }
         else if (DeptNameField == 'Purchase') {
-            debugger;
             $('#RequestedBy').hide();
             $('#imgRequestedBy').show();
             $('#imgStoreEx').show();

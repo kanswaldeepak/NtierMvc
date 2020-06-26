@@ -93,6 +93,31 @@ namespace NtierMvc.DataAccess.Pool
             return _dbAccess.GetDataSet(SPName, Params);
         }
 
+        public string SaveGateEntryDetails(BulkUploadEntity entity)
+        {
+            string msgCode = "";
+            entity.DestinationTable = "GateEntry";
+
+            if (!string.IsNullOrEmpty(entity.IdentityNo.ToString()) && entity.IdentityNo != 0)
+            {
+                string spName = ConfigurationManager.AppSettings["GetFindPONoInGateEntry"];
+                var parms = new Dictionary<string, object>();
+                parms.Add("@POno", entity.IdentityNo);
+                _dbAccess.ExecuteNonQuery(spName, parms, "@o_MsgCode", out msgCode);
+            }
+
+            if (msgCode == "Duplicate")
+            {
+                msgCode = "Duplicate Record Found";
+                return msgCode;
+            }
+            else
+            {
+                msgCode = _dbAccess.BulkUpload(entity.DataRecordTable, entity.DestinationTable);
+                return msgCode;
+            }
+        }
+
         #endregion
     }
 }

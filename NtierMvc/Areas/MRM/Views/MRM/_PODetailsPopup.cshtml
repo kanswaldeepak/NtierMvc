@@ -118,7 +118,7 @@
                 <div class="col-md-12">
                     <div class="form-inline pull-left">
                         <div class="form-group">
-                            <label for="PRNo">PR No :</label>
+                            <label for="PRNo">PR No </label>
                             @Html.DropDownListFor(m => m.PRSetno, new SelectList(@ViewBag.ListPRno, "DataStringValueField", "DataTextField", "Select"), new
                                 {
                                     @class = "form-control ml-2 requiredValidation clearField",
@@ -127,8 +127,31 @@
                                     @onchange = "FetchtPRDetailsFromPRSetNo()"
                                 })
                         </div>
-                        <div class="form-group" style="margin-left:650px">
-                            <label for="PONo">PO No :</label>
+                        <div class="form-group ml-4">
+                            <label for="PRcat">PR Cat </label>
+                            @Html.DropDownListFor(m => m.PRcat, new SelectList(@ViewBag.ListPRCat, "DataStringValueField", "DataTextField", Model.PRcat),
+                            new
+                            {
+                                @class = "form-control requiredValidation clearField",
+                                @id = "POCatPRDetails",
+                                @data_inneraction = "validationCall",
+                                @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                                @onchange = "RadioListChange()"
+                            })
+                        </div>
+                        <div class="form-group ml-4">
+                            <label for="SupplyTerms">Supply Terms </label>
+                            @Html.DropDownListFor(m => m.SupplyTerms, new SelectList(ViewBag.ListSupplyType, "DataStringValueField", "DataTextField", "Select"), new
+                                      {
+                                          @class = "form-control requiredValidation clearField",
+                                          @id = "SupplyTermsPODetails",
+                                          @data_inneraction = "validationCall",
+                                          @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                                          @onchange = "changeLotTable()"
+                                      })
+                        </div>
+                        <div class="form-group ml-4">
+                            <label for="PONo">PO No </label>
                             @Html.TextBoxFor(m => m.PONo, new
                        {
                            @class = "form-control ml-3 mr-2 requiredValidation",
@@ -137,7 +160,7 @@
                        })
                         </div>
                         <div class="form-group ml-4">
-                            <label for="PODate">PO Date :</label>
+                            <label for="PODate">PO Date </label>
                             @Html.TextBoxFor(m => m.POdate, new
                        {
                            @class = "form-control ml-3 requiredValidation",
@@ -146,48 +169,48 @@
                            @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
                        })
                         </div>
-
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="form-inline pull-right">
-                        <div class="form-group mt-4">
-                            <div class="custom-control custom-radio custom-control-inline">
-                                <input type="radio" class="custom-control-input RadioList" id="RadioListRM" name="multiRL" value="RM" onchange="RadioListChange()">
-                                <label class="custom-control-label h5" for="RadioListRM">RM</label>
-                            </div>
 
-                            <div class="custom-control custom-radio custom-control-inline">
-                                <input type="radio" class="custom-control-input RadioList" id="RadioListBOI" name="multiRL" value="BOI" onchange="RadioListChange()">
-                                <label class="custom-control-label h5" for="RadioListBOI">Bought Out Items</label>
-                            </div>
-
-                            <div class="custom-control custom-radio custom-control-inline">
-                                <input type="radio" class="custom-control-input RadioList" id="RadioListJW" name="multiRL" value="JW" onchange="RadioListChange()">
-                                <label class="custom-control-label h5" for="RadioListJW">Job Work</label>
-                            </div>
-                            <div class="custom-control custom-radio custom-control-inline">
-                                <input type="radio" class="custom-control-input RadioList" id="RadioListGI" name="multiRL" value="GI" onchange="RadioListChange()">
-                                <label class="custom-control-label h5" for="RadioListGI">General Items</label>
-                            </div>
-                            <div class="custom-control custom-radio custom-control-inline">
-                                <input type="radio" class="custom-control-input RadioList" id="RadioListC" name="multiRL" value="C" onchange="RadioListChange()">
-                                <label class="custom-control-label h5" for="RadioListC">Consumables</label>
-                            </div>
-                            <div class="custom-control custom-radio custom-control-inline">
-                                <input type="radio" class="custom-control-input RadioList" id="RadioListCG" name="multiRL" value="CG" onchange="RadioListChange()">
-                                <label class="custom-control-label h5" for="RadioListCG">Capital Goods</label>
-                            </div>
-                            <div class="custom-control custom-radio custom-control-inline">
-                                <input type="radio" class="custom-control-input RadioList" id="RadioListO" name="multiRL" value="O" onchange="RadioListChange()">
-                                <label class="custom-control-label h5" for="RadioListO">Others</label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            @*<div id="lotDiv" class="row">
+                    <div class="col-md-12"><a href="#" id="addNew" class="btn btn-info btn-sm mb-2 mt-4">Add Lot Details</a></div>
+                    <table id="lotTable" class="table table-responsive table-hover">
+                        <thead>
+                            <tr class="bg-cyan">
+                                <th>SN</th>
+                                <th>Lot Name</th>
+                                <th>Lot Date</th>
+                                <th>Lot Qty</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <input name="SN" type="text" class="form-control forSingle" />
+                                    <span class="HideValidMsg"> SN</span>
+                                </td>
+                                <td>
+                                    <select name="LotName" class="form-control">
+                                        <option value="Lot1">Lot 1</option>
+                                        <option value="Lot2">Lot 2</option>
+                                        <option value="Lot3">Lot 3</option>
+                                    </select>
+                                    <span class="HideValidMsg"> Enter Lot Name</span>
+                                </td>
+                                <td>
+                                    <input name="LotDate" type="text" class="form-control NoEndDate forSingle" readonly="readonly" autocomplete="off" />
+                                    <span class="HideValidMsg"> Enter Lot Date</span>
+                                </td>
+                                <td>
+                                    <input name="LotQty" type="text" class="form-control forSingle" />
+                                    <span class="HideValidMsg"> Enter Lot Qty</span>
+                                </td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>*@
 
             <div class="row">
                 <hr style="width:100%" />
@@ -195,54 +218,65 @@
 
             <div class="row">
                 <div class="col-md-12">
-
                     <table class="table table-bordered tableRadio" id="tableRM">
                         <thead>
                             <tr>
-                                <td>
+                                <td style="width: 5%;">
                                     SN
                                 </td>
-                                <td>
+                                <td width="25%">
                                     RM Description
                                 </td>
-                                <td>
+                                <td hidden>
                                     RM Grade
                                 </td>
-                                <td>
+                                <td hidden>
                                     RM Hardness
                                 </td>
-                                <td>
+                                <td hidden>
                                     PSL Level
                                 </td>
-                                <td>
+                                <td hidden>
                                     OD
                                 </td>
-                                <td>
+                                <td hidden>
                                     WT
                                 </td>
-                                <td>
+                                <td hidden>
                                     Len
                                 </td>
-                                <td>
+                                <td hidden>
                                     Qty Required (Nos)
                                 </td>
-                                <td>
+                                <td hidden>
                                     Qty in Stock (Nos)
                                 </td>
-                                <td>
-                                    Purchase Qty (Nos)
+                                <td style="width: 5%;">
+                                    Quantity
                                 </td>
-                                <td>
+                                <td class="lotColumns" style="width: 9%;">
+                                    Lot Name
+                                </td>
+                                <td class="lotColumns">
+                                    LotWise Qty
+                                </td>
+                                <td class="lotColumns" style="width: 9%;">
+                                    LotWise Delivery
+                                </td>
+                                <td style="width: 8%;">
                                     Unit Price
                                 </td>
-                                <td>
+                                <td style="width: 9%;">
                                     Total Price
                                 </td>
-                                <td>
+                                <td style="width: 10%;">
                                     Discount
                                 </td>
-                                <td>
+                                <td style="width: 10%;">
                                     Final Price
+                                </td>
+                                <td hidden>
+                                    Desc1
                                 </td>
                             </tr>
                         </thead>
@@ -254,9 +288,6 @@
                                 <td>
                                     SN
                                 </td>
-                                @*<td>
-                                        RM Code
-                                    </td>*@
                                 <td>
                                     RM Description
                                 </td>
@@ -448,17 +479,6 @@
             <table class="table">
                 <tr>
                     <td class="text-right">
-                        Work Instruction
-                    </td>
-                    <td>
-                        @Html.TextBoxFor(m => m.WorkNo, new
-                        {
-                            @class = "form-control requiredValidation",
-                            @id = "PODetailsWorkNo",
-                            @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
-                        })
-                    </td>
-                    <td class="text-right">
                         General Condition
                     </td>
                     <td>
@@ -469,6 +489,17 @@
                             @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
                         })
                     </td>
+                    <td class="text-right">
+                        Cost Centre
+                    </td>
+                    <td>
+                        @Html.DropDownListFor(m => m.CostCentre, new SelectList(@ViewBag.ListCostCache, "DataStringValueField", "DataTextField", "Select"), new
+                                {
+                                    @class = "form-control ml-2 requiredValidation clearField",
+                                    @id = "PODetailsCostCentre",
+                                    @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                                })
+                    </td>
                 </tr>
                 <tr>
                     <td class="text-right">
@@ -477,7 +508,7 @@
                     <td>
                         @Html.TextBoxFor(m => m.DeliveryDate, new
                         {
-                           @class = "form-control requiredValidation CalenderDate",
+                           @class = "form-control requiredValidation NoEndDate",
                            @id = "PODetailsDeliveryDate",
                            @readonly = "readonly",
                            @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
@@ -535,12 +566,12 @@
                         PO Revise No
                     </td>
                     <td>
-                        @Html.TextBoxFor(m => m.PORevNo, new
-                        {
-                            @class = "form-control requiredValidation",
-                            @id = "PODetailsPORevNo",
-                            @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
-                        })
+                        @Html.DropDownListFor(m => m.PORevNo, new SelectList(@ViewBag.ListPORevNo, "DataStringValueField", "DataTextField", "Select"), new
+                                {
+                                    @class = "form-control ml-2 requiredValidation clearField",
+                                    @id = "PORevNoPODetails",
+                                    @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                                })
                     </td>
                 </tr>
                 <tr>
@@ -603,6 +634,17 @@
                             @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
                         })
                     </td>
+                    <td class="text-right">
+                        Work Instruction
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(m => m.WorkNo, new
+                        {
+                            @class = "form-control requiredValidation",
+                            @id = "PODetailsWorkNo",
+                            @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                        })
+                    </td>
                 </tr>
                 <tr>
                     <td class="text-center">
@@ -654,10 +696,58 @@
         $('#tableC').hide();
         $('#tableO').hide();
 
+        $('#lotDiv').hide();
     });
 
+    //$("#addNew").click(function (e) {
+    //    e.preventDefault();
+    //    var $tableBody = $("#lotTable");
+    //    var $trLast = $tableBody.find("tr:last");
+    //    var $trNew = $trLast.clone();
+
+    //    var suffix = $trNew.find(':input:first').attr('name').match(/\d+/);
+
+    //    $trNew.find("#SN").attr('class', 'requiredValidation forSingle form-control');
+    //    $trNew.find("#LotName").attr('class', 'requiredValidation forSingle form-control');
+    //    $trNew.find("#LotDate").attr('class', 'form-control NoEndDate forSingle requiredValidation');
+    //    $trNew.find("#LotQty").attr('class', 'requiredValidation forSingle form-control');
+
+    //    $trNew.find("td:last").html('<a href="#" class="remove">Remove</a>');
+    //    $.each($trNew.find(':input'), function (i, val) {
+    //        // Replaced Name
+    //        var oldN = $(this).attr('name');
+    //        var newN = oldN.replace('[' + suffix + ']', '[' + (parseInt(suffix) + 1) + ']');
+    //        $(this).attr('name', newN);
+    //        //Replaced value
+    //        var type = $(this).attr('type');
+    //        if (type!=undefined && type.toLowerCase() == "text") {
+    //            $(this).attr('value', '');
+    //        }
+
+    //        // If you have another Type then replace with default value
+    //        $(this).removeClass("input-validation-error");
+    //        //$(this).addClass("requiredValidation");
+
+    //    });
+    //    $trLast.after($trNew);
+
+    //// 2. Remove
+    //            $('.remove').on("click", function (e) {
+    //                e.preventDefault();
+    //                $(this).parent().parent().remove();
+    //            });
+
+    //   $('.NoEndDate').datepicker({
+    //    format: 'dd-mm-yyyy',
+    //    autoclose: true,
+    //    changeMonth: true,
+    //    changeYear: true,
+    //    endDate: '',
+    //    });
+    //});
+
     //LEASE DATE AND EXP LEASE DATE VALIDATION
-    $('.CalenderDate').datepicker({
+    $('.NoEndDate').datepicker({
 
         format: 'dd-mm-yyyy',
         autoclose: true,
@@ -665,6 +755,7 @@
         changeYear: true,
         endDate: '',
     });
+
     $('.CalenderTillTodayDate').datepicker({
 
         format: 'dd-mm-yyyy',

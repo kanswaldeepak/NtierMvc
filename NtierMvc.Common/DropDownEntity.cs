@@ -12,6 +12,7 @@ namespace NtierMvc.Common
         public virtual int? DataValueField { get; set; }
         public virtual string DataStringValueField { get; set; }
         public virtual string DataTextField { get; set; }
+        public virtual string ObjectName { get; set; }
         public virtual string DataCodeField { get; set; }
         public virtual string DataAltValueField { get; set; }
         public virtual string ValidationCode { get; set; }

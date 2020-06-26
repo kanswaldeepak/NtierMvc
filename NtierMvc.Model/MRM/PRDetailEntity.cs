@@ -28,6 +28,7 @@ namespace NtierMvc.Model.MRM
         public int SN { get; set; }
         public string RMcode { get; set; }
         public int RMcat { get; set; }
+        public string Desc1 { get; set; }
         public string RMdescription { get; set; }
         public string RMgrade { get; set; }
         public string RMHardness { get; set; }

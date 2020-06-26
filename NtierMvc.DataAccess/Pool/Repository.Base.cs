@@ -104,7 +104,7 @@ namespace NtierMvc.DataAccess.Pool
             var ddl = new DropDownEntity()
             {
                 DataStringValueField = "",
-                DataTextField = "All"
+                DataTextField = "Select"
             };
             list.Add(ddl);
             foreach (DataRow row in table.Rows)

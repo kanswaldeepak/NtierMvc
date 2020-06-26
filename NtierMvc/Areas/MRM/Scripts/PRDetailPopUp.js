@@ -242,7 +242,9 @@ function RadioListChange() {
     });
 
     $('.tableRadio').hide();
-    var radioVal = $("input[type=radio][name=multiRL]:checked").val();
+    //var radioVal = $("input[type=radio][name=multiRL]:checked").val();
+    var radioVal = $("#PRCatPRDetails").val();
+
     $('#table' + radioVal).show();
     $('#tableSelected').val(radioVal);
 

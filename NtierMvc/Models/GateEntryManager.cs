@@ -42,13 +42,13 @@ namespace NtierMvc.Model
         }
         #endregion
 
-        public string SaveGateEntry(GateEntryEntity viewModel)
+        public string SaveGateEntryDetails(BulkUploadEntity objBU)
         {
             string result = "0";
             var baseAddress = "GateEntryDetails";
             using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
             {
-                HttpResponseMessage response = client.PostAsJsonAsync(baseAddress + "/SaveGateEntry", viewModel).Result;
+                HttpResponseMessage response = client.PostAsJsonAsync(baseAddress + "/SaveGateEntryDetails", objBU).Result;
                 if (response.IsSuccessStatusCode)
                 {
                     var data = response.Content.ReadAsStringAsync().Result;
