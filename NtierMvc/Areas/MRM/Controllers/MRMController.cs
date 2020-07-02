@@ -1,4 +1,5 @@
-﻿using NtierMvc.Areas.MRM.Models;
+﻿
+using NtierMvc.Areas.MRM.Models;
 using NtierMvc.Common;
 using NtierMvc.Infrastructure;
 using NtierMvc.Model;
@@ -33,8 +34,8 @@ namespace NtierMvc.Areas.MRM.Controllers
         public ActionResult MRMMaster()
         {
             ViewBag.ListVendorType = model.GetMasterTableStringList("Master.Vendor", "Id", "VendorType", "", "", GeneralConstants.ListTypeD);
-            ViewBag.ListSupplierId = "";
-            ViewBag.ListRMCategory = model.GetMasterTableStringList("Master.RMCategory", "Id", "CategoryName", "", "", GeneralConstants.ListTypeD);
+            ViewBag.ListSupplierId = model.GetMasterTableStringList("Clientele_Master", "Id", "VendorID", "", "", GeneralConstants.ListTypeD);
+            ViewBag.ListRMCategory = model.GetMasterTableStringList("Master.Taxonomy", "DropDownID", "ObjectName", "PRCat", "Property", GeneralConstants.ListTypeD);
             ViewBag.ListDeliveryDate = model.GetMasterTableStringList("PurchaseRequest", "DeliveryDate", "DeliveryDate", "", "", GeneralConstants.ListTypeD);
 
             var UserDetails = (UserEntity)Session["UserModel"];
@@ -537,11 +538,11 @@ namespace NtierMvc.Areas.MRM.Controllers
         }
 
         [HttpPost]
-        public ActionResult PODetailsPopup(string actionType, string PRSetno)
+        public ActionResult PODetailsPopup(string actionType, string POSetNo)
         {
             var UserDetails = (UserEntity)Session["UserModel"];
 
-            ViewBag.ListPRno = model.GetMasterTableStringList("PurchaseRequest", "PRSetNo", "PRNo", UserDetails.DeptName, "DeptName", GeneralConstants.ListTypeD);
+            ViewBag.ListPRno = objManager.GetPRNoList(UserDetails.DeptName);
             ViewBag.ListModeOfTransport = model.GetMasterTableStringList("Master.Taxonomy", "DropDownId", "DropDownValue", "Transport", "Property", GeneralConstants.ListTypeD);
             ViewBag.ListPRCat = model.GetMasterTableStringList("Master.Taxonomy", "DropDownValue", "ObjectName", "PRCat", "Property", GeneralConstants.ListTypeN);
             ViewBag.ListCostCache = model.GetMasterTableStringList("Master.Department", "Id", "DeptName", "", "", GeneralConstants.ListTypeN);
@@ -591,14 +592,15 @@ namespace NtierMvc.Areas.MRM.Controllers
 
             if (actionType == "VIEW" || actionType == "EDIT")
             {
-                poObj.PRSetno = Convert.ToInt32(PRSetno);
+                poObj.POSetno = POSetNo;
+                poObj = objManager.GetSavedPODetails(POSetNo);
 
-                if (poObj.SignStatus == "Entry")
-                    poObj.ApprovePerson1Sign = UserDetails.SignImage;
-                else if (poObj.SignStatus == "Approved1")
-                    poObj.ApprovePerson2Sign = UserDetails.SignImage;
-                else if (poObj.SignStatus == "Approved2")
-                    ViewBag.PurchaseRequest = UserDetails.SignImage;
+                //if (poObj.SignStatus == "Entry")
+                //    poObj.ApprovePerson1Sign = UserDetails.SignImage;
+                //else if (poObj.SignStatus == "Approved1")
+                //    poObj.ApprovePerson2Sign = UserDetails.SignImage;
+                //else if (poObj.SignStatus == "Approved2")
+                //    ViewBag.PurchaseRequest = UserDetails.SignImage;
 
             }
             else if (actionType == "ADD")
@@ -701,17 +703,15 @@ namespace NtierMvc.Areas.MRM.Controllers
             }
         }
 
-        public JsonResult FetchPODetailsList(string pageIndex, string pageSize)
+        public JsonResult FetchPODetailsList(string pageIndex, string pageSize, string SearchVendorTypeId=null, string SearchSupplierId = null, string SearchRMCategory = null, string SearchDeliveryDate = null)
         {
-            //SearchTypeId = SearchTypeId == null ? string.Empty : SearchTypeId;
-            //SearchQuoteNo = SearchQuoteNo == null ? string.Empty : SearchQuoteNo;
-            //SearchSONo = SearchSONo == null ? string.Empty : SearchSONo;
-            //SearchVendorId = SearchVendorId == null ? string.Empty : SearchVendorId;
-            //SearchVendorName = SearchVendorName == null ? string.Empty : SearchVendorName;
-            //SearchProductGroup = SearchProductGroup == null ? string.Empty : SearchProductGroup;
+            SearchVendorTypeId = SearchVendorTypeId == null ? string.Empty : SearchVendorTypeId;
+            SearchSupplierId = SearchSupplierId == null ? string.Empty : SearchSupplierId;
+            SearchRMCategory = SearchRMCategory == null ? string.Empty : SearchRMCategory;
+            SearchDeliveryDate = SearchDeliveryDate == null ? string.Empty : SearchDeliveryDate;
 
             PODetailEntityDetails prEntity = new PODetailEntityDetails();
-            prEntity = objManager.GetPODetailsList(Convert.ToInt32(pageIndex), Convert.ToInt32(pageSize));
+            prEntity = objManager.GetPODetailsList(Convert.ToInt32(pageIndex), Convert.ToInt32(pageSize), SearchVendorTypeId, SearchSupplierId, SearchRMCategory, SearchDeliveryDate);
             return new JsonResult { Data = prEntity, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 
@@ -876,7 +876,82 @@ namespace NtierMvc.Areas.MRM.Controllers
             return Json(new { fileName = FileName, errorMessage = "Error While Generating Excel. Contact Support." });
         }
 
+        [HttpGet]
+        public JsonResult GetPOTableDetails(string POSetno)
+        {
+            List<PODetailEntity> prObjList = new List<PODetailEntity>();
+            prObjList = objManager.GetPOTableDetails(POSetno);
 
+            return new JsonResult { Data = prObjList, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+        }
+
+        public ActionResult DeleteVendorPODetails(string id)
+        {
+            if (ModelState.IsValid)
+            {
+                string msgCode = model.DeleteFormTable("RMPO","POSetNo",id);
+                if (msgCode != "")
+                {
+                    //return RedirectToAction("Technical");
+                    return new JsonResult { Data = GeneralConstants.DeleteSuccess, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                }
+                else
+                {
+                    return new JsonResult { Data = GeneralConstants.NotDeletedError, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                }
+            }
+            else
+            {
+                Response.StatusCode = 444;
+                Response.Status = "Not Saved";
+                return null;
+            }
+
+        }
+
+        public JsonResult GetSuppliers(string VendorTypeId)
+        {
+            try
+            {
+                List<DropDownEntity> ddl = model.GetMasterTableStringList("Clientele_Master", "Id", "VendorId", VendorTypeId, "VendorTypeId", GeneralConstants.ListTypeD);
+                return new JsonResult { Data = ddl, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+            }
+            catch (Exception ex)
+            {
+                return new JsonResult { Data = ex, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                throw;
+            }
+
+        }
+
+        public JsonResult GetRMCategories(string SupplierId)
+        {
+            try
+            {
+                List<DropDownEntity> ddl = objManager.GetRMCategories(SupplierId);
+                return new JsonResult { Data = ddl, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+            }
+            catch (Exception ex)
+            {
+                return new JsonResult { Data = ex, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                throw;
+            }
+
+        }
+
+        public JsonResult GetDeliveryDates(string RMCategory)
+        {
+            try
+            {
+                List<DropDownEntity> ddl = objManager.GetDeliveryDates(RMCategory);
+                return new JsonResult { Data = ddl, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+            }
+            catch (Exception ex)
+            {
+                return new JsonResult { Data = ex, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                throw;
+            }
+        }
 
     }
 }

@@ -121,7 +121,7 @@
                             <label for="PRNo">PR No </label>
                             @Html.DropDownListFor(m => m.PRSetno, new SelectList(@ViewBag.ListPRno, "DataStringValueField", "DataTextField", "Select"), new
                                 {
-                                    @class = "form-control ml-2 requiredValidation clearField",
+                                    @class = "form-control ml-2 requiredValidation",
                                     @id = "PRSetNoPODetails",
                                     @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
                                     @onchange = "FetchtPRDetailsFromPRSetNo()"
@@ -132,9 +132,8 @@
                             @Html.DropDownListFor(m => m.PRcat, new SelectList(@ViewBag.ListPRCat, "DataStringValueField", "DataTextField", Model.PRcat),
                             new
                             {
-                                @class = "form-control requiredValidation clearField",
+                                @class = "form-control requiredValidation",
                                 @id = "POCatPRDetails",
-                                @data_inneraction = "validationCall",
                                 @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
                                 @onchange = "RadioListChange()"
                             })
@@ -143,9 +142,8 @@
                             <label for="SupplyTerms">Supply Terms </label>
                             @Html.DropDownListFor(m => m.SupplyTerms, new SelectList(ViewBag.ListSupplyType, "DataStringValueField", "DataTextField", "Select"), new
                                       {
-                                          @class = "form-control requiredValidation clearField",
+                                          @class = "form-control requiredValidation",
                                           @id = "SupplyTermsPODetails",
-                                          @data_inneraction = "validationCall",
                                           @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
                                           @onchange = "changeLotTable()"
                                       })
@@ -156,6 +154,7 @@
                        {
                            @class = "form-control ml-3 mr-2 requiredValidation",
                            @id = "PONoPODetails",
+                           @readonly = "readonly",
                            @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
                        })
                         </div>
@@ -168,6 +167,14 @@
                            @readonly = "readonly",
                            @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
                        })
+                        </div>
+                        <div class="form-group ml-4">
+                            <label for="PORevNo">PO Revise No </label>
+                                @Html.DropDownListFor(m => m.PORevNo, new SelectList(@ViewBag.ListPORevNo, "DataStringValueField", "DataTextField", "Select"), new
+                                        {
+                                            @class = "form-control ml-2",
+                                            @id = "PORevNoPODetails"
+                                        })
                         </div>
                     </div>
                 </div>
@@ -488,6 +495,7 @@
                             @id = "PODetailsGeneralCondition",
                             @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
                         })
+                        <label class="HideValidMsg">Fields is Required *</label>
                     </td>
                     <td class="text-right">
                         Cost Centre
@@ -499,21 +507,10 @@
                                     @id = "PODetailsCostCentre",
                                     @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
                                 })
+                        <label class="HideValidMsg">Fields is Required *</label>
                     </td>
                 </tr>
-                <tr>
-                    <td class="text-right">
-                        Delivery Date
-                    </td>
-                    <td>
-                        @Html.TextBoxFor(m => m.DeliveryDate, new
-                        {
-                           @class = "form-control requiredValidation NoEndDate",
-                           @id = "PODetailsDeliveryDate",
-                           @readonly = "readonly",
-                           @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
-                        })
-                    </td>
+                <tr>                    
                     <td class="text-right">
                         QMS Requirements
                     </td>
@@ -524,6 +521,19 @@
                            @id = "PODetailsPOQMSRequirement",
                            @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
                         })
+                        <label class="HideValidMsg">Fields is Required *</label>
+                    </td>
+                    <td class="text-right">
+                        Packing & Forwarding
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(m => m.POPackForward, new
+                        {
+                            @class = "form-control requiredValidation",
+                            @id = "PODetailsPOPackForward",
+                            @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                        })
+                        <label class="HideValidMsg">Fields is Required *</label>
                     </td>
                 </tr>
                 <tr>
@@ -537,6 +547,7 @@
                             @id = "PODetailsPOQuality",
                             @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
                         })
+                        <label class="HideValidMsg">Fields is Required *</label>
                     </td>
                     <td class="text-right">
                         PO Validity
@@ -544,34 +555,12 @@
                     <td>
                         @Html.TextBoxFor(m => m.POValidity, new
                         {
-                            @class = "form-control requiredValidation",
+                            @class = "form-control requiredValidation NoEndDate",
+                            @readonly = "true",
                             @id = "PODetailsPOValidity",
                             @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
                         })
-                    </td>
-                </tr>
-                <tr>
-                    <td class="text-right">
-                        Packing & Forwarding
-                    </td>
-                    <td>
-                        @Html.TextBoxFor(m => m.POPackForward, new
-                        {
-                            @class = "form-control requiredValidation",
-                            @id = "PODetailsPOPackForward",
-                            @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
-                        })
-                    </td>
-                    <td class="text-right">
-                        PO Revise No
-                    </td>
-                    <td>
-                        @Html.DropDownListFor(m => m.PORevNo, new SelectList(@ViewBag.ListPORevNo, "DataStringValueField", "DataTextField", "Select"), new
-                                {
-                                    @class = "form-control ml-2 requiredValidation clearField",
-                                    @id = "PORevNoPODetails",
-                                    @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
-                                })
+                        <label class="HideValidMsg">Fields is Required *</label>
                     </td>
                 </tr>
                 <tr>
@@ -585,6 +574,7 @@
                             @id = "PODetailsModeOfPayment",
                             @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
                         })
+                        <label class="HideValidMsg">Fields is Required *</label>
                     </td>
                     <td class="text-right">
                         Item Category
@@ -596,6 +586,7 @@
                             @id = "PODetailsItemCategory",
                             @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
                         })
+                        <label class="HideValidMsg">Fields is Required *</label>
                     </td>
                 </tr>
                 <tr>
@@ -609,6 +600,7 @@
                             @id = "PODetailsPaymentTerms",
                             @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
                         })
+                        <label class="HideValidMsg">Fields is Required *</label>
                     </td>
                     <td class="text-right">
                         Mode of Transport
@@ -620,6 +612,7 @@
                                     @id = "PODetailsModeOfTransport",
                                     @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
                                 })
+                        <label class="HideValidMsg">Fields is Required *</label>
                     </td>
                 </tr>
                 <tr>
@@ -633,6 +626,7 @@
                             @id = "PODetailsAnyOtherRequirements",
                             @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
                         })
+                        <label class="HideValidMsg">Fields is Required *</label>
                     </td>
                     <td class="text-right">
                         Work Instruction
@@ -643,6 +637,20 @@
                             @class = "form-control requiredValidation",
                             @id = "PODetailsWorkNo",
                             @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                        })
+                        <label class="HideValidMsg">Fields is Required *</label>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="text-right">
+                        Delivery Date
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(m => m.DeliveryDate, new
+                        {
+                           @class = "form-control NoEndDate",
+                           @id = "PODetailsDeliveryDate",
+                           @readonly = "readonly"
                         })
                     </td>
                 </tr>
@@ -672,8 +680,8 @@
 
             <div class="row">
                 <div class="col-md-12 pt-4 text-center">
-                    <button id="SavePODetails" style="font-size:18px" type="button" class="btn btn-success btn-sm" onclick="SaveDetailsForPO(event)">Save</button>
-                    <button style="font-size:18px" type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
+                    <button id="SavePODetails" style="font-size:18px" type="button" class="btn btn-success btn-sm save_results" onclick="SaveDetailsForPO(event)">Save</button>
+                    <button style="font-size:18px" type="button" class="btn btn-secondary btn-sm cancel_results" data-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
@@ -696,7 +704,7 @@
         $('#tableC').hide();
         $('#tableO').hide();
 
-        $('#lotDiv').hide();
+        //$('#lotDiv').hide();
     });
 
     //$("#addNew").click(function (e) {

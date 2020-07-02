@@ -65,17 +65,15 @@ namespace NtierMvc.DataAccess.Pool
             return msgCode;
         }
 
-        public DataSet GetPRDetailsList(int pageIndex, int pageSize, string SearchTypeId = null, string SearchQuoteNo = null, string SearchSONo = null, string SearchVendorId = null, string SearchVendorName = null, string SearchProductGroup = null)
+        public DataSet GetPRDetailsList(int pageIndex, int pageSize, string SearchVendorTypeId = null, string SearchSupplierId = null, string SearchRMCategory = null, string SearchDeliveryDate = null)
         {
             var parms = new Dictionary<string, object>();
             parms.Add("@pageIndex", pageIndex);
             parms.Add("@pageSize", pageSize);
-            parms.Add("@SearchTypeId", SearchTypeId);
-            parms.Add("@SearchQuoteNo", SearchQuoteNo);
-            parms.Add("@SearchSONo", SearchSONo);
-            parms.Add("@SearchVendorId", SearchVendorId);
-            parms.Add("@SearchVendorName", SearchVendorName);
-            parms.Add("@SearchProductGroup", SearchProductGroup);
+            parms.Add("@SearchVendorTypeId", SearchVendorTypeId);
+            parms.Add("@SearchSupplierId", SearchSupplierId);
+            parms.Add("@SearchRMCategory", SearchRMCategory);
+            parms.Add("@SearchDeliveryDate", SearchDeliveryDate);
 
             string spName = ConfigurationManager.AppSettings["GetPRDetailsList"];
             return _dbAccess.GetDataSet(spName, parms);
@@ -138,22 +136,29 @@ namespace NtierMvc.DataAccess.Pool
 
             if (!string.IsNullOrEmpty(entity.IdentityNo.ToString()) && entity.IdentityNo != 0)
             {
-                string spName = ConfigurationManager.AppSettings["FindPRSetNoDetails"];
+                string spName = ConfigurationManager.AppSettings["DeleteFormTable"];
                 var parms = new Dictionary<string, object>();
-                parms.Add("@PRSetno", entity.IdentityNo);
+                parms.Add("@TableName", "RMPO");
+                parms.Add("@ColumnName1", "PRSetno");
+                parms.Add("@Param1", entity.IdentityNo);
                 _dbAccess.ExecuteNonQuery(spName, parms, "@o_MsgCode", out msgCode);
             }
 
-            if (msgCode == "Duplicate")
-            {
-                msgCode = "Duplicate Record Found";
-                return msgCode;
-            }
-            else
+            if (msgCode == "Deleted Successfully!")
             {
                 msgCode = _dbAccess.BulkUpload(entity.DataRecordTable, entity.DestinationTable);
-                return msgCode;
             }
+            return msgCode;
+
+            //if (msgCode == "Duplicate")
+            //{
+            //    msgCode = "Duplicate Record Found";
+            //    return msgCode;
+            //}
+            //else
+            //{
+
+            //}
         }
 
         public DataSet GetPODetailsList(int pageIndex, int pageSize)
@@ -198,6 +203,38 @@ namespace NtierMvc.DataAccess.Pool
             parms.Add("@PRSetNo", PRSetNo);
             var dt = _dbAccess.GetDataTable(spName, parms);
             return dt;
+        }
+
+        public DataSet GetSavedPODetails(string POSetNo)
+        {
+            var SPName = ConfigurationManager.AppSettings["GetSavedPODetails"];
+            var Params = new Dictionary<string, object>();
+            Params.Add("@POSetno", POSetNo);
+            return _dbAccess.GetDataSet(SPName, Params);
+        }
+
+        public List<DropDownEntity> GetPRNoLists(string DeptName)
+        {
+            var spName = ConfigurationManager.AppSettings["GetPRNoLists"];
+            var Params = new Dictionary<string, object>();
+            Params.Add("@DeptName", DeptName);
+            return DataTableToStringList(_dbAccess.GetDataTable(spName, Params));            
+        }
+
+        public List<DropDownEntity> GetRMCategories(string SupplierId)
+        {
+            var spName = ConfigurationManager.AppSettings["GetRMCategories"];
+            var Params = new Dictionary<string, object>();
+            Params.Add("@SupplierId", SupplierId);
+            return DataTableToStringList(_dbAccess.GetDataTable(spName, Params));
+        }
+
+        public List<DropDownEntity> GetDeliveryDates(string RMCategory)
+        {
+            var spName = ConfigurationManager.AppSettings["GetDeliveryDates"];
+            var Params = new Dictionary<string, object>();
+            Params.Add("@RMCategory", RMCategory);
+            return DataTableToStringList(_dbAccess.GetDataTable(spName, Params));
         }
 
     }

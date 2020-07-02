@@ -1,7 +1,9 @@
-﻿using System.Web.Http;
+﻿using System.Collections.Generic;
+using System.Web.Http;
 using System.Web.Http.Description;
 using NtierMvc.BusinessLogic.Interface;
 using NtierMvc.BusinessLogic.Worker;
+using NtierMvc.Common;
 using NtierMvc.Model;
 using NtierMvc.Model.MRM;
 
@@ -88,9 +90,9 @@ namespace NtierMvc.API.Controllers.Application
         }
 
         [Route("api/MRMDetail/GetPODetailsList")]
-        public IHttpActionResult GetPODetailsList(int pageIndex, int pageSize)
+        public IHttpActionResult GetPODetailsList(int pageIndex, int pageSize, string SearchVendorTypeId = null, string SearchSupplierId = null, string SearchRMCategory = null, string SearchDeliveryDate = null)
         {
-            return Ok(_repository.GetPODetailsList(pageIndex, pageSize));
+            return Ok(_repository.GetPODetailsList(pageIndex, pageSize, SearchVendorTypeId, SearchSupplierId, SearchRMCategory, SearchDeliveryDate));
         }
 
         [HttpPost]
@@ -113,6 +115,41 @@ namespace NtierMvc.API.Controllers.Application
         public IHttpActionResult GetPOListDataForDocument(string PRSetNo)
         {
             return Ok(_repository.GetPOListDataForDocument(PRSetNo));
+        }
+
+        [HttpGet]
+        [Route("api/MRMDetail/GetPOTableDetails")]
+        public IHttpActionResult GetPOTableDetails(string POSetNo)
+        {
+            return Ok(_repository.GetPOTableDetails(POSetNo));
+        }
+
+        [HttpGet]
+        [Route("api/MRMDetail/GetSavedPODetails")]
+        public IHttpActionResult GetSavedPODetails(string POSetNo)
+        {
+            return Ok(_repository.GetSavedPODetails(POSetNo));
+        }
+
+        [Route("api/MRMDetail/GetPRNoList")]
+        [ResponseType(typeof(IEnumerable<DropDownEntity>))]
+        public IHttpActionResult GetPRNoList(string DeptName)
+        {
+            return Ok(_repository.GetPRNoList(DeptName));
+        }
+
+        [Route("api/MRMDetail/GetRMCategories")]
+        [ResponseType(typeof(IEnumerable<DropDownEntity>))]
+        public IHttpActionResult GetRMCategories(string SupplierId)
+        {
+            return Ok(_repository.GetRMCategories(SupplierId));
+        }
+
+        [Route("api/MRMDetail/GetDeliveryDates")]
+        [ResponseType(typeof(IEnumerable<DropDownEntity>))]
+        public IHttpActionResult GetDeliveryDates(string RMCategory)
+        {
+            return Ok(_repository.GetDeliveryDates(RMCategory));
         }
 
     }

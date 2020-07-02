@@ -1,22 +1,132 @@
 ﻿
+
+function GetSupplierIds() {
+    var vendorTypeId = $('#POSearchVendorTypeId').val();
+
+    return $.ajax({
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json',
+        type: 'GET',
+        url: window.GetSuppliers,
+        data: { VendorTypeId: vendorTypeId},
+        success: function (res) {
+            if (res.length > 0) {
+                $("#POSearchSupplierId").empty();
+                $.each(res, function (i, item) {
+                    $("#POSearchSupplierId").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
+                })
+            }
+        },
+        error: function () {
+            alert(result)
+        }
+    });
+}
+
+
+function GetPORMCategories() {
+    var SupplierId = $('#POSearchSupplierId').val();
+
+    return $.ajax({
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json',
+        type: 'GET',
+        url: window.GetRMCategories,
+        data: { SupplierId: SupplierId },
+        success: function (res) {
+            if (res.length > 0) {
+                $("#POSearchRMCategory").empty();
+                $.each(res, function (i, item) {
+                    $("#POSearchRMCategory").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
+                })
+            }
+        },
+        error: function () {
+            alert(result)
+        }
+    });
+}
+
+function GetPODeliveryDates() {
+    var RMCategory = $('#POSearchRMCategory option:selected').text();
+
+    return $.ajax({
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json',
+        type: 'GET',
+        url: window.GetDeliveryDates,
+        data: { RMCategory: RMCategory },
+        success: function (res) {
+            if (res.length > 0) {
+                $("#POSearchDeliveryDate").empty();
+                $.each(res, function (i, item) {
+                    $("#POSearchDeliveryDate").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
+                })
+            }
+        },
+        error: function () {
+            alert(result)
+        }
+    });
+}
+
+
 function changeLotTable() {
 
-    var SupplyTermsText = $('#GESupplyTerms option:selected').text();
+    var SupplyTermsText = $('#SupplyTermsPODetails option:selected').text();
     if (SupplyTermsText == 'Single') {
-        $('#addNew').hide();
-        $('#lotDiv').hide();
         $('.lotColumns').prop("disabled", true);
-        $('.forSingle').val('');
-        //$(".forSingle").prop('disabled', true);    
+        $('.lotColumns').val('');
+        $('#PODetailsDeliveryDate').removeAttr('disabled');
+        $('#PODetailsDeliveryDate').addClass('requiredValidation');
         $('#lotTable > tbody').children('tr:not(:first)').remove();
-        $('.forSingle').removeClass('requiredValidation');
+
+        let PRCat = $('#POCatPRDetails').val();
+        switch (PRCat) {
+            case 'RM':
+                var seen = {};
+                $('#tableRM tbody tr').each(function () {
+                    var txt = $(this).find('td:eq(0) span').text();
+                    if (seen[txt])
+                        $(this).remove();
+                    else
+                        seen[txt] = true;
+                });
+
+                break;
+            case 'BOI':
+                $('.tableBOI').show();
+                break;
+            case 'JW':
+                $('.tableJW').show();
+                break;
+            case 'GI':
+                $('.tableGI').show();
+                break;
+            case 'C':
+                $('.tableC').show();
+                break;
+            case 'O':
+                $('.tableO').show();
+                break;
+            default:
+                break;
+        }
+
+        //$('#addNew').hide();
+        //$('#lotDiv').hide();
+        //$(".forSingle").prop('disabled', true);    
+        //$('.forSingle').removeClass('requiredValidation');
+
     }
     else {
-        $('#addNew').show();
-        $('#lotDiv').show();
         $('.lotColumns').prop("disabled", false);
+        $('#PODetailsDeliveryDate').val('');
+        $('#PODetailsDeliveryDate').attr('disabled');
+        //$('#addNew').show();
+        //$('#lotDiv').show();
         //$(".forSingle").prop('disabled', false);
-        $('.forSingle').addClass('requiredValidation');
+        //$('.forSingle').addClass('requiredValidation');
     }
 }
 
@@ -61,8 +171,30 @@ function FetchtPRDetailsFromPRSetNo() {
                         $('#tableRM tbody').empty();
 
                         $.each(data, function (i, item) {
-                            $('#tableRM > tbody:last-child').append('<tr sn=' + item.SN + '><td><span name="RMSN">' + item.SN + '</span></td><td><span name="RMdescription">' + item.RMdescription + '</span></td><td hidden><span name="RMgrade">' + item.RMgrade + '<span></td><td hidden><span name="RMHardness">' + item.RMHardness + '<span></td><td hidden><span name="RMPSLlevel">' + item.PSLlevel + '<span></td><td hidden><span name="RMOD">' + item.OD + '<span></td><td hidden><span name="RMWT">' + item.WT + '</span></td><td hidden><span name="RMLen">' + item.Len + '</span></td><td hidden><span name="RMQtyReqd">' + item.QtyReqd + '</span></td><td hidden><span name="RMQtyStock">' + item.QtyStock + '</span></td><td><span name="RMPRqty">' + item.PRqty + '</span></td><td><select name="RMLotName" disabled class="form-control lotColumns"><option value="">Select</option><option value="Lot1">Lot1</option><option value="Lot2">Lot2</option><option value="Lot3">Lot3</option></select></td><td><input name="RMLotQty" type="text" disabled class="form-control lotColumns" value="" /></td><td><input name="RMLotDate" type="text" disabled class="form-control lotColumns NoEndDate" value="" /></td><td><span name="RMUnitPrice">' + item.UnitPrice + '</span></td><td><span name="RMPrice" class="PORMTPrice">' + item.TotalPrice + '</span></td><td><input name="PORMDiscount" type="text" class="form-control PORMDiscount col-md-6" value="" onkeyup="CalcTotalWithDiscount(this)" /></td><td><input name="RMTotalPrice" type="text" readonly="readonly" class="form-control PORMFinalPrice" value="' + item.TotalPrice + '" /></td><td hidden><span name="RMDesc1">' + item.Desc1 + '</span></td><td><a href="#" class="addLotPO">Add Lot Details</a></td><td><a href="#" class="removeRMPO">Remove</a></td></tr>');
-
+                            let rowHtml = '<tr sn="' + item.SN +'"><td><span class="RMSN">${item.SN}</span></td><td><span class="RMdescription">${item.RMdescription}</span></td><td hidden><span class="RMgrade">${item.RMgrade}<span></td><td hidden><span class="RMHardness">${item.RMHardness}<span></td><td hidden><span class="RMPSLlevel">${item.PSLlevel}<span></td><td hidden><span class="RMOD">${item.OD}<span></td><td hidden><span class="RMWT">${item.WT}</span></td><td hidden><span class="RMLen">${item.Len}</span></td><td hidden><span class="RMQtyReqd">${item.QtyReqd}</span></td><td hidden><span class="RMQtyStock">${item.QtyStock}</span></td><td><span class="RMPRqty">${item.PRqty}</span></td><td><select disabled class="RMLotName form-control lotColumns"><option value="">Select</option><option value="Lot1">Lot1</option><option value="Lot2">Lot2</option><option value="Lot3">Lot3</option></select></td><td><input type="text" disabled class="form-control lotColumns RMLotQty" value="${item.LotQty}" /></td><td><input type="text" disabled class="form-control lotColumns NoEndDate RMLotDate" value="${item.LotDate}" /></td><td><span class="RMUnitPrice">${item.UnitPrice}</span></td><td><span class="PORMTPrice RMPrice">${item.TotalPrice}</span></td><td><input type="text" class="PORMDiscount form-control col-md-6" value="${item.Discount}" /></td><td><input type="text" class="form-control PORMFinalPrice RMTotalPrice" value="${item.TotalPrice}" /></td><td hidden><span class="RMDesc1">${item.TotalPrice}</span></td><td><a href="#" class="addLotPO">Add Lot Details</a></td><td><a href="#" class="removeRMPO">Remove</a></td></tr>';
+                            // create object from html string
+                            let $row = $(rowHtml)
+                            // set value of the select within this row instance
+                            $row.find('.RMSN').text(item.SN);
+                            $row.find('.RMdescription').text(item.RMdescription);
+                            $row.find('.RMgrade').text(item.RMgrade);
+                            $row.find('.RMHardness').text(item.RMHardness);
+                            $row.find('.RMPSLlevel').text(item.PSLlevel);
+                            $row.find('.RMOD').text(item.OD);
+                            $row.find('.RMWT').text(item.WT);
+                            $row.find('.RMLen').text(item.Len);
+                            $row.find('.RMQtyReqd').text(item.QtyReqd);
+                            $row.find('.RMPRqty').text(item.PRqty);
+                            $row.find('select.lotColumns').val(item.LotName);
+                            $row.find('.RMLotQty').val(item.LotQty);
+                            $row.find('.RMLotDate').val(item.LotDate);
+                            $row.find('.RMUnitPrice').text(item.UnitPrice);
+                            $row.find('.PORMTPrice').text(item.TotalPrice);
+                            $row.find('.PORMDiscount').val(item.Discount);
+                            $row.find('.RMTotalPrice').val(item.TotalPrice);
+                            $row.find('.PORMFinalPrice').val(item.TotalPrice);
+                            // append updated object to DOM
+                            $('#tableRM > tbody:last-child').append($row);
                         })
 
                         $('#imgRequestedBy').attr("src", "/Images/Sign/" + data[0].EntryPersonSign);
@@ -99,14 +231,14 @@ function FetchtPRDetailsFromPRSetNo() {
                             $trNew.find("td:nth-last-child(6)").html('');
                             $trNew.find("td:nth-last-child(7)").html('');
 
-                            var suffix = $trNew.find(':input:first').attr('name').match(/\d+/);
+                            //var suffix = $trNew.find(':input:first').attr('name').match(/\d+/);
 
                             //$trNew.find("td:last").html('<a href="#" class="remove">Remove</a>');
                             $.each($trNew.find(':input'), function (i, val) {
                                 // Replaced Name
-                                var oldN = $(this).attr('name');
-                                var newN = oldN.replace('[' + suffix + ']', '[' + (parseInt(suffix) + 1) + ']');
-                                $(this).attr('name', newN);
+                                //var oldN = $(this).attr('name');
+                                //var newN = oldN.replace('[' + suffix + ']', '[' + (parseInt(suffix) + 1) + ']');
+                                //$(this).attr('name', newN);
                                 //Replaced value
                                 var type = $(this).attr('type');
                                 if (type != undefined && type.toLowerCase() == "text") {
@@ -227,8 +359,13 @@ function SaveDetailsForPO(e) {
         for (var i = 0; i <= lastValue; i++) {
 
             let flg = 1;
-
+            let lotQtyTotal = 0;
+            let PRqty = 0;
+            let DelvryDate = '';
             $.each($(tableSelected + " tbody tr[sn='" + i + "']"), function () {
+
+                lotQtyTotal = parseInt(lotQtyTotal) + parseInt($(this).find('td:eq(12) input').val());
+                PRqty = parseInt($(this).find('td:eq(10) span').text());
 
                 if (flg == 1) {
                     SN = $(this).find('td:eq(0) span').text();
@@ -243,6 +380,13 @@ function SaveDetailsForPO(e) {
                     TotalPrice = $(this).find('td:eq(15) span').text();
                     Discount = $(this).find('td:eq(16) input').val();
                     FinalPrice = $(this).find('td:eq(17) input').val();
+                }
+
+                if ($('#SupplyTermsPODetails option:selected').text() == "Single") {
+                    DelvryDate = $('#PODetailsDeliveryDate').val();
+                }
+                else {
+                    DelvryDate = $(this).find('td:eq(13) input').val();
                 }
 
                 arr.push({
@@ -279,7 +423,7 @@ function SaveDetailsForPO(e) {
                     FinalPrice: FinalPrice,
 
                     WorkNo: $('#PODetailsWorkNo').val(),
-                    DeliveryDate: $('#PODetailsDeliveryDate').val(),
+                    DeliveryDate: DelvryDate,                    
                     POValidity: $('#PODetailsPOValidity').val(),
                     PORevNo: $('#PODetailsPORevNo').val(),
                     CostCentre: $('#PODetailsCostCentre').val(),
@@ -290,7 +434,10 @@ function SaveDetailsForPO(e) {
                 flg++;
             });
 
-
+            if (lotQtyTotal != PRqty) {
+                alert("LotWise Quantity Total should be Equal to Quantity for each item");
+                return;
+            }
         }
 
         var data = JSON.stringify({

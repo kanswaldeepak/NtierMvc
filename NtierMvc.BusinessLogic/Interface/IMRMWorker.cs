@@ -1,4 +1,5 @@
-﻿using NtierMvc.Model;
+﻿using NtierMvc.Common;
+using NtierMvc.Model;
 using NtierMvc.Model.MRM;
 using System.Collections.Generic;
 using System.Data;
@@ -22,8 +23,12 @@ namespace NtierMvc.BusinessLogic.Interface
         DataTable GetPODetailForDocument(string PRSetNo);
         DataTable GetPOListDataForDocument(string PRSetNo);
         string SavePODetailsList(BulkUploadEntity bEntity);
-        PODetailEntityDetails GetPODetailsList(int pageIndex, int pageSize);
+        PODetailEntityDetails GetPODetailsList(int pageIndex, int pageSize, string SearchVendorTypeId = null, string SearchSupplierId = null, string SearchRMCategory = null, string SearchDeliveryDate = null);
         PODetailEntity GetPODetailsForPopup(PODetailEntity Model);
-
+        PODetailEntity GetSavedPODetails(string POSetNo);
+        List<PODetailEntity> GetPOTableDetails(string POSetNo);
+        List<DropDownEntity> GetPRNoList(string DeptName);
+        List<DropDownEntity> GetRMCategories(string SupplierId);
+        List<DropDownEntity> GetDeliveryDates(string RMCategory);
     }
 }

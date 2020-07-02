@@ -4,121 +4,9 @@
     Layout = "~/Views/Shared/_LayoutMaster.cshtml";
 }
 
+<link href="~/assets/css/tableStyle.css" rel="stylesheet" />
 <link href="~/Content/Site.css" rel="stylesheet" />
 <script src="~/Scripts/tabs.js"></script>
-
-<style type="text/css">
-    form .form-group .fileinput {
-        width: 100%;
-    }
-
-    .modal-header .close {
-        padding: 0px !important;
-        margin: 0px !important;
-        margin-top: 10px !important;
-    }
-
-    form .form-group .error {
-        display: none;
-        font-size: 12px;
-        font-style: italic;
-        color: #e9573f;
-    }
-
-    form .form-group .validationError {
-        display: none;
-        font-size: 12px;
-        font-style: italic;
-        color: #e9573f;
-    }
-
-    .errorClass {
-        border: 1px solid red !important;
-    }
-
-    .ro-backcolor {
-        background-color: #fff !important;
-    }
-
-    /*For fixed table*/
-    .wrapper {
-        width: 100%;
-        position: relative;
-        border: 1px solid #000;
-        background: #faebd7;
-        overflow: hidden;
-        border-radius: 7px;
-    }
-
-    .container {
-        overflow-y: auto;
-        height: 500px;
-        border-top: 41px solid transparent;
-        border-bottom: 41px solid transparent;
-        max-width: 1400px;
-        margin-bottom: 25px;
-    }
-
-    table {
-        border-spacing: 0;
-        border-collapse: collapse;
-        width: 100%;
-    }
-
-    td + td {
-        border-left: 1px solid #fff;
-    }
-
-    .tblhead {
-        border-bottom: 1px solid #fff;
-        /*background: #faebd7;*/
-        color: transparent;
-        padding: 2px;
-    }
-
-    thead tr th,
-    tfoot tr td {
-        height: 0;
-        line-height: 0;
-        margin: 0;
-        padding-top: 0;
-        padding-bottom: 0;
-        /*color: transparent;*/
-        border: none;
-        white-space: nowrap;
-    }
-
-        thead tr th div,
-        tfoot tr td div {
-            position: absolute;
-            color: #000;
-            height: 40px;
-            padding: 10px;
-            margin-left: -10px;
-            line-height: normal;
-            width: 100%;
-            z-index: 2;
-            text-align: left;
-            font-weight: bold;
-        }
-
-        thead tr th div {
-            top: 0;
-        }
-
-        tfoot tr td div {
-            bottom: 0;
-        }
-
-        thead tr th:first-child div,
-        tfoot tr td:first-child div {
-            border-left: none;
-        }
-
-    .pagination {
-        margin: 0px;
-    }
-</style>
 
 <div ng-controller="MRMController">
     <div class="tab">
@@ -138,8 +26,8 @@
     </div>
 
     @*<div id="BillManagement" class="tabcontent">
-        @Html.Partial("PartialBillManagement")
-    </div>*@
+            @Html.Partial("PartialBillManagement")
+        </div>*@
 </div>
 
 <script>

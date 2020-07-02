@@ -25,12 +25,14 @@
         </tr>
         <tr>
             <td></td>
-            @*<td>
+            <td>
                     @Html.DropDownList("VendorType", new SelectList(@ViewBag.ListVendorType, "DataStringValueField", "DataTextField", "Select"),
                                new
                                {
                                    @class = "form-control",
-                                   ng_model = "SearchVendorTypeId"
+                                   @id = "POSearchVendorTypeId",
+                                   ng_model= "SearchVendorTypeId",
+                                   @onchange="GetSupplierIds()"
                                })
                 </td>
                 <td>
@@ -38,7 +40,9 @@
                                new
                                {
                                    @class = "form-control",
-                                   ng_model = "SearchSupplierId"
+                                   @id = "POSearchSupplierId",
+                                   ng_model = "SearchSupplierId",
+                                   @onchange = "GetPORMCategories()"
                                })
                 </td>
                 <td>
@@ -46,23 +50,26 @@
                                new
                                {
                                    @class = "form-control",
-                                   ng_model = "SearchRMCategory"
+                                   @id = "POSearchRMCategory",
+                                   ng_model = "SearchRMCategory",
+                                   @onchange = "GetPODeliveryDates()"
                                })
                 </td>
                 <td>
                     @Html.DropDownList("DeliveryDate", new SelectList(@ViewBag.ListDeliveryDate, "DataStringValueField", "DataTextField", "Select"),
-                                               new
-                                               {
-                                                   @class = "form-control",
-                                                   ng_model = "SearchDeliveryDate"
-                                               })
+                            new
+                            {
+                                @class = "form-control",
+                                @id = "POSearchDeliveryDate",
+                                ng_model = "SearchDeliveryDate"
+                            })
                 </td>
             <td></td>
             <td>
                 <button class="btn btn-link" type="button" id="btnSearch" ng-click="FetchPODetailsList()">
                     <i class="fa fa-search"></i>
                 </button>
-            </td>*@
+            </td>
         </tr>
     </table>
 
@@ -76,6 +83,12 @@
             <table>
                 <thead class="tblhead">
                     <tr>
+                        <th>
+                            Action
+                            <div class="c1">
+                                Action
+                            </div>
+                        </th>
                         <th>
                             PO No
                             <div class="c2">
@@ -107,12 +120,6 @@
                             </div>
                         </th>
                         <th>
-                            TotalPRSetPrice
-                            <div class="c2">
-                                TotalPRSetPrice
-                            </div>
-                        </th>
-                        <th>
                             Download
                             <div class="c2">
                                 Download
@@ -122,7 +129,17 @@
                 </thead>
                 <tbody>
                     <tr ng-repeat="L in POList">
-                     
+                        <td>
+                            <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="VIEW" ng-click="LoadVendorPOViewPopup(L.POSetno)">
+                                <i class="fa fa-eye"></i>
+                            </button>
+                            <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="EDIT" ng-click="LoadVendorPOEditPopup(L.POSetno)">
+                                <i class="fa fa-edit"></i>
+                            </button>
+                            <button type="button" class="btn btn-outline-danger btn-sm" data-toggle="tooltip" data-placement="bottom" title="DELETE" ng-click="DeleteVendorPODetails(L.POSetno)">
+                                <i class="fa fa-trash"></i>
+                            </button>
+                        </td>
                         <td>
                             {{L.PONo}}
                         </td>
@@ -142,10 +159,7 @@
                             {{L.POValidity}}
                         </td>
                         <td>
-                            {{L.TotalPRSetPrice}}
-                        </td>
-                        <td>
-                            <button class="btn btn-link btn-sm" value="{{L.PRSetno}}" onclick="CreateDocumentForPODetail(this)">
+                            <button class="btn btn-link btn-sm" value="{{L.POSetno}}" onclick="CreateDocumentForPODetail(this)">
                                 <img src="~/Images/excel.png" height="30px" />
                             </button>
                         </td>
@@ -196,9 +210,14 @@
     $(document).ready(function () {
         window.FetchPODetailsList = '@Url.Action("FetchPODetailsList", "MRM")';
         window.PODetailsPopup = '@Url.Action("PODetailsPopup", "MRM")';
+        window.POTableDetails = '@Url.Action("GetPOTableDetails", "MRM")';
         window.GetPRDetailsFromPRSetNo = '@Url.Action("GetPRTableDetails", "MRM")';
         window.SavePODetailsList = '@Url.Action("SavePODetailsList", "MRM")';
         window.CreateDocumentForPO = '@Url.Action("CreateDocumentForPO", "MRM")';
+        window.DeleteVendorPODetails = '@Url.Action("DeleteVendorPODetails", "MRM")';
+        window.GetSuppliers = '@Url.Action("GetSuppliers", "MRM")';
+        window.GetRMCategories = '@Url.Action("GetRMCategories", "MRM")';
+        window.GetDeliveryDates = '@Url.Action("GetDeliveryDates", "MRM")';
 
     });
 
@@ -211,7 +230,7 @@
         $('#btnPRPDetails').hide();
         }
 
-    
+
 function CreateDocumentForPODetail(e) {
 
     var PRSetNo = e.value;

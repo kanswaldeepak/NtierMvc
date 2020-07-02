@@ -27,6 +27,38 @@ namespace NtierMvc.Areas.MRM.Models
             return Model;
         }
 
+        public PODetailEntity GetSavedPODetails(string POSetNo)
+        {
+            var baseAddress = "MRMDetail";
+            PODetailEntity Model = new PODetailEntity();
+            using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
+            {
+                HttpResponseMessage response = client.GetAsync(baseAddress + "/GetSavedPODetails?POSetNo="+ POSetNo).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    var data = response.Content.ReadAsStringAsync().Result;
+                    Model = JsonConvert.DeserializeObject<PODetailEntity>(data);
+                }
+            }
+            return Model;
+        }
+
+        public List<PODetailEntity> GetPOTableDetails(string POSetNo)
+        {
+            var baseAddress = "MRMDetail";
+            List<PODetailEntity> Model = new List<PODetailEntity>();
+            using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
+            {
+                HttpResponseMessage response = client.GetAsync(baseAddress + "/GetPOTableDetails?POSetNo=" + POSetNo).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    var data = response.Content.ReadAsStringAsync().Result;
+                    Model = JsonConvert.DeserializeObject<List<PODetailEntity>>(data);
+                }
+            }
+            return Model;
+        }
+
         public List<PRDetailEntity> GetPRTableDetails(string PRSetno)
         {
             var baseAddress = "MRMDetail";
@@ -172,13 +204,13 @@ namespace NtierMvc.Areas.MRM.Models
             return result;
         }
 
-        public PODetailEntityDetails GetPODetailsList(int pageIndex, int pageSize)
+        public PODetailEntityDetails GetPODetailsList(int pageIndex, int pageSize, string SearchVendorTypeId = null, string SearchSupplierId = null, string SearchRMCategory = null, string SearchDeliveryDate = null)
         {
             var baseAddress = "MRMDetail";
             PODetailEntityDetails prDetails = new PODetailEntityDetails();
             using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
             {
-                HttpResponseMessage response = client.GetAsync(baseAddress + "/GetPODetailsList?pageIndex=" + pageIndex + "&pageSize=" + pageSize).Result;
+                HttpResponseMessage response = client.GetAsync(baseAddress + "/GetPODetailsList?pageIndex=" + pageIndex + "&pageSize=" + pageSize + "&SearchVendorTypeId=" + SearchVendorTypeId + "&SearchSupplierId=" + SearchSupplierId + "&SearchRMCategory=" + SearchRMCategory + "&SearchDeliveryDate=" + SearchDeliveryDate).Result;
                 if (response.IsSuccessStatusCode)
                 {
                     var data = response.Content.ReadAsStringAsync().Result;
@@ -233,6 +265,54 @@ namespace NtierMvc.Areas.MRM.Models
                 }
             }
             return lstTable;
+        }
+
+        public List<DropDownEntity> GetPRNoList(string DeptName)
+        {
+            List<DropDownEntity> lstDropDownEntity = new List<DropDownEntity>();
+            var baseAddress = "MRMDetail";
+            using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
+            {
+                HttpResponseMessage response = client.GetAsync(baseAddress + "/GetPRNoList?DeptName="+DeptName).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    var data = response.Content.ReadAsStringAsync().Result;
+                    lstDropDownEntity = JsonConvert.DeserializeObject<List<DropDownEntity>>(data);
+                }
+            }
+            return lstDropDownEntity;
+        }
+
+        public List<DropDownEntity> GetRMCategories(string SupplierId)
+        {
+            List<DropDownEntity> lstDropDownEntity = new List<DropDownEntity>();
+            var baseAddress = "MRMDetail";
+            using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
+            {
+                HttpResponseMessage response = client.GetAsync(baseAddress + "/GetRMCategories?SupplierId=" + SupplierId).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    var data = response.Content.ReadAsStringAsync().Result;
+                    lstDropDownEntity = JsonConvert.DeserializeObject<List<DropDownEntity>>(data);
+                }
+            }
+            return lstDropDownEntity;
+        }
+
+        public List<DropDownEntity> GetDeliveryDates(string RMCategory)
+        {
+            List<DropDownEntity> lstDropDownEntity = new List<DropDownEntity>();
+            var baseAddress = "MRMDetail";
+            using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
+            {
+                HttpResponseMessage response = client.GetAsync(baseAddress + "/GetDeliveryDates?RMCategory=" + RMCategory).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    var data = response.Content.ReadAsStringAsync().Result;
+                    lstDropDownEntity = JsonConvert.DeserializeObject<List<DropDownEntity>>(data);
+                }
+            }
+            return lstDropDownEntity;
         }
 
     }
