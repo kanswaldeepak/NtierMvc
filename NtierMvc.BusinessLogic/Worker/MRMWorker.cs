@@ -130,7 +130,7 @@ namespace NtierMvc.BusinessLogic.Worker
             return result;
         }
 
-        public PRDetailEntityDetails GetPRDetailsList(int pageIndex, int pageSize, string SearchVendorTypeId = null, string SearchSupplierId = null, string SearchRMCategory = null, string SearchDeliveryDate = null)
+        public PRDetailEntityDetails GetPRDetailsList(int pageIndex, int pageSize, string DeptName, string SearchVendorTypeId = null, string SearchSupplierId = null, string SearchRMCategory = null, string SearchDeliveryDate = null)
         {
             try
             {
@@ -161,8 +161,9 @@ namespace NtierMvc.BusinessLogic.Worker
                                 obj.DeliveryDate = dr1.IsNull("DeliveryDate") ? string.Empty : Convert.ToString(dr1["DeliveryDate"]);
                                 obj.SignStatus = dr1.IsNull("SignStatus") ? string.Empty : Convert.ToString(dr1["SignStatus"]);
                                 obj.PRStatus = dr1.IsNull("PRStatus") ? string.Empty : Convert.ToString(dr1["PRStatus"]);
-                                obj.LogInDeptName = DeptName;
+                                
                                 obj.DeptName = dr1.IsNull("DeptName") ? string.Empty : Convert.ToString(dr1["DeptName"]);
+                                obj.LogInDeptName = DeptName;
                                 obj.PurchasePerson = dr1.IsNull("PurchasePerson") ? string.Empty : Convert.ToString(dr1["PurchasePerson"]);
 
                                 prDetailEntity.lstPREntity.Add(obj);
@@ -279,14 +280,14 @@ namespace NtierMvc.BusinessLogic.Worker
             return dt;
         }
 
-        public PODetailEntityDetails GetPODetailsList(int pageIndex, int pageSize)
+        public PODetailEntityDetails GetPODetailsList(int pageIndex, int pageSize, string SearchVendorTypeId = null, string SearchSupplierId = null, string SearchRMCategory = null, string SearchDeliveryDate = null)
         {
             try
             {
                 PODetailEntityDetails poDetailEntity = new PODetailEntityDetails();
                 poDetailEntity.lstPOEntity = new List<PODetailEntity>();
 
-                DataSet ds = _repository.GetPODetailsList(pageIndex, pageSize);
+                DataSet ds = _repository.GetPODetailsList(pageIndex, pageSize, SearchVendorTypeId, SearchSupplierId, SearchRMCategory, SearchDeliveryDate);
 
                 if (ds.Tables.Count > 0)
                 {
@@ -307,7 +308,7 @@ namespace NtierMvc.BusinessLogic.Worker
                                 obj.WorkNo = dr1.IsNull("WorkNo") ? string.Empty : Convert.ToString(dr1["WorkNo"]);
                                 obj.DeliveryDate = dr1.IsNull("DeliveryDate") ? string.Empty : Convert.ToString(dr1["DeliveryDate"]);
                                 obj.POValidity = dr1.IsNull("POValidity") ? string.Empty : Convert.ToString(dr1["POValidity"]);
-                                obj.TotalPRSetPrice = dr1.IsNull("TotalPRSetPrice") ? "" : Convert.ToString(dr1["TotalPRSetPrice"]);
+                                //obj.TotalPRSetPrice = dr1.IsNull("TotalPRSetPrice") ? "" : Convert.ToString(dr1["TotalPRSetPrice"]);
                                
                                 poDetailEntity.lstPOEntity.Add(obj);
                             }

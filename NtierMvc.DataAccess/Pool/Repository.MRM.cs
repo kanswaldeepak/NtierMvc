@@ -161,17 +161,15 @@ namespace NtierMvc.DataAccess.Pool
             //}
         }
 
-        public DataSet GetPODetailsList(int pageIndex, int pageSize)
+        public DataSet GetPODetailsList(int pageIndex, int pageSize, string SearchVendorTypeId = null, string SearchSupplierId = null, string SearchRMCategory = null, string SearchDeliveryDate = null)
         {
             var parms = new Dictionary<string, object>();
             parms.Add("@pageIndex", pageIndex);
             parms.Add("@pageSize", pageSize);
-            //parms.Add("@SearchTypeId", SearchTypeId);
-            //parms.Add("@SearchQuoteNo", SearchQuoteNo);
-            //parms.Add("@SearchSONo", SearchSONo);
-            //parms.Add("@SearchVendorId", SearchVendorId);
-            //parms.Add("@SearchVendorName", SearchVendorName);
-            //parms.Add("@SearchProductGroup", SearchProductGroup);
+            parms.Add("@SearchVendorTypeId", SearchVendorTypeId);
+            parms.Add("@SearchSupplierId", SearchSupplierId);
+            parms.Add("@SearchRMCategory", SearchRMCategory);
+            parms.Add("@SearchDeliveryDate", SearchDeliveryDate);
 
             string spName = ConfigurationManager.AppSettings["GetPODetailsList"];
             return _dbAccess.GetDataSet(spName, parms);

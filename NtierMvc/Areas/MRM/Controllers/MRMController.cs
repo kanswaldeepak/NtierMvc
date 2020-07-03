@@ -50,19 +50,17 @@ namespace NtierMvc.Areas.MRM.Controllers
             return PartialView(prObj);
         }
 
-        public JsonResult FetchPRDetailsList(string pageIndex, string pageSize, string SearchTypeId = null, string SearchQuoteNo = null, string SearchSONo = null, string SearchVendorId = null, string SearchVendorName = null, string SearchProductGroup = null)
+        public JsonResult FetchPRDetailsList(string pageIndex, string pageSize, string SearchVendorTypeId = null, string SearchSupplierId = null, string SearchRMCategory = null, string SearchDeliveryDate = null)
         {
-            SearchTypeId = SearchTypeId == null ? string.Empty : SearchTypeId;
-            SearchQuoteNo = SearchQuoteNo == null ? string.Empty : SearchQuoteNo;
-            SearchSONo = SearchSONo == null ? string.Empty : SearchSONo;
-            SearchVendorId = SearchVendorId == null ? string.Empty : SearchVendorId;
-            SearchVendorName = SearchVendorName == null ? string.Empty : SearchVendorName;
-            SearchProductGroup = SearchProductGroup == null ? string.Empty : SearchProductGroup;
+            SearchVendorTypeId = SearchVendorTypeId == null ? string.Empty : SearchVendorTypeId;
+            SearchSupplierId = SearchSupplierId == null ? string.Empty : SearchSupplierId;
+            SearchRMCategory = SearchRMCategory == null ? string.Empty : SearchRMCategory;
+            SearchDeliveryDate = SearchDeliveryDate == null ? string.Empty : SearchDeliveryDate;
 
             var UserDetails = (UserEntity)Session["UserModel"];
 
             PRDetailEntityDetails prEntity = new PRDetailEntityDetails();
-            prEntity = objManager.GetPRDetailsList(Convert.ToInt32(pageIndex), Convert.ToInt32(pageSize), UserDetails.DeptName, SearchTypeId, SearchQuoteNo, SearchSONo, SearchVendorId, SearchVendorName, SearchProductGroup);
+            prEntity = objManager.GetPRDetailsList(Convert.ToInt32(pageIndex), Convert.ToInt32(pageSize), UserDetails.DeptName, SearchVendorTypeId, SearchSupplierId, SearchRMCategory, SearchDeliveryDate);
             return new JsonResult { Data = prEntity, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 

@@ -39,9 +39,9 @@ namespace NtierMvc.API.Controllers.Application
         }
 
         [Route("api/MRMDetail/GetPRDetailsList")]
-        public IHttpActionResult GetPRDetailsList(int pageIndex, int pageSize, string DeptName, string SearchTypeId = null, string SearchQuoteNo = null, string SearchSONo = null, string SearchVendorId = null, string SearchVendorName = null, string SearchProductGroup = null)
+        public IHttpActionResult GetPRDetailsList(int pageIndex, int pageSize, string DeptName, string SearchVendorTypeId = null, string SearchSupplierId = null, string SearchRMCategory = null, string SearchDeliveryDate = null)
         {
-            return Ok(_repository.GetPRDetailsList(pageIndex, pageSize, DeptName, SearchTypeId, SearchQuoteNo, SearchSONo, SearchVendorId, SearchVendorName, SearchProductGroup));
+            return Ok(_repository.GetPRDetailsList(pageIndex, pageSize, DeptName, SearchVendorTypeId, SearchSupplierId, SearchRMCategory, SearchDeliveryDate));
         }
 
         [HttpGet]
