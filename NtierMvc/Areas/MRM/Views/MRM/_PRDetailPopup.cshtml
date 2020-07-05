@@ -658,13 +658,12 @@
                                })
                     </td>
                     <td>
-                        @Html.TextBoxFor(m => m.PRFavouredOn, new
-                        {
-                            @class = "form-control",
-                            @id = "PRDetailsPRFavouredOn",
-                            @placeholder = "PR Favoured On",
-                            @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
-                        })
+                        @Html.DropDownListFor(m => m.PRFavouredOn, new SelectList(@ViewBag.ListSupplier, "DataStringValueField", "DataTextField", "Select"), new
+                   {
+                       @class = "form-control ml-2 requiredValidation clearField",
+                       @id = "PRDetailsPRFavouredOn",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                   })
                     </td>
                 </tr>
                 <tr>

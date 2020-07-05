@@ -1,4 +1,43 @@
 ﻿
+function getDdlDetailsForList(selectObject) {
+
+    var SelectedId = selectObject;
+    var SelectedVal = $('#' + selectObject).val();
+    $.ajax({
+        type: 'POST',
+        url: window.GetDdlDetailsForList,
+        data: JSON.stringify({ SelectedVal: SelectedVal, SelectedId: SelectedId }),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (data) {
+
+            if (SelectedId == 'TypeList') {
+                $('#BMVendorNatureList').empty();
+                $.each(data, function (i, item) {
+                    $("#BMVendorNatureList").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
+                })
+            }
+            else if (SelectedId == 'VendorNatureList') {
+                $('#BMVendorNameList').empty();
+                $.each(data, function (i, item) {
+                    $("#BMVendorNameList").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
+                })
+            }
+            else if (SelectedId == 'VendorNameList') {
+                $('#BMBillNoList').empty();
+                $.each(data, function (i, item) {
+                    $("#BMBillNoList").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
+                })
+            }
+
+
+        },
+        error: function (x, e) {
+            alert('Some error is occurred, Please try after some time.');
+        }
+    })
+}
+
 function GetDetailForGateEntry() {
     var POSetno = $('#GEVendorPONO').val();
 

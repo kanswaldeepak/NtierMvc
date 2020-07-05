@@ -1,5 +1,4 @@
 ﻿
-
 <div class="row">
     <div class="col-md-2">
         <div class="form-group">
@@ -112,7 +111,14 @@
 <script>
 
     $(function () {
-        
+
+        $(document).ready(function () {
+            window.GetSoNosFromVendorId = '@Url.Action("GetSoNosFromVendorId", "DesignEng", new { Area = "DesignEng" })';
+            window.GenerateExcelReport = '@Url.Action("GenerateExcelReport", "DesignEng", new { Area = "DesignEng" })';
+            window.GetVendorIdFromQuoteType = '@Url.Action("GetVendorIdFromQuoteType", "DesignEng", new { Area = "DesignEng" })';
+
+        });
+
         $('#SoNoReport').chosen({
             width: "210px",
             placeholder_text_single: "Select SoNo",
@@ -129,7 +135,7 @@
     });
 
 $("#VendorIdReport").chosen().change(
-        
+
     function GetSoNosFromVendorId() {
         var VendorId = '';
          var x=document.getElementById("VendorIdReport");
@@ -145,7 +151,7 @@ $("#VendorIdReport").chosen().change(
 
         $.ajax({
             type: 'POST',
-            url: '/DesignEng/DesignEng/GetSoNosFromVendorId',
+            url: window.GetSoNosFromVendorId,
             data: JSON.stringify({ VendorId: VendorId }),
             contentType: "application/json; charset=utf-8",
             success: function (data) {
@@ -169,7 +175,7 @@ $("#VendorIdReport").chosen().change(
 
         $.ajax({
             type: 'POST',
-            url: '/DesignEng/DesignEng/GetVendorIdFromQuoteType',
+            url: window.GetVendorIdFromQuoteType,
             data: JSON.stringify({ ReportType: ReportType }),
             contentType: "application/json; charset=utf-8",
             success: function (data) {
@@ -207,7 +213,7 @@ $("#VendorIdReport").chosen().change(
 
     $.ajax({
         type: 'POST',
-        url: '/DesignEng/DesignEng/GenerateExcelReport',
+        url: window.GenerateExcelReport,
         data: JSON.stringify({ ReportType: ReportType, DateFrom: dateFrom, DateTo: dateTo, VendorId : VendorId, SoNo : SoNo }),
         contentType: "application/json; charset=utf-8",
         success: function (data) {

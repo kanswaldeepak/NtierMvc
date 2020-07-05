@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Web.Mvc;
@@ -36,10 +37,25 @@ namespace NtierMvc.Areas.MRM.Controllers
             ViewBag.ListVendorType = model.GetMasterTableStringList("Master.Vendor", "Id", "VendorType", "", "", GeneralConstants.ListTypeD);
             ViewBag.ListSupplierId = model.GetMasterTableStringList("Clientele_Master", "Id", "VendorID", "", "", GeneralConstants.ListTypeD);
             ViewBag.ListRMCategory = model.GetMasterTableStringList("Master.Taxonomy", "DropDownID", "ObjectName", "PRCat", "Property", GeneralConstants.ListTypeD);
-            ViewBag.ListDeliveryDate = model.GetMasterTableStringList("PurchaseRequest", "DeliveryDate", "DeliveryDate", "", "", GeneralConstants.ListTypeD);
+            List<DropDownEntity> newlst = model.GetMasterTableStringList("PurchaseRequest", "DeliveryDate", "DeliveryDate", "", "", GeneralConstants.ListTypeD);
 
+            CultureInfo provider = CultureInfo.InvariantCulture;
+            DateTime dateTime;
+            foreach (var item in newlst)
+            {
+                if (DateTime.TryParse(item.DataStringValueField, out dateTime))
+                {
+                    item.DataStringValueField = Convert.ToDateTime(item.DataStringValueField).ToString("MM-dd-yyyy");
+                    item.DataTextField = Convert.ToDateTime(item.DataTextField).ToString("MM-dd-yyyy");
+                }
+            }
+
+            ViewBag.ListDeliveryDate = newlst;
             var UserDetails = (UserEntity)Session["UserModel"];
             ViewBag.DeptName = UserDetails.DeptName;
+
+            
+
             return View();
         }
 
@@ -94,7 +110,7 @@ namespace NtierMvc.Areas.MRM.Controllers
 
         public ActionResult PRDetailPopup(string actionType, string PRSetno)
         {
-            ViewBag.ListSupplier = model.GetMasterTableStringList("Clientele_Master", "Id", "VendorId", "", "", GeneralConstants.ListTypeN);
+            ViewBag.ListSupplier = model.GetMasterTableStringList("ApprovedSupplier", "Id", "SupplierName", "", "", GeneralConstants.ListTypeN);
             ViewBag.ListCurrency = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "Currency", "Property", GeneralConstants.ListTypeN);
             ViewBag.ListPriority = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "Priority", "Property", GeneralConstants.ListTypeN);
             ViewBag.ListRMcat = model.GetMasterTableStringList("Master.RMCategory", "CategoryName", "CategoryName", "", "", GeneralConstants.ListTypeN);
@@ -701,7 +717,7 @@ namespace NtierMvc.Areas.MRM.Controllers
             }
         }
 
-        public JsonResult FetchPODetailsList(string pageIndex, string pageSize, string SearchVendorTypeId=null, string SearchSupplierId = null, string SearchRMCategory = null, string SearchDeliveryDate = null)
+        public JsonResult FetchPODetailsList(string pageIndex, string pageSize, string SearchVendorTypeId = null, string SearchSupplierId = null, string SearchRMCategory = null, string SearchDeliveryDate = null)
         {
             SearchVendorTypeId = SearchVendorTypeId == null ? string.Empty : SearchVendorTypeId;
             SearchSupplierId = SearchSupplierId == null ? string.Empty : SearchSupplierId;
@@ -887,7 +903,7 @@ namespace NtierMvc.Areas.MRM.Controllers
         {
             if (ModelState.IsValid)
             {
-                string msgCode = model.DeleteFormTable("RMPO","POSetNo",id);
+                string msgCode = model.DeleteFormTable("RMPO", "POSetNo", id);
                 if (msgCode != "")
                 {
                     //return RedirectToAction("Technical");
@@ -911,7 +927,7 @@ namespace NtierMvc.Areas.MRM.Controllers
         {
             try
             {
-                List<DropDownEntity> ddl = model.GetMasterTableStringList("Clientele_Master", "Id", "VendorId", VendorTypeId, "VendorTypeId", GeneralConstants.ListTypeD);
+                List<DropDownEntity> ddl = model.GetDropDownList("Clientele_Master", GeneralConstants.ListTypeD, "Id", "VendorId", VendorTypeId, "VendorTypeId");
                 return new JsonResult { Data = ddl, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
             }
             catch (Exception ex)
@@ -942,6 +958,18 @@ namespace NtierMvc.Areas.MRM.Controllers
             try
             {
                 List<DropDownEntity> ddl = objManager.GetDeliveryDates(RMCategory);
+
+                CultureInfo provider = CultureInfo.InvariantCulture;
+                DateTime dateTime;
+                foreach (var item in ddl)
+                {
+                    if (DateTime.TryParse(item.DataStringValueField, out dateTime))
+                    {
+                        item.DataStringValueField = Convert.ToDateTime(item.DataStringValueField).ToString("MM-dd-yyyy");
+                        item.DataTextField = Convert.ToDateTime(item.DataTextField).ToString("MM-dd-yyyy");
+                    }
+                }
+
                 return new JsonResult { Data = ddl, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
             }
             catch (Exception ex)

@@ -30,6 +30,7 @@
                            new
                            {
                                @class = "form-control",
+                               @id = "PRSearchVendorTypeId",
                                ng_model = "PRSearchVendorTypeId"
                            })
             </td>
@@ -38,7 +39,9 @@
                            new
                            {
                                @class = "form-control",
-                               ng_model = "PRSearchSupplierId"
+                               @id = "PRSearchSupplierId",
+                               ng_model = "PRSearchSupplierId",
+                               @multiple = "true"
                            })
             </td>
             <td>
@@ -46,16 +49,20 @@
                            new
                            {
                                @class = "form-control",
-                               ng_model = "PRSearchRMCategory"
+                               @id = "PRSearchRMCategory",
+                               ng_model = "PRSearchRMCategory",
+                               @multiple = "true"
                            })
             </td>
             <td>
                 @Html.DropDownList("DeliveryDate", new SelectList(@ViewBag.ListDeliveryDate, "DataStringValueField", "DataTextField", "Select"),
-                                           new
-                                           {
-                                               @class = "form-control",
-                                               ng_model = "PRSearchDeliveryDate"
-                                           })
+                            new
+                            {
+                                @class = "form-control",
+                                @id = "PRSearchDeliveryDate",
+                                ng_model = "PRSearchDeliveryDate",
+                                @multiple = "true"
+                            })
             </td>
             <td></td>
             <td>
@@ -216,13 +223,13 @@
                                 </div>
                             </div>
                         </td>
-
                     </tr>
                 </tfoot>
             </table>
         </div>
     </div>
 </div>
+<script src="~/Areas/MRM/Scripts/PRDetailPopUp.js"></script>
 <script type="text/javascript">
 
     $(document).ready(function () {
@@ -231,11 +238,140 @@
         window.GetPRTableDetails = '@Url.Action("GetPRTableDetails", "MRM")';
         window.SavePRDetailsList = '@Url.Action("SavePRDetailsList", "MRM")';
         window.CreateDownloadDocument = '@Url.Action("CreateDownloadDocument", "MRM")';
+        window.GetSuppliers = '@Url.Action("GetSuppliers", "MRM")';
+        window.GetRMCategories = '@Url.Action("GetRMCategories", "MRM")';
+        window.GetDeliveryDates = '@Url.Action("GetDeliveryDates", "MRM")';
+
+        $('#PRSearchSupplierId').chosen({
+            width: "210px",
+            placeholder_text_single: "Select Supplier Id",
+            placeholder_text_multiple: "Select Supplier Ids"
+        });
+
+        $('#PRSearchRMCategory').chosen({
+            width: "210px",
+            placeholder_text_single: "Select RMCategory",
+            placeholder_text_multiple: "Select RMCategory"
+        });
+
+        $('#PRSearchDeliveryDate').chosen({
+            width: "210px",
+            placeholder_text_single: "Select Delivery Date",
+            placeholder_text_multiple: "Select Delivery Date"
+        });
+
+
+        $("#PRSearchVendorTypeId").chosen().change(
+            function PRGetSupplierIds() {
+                var vendorTypeId = $('#PRSearchVendorTypeId').val();
+
+                return $.ajax({
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json',
+                    type: 'GET',
+                    url: window.GetSuppliers,
+                    data: { VendorTypeId: vendorTypeId },
+                    success: function (res) {
+                        if (res.length > 0) {
+                            $("#PRSearchSupplierId").empty();
+                            $.each(res, function (i, item) {
+                                $("#PRSearchSupplierId").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
+                                $("#PRSearchSupplierId").trigger("chosen:updated");
+                            })
+                        }
+                    },
+                    error: function () {
+                        alert(result)
+                    }
+                });
+            }
+        );
+
+
+        $('#PRSearchSupplierId').chosen().change(
+            function PRGetPORMCategories() {
+                var SupplierId = '';
+                var x = document.getElementById("PRSearchSupplierId");
+                for (var i = 0; i < x.options.length; i++) {
+                    if (x.options[i].selected == true) {
+                        //alert(x.options[i].value);
+                        SupplierId = SupplierId + x.options[i].value + ',';
+                    }
+                }
+
+                //VendorId = VendorId.slice(0, -1);
+                SupplierId = SupplierId.substring(0, SupplierId.length - 1);
+
+                //var SupplierId = $('#PRSearchSupplierId').val();
+
+                return $.ajax({
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json',
+                    type: 'GET',
+                    url: window.GetRMCategories,
+                    data: { SupplierId: SupplierId },
+                    success: function (res) {
+                        if (res.length > 0) {
+                            $("#PRSearchRMCategory").empty();
+                            $.each(res, function (i, item) {
+                                $("#PRSearchRMCategory").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
+                                $("#PRSearchRMCategory").trigger("chosen:updated");
+                            })
+                        }
+                    },
+                    error: function (result) {
+                        alert(result)
+                    }
+                });
+            }
+        )
+
+
+        $('#PRSearchRMCategory').chosen().change(
+            function PRGetPODeliveryDates() {
+
+                var RMCategory = '';
+                var x = document.getElementById("PRSearchRMCategory");
+                for (var i = 0; i < x.options.length; i++) {
+                    if (x.options[i].selected == true) {
+                        //alert(x.options[i].value);
+                        RMCategory = RMCategory + x.options[i].value + ',';
+                    }
+                }
+
+                //VendorId = VendorId.slice(0, -1);
+                RMCategory = RMCategory.substring(0, RMCategory.length - 1);
+
+                //var RMCategory = $('#PRSearchRMCategory').val();
+                //var RMCategory = $('#PRSearchRMCategory option:selected').text();
+
+                return $.ajax({
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json',
+                    type: 'GET',
+                    url: window.GetDeliveryDates,
+                    data: { RMCategory: RMCategory },
+                    success: function (res) {
+                        if (res.length > 0) {
+                            $("#PRSearchDeliveryDate").empty();
+                            $.each(res, function (i, item) {
+                                $("#PRSearchDeliveryDate").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
+                                $("#PRSearchDeliveryDate").trigger("chosen:updated");
+                            })
+                        }
+                    },
+                    error: function (result) {
+                        alert(result)
+                    }
+                });
+            }
+
+        )
 
     });
 
     var DeptName = '@ViewBag.DeptName';
-    
+
     if (DeptName == 'Management' || DeptName == 'Purchase') {
         $('#btnPRPDetails').hide();
         $('#btnPRPDetails').attr('disabled',true);
@@ -255,7 +391,7 @@ function CreateDocument(e) {
         data: JSON.stringify({ PRSetNo: PRSetNo }),
         contentType: "application/json; charset=utf-8",
         success: function (data) {
-            
+
             if (data.fileName != "") {
                 @*window.location.href = '@Url.RouteUrl(new { Controller = "MRM", Action = "Download" })/?fileName=' + data.fileName;*@
             }
@@ -270,4 +406,3 @@ function CreateDocument(e) {
 }
 
 </script>
-<script src="~/Areas/MRM/Scripts/PRDetailPopUp.js"></script>

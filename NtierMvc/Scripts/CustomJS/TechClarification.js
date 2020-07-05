@@ -103,7 +103,7 @@ function GetQuoteNos() {
     })
 }
 
-function GetSoNoForClarification() {
+function GetSoNoDetialsForClarification() {
     var QuoteType = $("#QuoteClarificationFormType").val();
     var QuoteNo = $("#QuoteClarificationFormNo").val();
     $.ajax({

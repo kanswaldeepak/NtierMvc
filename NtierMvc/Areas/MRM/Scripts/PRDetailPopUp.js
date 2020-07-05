@@ -1,8 +1,4 @@
 ﻿
-$(document).ready(function () {
-
-})
-
 function funcSavePurchaseDetails() {
 
     var PRSetNo = $('#HiddenPRSetno').val();

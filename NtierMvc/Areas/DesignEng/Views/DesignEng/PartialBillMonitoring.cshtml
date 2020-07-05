@@ -263,11 +263,11 @@
 
     $(document).ready(function () {
         window.BillMonitoringPopUp = '@Url.Action("BillMonitoringPopUp", "DesignEng")';
+        window.GetDdlDetailsForList = '@Url.Action("GetDdlDetailsForList", "GateEntry", new { @Area = ""})';
         window.FetchBillMonitoringList = '@Url.Action("FetchBillMonitoringList", "DesignEng", new {@Area = "DesignEng" })';
     });
 
 </script>
 
-<script src="~/Scripts/CustomJS/BillMonitoring.js"></script>
-
+<script src="~/Areas/DesignEng/Scripts/BillMonitoring.js"></script>
 

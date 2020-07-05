@@ -1158,7 +1158,7 @@
     <Content Include="Scripts\CustomJS\Registration.js" />
     <Content Include="Scripts\CustomJS\Staff.js" />
     <Content Include="Scripts\CustomJS\TechClarification.js" />
-    <Content Include="Scripts\CustomJS\BillMonitoring.js" />
+    <Content Include="Areas\DesignEng\Scripts\BillMonitoring.js" />
     <Content Include="Scripts\CustomJS\TechItemDetails.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
