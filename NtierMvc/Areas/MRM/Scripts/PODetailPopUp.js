@@ -1,74 +1,74 @@
 ﻿
 
-function GetSupplierIds() {
-    var vendorTypeId = $('#POSearchVendorTypeId').val();
+//function GetSupplierIds() {
+//    var vendorTypeId = $('#POSearchVendorTypeId').val();
 
-    return $.ajax({
-        contentType: 'application/json; charset=utf-8',
-        dataType: 'json',
-        type: 'GET',
-        url: window.GetSuppliers,
-        data: { VendorTypeId: vendorTypeId},
-        success: function (res) {
-            if (res.length > 0) {
-                $("#POSearchSupplierId").empty();
-                $.each(res, function (i, item) {
-                    $("#POSearchSupplierId").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
-                })
-            }
-        },
-        error: function () {
-            alert(result)
-        }
-    });
-}
+//    return $.ajax({
+//        contentType: 'application/json; charset=utf-8',
+//        dataType: 'json',
+//        type: 'GET',
+//        url: window.GetSuppliers,
+//        data: { VendorTypeId: vendorTypeId},
+//        success: function (res) {
+//            if (res.length > 0) {
+//                $("#POSearchSupplierId").empty();
+//                $.each(res, function (i, item) {
+//                    $("#POSearchSupplierId").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
+//                })
+//            }
+//        },
+//        error: function () {
+//            alert(result)
+//        }
+//    });
+//}
 
 
-function GetPORMCategories() {
-    var SupplierId = $('#POSearchSupplierId').val();
+//function GetPORMCategories() {
+//    var SupplierId = $('#POSearchSupplierId').val();
 
-    return $.ajax({
-        contentType: 'application/json; charset=utf-8',
-        dataType: 'json',
-        type: 'GET',
-        url: window.GetRMCategories,
-        data: { SupplierId: SupplierId },
-        success: function (res) {
-            if (res.length > 0) {
-                $("#POSearchRMCategory").empty();
-                $.each(res, function (i, item) {
-                    $("#POSearchRMCategory").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
-                })
-            }
-        },
-        error: function () {
-            alert(result)
-        }
-    });
-}
+//    return $.ajax({
+//        contentType: 'application/json; charset=utf-8',
+//        dataType: 'json',
+//        type: 'GET',
+//        url: window.GetRMCategories,
+//        data: { SupplierId: SupplierId },
+//        success: function (res) {
+//            if (res.length > 0) {
+//                $("#POSearchRMCategory").empty();
+//                $.each(res, function (i, item) {
+//                    $("#POSearchRMCategory").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
+//                })
+//            }
+//        },
+//        error: function () {
+//            alert(result)
+//        }
+//    });
+//}
 
-function GetPODeliveryDates() {
-    var RMCategory = $('#POSearchRMCategory option:selected').text();
+//function GetPODeliveryDates() {
+//    var RMCategory = $('#POSearchRMCategory option:selected').text();
 
-    return $.ajax({
-        contentType: 'application/json; charset=utf-8',
-        dataType: 'json',
-        type: 'GET',
-        url: window.GetDeliveryDates,
-        data: { RMCategory: RMCategory },
-        success: function (res) {
-            if (res.length > 0) {
-                $("#POSearchDeliveryDate").empty();
-                $.each(res, function (i, item) {
-                    $("#POSearchDeliveryDate").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
-                })
-            }
-        },
-        error: function () {
-            alert(result)
-        }
-    });
-}
+//    return $.ajax({
+//        contentType: 'application/json; charset=utf-8',
+//        dataType: 'json',
+//        type: 'GET',
+//        url: window.GetDeliveryDates,
+//        data: { RMCategory: RMCategory },
+//        success: function (res) {
+//            if (res.length > 0) {
+//                $("#POSearchDeliveryDate").empty();
+//                $.each(res, function (i, item) {
+//                    $("#POSearchDeliveryDate").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
+//                })
+//            }
+//        },
+//        error: function () {
+//            alert(result)
+//        }
+//    });
+//}
 
 
 function changeLotTable() {

@@ -26,14 +26,13 @@
         <tr>
             <td></td>
             <td>
-                    @Html.DropDownList("VendorType", new SelectList(@ViewBag.ListVendorType, "DataStringValueField", "DataTextField", "Select"),
-                               new
-                               {
-                                   @class = "form-control",
-                                   @id = "POSearchVendorTypeId",
-                                   ng_model= "POSearchVendorTypeId",
-                                   @onchange="GetSupplierIds()"
-                               })
+                @Html.DropDownList("VendorType", new SelectList(@ViewBag.ListVendorType, "DataStringValueField", "DataTextField", "Select"),
+                        new
+                        {
+                            @class = "form-control",
+                            @id = "POSearchVendorTypeId",
+                            ng_model= "POSearchVendorTypeId"
+                        })
                 </td>
                 <td>
                     @Html.DropDownList("SupplierId", new SelectList(@ViewBag.ListSupplierId, "DataStringValueField", "DataTextField", "Select"),
@@ -42,7 +41,7 @@
                                    @class = "form-control",
                                    @id = "POSearchSupplierId",
                                    ng_model = "POSearchSupplierId",
-                                   @onchange = "GetPORMCategories()"
+                                   @multiple = "true"
                                })
                 </td>
                 <td>
@@ -52,7 +51,7 @@
                                    @class = "form-control",
                                    @id = "POSearchRMCategory",
                                    ng_model = "POSearchRMCategory",
-                                   @onchange = "GetPODeliveryDates()"
+                                   @multiple = "true"
                                })
                 </td>
                 <td>
@@ -61,7 +60,8 @@
                             {
                                 @class = "form-control",
                                 @id = "POSearchDeliveryDate",
-                                ng_model = "POSearchDeliveryDate"
+                                ng_model = "POSearchDeliveryDate",
+                                @multiple = "true"
                             })
                 </td>
             <td></td>
@@ -218,6 +218,139 @@
         window.GetSuppliers = '@Url.Action("GetSuppliers", "MRM")';
         window.GetRMCategories = '@Url.Action("GetRMCategories", "MRM")';
         window.GetDeliveryDates = '@Url.Action("GetDeliveryDates", "MRM")';
+
+        $('#POSearchVendorTypeId').chosen({
+            width: "210px",
+            placeholder_text_single: "Select Vendor Type Id",
+            placeholder_text_multiple: "Select Vendor Type Id"
+        });
+
+        $('#POSearchSupplierId').chosen({
+            width: "210px",
+            placeholder_text_single: "Select Supplier Id",
+            placeholder_text_multiple: "Select Supplier Ids"
+        });
+
+        $('#POSearchRMCategory').chosen({
+            width: "210px",
+            placeholder_text_single: "Select RMCategory",
+            placeholder_text_multiple: "Select RMCategory"
+        });
+
+        $('#POSearchDeliveryDate').chosen({
+            width: "210px",
+            placeholder_text_single: "Select Delivery Date",
+            placeholder_text_multiple: "Select Delivery Date"
+        });
+
+
+        $("#POSearchVendorTypeId").chosen().change(
+            function POGetSupplierIds() {
+                var vendorTypeId = $('#POSearchVendorTypeId').val();
+
+                return $.ajax({
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json',
+                    type: 'GET',
+                    url: window.GetSuppliers,
+                    data: { VendorTypeId: vendorTypeId },
+                    success: function (res) {
+                        if (res.length > 0) {
+                            $("#POSearchSupplierId").empty();
+                            $.each(res, function (i, item) {
+                                $("#POSearchSupplierId").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
+                                $("#POSearchSupplierId").trigger("chosen:updated");
+                            })
+                        }
+                    },
+                    error: function () {
+                        alert(result)
+                    }
+                });
+            }
+        );
+
+
+        $('#POSearchSupplierId').chosen().change(
+            function POGetPORMCategories() {
+                var SupplierId = '';
+                var x = document.getElementById("POSearchSupplierId");
+                for (var i = 0; i < x.options.length; i++) {
+                    if (x.options[i].selected == true) {
+                        //alert(x.options[i].value);
+                        SupplierId = SupplierId + x.options[i].value + ',';
+                    }
+                }
+
+                //VendorId = VendorId.slice(0, -1);
+                SupplierId = SupplierId.substring(0, SupplierId.length - 1);
+
+                //var SupplierId = $('#PRSearchSupplierId').val();
+
+                return $.ajax({
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json',
+                    type: 'GET',
+                    url: window.GetRMCategories,
+                    data: { SupplierId: SupplierId },
+                    success: function (res) {
+                        if (res.length > 0) {
+                            $("#POSearchRMCategory").empty();
+                            $.each(res, function (i, item) {
+                                $("#POSearchRMCategory").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
+                                $("#POSearchRMCategory").trigger("chosen:updated");
+                            })
+                        }
+                    },
+                    error: function (result) {
+                        alert(result)
+                    }
+                });
+            }
+        )
+
+
+        $('#POSearchRMCategory').chosen().change(
+            function POGetPODeliveryDates() {
+
+                var RMCategory = '';
+                var x = document.getElementById("POSearchRMCategory");
+                for (var i = 0; i < x.options.length; i++) {
+                    if (x.options[i].selected == true) {
+                        //alert(x.options[i].value);
+                        RMCategory = RMCategory + x.options[i].value + ',';
+                    }
+                }
+
+                //VendorId = VendorId.slice(0, -1);
+                RMCategory = RMCategory.substring(0, RMCategory.length - 1);
+
+                //var RMCategory = $('#PRSearchRMCategory').val();
+                //var RMCategory = $('#PRSearchRMCategory option:selected').text();
+
+                return $.ajax({
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json',
+                    type: 'GET',
+                    url: window.GetDeliveryDates,
+                    data: { RMCategory: RMCategory },
+                    success: function (res) {
+                        if (res.length > 0) {
+                            $("#POSearchDeliveryDate").empty();
+                            $.each(res, function (i, item) {
+                                $("#POSearchDeliveryDate").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
+                                $("#POSearchDeliveryDate").trigger("chosen:updated");
+                            })
+                        }
+                    },
+                    error: function (result) {
+                        alert(result)
+                    }
+                });
+            }
+
+        )
+
 
     });
 

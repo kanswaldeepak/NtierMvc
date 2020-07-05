@@ -242,6 +242,13 @@
         window.GetRMCategories = '@Url.Action("GetRMCategories", "MRM")';
         window.GetDeliveryDates = '@Url.Action("GetDeliveryDates", "MRM")';
 
+        $('#PRSearchVendorTypeId').chosen({
+            width: "210px",
+            placeholder_text_single: "Select Vendor Type Id",
+            placeholder_text_multiple: "Select Vendor Ids"
+        });
+
+
         $('#PRSearchSupplierId').chosen({
             width: "210px",
             placeholder_text_single: "Select Supplier Id",
