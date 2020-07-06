@@ -65,7 +65,7 @@ namespace NtierMvc.DataAccess.Pool
             return msgCode;
         }
 
-        public DataSet GetPRDetailsList(int pageIndex, int pageSize, string SearchVendorTypeId = null, string SearchSupplierId = null, string SearchRMCategory = null, string SearchDeliveryDate = null)
+        public DataSet GetPRDetailsList(int pageIndex, int pageSize, string SearchVendorTypeId = null, string SearchSupplierId = null, string SearchRMCategory = null, string SearchDeliveryDateFrom = null, string SearchDeliveryDateTo = null)
         {
             var parms = new Dictionary<string, object>();
             parms.Add("@pageIndex", pageIndex);
@@ -73,7 +73,8 @@ namespace NtierMvc.DataAccess.Pool
             parms.Add("@SearchVendorTypeId", SearchVendorTypeId);
             parms.Add("@SearchSupplierId", SearchSupplierId);
             parms.Add("@SearchRMCategory", SearchRMCategory);
-            parms.Add("@SearchDeliveryDate", SearchDeliveryDate);
+            parms.Add("@SearchDeliveryDateFrom", SearchDeliveryDateFrom);
+            parms.Add("@SearchDeliveryDateTo", SearchDeliveryDateTo);
 
             string spName = ConfigurationManager.AppSettings["GetPRDetailsList"];
             return _dbAccess.GetDataSet(spName, parms);
@@ -161,7 +162,7 @@ namespace NtierMvc.DataAccess.Pool
             //}
         }
 
-        public DataSet GetPODetailsList(int pageIndex, int pageSize, string SearchVendorTypeId = null, string SearchSupplierId = null, string SearchRMCategory = null, string SearchDeliveryDate = null)
+        public DataSet GetPODetailsList(int pageIndex, int pageSize, string SearchVendorTypeId = null, string SearchSupplierId = null, string SearchRMCategory = null, string SearchDeliveryDateFrom = null, string SearchDeliveryDateTo = null)
         {
             var parms = new Dictionary<string, object>();
             parms.Add("@pageIndex", pageIndex);
@@ -169,7 +170,8 @@ namespace NtierMvc.DataAccess.Pool
             parms.Add("@SearchVendorTypeId", SearchVendorTypeId);
             parms.Add("@SearchSupplierId", SearchSupplierId);
             parms.Add("@SearchRMCategory", SearchRMCategory);
-            parms.Add("@SearchDeliveryDate", SearchDeliveryDate);
+            parms.Add("@SearchDeliveryDateFrom", SearchDeliveryDateFrom);
+            parms.Add("@SearchDeliveryDateTo", SearchDeliveryDateTo);
 
             string spName = ConfigurationManager.AppSettings["GetPODetailsList"];
             return _dbAccess.GetDataSet(spName, parms);

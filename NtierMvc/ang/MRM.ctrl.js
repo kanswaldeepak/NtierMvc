@@ -10,10 +10,11 @@ angular.module('App').controller("MRMController", function ($scope, $http, $time
     $scope.PRSearchVendorTypeId = "";
     $scope.PRSearchSupplierId = "";
     $scope.PRSearchRMCategory = "";
-    $scope.PRSearchDeliveryDate = "";
+    $scope.PRSearchDeliveryDateFrom = "";
+    $scope.PRSearchDeliveryDateTo = "";
 
     $scope.FetchPRDetailsList = function () {
-        $http.get(window.FetchPRDetailsList + "?pageIndex=" + $scope.PRPageIndex + "&pageSize=" + $scope.PRPageSize + "&SearchVendorTypeId=" + $scope.PRSearchVendorTypeId + "&SearchSupplierId=" + $scope.PRSearchSupplierId + "&SearchRMCategory=" + $scope.PRSearchRMCategory + "&SearchDeliveryDate=" + $scope.PRSearchDeliveryDate).success(function (response) {
+        $http.get(window.FetchPRDetailsList + "?pageIndex=" + $scope.PRPageIndex + "&pageSize=" + $scope.PRPageSize + "&SearchVendorTypeId=" + $scope.PRSearchVendorTypeId + "&SearchSupplierId=" + $scope.PRSearchSupplierId + "&SearchRMCategory=" + $scope.PRSearchRMCategory + "&SearchDeliveryDateFrom=" + $scope.PRSearchDeliveryDateFrom + "&SearchDeliveryDateTo=" + $scope.PRSearchDeliveryDateTo).success(function (response) {
             $scope.PRPList = response.lstPREntity;
             $scope.PRPTotalCount = response.totalcount;
         }, function (error) {
@@ -268,10 +269,11 @@ angular.module('App').controller("MRMController", function ($scope, $http, $time
     $scope.POSearchVendorTypeId = "";
     $scope.POSearchSupplierId = "";
     $scope.POSearchRMCategory = "";
-    $scope.POSearchDeliveryDate = "";
+    $scope.POSearchDeliveryDateFrom = "";
+    $scope.POSearchDeliveryDateTo = "";
 
     $scope.FetchPODetailsList = function () {
-        $http.get(window.FetchPODetailsList + "?pageIndex=" + $scope.POPageIndex + "&pageSize=" + $scope.POPageSize + "&SearchVendorTypeId=" + $scope.POSearchVendorTypeId + "&SearchSupplierId=" + $scope.POSearchSupplierId + "&SearchRMCategory=" + $scope.POSearchRMCategory + "&SearchDeliveryDate=" + $scope.POSearchDeliveryDate).success(function (response) {
+        $http.get(window.FetchPODetailsList + "?pageIndex=" + $scope.POPageIndex + "&pageSize=" + $scope.POPageSize + "&SearchVendorTypeId=" + $scope.POSearchVendorTypeId + "&SearchSupplierId=" + $scope.POSearchSupplierId + "&SearchRMCategory=" + $scope.POSearchRMCategory + "&SearchDeliveryDateFrom=" + $scope.POSearchDeliveryDateFrom + "&SearchDeliveryDateTo=" + $scope.POSearchDeliveryDateTo).success(function (response) {
             $scope.POList = response.lstPOEntity;
             $scope.POTotalCount = response.totalcount;
         }, function (error) {

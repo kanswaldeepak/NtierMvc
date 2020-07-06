@@ -55,19 +55,37 @@
                            })
             </td>
             <td>
-                @Html.DropDownList("DeliveryDate", new SelectList(@ViewBag.ListDeliveryDate, "DataStringValueField", "DataTextField", "Select"),
-                            new
-                            {
-                                @class = "form-control",
-                                @id = "PRSearchDeliveryDate",
-                                ng_model = "PRSearchDeliveryDate",
-                                @multiple = "true"
-                            })
+                <div class="row">
+                    <div class="col-md-6">
+                        @Html.TextBox("DeliveryDateFrom", "", new
+                       {
+                           @class = "form-control requiredValidation NoEndDate",
+                           @id = "PRSearchDeliveryDateFrom",
+                           ng_model = "PRSearchDeliveryDateFrom",
+                           @placeholder = "Date From",
+                           @readonly = "readonly"
+                       })
+                    </div>
+                    <div class="col-md-6">
+                        @Html.TextBox("DeliveryDateTo", "", new
+                       {
+                           @class = "form-control ml-3 requiredValidation NoEndDate",
+                           @id = "PRSearchDeliveryDateTo",
+                           ng_model = "PRSearchDeliveryDateTo",
+                           @placeholder = "Date To",
+                           @readonly = "readonly"
+                       })
+                    </div>
+                </div>
+                
             </td>
             <td></td>
             <td>
                 <button class="btn btn-link" type="button" id="btnSearch" ng-click="FetchPRDetailsList()">
                     <i class="fa fa-search"></i>
+                </button>
+                <button class="btn btn-link" type="button" id="btnClearSearchPR">
+                    <i class="fa fa-trash"></i>
                 </button>
             </td>
         </tr>
@@ -261,11 +279,11 @@
             placeholder_text_multiple: "Select RMCategory"
         });
 
-        $('#PRSearchDeliveryDate').chosen({
-            width: "210px",
-            placeholder_text_single: "Select Delivery Date",
-            placeholder_text_multiple: "Select Delivery Date"
-        });
+        //$('#PRSearchDeliveryDate').chosen({
+        //    width: "210px",
+        //    placeholder_text_single: "Select Delivery Date",
+        //    placeholder_text_multiple: "Select Delivery Date"
+        //});
 
 
         $("#PRSearchVendorTypeId").chosen().change(
@@ -334,46 +352,59 @@
         )
 
 
-        $('#PRSearchRMCategory').chosen().change(
-            function PRGetPODeliveryDates() {
+        //$('#PRSearchRMCategory').chosen().change(
+        //    function PRGetPODeliveryDates() {
 
-                var RMCategory = '';
-                var x = document.getElementById("PRSearchRMCategory");
-                for (var i = 0; i < x.options.length; i++) {
-                    if (x.options[i].selected == true) {
-                        //alert(x.options[i].value);
-                        RMCategory = RMCategory + x.options[i].value + ',';
-                    }
-                }
+        //        var RMCategory = '';
+        //        var x = document.getElementById("PRSearchRMCategory");
+        //        for (var i = 0; i < x.options.length; i++) {
+        //            if (x.options[i].selected == true) {
+        //                //alert(x.options[i].value);
+        //                RMCategory = RMCategory + x.options[i].value + ',';
+        //            }
+        //        }
 
-                //VendorId = VendorId.slice(0, -1);
-                RMCategory = RMCategory.substring(0, RMCategory.length - 1);
+        //        //VendorId = VendorId.slice(0, -1);
+        //        RMCategory = RMCategory.substring(0, RMCategory.length - 1);
 
-                //var RMCategory = $('#PRSearchRMCategory').val();
-                //var RMCategory = $('#PRSearchRMCategory option:selected').text();
+        //        //var RMCategory = $('#PRSearchRMCategory').val();
+        //        //var RMCategory = $('#PRSearchRMCategory option:selected').text();
 
-                return $.ajax({
-                    contentType: 'application/json; charset=utf-8',
-                    dataType: 'json',
-                    type: 'GET',
-                    url: window.GetDeliveryDates,
-                    data: { RMCategory: RMCategory },
-                    success: function (res) {
-                        if (res.length > 0) {
-                            $("#PRSearchDeliveryDate").empty();
-                            $.each(res, function (i, item) {
-                                $("#PRSearchDeliveryDate").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
-                                $("#PRSearchDeliveryDate").trigger("chosen:updated");
-                            })
-                        }
-                    },
-                    error: function (result) {
-                        alert(result)
-                    }
-                });
+        //        return $.ajax({
+        //            contentType: 'application/json; charset=utf-8',
+        //            dataType: 'json',
+        //            type: 'GET',
+        //            url: window.GetDeliveryDates,
+        //            data: { RMCategory: RMCategory },
+        //            success: function (res) {
+        //                if (res.length > 0) {
+        //                    $("#PRSearchDeliveryDate").empty();
+        //                    $.each(res, function (i, item) {
+        //                        $("#PRSearchDeliveryDate").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
+        //                        $("#PRSearchDeliveryDate").trigger("chosen:updated");
+        //                    })
+        //                }
+        //            },
+        //            error: function (result) {
+        //                alert(result)
+        //            }
+        //        });
+        //    }
+
+        //)
+
+        $('#btnClearSearchPR').click(
+            function ClearFields() {
+                $('#PRSearchVendorTypeId').val('');
+                $("#PRSearchVendorTypeId").trigger("chosen:updated");
+                $('#PRSearchSupplierId').val('');
+                $("#PRSearchSupplierId").trigger("chosen:updated");
+                $('#PRSearchRMCategory').val('');
+                $("#PRSearchRMCategory").trigger("chosen:updated");
+                $('#PRSearchDeliveryDateFrom').val('');
+                $('#PRSearchDeliveryDateTo').val('');
             }
-
-        )
+        );
 
     });
 
@@ -410,6 +441,26 @@ function CreateDocument(e) {
             alert(data);
         }
     })
-}
+    }
+
+
+    //LEASE DATE AND EXP LEASE DATE VALIDATION
+    $('.NoEndDate').datepicker({
+        format: 'mm-dd-yyyy',
+        autoclose: true,
+        changeMonth: true,
+        changeYear: true,
+        endDate: '',
+        orientation: "bottom"
+    });
+
+    $('.CurrentEndDate').datepicker({
+        format: 'mm-dd-yyyy',
+        autoclose: true,
+        changeMonth: true,
+        changeYear: true,
+        endDate: 'today',
+        orientation: "bottom"
+    });
 
 </script>

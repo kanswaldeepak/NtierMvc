@@ -39,9 +39,9 @@ namespace NtierMvc.API.Controllers.Application
         }
 
         [Route("api/MRMDetail/GetPRDetailsList")]
-        public IHttpActionResult GetPRDetailsList(int pageIndex, int pageSize, string DeptName, string SearchVendorTypeId = null, string SearchSupplierId = null, string SearchRMCategory = null, string SearchDeliveryDate = null)
+        public IHttpActionResult GetPRDetailsList(int pageIndex, int pageSize, string DeptName, string SearchVendorTypeId = null, string SearchSupplierId = null, string SearchRMCategory = null, string SearchDeliveryDateFrom = null, string SearchDeliveryDateTo = null)
         {
-            return Ok(_repository.GetPRDetailsList(pageIndex, pageSize, DeptName, SearchVendorTypeId, SearchSupplierId, SearchRMCategory, SearchDeliveryDate));
+            return Ok(_repository.GetPRDetailsList(pageIndex, pageSize, DeptName, SearchVendorTypeId, SearchSupplierId, SearchRMCategory, SearchDeliveryDateFrom, SearchDeliveryDateTo));
         }
 
         [HttpGet]
@@ -90,9 +90,9 @@ namespace NtierMvc.API.Controllers.Application
         }
 
         [Route("api/MRMDetail/GetPODetailsList")]
-        public IHttpActionResult GetPODetailsList(int pageIndex, int pageSize, string SearchVendorTypeId = null, string SearchSupplierId = null, string SearchRMCategory = null, string SearchDeliveryDate = null)
+        public IHttpActionResult GetPODetailsList(int pageIndex, int pageSize, string SearchVendorTypeId = null, string SearchSupplierId = null, string SearchRMCategory = null, string SearchDeliveryDateFrom = null, string SearchDeliveryDateTo = null)
         {
-            return Ok(_repository.GetPODetailsList(pageIndex, pageSize, SearchVendorTypeId, SearchSupplierId, SearchRMCategory, SearchDeliveryDate));
+            return Ok(_repository.GetPODetailsList(pageIndex, pageSize, SearchVendorTypeId, SearchSupplierId, SearchRMCategory, SearchDeliveryDateFrom, SearchDeliveryDateTo));
         }
 
         [HttpPost]

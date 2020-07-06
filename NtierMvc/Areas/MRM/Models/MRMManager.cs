@@ -106,13 +106,13 @@ namespace NtierMvc.Areas.MRM.Models
             return result;
         }
 
-        public PRDetailEntityDetails GetPRDetailsList(int pageIndex, int pageSize, string DeptName, string SearchVendorTypeId = null, string SearchSupplierId = null, string SearchRMCategory = null, string SearchDeliveryDate = null)
+        public PRDetailEntityDetails GetPRDetailsList(int pageIndex, int pageSize, string DeptName, string SearchVendorTypeId = null, string SearchSupplierId = null, string SearchRMCategory = null, string SearchDeliveryDateFrom = null, string SearchDeliveryDateTo = null)
         {
             var baseAddress = "MRMDetail";
             PRDetailEntityDetails prDetails = new PRDetailEntityDetails();
             using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
             {
-                HttpResponseMessage response = client.GetAsync(baseAddress + "/GetPRDetailsList?pageIndex=" + pageIndex + "&pageSize=" + pageSize + "&DeptName=" + DeptName + "&SearchVendorTypeId=" + SearchVendorTypeId + "&SearchSupplierId=" + SearchSupplierId + "&SearchRMCategory=" + SearchRMCategory + "&SearchDeliveryDate=" + SearchDeliveryDate).Result;
+                HttpResponseMessage response = client.GetAsync(baseAddress + "/GetPRDetailsList?pageIndex=" + pageIndex + "&pageSize=" + pageSize + "&DeptName=" + DeptName + "&SearchVendorTypeId=" + SearchVendorTypeId + "&SearchSupplierId=" + SearchSupplierId + "&SearchRMCategory=" + SearchRMCategory + "&SearchDeliveryDateFrom=" + SearchDeliveryDateFrom + "&SearchDeliveryDateTo=" + SearchDeliveryDateTo).Result;
                 if (response.IsSuccessStatusCode)
                 {
                     var data = response.Content.ReadAsStringAsync().Result;
@@ -204,13 +204,13 @@ namespace NtierMvc.Areas.MRM.Models
             return result;
         }
 
-        public PODetailEntityDetails GetPODetailsList(int pageIndex, int pageSize, string SearchVendorTypeId = null, string SearchSupplierId = null, string SearchRMCategory = null, string SearchDeliveryDate = null)
+        public PODetailEntityDetails GetPODetailsList(int pageIndex, int pageSize, string SearchVendorTypeId = null, string SearchSupplierId = null, string SearchRMCategory = null, string SearchDeliveryDateFrom = null, string SearchDeliveryDateTo = null)
         {
             var baseAddress = "MRMDetail";
             PODetailEntityDetails prDetails = new PODetailEntityDetails();
             using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
             {
-                HttpResponseMessage response = client.GetAsync(baseAddress + "/GetPODetailsList?pageIndex=" + pageIndex + "&pageSize=" + pageSize + "&SearchVendorTypeId=" + SearchVendorTypeId + "&SearchSupplierId=" + SearchSupplierId + "&SearchRMCategory=" + SearchRMCategory + "&SearchDeliveryDate=" + SearchDeliveryDate).Result;
+                HttpResponseMessage response = client.GetAsync(baseAddress + "/GetPODetailsList?pageIndex=" + pageIndex + "&pageSize=" + pageSize + "&SearchVendorTypeId=" + SearchVendorTypeId + "&SearchSupplierId=" + SearchSupplierId + "&SearchRMCategory=" + SearchRMCategory + "&SearchDeliveryDateFrom=" + SearchDeliveryDateFrom + "&SearchDeliveryDateTo=" + SearchDeliveryDateTo).Result;
                 if (response.IsSuccessStatusCode)
                 {
                     var data = response.Content.ReadAsStringAsync().Result;

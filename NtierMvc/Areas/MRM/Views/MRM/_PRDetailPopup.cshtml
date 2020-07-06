@@ -578,7 +578,7 @@
                     <td>
                         @Html.TextBoxFor(m => m.DeliveryDate, new
                            {
-                               @class = "form-control requiredValidation CalenderDate",
+                               @class = "form-control requiredValidation NoEndDate",
                                autocomplete = "off",
                                @id = "DeliveryDatePRDetails",
                                @placeholder = "dd/MM/yyyy",
@@ -774,7 +774,7 @@
                             <td>
                                 @Html.TextBoxFor(m => m.ExpectedDeliveryDate, new
                                 {
-                                    @class = "form-control ml-3 CalenderDate",
+                                    @class = "form-control ml-3 NoEndDate",
                                     @placeholder = "dd/MM/yyyy",
                                     autocomplete = "off",
                                     @id = "ExpectedDeliveryDatePRDetails",
@@ -932,7 +932,7 @@
     });
 
     //LEASE DATE AND EXP LEASE DATE VALIDATION
-    $('.CalenderDate').datepicker({
+    $('.NoEndDate').datepicker({
 
         format: 'dd/mm/yyyy',
         autoclose: true,
@@ -940,7 +940,7 @@
         changeYear: true,
         endDate: '',
     });
-    $('.CalenderTillTodayDate').datepicker({
+    $('.CurrentEndDate').datepicker({
 
         format: 'dd/mm/yyyy',
         autoclose: true,

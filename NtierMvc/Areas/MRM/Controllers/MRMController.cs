@@ -66,17 +66,18 @@ namespace NtierMvc.Areas.MRM.Controllers
             return PartialView(prObj);
         }
 
-        public JsonResult FetchPRDetailsList(string pageIndex, string pageSize, string SearchVendorTypeId = null, string SearchSupplierId = null, string SearchRMCategory = null, string SearchDeliveryDate = null)
+        public JsonResult FetchPRDetailsList(string pageIndex, string pageSize, string SearchVendorTypeId = null, string SearchSupplierId = null, string SearchRMCategory = null, string SearchDeliveryDateFrom = null, string SearchDeliveryDateTo = null)
         {
             SearchVendorTypeId = SearchVendorTypeId == null ? string.Empty : SearchVendorTypeId;
             SearchSupplierId = SearchSupplierId == null ? string.Empty : SearchSupplierId;
             SearchRMCategory = SearchRMCategory == null ? string.Empty : SearchRMCategory;
-            SearchDeliveryDate = SearchDeliveryDate == null ? string.Empty : SearchDeliveryDate;
+            SearchDeliveryDateFrom = SearchDeliveryDateFrom == null ? string.Empty : SearchDeliveryDateFrom;
+            SearchDeliveryDateTo = SearchDeliveryDateTo == null ? string.Empty : SearchDeliveryDateTo;
 
             var UserDetails = (UserEntity)Session["UserModel"];
 
             PRDetailEntityDetails prEntity = new PRDetailEntityDetails();
-            prEntity = objManager.GetPRDetailsList(Convert.ToInt32(pageIndex), Convert.ToInt32(pageSize), UserDetails.DeptName, SearchVendorTypeId, SearchSupplierId, SearchRMCategory, SearchDeliveryDate);
+            prEntity = objManager.GetPRDetailsList(Convert.ToInt32(pageIndex), Convert.ToInt32(pageSize), UserDetails.DeptName, SearchVendorTypeId, SearchSupplierId, SearchRMCategory, SearchDeliveryDateFrom, SearchDeliveryDateTo);
             return new JsonResult { Data = prEntity, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 
@@ -717,15 +718,16 @@ namespace NtierMvc.Areas.MRM.Controllers
             }
         }
 
-        public JsonResult FetchPODetailsList(string pageIndex, string pageSize, string SearchVendorTypeId = null, string SearchSupplierId = null, string SearchRMCategory = null, string SearchDeliveryDate = null)
+        public JsonResult FetchPODetailsList(string pageIndex, string pageSize, string SearchVendorTypeId = null, string SearchSupplierId = null, string SearchRMCategory = null, string SearchDeliveryDateFrom = null, string SearchDeliveryDateTo = null)
         {
             SearchVendorTypeId = SearchVendorTypeId == null ? string.Empty : SearchVendorTypeId;
             SearchSupplierId = SearchSupplierId == null ? string.Empty : SearchSupplierId;
             SearchRMCategory = SearchRMCategory == null ? string.Empty : SearchRMCategory;
-            SearchDeliveryDate = SearchDeliveryDate == null ? string.Empty : SearchDeliveryDate;
+            SearchDeliveryDateFrom = SearchDeliveryDateFrom == null ? string.Empty : SearchDeliveryDateFrom;
+            SearchDeliveryDateTo = SearchDeliveryDateTo == null ? string.Empty : SearchDeliveryDateTo;
 
             PODetailEntityDetails prEntity = new PODetailEntityDetails();
-            prEntity = objManager.GetPODetailsList(Convert.ToInt32(pageIndex), Convert.ToInt32(pageSize), SearchVendorTypeId, SearchSupplierId, SearchRMCategory, SearchDeliveryDate);
+            prEntity = objManager.GetPODetailsList(Convert.ToInt32(pageIndex), Convert.ToInt32(pageSize), SearchVendorTypeId, SearchSupplierId, SearchRMCategory, SearchDeliveryDateFrom, SearchDeliveryDateTo);
             return new JsonResult { Data = prEntity, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 

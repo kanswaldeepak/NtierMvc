@@ -55,19 +55,37 @@
                                })
                 </td>
                 <td>
-                    @Html.DropDownList("DeliveryDate", new SelectList(@ViewBag.ListDeliveryDate, "DataStringValueField", "DataTextField", "Select"),
-                            new
-                            {
-                                @class = "form-control",
-                                @id = "POSearchDeliveryDate",
-                                ng_model = "POSearchDeliveryDate",
-                                @multiple = "true"
-                            })
+                    <div class="row">
+                        <div class="col-md-6">
+                            @Html.TextBox("DeliveryDateFrom","", new
+                       {
+                           @class = "form-control requiredValidation NoEndDate",
+                           @id = "POSearchDeliveryDateFrom",
+                           ng_model = "POSearchDeliveryDateFrom",
+                           @placeholder = "Date From",
+                           @readonly = "readonly"
+                       })
+                        </div>
+                        <div class="col-md-6">
+                            @Html.TextBox("DeliveryDateTo","", new
+                           {
+                               @class = "form-control ml-3 requiredValidation NoEndDate ",
+                               @id = "POSearchDeliveryDateTo",
+                               ng_model = "POSearchDeliveryDateTo",
+                               @placeholder = "Date To",
+                               @readonly = "readonly"
+                           })
+                        </div>
+                    </div>
+                            
                 </td>
             <td></td>
             <td>
                 <button class="btn btn-link" type="button" id="btnSearch" ng-click="FetchPODetailsList()">
                     <i class="fa fa-search"></i>
+                </button>
+                <button class="btn btn-link" type="button" id="btnClearSearchPO">
+                    <i class="fa fa-trash"></i>
                 </button>
             </td>
         </tr>
@@ -310,47 +328,59 @@
         )
 
 
-        $('#POSearchRMCategory').chosen().change(
-            function POGetPODeliveryDates() {
+        //$('#POSearchRMCategory').chosen().change(
+        //    function POGetPODeliveryDates() {
 
-                var RMCategory = '';
-                var x = document.getElementById("POSearchRMCategory");
-                for (var i = 0; i < x.options.length; i++) {
-                    if (x.options[i].selected == true) {
-                        //alert(x.options[i].value);
-                        RMCategory = RMCategory + x.options[i].value + ',';
-                    }
-                }
+        //        var RMCategory = '';
+        //        var x = document.getElementById("POSearchRMCategory");
+        //        for (var i = 0; i < x.options.length; i++) {
+        //            if (x.options[i].selected == true) {
+        //                //alert(x.options[i].value);
+        //                RMCategory = RMCategory + x.options[i].value + ',';
+        //            }
+        //        }
 
-                //VendorId = VendorId.slice(0, -1);
-                RMCategory = RMCategory.substring(0, RMCategory.length - 1);
+        //        //VendorId = VendorId.slice(0, -1);
+        //        RMCategory = RMCategory.substring(0, RMCategory.length - 1);
 
-                //var RMCategory = $('#PRSearchRMCategory').val();
-                //var RMCategory = $('#PRSearchRMCategory option:selected').text();
+        //        //var RMCategory = $('#PRSearchRMCategory').val();
+        //        //var RMCategory = $('#PRSearchRMCategory option:selected').text();
 
-                return $.ajax({
-                    contentType: 'application/json; charset=utf-8',
-                    dataType: 'json',
-                    type: 'GET',
-                    url: window.GetDeliveryDates,
-                    data: { RMCategory: RMCategory },
-                    success: function (res) {
-                        if (res.length > 0) {
-                            $("#POSearchDeliveryDate").empty();
-                            $.each(res, function (i, item) {
-                                $("#POSearchDeliveryDate").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
-                                $("#POSearchDeliveryDate").trigger("chosen:updated");
-                            })
-                        }
-                    },
-                    error: function (result) {
-                        alert(result)
-                    }
-                });
+        //        return $.ajax({
+        //            contentType: 'application/json; charset=utf-8',
+        //            dataType: 'json',
+        //            type: 'GET',
+        //            url: window.GetDeliveryDates,
+        //            data: { RMCategory: RMCategory },
+        //            success: function (res) {
+        //                if (res.length > 0) {
+        //                    $("#POSearchDeliveryDate").empty();
+        //                    $.each(res, function (i, item) {
+        //                        $("#POSearchDeliveryDate").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
+        //                        $("#POSearchDeliveryDate").trigger("chosen:updated");
+        //                    })
+        //                }
+        //            },
+        //            error: function (result) {
+        //                alert(result)
+        //            }
+        //        });
+        //    }
+
+        //)
+
+        $('#btnClearSearchPO').click(
+            function ClearFields() {
+                $('#POSearchVendorTypeId').val('');
+                $("#POSearchVendorTypeId").trigger("chosen:updated");
+                $('#POSearchSupplierId').val('');
+                $("#POSearchSupplierId").trigger("chosen:updated");
+                $('#POSearchRMCategory').val('');
+                $("#POSearchRMCategory").trigger("chosen:updated");
+                $('#POSearchDeliveryDateFrom').val('');
+                $('#POSearchDeliveryDateTo').val('');
             }
-
-        )
-
+        );
 
     });
 
@@ -387,6 +417,27 @@ function CreateDocumentForPODetail(e) {
         }
     })
 }
+
+    $('.NoEndDate').datepicker({
+
+        format: 'mm-dd-yyyy',
+        autoclose: true,
+        changeMonth: true,
+        changeYear: true,
+        endDate: '',
+        orientation:'bottom'
+    });
+
+    $('.CurrentEndDate').datepicker({
+
+        format: 'mm-dd-yyyy',
+        autoclose: true,
+        changeMonth: true,
+        changeYear: true,
+        endDate: 'today',
+        orientation: 'bottom'
+    });
+
 
 </script>
 <script src="~/Areas/MRM/Scripts/PODetailPopUp.js"></script>

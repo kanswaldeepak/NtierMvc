@@ -130,14 +130,14 @@ namespace NtierMvc.BusinessLogic.Worker
             return result;
         }
 
-        public PRDetailEntityDetails GetPRDetailsList(int pageIndex, int pageSize, string DeptName, string SearchVendorTypeId = null, string SearchSupplierId = null, string SearchRMCategory = null, string SearchDeliveryDate = null)
+        public PRDetailEntityDetails GetPRDetailsList(int pageIndex, int pageSize, string DeptName, string SearchVendorTypeId = null, string SearchSupplierId = null, string SearchRMCategory = null, string SearchDeliveryDateFrom = null, string SearchDeliveryDateTo = null)
         {
             try
             {
                 PRDetailEntityDetails prDetailEntity = new PRDetailEntityDetails();
                 prDetailEntity.lstPREntity = new List<PRDetailEntity>();
 
-                DataSet ds = _repository.GetPRDetailsList(pageIndex, pageSize, SearchVendorTypeId, SearchSupplierId, SearchRMCategory, SearchDeliveryDate);
+                DataSet ds = _repository.GetPRDetailsList(pageIndex, pageSize, SearchVendorTypeId, SearchSupplierId, SearchRMCategory, SearchDeliveryDateFrom, SearchDeliveryDateTo);
 
                 if (ds.Tables.Count > 0)
                 {
@@ -280,14 +280,14 @@ namespace NtierMvc.BusinessLogic.Worker
             return dt;
         }
 
-        public PODetailEntityDetails GetPODetailsList(int pageIndex, int pageSize, string SearchVendorTypeId = null, string SearchSupplierId = null, string SearchRMCategory = null, string SearchDeliveryDate = null)
+        public PODetailEntityDetails GetPODetailsList(int pageIndex, int pageSize, string SearchVendorTypeId = null, string SearchSupplierId = null, string SearchRMCategory = null, string SearchDeliveryDateFrom = null, string SearchDeliveryDateTo = null)
         {
             try
             {
                 PODetailEntityDetails poDetailEntity = new PODetailEntityDetails();
                 poDetailEntity.lstPOEntity = new List<PODetailEntity>();
 
-                DataSet ds = _repository.GetPODetailsList(pageIndex, pageSize, SearchVendorTypeId, SearchSupplierId, SearchRMCategory, SearchDeliveryDate);
+                DataSet ds = _repository.GetPODetailsList(pageIndex, pageSize, SearchVendorTypeId, SearchSupplierId, SearchRMCategory, SearchDeliveryDateFrom, SearchDeliveryDateTo);
 
                 if (ds.Tables.Count > 0)
                 {
