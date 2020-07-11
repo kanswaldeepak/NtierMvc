@@ -377,30 +377,31 @@ angular.module('App').controller("MRMController", function ($scope, $http, $time
                                     $('#tableRM tbody').empty();
 
                                     $.each(data, function (i, item) {
-                                        let rowHtml = '<tr sn=${item.SN}> <td><span class="RMSN">${item.SN}</span></td><td><span class="RMdescription">${item.RMdescription}</span></td><td hidden><span class="RMgrade">${item.RMgrade}<span></td><td hidden><span class="RMHardness">${item.RMHardness}<span></td><td hidden><span class="RMPSLlevel">${item.PSLlevel}<span></td><td hidden><span class="RMOD">${item.OD}<span></td><td hidden><span class="RMWT">${item.WT}</span></td><td hidden><span class="RMLen">${item.Len}</span></td><td hidden><span class="RMQtyReqd">${item.QtyReqd}</span></td><td hidden><span class="RMQtyStock">${item.QtyStock}</span></td><td><span class="RMPRqty">${item.PRqty}</span></td><td><select disabled class="RMLotName form-control lotColumns"><option value="">Select</option><option value="Lot1">Lot1</option><option value="Lot2">Lot2</option><option value="Lot3">Lot3</option></select></td><td><input type="text" disabled class="form-control lotColumns RMLotQty" value="${item.LotQty}" /></td><td><input type="text" disabled class="form-control lotColumns NoEndDate RMLotDate" value="${item.LotDate}" /></td><td><span class="RMUnitPrice">${item.UnitPrice}</span></td><td><span class="PORMTPrice RMPrice">${item.TotalPrice}</span></td><td><input disabled type="text" class="PORMDiscount form-control col-md-6" value="${item.Discount}" /></td><td><input type="text" disabled class="form-control PORMFinalPrice RMTotalPrice" value="${item.TotalPrice}" /></td><td hidden><span class="RMDesc1">${item.TotalPrice}</span></td></tr>';
-                                // create object from html string
-                                let $row = $(rowHtml)
-                                // set value of the select within this row instance
-                                $row.find('.RMSN').text(item.SN);
-                                $row.find('.RMdescription').text(item.RMdescription);
-                                $row.find('.RMgrade').text(item.RMgrade);
-                                $row.find('.RMHardness').text(item.RMHardness);
-                                $row.find('.RMPSLlevel').text(item.PSLlevel);
-                                $row.find('.RMOD').text(item.OD);
-                                $row.find('.RMWT').text(item.WT);
-                                $row.find('.RMLen').text(item.Len);
-                                $row.find('.RMQtyReqd').text(item.QtyReqd);
-                                $row.find('.RMPRqty').text(item.PRqty);
-                                $row.find('select.lotColumns').val(item.LotName);
-                                $row.find('.RMLotQty').val(item.LotQty);
-                                $row.find('.RMLotDate').val(item.LotDate);
-                                $row.find('.RMUnitPrice').text(item.UnitPrice);
-                                $row.find('.PORMTPrice').text(item.TotalPrice);                                
-                                $row.find('.PORMDiscount').val(item.Discount);                                
-                                $row.find('.RMTotalPrice').val(item.TotalPrice);                                
-                                $row.find('.PORMFinalPrice').val(item.TotalPrice);                                
-                                // append updated object to DOM
-                                $('#tableRM > tbody:last-child').append($row);
+                                        let rowHtml = '<tr sn=${item.SN}> <td><span class="RMSN">${item.SN}</span></td><td><span class="RMdescription">${item.RMdescription}</span></td><td hidden><span class="RMgrade">${item.RMgrade}<span></td><td hidden><span class="RMHardness">${item.RMHardness}<span></td><td hidden><span class="RMPSLlevel">${item.PSLlevel}<span></td><td hidden><span class="RMOD">${item.OD}<span></td><td hidden><span class="RMWT">${item.WT}</span></td><td hidden><span class="RMLen">${item.Len}</span></td><td hidden><span class="RMQtyReqd">${item.QtyReqd}</span></td><td hidden><span class="RMQtyStock">${item.QtyStock}</span></td><td><span class="RMPRqty">${item.PRqty}</span></td><td><select disabled class="RMLotName form-control lotColumns"><option value="">Select</option><option value="Lot1">Lot1</option><option value="Lot2">Lot2</option><option value="Lot3">Lot3</option></select></td><td><input type="text" disabled class="form-control lotColumns RMLotQty" value="${item.LotQty}" /></td><td><input type="text" disabled class="form-control lotColumns NoEndDate RMLotDate" value="${item.LotDate}" /></td><td><span class="RMUnitPrice">${item.UnitPrice}</span></td><td><span class="PORMTPrice RMPrice">${item.TotalPrice}</span></td><td><input disabled type="text" class="PORMDiscount form-control col-md-6" value="${item.Discount}" /></td><td><input type="text" disabled class="form-control PORMFinalPrice RMTotalPrice" value="${item.TotalPrice}" /></td><td hidden><span class="RMDesc1">${item.Desc1}</span></td></tr>';
+                                        // create object from html string
+                                        let $row = $(rowHtml)
+                                        // set value of the select within this row instance
+                                        $row.find('.RMSN').text(item.SN);
+                                        $row.find('.RMdescription').text(item.RMdescription);
+                                        $row.find('.RMgrade').text(item.RMgrade);
+                                        $row.find('.RMHardness').text(item.RMHardness);
+                                        $row.find('.RMPSLlevel').text(item.PSLlevel);
+                                        $row.find('.RMOD').text(item.OD);
+                                        $row.find('.RMWT').text(item.WT);
+                                        $row.find('.RMLen').text(item.Len);
+                                        $row.find('.RMQtyReqd').text(item.QtyReqd);
+                                        $row.find('.RMPRqty').text(item.PRqty);
+                                        $row.find('select.lotColumns').val(item.LotName);
+                                        $row.find('.RMLotQty').val(item.LotQty);
+                                        $row.find('.RMLotDate').val(item.LotDate);
+                                        $row.find('.RMUnitPrice').text(item.UnitPrice);
+                                        $row.find('.PORMTPrice').text(item.TotalPrice);
+                                        $row.find('.PORMDiscount').val(item.Discount);
+                                        $row.find('.RMTotalPrice').val(item.TotalPrice);
+                                        $row.find('.PORMFinalPrice').val(item.TotalPrice);
+                                        $row.find('.RMDesc1').text(item.Desc1);
+                                        // append updated object to DOM
+                                        $('#tableRM > tbody:last-child').append($row);
 
                                     })
 
@@ -559,10 +560,11 @@ angular.module('App').controller("MRMController", function ($scope, $http, $time
                                     $('#tableRM tbody').empty();
 
                                     $.each(data, function (i, item) {
-                                        let rowHtml = '<tr sn=${item.SN}> <td><span class="RMSN">${item.SN}</span></td><td><span class="RMdescription">${item.RMdescription}</span></td><td hidden><span class="RMgrade">${item.RMgrade}<span></td><td hidden><span class="RMHardness">${item.RMHardness}<span></td><td hidden><span class="RMPSLlevel">${item.PSLlevel}<span></td><td hidden><span class="RMOD">${item.OD}<span></td><td hidden><span class="RMWT">${item.WT}</span></td><td hidden><span class="RMLen">${item.Len}</span></td><td hidden><span class="RMQtyReqd">${item.QtyReqd}</span></td><td hidden><span class="RMQtyStock">${item.QtyStock}</span></td><td><span class="RMPRqty">${item.PRqty}</span></td><td><select disabled class="RMLotName form-control lotColumns"><option value="">Select</option><option value="Lot1">Lot1</option><option value="Lot2">Lot2</option><option value="Lot3">Lot3</option></select></td><td><input type="text" disabled class="form-control lotColumns RMLotQty" value="${item.LotQty}" /></td><td><input type="text" disabled class="form-control lotColumns NoEndDate RMLotDate" value="${item.LotDate}" /></td><td><span class="RMUnitPrice">${item.UnitPrice}</span></td><td><span class="PORMTPrice RMPrice">${item.TotalPrice}</span></td><td><input type="text" class="PORMDiscount form-control col-md-6" value="${item.Discount}" /></td><td><input type="text" class="form-control PORMFinalPrice RMTotalPrice" value="${item.TotalPrice}" /></td><td hidden><span class="RMDesc1">${item.TotalPrice}</span></td><td><a href="#" class="addLotPO">Add Lot Details</a></td><td><a href="#" class="removeRMPO">Remove</a></td></tr>';
+                                        let rowHtml = '<tr sn="' + item.SN + '"> <td><span class="RMSN">${item.SN}</span></td><td><span class="RMdescription">${item.RMdescription}</span></td><td hidden><span class="RMgrade">${item.RMgrade}<span></td><td hidden><span class="RMHardness">${item.RMHardness}<span></td><td hidden><span class="RMPSLlevel">${item.PSLlevel}<span></td><td hidden><span class="RMOD">${item.OD}<span></td><td hidden><span class="RMWT">${item.WT}</span></td><td hidden><span class="RMLen">${item.Len}</span></td><td hidden><span class="RMQtyReqd">${item.QtyReqd}</span></td><td hidden><span class="RMQtyStock">${item.QtyStock}</span></td><td><span class="RMPRqty">${item.PRqty}</span></td><td><select disabled class="RMLotName form-control lotColumns"><option value="">Select</option><option value="Lot1">Lot1</option><option value="Lot2">Lot2</option><option value="Lot3">Lot3</option></select></td><td><input type="text" disabled class="form-control lotColumns RMLotQty" value="${item.LotQty}" /></td><td><input type="text" disabled class="form-control lotColumns NoEndDate RMLotDate" value="${item.LotDate}" /></td><td><span class="RMUnitPrice">${item.UnitPrice}</span></td><td><span class="PORMTPrice RMPrice">${item.TotalPrice}</span></td><td><input type="text" class="PORMDiscount form-control col-md-6" value="${item.Discount}" /></td><td><input type="text" class="form-control PORMFinalPrice RMTotalPrice" value="${item.TotalPrice}" /></td><td hidden><span class="RMDesc1">${item.Desc1}</span></td><td><a href="#" class="addLotPO">Add Lot Details</a></td><td><a href="#" class="removeRMPO">Remove</a></td></tr>';
                                         // create object from html string
                                         let $row = $(rowHtml)
                                         // set value of the select within this row instance
+
                                         $row.find('.RMSN').text(item.SN);
                                         $row.find('.RMdescription').text(item.RMdescription);
                                         $row.find('.RMgrade').text(item.RMgrade);
@@ -581,6 +583,7 @@ angular.module('App').controller("MRMController", function ($scope, $http, $time
                                         $row.find('.PORMDiscount').val(item.Discount);
                                         $row.find('.RMTotalPrice').val(item.TotalPrice);
                                         $row.find('.PORMFinalPrice').val(item.FinalPrice);
+                                        $row.find('.RMDesc1').text(item.Desc1);
                                         // append updated object to DOM
                                         $('#tableRM > tbody:last-child').append($row);
 

@@ -488,7 +488,7 @@ namespace NtierMvc.BusinessLogic.Worker
                         Model.ApprovePerson2Sign = dr1.IsNull("ApprovePerson2Sign") ? "" : Convert.ToString(dr1["ApprovePerson2Sign"]);
                         Model.EntryPerson = dr1.IsNull("EntryPerson") ? "" : Convert.ToString(dr1["EntryPerson"]);
                         Model.EntryPersonSign = dr1.IsNull("EntryPersonSign") ? "" : Convert.ToString(dr1["EntryPersonSign"]);
-
+                        Model.Desc1 = dr1.IsNull("Desc1") ? "" : Convert.ToString(dr1["Desc1"]);
 
                         lstPO.Add(Model);
                     }

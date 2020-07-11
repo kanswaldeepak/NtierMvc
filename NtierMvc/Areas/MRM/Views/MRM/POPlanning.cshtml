@@ -60,6 +60,7 @@
                             @Html.TextBox("DeliveryDateFrom","", new
                        {
                            @class = "form-control requiredValidation NoEndDate",
+                           @style = "background-color: white",
                            @id = "POSearchDeliveryDateFrom",
                            ng_model = "POSearchDeliveryDateFrom",
                            @placeholder = "Date From",
@@ -68,13 +69,14 @@
                         </div>
                         <div class="col-md-6">
                             @Html.TextBox("DeliveryDateTo","", new
-                           {
-                               @class = "form-control ml-3 requiredValidation NoEndDate ",
-                               @id = "POSearchDeliveryDateTo",
-                               ng_model = "POSearchDeliveryDateTo",
-                               @placeholder = "Date To",
-                               @readonly = "readonly"
-                           })
+                       {
+                           @class = "form-control ml-3 requiredValidation NoEndDate ",
+                           @style = "background-color: white",
+                           @id = "POSearchDeliveryDateTo",
+                           ng_model = "POSearchDeliveryDateTo",
+                           @placeholder = "Date To",
+                           @readonly = "readonly"
+                       })
                         </div>
                     </div>
                             
@@ -84,9 +86,7 @@
                 <button class="btn btn-link" type="button" id="btnSearch" ng-click="FetchPODetailsList()">
                     <i class="fa fa-search"></i>
                 </button>
-                <button class="btn btn-link" type="button" id="btnClearSearchPO">
-                    <i class="fa fa-trash"></i>
-                </button>
+                <button class="btn btn-sm btn-info" type="button" id="btnClearSearchPO">Clear</button>
             </td>
         </tr>
     </table>

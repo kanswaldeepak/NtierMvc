@@ -58,23 +58,25 @@
                 <div class="row">
                     <div class="col-md-6">
                         @Html.TextBox("DeliveryDateFrom", "", new
-                       {
-                           @class = "form-control requiredValidation NoEndDate",
-                           @id = "PRSearchDeliveryDateFrom",
-                           ng_model = "PRSearchDeliveryDateFrom",
-                           @placeholder = "Date From",
-                           @readonly = "readonly"
-                       })
+                   {
+                       @class = "form-control requiredValidation NoEndDate",
+                       @style = "background-color: white",
+                       @id = "PRSearchDeliveryDateFrom",
+                       ng_model = "PRSearchDeliveryDateFrom",
+                       @placeholder = "Date From",
+                       @readonly = "readonly"
+                   })
                     </div>
                     <div class="col-md-6">
                         @Html.TextBox("DeliveryDateTo", "", new
-                       {
-                           @class = "form-control ml-3 requiredValidation NoEndDate",
-                           @id = "PRSearchDeliveryDateTo",
-                           ng_model = "PRSearchDeliveryDateTo",
-                           @placeholder = "Date To",
-                           @readonly = "readonly"
-                       })
+                   {
+                       @class = "form-control ml-3 requiredValidation NoEndDate",
+                       @style = "background-color: white",
+                       @id = "PRSearchDeliveryDateTo",
+                       ng_model = "PRSearchDeliveryDateTo",
+                       @placeholder = "Date To",
+                       @readonly = "readonly"
+                   })
                     </div>
                 </div>
                 
@@ -84,9 +86,7 @@
                 <button class="btn btn-link" type="button" id="btnSearch" ng-click="FetchPRDetailsList()">
                     <i class="fa fa-search"></i>
                 </button>
-                <button class="btn btn-link" type="button" id="btnClearSearchPR">
-                    <i class="fa fa-trash"></i>
-                </button>
+                <button class="btn btn-sm btn-info" type="button" id="btnClearSearchPR">Clear</button>
             </td>
         </tr>
     </table>
