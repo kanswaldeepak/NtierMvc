@@ -38,6 +38,8 @@ namespace NtierMvc.Model
         public string TimeOut { get; set; }
         public string VehicleReleased { get; set; }
         public string SupplyTerms { get; set; }
+        public string ContainerNo { get; set; }
+        public string SupplyType { get; set; }
         
     }
 

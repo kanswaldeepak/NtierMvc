@@ -106,7 +106,7 @@ namespace NtierMvc.BusinessLogic.Interface
         List<DropDownEntity> GetMasterTableList(string TableName, string DataValueField, string DataTextField, string Property);
         List<DropDownEntity> GetMasterTableList(string TableName, string DataValueField, string DataTextField, string Property, string ColumnName);
         List<DropDownEntity> GetMasterTableStringList(string TableName, string DataValueField, string DataTextField, string Property, string ColumnName,  string ListType=null);
-        List<DropDownEntity> GetDropDownList(string TableName, string ListType, string DataValueField, string DataTextField, string Property, string ColumnName, string orderBy = null, string orderByColumn = null, string Property1 = null, string ColumnName1 = null, string Property2 = null, string ColumnName2 = null, string Property3 = null, string ColumnName3 = null, string Property4 = null, string ColumnName4 = null);
+        List<DropDownEntity> GetDropDownList(string TableName, string ListType, string DataValueField, string DataTextField, string Param, string ColumnName, string orderBy = null, string orderByColumn = null, string Param1 = null, string ColumnName1 = null, string Param2 = null, string ColumnName2 = null, string Param3 = null, string ColumnName3 = null, string Param4 = null, string ColumnName4 = null);
 
         List<DropDownEntity> GetExistingCourseList(int RegistrationId);
 

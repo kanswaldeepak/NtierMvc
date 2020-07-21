@@ -22,7 +22,7 @@ angular.module('App').controller("MainController", function ($scope, $http, $tim
         });
     }
     
-    //$scope.FetchCustomerList();
+    $scope.FetchCustomerList();
     
     $scope.CustPageChanged = function () {
         $scope.FetchCustomerList();
@@ -938,7 +938,7 @@ angular.module('App').controller("MainController", function ($scope, $http, $tim
             url: window.InboundPopUp,
             success: function (html) {
                 html = $compile(html)($scope);
-                SetModalTitle("Material Entry")
+                SetModalTitle("Gate Entry")
                 SetModalBody(html);
                 HideLoadder();
                 SetModalWidth("1400px");

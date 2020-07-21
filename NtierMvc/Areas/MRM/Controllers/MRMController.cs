@@ -561,7 +561,8 @@ namespace NtierMvc.Areas.MRM.Controllers
             ViewBag.ListModeOfTransport = model.GetMasterTableStringList("Master.Taxonomy", "DropDownId", "DropDownValue", "Transport", "Property", GeneralConstants.ListTypeD);
             ViewBag.ListPRCat = model.GetMasterTableStringList("Master.Taxonomy", "DropDownValue", "ObjectName", "PRCat", "Property", GeneralConstants.ListTypeN);
             ViewBag.ListCostCache = model.GetMasterTableStringList("Master.Department", "Id", "DeptName", "", "", GeneralConstants.ListTypeN);
-            ViewBag.ListSupplyType = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "SupplyTerms", "Property", GeneralConstants.ListTypeN);
+            ViewBag.ListSupplyTerms = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "SupplyTerms", "Property", GeneralConstants.ListTypeN);
+            ViewBag.ListSupplyType = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "SupplyType", "Property", GeneralConstants.ListTypeN);
 
             List<DropDownEntity> ListPO = new List<DropDownEntity>();
             DropDownEntity ddl = new DropDownEntity();
@@ -668,6 +669,7 @@ namespace NtierMvc.Areas.MRM.Controllers
                         newObj.FinalPrice = item.FinalPrice;
                         newObj.WorkNo = item.WorkNo;
                         newObj.DeliveryDate = item.DeliveryDate;
+                        newObj.SupplyType = item.SupplyType;
                         newObj.ItemCategory = item.ItemCategory;
                         newObj.POValidity = item.POValidity;
                         newObj.GeneralCondition = item.GeneralCondition;

@@ -206,16 +206,16 @@ angular.module('App').controller("ModalController", function ($scope, $http, $ti
     }
 
     //Vendor Master Bill Starts
-    $scope.SaveInboundDetails = function () {
+    $scope.SaveInboundGateEntry = function () {
         var frm = $("#formInbound");
         var formData = new FormData(frm[0]);
 
-        var BillAmount = $('#BillAmount').val();
-        var EndUse = $('#EndUse option:selected').text();
-        if (BillAmount > 1000 && EndUse == 'Non-PO') {
-            alert('Value exceeds the sanctioned value. Please raise PO');
-            return;
-        }
+        //var BillAmount = $('#BillAmount').val();
+        //var EndUse = $('#EndUse option:selected').text();
+        //if (BillAmount > 1000 && EndUse == 'Non-PO') {
+        //    alert('Value exceeds the sanctioned value. Please raise PO');
+        //    return;
+        //}
 
         var Status = false;
         Status = GetFormValidationStatus("#formInbound");
@@ -224,10 +224,11 @@ angular.module('App').controller("ModalController", function ($scope, $http, $ti
             alert("Kindly Fill all mandatory fields");
         }
         else {
-            $http({ url: window.SaveGateEntry, method: 'POST', data: formData, headers: { 'Content-Type': undefined } }).success(
+            $http({ url: window.SaveGateEntryDetails, method: 'POST', data: formData, headers: { 'Content-Type': undefined } }).success(
                 function (res) {
                     if (res == 'Saved Successfully!') {
-                        $scope.FetchVendorsMasterList();
+                        alert(res);
+                        $scope.FetchInboundList();
                         $("#ModalPopup").modal('hide');
                     }
                     else {

@@ -5,13 +5,14 @@
 }
 
 <style>
-    .info-block{
-        margin-top: 10px;
+    .info-block {
+        margin-top: 70px;
     }
-    .info-block section {
-        border: 1px solid #d8d8d8;
-        border-radius: 10px;
-    }
+
+        .info-block section {
+            border: 1px solid #a59797;
+            border-radius: 10px;
+        }
 
     .file-marker > div {
         padding: 0 3px;
@@ -29,11 +30,45 @@
 
 <div ng-controller="ModalController" class="row">
     <form id="formInbound">
+        <div class="col-md-12">            
+            <div class="col-md-2 pull-right">
+                <div class="form-group">
+                    <label class="control-label" style="font-size: medium">
+                        Date
+                    </label>
+                    @Html.TextBox("GEDate", DateTime.Now, new
+               {
+                   @class = "form-control requiredValidation clearField ",
+                   @id = "GEInboundDate",
+                   @name = "GEInboundDate",
+                   @style = "font-size: medium; color: green",
+                   @readonly = "true"
+               })
+                </div>
+            </div>
+
+            <div class="col-md-2 pull-right">
+                <div class="form-group">
+                    <label class="control-label" style="font-size: medium">
+                        Gate Control No
+                    </label>
+                    @Html.TextBoxFor(m => m.GateControlNo, new
+               {
+                   @class = "form-control requiredValidation clearField ",
+                   @id = "GEGateControlNo",
+                   @name = "GEGateControlNo",
+                   @style = "font-size: medium; color: green",
+                   @readonly = "true"
+               })
+                </div>
+            </div>
+        </div>
+
         <div class="col-md-12">
             @Html.HiddenFor(m => m.Id)
             @Html.HiddenFor(m => m.GateNo)
 
-            <aside class="info-block">
+            <aside class="info-block" style="margin-top: 100px">
                 <section class="file-marker">
                     <div>
                         <div class="box-title">
@@ -42,6 +77,23 @@
                         <div class="box-contents">
                             <div id="audit-trail">
                                 <div class="ml-0 mr-0 row">
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label class="control-label">
+                                                Supply Types
+                                            </label>
+                                            @Html.DropDownListFor(m => m.SupplyType, new SelectList(@ViewBag.ListSupplyType, "DataStringValueField", "DataTextField", Model.SupplyType),
+                                            new
+                                            {
+                                                @class = "form-control requiredValidation",
+                                                @id = "GESupplyTypes",
+                                                @data_inneraction = "validationCall",
+                                                @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                                                @onchange = "GetPODetailsFromSupplyType()"
+                                            })
+                                        </div>
+                                    </div>
+
                                     <div class="col-md-2">
                                         <div class="form-group">
                                             <label class="control-label">
@@ -92,7 +144,7 @@
                                             </label>
                                             @Html.TextBoxFor(m => m.DeliveryDate, new
                                        {
-                                           @class = "form-control requiredValidation clearField ",
+                                           @class = "form-control requiredValidation NoEndDate ",
                                            @id = "GEDeliveryDate",
                                            @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
                                            @readonly = "true"
@@ -138,144 +190,10 @@
                                                     })
                                         </div>
                                     </div>
-                                    <div class="col-md-2">
-                                        <div class="form-group">
-                                            <label class="control-label">
-                                                Gate Control No
-                                            </label>
-                                            @Html.TextBoxFor(m => m.GateControlNo, new
-                                        {
-                                            @class = "form-control requiredValidation clearField ",
-                                            @id = "GEGateControlNo",
-                                            @readonly = "true"
-                                        })
-                                        </div>
-                                    </div>
+
                                 </div>
                             </div>
 
-                        </div>
-                    </div>
-                </section>
-            </aside>
-
-
-            <aside class="info-block">
-                <section class="file-marker">
-                    <div>
-                        <div class="box-title">
-                            <h4 class="control-label" style="font-size: 16px">Transport Informations</h4>
-                        </div>
-                        <div class="box-contents">
-                            <div id="audit-trail">
-                                <div class="ml-0 mr-0 row">
-
-                                    <div class="col-md-2">
-                                        <div class="form-group">
-                                            <label class="control-label">
-                                                Vehicle No. <span class="required">*</span>
-                                            </label>
-                                            @Html.TextBoxFor(m => m.VehicleNo, new
-                                       {
-                                           @class = "form-control requiredValidation clearField ",
-                                           @id = "GEVehicleNo",
-                                           @placeholder = "Enter Vehicle No",
-                                           @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
-                                       })
-                                            <span class="HideValidMsg"> Enter Vehicle No</span>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <div class="form-group">
-                                            <label class="control-label">
-                                                Driver Name <span class="required">*</span>
-                                            </label>
-                                            @Html.TextBoxFor(m => m.DriverName, new
-                                       {
-                                           @class = "form-control requiredValidation clearField ",
-                                           @id = "GEDriverName",
-                                           @placeholder = "Enter Driver Name",
-                                           @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
-                                       })
-                                            <span class="HideValidMsg">Enter Driver Name</span>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <div class="form-group">
-                                            <label class="control-label">
-                                                Driver Contact No <span class="required">*</span>
-                                            </label>
-                                            @Html.TextBoxFor(m => m.DriverContactNo, new
-                                       {
-                                           @class = "form-control requiredValidation clearField ",
-                                           @id = "GEDriverContactNo",
-                                           @placeholder = "Enter Driver Contact No",
-                                           @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
-                                       })
-                                            <span class="HideValidMsg">Enter Driver Contact No</span>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <div class="form-group">
-                                            <label class="control-label">
-                                                Time In <span class="required">*</span>
-                                            </label>
-                                            @Html.TextBoxFor(m => m.TimeIn, new
-                                       {
-                                           @class = "form-control requiredValidation clearField ",
-                                           @id = "GETimeIn",
-                                           @placeholder = "Enter Time In",
-                                           @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
-                                       })
-                                            <span class="HideValidMsg">Enter Time In</span>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <div class="form-group">
-                                            <label class="control-label">
-                                                Time Out <span class="required">*</span>
-                                            </label>
-                                            @Html.TextBoxFor(m => m.TimeOut, new
-                                       {
-                                           @class = "form-control requiredValidation clearField ",
-                                           @id = "GETimeOut",
-                                           @placeholder = "Enter Time Out",
-                                           @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
-                                       })
-                                            <span class="HideValidMsg">Enter Time Out</span>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <div class="form-group">
-                                            <label class="control-label">
-                                                Vehicle Released <span class="required">*</span>
-                                            </label>
-                                            @Html.TextBoxFor(m => m.VehicleReleased, new
-                                       {
-                                           @class = "form-control requiredValidation clearField ",
-                                           @id = "GEVehicleReleased",
-                                           @placeholder = "Enter Vehicle Released",
-                                           @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
-                                       })
-                                            <span class="HideValidMsg">Enter Vehicle Released</span>
-                                        </div>
-                                        <div class="col-md-2">
-                                            <div class="form-group">
-                                                <label class="control-label">
-                                                    Supply Terms <span class="required">*</span>
-                                                </label>
-                                                @Html.DropDownListFor(m => m.SupplyTerms, new SelectList(ViewBag.ListSupplyType, "DataStringValueField", "DataTextField", "Select"), new
-                                       {
-                                           @class = "form-control requiredValidation clearField",
-                                           @id = "GESupplyTerms",
-                                           @data_inneraction = "validationCall",
-                                           @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
-                                       })
-                                                <span class="HideValidMsg">Enter Supply Type</span>
-                                            </div>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </section>
@@ -293,15 +211,27 @@
                                     <div class="col-md-12">
                                         <div class="row">
                                             <div class="col-md-12">
-                                                <div class="form-inline pull-right">
+
+                                                <div class="col-md-2">
+                                                    <div class="form-group">
+                                                        <label class="control-label">
+                                                            Supply Terms <span class="required">*</span>
+                                                        </label>
+                                                        @Html.DropDownListFor(m => m.SupplyTerms, new SelectList(ViewBag.ListSupplyTerms, "DataStringValueField", "DataTextField", "Select"), new
+                                               {
+                                                   @class = "form-control",
+                                                   @id = "GESupplyTerms"
+                                               })
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-inline pull-right" hidden>
                                                     <div class="form-group mt-4">
                                                         @Html.DropDownListFor(m => m.PRCat, new SelectList(@ViewBag.ListPRCat, "DataStringValueField", "DataTextField", Model.PRCat),
                                                             new
                                                             {
-                                                                @class = "form-control requiredValidation clearField",
-                                                                @id = "GEPRCat",
-                                                                @data_inneraction = "validationCall",
-                                                                @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                                                                @class = "form-control ",
+                                                                @id = "GEPRCat"
                                                             })
                                                     </div>
                                                 </div>
@@ -511,8 +441,8 @@
                                                                 Total Price
                                                             </td>
                                                             @*<td width="16%">
-                                Required Dly. Date
-                            </td>*@
+                                                            Required Dly. Date
+                                                        </td>*@
                                                             <td style="width: 5%;">
                                                                 HSN
                                                             </td>
@@ -535,9 +465,130 @@
                 </section>
             </aside>
 
+
+            <aside class="info-block">
+                <section class="file-marker">
+                    <div>
+                        <div class="box-title">
+                            <h4 class="control-label" style="font-size: 16px">Transport Informations</h4>
+                        </div>
+                        <div class="box-contents">
+                            <div id="audit-trail">
+                                <div class="ml-0 mr-0 row">
+
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label class="control-label">
+                                                Vehicle No. <span class="required">*</span>
+                                            </label>
+                                            @Html.TextBoxFor(m => m.VehicleNo, new
+                                       {
+                                           @class = "form-control requiredValidation clearField ",
+                                           @id = "GEVehicleNo",
+                                           @placeholder = "Enter Vehicle No",
+                                           @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                                       })
+                                            <span class="HideValidMsg"> Enter Vehicle No</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label class="control-label">
+                                                Container No.
+                                            </label>
+                                            @Html.TextBoxFor(m => m.ContainerNo, new
+                                       {
+                                           @class = "form-control",
+                                           @id = "GEContainerNo",
+                                           @placeholder = "Enter Container No"
+                                       })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label class="control-label">
+                                                Driver Name <span class="required">*</span>
+                                            </label>
+                                            @Html.TextBoxFor(m => m.DriverName, new
+                                       {
+                                           @class = "form-control requiredValidation clearField ",
+                                           @id = "GEDriverName",
+                                           @placeholder = "Enter Driver Name",
+                                           @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                                       })
+                                            <span class="HideValidMsg">Enter Driver Name</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label class="control-label">
+                                                Driver Contact No <span class="required">*</span>
+                                            </label>
+                                            @Html.TextBoxFor(m => m.DriverContactNo, new
+                                       {
+                                           @class = "form-control requiredValidation clearField ",
+                                           @id = "GEDriverContactNo",
+                                           @placeholder = "Enter Driver Contact No",
+                                           @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                                       })
+                                            <span class="HideValidMsg">Enter Driver Contact No</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label class="control-label">
+                                                Time In <span class="required">*</span>
+                                            </label>
+                                            @Html.TextBoxFor(m => m.TimeIn, new
+                                       {
+                                           @class = "form-control requiredValidation clearField ",
+                                           @id = "GETimeIn",
+                                           @placeholder = "Enter Time In",
+                                           @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                                       })
+                                            <span class="HideValidMsg">Enter Time In</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label class="control-label">
+                                                Time Out <span class="required">*</span>
+                                            </label>
+                                            @Html.TextBoxFor(m => m.TimeOut, new
+                                       {
+                                           @class = "form-control requiredValidation clearField ",
+                                           @id = "GETimeOut",
+                                           @placeholder = "Enter Time Out",
+                                           @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                                       })
+                                            <span class="HideValidMsg">Enter Time Out</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label class="control-label">
+                                                Vehicle Released By <span class="required">*</span>
+                                            </label>
+                                            @Html.TextBoxFor(m => m.VehicleReleased, new
+                                       {
+                                           @class = "form-control requiredValidation clearField ",
+                                           @id = "GEVehicleReleased",
+                                           @placeholder = "Enter Vehicle Released",
+                                           @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                                       })
+                                            <span class="HideValidMsg">Enter Vehicle Released</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                </section>
+            </aside>
+
             <div class="row">
                 <div class="col-md-12 pt-4 text-center">
-                    <button style="font-size:18px" type="button" class="btn btn-success btn-sm" id="save_results" onclick="SaveInboundDetails(event)">Save</button>
+                    <button style="font-size:18px" type="button" class="btn btn-success btn-sm" id="save_results" ng-click="SaveInboundGateEntry()" >Save</button>
                     <button style="font-size:18px" type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
                 </div>
             </div>
@@ -548,6 +599,7 @@
     $(document).ready(function () {
         window.SaveGateEntryDetails = '@Url.Action("SaveGateEntryDetails", "GateEntry")';
         window.GetDetailsForGateEntry = '@Url.Action("GetDetailsForGateEntry", "GateEntry")';
+        window.GetPODetailFromSupplyType = '@Url.Action("GetPODetailFromSupplyType", "GateEntry")';
 
         $('#tableRM').hide();
         $('#tableBOI').hide();
@@ -566,6 +618,7 @@
         changeYear: true,
         endDate: '',
     });
+
     $('.CurrentEndDate').datepicker({
 
         format: 'dd/mm/yyyy',
@@ -574,4 +627,5 @@
         changeYear: true,
         endDate: 'today',
     });
+
 </script>

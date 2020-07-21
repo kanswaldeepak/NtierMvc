@@ -140,7 +140,7 @@
                         </div>
                         <div class="form-group ml-4">
                             <label for="SupplyTerms">Supply Terms </label>
-                            @Html.DropDownListFor(m => m.SupplyTerms, new SelectList(ViewBag.ListSupplyType, "DataStringValueField", "DataTextField", "Select"), new
+                            @Html.DropDownListFor(m => m.SupplyTerms, new SelectList(ViewBag.ListSupplyTerms, "DataStringValueField", "DataTextField", "Select"), new
                                       {
                                           @class = "form-control requiredValidation",
                                           @id = "SupplyTermsPODetails",
@@ -652,6 +652,18 @@
                            @id = "PODetailsDeliveryDate",
                            @readonly = "readonly"
                         })
+                    </td>
+                    <td class="text-right">
+                        Supply Type
+                    </td>
+                    <td>
+                        @Html.DropDownListFor(m => m.SupplyType, new SelectList(@ViewBag.ListSupplyType, "DataStringValueField", "DataTextField", "Select"), new
+                                {
+                                    @class = "form-control ml-2 requiredValidation",
+                                    @id = "PODetailsSupplyType",
+                                    @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                                    @onchange = "FetchtPRDetailsFromPRSetNo()"
+                                })
                     </td>
                 </tr>
                 <tr>

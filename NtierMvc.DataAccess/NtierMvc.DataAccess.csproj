@@ -59,6 +59,7 @@
     <Compile Include="Common\IRepository.cs" />
     <Compile Include="LoginRepository.cs" />
     <Compile Include="EmployeesRepository.cs" />
+    <Compile Include="Pool\Repository.Stores.cs" />
     <Compile Include="Pool\Repository.MRM.cs" />
     <Compile Include="Pool\Repository.Design.cs" />
     <Compile Include="Pool\Repository.Hr.cs" />

@@ -193,6 +193,7 @@
     <Compile Include="Areas\MRM\Models\MRMManager.cs" />
     <Compile Include="Areas\MRM\MRMAreaRegistration.cs" />
     <Compile Include="Areas\Stores\Controllers\StoresController.cs" />
+    <Compile Include="Areas\Stores\Models\StoresManager.cs" />
     <Compile Include="Areas\Stores\StoresAreaRegistration.cs" />
     <Compile Include="Controllers\ApplicationController.cs" />
     <Compile Include="Controllers\TechnicalController.cs" />
@@ -262,6 +263,7 @@
     <Content Include="Areas\DesignEng\Scripts\PRP.js" />
     <Content Include="Areas\MRM\Scripts\PODetailPopUp.js" />
     <Content Include="Areas\MRM\Scripts\PRDetailPopUp.js" />
+    <Content Include="Areas\Stores\Scripts\GoodsReciept.js" />
     <Content Include="assets\app\js\dashboard.js" />
     <Content Include="assets\app\js\layout-builder.js" />
     <Content Include="assets\app\js\my-script.js" />
@@ -1142,9 +1144,9 @@
     <Content Include="Areas\MRM\Views\MRM\_PODetailsPopup.cshtml" />
     <Content Include="Areas\MRM\Views\MRM\POPlanning.cshtml" />
     <Content Include="Areas\Stores\Views\web.config" />
-    <Content Include="Areas\Stores\Views\Stores\_InboundStoresPopUp.cshtml" />
+    <Content Include="Areas\Stores\Views\Stores\_GoodsRecieptPopUp.cshtml" />
     <Content Include="Areas\Stores\Views\Stores\StoresMaster.cshtml" />
-    <Content Include="Areas\Stores\Views\Stores\PartialStoresInbound.cshtml" />
+    <Content Include="Areas\Stores\Views\Stores\PartialGoodsReciept.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\CustomJS\common.js" />
@@ -1252,8 +1254,6 @@
     <Folder Include="Areas\HRDepartment\EmployeeImage\" />
     <Folder Include="Areas\HRDepartment\Views\Shared\" />
     <Folder Include="Areas\MRM\Views\Shared\" />
-    <Folder Include="Areas\Stores\Models\" />
-    <Folder Include="Areas\Stores\Scripts\" />
     <Folder Include="Areas\Stores\Views\Shared\" />
     <Folder Include="assets\custom\js\" />
     <Folder Include="assets\Documents\" />

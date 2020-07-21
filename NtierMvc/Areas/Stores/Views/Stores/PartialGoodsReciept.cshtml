@@ -1,13 +1,11 @@
-﻿@model NtierMvc.Model.GateEntryEntity
+﻿
 @{
-                /**/
-
-                ViewBag.Title = "Inbound";
+    ViewBag.Title = "GoodsReciept";
 }
 
 <div class="row mt-3">
     <div class="col-md-2">
-        <button id="btnBill" type="button" class="btn btn-outline-primary btn-sm" style="float: left;" ng-click="BindInboundPopUp()"><i class="fa fa-plus"></i><b> Add Material Entry</b></button>
+        <button id="btnBill" type="button" class="btn btn-outline-primary btn-sm" style="float: left;" ng-click="BindGoodsRecieptPopUp()"><i class="fa fa-plus"></i><b> Add Goods Reciept</b></button>
     </div>
     <div class="col-md-10">
         <div class="row">
@@ -22,61 +20,61 @@
                 </tr>
                 <tr>
                     <td>
-                        @Html.DropDownList("Type", new SelectList(@ViewBag.ListType, "DataStringValueField", "DataTextField", "Select"),
+                        @*@Html.DropDownList("Type", new SelectList(@ViewBag.ListType, "DataStringValueField", "DataTextField", "Select"),
                            new
                            {
                                @class = "form-control",
                                ng_model = "SearchType",
                                @id = "TypeList",
                                @onchange = "getDdlDetailsForList('TypeList')"
-                           })
+                           })*@
                     </td>
                     <td>
-                        @Html.DropDownList("VendorNature", new SelectList(@ViewBag.ListVendorNature, "DataStringValueField", "DataTextField", "Select"),
+                        @*@Html.DropDownList("VendorNature", new SelectList(@ViewBag.ListVendorNature, "DataStringValueField", "DataTextField", "Select"),
                                                    new
                                                    {
                                                        @class = "form-control",
                                                        ng_model = "SearchVendorNature",
                                                        @id = "VendorNatureList",
                                                        @onchange = "getDdlDetailsForList('VendorNatureList')"
-                                                   })
+                                                   })*@
                     </td>
                     <td>
-                        @Html.DropDownList("VendorName", new SelectList(@ViewBag.ListVendorName, "DataStringValueField", "DataTextField", "Select"),
+                        @*@Html.DropDownList("VendorName", new SelectList(@ViewBag.ListVendorName, "DataStringValueField", "DataTextField", "Select"),
                            new
                            {
                                @class = "form-control",
                                ng_model = "SearchVendorName",
                                @id = "VendorNameList",
                                @onchange = "getDdlDetailsForList('VendorNameList')"
-                           })
+                           })*@
                     </td>
                     <td>
-                        @Html.DropDownList("FunctionArea", new SelectList(@ViewBag.ListFunctionArea, "DataStringValueField", "DataTextField", "Select"),
+                        @*@Html.DropDownList("FunctionArea", new SelectList(@ViewBag.ListFunctionArea, "DataStringValueField", "DataTextField", "Select"),
                                                    new
                                                    {
                                                        @class = "form-control",
                                                        ng_model = "SearchFunctionArea",
                                                        @id = "FunctionAreaList"
-                                                   })
+                                                   })*@
                     </td>
                     <td>
-                        @Html.DropDownList("FinancialYear", new SelectList(@ViewBag.ListFinancialYear, "DataStringValueField", "DataTextField", "Select"),
+                        @*@Html.DropDownList("FinancialYear", new SelectList(@ViewBag.ListFinancialYear, "DataStringValueField", "DataTextField", "Select"),
                            new
                            {
                                @class = "form-control",
                                ng_model = "SearchFinancialYear",
                                @id = "FinancialYearList"
-                           })
+                           })*@
                     </td>
                     <td>
-                        @Html.DropDownList("ApprovalStatus", new SelectList(@ViewBag.ListApprovalStatus, "DataStringValueField", "DataTextField", "Select"),
+                        @*@Html.DropDownList("ApprovalStatus", new SelectList(@ViewBag.ListApprovalStatus, "DataStringValueField", "DataTextField", "Select"),
                            new
                            {
                                @class = "form-control",
                                ng_model = "SearchApprovalStatus",
                                @id = "ApprovalStatusList"
-                           })
+                           })*@
                     </td>
                     <td>
                         <button class="btn btn-link" type="button" id="btnSearch" ng-click="FetchVendorsMasterList()">
@@ -101,125 +99,75 @@
                         </div>
                     </th>
                     <th>
-                        Type
+                        Good Reciept No
                         <div class="c2">
-                            Type
+                            Good Reciept No
                         </div>
                     </th>
                     <th>
-                        Vendor Nature
+                        GR Date
                         <div class="c2">
-                            VendorNature
+                            GR Date
                         </div>
                     </th>
                     <th>
-                        Vendor Name
+                        Po No
                         <div class="c2">
-                            Vendor Name
+                            Po No
                         </div>
                     </th>
                     <th>
-                        Control No
+                        Supplier Name
                         <div class="c2">
-                            Control No
+                            Supplier Name
                         </div>
                     </th>
                     <th>
-                        Approval Date
+                        Supplier Date
                         <div class="c2">
-                            Approval Date
+                            Supplier Date
                         </div>
                     </th>
                     <th>
-                        Bill No
+                        Supplier Inv No
                         <div class="c2">
-                            Bill No
+                            Supplier Inv No
                         </div>
-                    </th>
-                    <th>
-                        Bill Date
-                        <div class="c3">
-                            Bill Date
-                        </div>
-                    </th>
-                    <th>
-                        Currency
-                        <div class="c3">
-                            Currency
-                        </div>
-                    </th>
-                    <th>
-                        Bill Amount
-                        <div class="c3">
-                            Bill Amount
-                        </div>
-                    </th>
-                    <th>
-                        Due Date
-                        <div class="c3">
-                            Due Date
-                        </div>
-                    </th>
-                    <th>
-                        Item Description
-                        <div class="c3">
-                            Item Description
-                        </div>
-                    </th>
-                    <th>
-                        Approval Status
-                        <div class="c3">
-                            Approval Status
-                        </div>
-                    </th>
+                    </th>                    
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="L in InboundList">
+                <tr ng-repeat="L in GRList">
                     <td>
-                        <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="VIEW" ng-click="LoadInboundPopup(L.Id)">
+                        <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="VIEW" ng-click="LoadGoodsRecieptPopup(L.Id)">
                             <i class="fa fa-eye"></i>
                         </button>
-                        <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="EDIT" ng-click="LoadInboundPopup(L.Id)">
+                        <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="EDIT" ng-click="LoadGoodsRecieptPopup(L.Id)">
                             <i class="fa fa-edit"></i>
+                        </button>
+                        <button type="button" class="btn btn-outline-danger btn-sm" data-toggle="tooltip" data-placement="bottom" title="DELETE" ng-click="DeleteGoodsReciept(L.Id)">
+                            <i class="fa fa-trash"></i>
                         </button>
                     </td>
                     <td>
-                        {{L.Type}}
+                        {{L.GoodRecieptNo}}
                     </td>
                     <td>
-                        {{L.VendorNature}}
+                        {{L.GRDate}}
                     </td>
                     <td>
-                        {{L.VendorName}}
+                        {{L.PoNo}}
                     </td>
                     <td>
-                        {{L.ControlNo}}
+                        {{L.SupplierName}}
                     </td>
                     <td>
-                        {{L.ApprovalDate}}
+                        {{L.SupplierDate}}
                     </td>
                     <td>
-                        {{L.BillNo}}
+                        {{L.SupplierInvNo}}
                     </td>
-                    <td>
-                        {{L.BillDate}}
-                    </td>
-                    <td>
-                        {{L.Currency}}
-                    </td>
-                    <td>
-                        {{L.BillAmount}}
-                    </td>
-                    <td>
-                        {{L.PaymentDueDate}}
-                    </td>
-                    <td>
-                        {{L.ItemDescription}}
-                    </td>
-                    <td>
-                        {{L.ApprovedStatus}}
-                    </td>
+                    
                 </tr>
             </tbody>
             <tfoot>
@@ -230,9 +178,9 @@
                                 <div class="col-md-2 p-0">
                                     <span class="form-group pull-left page-size form-inline">
                                         <b>Records per page : &nbsp;&nbsp;</b>
-                                        <select id="ddlINBPageSize" class="form-control control-color"
-                                                ng-model="INBPageSize"
-                                                ng-change="INBChangePageSize()">
+                                        <select id="ddlGRPageSize" class="form-control control-color"
+                                                ng-model="GRPageSize"
+                                                ng-change="GRChangePageSize()">
                                             <option value="100000">All</option>
                                             <option value="5">5</option>
                                             <option value="10">10</option>
@@ -245,10 +193,10 @@
                                 <div class="col-md-8 pull-right p-0">
                                     <div class="row p-0">
                                         <div class="col-md-10 p-0">
-                                            <pagination total-items="INBTotalCount" ng-change="INBPageChanged()" items-per-page="INBPageSize" direction-links="true" ng-model="INBPageIndex" max-size="maxsize" class="pagination pull-right" boundary-links="true" rotate="false" num-pages="INBNumPages"></pagination>
+                                            <pagination total-items="GRTotalCount" ng-change="GRPageChanged()" items-per-page="GRPageSize" direction-links="true" ng-model="GRPageIndex" max-size="maxsize" class="pagination pull-right" boundary-links="true" rotate="false" num-pages="GRNumPages"></pagination>
                                         </div>
                                         <div class="col-md-2 p-0">
-                                            <a class="btn btn-primary p-2 pull-right">Page: {{INBPageIndex}} / {{INBNumPages}}</a>
+                                            <a class="btn btn-primary p-2 pull-right">Page: {{GRPageIndex}} / {{GRNumPages}}</a>
                                         </div>
                                     </div>
                                 </div>
@@ -261,13 +209,4 @@
         </table>
     </div>
 </div>
-<script type="text/javascript">
-
-    $(document).ready(function () {
-        window.InboundPopUp = '@Url.Action("InboundPopUp", "GateEntry")';
-        window.GetDdlDetailsForList = '@Url.Action("GetDdlDetailsForList", "GateEntry")';
-        window.FetchInboundList = '@Url.Action("FetchInboundList", "GateEntry")';
-    });
-
-</script>
-<script src="~/Scripts/CustomJS/Inbound.js"></script>
+<script src="~/Areas/Stores/Scripts/GoodsReciept.js"></script>

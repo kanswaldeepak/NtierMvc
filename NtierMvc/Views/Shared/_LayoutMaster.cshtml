@@ -184,7 +184,7 @@
                 <div class="collapse navbar-collapse">
                     <ul class="nav text-center font-weight-bold-500" style="font-size:18px">                        
                         <li class="nav-item">
-                            <a class="nav-link" href="@Url.Action("CustomerMaster","Customer", new { Area = "" }, null)">CRM</a>
+                            <a class="nav-link" ng-click="FetchCustomerList()" href="@Url.Action("CustomerMaster","Customer", new { Area = "" }, null)">CRM</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href=@Url.Action("HRDepartmentMaster", "HR", new { Area = "HRDepartment" }, null)>HR & Payroll Management</a>
@@ -320,6 +320,7 @@
             <script src="~/ang/hr.ctrl.js"></script>
             <script src="~/ang/Design.ctrl.js"></script>
             <script src="~/ang/MRM.ctrl.js"></script>
+            <script src="~/ang/Stores.ctrl.js"></script>
 
             <span class="m-footer__copyright">
                 &copy; @DateTime.Now.Year Enterprise Resource Planning-ERP Corporation

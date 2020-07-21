@@ -42,7 +42,7 @@ namespace NtierMvc.Model
         }
         #endregion
 
-        public string SaveGateEntryDetails(BulkUploadEntity objBU)
+        public string SaveGateEntryDetails(GateEntryEntity objBU)
         {
             string result = "0";
             var baseAddress = "GateEntryDetails";

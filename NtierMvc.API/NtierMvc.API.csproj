@@ -172,10 +172,11 @@
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\Account\LoginController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\GateEntryDetailsController.cs" />
+    <Compile Include="Controllers\StoresDetailsController.cs" />
     <Compile Include="Controllers\MRMDetailController.cs" />
     <Compile Include="Controllers\DesignDetailsController.cs" />
     <Compile Include="Controllers\HrDetailsController.cs" />
-    <Compile Include="Controllers\GateEntryDetailsController.cs" />
     <Compile Include="Controllers\TechnicalDetailsController.cs" />
     <Compile Include="Controllers\QuotationDetailsController.cs" />
     <Compile Include="Controllers\EnquiryDetailsController.cs" />

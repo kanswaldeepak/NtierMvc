@@ -983,7 +983,7 @@ namespace NtierMvc.DataAccess.Pool
             return DataTableToStringList(_dbAccess.GetDataTable(spName, parms));
         }
 
-        public List<DropDownEntity> GetDropDownList(string TableName, string ListType, string DataValueField, string DataTextField, string Property, string ColumnName, string orderBy = null, string orderByColumn=null, string Property1 = null, string ColumnName1 = null, string Property2 = null, string ColumnName2 = null, string Property3 = null, string ColumnName3 = null, string Property4 = null, string ColumnName4 = null)
+        public List<DropDownEntity> GetDropDownList(string TableName, string ListType, string DataValueField, string DataTextField, string Param, string ColumnName, string orderBy = null, string orderByColumn=null, string Param1 = null, string ColumnName1 = null, string Param2 = null, string ColumnName2 = null, string Param3 = null, string ColumnName3 = null, string Param4 = null, string ColumnName4 = null)
         {
             var parms = new Dictionary<string, object>();
             var spName = "";
@@ -992,15 +992,15 @@ namespace NtierMvc.DataAccess.Pool
             parms.Add("@TableName", TableName);
             parms.Add("@DataValueField", DataValueField);
             parms.Add("@DataTextField", DataTextField);
-            parms.Add("@Property", Property);
+            parms.Add("@Param", Param);
             parms.Add("@ColumnName", ColumnName);
-            parms.Add("@Property1", Property1);
+            parms.Add("@Param1", Param1);
             parms.Add("@ColumnName1", ColumnName1);
-            parms.Add("@Property2", Property2);
+            parms.Add("@Param2", Param2);
             parms.Add("@ColumnName2", ColumnName2);
-            parms.Add("@Property3", Property3);
+            parms.Add("@Param3", Param3);
             parms.Add("@ColumnName3", ColumnName3);
-            parms.Add("@Property4", Property4);
+            parms.Add("@Param4", Param4);
             parms.Add("@ColumnName4", ColumnName4);
             parms.Add("@ListType", ListType);
             parms.Add("@orderBy", orderBy);

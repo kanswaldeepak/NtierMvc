@@ -34,6 +34,7 @@ namespace NtierMvc.Model.MRM
         public string PORevNo { get; set; }
         public string ItemCategory { get; set; }
         public string DeliveryDate { get; set; }
+        public string SupplyType { get; set; }
         public int UserId { get; set; }
         public string SignStatus { get; set; }
         public string PRStatus { get; set; }
@@ -44,7 +45,7 @@ namespace NtierMvc.Model.MRM
         public string EntryPerson { get; set; }
         public string EntryPersonSign { get; set; }
         public string CompShortName { get; set; }
-        public string SupplyTerms { get; set; }
+        public string SupplyTerms { get; set; }        
         public string GeneralCondition { get; set; }
         public string CostCentre { get; set; }
         public string POQMSRequirement { get; set; }
@@ -82,6 +83,7 @@ namespace NtierMvc.Model.MRM
         public string PORevNo { get; set; }
         public string ItemCategory { get; set; }
         public string DeliveryDate { get; set; }
+        public string SupplyType { get; set; }
         public string POValidity { get; set; }
         public string TotalPRSetPrice { get; set; }
         public string GeneralCondition { get; set; }

@@ -23,7 +23,7 @@ namespace NtierMvc.BusinessLogic.Worker
         
         #endregion
 
-        public string SaveGateEntryDetails(BulkUploadEntity entity)
+        public string SaveGateEntryDetails(GateEntryEntity entity)
         {
             string result = string.Empty;
             try
@@ -116,6 +116,7 @@ namespace NtierMvc.BusinessLogic.Worker
                         GateEntryEntity Model = new GateEntryEntity();
 
                         Model.GateControlNo = dr1.IsNull("GateControlNo") ? "" : Convert.ToString(dr1["GateControlNo"]);
+                        Model.GateNo = dr1.IsNull("GateNo") ? 0 : Convert.ToInt32(dr1["GateNo"]);
                         Model.Id = dr1.IsNull("Id") ? 0 : Convert.ToInt32(dr1["Id"]);
 
 
@@ -134,6 +135,7 @@ namespace NtierMvc.BusinessLogic.Worker
                         Model.UnitPrice = dr1.IsNull("UnitPrice") ? "" : Convert.ToString(dr1["UnitPrice"]);
                         Model.Discount = dr1.IsNull("Discount") ? "" : Convert.ToString(dr1["Discount"]);
                         Model.TotalPrice = dr1.IsNull("TotalPrice") ? "" : Convert.ToString(dr1["TotalPrice"]);
+                        Model.SupplyTerms = dr1.IsNull("SupplyTerms") ? "" : Convert.ToString(dr1["SupplyTerms"]);
 
                         //Model.RMgrade = dr1.IsNull("RMgrade") ? "" : Convert.ToString(dr1["RMgrade"]);
                         //Model.RMHardness = dr1.IsNull("RMHardness") ? "" : Convert.ToString(dr1["RMHardness"]);

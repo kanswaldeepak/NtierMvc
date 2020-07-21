@@ -15,7 +15,7 @@ namespace NtierMvc.DataAccess.Pool
     public partial class Repository : IDisposable
     {
         #region Class Methods
-        
+
         public string SaveGateEntry(GateEntryEntity Model)
         {
             string msgCode = "";
@@ -23,7 +23,7 @@ namespace NtierMvc.DataAccess.Pool
             //Params.Add("@GateEntryId", Model.Id == 0 ? 0 : Model.Id);
             //Params.Add("@UserInitial", Model.UserInitial);
             //Params.Add("@UnitNo", Model.UnitNo);
-            
+
             //Params.Add("@VendorNatureId", Model.VendorNatureId);
             //Params.Add("@VendorId", Model.VendorId);
             //Params.Add("@VendorName", Model.VendorName);
@@ -61,7 +61,7 @@ namespace NtierMvc.DataAccess.Pool
             //Params.Add("@TimeOut", Model.TimeOut);
             //Params.Add("@VehicleReleased", Model.VehicleReleased);
             //Params.Add("@PONumber", Model.PONumber);
-            
+
             var SPName = ConfigurationManager.AppSettings["SaveGateEntryDetails"];
             _dbAccess.ExecuteNonQuery(SPName, Params, "@o_MsgCode", out msgCode);
 
@@ -93,29 +93,27 @@ namespace NtierMvc.DataAccess.Pool
             return _dbAccess.GetDataSet(SPName, Params);
         }
 
-        public string SaveGateEntryDetails(BulkUploadEntity entity)
+        public string SaveGateEntryDetails(GateEntryEntity entity)
         {
             string msgCode = "";
-            entity.DestinationTable = "GateEntry";
 
-            if (!string.IsNullOrEmpty(entity.IdentityNo.ToString()) && entity.IdentityNo != 0)
-            {
-                string spName = ConfigurationManager.AppSettings["GetFindPONoInGateEntry"];
-                var parms = new Dictionary<string, object>();
-                parms.Add("@POno", entity.IdentityNo);
-                _dbAccess.ExecuteNonQuery(spName, parms, "@o_MsgCode", out msgCode);
-            }
+            string spName = ConfigurationManager.AppSettings["SaveGateEntryDetails"];
+            var parms = new Dictionary<string, object>();
+            parms.Add("@Id", string.IsNullOrEmpty(entity.Id.ToString()) ? 0 : entity.Id);
+            parms.Add("@VendorPONO", entity.VendorPONO);
+            parms.Add("@GateNo", entity.GateNo);
+            parms.Add("@GateControlNo", entity.GateControlNo);
+            parms.Add("@VehicleNo", entity.VehicleNo);
+            parms.Add("@ContainerNo", entity.ContainerNo);
+            parms.Add("@DriverName", entity.DriverName);
+            parms.Add("@DriverContactNo", entity.DriverContactNo);
+            parms.Add("@TimeIn", entity.TimeIn);
+            parms.Add("@TimeOut", entity.TimeOut);
+            parms.Add("@VehicleReleased", entity.VehicleReleased);
+            parms.Add("@SupplyType", entity.SupplyType);
+            _dbAccess.ExecuteNonQuery(spName, parms, "@o_MsgCode", out msgCode);
 
-            if (msgCode == "Duplicate")
-            {
-                msgCode = "Duplicate Record Found";
-                return msgCode;
-            }
-            else
-            {
-                msgCode = _dbAccess.BulkUpload(entity.DataRecordTable, entity.DestinationTable);
-                return msgCode;
-            }
+            return msgCode;
         }
 
         #endregion

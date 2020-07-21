@@ -19,13 +19,14 @@ namespace NtierMvc.API.Controllers.Application
     public class GateEntryDetailsController : ApiController
     {
         IGateEntryWorker _repository = new GateEntryWorker();
-        
+
         //[HttpGet]
         //[Route("api/GateEntryDetails/GetGateEntryList")]
         //public IHttpActionResult GetGateEntryList(int pageIndex, int pageSize, string SearchType = null, string SearchVendorNature = null, string SearchVendorName = null, string SearchBillNo = null, string SearchBillDate = null, string SearchItemDescription = null, string SearchCurrency = null, string SearchApprovalStatus = null)
         //{
         //    return Ok(_repository.GetGateEntryList(Convert.ToInt32(pageIndex), Convert.ToInt32(pageSize), SearchType, SearchVendorNature, SearchVendorName, SearchBillNo, SearchBillDate, SearchItemDescription, SearchCurrency, SearchApprovalStatus));
         //}
+
 
         [HttpGet]
         [Route("api/GateEntryDetails/GetPOTableDetailsForGateEntry")]
@@ -37,10 +38,11 @@ namespace NtierMvc.API.Controllers.Application
         [HttpPost]
         [ResponseType(typeof(string))]
         [Route("api/GateEntryDetails/SaveGateEntryDetails")]
-        public IHttpActionResult SaveGateEntryDetails(BulkUploadEntity iEntity)
+        public IHttpActionResult SaveGateEntryDetails(GateEntryEntity iEntity)
         {
             return Ok(_repository.SaveGateEntryDetails(iEntity));
         }
+
 
     }
 }

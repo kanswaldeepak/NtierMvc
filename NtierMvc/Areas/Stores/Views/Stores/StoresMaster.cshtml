@@ -11,12 +11,12 @@
 <div ng-controller="StoresController">
 
     <div class="tab">
-        <button id="defaultOpen" class="tablinks" onclick="openCity(event, 'StoresInboundView')">Inbound</button>
+        <button id="defaultOpen" class="tablinks" onclick="openCity(event, 'GoodsRecieptView')">Goods Reciept</button>
         <button id="StoresOutboundViewLink" class="tablinks" onclick="openCity(event, 'StoresOutboundView')" ng-click="BindPopup()">Outbound</button>
     </div>
 
-    <div id="StoresInboundView" class="tabcontent">
-        @Html.Partial("PartialStoresInbound")
+    <div id="GoodsRecieptView" class="tabcontent">
+        @Html.Partial("PartialGoodsReciept")
     </div>
 
     <div id="OutboundView" class="tabcontent">
@@ -28,4 +28,10 @@
 <script>
     document.getElementById("defaultOpen").click();
 
+    $(document).ready(function () {
+        window.GRPopup = '@Url.Action("GRPopup", "Stores", new { Area = "Stores"})';
+        window.FetchGoodsRecieptList = '@Url.Action("FetchGoodsRecieptList", "Stores")';
+    });
+
+    //$timeout($scope.FetchGoodsRecieptList);
 </script>

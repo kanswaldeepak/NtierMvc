@@ -50,10 +50,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Interface\IGateEntryWorker.cs" />
+    <Compile Include="Interface\IStoresWorker.cs" />
     <Compile Include="Interface\IMRMWorker.cs" />
     <Compile Include="Interface\IDesignWorker.cs" />
     <Compile Include="Interface\IHrWorker.cs" />
-    <Compile Include="Interface\IGateEntryWorker.cs" />
     <Compile Include="Interface\ITechnicalWorker.cs" />
     <Compile Include="Interface\IQuotationWorker.cs" />
     <Compile Include="Interface\IEnquiryWorker.cs" />
@@ -73,6 +74,7 @@
     <Compile Include="Utility\ProcessHelper.cs" />
     <Compile Include="Utility\ShortMessageServiceClient.cs" />
     <Compile Include="Utility\StringExtension.cs" />
+    <Compile Include="Worker\StoresWorker.cs" />
     <Compile Include="Worker\MRMWorker.cs" />
     <Compile Include="Worker\DesignWorker.cs" />
     <Compile Include="Worker\HrWorker.cs" />

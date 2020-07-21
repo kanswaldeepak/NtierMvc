@@ -1,6 +1,6 @@
 var jsInterval;
 var VERSION=new Date().getTime();
-var SITE_NAME="WEB";
+var SITE_NAME="ERP";
 var API_URL='';
 
 $.ajaxSetup({
