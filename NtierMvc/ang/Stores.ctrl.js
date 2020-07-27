@@ -163,7 +163,7 @@ angular.module('App').controller("StoresController", function ($scope, $http, $t
         $http({ url: window.DeleteGoodsRecieptDetails, method: 'POST', data: { id: id } }).success(
             function (res) {
                 if (res == 'Deleted Successfully!') {
-                    $scope.FetchPODetailsList();
+                    $scope.FetchGoodsRecieptList();
                 } else {
                     alert(res, 'E');
                 }
