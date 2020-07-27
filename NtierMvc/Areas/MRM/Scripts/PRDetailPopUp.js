@@ -368,11 +368,11 @@ function SavePRDetails(e) {
     var arr = [];
     arr.length = 0;
 
-    var frm = $("#formPODetails");
+    var frm = $("#formPRDetails");
     var formData = new FormData(frm[0]);
 
     var Status = false;
-    Status = GetFormValidationStatus("#formPODetails");
+    Status = GetFormValidationStatus("#formPRDetails");
 
     let tableSelected = '#table' + $('#tableSelected').val();
     let TotalPRSetPrice = 0;

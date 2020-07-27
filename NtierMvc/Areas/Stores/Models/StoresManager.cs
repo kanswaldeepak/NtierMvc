@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using NtierMvc.Common;
 using NtierMvc.Infrastructure;
+using NtierMvc.Model;
 using NtierMvc.Model.Stores;
 using System;
 using System.Net.Http;
@@ -56,13 +57,13 @@ namespace NtierMvc.Areas.Stores.Models
             return tableList;
         }
 
-        public GoodsRecieptEntityDetails FetchGoodsRecieptList(int pageIndex, int pageSize)
+        public GoodsRecieptEntityDetails FetchGoodsRecieptList(int pageIndex, int pageSize, string SearchVendorTypeId = null, string SearchSupplierId = null, string SearchRMCategory = null, string SearchDeliveryDateFrom = null, string SearchDeliveryDateTo = null)
         {
             var baseAddress = "StoresDetails";
             GoodsRecieptEntityDetails prDetails = new GoodsRecieptEntityDetails();
             using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
             {
-                HttpResponseMessage response = client.GetAsync(baseAddress + "/FetchGoodsRecieptList?pageIndex=" + pageIndex + "&pageSize=" + pageSize).Result;
+                HttpResponseMessage response = client.GetAsync(baseAddress + "/FetchGoodsRecieptList?pageIndex=" + pageIndex + "&pageSize=" + pageSize + "&SearchVendorTypeId=" + SearchVendorTypeId + "&SearchSupplierId=" + SearchSupplierId + "&SearchRMCategory=" + SearchRMCategory + "&SearchDeliveryDateFrom=" + SearchDeliveryDateFrom + "&SearchDeliveryDateTo=" + SearchDeliveryDateTo).Result;
                 if (response.IsSuccessStatusCode)
                 {
                     var data = response.Content.ReadAsStringAsync().Result;
@@ -72,13 +73,13 @@ namespace NtierMvc.Areas.Stores.Models
             return prDetails;
         }
 
-        public GoodsRecieptEntity GetGRDetailsPopup()
+        public GoodsRecieptEntity GetGRDetailsPopup(string GRno=null)
         {
             var baseAddress = "StoresDetails";
             GoodsRecieptEntity Model = new GoodsRecieptEntity();
             using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
             {
-                HttpResponseMessage response = client.GetAsync(baseAddress + "/GetGRDetailsPopup").Result;
+                HttpResponseMessage response = client.GetAsync(baseAddress + "/GetGRDetailsPopup?GRno="+ GRno).Result;
                 if (response.IsSuccessStatusCode)
                 {
                     var data = response.Content.ReadAsStringAsync().Result;
@@ -88,13 +89,13 @@ namespace NtierMvc.Areas.Stores.Models
             return Model;
         }
 
-        public string SaveGoodsRecieptEntryDetails(GoodsRecieptEntity viewModel)
+        public string SaveGoodsRecieptEntryDetails(BulkUploadEntity objBU)
         {
             string result = "0";
             var baseAddress = "StoresDetails";
             using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
             {
-                HttpResponseMessage response = client.PostAsJsonAsync(baseAddress + "/SaveGoodsRecieptEntryDetails", viewModel).Result;
+                HttpResponseMessage response = client.PostAsJsonAsync(baseAddress + "/SaveGoodsRecieptEntryDetails", objBU).Result;
                 if (response.IsSuccessStatusCode)
                 {
                     var data = response.Content.ReadAsStringAsync().Result;

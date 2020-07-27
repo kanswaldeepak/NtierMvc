@@ -15,7 +15,6 @@
                     <td>Vendor Nature</td>
                     <td>Vendor Name</td>
                     <td>Function Area</td>
-                    <td>Financial Year</td>
                     <td>Approval Status</td>
                 </tr>
                 <tr>
@@ -35,7 +34,7 @@
                                                    {
                                                        @class = "form-control",
                                                        ng_model = "SearchVendorNature",
-                                                       @id = "VendorNatureList",
+                                                       @id = "INBVendorNatureList",
                                                        @onchange = "getDdlDetailsForList('VendorNatureList')"
                                                    })
                     </td>
@@ -45,7 +44,7 @@
                            {
                                @class = "form-control",
                                ng_model = "SearchVendorName",
-                               @id = "VendorNameList",
+                               @id = "INBVendorNameList",
                                @onchange = "getDdlDetailsForList('VendorNameList')"
                            })
                     </td>
@@ -55,7 +54,7 @@
                                                    {
                                                        @class = "form-control",
                                                        ng_model = "SearchFunctionArea",
-                                                       @id = "FunctionAreaList"
+                                                       @id = "INBFunctionAreaList"
                                                    })
                     </td>                    
                     <td>
@@ -64,7 +63,7 @@
                            {
                                @class = "form-control",
                                ng_model = "SearchApprovalStatus",
-                               @id = "ApprovalStatusList"
+                               @id = "INBApprovalStatusList"
                            })
                     </td>
                     <td>
@@ -245,7 +244,7 @@
 
     $(document).ready(function () {
         window.InboundPopUp = '@Url.Action("InboundPopUp", "GateEntry")';
-        window.GetDdlDetailsForList = '@Url.Action("GetDdlDetailsForList", "GateEntry")';
+        window.GetDdlDetailsForInboundList = '@Url.Action("GetDdlDetailsForList", "GateEntry")';
         window.FetchInboundList = '@Url.Action("FetchInboundList", "GateEntry")';
     });
 

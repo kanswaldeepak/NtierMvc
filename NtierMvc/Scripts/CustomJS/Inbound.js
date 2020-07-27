@@ -26,7 +26,7 @@ function getDdlDetailsForList(selectObject) {
     var SelectedVal = $('#' + selectObject).val();
     $.ajax({
         type: 'POST',
-        url: window.GetDdlDetailsForList,
+        url: window.GetDdlDetailsForInboundList,
         data: JSON.stringify({ SelectedVal: SelectedVal, SelectedId: SelectedId }),
         contentType: "application/json; charset=utf-8",
         dataType: "json",
@@ -39,15 +39,15 @@ function getDdlDetailsForList(selectObject) {
                 })
             }
             else if (SelectedId == 'VendorNatureList') {
-                $('#BMVendorNameList').empty();
+                $('#INBVendorNameList').empty();
                 $.each(data, function (i, item) {
-                    $("#BMVendorNameList").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
+                    $("#INBVendorNameList").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
                 })
             }
             else if (SelectedId == 'VendorNameList') {
-                $('#BMBillNoList').empty();
+                $('#INBBillNoList').empty();
                 $.each(data, function (i, item) {
-                    $("#BMBillNoList").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
+                    $("#INBBillNoList").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
                 })
             }
 

@@ -254,7 +254,7 @@ function SaveDetailsForPO(e) {
 
 
     var Status = true;
-    //Status = GetFormValidationStatus("#formPODetails");
+    Status = GetFormValidationStatus("#formPODetails");
 
     let tableSelected = '#table' + $('#tableSelected').val();
     let TotalPRSetPrice = 0;

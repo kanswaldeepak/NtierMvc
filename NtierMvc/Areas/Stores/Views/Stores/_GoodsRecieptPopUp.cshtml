@@ -103,7 +103,10 @@
 </div>
 
 <form id="formGoodsReciept" class="mt-5">
+    @Html.HiddenFor(m => m.Id, new { @id = "GRId" })
     @Html.HiddenFor(m => m.GRno, new { @id = "GRno" })
+    @Html.HiddenFor(m => m.POSetno, new { @id = "GRPOSetno" })
+    @Html.HiddenFor(m => m.PreparedById, new { @id = "GRPreparedById" })
     <div class="row">
         <div class="col-md-12">
             <div class="form-group pull-right">
@@ -231,8 +234,6 @@
                 </div>
             </div>
 
-
-
             <div class="row">
                 <div class="col-md-12">
 
@@ -242,11 +243,11 @@
                                 <td>
                                     SN
                                 </td>
-                                <td width="35%">
+                                <td width="20%">
                                     RM Description
                                 </td>
                                 <td>
-                                    Quantity
+                                    Qty
                                 </td>
                                 <td>
                                     UOM
@@ -257,14 +258,29 @@
                                 <td>
                                     Total Price
                                 </td>
-                                <td>
+                                <td class="lotdetails">
                                     Lot Name
                                 </td>
-                                <td>
+                                <td width="9%" class="lotdetails">
                                     Lot Date
                                 </td>
-                                <td>
+                                <td class="lotdetails">
                                     Lot Qty
+                                </td>
+                                <td>
+                                    Store Name
+                                </td>
+                                <td>
+                                    Bay No
+                                </td>
+                                <td>
+                                    Location
+                                </td>
+                                <td>
+                                    Direction
+                                </td>
+                                <td>
+                                    Store Area
                                 </td>
                             </tr>
                         </thead>
@@ -454,196 +470,99 @@
                 <hr style="width:100%" />
             </div>
 
-            <div id="tblLocation" class="row" hidden>
-                <div class="col-md-2">
-                    <div class="form-group">
-                        <label class="control-label">SN<span class="required">*</span></label>
-                        @Html.DropDownListFor(m => m.SN, new SelectList(ViewBag.ListSN, "DataStringValueField", "DataTextField", "Select"), new
-                   {
-                       @class = "form-control requiredValidation",
-                       @id = "GRSN",
-                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
-                   })
-                    </div>
-                </div>
-                <div class="col-md-2">
-                    <div class="form-group">
-                        <label class="control-label">Stores Name<span class="required">*</span></label>
-                        @Html.DropDownListFor(m => m.StoresName, new SelectList(@ViewBag.ListStoresName, "DataStringValueField", "DataTextField", "Select"), new
-                   {
-                       @class = "form-control requiredValidation",
-                       @id = "GRStoresName",
-                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
-                   })
-                    </div>
-                </div>
-                <div class="col-md-2">
-                    <div class="form-group">
-                        <label class="control-label">BAY NO<span class="required">*</span></label>
-                        @Html.DropDownListFor(m => m.BayNo, new SelectList(@ViewBag.ListBayNo, "DataStringValueField", "DataTextField", "Select"), new
-                   {
-                       @class = "form-control requiredValidation",
-                       @id = "GRBayNo",
-                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
-                   })
-                    </div>
-                </div>
-                <div class="col-md-2">
-                    <div class="form-group">
-                        <label class="control-label">LOCATION<span class="required">*</span></label>
-                        @Html.DropDownListFor(m => m.Location, new SelectList(@ViewBag.ListLocation, "DataStringValueField", "DataTextField", "Select"), new
-                   {
-                       @class = "form-control requiredValidation",
-                       @id = "GRLocation",
-                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
-                   })
-                    </div>
-                </div>
-                <div class="col-md-2">
-                    <div class="form-group">
-                        <label class="control-label">POSTION<span class="required">*</span></label>
-                        @Html.DropDownListFor(m => m.Position, new SelectList(@ViewBag.ListPostion, "DataStringValueField", "DataTextField", "Select"), new
-                   {
-                       @class = "form-control requiredValidation",
-                       @id = "GRPostion",
-                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
-                   })
-                    </div>
-                </div>
-                <div class="col-md-2">
-                    <div class="form-group">
-                        <label class="control-label">DIRECTION<span class="required">*</span></label>
-                        @Html.DropDownListFor(m => m.Direction, new SelectList(@ViewBag.ListDirection, "DataStringValueField", "DataTextField", "Select"), new
-                   {
-                       @class = "form-control requiredValidation",
-                       @id = "GRPostion",
-                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
-                   })
-                    </div>
-                </div>
-                <div class="col-md-2">
-                    <div class="form-group">
-                        <label class="control-label">STOREAREA<span class="required">*</span></label>
-                        @Html.DropDownListFor(m => m.StoreArea, new SelectList(@ViewBag.ListStoreArea, "DataStringValueField", "DataTextField", "Select"), new
-                   {
-                       @class = "form-control requiredValidation",
-                       @id = "GRStoreArea",
-                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
-                   })
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label class="control-label">Supplier Inv No <span class="required">*</span></label>
+                                @Html.TextBoxFor(m => m.SupplierInvNo, new
+                           {
+                               @class = "form-control  requiredValidation",
+                               @id = "GRSupplierInvNo",
+                               @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                           })
+                                <label class="HideValidMsg">Fields is Required *</label>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label class="control-label">Inv Date<span class="required">*</span></label>
+                                @Html.TextBoxFor(m => m.SupplierDate, new
+                           {
+                               @class = "form-control  requiredValidation CalenderTillTodayDate",
+                               @id = "GRSupplierDate",
+                               @readonly = "readonly",
+                               @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                           })
+                                <label class="HideValidMsg">Fields is Required *</label>
+                            </div>
+                        </div>                        
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label class="control-label">Inspection Report No<span class="required">*</span></label>
+                                @Html.TextBoxFor(m => m.InspectionReportNo, new
+                            {
+                                @class = "form-control requiredValidation",
+                                @id = "GRInspectionReportNo",
+                                @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                            })
+                                <label class="HideValidMsg">Fields is Required *</label>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label class="control-label">Batch No<span class="required">*</span></label>
+                                @Html.TextBoxFor(m => m.BatchNo, new
+                            {
+                                @class = "form-control requiredValidation",
+                                @id = "GRBatchNo",
+                                @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                            })
+                                <label class="HideValidMsg">Fields is Required *</label>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label class="control-label">TC<span class="required">*</span></label>
+                                @Html.TextBoxFor(m => m.TestCertificationNo, new
+                            {
+                                @class = "form-control requiredValidation",
+                                @id = "GRTestCertificationNo",
+                                @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                            })
+                                <label class="HideValidMsg">Fields is Required *</label>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label class="control-label">Heat No<span class="required">*</span></label>
+                                @Html.TextBoxFor(m => m.HeatNo, new
+                             {
+                                 @class = "form-control requiredValidation",
+                                 @id = "GRHeatNo",
+                                 @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                             })
+                                <label class="HideValidMsg">Fields is Required *</label>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label class="control-label">Lot<span class="required">*</span></label>
+                                @Html.TextBoxFor(m => m.SupplierLotNo, new
+                            {
+                                @class = "form-control",
+                                @id = "GRSupplierLotNo"
+                            })
+                                <label class="HideValidMsg">Fields is Required *</label>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-
-            <table class="table">
-                <tr>
-                    <td class="text-right">
-                        Supplier Inv No
-                    </td>
-                    <td>
-                        @Html.TextBoxFor(m => m.SupplierInvNo, new
-                       {
-                           @class = "form-control  requiredValidation",
-                           @id = "GRSupplierInvNo",
-                           @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
-                       })
-                        <label class="HideValidMsg">Fields is Required *</label>
-                    </td>
-                    <td class="text-right">
-                        Supplier Date
-                    </td>
-                    <td>
-                        @Html.TextBoxFor(m => m.SupplierDate, new
-                       {
-                           @class = "form-control  requiredValidation CalenderTillTodayDate",
-                           @id = "GRSupplierDate",
-                           @readonly = "readonly",
-                           @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
-                       })
-                        <label class="HideValidMsg">Fields is Required *</label>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="text-right">
-                        InspectionReportNo
-                    </td>
-                    <td>
-                        @Html.TextBoxFor(m => m.InspectionReportNo, new
-                        {
-                            @class = "form-control requiredValidation",
-                            @id = "GRInspectionReportNo",
-                            @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
-                        })
-                        <label class="HideValidMsg">Fields is Required *</label>
-                    </td>
-                    <td class="text-right">
-                        Batch No
-                    </td>
-                    <td>
-                        @Html.TextBoxFor(m => m.BatchNo, new
-                        {
-                            @class = "form-control requiredValidation",
-                            @id = "GRBatchNo",
-                            @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
-                        })
-                        <label class="HideValidMsg">Fields is Required *</label>
-                    </td>
-
-                </tr>
-                <tr>
-                    <td class="text-right">
-                        Location Detail
-                    </td>
-                    <td>
-                        @Html.TextBoxFor(m => m.LocationDetail, new
-                        {
-                            @class = "form-control requiredValidation",
-                            @id = "GRLocationDetail",
-                            @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
-                        })
-                        <label class="HideValidMsg">Fields is Required *</label>
-                    </td>
-                    <td class="text-right">
-                        Test Certification No
-                    </td>
-                    <td>
-                        @Html.TextBoxFor(m => m.TestCertificationNo, new
-                        {
-                            @class = "form-control requiredValidation",
-                            @id = "GRTestCertificationNo",
-                            @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
-                        })
-                        <label class="HideValidMsg">Fields is Required *</label>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="text-right">
-                        Heat No
-                    </td>
-                    <td>
-                        @Html.TextBoxFor(m => m.HeatNo, new
-                        {
-                            @class = "form-control requiredValidation",
-                            @id = "GRHeatNo",
-                            @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
-                        })
-                        <label class="HideValidMsg">Fields is Required *</label>
-                    </td>
-                    <td class="text-right">
-                        Supplier Lot No
-                    </td>
-                    <td>
-                        @Html.TextBoxFor(m => m.SupplierLotNo, new
-                        {
-                            @class = "form-control",
-                            @id = "GRSupplierLotNo"
-                        })
-                    </td>
-                </tr>
-            </table>
-
-            <div class="row">
+            <div class="row mt-5">
                 <div class="col-md-12">
-                    <table class="table">
+                    <table class="table text-center">
                         <tr>
                             <td class="text-right">
                                 Prepared By
@@ -652,6 +571,7 @@
                                 <img id="imgPreparedBy" src="" class="img-thumbnail pull-left" height="100px" width="100px" />
                             </td>
                             <td class="text-right">
+                                <input type="checkbox" id="StoresIncharge" onchange="showRequestedSign('StoresIncharge')" />
                                 Stores Incharge
                             </td>
                             <td>
@@ -665,10 +585,12 @@
 
             <div class="row">
                 <div class="col-md-12 pt-4 text-center">
-                    <button id="SavePODetails" style="font-size:18px" type="button" class="btn btn-success btn-sm save_results" ng-click="SaveGoodsReciept()">Save</button>
+                    <button id="SaveStoreDetails" style="font-size:18px" type="button" class="btn btn-success btn-sm save_results" onclick="SaveGoodsReciept(event)" >Save</button>
                     <button style="font-size:18px" type="button" class="btn btn-secondary btn-sm cancel_results" data-dismiss="modal">Close</button>
                 </div>
             </div>
+
+
         </div>
     </div>
 </form>
@@ -677,8 +599,7 @@
 
     $(document).ready(function () {
 
-        window.GetGRValueFromSupplyType = '@Url.Action("GetGRValuesFromSupplyType", "Stores")';
-        window.GetDetailsForGateControlNo = '@Url.Action("GetDetailForGateControlNo", "Stores")';
+        window.GetGRValueFromSupplyType = '@Url.Action("GetGRValuesFromSupplyType", "Stores")';        
         window.SaveGoodsRecieptEntryDetails = '@Url.Action("SaveGoodsRecieptEntryDetails", "Stores")';
 
         $('#tableRM').hide();
@@ -688,7 +609,7 @@
         $('#tableC').hide();
         $('#tableO').hide();
 
-        //$('#lotDiv').hide();
+        $('#imgStoresIncharge').hide();
     });
 
 

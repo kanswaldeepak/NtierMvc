@@ -24,7 +24,7 @@ namespace NtierMvc.BusinessLogic.Worker
 
         #endregion
 
-        public string SaveGoodsRecieptEntryDetails(GoodsRecieptEntity entity)
+        public string SaveGoodsRecieptEntryDetails(BulkUploadEntity entity)
         {
             string result = string.Empty;
             try
@@ -38,14 +38,14 @@ namespace NtierMvc.BusinessLogic.Worker
             return result;
         }
 
-        public GoodsRecieptEntityDetails FetchGoodsRecieptList(int pageIndex, int pageSize)
+        public GoodsRecieptEntityDetails FetchGoodsRecieptList(int pageIndex, int pageSize, string SearchVendorTypeId = null, string SearchSupplierId = null, string SearchRMCategory = null, string SearchDeliveryDateFrom = null, string SearchDeliveryDateTo = null)
         {
             try
             {
                 GoodsRecieptEntityDetails vmbEnDetails = new GoodsRecieptEntityDetails();
                 vmbEnDetails.lstGREntity = new List<GoodsRecieptEntity>();
 
-                DataSet ds = _repository.FetchGoodsRecieptList(pageIndex, pageSize);
+                DataSet ds = _repository.FetchGoodsRecieptList(pageIndex, pageSize, SearchVendorTypeId, SearchSupplierId, SearchRMCategory, SearchDeliveryDateFrom, SearchDeliveryDateTo);
                 //DataTable dt = _repository.GetQuotationDetails();
 
                 if (ds.Tables.Count > 0)
@@ -61,7 +61,7 @@ namespace NtierMvc.BusinessLogic.Worker
                             {
                                 GoodsRecieptEntity obj = new GoodsRecieptEntity();
 
-                                obj.Id = dr1.IsNull("Id") ? 0 : Convert.ToInt32(dr1["Id"]);
+                                //obj.Id = dr1.IsNull("Id") ? 0 : Convert.ToInt32(dr1["Id"]);
                                 obj.GRno = dr1.IsNull("GRno") ? 0 : Convert.ToInt32(dr1["GRno"]);
 
                                 obj.GRDate = dr1.IsNull("GRDate") ? string.Empty : Convert.ToString(dr1["GRDate"]);
@@ -75,11 +75,12 @@ namespace NtierMvc.BusinessLogic.Worker
                                 //obj.PoDate = dr1.IsNull("PoDate") ? string.Empty : Convert.ToString(dr1["PoDate"]);
                                 obj.BatchNo = dr1.IsNull("BatchNo") ? string.Empty : Convert.ToString(dr1["BatchNo"]);
                                 obj.HeatNo = dr1.IsNull("HeatNo") ? string.Empty : Convert.ToString(dr1["HeatNo"]);
-                                obj.QtyReqd = dr1.IsNull("QtyReqd") ? 0 : Convert.ToInt32(dr1["QtyReqd"]);
-                                obj.RejTeqNo = dr1.IsNull("RejTeqNo") ? 0 : Convert.ToInt32(dr1["RejTeqNo"]);
+                                //obj.QtyReqd = dr1.IsNull("QtyReqd") ? 0 : Convert.ToInt32(dr1["QtyReqd"]);
+                                //obj.RejTeqNo = dr1.IsNull("RejTeqNo") ? 0 : Convert.ToInt32(dr1["RejTeqNo"]);
                                 obj.InspectionReportNo = dr1.IsNull("InspectionReportNo") ? string.Empty : Convert.ToString(dr1["InspectionReportNo"]);
-                                obj.LocationDetail = dr1.IsNull("LocationDetail") ? string.Empty : Convert.ToString(dr1["LocationDetail"]);
+                                //obj.LocationDetail = dr1.IsNull("LocationDetail") ? string.Empty : Convert.ToString(dr1["LocationDetail"]);
                                 obj.PreparedBy = dr1.IsNull("PreparedBy") ? string.Empty : Convert.ToString(dr1["PreparedBy"]);
+                                //obj.PreparedById = dr1.IsNull("PreparedById") ? 0 : Convert.ToInt32(dr1["PreparedById"]);
                                 obj.StoresIncharge = dr1.IsNull("StoresIncharge") ? string.Empty : Convert.ToString(dr1["StoresIncharge"]);
                                 obj.TestCertificationNo = dr1.IsNull("TestCertificationNo") ? string.Empty : Convert.ToString(dr1["TestCertificationNo"]);
                                 obj.SupplyType = dr1.IsNull("SupplyType") ? string.Empty : Convert.ToString(dr1["SupplyType"]);
@@ -136,6 +137,7 @@ namespace NtierMvc.BusinessLogic.Worker
                         Model.PRCat = dr1.IsNull("PRCat") ? string.Empty : Convert.ToString(dr1["PRCat"]);
                         Model.GateControlNo = dr1.IsNull("GateControlNo") ? string.Empty : Convert.ToString(dr1["GateControlNo"]);
                         Model.PoNo = dr1.IsNull("PoNo") ? string.Empty : Convert.ToString(dr1["PoNo"]);
+                        Model.POSetno = dr1.IsNull("POSetno") ? 0 : Convert.ToInt32(dr1["POSetno"]);
 
                         Model.PoDate = dr1.IsNull("PoDate") ? string.Empty : Convert.ToString(dr1["PoDate"]);
                         Model.SupplyTerms = dr1.IsNull("SupplyTerms") ? string.Empty : Convert.ToString(dr1["SupplyTerms"]);
@@ -151,7 +153,14 @@ namespace NtierMvc.BusinessLogic.Worker
                         Model.LotDate = dr1.IsNull("LotDate") ? "" : Convert.ToString(dr1["LotDate"]);
                         Model.LotQty = dr1.IsNull("LotQty") ? "" : Convert.ToString(dr1["LotQty"]);
                         Model.PreparedBy = dr1.IsNull("PreparedBy") ? "" : Convert.ToString(dr1["PreparedBy"]);
+                        Model.PreparedById = dr1.IsNull("PreparedById") ? 0 : Convert.ToInt32(dr1["PreparedById"]);
                         Model.StoresIncharge = dr1.IsNull("StoresIncharge") ? "" : Convert.ToString(dr1["StoresIncharge"]);
+                        Model.StoresName = dr1.IsNull("StoresName") ? "" : Convert.ToString(dr1["StoresName"]);
+                        Model.BayNo = dr1.IsNull("BayNo") ? "" : Convert.ToString(dr1["BayNo"]);
+                        Model.Location = dr1.IsNull("Location") ? "" : Convert.ToString(dr1["Location"]);
+                        Model.Direction = dr1.IsNull("Direction") ? "" : Convert.ToString(dr1["Direction"]);
+                        Model.StoreArea = dr1.IsNull("StoreArea") ? "" : Convert.ToString(dr1["StoreArea"]);
+
 
                         objGE.lstGREntity.Add(Model);
                     }
@@ -165,12 +174,12 @@ namespace NtierMvc.BusinessLogic.Worker
             return objGE;
         }
 
-        public GoodsRecieptEntity GetGRDetailsPopup()
+        public GoodsRecieptEntity GetGRDetailsPopup(string GRno=null)
         {
             GoodsRecieptEntity objGR = new GoodsRecieptEntity();
             try
             {
-                DataSet ds = _repository.GetGRDetailsPopup();
+                DataSet ds = _repository.GetGRDetailsPopup(GRno);
 
                 if (ds.Tables[0] != null && ds.Tables[0].Rows.Count > 0)
                 {
@@ -179,6 +188,43 @@ namespace NtierMvc.BusinessLogic.Worker
 
                     objGR.GRno = dr1.IsNull("GRno") ? 0 : Convert.ToInt32(dr1["GRno"]);
                     objGR.GoodRecieptNo = dr1.IsNull("GoodRecieptNo") ? string.Empty : Convert.ToString(dr1["GoodRecieptNo"]);
+                    if (!string.IsNullOrEmpty(GRno))
+                    {
+                        objGR.SupplyType = dr1.IsNull("SupplyType") ? string.Empty : Convert.ToString(dr1["SupplyType"]);
+                        objGR.GateControlNo = dr1.IsNull("GateNo") ? string.Empty : Convert.ToString(dr1["GateNo"]);
+                        objGR.SupplierName = dr1.IsNull("SupplierName") ? string.Empty : Convert.ToString(dr1["SupplierName"]);
+                        objGR.PRCat = dr1.IsNull("PRCat") ? string.Empty : Convert.ToString(dr1["PRCat"]);
+                        objGR.PoNo = dr1.IsNull("PoNo") ? string.Empty : Convert.ToString(dr1["PoNo"]);
+                        objGR.POSetno = dr1.IsNull("POSetno") ? 0 : Convert.ToInt32(dr1["POSetno"]);
+                        objGR.PoDate = dr1.IsNull("PoDate") ? string.Empty : Convert.ToString(dr1["PoDate"]);
+                        objGR.SupplyTerms = dr1.IsNull("SupplyTerms") ? string.Empty : Convert.ToString(dr1["SupplyTerms"]);
+                        objGR.SN = dr1.IsNull("SN") ? "" : Convert.ToString(dr1["SN"]);
+                        objGR.RMdescription = dr1.IsNull("RMdescription") ? "" : Convert.ToString(dr1["RMdescription"]);
+                        objGR.PRqty = dr1.IsNull("PRqty") ? "" : Convert.ToString(dr1["PRqty"]);
+                        objGR.UOM = dr1.IsNull("UOM") ? "" : Convert.ToString(dr1["UOM"]);
+                        objGR.UnitPrice = dr1.IsNull("UnitPrice") ? "" : Convert.ToString(dr1["UnitPrice"]);
+                        objGR.Discount = dr1.IsNull("Discount") ? "" : Convert.ToString(dr1["Discount"]);
+                        objGR.TotalPrice = dr1.IsNull("TotalPrice") ? "" : Convert.ToString(dr1["TotalPrice"]);
+                        objGR.LotName = dr1.IsNull("LotName") ? "" : Convert.ToString(dr1["LotName"]);
+                        objGR.LotDate = dr1.IsNull("LotDate") ? "" : Convert.ToString(dr1["LotDate"]);
+                        objGR.LotQty = dr1.IsNull("LotQty") ? "" : Convert.ToString(dr1["LotQty"]);
+                        objGR.PreparedBy = dr1.IsNull("PreparedBy") ? "" : Convert.ToString(dr1["PreparedBy"]);
+                        objGR.StoresIncharge = dr1.IsNull("StoresIncharge") ? "" : Convert.ToString(dr1["StoresIncharge"]);
+
+                        objGR.SupplierInvNo = dr1.IsNull("SupplierInvNo") ? "" : Convert.ToString(dr1["SupplierInvNo"]);
+                        objGR.SupplierDate = dr1.IsNull("SupplierDate") ? "" : Convert.ToString(dr1["SupplierDate"]);
+                        objGR.SupplierLocation = dr1.IsNull("SupplierLocation") ? "" : Convert.ToString(dr1["SupplierLocation"]);
+                        objGR.InspectionReportNo = dr1.IsNull("InspectionReportNo") ? "" : Convert.ToString(dr1["InspectionReportNo"]);
+                        objGR.BatchNo = dr1.IsNull("BatchNo") ? "" : Convert.ToString(dr1["BatchNo"]);
+                        objGR.TestCertificationNo = dr1.IsNull("TestCertificationNo") ? "" : Convert.ToString(dr1["TestCertificationNo"]);
+                        objGR.HeatNo = dr1.IsNull("HeatNo") ? "" : Convert.ToString(dr1["HeatNo"]);
+                        objGR.StoresName = dr1.IsNull("StoresName") ? "" : Convert.ToString(dr1["StoresName"]);
+                        objGR.BayNo = dr1.IsNull("BayNo") ? "" : Convert.ToString(dr1["BayNo"]);
+                        objGR.Location = dr1.IsNull("Location") ? "" : Convert.ToString(dr1["Location"]);
+                        objGR.Direction = dr1.IsNull("Direction") ? "" : Convert.ToString(dr1["Direction"]);
+                        objGR.StoreArea = dr1.IsNull("StoreArea") ? "" : Convert.ToString(dr1["StoreArea"]);
+
+                    }
 
                 }
             }

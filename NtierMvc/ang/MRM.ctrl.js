@@ -525,7 +525,7 @@ angular.module('App').controller("MRMController", function ($scope, $http, $time
     }
 
     $scope.LoadVendorPOEditPopup = function (_POSetno) {
-        var _actionType = "VIEW"
+        var _actionType = "EDIT"
         var POSetNo = _POSetno;
         //var ID = e.target.id;
         $.ajax({
@@ -534,7 +534,7 @@ angular.module('App').controller("MRMController", function ($scope, $http, $time
             datatype: "JSON",
             url: window.PODetailsPopup,
             success: function (html) {
-                SetModalTitle("View Purchase Order")
+                SetModalTitle("Edit Purchase Order")
                 SetModalBody(html);
                 HideLoadder();
                 SetModalWidth("1500px");

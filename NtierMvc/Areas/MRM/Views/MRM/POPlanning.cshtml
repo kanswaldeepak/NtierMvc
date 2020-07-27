@@ -59,7 +59,7 @@
                         <div class="col-md-6">
                             @Html.TextBox("DeliveryDateFrom","", new
                        {
-                           @class = "form-control requiredValidation NoEndDate",
+                           @class = "form-control requiredValidation CurrentEndDate",
                            @style = "background-color: white",
                            @id = "POSearchDeliveryDateFrom",
                            ng_model = "POSearchDeliveryDateFrom",
@@ -70,7 +70,7 @@
                         <div class="col-md-6">
                             @Html.TextBox("DeliveryDateTo","", new
                        {
-                           @class = "form-control ml-3 requiredValidation NoEndDate ",
+                           @class = "form-control ml-3 requiredValidation CurrentEndDate ",
                            @style = "background-color: white",
                            @id = "POSearchDeliveryDateTo",
                            ng_model = "POSearchDeliveryDateTo",
@@ -419,7 +419,6 @@ function CreateDocumentForPODetail(e) {
 }
 
     $('.NoEndDate').datepicker({
-
         format: 'mm-dd-yyyy',
         autoclose: true,
         changeMonth: true,
@@ -429,7 +428,6 @@ function CreateDocumentForPODetail(e) {
     });
 
     $('.CurrentEndDate').datepicker({
-
         format: 'mm-dd-yyyy',
         autoclose: true,
         changeMonth: true,

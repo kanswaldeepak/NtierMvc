@@ -1,4 +1,4 @@
-﻿
+﻿@model NtierMvc.Model.Stores.GoodsRecieptEntity
 @{
     ViewBag.Title = "GoodsReciept";
 }
@@ -9,77 +9,85 @@
     </div>
     <div class="col-md-10">
         <div class="row">
-            <table class="text-center">
+            <table>
                 <tr>
-                    <td>Type</td>
-                    <td>Vendor Nature</td>
-                    <td>Vendor Name</td>
-                    <td>Function Area</td>
-                    <td>Financial Year</td>
-                    <td>Approval Status</td>
+                    <td>
+                        <label>Vendor Type</label>
+                    </td>
+                    <td>
+                        <label>Supplier ID</label>
+                    </td>
+                    <td>
+                        <label>RM Category</label>
+                    </td>
+                    <td>
+                        <label>Delivery Date</label>
+                    </td>
+                    <td></td>
                 </tr>
                 <tr>
                     <td>
-                        @*@Html.DropDownList("Type", new SelectList(@ViewBag.ListType, "DataStringValueField", "DataTextField", "Select"),
-                           new
+                        @Html.DropDownList("VendorType", new SelectList(@ViewBag.ListVendorType, "DataStringValueField", "DataTextField", "Select"),
+                                new
+                                {
+                                    @class = "form-control",
+                                    @id = "GRSearchVendorTypeId",
+                                    ng_model = "GRSearchVendorTypeId"
+                                })
+                    </td>
+                    <td>
+                        @Html.DropDownList("SupplierId", new SelectList(@ViewBag.ListSupplierId, "DataStringValueField", "DataTextField", "Select"),
+                                   new
+                                   {
+                                       @class = "form-control",
+                                       @id = "GRSearchSupplierId",
+                                       ng_model = "GRSearchSupplierId",
+                                       @multiple = "true"
+                                   })
+                    </td>
+                    <td>
+                        @Html.DropDownList("RMCategory", new SelectList(@ViewBag.ListRMCategory, "DataStringValueField", "DataTextField", "Select"),
+                                   new
+                                   {
+                                       @class = "form-control",
+                                       @id = "GRSearchRMCategory",
+                                       ng_model = "GRSearchRMCategory",
+                                       @multiple = "true"
+                                   })
+                    </td>
+                    <td>
+                        <div class="row">
+                            <div class="col-md-6">
+                                @Html.TextBox("DeliveryDateFrom", "", new
                            {
-                               @class = "form-control",
-                               ng_model = "SearchType",
-                               @id = "TypeList",
-                               @onchange = "getDdlDetailsForList('TypeList')"
-                           })*@
-                    </td>
-                    <td>
-                        @*@Html.DropDownList("VendorNature", new SelectList(@ViewBag.ListVendorNature, "DataStringValueField", "DataTextField", "Select"),
-                                                   new
-                                                   {
-                                                       @class = "form-control",
-                                                       ng_model = "SearchVendorNature",
-                                                       @id = "VendorNatureList",
-                                                       @onchange = "getDdlDetailsForList('VendorNatureList')"
-                                                   })*@
-                    </td>
-                    <td>
-                        @*@Html.DropDownList("VendorName", new SelectList(@ViewBag.ListVendorName, "DataStringValueField", "DataTextField", "Select"),
-                           new
+                               @class = "form-control requiredValidation CurrentEndDate",
+                               @style = "background-color: white",
+                               @id = "GRSearchDeliveryDateFrom",
+                               ng_model = "GRSearchDeliveryDateFrom",
+                               @placeholder = "Date From",
+                               @readonly = "readonly"
+                           })
+                            </div>
+                            <div class="col-md-6">
+                                @Html.TextBox("DeliveryDateTo", "", new
                            {
-                               @class = "form-control",
-                               ng_model = "SearchVendorName",
-                               @id = "VendorNameList",
-                               @onchange = "getDdlDetailsForList('VendorNameList')"
-                           })*@
+                               @class = "form-control ml-3 requiredValidation CurrentEndDate ",
+                               @style = "background-color: white",
+                               @id = "GRSearchDeliveryDateTo",
+                               ng_model = "GRSearchDeliveryDateTo",
+                               @placeholder = "Date To",
+                               @readonly = "readonly"
+                           })
+                            </div>
+                        </div>
+
                     </td>
-                    <td>
-                        @*@Html.DropDownList("FunctionArea", new SelectList(@ViewBag.ListFunctionArea, "DataStringValueField", "DataTextField", "Select"),
-                                                   new
-                                                   {
-                                                       @class = "form-control",
-                                                       ng_model = "SearchFunctionArea",
-                                                       @id = "FunctionAreaList"
-                                                   })*@
-                    </td>
-                    <td>
-                        @*@Html.DropDownList("FinancialYear", new SelectList(@ViewBag.ListFinancialYear, "DataStringValueField", "DataTextField", "Select"),
-                           new
-                           {
-                               @class = "form-control",
-                               ng_model = "SearchFinancialYear",
-                               @id = "FinancialYearList"
-                           })*@
-                    </td>
-                    <td>
-                        @*@Html.DropDownList("ApprovalStatus", new SelectList(@ViewBag.ListApprovalStatus, "DataStringValueField", "DataTextField", "Select"),
-                           new
-                           {
-                               @class = "form-control",
-                               ng_model = "SearchApprovalStatus",
-                               @id = "ApprovalStatusList"
-                           })*@
-                    </td>
+                    <td></td>
                     <td>
                         <button class="btn btn-link" type="button" id="btnSearch" ng-click="FetchVendorsMasterList()">
                             <i class="fa fa-search"></i>
                         </button>
+                        <button class="btn btn-sm btn-info" type="button" id="btnClearSearchGR">Clear</button>
                     </td>
                 </tr>
             </table>
@@ -89,7 +97,7 @@
 
 <div class="wrapper">
     <div class="container">
-        <table class="text-center">
+        <table class="table">
             <thead class="tblhead">
                 <tr>
                     <th>
@@ -133,19 +141,25 @@
                         <div class="c2">
                             Supplier Inv No
                         </div>
-                    </th>                    
+                    </th>
+                    <th>
+                        Download
+                        <div class="c2">
+                            Download
+                        </div>
+                    </th>
                 </tr>
             </thead>
             <tbody>
                 <tr ng-repeat="L in GRList">
                     <td>
-                        <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="VIEW" ng-click="LoadGoodsRecieptPopup(L.Id)">
+                        <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="VIEW" ng-click="LoadGoodsRecieptViewPopup(L.GRno)">
                             <i class="fa fa-eye"></i>
                         </button>
-                        <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="EDIT" ng-click="LoadGoodsRecieptPopup(L.Id)">
+                        <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="EDIT" ng-click="LoadGoodsRecieptEditPopup(L.GRno)">
                             <i class="fa fa-edit"></i>
                         </button>
-                        <button type="button" class="btn btn-outline-danger btn-sm" data-toggle="tooltip" data-placement="bottom" title="DELETE" ng-click="DeleteGoodsReciept(L.Id)">
+                        <button type="button" class="btn btn-outline-danger btn-sm" data-toggle="tooltip" data-placement="bottom" title="DELETE" ng-click="DeleteGoodsReciept(L.GRno)">
                             <i class="fa fa-trash"></i>
                         </button>
                     </td>
@@ -167,7 +181,11 @@
                     <td>
                         {{L.SupplierInvNo}}
                     </td>
-                    
+                    <td>
+                        <button class="btn btn-link btn-sm" value="{{L.Grno}}" onclick="CreateDocumentForGRDetail(this)">
+                            <img src="~/Images/excel.png" height="30px" />
+                        </button>
+                    </td>
                 </tr>
             </tbody>
             <tfoot>
@@ -209,4 +227,198 @@
         </table>
     </div>
 </div>
+
+<!--Do Not Remove This used for dropdownlist fetch on GateControlNo Change-->
+<div id="tblLocation" class="row" hidden>
+    <div class="col-md-2">
+        <div class="form-group">
+            <label class="control-label">SN<span class="required">*</span></label>
+            @Html.DropDownListFor(m => m.SN, new SelectList(ViewBag.ListSN, "DataStringValueField", "DataTextField", "Select"), new
+       {
+           @class = "form-control",
+           @id = "GRSN"
+       })
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="form-group">
+            <label class="control-label">Stores Name<span class="required">*</span></label>
+            @Html.DropDownListFor(m => m.StoresName, new SelectList(@ViewBag.ListStoresName, "DataStringValueField", "DataTextField", "Select"), new
+       {
+           @class = "form-control",
+           @id = "GRStoresName"
+       })
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="form-group">
+            <label class="control-label">BAY NO<span class="required">*</span></label>
+            @Html.DropDownListFor(m => m.BayNo, new SelectList(@ViewBag.ListBayNo, "DataStringValueField", "DataTextField", "Select"), new
+       {
+           @class = "form-control",
+           @id = "GRBayNo"
+       })
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="form-group">
+            <label class="control-label">LOCATION<span class="required">*</span></label>
+            @Html.DropDownListFor(m => m.Location, new SelectList(@ViewBag.ListLocation, "DataStringValueField", "DataTextField", "Select"), new
+       {
+           @class = "form-control",
+           @id = "GRLocation"
+       })
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="form-group">
+            <label class="control-label">POSTION<span class="required">*</span></label>
+            @Html.DropDownListFor(m => m.Position, new SelectList(@ViewBag.ListPostion, "DataStringValueField", "DataTextField", "Select"), new
+       {
+           @class = "form-control",
+           @id = "GRPostion"
+       })
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="form-group">
+            <label class="control-label">DIRECTION<span class="required">*</span></label>
+            @Html.DropDownListFor(m => m.Direction, new SelectList(@ViewBag.ListDirection, "DataStringValueField", "DataTextField", "Select"), new
+       {
+           @class = "form-control",
+           @id = "GRDirection"
+       })
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="form-group">
+            <label class="control-label">STORE AREA<span class="required">*</span></label>
+            @Html.DropDownListFor(m => m.StoreArea, new SelectList(@ViewBag.ListStoreArea, "DataStringValueField", "DataTextField", "Select"), new
+       {
+           @class = "form-control",
+           @id = "GRStoreArea"
+       })
+        </div>
+    </div>
+</div>
 <script src="~/Areas/Stores/Scripts/GoodsReciept.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        window.GetSuppliers = '@Url.Action("GetSuppliers", "Stores")';
+        window.GetRMCategories = '@Url.Action("GetRMCategories", "Stores")';
+        window.GetDeliveryDates = '@Url.Action("GetDeliveryDates", "Stores")';
+        window.GetDetailsForGateControlNo = '@Url.Action("GetDetailForGateControlNo", "Stores")';
+        window.DeleteGoodsRecieptDetails = '@Url.Action("DeleteGoodsRecieptDetails", "Stores")';
+        window.GoodsRecieptViewPopup = '@Url.Action("GRPopup", "Stores")';
+
+    });
+
+    $('#GRSearchVendorTypeId').chosen({
+        width: "210px",
+        placeholder_text_single: "Select Vendor Type Id",
+        placeholder_text_multiple: "Select Vendor Type Id"
+    });
+
+    $('#GRSearchSupplierId').chosen({
+        width: "210px",
+        placeholder_text_single: "Select Supplier Id",
+        placeholder_text_multiple: "Select Supplier Ids"
+    });
+
+    $('#GRSearchRMCategory').chosen({
+        width: "210px",
+        placeholder_text_single: "Select RMCategory",
+        placeholder_text_multiple: "Select RMCategory"
+    });
+
+    $('#GRSearchDeliveryDate').chosen({
+        width: "210px",
+        placeholder_text_single: "Select Delivery Date",
+        placeholder_text_multiple: "Select Delivery Date"
+    });
+
+
+    $("#GRSearchVendorTypeId").chosen().change(
+        function POGetSupplierIds() {
+            var vendorTypeId = $('#GRSearchVendorTypeId').val();
+
+            return $.ajax({
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                type: 'GET',
+                url: window.GetSuppliers,
+                data: { VendorTypeId: vendorTypeId },
+                success: function (res) {
+                    if (res.length > 0) {
+                        $("#GRSearchSupplierId").empty();
+                        $.each(res, function (i, item) {
+                            $("#GRSearchSupplierId").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
+                            $("#GRSearchSupplierId").trigger("chosen:updated");
+                        })
+                    }
+                },
+                error: function () {
+                    alert(result)
+                }
+            });
+        }
+    );
+
+
+    $('#GRSearchSupplierId').chosen().change(
+        function POGetPORMCategories() {
+            var SupplierId = '';
+            var x = document.getElementById("GRSearchSupplierId");
+            for (var i = 0; i < x.options.length; i++) {
+                if (x.options[i].selected == true) {
+                    SupplierId = SupplierId + x.options[i].value + ',';
+                }
+            }
+
+            SupplierId = SupplierId.substring(0, SupplierId.length - 1);
+
+            return $.ajax({
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                type: 'GET',
+                url: window.GetRMCategories,
+                data: { SupplierId: SupplierId },
+                success: function (res) {
+                    if (res.length > 0) {
+                        $("#GRSearchRMCategory").empty();
+                        $.each(res, function (i, item) {
+                            $("#GRSearchRMCategory").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
+                            $("#GRSearchRMCategory").trigger("chosen:updated");
+                        })
+                    }
+                },
+                error: function (result) {
+                    alert(result)
+                }
+            });
+        }
+    )
+
+    $('.NoEndDate').datepicker({
+
+        format: 'mm-dd-yyyy',
+        autoclose: true,
+        changeMonth: true,
+        changeYear: true,
+        endDate: '',
+        orientation: 'bottom'
+    });
+
+    $('.CurrentEndDate').datepicker({
+
+        format: 'mm-dd-yyyy',
+        autoclose: true,
+        changeMonth: true,
+        changeYear: true,
+        endDate: 'today',
+        orientation: 'bottom'
+    });
+
+
+</script>
