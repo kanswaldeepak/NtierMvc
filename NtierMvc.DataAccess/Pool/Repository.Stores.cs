@@ -99,6 +99,27 @@ namespace NtierMvc.DataAccess.Pool
             return _dbAccess.GetDataSet(SPName, Params);
         }
 
+        public DataTable GetGoodsListDataForDocument(string GRno)
+        {
+            var parms = new Dictionary<string, object>();
+            var spName = ConfigurationManager.AppSettings["GetGoodsListDataForDocument"];
+
+            parms.Add("@GRno", GRno);
+            var dt = _dbAccess.GetDataTable(spName, parms);
+            return dt;
+        }
+
+        public DataTable GetGoodsDetailForDocument(string GRno)
+        {
+            var parms = new Dictionary<string, object>();
+            var spName = ConfigurationManager.AppSettings["GetGoodsDetailForDocument"];
+
+            parms.Add("@GRno", GRno);
+            var dt = _dbAccess.GetDataTable(spName, parms);
+            return dt;
+        }
+
+
         #endregion
     }
 }

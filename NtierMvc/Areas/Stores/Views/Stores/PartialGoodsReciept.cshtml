@@ -182,7 +182,7 @@
                         {{L.SupplierInvNo}}
                     </td>
                     <td>
-                        <button class="btn btn-link btn-sm" value="{{L.Grno}}" onclick="CreateDocumentForGRDetail(this)">
+                        <button class="btn btn-link btn-sm" value="{{L.GRno}}" onclick="CreateDocumentForGRDetail(this)">
                             <img src="~/Images/excel.png" height="30px" />
                         </button>
                     </td>
@@ -311,6 +311,7 @@
         window.GetDetailsForGateControlNo = '@Url.Action("GetDetailForGateControlNo", "Stores")';
         window.DeleteGoodsRecieptDetails = '@Url.Action("DeleteGoodsRecieptDetails", "Stores")';
         window.GoodsRecieptViewPopup = '@Url.Action("GRPopup", "Stores")';
+        window.CreateDocumentForGR = '@Url.Action("CreateDocumentForGR", "Stores")';
 
     });
 

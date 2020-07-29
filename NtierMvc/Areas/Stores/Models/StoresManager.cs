@@ -4,6 +4,7 @@ using NtierMvc.Infrastructure;
 using NtierMvc.Model;
 using NtierMvc.Model.Stores;
 using System;
+using System.Data;
 using System.Net.Http;
 
 namespace NtierMvc.Areas.Stores.Models
@@ -103,6 +104,38 @@ namespace NtierMvc.Areas.Stores.Models
                 }
             }
             return result;
+        }
+
+        public DataTable GetGoodsListDataForDocument(string GRno)
+        {
+            DataTable lstTable = new DataTable();
+            var baseAddress = "StoresDetails";
+            using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
+            {
+                HttpResponseMessage response = client.GetAsync(baseAddress + "/GetGoodsListDataForDocument?GRno=" + GRno).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    var data = response.Content.ReadAsStringAsync().Result;
+                    lstTable = JsonConvert.DeserializeObject<DataTable>(data);
+                }
+            }
+            return lstTable;
+        }
+
+        public DataTable GetGoodsDetailForDocument(string GRno)
+        {
+            DataTable lstTable = new DataTable();
+            var baseAddress = "StoresDetails";
+            using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
+            {
+                HttpResponseMessage response = client.GetAsync(baseAddress + "/GetGoodsDetailForDocument?GRno=" + GRno).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    var data = response.Content.ReadAsStringAsync().Result;
+                    lstTable = JsonConvert.DeserializeObject<DataTable>(data);
+                }
+            }
+            return lstTable;
         }
 
     }

@@ -395,9 +395,9 @@
 
 
 function CreateDocumentForPODetail(e) {
-
+    
     var PRSetNo = e.value;
-
+    ShowLoadder();
     $.ajax({
         type: 'POST',
         url: window.CreateDocumentForPO,
@@ -407,13 +407,16 @@ function CreateDocumentForPODetail(e) {
 
             if (data.fileName != "") {
                 console.log(data.fileName);
+                HideLoadder();
             }
             else {
                 alert(data.errorMessage);
+                HideLoadder();
             }
         },
         error: function (x, e) {
             alert(data);
+            HideLoadder();
         }
     })
 }

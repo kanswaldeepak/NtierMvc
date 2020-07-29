@@ -1147,6 +1147,8 @@
     <Content Include="Areas\Stores\Views\Stores\_GoodsRecieptPopUp.cshtml" />
     <Content Include="Areas\Stores\Views\Stores\StoresMaster.cshtml" />
     <Content Include="Areas\Stores\Views\Stores\PartialGoodsReciept.cshtml" />
+    <Content Include="App_Data\Documents\Excel\GoodsReciept.xlsx" />
+    <Content Include="App_Data\Documents\Excel\PO_Mackarel.xlsx" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\CustomJS\common.js" />

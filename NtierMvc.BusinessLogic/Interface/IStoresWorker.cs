@@ -1,5 +1,6 @@
 ﻿using NtierMvc.Model;
 using NtierMvc.Model.Stores;
+using System.Data;
 
 namespace NtierMvc.BusinessLogic.Interface
 {
@@ -11,5 +12,7 @@ namespace NtierMvc.BusinessLogic.Interface
         GoodsRecieptEntityDetails GetDetailForGateControlNo(string GateControlNo);
         string SaveGoodsRecieptEntryDetails(BulkUploadEntity bEntity);
         GoodsRecieptEntity GetGRDetailsPopup(string GRno=null);
+        DataTable GetGoodsListDataForDocument(string GRno);
+        DataTable GetGoodsDetailForDocument(string GRno);
     }
 }

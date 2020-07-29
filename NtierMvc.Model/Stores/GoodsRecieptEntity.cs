@@ -30,6 +30,7 @@ namespace NtierMvc.Model.Stores
         public string LocationDetail { get; set; }        
         public string PreparedBy { get; set; }
         public string StoresIncharge { get; set; }
+        public string StoresInchargeSign { get; set; }
         public string TestCertificationNo { get; set; }
         public string SupplyType { get; set; }
         public string SupplyTerms { get; set; }
@@ -51,7 +52,7 @@ namespace NtierMvc.Model.Stores
         public string LotName { get; set; }
         public string LotDate { get; set; }
         public string LotQty { get; set; }
-        public int PreparedById { get; set; }
+        public string PreparedBySign { get; set; }
 
     }
 

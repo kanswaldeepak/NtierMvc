@@ -55,8 +55,8 @@ function GetDetailForGateControlNo() {
                 $('#GRPoDate').val(data[0].PoDate);
                 $('#GRSupplyTerms').val(data[0].SupplyTerms);
 
-                $('#imgPreparedBy').attr("src", "/Images/Sign/" + data[0].PreparedBy);
-                $('#imgStoresIncharge').attr("src", "/Images/Sign/" + data[0].StoresIncharge);
+                $('#imgPreparedBy').attr("src", "/Images/Sign/" + data[0].PreparedBySign);
+                $('#imgStoresIncharge').attr("src", "/Images/Sign/" + data[0].StoresInchargeSign);
 
                 switch (data[0].PRCat) {
                     case 'RM':
@@ -66,13 +66,10 @@ function GetDetailForGateControlNo() {
                         $.each(data, function (i, item) {
                             $('#tableRM > tbody:last-child').append('<tr><td><span>' + item.SN + '</span></td><td><span>' + item.RMdescription + '</span></td><td><span>' + item.PRqty + '</span></td><td><span>' + item.UOM + '</span></td><td><span>' + item.UnitPrice + '</span></td><td><span>' + item.TotalPrice + '</span></td><td class="lotdetails"><span>' + item.LotName + '</span></td><td class="lotdetails"><span>' + item.LotDate + '</span></td><td class="lotdetails"><span>' + item.LotQty + '</span></td><td><select class= "form-control requiredValidation GRStoresName" name = "StoresName" onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"></select></td><td><select class="form-control requiredValidation GRBayNo" name="BayNo" onfocusout="return ValidateRequiredFieldsOnFocusOut(this)"><option value="">Select</option></select></td><td><select class="form-control requiredValidation GRLocation" name="Location" onfocusout="return ValidateRequiredFieldsOnFocusOut(this)"><option value="">Select</option></select></td><td><select class="form-control requiredValidation GRDirection" name="Direction" onfocusout="return ValidateRequiredFieldsOnFocusOut(this)"><option value="">Select</option></select></td><td><select class="form-control requiredValidation GRStoreArea" name="StoreArea" onfocusout="return ValidateRequiredFieldsOnFocusOut(this)"><option value="">Select</option></select></td></tr>');
 
-                            //$('#GRSN').append('<option value="' + item.SN + '">' + item.SN + '</option>');
-
                             if ($('#GRSupplyTerms options:select').text() == 'Single')
                                 $('.lotdetails').hide();
                             else
                                 $('.lotdetails').hide();
-
 
                         })
 
@@ -136,7 +133,7 @@ function saveButtonGoodsRecieptDetails(data) {
 
 function SaveGoodsReciept(e) {
     e.preventDefault();
-
+    ShowLoadder();
     var arr = [];
     arr.length = 0;
 
@@ -151,10 +148,12 @@ function SaveGoodsReciept(e) {
     
     if (!Status) {
         alert("Kindly Fill all mandatory fields");
+        HideLoadder();
         return;
     }
     else if ($('#StoresIncharge').prop("checked") == false) {
         alert("Kindly tick Stores Incharge Checkbox");
+        HideLoadder();
         return;
     }
     else {
@@ -178,7 +177,7 @@ function SaveGoodsReciept(e) {
                 SupplierName: $("#GRSupplierName").val(),
                 SupplierLocation: $("#GRSupplierLocation").val(),
                 SupplierLotNo: $("#GRSupplierLotNo").val(),
-                PreparedBy: $("#GRPreparedById").val(),
+                PreparedBy: $("#GRPreparedBy").val(),
 
                 SN: $(this).find('td:eq(0) span').text(),
                 StoresName: $(this).find('td:eq(9) select').val(),
@@ -196,10 +195,36 @@ function SaveGoodsReciept(e) {
 
         $.when(saveButtonGoodsRecieptDetails(data)).then(function (response) {
             console.log(response);
+            HideLoadder();
         }).fail(function (err) {
             console.log(err);
         });
     }
 };
 
+function CreateDocumentForGRDetail(e) {
 
+    var GRNo = e.value;
+    ShowLoadder();
+    $.ajax({
+        type: 'POST',
+        url: window.CreateDocumentForGR,
+        data: JSON.stringify({ GRno: GRNo }),
+        contentType: "application/json; charset=utf-8",
+        success: function (data) {
+
+            if (data.fileName != "") {
+                console.log(data.fileName);    
+                HideLoadder();
+            }
+            else {
+                alert(data.errorMessage);
+                HideLoadder();
+            }
+        },
+        error: function (x, e) {
+            alert(data);
+            HideLoadder();
+        }        
+    })
+}

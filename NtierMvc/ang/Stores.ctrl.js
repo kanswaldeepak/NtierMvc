@@ -159,16 +159,18 @@ angular.module('App').controller("StoresController", function ($scope, $http, $t
         if (!confirm("Are you sure to delete?")) {
             return;
         }
-        //show_loader();
+        ShowLoadder();
         $http({ url: window.DeleteGoodsRecieptDetails, method: 'POST', data: { id: id } }).success(
             function (res) {
                 if (res == 'Deleted Successfully!') {
                     $scope.FetchGoodsRecieptList();
+                    HideLoadder();
                 } else {
                     alert(res, 'E');
+                    HideLoadder();
                 }
             }
-        ).error(function (res) { showHttpErr(res); });
+        ).error(function (res) { showHttpErr(res); HideLoadder(); });
     }
 
     $scope.GetGateControlNoDetails = function () {
@@ -195,8 +197,8 @@ angular.module('App').controller("StoresController", function ($scope, $http, $t
                     $('#GRPoDate').val(data[0].PoDate);
                     $('#GRSupplyTerms').val(data[0].SupplyTerms);
 
-                    $('#imgPreparedBy').attr("src", "/Images/Sign/" + data[0].PreparedBy);
-                    $('#imgStoresIncharge').attr("src", "/Images/Sign/" + data[0].StoresIncharge);
+                    $('#imgPreparedBy').attr("src", "/Images/Sign/" + data[0].PreparedBySign);
+                    $('#imgStoresIncharge').attr("src", "/Images/Sign/" + data[0].StoresInchargeSign);
 
                     switch (data[0].PRCat) {
                         case 'RM':

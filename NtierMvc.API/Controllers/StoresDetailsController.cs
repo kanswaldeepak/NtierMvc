@@ -50,5 +50,20 @@ namespace NtierMvc.API.Controllers.Application
             return Ok(_repository.SaveGoodsRecieptEntryDetails(iEntity));
         }
 
+
+        [HttpGet]
+        [Route("api/StoresDetails/GetGoodsListDataForDocument")]
+        public IHttpActionResult GetGoodsListDataForDocument(string GRno)
+        {
+            return Ok(_repository.GetGoodsListDataForDocument(GRno));
+        }
+
+        [HttpGet]
+        [Route("api/StoresDetails/GetGoodsDetailForDocument")]
+        public IHttpActionResult GetGoodsDetailForDocument(string GRno)
+        {
+            return Ok(_repository.GetGoodsDetailForDocument(GRno));
+        }
+
     }
 }
