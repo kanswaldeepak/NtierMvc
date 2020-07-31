@@ -12,7 +12,7 @@
     <div class="tab">
         <button class="tablinks" onclick="openCity(event, 'PR')" id="defaultOpen" ng-click="FetchPRDetailsList()"> Purchase Requisition </button>
         <button class="tablinks" onclick="openCity(event, 'VendorsPO')" ng-click="FetchVendorsPOList()">Vendors PO</button>
-        <button class="tablinks" onclick="openCity(event, 'BillMonitoring')" ng-click="FetchBillMonitoringList()">Bill Monitoring</button>
+        <button class="tablinks" onclick="openCity(event, 'BOM')" ng-click="FetchBOMList()">BOM</button>
         <button class="tablinks" onclick="openCity(event, 'ApprovedVendors')" ng-click="FetchApprovedVendorsList()">Approved Vendors</button>
     </div>
 
@@ -25,9 +25,9 @@
         @Html.Partial("POPlanning")
     </div>
 
-    @*<div id="BillManagement" class="tabcontent">
-            @Html.Partial("PartialBillManagement")
-        </div>*@
+    <div id="BOM" class="tabcontent">
+            @Html.Partial("PartialBOM")
+        </div>
 </div>
 
 <script>
@@ -36,6 +36,6 @@
     $(document).ready(function () {
         window.PanningTab = '@Url.Action("PRPlanning", "MRM")';
         window.PurchaseTab = '@Url.Action("PartialPurchase", "MRM")';
-        window.BillManagementTab = '@Url.Action("PartialBillManagement", "MRM")';
+        window.BOMTab = '@Url.Action("PartialBOM", "MRM")';
     });
 </script>

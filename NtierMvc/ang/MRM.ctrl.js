@@ -725,5 +725,44 @@ angular.module('App').controller("MRMController", function ($scope, $http, $time
         ).error(function (res) { showHttpErr(res); });
     }
 
+    $scope.BindBOMPopup = function () {
+        var _actionType = "ADD"
+        $.ajax({
+            type: "POST",
+            data: { actionType: _actionType },
+            datatype: "JSON",
+            url: window.BOMPopup,
+            success: function (html) {
+                html = $compile(html)($scope);
+                SetModalTitle("Master BOM Detail")
+                SetModalBody(html);
+                HideLoadder();
+                SetModalWidth("1200px");
+                ShowModal();
+
+                if (!($('.modal.in').length)) {
+                    $('.modal-dialog').css({
+                        top: '5%',
+                        left: '5%'
+                    });
+                }
+                $('#ModalPopup').modal({
+                    backdrop: false,
+                    show: true
+                });
+
+                $('.modal-dialog').draggable({
+                    handle: ".modal-body"
+                });
+
+            },
+            error: function (r) {
+                HideLoadder();
+                alert(window.ErrorMsg);
+            }
+        })
+        //});
+    }
+
 })
 //EOF

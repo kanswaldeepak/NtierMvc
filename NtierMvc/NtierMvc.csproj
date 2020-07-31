@@ -1149,6 +1149,7 @@
     <Content Include="Areas\Stores\Views\Stores\PartialGoodsReciept.cshtml" />
     <Content Include="App_Data\Documents\Excel\GoodsReciept.xlsx" />
     <Content Include="App_Data\Documents\Excel\PO_Mackarel.xlsx" />
+    <Content Include="Areas\MRM\Views\MRM\PartialBOM.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\CustomJS\common.js" />

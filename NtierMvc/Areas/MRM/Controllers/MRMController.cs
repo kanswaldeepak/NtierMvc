@@ -5,6 +5,7 @@ using NtierMvc.Infrastructure;
 using NtierMvc.Model;
 using NtierMvc.Model.Account;
 using NtierMvc.Model.Application;
+using NtierMvc.Model.DesignEng;
 using NtierMvc.Model.MRM;
 using NtierMvc.Models;
 using System;
@@ -34,6 +35,15 @@ namespace NtierMvc.Areas.MRM.Controllers
         [HttpGet]
         public ActionResult MRMMaster()
         {
+            //For BOM
+            ViewBag.ListQuoteType = model.GetMasterTableStringList("DesignPRP", "Id", "QuoteNo", "", "", GeneralConstants.ListTypeD);
+            ViewBag.ListQuoteNo = model.GetDropDownList("DesignPRP", GeneralConstants.ListTypeD, "QuoteNo", "QuoteNo", "", "");
+            ViewBag.ListSONo = model.GetDropDownList("DesignPRP", GeneralConstants.ListTypeD, "SONo", "SONo", "", "");
+            ViewBag.ListVendorId = model.GetMasterTableStringList("DesignPRP", "Id", "VendorID", "", "", GeneralConstants.ListTypeD);
+            ViewBag.ListVendorName = model.GetMasterTableStringList("DesignPRP", "Id", "VendorID", "", "", GeneralConstants.ListTypeD);
+            ViewBag.ListProductGroup = model.GetMasterTableStringList("Master.Product", "Id", "ProductName", "", "", GeneralConstants.ListTypeD);
+
+            //For 
             ViewBag.ListVendorType = model.GetMasterTableStringList("Master.Vendor", "Id", "VendorType", "", "", GeneralConstants.ListTypeD);
             ViewBag.ListSupplierId = model.GetMasterTableStringList("Clientele_Master", "Id", "VendorID", "", "", GeneralConstants.ListTypeD);
             ViewBag.ListRMCategory = model.GetMasterTableStringList("Master.Taxonomy", "DropDownID", "ObjectName", "PRCat", "Property", GeneralConstants.ListTypeD);
@@ -982,6 +992,42 @@ namespace NtierMvc.Areas.MRM.Controllers
                 throw;
             }
         }
+
+        [HttpGet]
+        public ActionResult PartialBOM()
+        {
+            return PartialView();
+        }
+
+        [HttpPost]
+        public ActionResult BOMPopup(string actionType, string BOMId)
+        {
+            ViewBag.ListProductName = model.GetMasterTableStringList("Master.Product", "Id", "ProductName", "", "", GeneralConstants.ListTypeN);
+            ViewBag.ListProductCode = model.GetMasterTableStringList("Master.Product", "Id", "ProductCode", "", "", GeneralConstants.ListTypeN);
+            ViewBag.ListPL = model.GetMasterTableStringList("Master.Product", "PL", "PL", "", "", GeneralConstants.ListTypeD);
+            ViewBag.ListProductNo = model.GetMasterTableStringList("Master.Product", "Id", "ProductNo", "", "", GeneralConstants.ListTypeN);
+            ViewBag.ListCasingSize = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "CasingSize", "Property", GeneralConstants.ListTypeN);
+            ViewBag.ListCasingPPF = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "Ppf", "Property", GeneralConstants.ListTypeN);
+            ViewBag.ListGrade = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "MatGrade", "Property", GeneralConstants.ListTypeN);
+            ViewBag.ListUom = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "Uom", "Property", GeneralConstants.ListTypeN);
+            ViewBag.ListOpenHoleSize = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "OpenHoleSize", "Property", GeneralConstants.ListTypeN);
+
+            BOMEntity bOM = new BOMEntity();
+            if (actionType == "VIEW" || actionType == "EDIT")
+            {
+                if (!string.IsNullOrEmpty(BOMId))
+                    bOM.Id = Convert.ToInt32(BOMId);
+                //eOrder = objManager.BOMPopup(eOrder);
+            }
+            if (actionType == "ADD")
+            {
+                //eOrder = objManager.GetUserDetails(PRPObj.UnitNo);
+            }
+
+            return base.PartialView("~/Areas/DesignEng/Views/DesignEng/_BOMDetails.cshtml", bOM);
+        }
+
+
 
     }
 }

@@ -1,0 +1,311 @@
+﻿@using NtierMvc.Model
+@using NtierMvc.Infrastructure
+
+@model NtierMvc.Model.DesignEng.ProductRealisation
+@{
+    ViewBag.Title = "Product Realisation";
+}
+
+
+<td class="row mt-3">
+    <table>
+        <tr>
+            <td>
+                <button id="btnAddBOM" type="button" class="btn btn-outline-primary btn-sm" ng-click="BindBOMPopup()"><i class="fa fa-plus"></i> <b>Add Master BOM</b></button>
+            </td>
+            <td>
+                <label>Type</label>
+            </td>
+            <td>
+                <label>Quote No</label>
+            </td>
+            <td>
+                <label>SO No</label>
+            </td>
+            <td>
+                <label>Vendor Id</label>
+            </td>
+            <td>
+                <label>Vendor Name</label>
+            </td>
+            <td>
+                <label>Product Group</label>
+            </td>
+            <td></td>
+        </tr>
+        <tr>    
+            <td></td>
+            <td>
+                @Html.DropDownList("QuoteType", new SelectList(@ViewBag.ListQuoteType, "DataStringValueField", "DataTextField", "Select"),
+                           new
+                           {
+                               @class = "form-control",
+                               ng_model = "SearchTypeId"
+                           })
+            </td>
+            <td>
+                @Html.DropDownList("QuoteNo", new SelectList(@ViewBag.ListQuoteNo, "DataStringValueField", "DataTextField", "Select"),
+                           new
+                           {
+                               @class = "form-control",
+                               ng_model = "SearchQuoteNo"
+                           })
+            </td>
+            <td>
+                @Html.DropDownList("SONo", new SelectList(@ViewBag.ListSONo, "DataStringValueField", "DataTextField", "Select"),
+                           new
+                           {
+                               @class = "form-control",
+                               ng_model = "SearchSONo"
+                           })
+            </td>
+            <td>
+                @Html.DropDownList("VendorId", new SelectList(@ViewBag.ListVendorId, "DataStringValueField", "DataTextField", "Select"),
+                                           new
+                                           {
+                                               @class = "form-control",
+                                               ng_model = "SearchVendorId"
+                                           })
+            </td>
+            <td>
+                @Html.DropDownList("VendorName", new SelectList(@ViewBag.ListVendorName, "DataStringValueField", "DataTextField", "Select"),
+                           new
+                           {
+                               @class = "form-control",
+                               ng_model = "SearchVendorName"
+                           })
+            </td>
+            <td style="max-width:50px">
+                @Html.DropDownList("ProductGroup", new SelectList(@ViewBag.ListProductGroup, "DataStringValueField", "DataTextField", "Select"),
+                           new
+                           {
+                               @class = "form-control",
+                               ng_model = "SearchProductGroup"
+                           })
+            </td>
+            <td></td>
+            <td>
+                <button class="btn btn-link" type="button" id="btnSearch" ng-click="FetchProductRealisationList()">
+                    <i class="fa fa-search"></i>
+                </button>
+            </td>
+        </tr>
+    </table>
+
+    <div class="wrapper">
+        <div class="container">
+            <table>
+                <thead class="tblhead">
+                    <tr>
+                        <th>
+                            Action
+                            <div class="c1">
+                                Action
+                            </div>
+                        </th>
+                        <th>
+                            Quote Type
+                            <div class="c2">
+                                Quote Type
+                            </div>
+                        </th>
+                        <th>
+                            Quote No
+                            <div class="c2">
+                                Quote No
+                            </div>
+                        </th>
+                        <th>
+                            SO No
+                            <div class="c2">
+                                SO No
+                            </div>
+                        </th>
+                        <th>
+                            Vendor Name
+                            <div class="c3">
+                                Vendor Name
+                            </div>
+                        </th>
+                        <th>
+                            Supply Terms
+                            <div class="c3">
+                                Supply Terms
+                            </div>
+                        </th>
+                        <th>
+                            PO No
+                            <div class="c2">
+                                PO No
+                            </div>
+                        </th>
+                        <th>
+                            PO Date
+                            <div class="c2">
+                                PO Date
+                            </div>
+                        </th>
+                        <th>
+                            PO Delivery Date
+                            <div class="c2">
+                                PO Delivery Date
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="L in PRPList">
+                        <td>
+                            <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="VIEW" ng-click="LoadPRPViewPopup(L.SONo)">
+                                <i class="fa fa-eye"></i>
+                            </button>
+                            <button hidden type="button" class="btn btn-outline-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="EDIT" ng-click="LoadPRPEditPopup(L.SONo)">
+                                <i class="fa fa-edit"></i>
+                            </button>
+                            <button type="button" class="btn btn-outline-danger btn-sm" data-toggle="tooltip" data-placement="bottom" title="DELETE" ng-click="DeletePRP(L.SONo)">
+                                <i class="fa fa-trash"></i>
+                            </button>
+                        </td>
+                        <td>
+                            {{L.QuoteType}}
+                        </td>
+                        <td>
+                            {{L.QuoteNo}}
+                        </td>
+                        <td>
+                            {{L.SONo}}
+                        </td>
+                        <td>
+                            {{L.VendorName}}
+                        </td>
+                        <td>
+                            {{L.SupplyTerms}}
+                        </td>
+                        <td>
+                            {{L.PONo}}
+                        </td>
+                        <td>
+                            {{L.PODate}}
+                        </td>
+                        <td>
+                            {{L.PODeliveryDate}}
+                        </td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td>
+                            <div class="c1">
+                                <div class="row p-0">
+                                    <div class="col-md-2 p-0">
+                                        <span class="form-group pull-left page-size form-inline">
+                                            <b>Records per page : &nbsp;&nbsp;</b>
+                                            <select id="ddlPRPageSize" class="form-control control-color"
+                                                    ng-model="PRPageSize"
+                                                    ng-change="PRChangePageSize()">
+                                                <option value="100000">All</option>
+                                                <option value="5">5</option>
+                                                <option value="10">10</option>
+                                                <option value="25">25</option>
+                                                <option value="50">50</option>
+                                                <option value="100">100</option>
+                                            </select>
+                                        </span>
+                                    </div>
+                                    <div class="col-md-8 pull-right p-0">
+                                        <div class="row p-0">
+                                            <div class="col-md-10 p-0">
+                                                <pagination total-items="PRPTotalCount" ng-change="PRPageChanged()" items-per-page="PRPageSize" direction-links="true" ng-model="PRPageIndex" max-size="maxsize" class="pagination pull-right" boundary-links="true" rotate="false" num-pages="PRNumPages"></pagination>
+                                            </div>
+                                            <div class="col-md-2 p-0">
+                                                <a class="btn btn-primary p-2 pull-right">Page: {{PRPageIndex}} / {{PRNumPages}}</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+
+    <div class="modal fade" id="add_details" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    </div>
+
+    <div class="modal fade" id="registor-Sucess-Failure" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h6 class="modal-title">Notification</h6>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    &nbsp;&nbsp;<span id="spn-registor-Sucess-Failure"></span><span id="spnUserName" style="font-weight:bold"></span>&nbsp;&nbsp;<span id="spnUserNameMore"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" data-dismiss="modal" class="btn btn-primary">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="Sucess-Failure" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h6 class="modal-title">Notification</h6>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group row">
+                                    &nbsp;&nbsp;<span id="spn-Sucess-Failure"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" data-dismiss="modal" class="btn btn-primary">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+
+    $(document).ready(function () {
+        window.PRPPopup = '@Url.Action("PRPPopup", "DesignEng")';
+        window.BOMPopup = '@Url.Action("BOMPopup", "DesignEng", new { @Area = "DesignEng" })';
+        window.FetchProductRealisationList = '@Url.Action("FetchProductRealisationList", "DesignEng", new {@Area = "DesignEng" })';
+        window.DeletePRPDetail = '@Url.Action("DeletePRPDetail", "DesignEng", new {@Area = "DesignEng" })';
+        window.GetPlSoNoDetails = '@Url.Action("GetPlSoNoDetails", "DesignEng", new {@Area = "DesignEng" })';
+        window.GetQuoteOrderDetailsForPRP = '@Url.Action("GetQuoteOrderDetailsForPRP", "DesignEng", new {@Area = "DesignEng" })';
+        window.GetOrderDetailsFromSO = '@Url.Action("GetOrderDetailsFromSO", "Technical", new {@Area = "" })';
+        window.GetPrepQuoteNo = '@Url.Action("GetPrepQuoteNo", "Technical", new {@Area = "" })';
+    });
+
+
+    </script>
+
+    <script src="~/Areas/DesignEng/Scripts/BOMDetails.js"></script>
+
+
+
