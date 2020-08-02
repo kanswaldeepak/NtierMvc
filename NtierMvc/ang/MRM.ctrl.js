@@ -764,5 +764,77 @@ angular.module('App').controller("MRMController", function ($scope, $http, $time
         //});
     }
 
+    //Bill Monitoring List Starts
+    $scope.BMTotalCount = 0;
+    $scope.BMPageIndex = 1;
+    $scope.BMPageSize = "50";
+    $scope.SearchType = "";
+    $scope.SearchVendorNature = "";
+    $scope.SearchVendorName = "";
+    $scope.SearchBillNo = "";
+    $scope.SearchBillDate = "";
+    $scope.SearchItemDescription = "";
+    $scope.SearchCurrency = "";
+    $scope.SearchApprovalStatus = "";
+
+    $scope.FetchBillMonitoringList = function () {
+        $http.get(window.FetchBillMonitoringList + "?pageindex=" + $scope.BMPageIndex + "&pageSize=" + $scope.BMPageSize + "&SearchType=" + $scope.SearchType + "&SearchVendorNature=" + $scope.SearchVendorNature + "&SearchVendorName=" + $scope.SearchVendorName + "&SearchBillNo=" + $scope.SearchBillNo + "&SearchBillDate=" + $scope.SearchBillDate + "&SearchItemDescription=" + $scope.SearchItemDescription + "&SearchCurrency=" + $scope.SearchCurrency + "&SearchApprovalStatus=" + $scope.SearchApprovalStatus).success(function (response) {
+            $scope.BOMList = response.lstVBM;
+            $scope.BMTotalCount = response.totalcount;
+        }, function (error) {
+            alert('failed');
+        });
+    }
+
+
+    $scope.BMPageChanged = function () {
+        $scope.FetchBillMonitoringList();
+    }
+
+    $scope.BMChangePageSize = function () {
+        $scope.BMPageIndex = 1;
+        $scope.FetchBillMonitoringList();
+    }
+
+    $scope.MRMBindVendorsMasterBillPopUp = function () {
+        var _actionType = "ADD"
+        //var ID = e.target.id;
+        $.ajax({
+            type: "POST",
+            data: { actionType: _actionType, BillId: '' },
+            datatype: "JSON",
+            url: window.MRMBillMonitoringPopUp,
+            success: function (html) {
+                html = $compile(html)($scope);
+                SetModalTitle("Material Entry")
+                SetModalBody(html);
+                HideLoadder();
+                SetModalWidth("1200px");
+                ShowModal();
+
+                if (!($('.modal.in').length)) {
+                    $('.modal-dialog').css({
+                        top: '5%',
+                        left: '5%'
+                    });
+                }
+                $('#ModalPopup').modal({
+                    backdrop: false,
+                    show: true
+                });
+
+                $('.modal-dialog').draggable({
+                    handle: ".modal-body"
+                });
+
+            },
+            error: function () {
+                HideLoadder();
+                alert(window.ErrorMsg);
+            }
+        })
+    }
+
+
 })
 //EOF

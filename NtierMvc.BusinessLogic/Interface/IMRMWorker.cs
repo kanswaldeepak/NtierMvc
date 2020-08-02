@@ -30,5 +30,6 @@ namespace NtierMvc.BusinessLogic.Interface
         List<DropDownEntity> GetPRNoList(string DeptName);
         List<DropDownEntity> GetRMCategories(string SupplierId);
         List<DropDownEntity> GetDeliveryDates(string RMCategory);
+        MRMBillMonitoringEntityDetails GetMRMDetailForGateControlNo(string GateControlNo);
     }
 }

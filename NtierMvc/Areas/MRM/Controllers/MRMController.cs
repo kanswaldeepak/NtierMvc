@@ -7,6 +7,7 @@ using NtierMvc.Model.Account;
 using NtierMvc.Model.Application;
 using NtierMvc.Model.DesignEng;
 using NtierMvc.Model.MRM;
+using NtierMvc.Model.Stores;
 using NtierMvc.Models;
 using System;
 using System.Collections.Generic;
@@ -43,6 +44,15 @@ namespace NtierMvc.Areas.MRM.Controllers
             ViewBag.ListVendorName = model.GetMasterTableStringList("DesignPRP", "Id", "VendorID", "", "", GeneralConstants.ListTypeD);
             ViewBag.ListProductGroup = model.GetMasterTableStringList("Master.Product", "Id", "ProductName", "", "", GeneralConstants.ListTypeD);
 
+            //Bill Monitoring
+            ViewBag.ListType = model.GetMasterTableStringList("Master.Taxonomy", "DropDownId", "DropDownValue", "QuoteType", "Property", GeneralConstants.ListTypeD);
+            ViewBag.ListVendorNature = "";
+            ViewBag.ListVendorName = "";
+            ViewBag.ListBillDate = "";
+            ViewBag.ListFunctionArea = "";
+            //ViewBag.ListFinancialYear = model.GetMasterTableStringList("GateEntry", "FinancialYear", "FinancialYear", "", "", GeneralConstants.ListTypeD);
+            ViewBag.ListApprovalStatus = model.GetMasterTableStringList("ApproveStatus", "Id", "Status", "", "", GeneralConstants.ListTypeN);
+
             //For 
             ViewBag.ListVendorType = model.GetMasterTableStringList("Master.Vendor", "Id", "VendorType", "", "", GeneralConstants.ListTypeD);
             ViewBag.ListSupplierId = model.GetMasterTableStringList("Clientele_Master", "Id", "VendorID", "", "", GeneralConstants.ListTypeD);
@@ -64,7 +74,7 @@ namespace NtierMvc.Areas.MRM.Controllers
             var UserDetails = (UserEntity)Session["UserModel"];
             ViewBag.DeptName = UserDetails.DeptName;
 
-            
+
 
             return View();
         }
@@ -1027,7 +1037,80 @@ namespace NtierMvc.Areas.MRM.Controllers
             return base.PartialView("~/Areas/DesignEng/Views/DesignEng/_BOMDetails.cshtml", bOM);
         }
 
+        [HttpGet]
+        public ActionResult PartialMRMBillMonitoring()
+        {
+            return View();
+        }
 
+        [HttpPost]
+        public ActionResult MRMBillMonitoringPopUp(string actionType, string BillId=null)
+        {
+            ViewBag.ListType = model.GetMasterTableStringList("Master.Taxonomy", "DropDownId", "DropDownValue", "SupplyType", "Property", GeneralConstants.ListTypeD);
+            ViewBag.ListVendorNature = model.GetMasterTableStringList("Master.Vendor", "Id", "VendorNature", "", "", GeneralConstants.ListTypeN);
+            ViewBag.ListVendorId = model.GetMasterTableStringList("Clientele_Master", "Id", "VendorId", "", "", GeneralConstants.ListTypeN);
+            ViewBag.ListEndUse = model.GetMasterTableStringList("Master.Taxonomy", "DropDownId", "DropDownValue", "EndUse", "Property", GeneralConstants.ListTypeN);
+            ViewBag.ListEndUseNo = "";
+            ViewBag.ListUom = model.GetMasterTableStringList("Master.Taxonomy", "DropDownId", "DropDownValue", "Uom", "Property", GeneralConstants.ListTypeN);
+            ViewBag.ListCurrency = model.GetMasterTableStringList("Master.Taxonomy", "DropDownId", "DropDownValue", "Currency", "Property", GeneralConstants.ListTypeN);
+            ViewBag.ListSupplyType = model.GetMasterTableStringList("Master.Taxonomy", "DropDownId", "DropDownValue", "SupplyTerms", "Property", GeneralConstants.ListTypeN);
+            ViewBag.ListDepartment = model.GetMasterTableStringList("Master.Department", "Id", "DeptName", "", "", GeneralConstants.ListTypeN);
+            ViewBag.ListSCCNO = model.GetMasterTableStringList("SCCNO", "Id", "Heading", "", "", GeneralConstants.ListTypeN);
+            ViewBag.ListCostCentre = "";
+            ViewBag.ListApproveStatus = model.GetMasterTableStringList("ApproveStatus", "Id", "Status", "", "", GeneralConstants.ListTypeN);
+            ViewBag.ListGateControlNo = model.GetMasterTableStringList("GateEntry", "GateNo", "GateControlNo", "", "", GeneralConstants.ListTypeD);
+
+            MRMBillMonitoringEntity vmbE = new MRMBillMonitoringEntity();
+
+            if (actionType == "VIEW" || actionType == "EDIT")
+            {
+                if (!string.IsNullOrEmpty(BillId))
+                    vmbE.Id = Convert.ToInt32(BillId);
+
+                //vmbE = objManager.BillDetailsPopup(vmbE);
+
+            }
+            if (actionType == "ADD")
+            {
+                //List<DropDownEntity> SelectList = new List<DropDownEntity>();
+                //DropDownEntity objSelect = new DropDownEntity();
+                //objSelect.DataStringValueField = "";
+                //objSelect.DataTextField = "Select";
+                //SelectList.Add(objSelect);
+
+                //ViewBag.ListQuoteNo = ViewBag.ListQuoteSlNo = SelectList;
+
+            }
+
+            return base.PartialView("~/Areas/MRM/Views/MRM/_MRMBillMonitoringPopUp.cshtml", vmbE);
+        }
+
+        [HttpPost]
+        public ActionResult SaveBillMonitoringDetails(BillMonitoringEntity vmbE)
+        {
+            string result = string.Empty;
+            //result = objManager.SaveBillMonitoringDetails(vmbE);
+
+            string data = string.Empty;
+            if (!string.IsNullOrEmpty(result) && (result == GeneralConstants.Inserted || result == GeneralConstants.Updated))
+            {
+                data = GeneralConstants.SavedSuccess;
+            }
+            else
+            {
+                data = GeneralConstants.NotSavedError + ". Reason: " + result;
+            }
+
+            return new JsonResult { Data = data, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+        }
+
+        public JsonResult GetMRMDetailForGateControlNo(string GateControlNo)
+        {
+            MRMBillMonitoringEntityDetails bmObj = new MRMBillMonitoringEntityDetails();
+            bmObj = objManager.GetMRMDetailForGateControlNo(GateControlNo);
+
+            return new JsonResult { Data = bmObj.lstMRMEntity, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+        }
 
     }
 }

@@ -14,6 +14,7 @@
         <button class="tablinks" onclick="openCity(event, 'VendorsPO')" ng-click="FetchVendorsPOList()">Vendors PO</button>
         <button class="tablinks" onclick="openCity(event, 'BOM')" ng-click="FetchBOMList()">BOM</button>
         <button class="tablinks" onclick="openCity(event, 'ApprovedVendors')" ng-click="FetchApprovedVendorsList()">Approved Vendors</button>
+        <button class="tablinks" onclick="openCity(event, 'BillMonitoring')" ng-click="FetchBillMonitoringList()">Bill Monitoring</button>
     </div>
 
     <!-- Tab content -->
@@ -26,8 +27,12 @@
     </div>
 
     <div id="BOM" class="tabcontent">
-            @Html.Partial("PartialBOM")
-        </div>
+        @Html.Partial("PartialBOM")
+    </div>
+
+    <div id="BillMonitoring" class="tabcontent">
+        @Html.Partial("PartialMRMBillMonitoring")
+    </div>
 </div>
 
 <script>

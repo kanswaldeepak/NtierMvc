@@ -152,5 +152,12 @@ namespace NtierMvc.API.Controllers.Application
             return Ok(_repository.GetDeliveryDates(RMCategory));
         }
 
+        [HttpGet]
+        [Route("api/MRMDetail/GetMRMDetailForGateControlNo")]
+        public IHttpActionResult GetMRMDetailForGateControlNo(string GateControlNo)
+        {
+            return Ok(_repository.GetMRMDetailForGateControlNo(GateControlNo));
+        }
+
     }
 }

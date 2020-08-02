@@ -237,5 +237,13 @@ namespace NtierMvc.DataAccess.Pool
             return DataTableToStringList(_dbAccess.GetDataTable(spName, Params));
         }
 
+        public DataSet GetMRMDetailForGateControlNo(string GateControlNo)
+        {
+            var SPName = ConfigurationManager.AppSettings["GetMRMDetailForGateControlNo"];
+            var Params = new Dictionary<string, object>();
+            Params.Add("@GateControlNo", GateControlNo);
+            return _dbAccess.GetDataSet(SPName, Params);
+        }
+
     }
 }

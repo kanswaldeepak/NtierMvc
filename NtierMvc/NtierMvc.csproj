@@ -261,6 +261,7 @@
     <Content Include="ang\PdfFile\vfs_fonts.js" />
     <Content Include="Areas\DesignEng\Scripts\BOMDetails.js" />
     <Content Include="Areas\DesignEng\Scripts\PRP.js" />
+    <Content Include="Areas\MRM\Scripts\MRMBillMonitoring.js" />
     <Content Include="Areas\MRM\Scripts\PODetailPopUp.js" />
     <Content Include="Areas\MRM\Scripts\PRDetailPopUp.js" />
     <Content Include="Areas\Stores\Scripts\GoodsReciept.js" />
@@ -1150,6 +1151,8 @@
     <Content Include="App_Data\Documents\Excel\GoodsReciept.xlsx" />
     <Content Include="App_Data\Documents\Excel\PO_Mackarel.xlsx" />
     <Content Include="Areas\MRM\Views\MRM\PartialBOM.cshtml" />
+    <Content Include="Areas\MRM\Views\MRM\PartialMRMBillMonitoring.cshtml" />
+    <Content Include="Areas\MRM\Views\MRM\_MRMBillMonitoringPopUp.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\CustomJS\common.js" />

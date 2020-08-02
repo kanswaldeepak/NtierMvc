@@ -315,5 +315,21 @@ namespace NtierMvc.Areas.MRM.Models
             return lstDropDownEntity;
         }
 
+        public MRMBillMonitoringEntityDetails GetMRMDetailForGateControlNo(string GateControlNo)
+        {
+            var baseAddress = "MRMDetail";
+            MRMBillMonitoringEntityDetails tableList = new MRMBillMonitoringEntityDetails();
+            using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
+            {
+                HttpResponseMessage response = client.GetAsync(baseAddress + "/GetMRMDetailForGateControlNo?GateControlNo=" + GateControlNo).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    var data = response.Content.ReadAsStringAsync().Result;
+                    tableList = JsonConvert.DeserializeObject<MRMBillMonitoringEntityDetails>(data);
+                }
+            }
+            return tableList;
+        }
+
     }
 }

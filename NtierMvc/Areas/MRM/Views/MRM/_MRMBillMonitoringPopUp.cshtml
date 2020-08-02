@@ -1,0 +1,701 @@
+﻿@model NtierMvc.Model.MRM.MRMBillMonitoringEntity
+
+@{
+    ViewBag.Title = "Bill Monitoring";
+}
+
+<div ng-controller="ModalController" class="row">
+    <form id="formBillMonitoring">
+        <div class="col-md-12">
+            @Html.HiddenFor(m => m.Id)
+            @*<div class="row mb-2">
+                <div class="col-md-12" style="background-color: lightblue;">
+                    <h4 class="control-label mt-2" style="margin-left:10px; font-size: 22px">Material Entry</h4>
+                </div>
+            </div>*@
+            <div class="row">
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label">
+                            Type <span class="required">*</span>
+                        </label>
+                        @Html.DropDownListFor(m => m.Type, new SelectList(@ViewBag.ListType, "DataStringValueField", "DataTextField", Model.Type),
+                           new
+                           {
+                               @class = "form-control requiredValidation clearField applyDisabled",
+                               @id = "MRMListType",
+                               @data_inneraction = "validationCall",
+                               @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                           })
+                        <span class="HideValidMsg"> Select End Use</span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label">Gate Control No <span class="required">*</span></label>
+                        @Html.DropDownListFor(m => m.GateControlNo, new SelectList(ViewBag.ListGateControlNo, "DataStringValueField", "DataTextField", "Select"), new
+                   {
+                       @class = "form-control  requiredValidation",
+                       @id = "MRMGateControlNo",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                       @onchange = "GetMRMGateControlNoDetails()"
+                   })
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label ">
+                            Vendor Nature <span class="required">*</span>
+                        </label>
+                        @Html.DropDownListFor(m => m.VendorNatureId, new SelectList(ViewBag.ListVendorNature, "DataStringValueField", "DataTextField", Model.VendorNatureId), new
+                            {
+                                @class = "form-control requiredValidation clearField applyDisabled",
+                                @id = "MRMVendorNatureId",
+                                @data_inneraction = "validationCall",
+                                @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                                @onchange = "getVendorIDs()"
+                            })
+                        <span class="HideValidMsg"> Please Select Vendor Nature</span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label ">
+                            Vendor Id <span class="required">*</span>
+                        </label>
+                        @Html.DropDownListFor(m => m.VendorId, new SelectList(ViewBag.ListVendorId, "DataStringValueField", "DataTextField", Model.VendorId), new
+                   {
+                       @class = "form-control requiredValidation clearField applyDisabled",
+                       @id = "MRMVendorId",
+                       @data_inneraction = "validationCall",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                       @onchange = "getVendorDetails()"
+                   })
+                        <span class="HideValidMsg"> Please Select Vendor Id</span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label">
+                            Vendor Name <span class="required">*</span>
+                        </label>
+                        @Html.TextBoxFor(m => m.VendorName, new
+                   {
+                       @class = "form-control requiredValidation clearField applyDisabled",
+                       @id = "MRMVendorName",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                       @readonly = "true",
+                       @placeholder = "Select VendorId"
+                   })
+                        <span class="HideValidMsg">Please Enter VendorId</span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group text-left">
+                        <label class="control-label ">
+                            City <span class="required">*</span>
+                        </label>
+                        @Html.TextBoxFor(m => m.City, new
+                   {
+                       @class = "form-control requiredValidation clearField applyDisabled",
+                       @id = "MRMCity",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                       @readonly = "true",
+                       @placeholder = "Select VendorId"
+                   })
+                        <span class="HideValidMsg">Please Enter City</span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label">
+                            End Use <span class="required">*</span>
+                        </label>
+                        @Html.DropDownListFor(m => m.EndUse, new SelectList(@ViewBag.ListEndUse, "DataStringValueField", "DataTextField", Model.EndUse),
+                           new
+                           {
+                               @class = "form-control requiredValidation clearField applyDisabled",
+                               @id = "MRMEndUse",
+                               @data_inneraction = "validationCall",
+                               @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                               @onchange = "changeEndUseNo()"
+                           })
+                        <span class="HideValidMsg"> Select End Use</span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label">
+                            End Use No <span class="required">*</span>
+                        </label>
+                        @Html.DropDownListFor(m => m.EndUseNo, new SelectList(@ViewBag.ListEndUseNo, "DataStringValueField", "DataTextField", Model.EndUseNo),
+                           new
+                           {
+                               @class = "form-control requiredValidation clearField applyDisabled",
+                               @id = "MRMEndUseNo",
+                               @readonly = "true"
+                           })
+                        <span class="HideValidMsg"> Select End Use No</span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label">
+                            Functional Area <span class="required">*</span>
+                        </label>
+                        @Html.DropDownListFor(m => m.FunctionalAreaId, new SelectList(@ViewBag.ListDepartment, "DataStringValueField", "DataTextField", Model.FunctionalAreaId),
+                           new
+                           {
+                               @class = "form-control requiredValidation clearField applyDisabled",
+                               @id = "MRMFunctionalAreaId",
+                               @data_inneraction = "validationCall",
+                               @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                           })
+                        <span class="HideValidMsg"> Select Functional Area</span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label">
+                            VendorPO NO <span class="required">*</span>
+                        </label>
+                        @Html.TextBoxFor(m => m.VendorPONO, new
+                   {
+                       @class = "form-control requiredValidation clearField applyDisabled",
+                       @id = "MRMVendorPONO",
+                       @placeholder = "Enter VendorPONO"
+                   })
+                        <span class="HideValidMsg"> Select Vendor PONO</span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label">
+                            VendorPO Date <span class="required">*</span>
+                        </label>
+                        @Html.TextBoxFor(m => m.VendorPODate, new
+                   {
+                       @class = "form-control requiredValidation clearField applyDisabled NoEndDate",
+                       autocomplete = "off",
+                       @id = "MRMVendorPODate",
+                       @placeholder = "dd/MM/yyyy",
+                       @style = "disabled :disabled",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                   })
+                        <span class="HideValidMsg"> Select VendorPO Date</span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label">
+                            Supply Type <span class="required">*</span>
+                        </label>
+                        @Html.DropDownListFor(m => m.SupplyType, new SelectList(@ViewBag.ListSupplyType, "DataStringValueField", "DataTextField", Model.SupplyType),
+                           new
+                           {
+                               @class = "form-control requiredValidation clearField applyDisabled",
+                               @id = "MRMSupplyType"
+                           })
+                        <span class="HideValidMsg"> Select SupplyType</span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label">
+                            Bill No <span class="required">*</span>
+                        </label>
+                        @Html.TextBoxFor(m => m.BillNo, new
+                   {
+                       @class = "form-control requiredValidation clearField applyDisabled",
+                       @id = "MRMBillNo",
+                       @placeholder = "Enter Bill No",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                   })
+                        <span class="HideValidMsg">Enter Bill No</span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label">
+                            Bill Date <span class="required">*</span>
+                        </label>
+                        @Html.TextBoxFor(m => m.BillDate, new
+                   {
+                       @class = "form-control requiredValidation clearField applyDisabled NoEndDate",
+                       autocomplete = "off",
+                       @id = "MRMBillDate",
+                       @placeholder = "dd/MM/yyyy",
+                       @style = "disabled :disabled",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                   })
+                        <span class="HideValidMsg"> Select Bill Date</span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label">
+                            Currency <span class="required">*</span>
+                        </label>
+                        @Html.DropDownListFor(m => m.Currency, new SelectList(ViewBag.ListCurrency, "DataStringValueField", "DataTextField", Model.Currency), new
+                           {
+                               @class = "form-control requiredValidation clearField applyDisabled",
+                               @id = "MRMCurrency",
+                               @data_inneraction = "validationCall",
+                               @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                           })
+                        <span class="HideValidMsg"> Select Currency</span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label">
+                            Bill Amount <span class="required">*</span>
+                        </label>
+                        @Html.TextBoxFor(m => m.BillAmount, new
+                   {
+                       @class = "form-control requiredValidation clearField applyDisabled requiredValidation",
+                       @id = "MRMBillAmount",
+                       @placeholder = "Enter Bill Amount",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                           @onkeypress = "return AllowNumbers(event); "
+                   })
+                        <span class="HideValidMsg">Enter Bill Amount</span>
+                    </div>
+                </div>
+
+                @*<div class="col-md-2">
+            <div class="form-group">
+                <label class="control-label">
+                    Unit Rate <span class="required">*</span>
+                </label>
+                @Html.TextBoxFor(m => m.UnitRate, new
+           {
+               @class = "form-control requiredValidation clearField applyDisabled",
+               @id = "UnitRate",
+               @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+               @onkeypress = "return AllowNumbers(event); ",
+           })
+                <span class="HideValidMsg"> Select Unit Rate</span>
+            </div>
+        </div>*@
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label">
+                            Vehicle No. <span class="required">*</span>
+                        </label>
+                        @Html.TextBoxFor(m => m.VehicleNo, new
+                   {
+                       @class = "form-control requiredValidation clearField applyDisabled",
+                       @id = "MRMVehicleNo",
+                       @placeholder = "Enter Vehicle No",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                   })
+                        <span class="HideValidMsg"> Enter Vehicle No</span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label">
+                            Driver Name <span class="required">*</span>
+                        </label>
+                        @Html.TextBoxFor(m => m.DriverName, new
+                   {
+                       @class = "form-control requiredValidation clearField applyDisabled",
+                       @id = "MRMDriverName",
+                       @placeholder = "Enter Driver Name",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                   })
+                        <span class="HideValidMsg">Enter Driver Name</span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label">
+                            Driver Contact No <span class="required">*</span>
+                        </label>
+                        @Html.TextBoxFor(m => m.DriverContactNo, new
+                   {
+                       @class = "form-control requiredValidation clearField applyDisabled",
+                       @id = "MRMDriverContactNo",
+                       @placeholder = "Enter Driver Contact No",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                   })
+                        <span class="HideValidMsg">Enter Driver Contact No</span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label">
+                            Time In <span class="required">*</span>
+                        </label>
+                        @Html.TextBoxFor(m => m.TimeIn, new
+                   {
+                       @class = "form-control requiredValidation clearField applyDisabled",
+                       @id = "MRMTimeIn",
+                       @placeholder = "Enter Time In",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                   })
+                        <span class="HideValidMsg">Enter Time In</span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label">
+                            Time Out <span class="required">*</span>
+                        </label>
+                        @Html.TextBoxFor(m => m.TimeOut, new
+                   {
+                       @class = "form-control requiredValidation clearField applyDisabled",
+                       @id = "MRMTimeOut",
+                       @placeholder = "Enter Time Out",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                   })
+                        <span class="HideValidMsg">Enter Time Out</span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label">
+                            Vehicle Released <span class="required">*</span>
+                        </label>
+                        @Html.TextBoxFor(m => m.VehicleReleased, new
+                   {
+                       @class = "form-control requiredValidation clearField applyDisabled",
+                       @id = "MRMVehicleReleased",
+                       @placeholder = "Enter Vehicle Released",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                   })
+                        <span class="HideValidMsg">Enter Vehicle Released</span>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <table class="table table-bordered table-sm table-striped text-center">
+                        <thead>
+                            <tr>
+                                <td>SN</td>
+                                <td>Qty</td>
+                                <td>ItemDesc</td>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="row mb-2 mt-5">
+                <div class="col-md-12" style="background-color: lightblue;">
+                    <h4 class="control-label mt-2" style="margin-left:10px; font-size: 22px">Bill Verification</h4>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label">
+                            GRN No <span class="required">*</span>
+                        </label>
+                        @Html.TextBoxFor(m => m.GRNo, new
+                   {
+                       @class = "form-control requiredValidation clearField",
+                       @id = "MRMGRNo",
+                       @placeholder = "Enter GRNo",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                   })
+                    <span class="HideValidMsg">Enter GR No</span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label">
+                            GRN Date <span class="required">*</span>
+                        </label>
+                        @Html.TextBoxFor(m => m.GRDate, new
+                   {
+                       @class = "form-control requiredValidation clearField NoEndDate",
+                       autocomplete = "off",
+                       @id = "MRMGRDate",
+                       @placeholder = "dd/MM/yyyy",
+                       @style = "disabled :disabled",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                   })
+                        <span class="HideValidMsg">Enter GR Date</span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label">
+                            Payment Due Date <span class="required">*</span>
+                        </label>
+                        @Html.TextBoxFor(m => m.PaymentDueDate, new
+                   {
+                       @class = "form-control requiredValidation clearField applyDisabled NoEndDate",
+                       autocomplete = "off",
+                       @id = "MRMPaymentDueDate",
+                       @placeholder = "dd/MM/yyyy",
+                       @style = "disabled :disabled",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                   })
+                        <span class="HideValidMsg">Enter Payment Due Date</span>
+                    </div>
+                </div>
+                @*<div class="col-md-2">
+                <div class="form-group">
+                    <label class="control-label">
+                        SCC No <span class="required">*</span>
+                    </label>
+                    @Html.DropDownListFor(m => m.SCCNO, new SelectList(ViewBag.ListSCCNO, "DataStringValueField", "DataTextField", "Select"), new
+                       {
+                           @class = "form-control requiredValidation clearField applyDisabled",
+                           @id = "MRMSCCNO",
+                           @data_inneraction = "validationCall",
+                           @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                       })
+                    <span class="HideValidMsg"> Enter SCCNO</span>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label class="control-label">
+                        GST % <span class="required">*</span>
+                    </label>
+                    @Html.TextBoxFor(m => m.GSTPercent, new
+               {
+                   @class = "form-control requiredValidation clearField applyDisabled",
+                   @id = "GSTPercent",
+                   @placeholder = " Enter GSTPercent",
+                   @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                   @onkeypress = "return AllowNumbers(event);"
+               })
+                    <span class="HideValidMsg"> Enter GSTPercent</span>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label class="control-label">
+                        GST Amount <span class="required">*</span>
+                    </label>
+                    @Html.TextBoxFor(m => m.GSTAmount, new
+               {
+                   @class = "form-control requiredValidation clearField applyDisabled",
+                   @id = "GSTAmount",
+                   @placeholder = " Enter GSTAmount",
+                   @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                   @onkeypress = "return AllowNumbers(event);"
+               })
+                    <span class="HideValidMsg"> Enter GST Amount</span>
+                </div>
+            </div>*@
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label">
+                            Verified By <span class="required">*</span>
+                        </label>
+                        @Html.TextBoxFor(m => m.PassedBy, new
+                   {
+                       @class = "form-control requiredValidation clearField applyDisabled",
+                       @id = "MRMPassedBy",
+                       @placeholder = " Enter Passed By",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                   })
+                        <span class="HideValidMsg"> Enter Passed By</span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label">
+                            Cost Center
+                        </label>
+                        @Html.DropDownListFor(m => m.CostCentre, new SelectList(ViewBag.ListCostCentre, "DataStringValueField", "DataTextField", Model.CostCentre), new
+                            {
+                                @class = "form-control requiredValidation clearField applyDisabled",
+                                @id = "MRMCostCentre",
+                                @data_inneraction = "validationCall"
+                            })
+                        <span class="HideValidMsg"> Enter Cost Centre</span>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <table class="table table-bordered table-sm table-striped text-center">
+                        <thead>
+                            <tr>
+                                <td>SN</td>
+                                <td>Qty</td>
+                                <td>ItemDesc</td>
+                                <td>UoM</td>
+                                <td>SAC No</td>
+                                <td>GST%</td>
+                                <td>GST Amount</td>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="row mb-2 mt-5">
+                <div class="col-md-12" style="background-color: lightblue;">
+                    <h4 class="control-label mt-2" style="margin-left:10px; font-size: 22px">Bill Approval</h4>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label ">
+                            Approved Status <span class="required">*</span>
+                        </label>
+                        @Html.DropDownListFor(m => m.ApprovedStatus, new SelectList(ViewBag.ListApproveStatus, "DataStringValueField", "DataTextField", Model.ApprovedStatus), new
+                            {
+                                @class = "form-control requiredValidation",
+                                @id = "MRMApprovedStatus",
+                                @data_inneraction = "validationCall",
+                                @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                                @onchange = "showHideRejectReason()"
+                            })
+                        <span class="HideValidMsg"> Please Select Approved Status</span>
+                    </div>
+                </div>
+                <div id="divRejectReason" class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label ">
+                            Reject Reason <span class="required">*</span>
+                        </label>
+                        @Html.TextBoxFor(m => m.RejectReason, new
+                   {
+                       @class = "form-control",
+                       @id = "MRMRejectReason",
+                       @placeholder = "Enter RejectReason"
+                   })
+                    </div>
+                </div>
+                <div id="divPendingReason" class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label ">
+                            Pending Reason <span class="required">*</span>
+                        </label>
+                        @Html.TextBoxFor(m => m.PendingReason, new
+                   {
+                       @class = "form-control",
+                       @id = "MRMPendingReason",
+                       @placeholder = "Enter PendingReason"
+                   })
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label">
+                            Approved By <span class="required">*</span>
+                        </label>
+                        @Html.TextBoxFor(m => m.ApprovedBy, new
+                   {
+                       @class = "form-control requiredValidation",
+                       @id = "MRMApprovedBy",
+                       @placeholder = "Enter ApprovedBy",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                   })
+                        <span class="HideValidMsg">Enter Approved By</span>
+                    </div>
+                </div>
+                @*<div class="col-md-2">
+            <div class="form-group">
+                <label class="control-label">
+                    Control No <span class="required">*</span>
+                </label>
+                @Html.TextBoxFor(m => m.ControlNo, new
+           {
+               @class = "form-control requiredValidation",
+               @id = "ControlNo",
+               @placeholder = "Enter ControlNo",
+               @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+           })
+                <span class="HideValidMsg"> Enter Control No</span>
+            </div>
+        </div>*@
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label">
+                            Approval Date <span class="required">*</span>
+                        </label>
+                        @Html.TextBoxFor(m => m.ApprovalDate, new
+                   {
+                       @class = "form-control requiredValidation NoEndDate",
+                       autocomplete = "off",
+                       @id = "MRMApprovalDate",
+                       @placeholder = "dd/MM/yyyy",
+                       @style = "disabled :disabled",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                   })
+                    <span class="HideValidMsg"> Select Approval Date</span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label">
+                            Forwarded To <span class="required">*</span>
+                        </label>
+                        @Html.TextBoxFor(m => m.ForwardedTo, new
+                   {
+                       @class = "form-control requiredValidation",
+                       @id = "MRMForwardedTo",
+                       @Value = "Finance",
+                       @placeholder = "Enter ForwardedTo",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                       @readonly = "true"
+                   })
+                        <span class="HideValidMsg"> Enter Forwarded To</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 pt-4 text-center">
+                    <button style="font-size:18px" type="button" class="btn btn-success btn-sm" id="save_results" ng-click="SaveBillMonitoringDetails()">Save</button>
+                    <button style="font-size:18px" type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<script src="~/Areas/MRM/Scripts/MRMBillMonitoring.js"></script>
+<script>
+    $(document).ready(function () {
+         //window.SaveGateEntry = '@Url.Action("SaveGateEntry", "GateEntry", new { Area = "" })';
+        window.GetVendorIds = '@Url.Action("GetVendorIds", "GateEntry", new { Area = "" })';
+        window.GetVendorDetails = '@Url.Action("GetVendorDetails", "GateEntry", new { Area = "" })';
+        window.ChangeEndUseNo = '@Url.Action("ChangeEndUseNo", "GateEntry", new { Area = "" })';
+        window.MRMGateControlNoDetails = '@Url.Action("GetMRMDetailForGateControlNo", "MRM")';
+        window.SaveBillMonitoringDetails = '@Url.Action("SaveBillMonitoringDetails", "DesignEng")';
+
+        $('#divRejectReason').hide();
+        $('#divPendingReason').hide();
+    });
+
+    function showHideRejectReason() {
+        var selectedVal = $('#ApprovedStatus option:selected').text();
+
+        if (selectedVal == 'Rejected') {
+            $('#divRejectReason').show();
+            $('#divPendingReason').hide();
+        }
+        else if (selectedVal == 'Pending') {
+            $('#divPendingReason').show();
+            $('#divRejectReason').hide();
+        }
+        else {
+            $('#divRejectReason').hide();
+            $('#divPendingReason').hide();
+        }
+    }
+
+
+    $('.NoEndDate').datepicker({
+        format: 'dd/mm/yyyy',
+        autoclose: true,
+        changeMonth: true,
+        changeYear: true,
+        endDate: '',
+    });
+    $('.CurrentEndDate').datepicker({
+
+        format: 'dd/mm/yyyy',
+        autoclose: true,
+        changeMonth: true,
+        changeYear: true,
+        endDate: 'today',
+    });
+</script>

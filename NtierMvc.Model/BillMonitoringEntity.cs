@@ -14,6 +14,7 @@ namespace NtierMvc.Model
         public string VendorName { get; set; }
         public string City { get; set; }
         public string Type { get; set; }
+        public string GateControlNo { get; set; }
         public string EndUse { get; set; }
         public string EndUseNo { get; set; }
         public int FunctionalAreaId { get; set; }
@@ -48,8 +49,8 @@ namespace NtierMvc.Model
         public string TimeOut { get; set; }
         public string VehicleReleased { get; set; }
         public string PONumber { get; set; }
-        public string MRNNo { get; set; }
-        public string MRNDate { get; set; }
+        public string GRNNo { get; set; }
+        public string GRNDate { get; set; }
 
     }
 
