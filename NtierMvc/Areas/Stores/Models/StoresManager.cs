@@ -42,13 +42,13 @@ namespace NtierMvc.Areas.Stores.Models
         }
         #endregion
 
-        public GoodsRecieptEntityDetails GetDetailForGateControlNo(string GateControlNo)
+        public GoodsRecieptEntityDetails GetDetailForGateControlNo(string GateControlNo, string GRNo = null)
         {
             var baseAddress = "StoresDetails";
             GoodsRecieptEntityDetails tableList = new GoodsRecieptEntityDetails();
             using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
             {
-                HttpResponseMessage response = client.GetAsync(baseAddress + "/GetDetailForGateControlNo?GateControlNo=" + GateControlNo).Result;
+                HttpResponseMessage response = client.GetAsync(baseAddress + "/GetDetailForGateControlNo?GateControlNo=" + GateControlNo + "&GRno="+GRNo).Result;
                 if (response.IsSuccessStatusCode)
                 {
                     var data = response.Content.ReadAsStringAsync().Result;

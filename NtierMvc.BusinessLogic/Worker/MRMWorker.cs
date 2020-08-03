@@ -574,10 +574,10 @@ namespace NtierMvc.BusinessLogic.Worker
                         Model.FunctionalAreaId = dr1.IsNull("FunctionalAreaId") ? string.Empty : Convert.ToString(dr1["FunctionalAreaId"]);
                         Model.VendorPONO = dr1.IsNull("VendorPONO") ? string.Empty : Convert.ToString(dr1["VendorPONO"]);
                         Model.VendorPODate = dr1.IsNull("VendorPODate") ? string.Empty : Convert.ToString(dr1["VendorPODate"]);
-                        //Model.BillNo = dr1.IsNull("BillNo") ? string.Empty : Convert.ToString(dr1["BillNo"]);
-                        //Model.BillDate = dr1.IsNull("BillDate") ? string.Empty : Convert.ToString(dr1["BillDate"]);
-                        //Model.Currency = dr1.IsNull("Currency") ? string.Empty : Convert.ToString(dr1["Currency"]);
-                        //Model.BillAmount = dr1.IsNull("BillAmount") ? 0 : Convert.ToInt32(dr1["BillAmount"]);
+                        Model.SupplierInvNo = dr1.IsNull("SupplierInvNo") ? string.Empty : Convert.ToString(dr1["SupplierInvNo"]);
+                        Model.SupplierInvDate = dr1.IsNull("SupplierDate") ? string.Empty : Convert.ToString(dr1["SupplierDate"]);
+                        Model.Currency = dr1.IsNull("Currency") ? string.Empty : Convert.ToString(dr1["Currency"]);
+                        Model.SupplierInvAmount = dr1.IsNull("SupplierAmount") ? string.Empty : Convert.ToString(dr1["SupplierAmount"]);
                         Model.VehicleNo = dr1.IsNull("VehicleNo") ? string.Empty : Convert.ToString(dr1["VehicleNo"]);
                         Model.DriverName = dr1.IsNull("DriverName") ? string.Empty : Convert.ToString(dr1["DriverName"]);
                         Model.DriverContactNo = dr1.IsNull("DriverContactNo") ? string.Empty : Convert.ToString(dr1["DriverContactNo"]);
@@ -586,13 +586,8 @@ namespace NtierMvc.BusinessLogic.Worker
                         Model.VehicleReleased = dr1.IsNull("VehicleReleased") ? string.Empty : Convert.ToString(dr1["VehicleReleased"]);
                         Model.GRNo = dr1.IsNull("GRno") ? string.Empty : Convert.ToString(dr1["GRno"]);
                         Model.GRDate = dr1.IsNull("GRDate") ? string.Empty : Convert.ToString(dr1["GRDate"]);
-                        //Model.PaymentDueDate = dr1.IsNull("PaymentDueDate") ? string.Empty : Convert.ToString(dr1["PaymentDueDate"]);
-                        //Model.PassedBy = dr1.IsNull("PassedBy") ? string.Empty : Convert.ToString(dr1["PassedBy"]);
+                        Model.SupplyTerms = dr1.IsNull("SupplyTerms") ? string.Empty : Convert.ToString(dr1["SupplyTerms"]);
                         Model.CostCentre = dr1.IsNull("CostCentre") ? string.Empty : Convert.ToString(dr1["CostCentre"]);
-                        //Model.ApprovedStatus = dr1.IsNull("ApprovedStatus") ? string.Empty : Convert.ToString(dr1["ApprovedStatus"]);
-                        //Model.RejectReason = dr1.IsNull("RejectReason") ? 0 : Convert.ToInt32(dr1["RejectReason"]);
-                        //Model.PendingReason = dr1.IsNull("PendingReason") ? 0 : Convert.ToInt32(dr1["PendingReason"]);
-
 
                         Model.SN = dr1.IsNull("SN") ? "" : Convert.ToString(dr1["SN"]);
                         Model.RMdescription = dr1.IsNull("RMdescription") ? "" : Convert.ToString(dr1["RMdescription"]);

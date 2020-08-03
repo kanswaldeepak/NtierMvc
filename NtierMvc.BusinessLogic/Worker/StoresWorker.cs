@@ -109,14 +109,14 @@ namespace NtierMvc.BusinessLogic.Worker
             }
         }
 
-        public GoodsRecieptEntityDetails GetDetailForGateControlNo(string GateControlNo)
+        public GoodsRecieptEntityDetails GetDetailForGateControlNo(string GateControlNo, string GRNo = null)
         {
             GoodsRecieptEntityDetails objGE = new GoodsRecieptEntityDetails();
             objGE.lstGREntity = new List<GoodsRecieptEntity>();
 
             try
             {
-                DataSet ds = _repository.GetDetailForGateControlNo(GateControlNo);
+                DataSet ds = _repository.GetDetailForGateControlNo(GateControlNo, GRNo);
 
                 if (ds.Tables[0] != null && ds.Tables[0].Rows.Count > 0)
                 {
@@ -127,21 +127,14 @@ namespace NtierMvc.BusinessLogic.Worker
                         GoodsRecieptEntity Model = new GoodsRecieptEntity();
 
                         //Model.Id = dr1.IsNull("Id") ? 0 : Convert.ToInt32(dr1["Id"]);
-                        //Model.GRno = dr1.IsNull("GRno") ? 0 : Convert.ToInt32(dr1["GRno"]);
-                        //Model.GoodRecieptNo = dr1.IsNull("GoodRecieptNo") ? string.Empty : Convert.ToString(dr1["GoodRecieptNo"]);
-                        //Model.SupplierInvNo = dr1.IsNull("SupplierInvNo") ? string.Empty : Convert.ToString(dr1["SupplierInvNo"]);
-                        //Model.SupplierDate = dr1.IsNull("SupplierDate") ? string.Empty : Convert.ToString(dr1["SupplierDate"]);
-                        //Model.GRDate = dr1.IsNull("GRDate") ? string.Empty : Convert.ToString(dr1["GRDate"]);
                         Model.SupplierName = dr1.IsNull("SupplierName") ? string.Empty : Convert.ToString(dr1["SupplierName"]);
                         Model.SupplierLocation = dr1.IsNull("SupplierLocation") ? string.Empty : Convert.ToString(dr1["SupplierLocation"]);
                         Model.PRCat = dr1.IsNull("PRCat") ? string.Empty : Convert.ToString(dr1["PRCat"]);
                         Model.GateControlNo = dr1.IsNull("GateControlNo") ? string.Empty : Convert.ToString(dr1["GateControlNo"]);
                         Model.PoNo = dr1.IsNull("PoNo") ? string.Empty : Convert.ToString(dr1["PoNo"]);
                         Model.POSetno = dr1.IsNull("POSetno") ? 0 : Convert.ToInt32(dr1["POSetno"]);
-
                         Model.PoDate = dr1.IsNull("PoDate") ? string.Empty : Convert.ToString(dr1["PoDate"]);
                         Model.SupplyTerms = dr1.IsNull("SupplyTerms") ? string.Empty : Convert.ToString(dr1["SupplyTerms"]);
-
                         Model.SN = dr1.IsNull("SN") ? "" : Convert.ToString(dr1["SN"]);
                         Model.RMdescription = dr1.IsNull("RMdescription") ? "" : Convert.ToString(dr1["RMdescription"]);
                         Model.PRqty = dr1.IsNull("PRqty") ? "" : Convert.ToString(dr1["PRqty"]);
@@ -154,12 +147,24 @@ namespace NtierMvc.BusinessLogic.Worker
                         Model.LotQty = dr1.IsNull("LotQty") ? "" : Convert.ToString(dr1["LotQty"]);
                         Model.PreparedBy = dr1.IsNull("PreparedBy") ? "" : Convert.ToString(dr1["PreparedBy"]);
                         Model.PreparedBySign = dr1.IsNull("PreparedBySign") ? "" : Convert.ToString(dr1["PreparedBySign"]);
-                        Model.StoresIncharge = dr1.IsNull("StoresIncharge") ? "" : Convert.ToString(dr1["StoresIncharge"]);
-                        Model.StoresName = dr1.IsNull("StoresName") ? "" : Convert.ToString(dr1["StoresName"]);
-                        Model.BayNo = dr1.IsNull("BayNo") ? "" : Convert.ToString(dr1["BayNo"]);
-                        Model.Location = dr1.IsNull("Location") ? "" : Convert.ToString(dr1["Location"]);
-                        Model.Direction = dr1.IsNull("Direction") ? "" : Convert.ToString(dr1["Direction"]);
-                        Model.StoreArea = dr1.IsNull("StoreArea") ? "" : Convert.ToString(dr1["StoreArea"]);
+
+                        if (!string.IsNullOrEmpty(GRNo))
+                        {
+                            Model.GRno = dr1.IsNull("GRno") ? 0 : Convert.ToInt32(dr1["GRno"]);
+                            Model.GoodRecieptNo = dr1.IsNull("GoodRecieptNo") ? string.Empty : Convert.ToString(dr1["GoodRecieptNo"]);
+                            Model.SupplierInvNo = dr1.IsNull("SupplierInvNo") ? string.Empty : Convert.ToString(dr1["SupplierInvNo"]);
+                            Model.SupplierDate = dr1.IsNull("SupplierDate") ? string.Empty : Convert.ToString(dr1["SupplierDate"]);
+                            Model.SupplierAmount = dr1.IsNull("SupplierAmount") ? string.Empty : Convert.ToString(dr1["SupplierAmount"]);
+                            
+                            Model.StoresName = dr1.IsNull("StoresName") ? "" : Convert.ToString(dr1["StoresName"]);
+                            Model.BayNo = dr1.IsNull("BayNo") ? "" : Convert.ToString(dr1["BayNo"]);
+                            Model.Location = dr1.IsNull("Location") ? "" : Convert.ToString(dr1["Location"]);
+                            Model.Direction = dr1.IsNull("Direction") ? "" : Convert.ToString(dr1["Direction"]);
+                            Model.StoreArea = dr1.IsNull("StoreArea") ? "" : Convert.ToString(dr1["StoreArea"]);
+                            Model.StoresIncharge = dr1.IsNull("StoresIncharge") ? "" : Convert.ToString(dr1["StoresIncharge"]);
+                            Model.SupplierLotNo = dr1.IsNull("SupplierLotNo") ? "" : Convert.ToString(dr1["SupplierLotNo"]);
+                        }
+
 
 
                         objGE.lstGREntity.Add(Model);
@@ -174,7 +179,7 @@ namespace NtierMvc.BusinessLogic.Worker
             return objGE;
         }
 
-        public GoodsRecieptEntity GetGRDetailsPopup(string GRno=null)
+        public GoodsRecieptEntity GetGRDetailsPopup(string GRno = null)
         {
             GoodsRecieptEntity objGR = new GoodsRecieptEntity();
             try

@@ -30,9 +30,9 @@ namespace NtierMvc.API.Controllers.Application
 
         [HttpGet]
         [Route("api/StoresDetails/GetDetailForGateControlNo")]
-        public IHttpActionResult GetDetailForGateControlNo(string GateControlNo)
+        public IHttpActionResult GetDetailForGateControlNo(string GateControlNo, string GRNo = null)
         {
-            return Ok(_repository.GetDetailForGateControlNo(GateControlNo));
+            return Ok(_repository.GetDetailForGateControlNo(GateControlNo, GRNo));
         }
 
         [HttpGet]

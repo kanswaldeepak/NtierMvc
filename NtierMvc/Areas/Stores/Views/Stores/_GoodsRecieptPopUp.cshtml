@@ -488,7 +488,7 @@
                         </div>
                         <div class="col-md-2">
                             <div class="form-group">
-                                <label class="control-label">Inv Date<span class="required">*</span></label>
+                                <label class="control-label">Supplier Inv Date<span class="required">*</span></label>
                                 @Html.TextBoxFor(m => m.SupplierDate, new
                            {
                                @class = "form-control  requiredValidation CalenderTillTodayDate",
@@ -498,7 +498,19 @@
                            })
                                 <label class="HideValidMsg">Fields is Required *</label>
                             </div>
-                        </div>                        
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label class="control-label">Supplier Inv Amount<span class="required">*</span></label>
+                                @Html.TextBoxFor(m => m.SupplierAmount, new
+                           {
+                               @class = "form-control  requiredValidation",
+                               @id = "GRSupplierAmount",
+                               @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                           })
+                                <label class="HideValidMsg">Fields is Required *</label>
+                            </div>
+                        </div>
                         <div class="col-md-2">
                             <div class="form-group">
                                 <label class="control-label">Inspection Report No<span class="required">*</span></label>
@@ -586,7 +598,7 @@
 
             <div class="row">
                 <div class="col-md-12 pt-4 text-center">
-                    <button id="SaveStoreDetails" style="font-size:18px" type="button" class="btn btn-success btn-sm save_results" onclick="SaveGoodsReciept(event)" >Save</button>
+                    <button id="SaveStoreDetails" style="font-size:18px" type="button" class="btn btn-success btn-sm save_results" onclick="SaveGoodsReciept(event)">Save</button>
                     <button style="font-size:18px" type="button" class="btn btn-secondary btn-sm cancel_results" data-dismiss="modal">Close</button>
                 </div>
             </div>
@@ -600,7 +612,7 @@
 
     $(document).ready(function () {
 
-        window.GetGRValueFromSupplyType = '@Url.Action("GetGRValuesFromSupplyType", "Stores")';        
+        window.GetGRValueFromSupplyType = '@Url.Action("GetGRValuesFromSupplyType", "Stores")';
         window.SaveGoodsRecieptEntryDetails = '@Url.Action("SaveGoodsRecieptEntryDetails", "Stores")';
 
         $('#tableRM').hide();

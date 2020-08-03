@@ -1053,7 +1053,7 @@ namespace NtierMvc.Areas.MRM.Controllers
             ViewBag.ListEndUseNo = "";
             ViewBag.ListUom = model.GetMasterTableStringList("Master.Taxonomy", "DropDownId", "DropDownValue", "Uom", "Property", GeneralConstants.ListTypeN);
             ViewBag.ListCurrency = model.GetMasterTableStringList("Master.Taxonomy", "DropDownId", "DropDownValue", "Currency", "Property", GeneralConstants.ListTypeN);
-            ViewBag.ListSupplyType = model.GetMasterTableStringList("Master.Taxonomy", "DropDownId", "DropDownValue", "SupplyTerms", "Property", GeneralConstants.ListTypeN);
+            ViewBag.ListSupplyTerms = model.GetMasterTableStringList("Master.Taxonomy", "DropDownId", "DropDownValue", "SupplyTerms", "Property", GeneralConstants.ListTypeN);
             ViewBag.ListDepartment = model.GetMasterTableStringList("Master.Department", "Id", "DeptName", "", "", GeneralConstants.ListTypeN);
             ViewBag.ListSCCNO = model.GetMasterTableStringList("SCCNO", "Id", "Heading", "", "", GeneralConstants.ListTypeN);
             ViewBag.ListCostCentre = "";

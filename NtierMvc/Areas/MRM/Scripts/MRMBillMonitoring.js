@@ -1,4 +1,23 @@
 ﻿
+function GetMRMValuesFromSupplyType() {
+    let SupplyType = $('#MRMListType').val();
+
+    $.ajax({
+        type: 'POST',
+        url: window.GetGRValueFromSupplyType,
+        data: JSON.stringify({ SupplyType: SupplyType }),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (data) {
+            $('#MRMGateControlNo').empty();
+            $.each(data, function (i, item) {
+                $('#MRMGateControlNo').append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
+            })
+        }, error: function (x, e) {
+            alert('Some error is occurred, Please try after some time.');
+        }
+    })
+}
 
 function GetMRMGateControlNoDetails() {
     var GateControlNo = $('#MRMGateControlNo option:selected').val();
@@ -32,6 +51,11 @@ function GetMRMGateControlNoDetails() {
                 $('#MRMGRNo').val(data[0].GRNo);
                 $('#MRMGRDate').val(data[0].GRDate);
                 $('#MRMCostCentre').val(data[0].CostCentre);
+                $('#MRMSupplyTerms').val(data[0].SupplyTerms);
+                $('#MRMSupplierInvNo').val(data[0].SupplierInvNo);
+                $('#MRMSupplierInvDate').val(data[0].SupplierInvDate);
+                $('#MRMCurrency').val(data[0].Currency);
+                $('#MRMSupplierInvAmount').val(data[0].SupplierInvAmount);
                 
                 
                 //switch (data[0].PRCat) {

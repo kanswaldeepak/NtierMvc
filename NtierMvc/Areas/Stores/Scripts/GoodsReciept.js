@@ -54,6 +54,7 @@ function GetDetailForGateControlNo() {
                 $('#GRSupplierLocation').val(data[0].SupplierLocation);
                 $('#GRPoDate').val(data[0].PoDate);
                 $('#GRSupplyTerms').val(data[0].SupplyTerms);
+                $('#GRPOSetno').val(data[0].POSetno);
 
                 $('#imgPreparedBy').attr("src", "/Images/Sign/" + data[0].PreparedBySign);
                 $('#imgStoresIncharge').attr("src", "/Images/Sign/" + data[0].StoresInchargeSign);
@@ -174,6 +175,7 @@ function SaveGoodsReciept(e) {
                 TestCertificationNo: $("#GRTestCertificationNo").val(),
                 SupplierInvNo: $("#GRSupplierInvNo").val(),
                 SupplierDate: $("#GRSupplierDate").val(),
+                SupplierAmount: $("#GRSupplierAmount").val(),
                 SupplierName: $("#GRSupplierName").val(),
                 SupplierLocation: $("#GRSupplierLocation").val(),
                 SupplierLotNo: $("#GRSupplierLotNo").val(),

@@ -21,17 +21,17 @@ namespace NtierMvc.Model.MRM
         public string FunctionalAreaId { get; set; }
         public string VendorPONO { get; set; }
         public string VendorPODate { get; set; }
-        public string BillNo { get; set; }
-        public string BillDate { get; set; }
+        public string SupplierInvNo { get; set; }
+        public string SupplierInvDate { get; set; }
         public string Currency { get; set; }
-        public int BillAmount { get; set; }
+        public string SupplierInvAmount { get; set; }
         public string VehicleNo { get; set; }
         public string DriverName { get; set; }
         public string DriverContactNo { get; set; }
         public string TimeIn { get; set; }
         public string TimeOut { get; set; }
         public string VehicleReleased { get; set; }
-        public string SupplyType { get; set; }
+        public string SupplyTerms { get; set; }
 
 
         public string GRNo { get; set; }

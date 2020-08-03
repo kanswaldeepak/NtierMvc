@@ -175,13 +175,14 @@ angular.module('App').controller("StoresController", function ($scope, $http, $t
 
     $scope.GetGateControlNoDetails = function () {
         var GateControlNo = $('#GRGateControlNo option:selected').val();
+        var GRno = $('#GRno').val();
 
         $.ajax({
             url: window.GetDetailsForGateControlNo,
             type: 'POST',
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
-            data: JSON.stringify({ GateControlNo: GateControlNo }),
+            data: JSON.stringify({ GateControlNo: GateControlNo, GRNo: GRno }),
             success: function (data) {
 
                 if (data.length > 0) {
@@ -196,6 +197,8 @@ angular.module('App').controller("StoresController", function ($scope, $http, $t
                     $('#GRSupplierLocation').val(data[0].SupplierLocation);
                     $('#GRPoDate').val(data[0].PoDate);
                     $('#GRSupplyTerms').val(data[0].SupplyTerms);
+                    $('#GRSupplierAmount').val(data[0].SupplierAmount);
+                    $('#GRSupplierLotNo').val(data[0].SupplierLotNo);
 
                     $('#imgPreparedBy').attr("src", "/Images/Sign/" + data[0].PreparedBySign);
                     $('#imgStoresIncharge').attr("src", "/Images/Sign/" + data[0].StoresInchargeSign);

@@ -11,11 +11,12 @@ namespace NtierMvc.DataAccess.Pool
     {
         #region Class Methods
 
-        public DataSet GetDetailForGateControlNo(string GateControlNo)
+        public DataSet GetDetailForGateControlNo(string GateControlNo, string GRNo = null)
         {
             var SPName = ConfigurationManager.AppSettings["GetDetailForGateControlNo"];
             var Params = new Dictionary<string, object>();
             Params.Add("@GateControlNo", GateControlNo);
+            Params.Add("@GRno", GRNo);
             return _dbAccess.GetDataSet(SPName, Params);
         }
 

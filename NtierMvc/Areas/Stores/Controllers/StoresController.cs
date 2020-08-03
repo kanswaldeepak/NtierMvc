@@ -144,13 +144,16 @@ namespace NtierMvc.Areas.Stores.Controllers
             }
         }
 
-        public JsonResult GetDetailForGateControlNo(string GateControlNo)
+        public JsonResult GetDetailForGateControlNo(string GateControlNo, string GRNo=null)
         {
             GoodsRecieptEntityDetails poObj = new GoodsRecieptEntityDetails();
-            poObj = objManager.GetDetailForGateControlNo(GateControlNo);
+            poObj = objManager.GetDetailForGateControlNo(GateControlNo, GRNo);
 
-            var UserDetails = (UserEntity)Session["UserModel"];
-            poObj.lstGREntity[0].StoresInchargeSign = UserDetails.SignImage;
+            if (poObj.lstGREntity.Count > 0)
+            {
+                var UserDetails = (UserEntity)Session["UserModel"];
+                poObj.lstGREntity[0].StoresInchargeSign = UserDetails.SignImage;
+            }
 
             return new JsonResult { Data = poObj.lstGREntity, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }

@@ -21,6 +21,7 @@ namespace NtierMvc.Model.Stores
         public int POSetno { get; set; }
         public string SupplierLocation { get; set; } 
         public string SupplierDate { get; set; }
+        public string SupplierAmount { get; set; }
         public string PoDate { get; set; }
         public string BatchNo { get; set; }
         public string HeatNo { get; set; }
@@ -73,6 +74,7 @@ namespace NtierMvc.Model.Stores
         public string TestCertificationNo { get; set; }
         public string SupplierInvNo { get; set; }
         public string SupplierDate { get; set; }
+        public string SupplierAmount { get; set; }
         public string SupplierName { get; set; }
         public string SupplierLocation { get; set; }        
         public string SN { get; set; }        
