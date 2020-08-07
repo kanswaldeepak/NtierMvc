@@ -12,5 +12,6 @@ namespace NtierMvc.Model
         public string TableName { get; set; }
         public string EntryType { get; set; }
         public int IdentityNo { get; set; }
+        public string IdentityNoColumnName { get; set; }
     }
 }

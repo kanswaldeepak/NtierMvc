@@ -337,7 +337,7 @@ namespace NtierMvc.Areas.DesignEng.Controllers
             ViewBag.ListSupplyType = model.GetMasterTableStringList("Master.Taxonomy", "DropDownId", "DropDownValue", "SupplyTerms", "Property", GeneralConstants.ListTypeN);
             ViewBag.ListDepartment = model.GetMasterTableStringList("Master.Department", "Id", "DeptName", "", "", GeneralConstants.ListTypeN);
             ViewBag.ListSCCNO = model.GetMasterTableStringList("SCCNO", "Id", "Heading", "", "", GeneralConstants.ListTypeN);
-            ViewBag.ListCostCentre = "";
+            ViewBag.ListCostCenter = "";
             ViewBag.ListApproveStatus = model.GetMasterTableStringList("ApproveStatus", "Id", "Status", "", "", GeneralConstants.ListTypeN);
 
             BillMonitoringEntity vmbE = new BillMonitoringEntity();

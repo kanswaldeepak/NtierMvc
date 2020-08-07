@@ -13,7 +13,7 @@ namespace NtierMvc.API.Controllers.Application
     {
         IMRMWorker _repository = new MRMWorker();
 
-        
+
         [HttpPost]
         [ResponseType(typeof(PRDetailEntity))]
         [Route("api/MRMDetail/GetPRDetailsPopup")]
@@ -154,10 +154,37 @@ namespace NtierMvc.API.Controllers.Application
 
         [HttpGet]
         [Route("api/MRMDetail/GetMRMDetailForGateControlNo")]
-        public IHttpActionResult GetMRMDetailForGateControlNo(string GateControlNo)
+        public IHttpActionResult GetMRMDetailForGateControlNo(string GateControlNo, string BMno=null)
         {
-            return Ok(_repository.GetMRMDetailForGateControlNo(GateControlNo));
+            return Ok(_repository.GetMRMDetailForGateControlNo(GateControlNo, BMno));
         }
+
+        [HttpGet]
+        [Route("api/MRMDetail/GetBillMonitoringNo")]
+        public IHttpActionResult GetBillMonitoringNo()
+        {
+            return Ok(_repository.GetBillMonitoringNo());
+        }
+
+        [HttpGet]
+        [ResponseType(typeof(MRMBillMonitoringEntity))]
+        [Route("api/MRMDetail/GetBillDetailsPopup")]
+        public IHttpActionResult GetBillDetailsPopup(string BMno)
+        {
+            return Ok(_repository.GetBillDetailsPopup(BMno));
+        }
+
+        [HttpGet]
+        [Route("api/MRMDetail/FetchMRMBillMonitoringList")]
+        //[ResponseType(typeof(MRMBillMonitoringEntityDetails))]
+        public IHttpActionResult FetchMRMBillMonitoringList(int pageIndex, int pageSize, string DeptName=null, string SearchVendorTypeId = null, string SearchSupplierId = null, string SearchRMCategory = null, string SearchDeliveryDateFrom = null, string SearchDeliveryDateTo = null)
+        {
+            return Ok(_repository.FetchBillMonitoringList(pageIndex, pageSize, DeptName, SearchVendorTypeId, SearchSupplierId, SearchRMCategory, SearchDeliveryDateFrom, SearchDeliveryDateTo));
+        }
+
+
+
+
 
     }
 }

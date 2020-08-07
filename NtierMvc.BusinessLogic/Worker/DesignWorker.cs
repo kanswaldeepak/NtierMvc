@@ -320,7 +320,7 @@ namespace NtierMvc.BusinessLogic.Worker
                     obj.GSTPercent = dr1.IsNull("GSTPERCENT") ? string.Empty : Convert.ToString(dr1["GSTPERCENT"]);
                     obj.GSTAmount = dr1.IsNull("GSTAMOUNT") ? string.Empty : Convert.ToString(dr1["GSTAMOUNT"]);
                     obj.PassedBy = dr1.IsNull("PASSEDBY") ? string.Empty : Convert.ToString(dr1["PASSEDBY"]);
-                    obj.CostCentre = dr1.IsNull("CostCentre") ? string.Empty : Convert.ToString(dr1["CostCentre"]);
+                    obj.CostCenter = dr1.IsNull("CostCenter") ? string.Empty : Convert.ToString(dr1["CostCenter"]);
                     obj.ControlNo = dr1.IsNull("ControlNo") ? string.Empty : Convert.ToString(dr1["ControlNo"]);
                     obj.ApprovalDate = dr1.IsNull("ApprovalDate") ? string.Empty : Convert.ToString(dr1["ApprovalDate"]);
                     obj.VehicleNo = dr1.IsNull("VehicleNo") ? string.Empty : Convert.ToString(dr1["VehicleNo"]);

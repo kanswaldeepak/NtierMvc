@@ -24,7 +24,7 @@ namespace NtierMvc.Model.MRM
         public string CriticalNature { get; set; }
         public int EndUse { get; set; }
         public int EndUseNo { get; set; }
-        public int CostCentre { get; set; }
+        public int CostCenter { get; set; }
         public int SN { get; set; }
         public string RMcode { get; set; }
         public int RMcat { get; set; }
@@ -99,7 +99,7 @@ namespace NtierMvc.Model.MRM
         //public string CriticalNature { get; set; }
         public int EndUse { get; set; }
         public int EndUseNo { get; set; }
-        public int CostCentre { get; set; }
+        public int CostCenter { get; set; }
         public int SN { get; set; }
         public string RMcode { get; set; }
         public int RMcat { get; set; }

@@ -491,13 +491,13 @@
                         <label class="control-label">
                             Cost Center
                         </label>
-                        @Html.DropDownListFor(m => m.CostCentre, new SelectList(ViewBag.ListCostCentre, "DataStringValueField", "DataTextField", Model.CostCentre), new
+                        @Html.DropDownListFor(m => m.CostCenter, new SelectList(ViewBag.ListCostCenter, "DataStringValueField", "DataTextField", Model.CostCenter), new
                             {
                                 @class = "form-control requiredValidation clearField applyDisabled",
-                                @id = "BMCostCentre",
+                                @id = "BMCostCenter",
                                 @data_inneraction = "validationCall"
                             })
-                        <span class="HideValidMsg"> Enter CostCentre</span>
+                        <span class="HideValidMsg"> Enter CostCenter</span>
                     </div>
                 </div>
                 <div class="col-md-12">

@@ -99,15 +99,21 @@
                         </div>
                     </th>
                     <th>
-                        Type
+                        Supply Type
                         <div class="c2">
-                            Type
+                            Supply Type
                         </div>
                     </th>
                     <th>
-                        Vendor Nature
+                        GateControlNo
                         <div class="c2">
-                            VendorNature
+                            GateControlNo
+                        </div>
+                    </th>
+                    <th>
+                        Vendor Id
+                        <div class="c2">
+                            Vendor Id
                         </div>
                     </th>
                     <th>
@@ -117,107 +123,66 @@
                         </div>
                     </th>
                     <th>
-                        Control No
+                        Supplier Inv No
                         <div class="c2">
-                            Control No
+                            Supplier Inv No
                         </div>
                     </th>
                     <th>
-                        Approval Date
+                        Supplier Inv Date
                         <div class="c2">
-                            Approval Date
+                            Supplier Inv Date
                         </div>
                     </th>
                     <th>
-                        Bill No
-                        <div class="c2">
-                            Bill No
-                        </div>
-                    </th>
-                    <th>
-                        Bill Date
+                        GR No
                         <div class="c3">
-                            Bill Date
+                            GR No
                         </div>
                     </th>
                     <th>
-                        Currency
+                        GR Date
                         <div class="c3">
-                            Currency
+                            GR Date
                         </div>
-                    </th>
-                    <th>
-                        Bill Amount
-                        <div class="c3">
-                            Bill Amount
-                        </div>
-                    </th>
-                    <th>
-                        Due Date
-                        <div class="c3">
-                            Due Date
-                        </div>
-                    </th>
-                    <th>
-                        Item Description
-                        <div class="c3">
-                            Item Description
-                        </div>
-                    </th>
-                    <th>
-                        Approval Status
-                        <div class="c3">
-                            Approval Status
-                        </div>
-                    </th>
+                    </th>                    
                 </tr>
             </thead>
             <tbody>
                 <tr ng-repeat="L in BOMList">
                     <td>
-                        <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="VIEW" ng-click="LoadBillMonitoringViewPopup(L.Id)">
+                        <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="VIEW" ng-click="LoadBillMonitoringViewPopup(L.BMno)">
                             <i class="fa fa-eye"></i>
                         </button>
-                        <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="EDIT" ng-click="LoadBillMonitoringEditPopup(L.Id)">
+                        <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="EDIT" ng-click="LoadBillMonitoringEditPopup(L.BMno)">
                             <i class="fa fa-edit"></i>
                         </button>
                     </td>
                     <td>
-                        {{L.Type}}
+                        {{L.SupplyType}}
                     </td>
                     <td>
-                        {{L.VendorNature}}
+                        {{L.GateControlNo}}
+                    </td>
+                    <td>
+                        {{L.VendorId}}
                     </td>
                     <td>
                         {{L.VendorName}}
                     </td>
                     <td>
-                        {{L.ControlNo}}
+                        {{L.SupplierInvNo}}
                     </td>
                     <td>
-                        {{L.ApprovalDate}}
+                        {{L.SupplierInvDate}}
                     </td>
                     <td>
-                        {{L.BillNo}}
+                        {{L.GRNo}}
                     </td>
                     <td>
-                        {{L.BillDate}}
+                        {{L.GRDate}}
                     </td>
-                    <td>
-                        {{L.Currency}}
-                    </td>
-                    <td>
-                        {{L.BillAmount}}
-                    </td>
-                    <td>
-                        {{L.PaymentDueDate}}
-                    </td>
-                    <td>
-                        {{L.ItemDescription}}
-                    </td>
-                    <td>
-                        {{L.ApprovedStatus}}
-                    </td>
+                    
                 </tr>
             </tbody>
             <tfoot>
@@ -264,7 +229,8 @@
     $(document).ready(function () {
         window.MRMBillMonitoringPopUp = '@Url.Action("MRMBillMonitoringPopUp", "MRM")';
         window.GetDdlDetailsForList = '@Url.Action("GetDdlDetailsForList", "GateEntry", new { @Area = ""})';
-        window.FetchBillMonitoringList = '@Url.Action("FetchBillMonitoringList", "DesignEng", new {@Area = "DesignEng" })';
+        window.FetchBillMonitoringList = '@Url.Action("FetchBillMonitoringList", "MRM")';
+        window.MRMGateControlNoDetails = '@Url.Action("GetMRMDetailForGateControlNo", "MRM")';
     });
 
 </script>

@@ -10,7 +10,9 @@ namespace NtierMvc.Model.MRM
     public class MRMBillMonitoringEntity
     {
         public int Id { get; set; }
-        public string Type { get; set; }
+        public int BMno { get; set; }
+        public int GateNo { get; set; }
+        public string SupplyType { get; set; }
         public string GateControlNo { get; set; }
         public string VendorNatureId { get; set; }
         public string VendorId { get; set; }
@@ -37,8 +39,9 @@ namespace NtierMvc.Model.MRM
         public string GRNo { get; set; }
         public string GRDate { get; set; }
         public string PaymentDueDate { get; set; }
-        public string PassedBy { get; set; }
-        public string CostCentre { get; set; }
+        public string VerifiedBy { get; set; }
+        public string CostCenter { get; set; }
+        public string PRCat { get; set; }
         public string ApprovedStatus { get; set; }
         public int RejectReason { get; set; }
         public int PendingReason { get; set; }
@@ -57,9 +60,38 @@ namespace NtierMvc.Model.MRM
         public string LotDate { get; set; }
         public string LotQty { get; set; }
         public string PreparedBySign { get; set; }
+        public string SACNo { get; set; }
+        public string GSTPercent { get; set; }
+        public string GSTAmount { get; set; }
 
     }
 
+    public class MRMBillMonitoringBulkEntity
+    {
+        public int Id { get; set; }
+        public int BMno { get; set; }
+        public int GateNo { get; set; }
+        public string SupplyType { get; set; }
+        public string GateControlNo { get; set; }
+        public string SupplierInvNo { get; set; }
+        public string SupplierInvDate { get; set; }
+        public string PaymentDueDate { get; set; }
+        public string VerifiedBy { get; set; }
+        public string CostCenter { get; set; }
+        public string SN { get; set; }
+        public string RMDescription { get; set; }
+        public string Qty { get; set; }
+        public string UOM { get; set; }
+        public string UnitPrice { get; set; }
+        public string TotalPrice { get; set; }
+        public string SACNo { get; set; }
+        public string GSTPercent { get; set; }
+        public string GSTAmount { get; set; }
+        public string ApprovedStatus { get; set; }
+        public string ApprovedBy { get; set; }
+        public string ApprovedDate { get; set; }
+        public string ForwardedTo { get; set; }
+    }
 
     public class MRMBillMonitoringEntityDetails
     {

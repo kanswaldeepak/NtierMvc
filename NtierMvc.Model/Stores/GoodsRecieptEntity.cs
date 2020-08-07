@@ -61,6 +61,7 @@ namespace NtierMvc.Model.Stores
     {
         public int Id { get; set; }
         public string SupplyType { get; set; }
+        public string GateNo { get; set; }
         public int GRno { get; set; }
         public string GoodRecieptNo { get; set; }
         public string GRDate { get; set; }
@@ -74,7 +75,7 @@ namespace NtierMvc.Model.Stores
         public string TestCertificationNo { get; set; }
         public string SupplierInvNo { get; set; }
         public string SupplierDate { get; set; }
-        public string SupplierAmount { get; set; }
+        public decimal SupplierAmount { get; set; }
         public string SupplierName { get; set; }
         public string SupplierLocation { get; set; }        
         public string SN { get; set; }        

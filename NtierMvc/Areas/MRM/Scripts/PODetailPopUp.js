@@ -360,7 +360,7 @@ function SaveDetailsForPO(e) {
                     SupplyType: $('#PODetailsSupplyType').val(),
                     POValidity: $('#PODetailsPOValidity').val(),
                     PORevNo: $('#PODetailsPORevNo').val(),
-                    CostCentre: $('#PODetailsCostCentre').val(),
+                    CostCenter: $('#PODetailsCostCenter').val(),
                     TotalPRSetPrice: TotalPRSetPrice
 
                 });

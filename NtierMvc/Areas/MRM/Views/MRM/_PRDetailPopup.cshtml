@@ -235,11 +235,11 @@
                                 })
                         </div>
                         <div class="form-group ml-3">
-                            <label for="CostCentrePRDetails">Cost Centre</label>
-                            @Html.DropDownListFor(m => m.CostCentre, new SelectList(@ViewBag.ListCostCache, "DataStringValueField", "DataTextField", "Select"), new
+                            <label for="CostCenterPRDetails">Cost Centre</label>
+                            @Html.DropDownListFor(m => m.CostCenter, new SelectList(@ViewBag.ListCostCenter, "DataStringValueField", "DataTextField", "Select"), new
                                 {
                                     @class = "form-control ml-2 requiredValidation clearField",
-                                    @id = "CostCentrePRDetails",
+                                    @id = "CostCenterPRDetails",
                                     @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
                                 })
                         </div>

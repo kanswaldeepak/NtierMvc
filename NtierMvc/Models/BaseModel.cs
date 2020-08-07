@@ -1421,5 +1421,28 @@ namespace NtierMvc.Models
 
         }
 
+        public string SaveBulkEntryDetails(BulkUploadEntity objBU)
+        {
+            string result = "0";
+            var baseAddress = "Base";
+            using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
+            {
+                HttpResponseMessage response = client.PostAsJsonAsync(baseAddress + "/SaveBulkEntryDetails", objBU).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    var data = response.Content.ReadAsStringAsync().Result;
+                    result = JsonConvert.DeserializeObject<string>(data);
+                }
+            }
+            return result;
+        }
+
+
+
+
+
+
+
+
     }
 }

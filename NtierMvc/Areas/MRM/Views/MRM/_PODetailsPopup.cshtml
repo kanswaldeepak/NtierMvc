@@ -501,10 +501,10 @@
                         Cost Centre
                     </td>
                     <td>
-                        @Html.DropDownListFor(m => m.CostCentre, new SelectList(@ViewBag.ListCostCache, "DataStringValueField", "DataTextField", "Select"), new
+                        @Html.DropDownListFor(m => m.CostCenter, new SelectList(@ViewBag.ListCostCenter, "DataStringValueField", "DataTextField", "Select"), new
                                 {
                                     @class = "form-control ml-2 requiredValidation clearField",
-                                    @id = "PODetailsCostCentre",
+                                    @id = "PODetailsCostCenter",
                                     @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
                                 })
                         <label class="HideValidMsg">Fields is Required *</label>

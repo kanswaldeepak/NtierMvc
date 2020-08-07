@@ -53,7 +53,7 @@ namespace NtierMvc.DataAccess.Pool
             //Params.Add("@ApprovalDate", Model.ApprovalDate);
             //Params.Add("@ControlNo", Model.ControlNo);
             //Params.Add("@ForwardedTo", Model.ForwardedTo);
-            //Params.Add("@CostCentre", Model.CostCentre);
+            //Params.Add("@CostCenter", Model.CostCenter);
             //Params.Add("@VehicleNo", Model.VehicleNo);
             //Params.Add("@DriverName", Model.DriverName);
             //Params.Add("@DriverContactNo", Model.DriverContactNo);

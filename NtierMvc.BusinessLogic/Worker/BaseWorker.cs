@@ -1555,6 +1555,19 @@ namespace NtierMvc.BusinessLogic.Worker
             return dt;
         }
 
+        public string SaveBulkEntryDetails(BulkUploadEntity entity)
+        {
+            string result = string.Empty;
+            try
+            {
+                result = objData.SaveBulkEntryDetails(entity);
+            }
+            catch (Exception Ex)
+            {
+                NtierMvc.DataAccess.ExceptionLogging.SendExcepToDB(Ex);
+            }
+            return result;
+        }
 
     }
 }

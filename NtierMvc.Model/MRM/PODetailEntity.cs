@@ -47,7 +47,7 @@ namespace NtierMvc.Model.MRM
         public string CompShortName { get; set; }
         public string SupplyTerms { get; set; }        
         public string GeneralCondition { get; set; }
-        public string CostCentre { get; set; }
+        public string CostCenter { get; set; }
         public string POQMSRequirement { get; set; }
         public string POQuality { get; set; }
         public string POPackForward { get; set; }
@@ -97,7 +97,7 @@ namespace NtierMvc.Model.MRM
         public string LotName { get; set; }
         public string LotDate { get; set; }
         public string LotQty { get; set; }
-        public string CostCentre { get; set; }
+        public string CostCenter { get; set; }
     }
 
     public class PODetailEntityDetails

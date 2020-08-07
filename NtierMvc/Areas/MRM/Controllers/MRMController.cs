@@ -137,7 +137,7 @@ namespace NtierMvc.Areas.MRM.Controllers
             ViewBag.ListRMcat = model.GetMasterTableStringList("Master.RMCategory", "CategoryName", "CategoryName", "", "", GeneralConstants.ListTypeN);
             ViewBag.ListUOM = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "UOM", "Property", GeneralConstants.ListTypeN);
             ViewBag.ListEndUse = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "EndUse", "Property", GeneralConstants.ListTypeN);
-            ViewBag.ListCostCache = model.GetMasterTableStringList("Master.Department", "Id", "DeptName", "", "", GeneralConstants.ListTypeN);
+            ViewBag.ListCostCenter = model.GetMasterTableStringList("Master.Department", "Id", "DeptName", "", "", GeneralConstants.ListTypeN);
             ViewBag.ListQuoteType = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "QuoteType", "Property", GeneralConstants.ListTypeN);
             ViewBag.ListSupplyTerms = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "SupplyTerms", "Property", GeneralConstants.ListTypeN);
             ViewBag.ListAcceptReject = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "AcceptReject", "Property", GeneralConstants.ListTypeN);
@@ -269,7 +269,7 @@ namespace NtierMvc.Areas.MRM.Controllers
                         newObj.EndUse = item.EndUse;
                         newObj.QuoteType = item.QuoteType;
                         newObj.EndUseNo = item.EndUseNo;
-                        newObj.CostCentre = item.CostCentre;
+                        newObj.CostCenter = item.CostCenter;
                         newObj.RMcat = item.RMcat;
                         newObj.RMdescription = item.RMdescription;
                         newObj.RMgrade = item.RMgrade;
@@ -580,7 +580,7 @@ namespace NtierMvc.Areas.MRM.Controllers
             ViewBag.ListPRno = objManager.GetPRNoList(UserDetails.DeptName);
             ViewBag.ListModeOfTransport = model.GetMasterTableStringList("Master.Taxonomy", "DropDownId", "DropDownValue", "Transport", "Property", GeneralConstants.ListTypeD);
             ViewBag.ListPRCat = model.GetMasterTableStringList("Master.Taxonomy", "DropDownValue", "ObjectName", "PRCat", "Property", GeneralConstants.ListTypeN);
-            ViewBag.ListCostCache = model.GetMasterTableStringList("Master.Department", "Id", "DeptName", "", "", GeneralConstants.ListTypeN);
+            ViewBag.ListCostCenter = model.GetMasterTableStringList("Master.Department", "Id", "DeptName", "", "", GeneralConstants.ListTypeN);
             ViewBag.ListSupplyTerms = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "SupplyTerms", "Property", GeneralConstants.ListTypeN);
             ViewBag.ListSupplyType = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "SupplyType", "Property", GeneralConstants.ListTypeN);
 
@@ -704,7 +704,7 @@ namespace NtierMvc.Areas.MRM.Controllers
                         newObj.LotName = item.LotName;
                         newObj.LotDate = item.LotDate;
                         newObj.LotQty = item.LotQty;
-                        newObj.CostCentre = item.CostCentre;
+                        newObj.CostCenter = item.CostCenter;
 
                         newObj.PORevNo = item.PORevNo == "" ? "" : item.PONo + item.PORevNo;
 
@@ -1044,7 +1044,7 @@ namespace NtierMvc.Areas.MRM.Controllers
         }
 
         [HttpPost]
-        public ActionResult MRMBillMonitoringPopUp(string actionType, string BillId=null)
+        public ActionResult MRMBillMonitoringPopUp(string actionType, string BMno=null)
         {
             ViewBag.ListType = model.GetMasterTableStringList("Master.Taxonomy", "DropDownId", "DropDownValue", "SupplyType", "Property", GeneralConstants.ListTypeD);
             ViewBag.ListVendorNature = model.GetMasterTableStringList("Master.Vendor", "Id", "VendorNature", "", "", GeneralConstants.ListTypeN);
@@ -1056,7 +1056,7 @@ namespace NtierMvc.Areas.MRM.Controllers
             ViewBag.ListSupplyTerms = model.GetMasterTableStringList("Master.Taxonomy", "DropDownId", "DropDownValue", "SupplyTerms", "Property", GeneralConstants.ListTypeN);
             ViewBag.ListDepartment = model.GetMasterTableStringList("Master.Department", "Id", "DeptName", "", "", GeneralConstants.ListTypeN);
             ViewBag.ListSCCNO = model.GetMasterTableStringList("SCCNO", "Id", "Heading", "", "", GeneralConstants.ListTypeN);
-            ViewBag.ListCostCentre = "";
+            ViewBag.ListCostCenter = model.GetMasterTableStringList("Master.Department", "Id", "DeptName", "", "", GeneralConstants.ListTypeN);
             ViewBag.ListApproveStatus = model.GetMasterTableStringList("ApproveStatus", "Id", "Status", "", "", GeneralConstants.ListTypeN);
             ViewBag.ListGateControlNo = model.GetMasterTableStringList("GateEntry", "GateNo", "GateControlNo", "", "", GeneralConstants.ListTypeD);
 
@@ -1064,53 +1064,98 @@ namespace NtierMvc.Areas.MRM.Controllers
 
             if (actionType == "VIEW" || actionType == "EDIT")
             {
-                if (!string.IsNullOrEmpty(BillId))
-                    vmbE.Id = Convert.ToInt32(BillId);
+                if (!string.IsNullOrEmpty(BMno))
+                    vmbE.BMno = Convert.ToInt32(BMno);
 
-                //vmbE = objManager.BillDetailsPopup(vmbE);
+                vmbE = objManager.GetBillDetailsPopup(BMno);
 
             }
             if (actionType == "ADD")
             {
-                //List<DropDownEntity> SelectList = new List<DropDownEntity>();
-                //DropDownEntity objSelect = new DropDownEntity();
-                //objSelect.DataStringValueField = "";
-                //objSelect.DataTextField = "Select";
-                //SelectList.Add(objSelect);
-
-                //ViewBag.ListQuoteNo = ViewBag.ListQuoteSlNo = SelectList;
+                vmbE.BMno = objManager.GetBillMonitoringNo();
 
             }
 
             return base.PartialView("~/Areas/MRM/Views/MRM/_MRMBillMonitoringPopUp.cshtml", vmbE);
         }
 
-        [HttpPost]
-        public ActionResult SaveBillMonitoringDetails(BillMonitoringEntity vmbE)
-        {
-            string result = string.Empty;
-            //result = objManager.SaveBillMonitoringDetails(vmbE);
-
-            string data = string.Empty;
-            if (!string.IsNullOrEmpty(result) && (result == GeneralConstants.Inserted || result == GeneralConstants.Updated))
-            {
-                data = GeneralConstants.SavedSuccess;
-            }
-            else
-            {
-                data = GeneralConstants.NotSavedError + ". Reason: " + result;
-            }
-
-            return new JsonResult { Data = data, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
-        }
-
-        public JsonResult GetMRMDetailForGateControlNo(string GateControlNo)
+        public JsonResult GetMRMDetailForGateControlNo(string GateControlNo, string BMno=null)
         {
             MRMBillMonitoringEntityDetails bmObj = new MRMBillMonitoringEntityDetails();
-            bmObj = objManager.GetMRMDetailForGateControlNo(GateControlNo);
+            bmObj = objManager.GetMRMDetailForGateControlNo(GateControlNo, BMno);
 
             return new JsonResult { Data = bmObj.lstMRMEntity, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
+
+        [HttpPost]
+        public ActionResult SaveButtonMRMBillMonitoring(MRMBillMonitoringBulkEntity[] MRMBillDetails)
+        {
+            string data = string.Empty;
+            var UserDetails = (UserEntity)Session["UserModel"];
+            try
+            {
+                if (MRMBillDetails != null)
+                {
+                    BulkUploadEntity objBU = new BulkUploadEntity();
+                    objBU.DataRecordTable = new DataTable();
+                    List<MRMBillMonitoringBulkEntity> itemListBulk = new List<MRMBillMonitoringBulkEntity>();
+                    itemListBulk = MRMBillDetails.OfType<MRMBillMonitoringBulkEntity>().ToList();
+
+                    foreach (var Item in itemListBulk)
+                    {
+                        Item.ApprovedBy = UserDetails.UserId.ToString();
+                        //Item.ApprovedDate = Convert.ToString(DateTime.Now.ToString("dd-MM-yyyy"));
+                        //Item.GSTAmount = Convert.ToString(Math.Round(((Decimal.Parse(Item.TotalPrice) - Decimal.Parse(Item.GSTPercent)) * 1000) / 10) / 100);
+                    }
+                    string result = string.Empty;
+                    ExtensionMethods lsttodt = new ExtensionMethods();
+                    objBU.DataRecordTable = lsttodt.ToDataTable(itemListBulk);
+                    objBU.IdentityNo = MRMBillDetails[0].BMno;
+                    objBU.DestinationTable = "BillMonitoring";
+                    objBU.IdentityNoColumnName = "BMno";
+                    result = model.SaveBulkEntryDetails(objBU);
+
+                    if (!string.IsNullOrEmpty(result) && (result == GeneralConstants.Inserted || result == GeneralConstants.Updated))
+                    {
+                        data = GeneralConstants.SavedSuccess;
+                    }
+                    else
+                    {
+                        data = GeneralConstants.NotSavedError + " Reason: " + result;
+                    }
+
+                    return new JsonResult { Data = data, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+
+                }
+                return Json("Unable to save Item Details! Please Provide correct information", JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception)
+            {
+                return Json("Unable to save your Item Details! Please try again later.", JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        public JsonResult FetchBillMonitoringList(string pageIndex, string pageSize, string DeptName, string SearchVendorTypeId = null, string SearchSupplierId = null, string SearchRMCategory = null, string SearchDeliveryDateFrom = null, string SearchDeliveryDateTo = null)
+        {
+            DeptName = DeptName == null ? string.Empty : DeptName;
+            SearchVendorTypeId = SearchVendorTypeId == null ? string.Empty : SearchVendorTypeId;
+            SearchSupplierId = SearchSupplierId == null ? string.Empty : SearchSupplierId;
+            SearchRMCategory = SearchRMCategory == null ? string.Empty : SearchRMCategory;
+            SearchDeliveryDateFrom = SearchDeliveryDateFrom == null ? string.Empty : SearchDeliveryDateFrom;
+            SearchDeliveryDateTo = SearchDeliveryDateTo == null ? string.Empty : SearchDeliveryDateTo;
+
+            MRMBillMonitoringEntityDetails bmD = new MRMBillMonitoringEntityDetails();
+
+            bmD = objManager.FetchBillMonitoringList(Convert.ToInt32(pageIndex), Convert.ToInt32(pageSize), DeptName, SearchVendorTypeId, SearchSupplierId, SearchRMCategory, SearchDeliveryDateFrom, SearchDeliveryDateTo);
+
+            return new JsonResult { Data = bmD, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+            //return custDetail.LstCusEnt;
+        }
+
+
+
+
+
 
     }
 }

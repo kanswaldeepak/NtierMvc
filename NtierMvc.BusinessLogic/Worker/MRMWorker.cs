@@ -62,7 +62,7 @@ namespace NtierMvc.BusinessLogic.Worker
                     Model.Priority = dr1.IsNull("Priority") ? 0 : Convert.ToInt32(dr1["Priority"]);
                     Model.EndUse = dr1.IsNull("EndUse") ? 0 : Convert.ToInt32(dr1["EndUse"]);
                     Model.EndUseNo = dr1.IsNull("EndUseNo") ? 0 : Convert.ToInt32(dr1["EndUseNo"]);
-                    Model.CostCentre = dr1.IsNull("CostCentre") ? 0 : Convert.ToInt32(dr1["CostCentre"]);
+                    Model.CostCenter = dr1.IsNull("CostCenter") ? 0 : Convert.ToInt32(dr1["CostCenter"]);
                     //Model.SN = dr1.IsNull("SN") ? 0 : Convert.ToInt32(dr1["SN"]);
                     Model.RMcode = dr1.IsNull("RMcode") ? "" : Convert.ToString(dr1["RMcode"]);
                     Model.RMcat = dr1.IsNull("RMcat") ? 0 : Convert.ToInt32(dr1["RMcat"]);
@@ -161,7 +161,7 @@ namespace NtierMvc.BusinessLogic.Worker
                                 obj.DeliveryDate = dr1.IsNull("DeliveryDate") ? string.Empty : Convert.ToString(dr1["DeliveryDate"]);
                                 obj.SignStatus = dr1.IsNull("SignStatus") ? string.Empty : Convert.ToString(dr1["SignStatus"]);
                                 obj.PRStatus = dr1.IsNull("PRStatus") ? string.Empty : Convert.ToString(dr1["PRStatus"]);
-                                
+
                                 obj.DeptName = dr1.IsNull("DeptName") ? string.Empty : Convert.ToString(dr1["DeptName"]);
                                 obj.LogInDeptName = DeptName;
                                 obj.PurchasePerson = dr1.IsNull("PurchasePerson") ? string.Empty : Convert.ToString(dr1["PurchasePerson"]);
@@ -302,14 +302,14 @@ namespace NtierMvc.BusinessLogic.Worker
                             {
                                 PODetailEntity obj = new PODetailEntity();
                                 obj.POSetno = dr1.IsNull("POSetno") ? "" : Convert.ToString(dr1["POSetno"]);
-                                
+
                                 obj.PONo = dr1.IsNull("PONo") ? string.Empty : Convert.ToString(dr1["PONo"]);
                                 obj.POdate = dr1.IsNull("POdate") ? string.Empty : Convert.ToString(dr1["POdate"]);
                                 obj.WorkNo = dr1.IsNull("WorkNo") ? string.Empty : Convert.ToString(dr1["WorkNo"]);
                                 obj.DeliveryDate = dr1.IsNull("DeliveryDate") ? string.Empty : Convert.ToString(dr1["DeliveryDate"]);
                                 obj.POValidity = dr1.IsNull("POValidity") ? string.Empty : Convert.ToString(dr1["POValidity"]);
                                 //obj.TotalPRSetPrice = dr1.IsNull("TotalPRSetPrice") ? "" : Convert.ToString(dr1["TotalPRSetPrice"]);
-                               
+
                                 poDetailEntity.lstPOEntity.Add(obj);
                             }
                         }
@@ -397,10 +397,10 @@ namespace NtierMvc.BusinessLogic.Worker
                     Model.TotalPrice = dr1.IsNull("TotalPrice") ? "" : Convert.ToString(dr1["TotalPrice"]);
                     Model.PaymentTerms = dr1.IsNull("PaymentTerms") ? "" : Convert.ToString(dr1["PaymentTerms"]);
 
-                    Model.SN = dr1.IsNull("SN") ? 0 : Convert.ToInt32(dr1["SN"]);                    
+                    Model.SN = dr1.IsNull("SN") ? 0 : Convert.ToInt32(dr1["SN"]);
                     Model.RMdescription = dr1.IsNull("RMdescription") ? "" : Convert.ToString(dr1["RMdescription"]);
                     Model.GeneralCondition = dr1.IsNull("GeneralCondition") ? "" : Convert.ToString(dr1["GeneralCondition"]);
-                    Model.CostCentre = dr1.IsNull("CostCentre") ? "" : Convert.ToString(dr1["CostCentre"]);
+                    Model.CostCenter = dr1.IsNull("CostCenter") ? "" : Convert.ToString(dr1["CostCenter"]);
                     Model.POQMSRequirement = dr1.IsNull("POQMSRequirement") ? "" : Convert.ToString(dr1["POQMSRequirement"]);
                     Model.POPackForward = dr1.IsNull("POPackForward") ? "" : Convert.ToString(dr1["POPackForward"]);
                     Model.POQuality = dr1.IsNull("POQuality") ? "" : Convert.ToString(dr1["POQuality"]);
@@ -413,13 +413,13 @@ namespace NtierMvc.BusinessLogic.Worker
                     Model.WorkNo = dr1.IsNull("WorkNo") ? "" : Convert.ToString(dr1["WorkNo"]);
                     Model.LotName = dr1.IsNull("LotName") ? "" : Convert.ToString(dr1["LotName"]);
                     Model.LotDate = dr1.IsNull("LotDate") ? "" : Convert.ToString(dr1["LotDate"]);
-                    Model.LotQty = dr1.IsNull("LotQty") ? "" : Convert.ToString(dr1["LotQty"]);                    
+                    Model.LotQty = dr1.IsNull("LotQty") ? "" : Convert.ToString(dr1["LotQty"]);
                     Model.SignStatus = dr1.IsNull("SignStatus") ? "" : Convert.ToString(dr1["SignStatus"]);
                     Model.PRStatus = dr1.IsNull("PRStatus") ? "" : Convert.ToString(dr1["PRStatus"]);
                     Model.ApprovePerson1 = dr1.IsNull("ApprovePerson1") ? "" : Convert.ToString(dr1["ApprovePerson1"]);
                     Model.ApprovePerson2 = dr1.IsNull("ApprovePerson2") ? "" : Convert.ToString(dr1["ApprovePerson2"]);
                     Model.ApprovePerson1Sign = dr1.IsNull("ApprovePerson1Sign") ? "" : Convert.ToString(dr1["ApprovePerson1Sign"]);
-                    Model.ApprovePerson2Sign = dr1.IsNull("ApprovePerson2Sign") ? "" : Convert.ToString(dr1["ApprovePerson2Sign"]);                    
+                    Model.ApprovePerson2Sign = dr1.IsNull("ApprovePerson2Sign") ? "" : Convert.ToString(dr1["ApprovePerson2Sign"]);
 
                 }
             }
@@ -434,7 +434,7 @@ namespace NtierMvc.BusinessLogic.Worker
         public List<PODetailEntity> GetPOTableDetails(string POSetNo)
         {
             List<PODetailEntity> lstPO = new List<PODetailEntity>();
-            
+
             try
             {
                 DataSet ds = _repository.GetSavedPODetails(POSetNo);
@@ -466,7 +466,7 @@ namespace NtierMvc.BusinessLogic.Worker
                         Model.RMdescription = dr1.IsNull("RMdescription") ? "" : Convert.ToString(dr1["RMdescription"]);
                         Model.Discount = dr1.IsNull("Discount") ? "" : Convert.ToString(dr1["Discount"]);
                         Model.GeneralCondition = dr1.IsNull("GeneralCondition") ? "" : Convert.ToString(dr1["GeneralCondition"]);
-                        Model.CostCentre = dr1.IsNull("CostCentre") ? "" : Convert.ToString(dr1["CostCentre"]);
+                        Model.CostCenter = dr1.IsNull("CostCenter") ? "" : Convert.ToString(dr1["CostCenter"]);
                         Model.POQMSRequirement = dr1.IsNull("POQMSRequirement") ? "" : Convert.ToString(dr1["POQMSRequirement"]);
                         Model.POPackForward = dr1.IsNull("POPackForward") ? "" : Convert.ToString(dr1["POPackForward"]);
                         Model.POQuality = dr1.IsNull("POQuality") ? "" : Convert.ToString(dr1["POQuality"]);
@@ -548,14 +548,14 @@ namespace NtierMvc.BusinessLogic.Worker
             return objList;
         }
 
-        public MRMBillMonitoringEntityDetails GetMRMDetailForGateControlNo(string GateControlNo)
+        public MRMBillMonitoringEntityDetails GetMRMDetailForGateControlNo(string GateControlNo, string BMno = null)
         {
             MRMBillMonitoringEntityDetails objBM = new MRMBillMonitoringEntityDetails();
             objBM.lstMRMEntity = new List<MRMBillMonitoringEntity>();
 
             try
             {
-                DataSet ds = _repository.GetMRMDetailForGateControlNo(GateControlNo);
+                DataSet ds = _repository.GetMRMDetailForGateControlNo(GateControlNo, BMno);
 
                 if (ds.Tables[0] != null && ds.Tables[0].Rows.Count > 0)
                 {
@@ -585,10 +585,12 @@ namespace NtierMvc.BusinessLogic.Worker
                         Model.TimeOut = dr1.IsNull("TimeOut") ? string.Empty : Convert.ToString(dr1["TimeOut"]);
                         Model.VehicleReleased = dr1.IsNull("VehicleReleased") ? string.Empty : Convert.ToString(dr1["VehicleReleased"]);
                         Model.GRNo = dr1.IsNull("GRno") ? string.Empty : Convert.ToString(dr1["GRno"]);
+                        Model.GateNo = dr1.IsNull("GateNo") ? 0 : Convert.ToInt32(dr1["GateNo"]);
                         Model.GRDate = dr1.IsNull("GRDate") ? string.Empty : Convert.ToString(dr1["GRDate"]);
                         Model.SupplyTerms = dr1.IsNull("SupplyTerms") ? string.Empty : Convert.ToString(dr1["SupplyTerms"]);
-                        Model.CostCentre = dr1.IsNull("CostCentre") ? string.Empty : Convert.ToString(dr1["CostCentre"]);
-
+                        Model.CostCenter = dr1.IsNull("CostCenter") ? string.Empty : Convert.ToString(dr1["CostCenter"]);
+                        Model.PRCat = dr1.IsNull("PRcat") ? "" : Convert.ToString(dr1["PRcat"]);
+                        
                         Model.SN = dr1.IsNull("SN") ? "" : Convert.ToString(dr1["SN"]);
                         Model.RMdescription = dr1.IsNull("RMdescription") ? "" : Convert.ToString(dr1["RMdescription"]);
                         Model.PRqty = dr1.IsNull("PRqty") ? "" : Convert.ToString(dr1["PRqty"]);
@@ -599,7 +601,14 @@ namespace NtierMvc.BusinessLogic.Worker
                         Model.LotName = dr1.IsNull("LotName") ? "" : Convert.ToString(dr1["LotName"]);
                         Model.LotDate = dr1.IsNull("LotDate") ? "" : Convert.ToString(dr1["LotDate"]);
                         Model.LotQty = dr1.IsNull("LotQty") ? "" : Convert.ToString(dr1["LotQty"]);
-                        
+
+                        if (!string.IsNullOrEmpty(BMno) && Convert.ToInt32(BMno) > 0)
+                        {
+                            Model.SACNo = dr1.IsNull("SACNo") ? "" : Convert.ToString(dr1["SACNo"]);
+                            Model.GSTPercent = dr1.IsNull("GSTPercent") ? "" : Convert.ToString(dr1["GSTPercent"]);
+                            Model.GSTAmount = dr1.IsNull("GSTAmount") ? "" : Convert.ToString(dr1["GSTAmount"]);
+
+                        }
 
                         objBM.lstMRMEntity.Add(Model);
                     }
@@ -612,6 +621,164 @@ namespace NtierMvc.BusinessLogic.Worker
             }
             return objBM;
         }
+
+        public MRMBillMonitoringEntity GetBillDetailsPopup(string BMno)
+        {
+            MRMBillMonitoringEntity Model = new MRMBillMonitoringEntity();
+            try
+            {
+                DataSet ds = _repository.GetBillDetailsPopup(BMno);
+
+                if (ds.Tables[0] != null && ds.Tables[0].Rows.Count > 0)
+                {
+                    DataTable dt1 = ds.Tables[0];
+
+                    foreach (DataRow dr1 in dt1.Rows)
+                    {
+                        Model.GateNo = dr1.IsNull("GateNo") ? 0 : Convert.ToInt32(dr1["GateNo"]);
+                        Model.GateControlNo = dr1.IsNull("GateControlNo") ? string.Empty : Convert.ToString(dr1["GateControlNo"]);
+                        Model.SupplyType = dr1.IsNull("SupplyType") ? string.Empty : Convert.ToString(dr1["SupplyType"]);
+                        Model.BMno = Convert.ToInt32(BMno);
+
+                        Model.SupplierInvNo = dr1.IsNull("SupplierInvNo") ? string.Empty : Convert.ToString(dr1["SupplierInvNo"]);
+                        Model.SupplierInvDate = dr1.IsNull("SupplierDate") ? string.Empty : Convert.ToString(dr1["SupplierDate"]);
+
+                        Model.VendorNatureId = dr1.IsNull("VendorNatureId") ? string.Empty : Convert.ToString(dr1["VendorNatureId"]);
+                        Model.VendorId = dr1.IsNull("VendorId") ? string.Empty : Convert.ToString(dr1["VendorId"]);
+                        Model.VendorName = dr1.IsNull("VendorName") ? string.Empty : Convert.ToString(dr1["VendorName"]);
+                        Model.City = dr1.IsNull("City") ? string.Empty : Convert.ToString(dr1["City"]);
+                        Model.EndUse = dr1.IsNull("EndUse") ? string.Empty : Convert.ToString(dr1["EndUse"]);
+                        Model.EndUseNo = dr1.IsNull("EndUseNo") ? string.Empty : Convert.ToString(dr1["EndUseNo"]);
+                        Model.FunctionalAreaId = dr1.IsNull("FunctionalAreaId") ? string.Empty : Convert.ToString(dr1["FunctionalAreaId"]);
+                        Model.VendorPONO = dr1.IsNull("VendorPONO") ? string.Empty : Convert.ToString(dr1["VendorPONO"]);
+                        Model.VendorPODate = dr1.IsNull("VendorPODate") ? string.Empty : Convert.ToString(dr1["VendorPODate"]);
+                        Model.SupplierInvNo = dr1.IsNull("SupplierInvNo") ? string.Empty : Convert.ToString(dr1["SupplierInvNo"]);
+                        Model.SupplierInvDate = dr1.IsNull("SupplierDate") ? string.Empty : Convert.ToString(dr1["SupplierDate"]);
+                        Model.Currency = dr1.IsNull("Currency") ? string.Empty : Convert.ToString(dr1["Currency"]);
+                        Model.SupplierInvAmount = dr1.IsNull("SupplierAmount") ? string.Empty : Convert.ToString(dr1["SupplierAmount"]);
+                        Model.VehicleNo = dr1.IsNull("VehicleNo") ? string.Empty : Convert.ToString(dr1["VehicleNo"]);
+                        Model.DriverName = dr1.IsNull("DriverName") ? string.Empty : Convert.ToString(dr1["DriverName"]);
+                        Model.DriverContactNo = dr1.IsNull("DriverContactNo") ? string.Empty : Convert.ToString(dr1["DriverContactNo"]);
+                        Model.TimeIn = dr1.IsNull("TimeIn") ? string.Empty : Convert.ToString(dr1["TimeIn"]);
+                        Model.TimeOut = dr1.IsNull("TimeOut") ? string.Empty : Convert.ToString(dr1["TimeOut"]);
+                        Model.VehicleReleased = dr1.IsNull("VehicleReleased") ? string.Empty : Convert.ToString(dr1["VehicleReleased"]);
+                        Model.GRNo = dr1.IsNull("GRno") ? string.Empty : Convert.ToString(dr1["GRno"]);
+                        Model.GRDate = dr1.IsNull("GRDate") ? string.Empty : Convert.ToString(dr1["GRDate"]);
+                        Model.SupplyTerms = dr1.IsNull("SupplyTerms") ? string.Empty : Convert.ToString(dr1["SupplyTerms"]);
+                        Model.CostCenter = dr1.IsNull("CostCenter") ? string.Empty : Convert.ToString(dr1["CostCenter"]);
+                        Model.PRCat = dr1.IsNull("PRcat") ? "" : Convert.ToString(dr1["PRcat"]);
+
+                        Model.PaymentDueDate = dr1.IsNull("PaymentDueDate") ? "" : Convert.ToString(dr1["PaymentDueDate"]);
+                        Model.VerifiedBy = dr1.IsNull("VerifiedBy") ? "" : Convert.ToString(dr1["VerifiedBy"]);
+                        Model.ApprovedStatus = dr1.IsNull("ApprovedStatus") ? "" : Convert.ToString(dr1["ApprovedStatus"]);
+
+                        //Model.SN = dr1.IsNull("SN") ? "" : Convert.ToString(dr1["SN"]);
+                        //Model.RMdescription = dr1.IsNull("RMdescription") ? "" : Convert.ToString(dr1["RMdescription"]);
+                        //Model.PRqty = dr1.IsNull("PRqty") ? "" : Convert.ToString(dr1["PRqty"]);
+                        //Model.UOM = dr1.IsNull("UOM") ? "" : Convert.ToString(dr1["UOM"]);
+                        //Model.UnitPrice = dr1.IsNull("UnitPrice") ? "" : Convert.ToString(dr1["UnitPrice"]);
+                        //Model.Discount = dr1.IsNull("Discount") ? "" : Convert.ToString(dr1["Discount"]);
+                        //Model.TotalPrice = dr1.IsNull("TotalPrice") ? "" : Convert.ToString(dr1["TotalPrice"]);
+                        //Model.LotName = dr1.IsNull("LotName") ? "" : Convert.ToString(dr1["LotName"]);
+                        //Model.LotDate = dr1.IsNull("LotDate") ? "" : Convert.ToString(dr1["LotDate"]);
+                        //Model.LotQty = dr1.IsNull("LotQty") ? "" : Convert.ToString(dr1["LotQty"]);
+
+
+                    }
+                }
+            }
+
+            catch (Exception ex)
+            {
+                NtierMvc.DataAccess.ExceptionLogging.SendExcepToDB(ex);
+            }
+            return Model;
+        }
+
+
+        public int GetBillMonitoringNo()
+        {
+            int BMNo = 0;
+            try
+            {
+                DataSet ds = _repository.GetBillMonitoringNo();
+                if (ds.Tables[0] != null && ds.Tables[0].Rows.Count > 0)
+                {
+                    DataTable dt1 = ds.Tables[0];
+                    if (dt1.Rows.Count > 0)
+                    {
+                        DataRow dr = dt1.Rows[0];
+                        BMNo = dr.IsNull("BMNo") ? 0 : Convert.ToInt32(dr["BMNo"]);
+                    }
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+                NtierMvc.DataAccess.ExceptionLogging.SendExcepToDB(ex);
+            }
+            return BMNo;
+        }
+
+        public MRMBillMonitoringEntityDetails FetchBillMonitoringList(int pageIndex, int pageSize, string DeptName, string SearchVendorTypeId = null, string SearchSupplierId = null, string SearchRMCategory = null, string SearchDeliveryDateFrom = null, string SearchDeliveryDateTo = null)
+        {
+            try
+            {
+                MRMBillMonitoringEntityDetails mrmEntity = new MRMBillMonitoringEntityDetails();
+                mrmEntity.lstMRMEntity = new List<MRMBillMonitoringEntity>();
+
+                DataSet ds = _repository.FetchBillMonitoringList(pageIndex, pageSize, DeptName, SearchVendorTypeId, SearchSupplierId, SearchRMCategory, SearchDeliveryDateFrom, SearchDeliveryDateTo);
+
+                if (ds.Tables.Count > 0)
+                {
+                    DataTable dt1 = ds.Tables[0];
+                    DataTable dt2 = ds.Tables[1];
+
+                    if (dt1 != null && dt1.Rows.Count > 0)
+                    {
+                        if (dt1.Rows.Count > 0)
+                        {
+                            foreach (DataRow dr1 in dt1.Rows)
+                            {
+                                MRMBillMonitoringEntity obj = new MRMBillMonitoringEntity();
+                                obj.BMno = dr1.IsNull("BMno") ? 0 : Convert.ToInt32(dr1["BMno"]);
+                                obj.SupplyType = dr1.IsNull("SupplyType") ? string.Empty : Convert.ToString(dr1["SupplyType"]);
+                                obj.GateControlNo = dr1.IsNull("GateControlNo") ? string.Empty : Convert.ToString(dr1["GateControlNo"]);
+
+                                obj.VendorId = dr1.IsNull("VendorId") ? string.Empty : Convert.ToString(dr1["VendorId"]);
+                                obj.VendorName = dr1.IsNull("VendorName") ? string.Empty : Convert.ToString(dr1["VendorName"]);
+                                obj.SupplierInvNo = dr1.IsNull("SupplierInvNo") ? string.Empty : Convert.ToString(dr1["SupplierInvNo"]);
+                                obj.SupplierInvDate = dr1.IsNull("SupplierInvDate") ? "" : Convert.ToString(dr1["SupplierInvDate"]);
+                                obj.GRNo = dr1.IsNull("GRNo") ? string.Empty : Convert.ToString(dr1["GRNo"]);
+                                obj.GRDate = dr1.IsNull("GRDate") ? string.Empty : Convert.ToString(dr1["GRDate"]);
+
+                                mrmEntity.lstMRMEntity.Add(obj);
+                            }
+                        }
+                    }
+
+
+                    if (dt2.Rows.Count > 0)
+                    {
+                        foreach (DataRow dr2 in dt2.Rows)
+                        {
+                            mrmEntity.totalcount = dr2.IsNull("totalCount") ? 0 : Convert.ToInt32(dr2["totalCount"]);
+                        }
+                    }
+                }
+                return mrmEntity;
+            }
+            catch (Exception Ex)
+            {
+                NtierMvc.DataAccess.ExceptionLogging.SendExcepToDB(Ex);
+                throw Ex;
+            }
+        }
+
+
+
+
 
 
     }

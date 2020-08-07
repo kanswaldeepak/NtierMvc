@@ -30,6 +30,9 @@ namespace NtierMvc.BusinessLogic.Interface
         List<DropDownEntity> GetPRNoList(string DeptName);
         List<DropDownEntity> GetRMCategories(string SupplierId);
         List<DropDownEntity> GetDeliveryDates(string RMCategory);
-        MRMBillMonitoringEntityDetails GetMRMDetailForGateControlNo(string GateControlNo);
+        MRMBillMonitoringEntityDetails GetMRMDetailForGateControlNo(string GateControlNo, string BMno = null);
+        MRMBillMonitoringEntity GetBillDetailsPopup(string BMno);
+        int GetBillMonitoringNo();
+        MRMBillMonitoringEntityDetails FetchBillMonitoringList(int pageIndex, int pageSize, string DeptName, string SearchVendorTypeId = null, string SearchSupplierId = null, string SearchRMCategory = null, string SearchDeliveryDateFrom = null, string SearchDeliveryDateTo = null);
     }
 }

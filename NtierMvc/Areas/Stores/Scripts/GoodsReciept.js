@@ -29,8 +29,6 @@ function showRequestedSign(id) {
 }
 
 
-
-
 function GetDetailForGateControlNo() {
     var GateControlNo = $('#GRGateControlNo option:selected').val();
     
@@ -162,6 +160,7 @@ function SaveGoodsReciept(e) {
             arr.push({
                 //Id: $("#GRId").val(),
                 SupplyType: $("#GRSupplyType").val(),
+                GateNo: $("#GRGateControlNo").val(),
                 GRno: $("#GRno").val(),
                 GoodRecieptNo: $("#GRGoodRecieptNo").val(),
                 GRDate: $("#GRDate").val(),

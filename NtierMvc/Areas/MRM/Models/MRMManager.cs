@@ -315,13 +315,13 @@ namespace NtierMvc.Areas.MRM.Models
             return lstDropDownEntity;
         }
 
-        public MRMBillMonitoringEntityDetails GetMRMDetailForGateControlNo(string GateControlNo)
+        public MRMBillMonitoringEntityDetails GetMRMDetailForGateControlNo(string GateControlNo, string BMno = null)
         {
             var baseAddress = "MRMDetail";
             MRMBillMonitoringEntityDetails tableList = new MRMBillMonitoringEntityDetails();
             using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
             {
-                HttpResponseMessage response = client.GetAsync(baseAddress + "/GetMRMDetailForGateControlNo?GateControlNo=" + GateControlNo).Result;
+                HttpResponseMessage response = client.GetAsync(baseAddress + "/GetMRMDetailForGateControlNo?GateControlNo=" + GateControlNo+"&BMno="+BMno).Result;
                 if (response.IsSuccessStatusCode)
                 {
                     var data = response.Content.ReadAsStringAsync().Result;
@@ -330,6 +330,58 @@ namespace NtierMvc.Areas.MRM.Models
             }
             return tableList;
         }
+
+        public int GetBillMonitoringNo()
+        {
+            var baseAddress = "MRMDetail";
+            int BMNo = 0;
+            using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
+            {
+                HttpResponseMessage response = client.GetAsync(baseAddress + "/GetBillMonitoringNo").Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    var data = response.Content.ReadAsStringAsync().Result;
+                    BMNo = JsonConvert.DeserializeObject<int>(data);
+                }
+            }
+            return BMNo;
+        }
+
+        public MRMBillMonitoringEntity GetBillDetailsPopup(string BMno = null)
+        {
+            var baseAddress = "MRMDetail";
+            MRMBillMonitoringEntity Model = new MRMBillMonitoringEntity();
+            using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
+            {
+                HttpResponseMessage response = client.GetAsync(baseAddress + "/GetBillDetailsPopup?BMno=" + BMno).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    var data = response.Content.ReadAsStringAsync().Result;
+                    Model = JsonConvert.DeserializeObject<MRMBillMonitoringEntity>(data);
+                }
+            }
+            return Model;
+        }
+
+        public MRMBillMonitoringEntityDetails FetchBillMonitoringList(int pageIndex, int pageSize, string DeptName=null, string SearchVendorTypeId = null, string SearchSupplierId = null, string SearchRMCategory = null, string SearchDeliveryDateFrom = null, string SearchDeliveryDateTo = null)
+        {
+            var baseAddress = "MRMDetail";
+            MRMBillMonitoringEntityDetails prDetails = new MRMBillMonitoringEntityDetails();
+            using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
+            {
+                HttpResponseMessage response = client.GetAsync(baseAddress + "/FetchMRMBillMonitoringList?pageIndex=" + pageIndex + "&pageSize=" + pageSize + "&DeptName=" + DeptName + "&SearchVendorTypeId=" + SearchVendorTypeId + "&SearchSupplierId=" + SearchSupplierId + "&SearchRMCategory=" + SearchRMCategory + "&SearchDeliveryDateFrom=" + SearchDeliveryDateFrom + "&SearchDeliveryDateTo=" + SearchDeliveryDateTo).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    var data = response.Content.ReadAsStringAsync().Result;
+                    prDetails = JsonConvert.DeserializeObject<MRMBillMonitoringEntityDetails>(data);
+                }
+            }
+            return prDetails;
+        }
+
+
+
+
 
     }
 }

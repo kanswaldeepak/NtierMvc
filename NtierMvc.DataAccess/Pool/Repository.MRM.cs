@@ -237,13 +237,50 @@ namespace NtierMvc.DataAccess.Pool
             return DataTableToStringList(_dbAccess.GetDataTable(spName, Params));
         }
 
-        public DataSet GetMRMDetailForGateControlNo(string GateControlNo)
+        public DataSet GetMRMDetailForGateControlNo(string GateControlNo, string BMno = null)
         {
             var SPName = ConfigurationManager.AppSettings["GetMRMDetailForGateControlNo"];
             var Params = new Dictionary<string, object>();
             Params.Add("@GateControlNo", GateControlNo);
+            Params.Add("@BMno", BMno);
             return _dbAccess.GetDataSet(SPName, Params);
         }
+
+        public DataSet GetBillDetailsPopup(string BMno)
+        {
+            var SPName = ConfigurationManager.AppSettings["GetBillDetailsPopup"];
+            var Params = new Dictionary<string, object>();
+            Params.Add("@BMno", BMno);
+            return _dbAccess.GetDataSet(SPName, Params);
+        }
+
+        public DataSet GetBillMonitoringNo()
+        {
+            var SPName = ConfigurationManager.AppSettings["GetBillMonitoringNo"];
+            var Params = new Dictionary<string, object>();
+            //Params.Add("@GateControlNo", GateControlNo);
+            return _dbAccess.GetDataSet(SPName, Params);
+        }
+
+        public DataSet FetchBillMonitoringList(int pageIndex, int pageSize, string DeptName, string SearchVendorTypeId = null, string SearchSupplierId = null, string SearchRMCategory = null, string SearchDeliveryDateFrom = null, string SearchDeliveryDateTo = null)
+        {
+            var parms = new Dictionary<string, object>();
+            parms.Add("@pageIndex", pageIndex);
+            parms.Add("@pageSize", pageSize);
+            parms.Add("@SearchVendorTypeId", SearchVendorTypeId);
+            parms.Add("@SearchSupplierId", SearchSupplierId);
+            parms.Add("@SearchRMCategory", SearchRMCategory);
+            parms.Add("@SearchDeliveryDateFrom", SearchDeliveryDateFrom);
+            parms.Add("@SearchDeliveryDateTo", SearchDeliveryDateTo);
+
+            string spName = ConfigurationManager.AppSettings["FetchBillMonitoringList"];
+            return _dbAccess.GetDataSet(spName, parms);
+        }
+
+
+
+
+
 
     }
 }

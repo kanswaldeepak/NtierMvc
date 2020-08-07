@@ -1,6 +1,129 @@
 ﻿
+
+function saveButtonMRMBillMonitoring(data) {
+    return $.ajax({
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json',
+        type: 'POST',
+        url: window.SaveButtonMRMBillMonitoringDetails,
+        data: data,
+        success: function (result) {
+            alert(result);
+        },
+        error: function () {
+            alert(result)
+        }
+    });
+}
+
+function SaveMRMBillMonitoringDetails(e) {
+    e.preventDefault();
+    ShowLoadder();
+    var arr = [];
+    arr.length = 0;
+
+    var frm = $("#formMRMBillMonitoring");
+    var formData = new FormData(frm[0]);
+
+
+    var Status = true;
+    Status = GetFormValidationStatus("#formMRMBillMonitoring");
+
+    let tableSelected = '#table' + $('#tableSelected').val();
+
+    if (!Status) {
+        alert("Kindly Fill all mandatory fields");
+        HideLoadder();
+        return;
+    }
+    else {
+        $.each($(tableSelected + " tbody tr"), function () {
+            arr.push({
+                BMno: $("#BMno").val(),
+                SupplyType: $("#MRMSupplyType").val(),
+                GateNo: $("#MRMGateNo").val(),
+                GateControlNo: $("#MRMGateControlNo").val(),                
+                SupplierInvNo: $("#MRMSupplierInvNo").val(),
+                SupplierInvDate: $("#MRMSupplierInvDate").val(),
+                Currency: $("#MRMCurrency").val(),
+                SupplierInvAmount: $("#MRMSupplierInvAmount").val(),
+                PaymentDueDate: $("#MRMPaymentDueDate").val(),
+                VerifiedBy: $("#MRMVerifiedBy").val(),
+                CostCenter: $("#MRMCostCenter").val(),
+                ApprovedStatus: $("#MRMApprovedStatus").val(),
+                ForwardedTo: $('#MRMForwardedTo').val(),
+
+                SN: $(this).find('td:eq(0) span').text(),
+                RMDescription: $(this).find('td:eq(1) span').text(),
+                Qty: $(this).find('td:eq(2) span').text(),
+                UOM: $(this).find('td:eq(3) span').text(),
+                UnitPrice: $(this).find('td:eq(4) span').text(),
+                TotalPrice: $(this).find('td:eq(5) span').text(),
+                SACNo: $(this).find('td:eq(6) input').val(),
+                GSTPercent: $(this).find('td:eq(7) input').val(),
+                GSTAmount: $(this).find('td:eq(8) input').val()
+                
+            });
+        });
+
+
+        var data = JSON.stringify({
+            MRMBillDetails: arr
+        });
+
+        $.when(saveButtonMRMBillMonitoring(data)).then(function (response) {
+            console.log(response);
+            HideLoadder();
+        }).fail(function (err) {
+            console.log(err);
+        });
+    }
+};
+
+function showApproverSign(id) {
+    if ($('#' + id).is(':checked')) {
+        $('#img' + id).show();
+    }
+    else {
+        $('#img' + id).hide();
+    }
+}
+
+function showHideRejectReason() {
+    var selectedVal = $('#MRMApprovedStatus option:selected').text();
+
+    if (selectedVal == 'Rejected') {
+        $('#divRejectReason').show();
+        $('#divPendingReason').hide();
+    }
+    else if (selectedVal == 'Pending') {
+        $('#divPendingReason').show();
+        $('#divRejectReason').hide();
+    }
+    else {
+        $('#divRejectReason').hide();
+        $('#divPendingReason').hide();
+    }
+}
+
+function CalcTotal(ob) {
+
+    let trob = $(ob).closest('tr');
+    let totPrice = parseFloat($.trim(trob.find(".MRMTPrice").text()));
+    if (!totPrice || isNaN(totPrice)) {
+        totPrice = 0;
+    }
+    let gstpercent = parseFloat($.trim(trob.find(".MRMGSTPercent").val()));
+    if (!gstpercent || isNaN(gstpercent)) {
+        gstpercent = 0;
+    }
+
+    let gstVal = ((totPrice / 100) * gstpercent).toFixed(2);
+    trob.find(".MRMGSTAmount").val((Math.round(((totPrice - gstVal) * 1000) / 10) / 100).toFixed(2));
+}
+
 function GetMRMValuesFromSupplyType() {
-    let SupplyType = $('#MRMListType').val();
+    let SupplyType = $('#MRMSupplyType').val();
 
     $.ajax({
         type: 'POST',
@@ -32,7 +155,7 @@ function GetMRMGateControlNoDetails() {
 
             if (data.length > 0) {
 
-                //$('#tableSelected').val(data[0].PRCat);
+                $('#tableSelected').val(data[0].PRCat);
                 $('#MRMVendorNatureId').val(data[0].VendorNatureId);
                 $('#MRMVendorId').val(data[0].VendorId);
                 $('#MRMVendorName').val(data[0].VendorName);
@@ -48,9 +171,10 @@ function GetMRMGateControlNoDetails() {
                 $('#MRMTimeIn').val(data[0].TimeIn);
                 $('#MRMTimeOut').val(data[0].TimeOut);
                 $('#MRMVehicleReleased').val(data[0].VehicleReleased);
+                $('#MRMGateNo').val(data[0].GateNo);
                 $('#MRMGRNo').val(data[0].GRNo);
                 $('#MRMGRDate').val(data[0].GRDate);
-                $('#MRMCostCentre').val(data[0].CostCentre);
+                $('#MRMCostCenter').val(data[0].CostCenter);
                 $('#MRMSupplyTerms').val(data[0].SupplyTerms);
                 $('#MRMSupplierInvNo').val(data[0].SupplierInvNo);
                 $('#MRMSupplierInvDate').val(data[0].SupplierInvDate);
@@ -58,49 +182,40 @@ function GetMRMGateControlNoDetails() {
                 $('#MRMSupplierInvAmount').val(data[0].SupplierInvAmount);
                 
                 
-                //switch (data[0].PRCat) {
-                //    case 'RM':
-                //        $('#tableRM').show();
-                //        $('#tableRM tbody').empty();
+                switch (data[0].PRCat) {
+                    case 'RM':
+                        $('#tableRM').show();
+                        $('#tableRM tbody').empty();
 
-                //        $.each(data, function (i, item) {
-                //            $('#tableRM > tbody:last-child').append('<tr><td><span>' + item.SN + '</span></td><td><span>' + item.RMdescription + '</span></td><td><span>' + item.PRqty + '</span></td><td><span>' + item.UOM + '</span></td><td><span>' + item.UnitPrice + '</span></td><td><span>' + item.TotalPrice + '</span></td><td class="lotdetails"><span>' + item.LotName + '</span></td><td class="lotdetails"><span>' + item.LotDate + '</span></td><td class="lotdetails"><span>' + item.LotQty + '</span></td><td><select class= "form-control requiredValidation GRStoresName" name = "StoresName" onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"></select></td><td><select class="form-control requiredValidation GRBayNo" name="BayNo" onfocusout="return ValidateRequiredFieldsOnFocusOut(this)"><option value="">Select</option></select></td><td><select class="form-control requiredValidation GRLocation" name="Location" onfocusout="return ValidateRequiredFieldsOnFocusOut(this)"><option value="">Select</option></select></td><td><select class="form-control requiredValidation GRDirection" name="Direction" onfocusout="return ValidateRequiredFieldsOnFocusOut(this)"><option value="">Select</option></select></td><td><select class="form-control requiredValidation GRStoreArea" name="StoreArea" onfocusout="return ValidateRequiredFieldsOnFocusOut(this)"><option value="">Select</option></select></td></tr>');
+                        $.each(data, function (i, item) {
+                            $('#tableRM > tbody:last-child').append('<tr><td><span>' + item.SN + '</span></td><td><span>' + item.RMdescription + '</span></td><td><span>' + item.PRqty + '</span></td><td><span>' + item.UOM + '</span></td><td><span>' + item.UnitPrice + '</span></td><td><span class="MRMTPrice">' + item.TotalPrice + '</span></td><td><input type="text" class="MRMSacNo form-control"/></td><td><input type="text" onkeyup="CalcTotal(this)" onkeypress="return AllowNumbers(event);" class="MRMGSTPercent form-control"/></td><td><input type="text" onkeyup="CalcTotal(this);" onkeypress="return AllowNumbers(event);" class="MRMGSTAmount form-control" readonly="readonly" /></td></tr>');
 
-                //            if ($('#GRSupplyTerms options:select').text() == 'Single')
-                //                $('.lotdetails').hide();
-                //            else
-                //                $('.lotdetails').hide();
+                            if ($('#MRMSupplyTerms options:select').text() == 'Single')
+                                $('.lotdetails').hide();
+                            else
+                                $('.lotdetails').hide();
 
-                //        })
+                        })
 
-                //        $('.GRStoresName').html($('#GRStoresName').html());
-                //        $('.GRBayNo').html($('#GRBayNo').html());
-                //        $('.GRLocation').html($('#GRLocation').html());
-                //        $('.GRDirection').html($('#GRDirection').html());
-                //        $('.GRStoreArea').html($('#GRStoreArea').html());
-
-                //        $('.tblLocation').hide();
-
-
-                //        break;
-                //    case 'BOI':
-                //        $('.tableBOI').show();
-                //        break;
-                //    case 'JW':
-                //        $('.tableJW').show();
-                //        break;
-                //    case 'GI':
-                //        $('.tableGI').show();
-                //        break;
-                //    case 'C':
-                //        $('.tableC').show();
-                //        break;
-                //    case 'O':
-                //        $('.tableO').show();
-                //        break;
-                //    default:
-                //        break;
-                //}
+                        break;
+                    case 'BOI':
+                        $('.tableBOI').show();
+                        break;
+                    case 'JW':
+                        $('.tableJW').show();
+                        break;
+                    case 'GI':
+                        $('.tableGI').show();
+                        break;
+                    case 'C':
+                        $('.tableC').show();
+                        break;
+                    case 'O':
+                        $('.tableO').show();
+                        break;
+                    default:
+                        break;
+                }
 
 
             }

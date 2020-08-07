@@ -407,7 +407,7 @@ function SavePRDetails(e) {
                 EndUse: $("#EndUsePRDetails").val(),
                 QuoteType: $("#QuoteTypePRDetails").val(),
                 EndUseNo: $("#EndUseNosPRDetails").val(),
-                CostCentre: $("#CostCentrePRDetails").val(),
+                CostCenter: $("#CostCenterPRDetails").val(),
                 RMcat: $("#RMCatPRDetails").val(),
                 UOM: $("#UOMPRDetails").val(),
 

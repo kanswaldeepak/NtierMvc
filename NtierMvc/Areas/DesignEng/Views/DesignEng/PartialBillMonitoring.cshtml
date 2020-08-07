@@ -77,7 +77,7 @@
                            })
                     </td>
                     <td>
-                        <button class="btn btn-link" type="button" id="btnSearch" ng-click="FetchVendorsMasterList()">
+                        <button class="btn btn-link" type="button" id="btnSearch" ng-click="FetchBillMonitoringList()">
                             <i class="fa fa-search"></i>
                         </button>
                     </td>
@@ -264,7 +264,7 @@
     $(document).ready(function () {
         window.BillMonitoringPopUp = '@Url.Action("BillMonitoringPopUp", "DesignEng")';
         window.GetDdlDetailsForList = '@Url.Action("GetDdlDetailsForList", "GateEntry", new { @Area = ""})';
-        window.FetchBillMonitoringList = '@Url.Action("FetchBillMonitoringList", "DesignEng", new {@Area = "DesignEng" })';
+        window.FetchBillMonitoringList = '@Url.Action("FetchBillMonitoringList", "MRM")';
     });
 
 </script>

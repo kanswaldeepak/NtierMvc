@@ -41,7 +41,7 @@ namespace NtierMvc.Model
         public string ControlNo { get; set; }
         public string ApprovalDate { get; set; }
         public string ForwardedTo { get; set; }
-        public string CostCentre { get; set; }
+        public string CostCenter { get; set; }
         public string VehicleNo { get; set; }
         public string DriverName { get; set; }
         public string DriverContactNo { get; set; }

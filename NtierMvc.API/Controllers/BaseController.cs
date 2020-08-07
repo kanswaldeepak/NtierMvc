@@ -590,6 +590,16 @@ namespace NtierMvc.API.Controllers
             return Ok(_repository.GetDataTableForDocument(ListType, TableName, DataColumn, DataParam, RequiredColumn));
         }
 
+        [HttpPost]
+        [ResponseType(typeof(string))]
+        [Route("api/Base/SaveBulkEntryDetails")]
+        public IHttpActionResult SaveBulkEntryDetails(BulkUploadEntity iEntity)
+        {
+            return Ok(_repository.SaveBulkEntryDetails(iEntity));
+        }
+
+
+
 
     }
 }

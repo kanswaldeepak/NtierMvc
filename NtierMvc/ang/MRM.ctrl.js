@@ -777,9 +777,9 @@ angular.module('App').controller("MRMController", function ($scope, $http, $time
     $scope.SearchCurrency = "";
     $scope.SearchApprovalStatus = "";
 
-    $scope.FetchBillMonitoringList = function () {
+    $scope.FetchBMList = function () {
         $http.get(window.FetchBillMonitoringList + "?pageindex=" + $scope.BMPageIndex + "&pageSize=" + $scope.BMPageSize + "&SearchType=" + $scope.SearchType + "&SearchVendorNature=" + $scope.SearchVendorNature + "&SearchVendorName=" + $scope.SearchVendorName + "&SearchBillNo=" + $scope.SearchBillNo + "&SearchBillDate=" + $scope.SearchBillDate + "&SearchItemDescription=" + $scope.SearchItemDescription + "&SearchCurrency=" + $scope.SearchCurrency + "&SearchApprovalStatus=" + $scope.SearchApprovalStatus).success(function (response) {
-            $scope.BOMList = response.lstVBM;
+            $scope.BOMList = response.lstMRMEntity;
             $scope.BMTotalCount = response.totalcount;
         }, function (error) {
             alert('failed');
@@ -806,7 +806,7 @@ angular.module('App').controller("MRMController", function ($scope, $http, $time
             url: window.MRMBillMonitoringPopUp,
             success: function (html) {
                 html = $compile(html)($scope);
-                SetModalTitle("Material Entry")
+                SetModalTitle("Bill Monitoring")
                 SetModalBody(html);
                 HideLoadder();
                 SetModalWidth("1200px");
@@ -831,6 +831,176 @@ angular.module('App').controller("MRMController", function ($scope, $http, $time
             error: function () {
                 HideLoadder();
                 alert(window.ErrorMsg);
+            }
+        })
+    }
+
+
+    $scope.LoadBillMonitoringViewPopup = function (_BMno) {
+        var _actionType = "VIEW"
+        //var ID = e.target.id;
+        $.ajax({
+            type: "POST",
+            data: { actionType: _actionType, BMno: _BMno },
+            datatype: "JSON",
+            url: window.MRMBillMonitoringPopUp,
+            success: function (html) {
+                html = $compile(html)($scope);
+                SetModalTitle("View Bill Monitoring")
+                SetModalBody(html);
+                HideLoadder();
+                SetModalWidth("1200px");
+                ShowModal();
+                $scope.GetMRMGateControlNoDetails();
+
+                $('#formMRMBillMonitoring input[type=radio],input[type=text], select, textarea').prop("disabled", true);
+                $('.save_results').css('display', 'none');
+                $('.cancel_results').css('display', 'none');
+                $('.bs-tooltip-top').css('display', 'none');
+
+                if (!($('.modal.in').length)) {
+                    $('.modal-dialog').css({
+                        top: '5%',
+                        left: '5%'
+                    });
+                }
+                $('#ModalPopup').modal({
+                    backdrop: false,
+                    show: true
+                });
+
+                $('.modal-dialog').draggable({
+                    handle: ".modal-body"
+                });
+
+            },
+            error: function () {
+                HideLoadder();
+                alert(window.ErrorMsg);
+            }
+        })
+    }
+    $scope.LoadBillMonitoringEditPopup = function (_BMno) {
+        var _actionType = "EDIT"
+        //var ID = e.target.id;
+        $.ajax({
+            type: "POST",
+            data: { actionType: _actionType, BMno: _BMno },
+            datatype: "JSON",
+            url: window.MRMBillMonitoringPopUp,
+            success: function (html) {
+                html = $compile(html)($scope);
+                SetModalTitle("Edit Bill Monitoring")
+                SetModalBody(html);
+                HideLoadder();
+                SetModalWidth("1200px");
+                ShowModal();
+                $scope.GetMRMGateControlNoDetails();
+         
+                if (!($('.modal.in').length)) {
+                    $('.modal-dialog').css({
+                        top: '5%',
+                        left: '5%'
+                    });
+                }
+                $('#ModalPopup').modal({
+                    backdrop: false,
+                    show: true
+                });
+
+                $('.modal-dialog').draggable({
+                    handle: ".modal-body"
+                });
+
+            },
+            error: function () {
+                HideLoadder();
+                alert(window.ErrorMsg);
+            }
+        })
+    }
+
+
+    $scope.GetMRMGateControlNoDetails = function() {
+        var GateControlNo = $('#MRMGateControlNo option:selected').val();
+        var BMno = $('#BMno').val();
+
+        $.ajax({
+            url: window.MRMGateControlNoDetails,
+            type: 'POST',
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            data: JSON.stringify({ GateControlNo: GateControlNo, BMno: BMno }),
+            success: function (data) {
+
+                if (data.length > 0) {
+
+                    $('#tableSelected').val(data[0].PRCat);
+                    $('#MRMVendorNatureId').val(data[0].VendorNatureId);
+                    $('#MRMVendorId').val(data[0].VendorId);
+                    $('#MRMVendorName').val(data[0].VendorName);
+                    $('#MRMCity').val(data[0].City);
+                    $('#MRMEndUse').val(data[0].EndUse);
+                    $('#MRMEndUseNo').val(data[0].EndUseNo);
+                    $('#MRMFunctionalAreaId').val(data[0].FunctionalAreaId);
+                    $('#MRMVendorPONO').val(data[0].VendorPONO);
+                    $('#MRMVendorPODate').val(data[0].VendorPODate);
+                    $('#MRMVehicleNo').val(data[0].VehicleNo);
+                    $('#MRMDriverName').val(data[0].DriverName);
+                    $('#MRMDriverContactNo').val(data[0].DriverContactNo);
+                    $('#MRMTimeIn').val(data[0].TimeIn);
+                    $('#MRMTimeOut').val(data[0].TimeOut);
+                    $('#MRMVehicleReleased').val(data[0].VehicleReleased);
+                    $('#MRMGRNo').val(data[0].GRNo);
+                    $('#MRMGRDate').val(data[0].GRDate);
+                    $('#MRMCostCenter').val(data[0].CostCenter);
+                    $('#MRMSupplyTerms').val(data[0].SupplyTerms);
+                    $('#MRMSupplierInvNo').val(data[0].SupplierInvNo);
+                    $('#MRMSupplierInvDate').val(data[0].SupplierInvDate);
+                    $('#MRMCurrency').val(data[0].Currency);
+                    $('#MRMSupplierInvAmount').val(data[0].SupplierInvAmount);
+
+
+                    switch (data[0].PRCat) {
+                        case 'RM':
+                            $('#tableRM').show();
+                            $('#tableRM tbody').empty();
+
+                            $.each(data, function (i, item) {
+                                $('#tableRM > tbody:last-child').append('<tr><td><span>' + item.SN + '</span></td><td><span>' + item.RMdescription + '</span></td><td><span>' + item.PRqty + '</span></td><td><span>' + item.UOM + '</span></td><td><span>' + item.UnitPrice + '</span></td><td><span class="MRMTPrice">' + item.TotalPrice + '</span></td><td><input type="text" class="MRMSacNo form-control" value="' + item.SACNo + '" /></td><td><input type="text" onkeyup="CalcTotal(this)" onkeypress="return AllowNumbers(event);" class="MRMGSTPercent form-control" value="' + item.GSTPercent + '" /></td><td><input type="text" onkeyup="CalcTotal(this);" onkeypress="return AllowNumbers(event);" class="MRMGSTAmount form-control" readonly="readonly"  value="' + item.GSTAmount +'"/></td></tr>');
+
+                                if ($('#MRMSupplyTerms options:select').text() == 'Single')
+                                    $('.lotdetails').hide();
+                                else
+                                    $('.lotdetails').hide();
+
+                            })
+
+                            break;
+                        case 'BOI':
+                            $('.tableBOI').show();
+                            break;
+                        case 'JW':
+                            $('.tableJW').show();
+                            break;
+                        case 'GI':
+                            $('.tableGI').show();
+                            break;
+                        case 'C':
+                            $('.tableC').show();
+                            break;
+                        case 'O':
+                            $('.tableO').show();
+                            break;
+                        default:
+                            break;
+                    }
+
+
+                }
+            },
+            error: function (res) {
+                alert(res);
             }
         })
     }
