@@ -768,17 +768,14 @@ angular.module('App').controller("MRMController", function ($scope, $http, $time
     $scope.BMTotalCount = 0;
     $scope.BMPageIndex = 1;
     $scope.BMPageSize = "50";
-    $scope.SearchType = "";
-    $scope.SearchVendorNature = "";
-    $scope.SearchVendorName = "";
-    $scope.SearchBillNo = "";
-    $scope.SearchBillDate = "";
-    $scope.SearchItemDescription = "";
-    $scope.SearchCurrency = "";
-    $scope.SearchApprovalStatus = "";
+    $scope.MRMSearchVendorTypeId = "";
+    $scope.MRMSearchSupplierId = "";
+    $scope.MRMSearchSupplierName = "";
+    $scope.MRMSearchApprovedDate = "";
+    $scope.MRMSearchTotalAmount = "";
 
     $scope.FetchBMList = function () {
-        $http.get(window.FetchBillMonitoringList + "?pageindex=" + $scope.BMPageIndex + "&pageSize=" + $scope.BMPageSize + "&SearchType=" + $scope.SearchType + "&SearchVendorNature=" + $scope.SearchVendorNature + "&SearchVendorName=" + $scope.SearchVendorName + "&SearchBillNo=" + $scope.SearchBillNo + "&SearchBillDate=" + $scope.SearchBillDate + "&SearchItemDescription=" + $scope.SearchItemDescription + "&SearchCurrency=" + $scope.SearchCurrency + "&SearchApprovalStatus=" + $scope.SearchApprovalStatus).success(function (response) {
+        $http.get(window.FetchBillMonitoringList + "?pageindex=" + $scope.BMPageIndex + "&pageSize=" + $scope.BMPageSize + "&SearchVendorTypeId=" + $scope.MRMSearchVendorTypeId + "&SearchSupplierId=" + $scope.MRMSearchSupplierId + "&MRMSearchSupplierName=" + $scope.MRMSearchSupplierName + "&SearchApprovedDate=" + $scope.SearchApprovedDate + "&SearchGSTAmount=" + $scope.SearchGSTAmount).success(function (response) {
             $scope.BOMList = response.lstMRMEntity;
             $scope.BMTotalCount = response.totalcount;
         }, function (error) {

@@ -33,6 +33,6 @@ namespace NtierMvc.BusinessLogic.Interface
         MRMBillMonitoringEntityDetails GetMRMDetailForGateControlNo(string GateControlNo, string BMno = null);
         MRMBillMonitoringEntity GetBillDetailsPopup(string BMno);
         int GetBillMonitoringNo();
-        MRMBillMonitoringEntityDetails FetchBillMonitoringList(int pageIndex, int pageSize, string DeptName, string SearchVendorTypeId = null, string SearchSupplierId = null, string SearchRMCategory = null, string SearchDeliveryDateFrom = null, string SearchDeliveryDateTo = null);
+        MRMBillMonitoringEntityDetails FetchBillMonitoringList(int pageIndex, int pageSize, string MRMSearchVendorTypeId = null, string MRMSearchSupplierId = null, string MRMSearchSupplierName = null, string MRMSearchApprovedDate = null, string MRMSearchTotalAmount = null);
     }
 }

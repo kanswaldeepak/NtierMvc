@@ -30,6 +30,12 @@ function SaveMRMBillMonitoringDetails(e) {
     Status = GetFormValidationStatus("#formMRMBillMonitoring");
 
     let tableSelected = '#table' + $('#tableSelected').val();
+    let TotalAmount = 0;
+
+    $.each($(tableSelected + " tbody tr"), function () {
+        TotalAmount = TotalAmount + Math.round($(this).find('td:eq(8) input').val());
+    });
+
 
     if (!Status) {
         alert("Kindly Fill all mandatory fields");
@@ -41,6 +47,7 @@ function SaveMRMBillMonitoringDetails(e) {
             arr.push({
                 BMno: $("#BMno").val(),
                 SupplyType: $("#MRMSupplyType").val(),
+                VendorId: $("#MRMVendorId").val(),
                 GateNo: $("#MRMGateNo").val(),
                 GateControlNo: $("#MRMGateControlNo").val(),                
                 SupplierInvNo: $("#MRMSupplierInvNo").val(),
@@ -61,7 +68,8 @@ function SaveMRMBillMonitoringDetails(e) {
                 TotalPrice: $(this).find('td:eq(5) span').text(),
                 SACNo: $(this).find('td:eq(6) input').val(),
                 GSTPercent: $(this).find('td:eq(7) input').val(),
-                GSTAmount: $(this).find('td:eq(8) input').val()
+                GSTAmount: $(this).find('td:eq(8) input').val(),
+                TotalAmount: TotalAmount
                 
             });
         });

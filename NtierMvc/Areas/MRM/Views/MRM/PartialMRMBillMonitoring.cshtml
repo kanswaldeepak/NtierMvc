@@ -11,75 +11,79 @@
         <div class="row">
             <table class="text-center">
                 <tr>
-                    <td>Type</td>
-                    <td>Vendor Nature</td>
-                    <td>Vendor Name</td>
-                    <td>Function Area</td>
-                    <td>Financial Year</td>
-                    <td>Approval Status</td>
+                    <td>
+                        <label>Vendor Type</label>
+                    </td>
+                    <td>
+                        <label>Supplier ID</label>
+                    </td>
+                    <td>
+                        <label>Supplier Name</label>
+                    </td>
+                    <td>
+                        <label>Approved Date</label>
+                    </td>
+                    <td>
+                        <label>Amount</label>
+                    </td>
+                    <td></td>
                 </tr>
                 <tr>
                     <td>
-                        @Html.DropDownList("Type", new SelectList(@ViewBag.ListType, "DataStringValueField", "DataTextField", "Select"),
+                        @Html.DropDownList("VendorType", new SelectList(@ViewBag.ListVendorType, "DataStringValueField", "DataTextField", "Select"),
+                                new
+                                {
+                                    @class = "form-control",
+                                    @id = "MRMSearchVendorTypeId",
+                                    ng_model = "MRMSearchVendorTypeId"
+                                })
+                    </td>
+                    <td>
+                        @Html.DropDownList("SupplierId", new SelectList(@ViewBag.ListSupplierId, "DataStringValueField", "DataTextField", "Select"),
+                                   new
+                                   {
+                                       @class = "form-control",
+                                       @id = "MRMSearchSupplierId",
+                                       ng_model = "MRMSearchSupplierId",
+                                       @multiple = "true"
+                                   })
+                    </td>
+                    <td>
+                        @Html.DropDownList("SupplierName", new SelectList(@ViewBag.ListSupplierName, "DataStringValueField", "DataTextField", "Select"),
+                                   new
+                                   {
+                                       @class = "form-control",
+                                       @id = "MRMSearchSupplierName",
+                                       ng_model = "MRMSearchSupplierName",
+                                       @multiple = "true"
+                                   })
+                    </td>
+                    <td>
+                        @Html.DropDownList("ApprovedDate", new SelectList(@ViewBag.ListDeliveryDate, "DataStringValueField", "DataTextField", "Select"),
                            new
                            {
                                @class = "form-control",
-                               ng_model = "SearchType",
-                               @id = "TypeList",
-                               @onchange = "getDdlDetailsForList('TypeList')"
+                               @id = "MRMSearchApprovedDate",
+                               ng_model = "MRMSearchApprovedDate",
+                               @multiple = "true"
                            })
                     </td>
                     <td>
-                        @Html.DropDownList("VendorNature", new SelectList(@ViewBag.ListVendorNature, "DataStringValueField", "DataTextField", "Select"),
-                                                   new
-                                                   {
-                                                       @class = "form-control",
-                                                       ng_model = "SearchVendorNature",
-                                                       @id = "VendorNatureList",
-                                                       @onchange = "getDdlDetailsForList('VendorNatureList')"
-                                                   })
-                    </td>
-                    <td>
-                        @Html.DropDownList("VendorName", new SelectList(@ViewBag.ListVendorName, "DataStringValueField", "DataTextField", "Select"),
+                        @Html.DropDownList("TotalAmount", new SelectList(@ViewBag.ListTotalAmount, "DataStringValueField", "DataTextField", "Select"),
                            new
                            {
                                @class = "form-control",
-                               ng_model = "SearchVendorName",
-                               @id = "VendorNameList",
-                               @onchange = "getDdlDetailsForList('VendorNameList')"
+                               @id = "MRMSearchTotalAmount",
+                               ng_model = "MRMSearchTotalAmount",
+                               @multiple = "true"
                            })
-                    </td>
-                    <td>
-                        @Html.DropDownList("FunctionArea", new SelectList(@ViewBag.ListFunctionArea, "DataStringValueField", "DataTextField", "Select"),
-                                                   new
-                                                   {
-                                                       @class = "form-control",
-                                                       ng_model = "SearchFunctionArea",
-                                                       @id = "FunctionAreaList"
-                                                   })
-                    </td>
-                    <td>
-                        @*@Html.DropDownList("FinancialYear", new SelectList(@ViewBag.ListFinancialYear, "DataStringValueField", "DataTextField", "Select"),
-                            new
-                            {
-                                @class = "form-control",
-                                ng_model= "SearchFinancialYear",
-                                @id= "FinancialYearList"
-                            })*@
-                    </td>
-                    <td>
-                        @Html.DropDownList("ApprovalStatus", new SelectList(@ViewBag.ListApprovalStatus, "DataStringValueField", "DataTextField", "Select"),
-                           new
-                           {
-                               @class = "form-control",
-                               ng_model = "SearchApprovalStatus",
-                               @id = "ApprovalStatusList"
-                           })
+
                     </td>
                     <td>
                         <button class="btn btn-link" type="button" id="btnSearch" ng-click="FetchVendorsMasterList()">
                             <i class="fa fa-search"></i>
                         </button>
+                        <button class="btn btn-sm btn-info" type="button" id="btnClearSearchBM">Clear</button>
                     </td>
                 </tr>
             </table>
@@ -231,7 +235,143 @@
         window.GetDdlDetailsForList = '@Url.Action("GetDdlDetailsForList", "GateEntry", new { @Area = ""})';
         window.FetchBillMonitoringList = '@Url.Action("FetchBillMonitoringList", "MRM")';
         window.MRMGateControlNoDetails = '@Url.Action("GetMRMDetailForGateControlNo", "MRM")';
+        window.GetSuppliers = '@Url.Action("GetSuppliers", "MRM")';
+        window.GetSupplierName = '@Url.Action("GetSupplierName", "MRM")';
+        window.GetApprovedDate = '@Url.Action("GetApprovedDate", "MRM")';
+
     });
+
+    $('#MRMSearchVendorTypeId').chosen({
+        width: "210px",
+        placeholder_text_single: "Select Vendor Type Id",
+        placeholder_text_multiple: "Select Vendor Type Id"
+    });
+
+    $('#MRMSearchSupplierId').chosen({
+        width: "210px",
+        placeholder_text_single: "Select Supplier Id",
+        placeholder_text_multiple: "Select Supplier Ids"
+    });
+
+    $('#MRMSearchSupplierName').chosen({
+        width: "210px",
+        placeholder_text_single: "Select Supplier Name",
+        placeholder_text_multiple: "Select Supplier Name"
+    });
+
+    $('#MRMSearchApprovedDate').chosen({
+        width: "210px",
+        placeholder_text_single: "Select Approved Date",
+        placeholder_text_multiple: "Select Approved Date"
+    });
+
+    $('#MRMSearchTotalAmount').chosen({
+        width: "210px",
+        placeholder_text_single: "Select Total Amount",
+        placeholder_text_multiple: "Select Total Amount"
+    });
+
+
+    $("#MRMSearchVendorTypeId").chosen().change(
+        function MRMGetSupplierIds() {
+            var vendorTypeId = $('#MRMSearchVendorTypeId').val();
+
+            return $.ajax({
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                type: 'GET',
+                url: window.GetSuppliers,
+                data: { VendorTypeId: vendorTypeId },
+                success: function (res) {
+                    if (res.length > 0) {
+                        $("#MRMSearchSupplierId").empty();
+                        $.each(res, function (i, item) {
+                            $("#MRMSearchSupplierId").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
+                            $("#MRMSearchSupplierId").trigger("chosen:updated");
+                        })
+                    }
+                },
+                error: function () {
+                    alert(result)
+                }
+            });
+        }
+    );
+
+
+    $('#MRMSearchSupplierId').chosen().change(
+        function MRMGetSupplierNameAndDate() {
+            var SupplierId = '';
+            var x = document.getElementById("MRMSearchSupplierId");
+            for (var i = 0; i < x.options.length; i++) {
+                if (x.options[i].selected == true) {
+                    //alert(x.options[i].value);
+                    SupplierId = SupplierId + x.options[i].value + ',';
+                }
+            }
+
+            SupplierId = SupplierId.substring(0, SupplierId.length - 1);
+
+            return $.ajax({
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                type: 'GET',
+                url: window.GetSupplierName,
+                data: { SupplierId: SupplierId },
+                success: function (res) {
+                    if (res.length > 0) {
+                        $("#MRMSearchSupplierName").empty();
+                        $.each(res, function (i, item) {
+                            $("#MRMSearchSupplierName").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
+                            $("#MRMSearchSupplierName").trigger("chosen:updated");
+                        })
+                    }
+                },
+                error: function (result) {
+                    alert(result)
+                }
+            });
+
+            return $.ajax({
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                type: 'GET',
+                url: window.GetApprovedDate,
+                data: { SupplierId: SupplierId },
+                success: function (res) {
+                    if (res.length > 0) {
+                        $("#MRMSearchApprovedDate").empty();
+                        $.each(res, function (i, item) {
+                            $("#MRMSearchApprovedDate").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
+                            $("#MRMSearchApprovedDate").trigger("chosen:updated");
+                        })
+                    }
+                },
+                error: function (result) {
+                    alert(result)
+                }
+            });
+
+
+        }
+    )
+
+
+
+    $('#btnClearSearchBM').click(
+        function ClearFields() {
+            $('#MRMSearchVendorTypeId').val('');
+            $("#MRMSearchVendorTypeId").trigger("chosen:updated");
+            $('#MRMSearchSupplierId').val('');
+            $("#MRMSearchSupplierId").trigger("chosen:updated");
+            $('#MRMSearchSupplierName').val('');
+            $("#MRMSearchSupplierName").trigger("chosen:updated");
+            $('#MRMSearchApprovedDate').val('');
+            $("#MRMSearchApprovedDate").trigger("chosen:updated");
+            //$('#MRMSearchTotalAmount').val('');
+            //$("#MRMSearchTotalAmount").trigger("chosen:updated");
+        }
+    );
 
 </script>
 

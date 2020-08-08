@@ -262,16 +262,16 @@ namespace NtierMvc.DataAccess.Pool
             return _dbAccess.GetDataSet(SPName, Params);
         }
 
-        public DataSet FetchBillMonitoringList(int pageIndex, int pageSize, string DeptName, string SearchVendorTypeId = null, string SearchSupplierId = null, string SearchRMCategory = null, string SearchDeliveryDateFrom = null, string SearchDeliveryDateTo = null)
+        public DataSet FetchBillMonitoringList(int pageIndex, int pageSize, string MRMSearchVendorTypeId = null, string MRMSearchSupplierId = null, string MRMSearchSupplierName = null, string MRMSearchApprovedDate = null, string MRMSearchTotalAmount = null)
         {
             var parms = new Dictionary<string, object>();
             parms.Add("@pageIndex", pageIndex);
             parms.Add("@pageSize", pageSize);
-            parms.Add("@SearchVendorTypeId", SearchVendorTypeId);
-            parms.Add("@SearchSupplierId", SearchSupplierId);
-            parms.Add("@SearchRMCategory", SearchRMCategory);
-            parms.Add("@SearchDeliveryDateFrom", SearchDeliveryDateFrom);
-            parms.Add("@SearchDeliveryDateTo", SearchDeliveryDateTo);
+            parms.Add("@SearchVendorTypeId", MRMSearchVendorTypeId);
+            parms.Add("@SearchSupplierId", MRMSearchSupplierId);
+            parms.Add("@SearchSupplierName", MRMSearchSupplierName);
+            parms.Add("@SearchApprovedDate", MRMSearchApprovedDate);
+            parms.Add("@SearchTotalAmount", MRMSearchTotalAmount);
 
             string spName = ConfigurationManager.AppSettings["FetchBillMonitoringList"];
             return _dbAccess.GetDataSet(spName, parms);

@@ -177,9 +177,9 @@ namespace NtierMvc.API.Controllers.Application
         [HttpGet]
         [Route("api/MRMDetail/FetchMRMBillMonitoringList")]
         //[ResponseType(typeof(MRMBillMonitoringEntityDetails))]
-        public IHttpActionResult FetchMRMBillMonitoringList(int pageIndex, int pageSize, string DeptName=null, string SearchVendorTypeId = null, string SearchSupplierId = null, string SearchRMCategory = null, string SearchDeliveryDateFrom = null, string SearchDeliveryDateTo = null)
+        public IHttpActionResult FetchMRMBillMonitoringList(int pageIndex, int pageSize, string MRMSearchVendorTypeId = null, string MRMSearchSupplierId = null, string MRMSearchSupplierName = null, string MRMSearchApprovedDate = null, string MRMSearchTotalAmount = null)
         {
-            return Ok(_repository.FetchBillMonitoringList(pageIndex, pageSize, DeptName, SearchVendorTypeId, SearchSupplierId, SearchRMCategory, SearchDeliveryDateFrom, SearchDeliveryDateTo));
+            return Ok(_repository.FetchBillMonitoringList(pageIndex, pageSize, MRMSearchVendorTypeId, MRMSearchSupplierId, MRMSearchSupplierName, MRMSearchApprovedDate, MRMSearchTotalAmount));
         }
 
 

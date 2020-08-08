@@ -566,7 +566,7 @@ namespace NtierMvc.BusinessLogic.Worker
                         MRMBillMonitoringEntity Model = new MRMBillMonitoringEntity();
 
                         Model.VendorNatureId = dr1.IsNull("VendorNatureId") ? string.Empty : Convert.ToString(dr1["VendorNatureId"]);
-                        Model.VendorId = dr1.IsNull("VendorId") ? string.Empty : Convert.ToString(dr1["VendorId"]);
+                        Model.VendorId = dr1.IsNull("VendorId") ? 0 : Convert.ToInt32(dr1["VendorId"]);
                         Model.VendorName = dr1.IsNull("VendorName") ? string.Empty : Convert.ToString(dr1["VendorName"]);
                         Model.City = dr1.IsNull("City") ? string.Empty : Convert.ToString(dr1["City"]);
                         Model.EndUse = dr1.IsNull("EndUse") ? string.Empty : Convert.ToString(dr1["EndUse"]);
@@ -644,7 +644,7 @@ namespace NtierMvc.BusinessLogic.Worker
                         Model.SupplierInvDate = dr1.IsNull("SupplierDate") ? string.Empty : Convert.ToString(dr1["SupplierDate"]);
 
                         Model.VendorNatureId = dr1.IsNull("VendorNatureId") ? string.Empty : Convert.ToString(dr1["VendorNatureId"]);
-                        Model.VendorId = dr1.IsNull("VendorId") ? string.Empty : Convert.ToString(dr1["VendorId"]);
+                        Model.VendorId = dr1.IsNull("VendorId") ? 0 : Convert.ToInt32(dr1["VendorId"]);
                         Model.VendorName = dr1.IsNull("VendorName") ? string.Empty : Convert.ToString(dr1["VendorName"]);
                         Model.City = dr1.IsNull("City") ? string.Empty : Convert.ToString(dr1["City"]);
                         Model.EndUse = dr1.IsNull("EndUse") ? string.Empty : Convert.ToString(dr1["EndUse"]);
@@ -721,14 +721,14 @@ namespace NtierMvc.BusinessLogic.Worker
             return BMNo;
         }
 
-        public MRMBillMonitoringEntityDetails FetchBillMonitoringList(int pageIndex, int pageSize, string DeptName, string SearchVendorTypeId = null, string SearchSupplierId = null, string SearchRMCategory = null, string SearchDeliveryDateFrom = null, string SearchDeliveryDateTo = null)
+        public MRMBillMonitoringEntityDetails FetchBillMonitoringList(int pageIndex, int pageSize, string MRMSearchVendorTypeId = null, string MRMSearchSupplierId = null, string MRMSearchSupplierName = null, string MRMSearchApprovedDate = null, string MRMSearchTotalAmount = null)
         {
             try
             {
                 MRMBillMonitoringEntityDetails mrmEntity = new MRMBillMonitoringEntityDetails();
                 mrmEntity.lstMRMEntity = new List<MRMBillMonitoringEntity>();
 
-                DataSet ds = _repository.FetchBillMonitoringList(pageIndex, pageSize, DeptName, SearchVendorTypeId, SearchSupplierId, SearchRMCategory, SearchDeliveryDateFrom, SearchDeliveryDateTo);
+                DataSet ds = _repository.FetchBillMonitoringList(pageIndex, pageSize, MRMSearchVendorTypeId, MRMSearchSupplierId, MRMSearchSupplierName, MRMSearchApprovedDate, MRMSearchTotalAmount);
 
                 if (ds.Tables.Count > 0)
                 {
@@ -746,7 +746,7 @@ namespace NtierMvc.BusinessLogic.Worker
                                 obj.SupplyType = dr1.IsNull("SupplyType") ? string.Empty : Convert.ToString(dr1["SupplyType"]);
                                 obj.GateControlNo = dr1.IsNull("GateControlNo") ? string.Empty : Convert.ToString(dr1["GateControlNo"]);
 
-                                obj.VendorId = dr1.IsNull("VendorId") ? string.Empty : Convert.ToString(dr1["VendorId"]);
+                                //obj.VendorId = dr1.IsNull("VendorId") ? 0 : Convert.ToInt32(dr1["VendorId"]);
                                 obj.VendorName = dr1.IsNull("VendorName") ? string.Empty : Convert.ToString(dr1["VendorName"]);
                                 obj.SupplierInvNo = dr1.IsNull("SupplierInvNo") ? string.Empty : Convert.ToString(dr1["SupplierInvNo"]);
                                 obj.SupplierInvDate = dr1.IsNull("SupplierInvDate") ? "" : Convert.ToString(dr1["SupplierInvDate"]);

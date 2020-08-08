@@ -11,11 +11,11 @@ namespace NtierMvc.Model.MRM
     {
         public int Id { get; set; }
         public int BMno { get; set; }
+        public int VendorId { get; set; }
         public int GateNo { get; set; }
         public string SupplyType { get; set; }
         public string GateControlNo { get; set; }
         public string VendorNatureId { get; set; }
-        public string VendorId { get; set; }
         public string VendorName { get; set; }
         public string City { get; set; }
         public string EndUse { get; set; }
@@ -63,6 +63,7 @@ namespace NtierMvc.Model.MRM
         public string SACNo { get; set; }
         public string GSTPercent { get; set; }
         public string GSTAmount { get; set; }
+        public decimal TotalAmount { get; set; }
 
     }
 
@@ -70,6 +71,7 @@ namespace NtierMvc.Model.MRM
     {
         public int Id { get; set; }
         public int BMno { get; set; }
+        public int VendorId { get; set; }
         public int GateNo { get; set; }
         public string SupplyType { get; set; }
         public string GateControlNo { get; set; }
@@ -87,6 +89,7 @@ namespace NtierMvc.Model.MRM
         public string SACNo { get; set; }
         public string GSTPercent { get; set; }
         public string GSTAmount { get; set; }
+        public decimal TotalAmount { get; set; }
         public string ApprovedStatus { get; set; }
         public string ApprovedBy { get; set; }
         public string ApprovedDate { get; set; }

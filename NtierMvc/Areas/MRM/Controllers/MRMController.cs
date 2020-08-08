@@ -56,8 +56,10 @@ namespace NtierMvc.Areas.MRM.Controllers
             //For 
             ViewBag.ListVendorType = model.GetMasterTableStringList("Master.Vendor", "Id", "VendorType", "", "", GeneralConstants.ListTypeD);
             ViewBag.ListSupplierId = model.GetMasterTableStringList("Clientele_Master", "Id", "VendorID", "", "", GeneralConstants.ListTypeD);
+            ViewBag.ListSupplierName = model.GetMasterTableStringList("Clientele_Master", "Id", "VendorName", "", "", GeneralConstants.ListTypeD);
+            ViewBag.ListTotalAmount = model.GetMasterTableStringList("BillMonitoring", "TotalAmount", "TotalAmount", "", "", GeneralConstants.ListTypeD);
             ViewBag.ListRMCategory = model.GetMasterTableStringList("Master.Taxonomy", "DropDownID", "ObjectName", "PRCat", "Property", GeneralConstants.ListTypeD);
-            List<DropDownEntity> newlst = model.GetMasterTableStringList("PurchaseRequest", "DeliveryDate", "DeliveryDate", "", "", GeneralConstants.ListTypeD);
+            List<DropDownEntity> newlst = model.GetMasterTableStringList("BillMonitoring", "ApprovedDate", "ApprovedDate", "", "", GeneralConstants.ListTypeD);
 
             CultureInfo provider = CultureInfo.InvariantCulture;
             DateTime dateTime;
@@ -1135,23 +1137,51 @@ namespace NtierMvc.Areas.MRM.Controllers
             }
         }
 
-        public JsonResult FetchBillMonitoringList(string pageIndex, string pageSize, string DeptName, string SearchVendorTypeId = null, string SearchSupplierId = null, string SearchRMCategory = null, string SearchDeliveryDateFrom = null, string SearchDeliveryDateTo = null)
+        public JsonResult FetchBillMonitoringList(string pageIndex, string pageSize, string MRMSearchVendorTypeId = null, string MRMSearchSupplierId = null, string MRMSearchSupplierName = null, string MRMSearchApprovedDate = null, string MRMSearchTotalAmount = null)
         {
-            DeptName = DeptName == null ? string.Empty : DeptName;
-            SearchVendorTypeId = SearchVendorTypeId == null ? string.Empty : SearchVendorTypeId;
-            SearchSupplierId = SearchSupplierId == null ? string.Empty : SearchSupplierId;
-            SearchRMCategory = SearchRMCategory == null ? string.Empty : SearchRMCategory;
-            SearchDeliveryDateFrom = SearchDeliveryDateFrom == null ? string.Empty : SearchDeliveryDateFrom;
-            SearchDeliveryDateTo = SearchDeliveryDateTo == null ? string.Empty : SearchDeliveryDateTo;
+            MRMSearchVendorTypeId = MRMSearchVendorTypeId == null ? string.Empty : MRMSearchVendorTypeId;
+            MRMSearchSupplierId = MRMSearchSupplierId == null ? string.Empty : MRMSearchSupplierId;
+            MRMSearchSupplierName = MRMSearchSupplierName == null ? string.Empty : MRMSearchSupplierName;
+            MRMSearchApprovedDate = MRMSearchApprovedDate == null ? string.Empty : MRMSearchApprovedDate;
+            MRMSearchTotalAmount = MRMSearchTotalAmount == null ? string.Empty : MRMSearchTotalAmount;
 
             MRMBillMonitoringEntityDetails bmD = new MRMBillMonitoringEntityDetails();
 
-            bmD = objManager.FetchBillMonitoringList(Convert.ToInt32(pageIndex), Convert.ToInt32(pageSize), DeptName, SearchVendorTypeId, SearchSupplierId, SearchRMCategory, SearchDeliveryDateFrom, SearchDeliveryDateTo);
+            bmD = objManager.FetchBillMonitoringList(Convert.ToInt32(pageIndex), Convert.ToInt32(pageSize), MRMSearchVendorTypeId, MRMSearchSupplierId , MRMSearchSupplierName , MRMSearchApprovedDate , MRMSearchTotalAmount);
 
             return new JsonResult { Data = bmD, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
             //return custDetail.LstCusEnt;
         }
 
+        public JsonResult GetSupplierName(string SupplierId)
+        {
+            try
+            {
+                List<DropDownEntity> ddl = model.GetDropDownList("Clientele_Master", GeneralConstants.ListTypeD, "Id", "VendorName", SupplierId, "Id");
+                return new JsonResult { Data = ddl, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+            }
+            catch (Exception ex)
+            {
+                return new JsonResult { Data = ex, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                throw;
+            }
+
+        }
+
+        public JsonResult GetApprovedDate(string SupplierId)
+        {
+            try
+            {
+                List<DropDownEntity> ddl = model.GetDropDownList("BillMonitoring", GeneralConstants.ListTypeD, "Id", "ApprovedDate", SupplierId, "VendorId");
+                return new JsonResult { Data = ddl, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+            }
+            catch (Exception ex)
+            {
+                return new JsonResult { Data = ex, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                throw;
+            }
+
+        }
 
 
 

@@ -363,13 +363,13 @@ namespace NtierMvc.Areas.MRM.Models
             return Model;
         }
 
-        public MRMBillMonitoringEntityDetails FetchBillMonitoringList(int pageIndex, int pageSize, string DeptName=null, string SearchVendorTypeId = null, string SearchSupplierId = null, string SearchRMCategory = null, string SearchDeliveryDateFrom = null, string SearchDeliveryDateTo = null)
+        public MRMBillMonitoringEntityDetails FetchBillMonitoringList(int pageIndex, int pageSize, string MRMSearchVendorTypeId = null, string MRMSearchSupplierId = null, string MRMSearchSupplierName = null, string MRMSearchApprovedDate = null, string MRMSearchTotalAmount = null)
         {
             var baseAddress = "MRMDetail";
             MRMBillMonitoringEntityDetails prDetails = new MRMBillMonitoringEntityDetails();
             using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
             {
-                HttpResponseMessage response = client.GetAsync(baseAddress + "/FetchMRMBillMonitoringList?pageIndex=" + pageIndex + "&pageSize=" + pageSize + "&DeptName=" + DeptName + "&SearchVendorTypeId=" + SearchVendorTypeId + "&SearchSupplierId=" + SearchSupplierId + "&SearchRMCategory=" + SearchRMCategory + "&SearchDeliveryDateFrom=" + SearchDeliveryDateFrom + "&SearchDeliveryDateTo=" + SearchDeliveryDateTo).Result;
+                HttpResponseMessage response = client.GetAsync(baseAddress + "/FetchMRMBillMonitoringList?pageIndex=" + pageIndex + "&pageSize=" + pageSize + "&MRMSearchVendorTypeId=" + MRMSearchVendorTypeId + "&MRMSearchSupplierId=" + MRMSearchSupplierId + "&MRMSearchSupplierName=" + MRMSearchSupplierName + "&MRMSearchApprovedDate=" + MRMSearchApprovedDate + "&MRMSearchTotalAmount=" + MRMSearchTotalAmount).Result;
                 if (response.IsSuccessStatusCode)
                 {
                     var data = response.Content.ReadAsStringAsync().Result;
