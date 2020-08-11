@@ -9,7 +9,7 @@
     </div>
     <div class="col-md-10">
         <div class="row">
-            <table class="text-center">
+            <table>
                 <tr>
                     <td>
                         <label>Vendor Type</label>
@@ -115,12 +115,6 @@
                         </div>
                     </th>
                     <th>
-                        Vendor Id
-                        <div class="c2">
-                            Vendor Id
-                        </div>
-                    </th>
-                    <th>
                         Vendor Name
                         <div class="c2">
                             Vendor Name
@@ -167,9 +161,6 @@
                     </td>
                     <td>
                         {{L.GateControlNo}}
-                    </td>
-                    <td>
-                        {{L.VendorId}}
                     </td>
                     <td>
                         {{L.VendorName}}
@@ -360,16 +351,12 @@
 
     $('#btnClearSearchBM').click(
         function ClearFields() {
-            $('#MRMSearchVendorTypeId').val('');
-            $("#MRMSearchVendorTypeId").trigger("chosen:updated");
-            $('#MRMSearchSupplierId').val('');
-            $("#MRMSearchSupplierId").trigger("chosen:updated");
-            $('#MRMSearchSupplierName').val('');
-            $("#MRMSearchSupplierName").trigger("chosen:updated");
-            $('#MRMSearchApprovedDate').val('');
-            $("#MRMSearchApprovedDate").trigger("chosen:updated");
-            //$('#MRMSearchTotalAmount').val('');
-            //$("#MRMSearchTotalAmount").trigger("chosen:updated");
+            
+            $('#MRMSearchVendorTypeId').val('').trigger('chosen:updated');
+            $('#MRMSearchSupplierId').val([]).trigger('chosen:updated');
+            $('#MRMSearchSupplierName').val([]).trigger('chosen:updated');
+            $('#MRMSearchApprovedDate').val([]).trigger('chosen:updated');
+            $('#MRMSearchTotalAmount').val([]).trigger('chosen:updated');
         }
     );
 

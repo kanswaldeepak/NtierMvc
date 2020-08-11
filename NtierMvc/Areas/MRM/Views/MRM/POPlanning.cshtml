@@ -371,12 +371,10 @@
 
         $('#btnClearSearchPO').click(
             function ClearFields() {
-                $('#POSearchVendorTypeId').val('');
-                $("#POSearchVendorTypeId").trigger("chosen:updated");
-                $('#POSearchSupplierId').val('');
-                $("#POSearchSupplierId").trigger("chosen:updated");
-                $('#POSearchRMCategory').val('');
-                $("#POSearchRMCategory").trigger("chosen:updated");
+
+                $('#POSearchVendorTypeId').val('').trigger('chosen:updated');
+                $('#POSearchSupplierId').val([]).trigger('chosen:updated');
+                $('#POSearchRMCategory').val([]).trigger('chosen:updated');
                 $('#POSearchDeliveryDateFrom').val('');
                 $('#POSearchDeliveryDateTo').val('');
             }

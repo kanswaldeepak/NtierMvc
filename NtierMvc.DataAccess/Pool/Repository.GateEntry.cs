@@ -96,22 +96,28 @@ namespace NtierMvc.DataAccess.Pool
         public string SaveGateEntryDetails(GateEntryEntity entity)
         {
             string msgCode = "";
-
-            string spName = ConfigurationManager.AppSettings["SaveGateEntryDetails"];
-            var parms = new Dictionary<string, object>();
-            parms.Add("@Id", string.IsNullOrEmpty(entity.Id.ToString()) ? 0 : entity.Id);
-            parms.Add("@VendorPONO", entity.VendorPONO);
-            parms.Add("@GateNo", entity.GateNo);
-            parms.Add("@GateControlNo", entity.GateControlNo);
-            parms.Add("@VehicleNo", entity.VehicleNo);
-            parms.Add("@ContainerNo", entity.ContainerNo);
-            parms.Add("@DriverName", entity.DriverName);
-            parms.Add("@DriverContactNo", entity.DriverContactNo);
-            parms.Add("@TimeIn", entity.TimeIn);
-            parms.Add("@TimeOut", entity.TimeOut);
-            parms.Add("@VehicleReleased", entity.VehicleReleased);
-            parms.Add("@SupplyType", entity.SupplyType);
-            _dbAccess.ExecuteNonQuery(spName, parms, "@o_MsgCode", out msgCode);
+            try
+            {
+                string spName = ConfigurationManager.AppSettings["SaveGateEntryDetails"];
+                var parms = new Dictionary<string, object>();
+                parms.Add("@Id", string.IsNullOrEmpty(entity.Id.ToString()) ? 0 : entity.Id);
+                parms.Add("@VendorPONO", entity.VendorPONO);
+                parms.Add("@GateNo", entity.GateNo);
+                parms.Add("@GateControlNo", entity.GateControlNo);
+                parms.Add("@VehicleNo", entity.VehicleNo);
+                parms.Add("@ContainerNo", entity.ContainerNo);
+                parms.Add("@DriverName", entity.DriverName);
+                parms.Add("@DriverContactNo", entity.DriverContactNo);
+                parms.Add("@TimeIn", entity.TimeIn);
+                parms.Add("@TimeOut", entity.TimeOut);
+                parms.Add("@VehicleReleased", entity.VehicleReleased);
+                parms.Add("@SupplyType", entity.SupplyType);
+                _dbAccess.ExecuteNonQuery(spName, parms, "@o_MsgCode", out msgCode);
+            }
+            catch (Exception ex)
+            {
+                msgCode = ex.Message;
+            }
 
             return msgCode;
         }

@@ -398,14 +398,12 @@
 
         $('#btnClearSearchPR').click(
             function ClearFields() {
-                $('#PRSearchVendorTypeId').val('');
-                $("#PRSearchVendorTypeId").trigger("chosen:updated");
-                $('#PRSearchSupplierId').val('');
-                $("#PRSearchSupplierId").trigger("chosen:updated");
-                $('#PRSearchRMCategory').val('');
-                $("#PRSearchRMCategory").trigger("chosen:updated");
                 $('#PRSearchDeliveryDateFrom').val('');
                 $('#PRSearchDeliveryDateTo').val('');
+
+                $('#PRSearchVendorTypeId').val('').trigger('chosen:updated');
+                $('#PRSearchSupplierId').val([]).trigger('chosen:updated');
+                $('#PRSearchRMCategory').val([]).trigger('chosen:updated');
             }
         );
 

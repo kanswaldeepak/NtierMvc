@@ -401,6 +401,18 @@
         }
     )
 
+    $('#btnClearSearchGR').click(
+        function ClearFields() {
+
+            $('#GRSearchVendorTypeId').val('').trigger('chosen:updated');
+            $('#GRSearchSupplierId').val([]).trigger('chosen:updated');
+            $('#GRSearchRMCategory').val([]).trigger('chosen:updated');
+            $('#GRSearchDeliveryDateFrom').val('');
+            $('#GRSearchDeliveryDateTo').val('');
+        }
+    );
+
+
     $('.NoEndDate').datepicker({
 
         format: 'mm-dd-yyyy',

@@ -85,7 +85,8 @@ function GetDetailForGateEntry() {
                 $('#GEItemCategory').val(data[0].ItemCategory);
                 $('#GEModeOfTransport').val(data[0].ModeOfTransport);
                 $('#GEGateControlNo').val(data[0].GateControlNo);
-                $('#GESupplyTerms').val(data[0].SupplyTerms);
+                $('#GESupplyTerms').val(data[0].SupplyTerms);                
+                $('#GateNo').val(data[0].GateNo);
 
                 switch (data[0].PRCat) {
                     case 'RM':

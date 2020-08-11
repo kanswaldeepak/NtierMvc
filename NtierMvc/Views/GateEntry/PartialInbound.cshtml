@@ -15,7 +15,6 @@
                     <td>Vendor Nature</td>
                     <td>Vendor Name</td>
                     <td>Function Area</td>
-                    <td>Approval Status</td>
                 </tr>
                 <tr>
                     <td>
@@ -56,15 +55,6 @@
                                                        ng_model = "SearchFunctionArea",
                                                        @id = "INBFunctionAreaList"
                                                    })
-                    </td>                    
-                    <td>
-                        @Html.DropDownList("ApprovalStatus", new SelectList(@ViewBag.ListApprovalStatus, "DataStringValueField", "DataTextField", "Select"),
-                           new
-                           {
-                               @class = "form-control",
-                               ng_model = "SearchApprovalStatus",
-                               @id = "INBApprovalStatusList"
-                           })
                     </td>
                     <td>
                         <button class="btn btn-link" type="button" id="btnSearch" ng-click="FetchVendorsMasterList()">
@@ -136,24 +126,7 @@
                             Bill Amount
                         </div>
                     </th>
-                    <th>
-                        Due Date
-                        <div class="c3">
-                            Due Date
-                        </div>
-                    </th>
-                    <th>
-                        Item Description
-                        <div class="c3">
-                            Item Description
-                        </div>
-                    </th>
-                    <th>
-                        Approval Status
-                        <div class="c3">
-                            Approval Status
-                        </div>
-                    </th>
+
                 </tr>
             </thead>
             <tbody>
@@ -190,15 +163,7 @@
                     <td>
                         {{L.BillAmount}}
                     </td>
-                    <td>
-                        {{L.PaymentDueDate}}
-                    </td>
-                    <td>
-                        {{L.ItemDescription}}
-                    </td>
-                    <td>
-                        {{L.ApprovedStatus}}
-                    </td>
+
                 </tr>
             </tbody>
             <tfoot>

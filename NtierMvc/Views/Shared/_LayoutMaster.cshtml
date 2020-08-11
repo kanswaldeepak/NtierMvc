@@ -217,7 +217,7 @@
                             <a class="nav-link" href="@Url.Action("QualityMaster","Quality")">Quality Control</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="@Url.Action("StoresMaster","Stores", new { Area="Stores"})">Stores</a>
+                            <a class="nav-link" ng-click="FetchInboundList()" href="@Url.Action("StoresMaster","Stores", new { Area="Stores"})">Stores</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="@Url.Action("TradeMaster","Trade")">Trade Finance</a>

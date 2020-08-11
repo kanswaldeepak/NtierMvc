@@ -11,7 +11,7 @@
 <div ng-controller="MainController">
 
     <div class="tab">
-        <button id="defaultOpen" class="tablinks" onclick="openCity(event, 'InboundView')" >Inbound</button>
+        <button id="defaultOpen" class="tablinks" onclick="openCity(event, 'InboundView')" ng-click="FetchInboundList()" >Inbound</button>
         <button id="OutboundViewLink" class="tablinks" onclick="openCity(event, 'OutboundView')">Outbound</button>
     </div>
 
