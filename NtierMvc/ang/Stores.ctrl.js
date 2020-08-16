@@ -92,8 +92,7 @@ angular.module('App').controller("StoresController", function ($scope, $http, $t
                 $('#formGoodsReciept input[type=radio],input[type=text], select, textarea').prop("disabled", true);
                 $('.save_results').css('display', 'none');
                 $('.cancel_results').css('display', 'none');
-                $('.bs-tooltip-top').css('display', 'none');
-
+                
                 if (!($('.modal.in').length)) {
                     $('.modal-dialog').css({
                         top: '5%',

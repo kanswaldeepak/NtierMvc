@@ -6,7 +6,7 @@ namespace NtierMvc.Model
     public class GateEntryEntity
     {
         public int Id { get; set; }
-        public int GateNo { get; set; }
+        public string GateNo { get; set; }
         public string GateControlNo { get; set; }
         public string PONo { get; set; }
         public string POdate { get; set; }
@@ -32,14 +32,18 @@ namespace NtierMvc.Model
         public string UserInitial { get; set; }
         public string UnitNo { get; set; }        
         public string VehicleNo { get; set; }
+        public string GateDate { get; set; }
         public string DriverName { get; set; }
         public string DriverContactNo { get; set; }
-        public string TimeIn { get; set; }
-        public string TimeOut { get; set; }
+        public bool TimeIn { get; set; }
+        public bool TimeOut { get; set; }
+        public string TimeInDate { get; set; }
+        public string TimeOutDate { get; set; }
         public string VehicleReleased { get; set; }
         public string SupplyTerms { get; set; }
         public string ContainerNo { get; set; }
         public string SupplyType { get; set; }
+        public string ViewType { get; set; }
         
     }
 
@@ -64,7 +68,6 @@ namespace NtierMvc.Model
         public string TimeIn { get; set; }
         public string TimeOut { get; set; }
         public string VehicleReleased { get; set; }
-
     }
 
     public class GateEntryEntityDetails

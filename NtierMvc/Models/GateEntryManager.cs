@@ -58,17 +58,15 @@ namespace NtierMvc.Model
             return result;
         }
 
-        public GateEntryEntityDetails FetchInboundList(int pageIndex, int pageSize, string SearchType = null, string SearchVendorNature = null, string SearchVendorName = null, string SearchBillNo = null, string SearchBillDate = null, string SearchItemDescription = null, string SearchCurrency = null, string SearchApprovalStatus = null)
+        public GateEntryEntityDetails FetchInboundList(int pageIndex, int pageSize, string SearchType = null, string SearchVendorNature = null, string SearchVendorName = null, string SearchPONo = null)
         {
             var baseAddress = "GateEntryDetails";
             GateEntryEntityDetails vbmEnt = new GateEntryEntityDetails();
             using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
             {
-                HttpResponseMessage response = client.GetAsync(baseAddress + "/GetGateEntryList?pageIndex="
+                HttpResponseMessage response = client.GetAsync(baseAddress + "/FetchInboundList?pageIndex="
                     + pageIndex + "&pageSize=" + pageSize + "&SearchVendorNature=" + SearchVendorNature
-                    + "&SearchVendorName=" + SearchVendorName + "&SearchBillNo=" + SearchBillNo + "&SearchBillDate="
-                    + SearchBillDate + "&SearchItemDescription=" + SearchItemDescription + "&SearchCurrency="
-                    + SearchCurrency + "&SearchApprovalStatus=" + SearchApprovalStatus).Result;
+                    + "&SearchVendorName=" + SearchVendorName + "&SearchPONo=" + SearchPONo).Result;
                 if (response.IsSuccessStatusCode)
                 {
                     var data = response.Content.ReadAsStringAsync().Result;
@@ -79,13 +77,13 @@ namespace NtierMvc.Model
         }
 
 
-        public GateEntryEntityDetails GetPOTableDetailsForGateEntry(string PRSetno)
+        public GateEntryEntityDetails GetPOTableDetailsForGateEntry(string PRSetno, string GateNo = null)
         {
             var baseAddress = "GateEntryDetails";
             GateEntryEntityDetails tableList = new GateEntryEntityDetails();
             using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
             {
-                HttpResponseMessage response = client.GetAsync(baseAddress + "/GetPOTableDetailsForGateEntry?POSetno=" + PRSetno).Result;
+                HttpResponseMessage response = client.GetAsync(baseAddress + "/GetPOTableDetailsForGateEntry?POSetno=" + PRSetno + "&GateNo=" + GateNo).Result;
                 if (response.IsSuccessStatusCode)
                 {
                     var data = response.Content.ReadAsStringAsync().Result;
@@ -95,7 +93,39 @@ namespace NtierMvc.Model
             return tableList;
         }
 
-        
+        public GateEntryEntity InboundDetailsPopup(string GateNo)
+        {
+            var baseAddress = "GateEntryDetails";
+            GateEntryEntity tableList = new GateEntryEntity();
+            using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
+            {
+                HttpResponseMessage response = client.GetAsync(baseAddress + "/InboundDetailsPopup?GateNo=" + GateNo).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    var data = response.Content.ReadAsStringAsync().Result;
+                    tableList = JsonConvert.DeserializeObject<GateEntryEntity>(data);
+                }
+            }
+            return tableList;
+        }
+
+        public List<DropDownEntity> GetPoNoDetailsForGE()
+        {
+            var baseAddress = "GateEntryDetails";
+            List<DropDownEntity> tblDdl = new List<DropDownEntity>();
+            using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
+            {
+                HttpResponseMessage response = client.GetAsync(baseAddress + "/GetPoNoDetailsForGE").Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    var data = response.Content.ReadAsStringAsync().Result;
+                    tblDdl = JsonConvert.DeserializeObject<List<DropDownEntity>>(data);
+                }
+            }
+            return tblDdl;
+
+        }
+
 
 
     }

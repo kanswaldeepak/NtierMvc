@@ -13,9 +13,11 @@ namespace NtierMvc.BusinessLogic.Interface
     public interface IGateEntryWorker
     {
 
-        //GateEntryEntityDetails GetGateEntryList(int pageIndex, int pageSize, string SearchType = null, string SearchVendorNature = null, string SearchVendorName = null, string SearchBillNo = null, string SearchBillDate = null, string SearchItemDescription = null, string SearchCurrency = null, string SearchApprovalStatus = null);
+        GateEntryEntityDetails FetchInboundList(int pageIndex, int pageSize, string SearchType = null, string SearchVendorNature = null, string SearchVendorName = null, string SearchPONo = null);
 
-        GateEntryEntityDetails GetPOTableDetailsForGateEntry(string POSetno);
+        GateEntryEntityDetails GetPOTableDetailsForGateEntry(string POSetno, string GateNo = null);
+        GateEntryEntity InboundDetailsPopup(string GateNo);
         string SaveGateEntryDetails(GateEntryEntity bEntity);
+        List<DropDownEntity> GetPoNoDetailsForGE();
     }
 }

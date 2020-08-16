@@ -1,4 +1,5 @@
-﻿using NtierMvc.Common;
+﻿using DocumentFormat.OpenXml.Office.CustomUI;
+using NtierMvc.Common;
 using NtierMvc.Infrastructure;
 using NtierMvc.Model;
 using NtierMvc.Models;
@@ -28,13 +29,11 @@ namespace NtierMvc.Controllers
         [HttpGet]
         public ActionResult GateEntryMaster()
         {
-            ViewBag.ListType = model.GetMasterTableStringList("Master.Taxonomy", "DropDownId", "DropDownValue", "QuoteType", "Property", GeneralConstants.ListTypeD);
-            ViewBag.ListVendorNature = "";
-            ViewBag.ListVendorName = "";
-            //ViewBag.ListBillDate = model.GetMasterTableStringList("GateEntry", "Id", "BillDate", "", "", GeneralConstants.ListTypeN);
-            ViewBag.ListFunctionArea = "";
-            //ViewBag.ListFinancialYear = model.GetMasterTableStringList("GateEntry", "FinancialYear", "FinancialYear", "", "", GeneralConstants.ListTypeD);
+            ViewBag.ListSupplyType = model.GetMasterTableStringList("Master.Taxonomy", "DropDownId", "DropDownValue", "SupplyType", "Property", GeneralConstants.ListTypeD);
+            ViewBag.ListVendorNature = model.GetMasterTableStringList("Master.Vendor", "Id", "VendorNature", "", "", GeneralConstants.ListTypeD);
+            ViewBag.ListVendorName = model.GetMasterTableStringList("Clientele_Master", "Id", "VendorName", "", "", GeneralConstants.ListTypeD);            
             ViewBag.ListApprovalStatus = model.GetMasterTableStringList("ApproveStatus", "Id", "Status", "", "", GeneralConstants.ListTypeN);
+            ViewBag.ListPONo = model.GetMasterTableStringList("RMPO", "POSetno", "PONo", "", "", GeneralConstants.ListTypeD);
 
             return View();
         }
@@ -46,9 +45,8 @@ namespace NtierMvc.Controllers
         }
 
         [HttpPost]
-        public ActionResult InboundPopUp(string actionType)
+        public ActionResult InboundPopUp(string actionType, string GateNo=null)
         {
-            ViewBag.ListPONo = model.GetMasterTableStringList("RMPO", "POSetno", "PONo", "", "", GeneralConstants.ListTypeD);            
             ViewBag.ListModeOfTransport = model.GetMasterTableStringList("Master.Taxonomy", "DropDownId", "DropDownValue", "Transport", "Property", GeneralConstants.ListTypeD);
             ViewBag.ListPRCat = model.GetMasterTableStringList("Master.Taxonomy", "DropDownValue", "ObjectName", "PRCat", "Property", GeneralConstants.ListTypeN);
             ViewBag.ListSupplyTerms = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "SupplyTerms", "Property", GeneralConstants.ListTypeN);
@@ -56,25 +54,16 @@ namespace NtierMvc.Controllers
 
             GateEntryEntity orderE = new GateEntryEntity();
             orderE.UnitNo = Session["UserId"].ToString();
+            orderE.ViewType = actionType;
 
             if (actionType == "VIEW" || actionType == "EDIT")
             {
-                //if (!string.IsNullOrEmpty(Id))
-                //    orderE.Id = Convert.ToInt32(Id);
-
-                //orderE = objManager.OrderDetailsPopup(orderE);
-
+                ViewBag.ListPONo = model.GetMasterTableStringList("RMPO", "POSetno", "PONo", "", "", GeneralConstants.ListTypeD);
+                orderE = objManager.InboundDetailsPopup(GateNo);                
             }
             if (actionType == "ADD")
             {
-                //List<DropDownEntity> SelectList = new List<DropDownEntity>();
-                //DropDownEntity objSelect = new DropDownEntity();
-                //objSelect.DataStringValueField = "";
-                //objSelect.DataTextField = "Select";
-                //SelectList.Add(objSelect);
-
-                //ViewBag.ListQuoteNo = ViewBag.ListQuoteSlNo = SelectList;
-
+                ViewBag.ListPONo = objManager.GetPoNoDetailsForGE();
             }
 
             return base.PartialView("~/Views/GateEntry/_InboundPopUp.cshtml", orderE);
@@ -153,20 +142,16 @@ namespace NtierMvc.Controllers
             return new JsonResult { Data = lstVendors, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 
-        public JsonResult FetchInboundList(string pageIndex, string pageSize, string SearchType, string SearchVendorNature, string SearchVendorName, string SearchBillNo, string SearchBillDate, string SearchItemDescription, string SearchCurrency, string SearchApprovalStatus)
+        public JsonResult FetchInboundList(string pageIndex, string pageSize, string SearchType, string SearchVendorNature, string SearchVendorName, string SearchPONo)
         {
             SearchType = SearchType == "-1" ? string.Empty : SearchType;
             SearchVendorNature = SearchVendorNature == "-1" ? string.Empty : SearchVendorNature;
             SearchVendorName = SearchVendorName == "-1" ? string.Empty : SearchVendorName;
-            SearchBillNo = SearchBillNo == "-1" ? string.Empty : SearchBillNo;
-            SearchBillDate = SearchBillDate == "-1" ? string.Empty : SearchBillDate;
-            SearchItemDescription = SearchItemDescription == "-1" ? string.Empty : SearchItemDescription;
-            SearchCurrency = SearchCurrency == "-1" ? string.Empty : SearchCurrency;
-            SearchApprovalStatus = SearchApprovalStatus == "-1" ? string.Empty : SearchApprovalStatus;
+            SearchPONo = SearchPONo == "-1" ? string.Empty : SearchPONo;
 
             GateEntryEntityDetails vbmDetail = new GateEntryEntityDetails();
-            vbmDetail = objManager.FetchInboundList(Convert.ToInt32(pageIndex), Convert.ToInt32(pageSize), SearchType, SearchVendorNature, SearchVendorName, SearchBillNo, SearchBillDate, SearchItemDescription, SearchCurrency, SearchApprovalStatus);
-            return new JsonResult { Data = vbmDetail.lstVBM, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+            vbmDetail = objManager.FetchInboundList(Convert.ToInt32(pageIndex), Convert.ToInt32(pageSize), SearchType, SearchVendorNature, SearchVendorName, SearchPONo);
+            return new JsonResult { Data = vbmDetail, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
             //return techDetail.LstCusEnt;
         }
 
@@ -181,25 +166,29 @@ namespace NtierMvc.Controllers
             else if (SelectedId == "VendorNameList")
                 lstDdl = model.GetMasterTableStringList("GateEntry", "Id", "BillNo", SelectedVal, "VendorId", GeneralConstants.ListTypeN);
 
-
             return new JsonResult { Data = lstDdl, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
-
         }
 
-        public JsonResult GetDetailsForGateEntry(string POSetno)
+        public JsonResult GetPOTableDetailsForGateEntry(string POSetno, string GateNo = null)
         {
             GateEntryEntityDetails poObj = new GateEntryEntityDetails();
-            poObj = objManager.GetPOTableDetailsForGateEntry(POSetno);
+            poObj = objManager.GetPOTableDetailsForGateEntry(POSetno, GateNo);
 
             return new JsonResult { Data = poObj.lstVBM, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 
         [HttpPost]
-        public JsonResult GetPODetailFromSupplyType(string SupplyType)
+        public JsonResult GetPODetailFromSupplyType(string SupplyType, string ViewType)
         {
             try
             {
-                var ddl = model.GetDropDownList("RMPO", GeneralConstants.ListTypeD, "POSetno", "PONo", SupplyType, "SupplyType");
+                List<DropDownEntity> ddl = new List<DropDownEntity>();
+
+                if(ViewType == "ADD")
+                    ddl = objManager.GetPoNoDetailsForGE();
+                else
+                ddl = model.GetMasterTableStringList("RMPO", "POSetno", "PONo", SupplyType, "SupplyType", GeneralConstants.ListTypeD);
+
                 return new JsonResult { Data = ddl, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
             }
             catch (Exception ex)
@@ -209,6 +198,8 @@ namespace NtierMvc.Controllers
             }
 
         }
+
+
 
     }
 }

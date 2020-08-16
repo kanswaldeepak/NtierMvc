@@ -30,7 +30,7 @@
 
 <div ng-controller="ModalController" class="row">
     <form id="formInbound">
-        <div class="col-md-12">            
+        <div class="col-md-12">
             <div class="col-md-2 pull-right">
                 <div class="form-group">
                     <label class="control-label" style="font-size: medium">
@@ -67,6 +67,7 @@
         <div class="col-md-12">
             @Html.HiddenFor(m => m.Id)
             @Html.HiddenFor(m => m.GateNo)
+            @Html.TextBoxFor(m => m.ViewType, new { @id = "GEViewType" })
 
             <aside class="info-block" style="margin-top: 100px">
                 <section class="file-marker">
@@ -106,7 +107,7 @@
                                                    @id = "GEVendorPONO",
                                                    @data_inneraction = "validationCall",
                                                    @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
-                                                   @onchange = "GetDetailForGateEntry()"
+                                                   @onchange = "GetPOTableDetailsForGate()"
                                                })
                                             <span class="HideValidMsg">Select PO No</span>
                                         </div>
@@ -441,8 +442,8 @@
                                                                 Total Price
                                                             </td>
                                                             @*<td width="16%">
-                                                            Required Dly. Date
-                                                        </td>*@
+                                                                    Required Dly. Date
+                                                                </td>*@
                                                             <td style="width: 5%;">
                                                                 HSN
                                                             </td>
@@ -539,13 +540,14 @@
                                             <label class="control-label">
                                                 Time In <span class="required">*</span>
                                             </label>
-                                            @Html.TextBoxFor(m => m.TimeIn, new
-                                       {
-                                           @class = "form-control requiredValidation clearField ",
-                                           @id = "GETimeIn",
-                                           @placeholder = "Enter Time In",
-                                           @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
-                                       })
+                                            @Html.CheckBoxFor(m => m.TimeIn, new { @class = "form-control requiredValidation" })
+                                            @*@Html.TextBoxFor(m => m.TimeIn, new
+                                                {
+                                                    @class = "form-control requiredValidation clearField ",
+                                                    @id = "GETimeIn",
+                                                    @placeholder = "Enter Time In",
+                                                    @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                                                })*@
                                             <span class="HideValidMsg">Enter Time In</span>
                                         </div>
                                     </div>
@@ -554,13 +556,14 @@
                                             <label class="control-label">
                                                 Time Out <span class="required">*</span>
                                             </label>
-                                            @Html.TextBoxFor(m => m.TimeOut, new
-                                       {
-                                           @class = "form-control clearField ",
-                                           @id = "GETimeOut",
-                                           @placeholder = "Enter Time Out",
-                                           @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
-                                       })
+                                            @Html.CheckBoxFor(m => m.TimeOut, new { @class = "form-control requiredValidation" })
+                                            @*@Html.TextBoxFor(m => m.TimeOut, new
+                                                {
+                                                    @class = "form-control clearField ",
+                                                    @id = "GETimeOut",
+                                                    @placeholder = "Enter Time Out",
+                                                    @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                                                })*@
                                             <span class="HideValidMsg">Enter Time Out</span>
                                         </div>
                                     </div>
@@ -588,8 +591,8 @@
 
             <div class="row">
                 <div class="col-md-12 pt-4 text-center">
-                    <button style="font-size:18px" type="button" class="btn btn-success btn-sm" id="save_results" ng-click="SaveInboundGateEntry()" >Save</button>
-                    <button style="font-size:18px" type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
+                    <button style="font-size:18px" type="button" class="btn btn-success btn-sm save_results" ng-click="SaveInboundGateEntry()">Save</button>
+                    <button style="font-size:18px" type="button" class="btn btn-secondary btn-sm cancel_results" data-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
@@ -598,7 +601,6 @@
 <script>
     $(document).ready(function () {
         window.SaveGateEntryDetails = '@Url.Action("SaveGateEntryDetails", "GateEntry")';
-        window.GetDetailsForGateEntry = '@Url.Action("GetDetailsForGateEntry", "GateEntry")';
         window.GetPODetailFromSupplyType = '@Url.Action("GetPODetailFromSupplyType", "GateEntry")';
 
         $('#tableRM').hide();

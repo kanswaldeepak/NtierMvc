@@ -1,11 +1,12 @@
 ﻿
 function GetPODetailsFromSupplyType() {
     let SupplyType = $('#GESupplyTypes').val();
+    let ViewType = $('#GEViewType').val();
 
     $.ajax({
         type: 'POST',
         url: window.GetPODetailFromSupplyType,
-        data: JSON.stringify({ SupplyType: SupplyType }),
+        data: JSON.stringify({ SupplyType: SupplyType, ViewType: ViewType }),
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (data) {
@@ -59,11 +60,11 @@ function getDdlDetailsForList(selectObject) {
     })
 }
 
-function GetDetailForGateEntry() {
+function GetPOTableDetailsForGate() {
     var POSetno = $('#GEVendorPONO').val();
 
     $.ajax({
-        url: window.GetDetailsForGateEntry,
+        url: window.GetPOTableDetailsForGateEntry,
         type: 'POST',
         contentType: 'application/json; charset=utf-8',
         dataType: 'json',

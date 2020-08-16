@@ -189,8 +189,6 @@ angular.module('App').controller("MainController", function ($scope, $http, $tim
         });
     }
 
-    //$scope.FetchEnquiryList();
-
     $scope.EnqPageChanged = function () {
         $scope.FetchEnquiryList();
     }
@@ -199,6 +197,8 @@ angular.module('App').controller("MainController", function ($scope, $http, $tim
         $scope.enqPageIndex = 1;
         $scope.FetchEnquiryList();
     }
+
+    $scope.FetchEnquiryList();
 
     $scope.BindEnquiryPopup = function () {
         var _actionType = "ADD"
@@ -975,14 +975,10 @@ angular.module('App').controller("MainController", function ($scope, $http, $tim
     $scope.SearchType = "";
     $scope.SearchVendorNature = "";
     $scope.SearchVendorName = "";
-    $scope.SearchBillNo = "";
-    $scope.SearchBillDate = "";
-    $scope.SearchItemDescription = "";
-    $scope.SearchCurrency = "";
-    $scope.SearchApprovalStatus = "";
+    $scope.SearchPONo = "";
 
     $scope.FetchInboundList = function () {
-        $http.get(window.FetchInboundList+"?pageindex=" + $scope.INBPageIndex + "&pageSize=" + $scope.INBPageSize + "&SearchType=" + $scope.SearchType + "&SearchVendorNature=" + $scope.SearchVendorNature + "&SearchVendorName=" + $scope.SearchVendorName + "&SearchBillNo=" + $scope.SearchBillNo + "&SearchBillDate=" + $scope.SearchBillDate + "&SearchItemDescription=" + $scope.SearchItemDescription + "&SearchCurrency=" + $scope.SearchCurrency + "&SearchApprovalStatus=" + $scope.SearchApprovalStatus).success(function (response) {
+        $http.get(window.FetchInboundsList + "?pageIndex=" + $scope.INBPageIndex + "&pageSize=" + $scope.INBPageSize + "&SearchType=" + $scope.SearchType + "&SearchVendorNature=" + $scope.SearchVendorNature + "&SearchVendorName=" + $scope.SearchVendorName + "&SearchPONo=" + $scope.SearchPONo).success(function (response) {
             $scope.InboundList = response.lstVBM;
             $scope.INBTotalCount = response.totalcount;
         }, function (error) {
@@ -998,6 +994,181 @@ angular.module('App').controller("MainController", function ($scope, $http, $tim
         $scope.INBPageIndex = 1;
         $scope.FetchInboundList();
     }
+
+    $scope.FetchInboundList();
+
+
+    $scope.LoadInboundViewPopup = function (_GateNo) {
+        var _actionType = "VIEW"
+        //var ID = e.target.id;
+        $.ajax({
+            type: "POST",
+            data: { actionType: _actionType, GateNo: _GateNo },
+            datatype: "JSON",
+            url: window.InboundPopUp,
+            success: function (html) {
+                SetModalTitle("View Inbound Details")
+                SetModalBody(html);
+                HideLoadder();
+                SetModalWidth("1400px");
+                ShowModal();
+                //$scope.GetPODetailsFromSupplyType();
+
+                $scope.GetPOTableDetailsForGateEntry();   
+                $('#formInbound input[type=radio],input[type=text], select').prop("disabled", true);
+                $('.save_results').css('display', 'none');
+                $('.cancel_results').css('display', 'none');
+
+                if (!($('.modal.in').length)) {
+                    $('.modal-dialog').css({
+                        top: '5%',
+                        left: '0%'
+                    });
+                }
+                $('#ModalPopup').modal({
+                    backdrop: false,
+                    show: true
+                });
+
+                $('.modal-dialog').draggable({
+                    handle: ".modal-body"
+                });
+            },
+            error: function () {
+                HideLoadder();
+                alert(window.ErrorMsg);
+            }
+        })
+    }
+
+    $scope.LoadInboundEditPopup = function (_GateNo) {
+        var _actionType = "EDIT"
+        //var ID = e.target.id;
+        $.ajax({
+            type: "POST",
+            data: { actionType: _actionType, GateNo: _GateNo },
+            datatype: "JSON",
+            url: window.InboundPopUp,
+            success: function (res) {
+                var html = $compile(res)($scope);
+                SetModalTitle("Edit Inbound Details")
+                SetModalBody(html);
+                HideLoadder();
+                SetModalWidth("1400px");
+                ShowModal();
+                //$scope.GetPODetailsFromSupplyType();
+                $scope.GetPOTableDetailsForGateEntry();   
+
+                if (!($('.modal.in').length)) {
+                    $('.modal-dialog').css({
+                        top: '5%',
+                        left: '0%'
+                    });
+                }
+                $('#ModalPopup').modal({
+                    backdrop: false,
+                    show: true
+                });
+
+                $('.modal-dialog').draggable({
+                    handle: ".modal-body"
+                });
+            },
+            error: function () {
+                HideLoadder();
+                alert(window.ErrorMsg);
+            }
+        })
+    }
+
+    $scope.GetPOTableDetailsForGateEntry = function() {
+        var POSetno = $('#GEVendorPONO').val();
+        var GateNo = $('#GateNo').val();
+        
+        $.ajax({
+            url: window.GetPOTableDetailsForGateEntry,
+            type: 'POST',
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            data: JSON.stringify({ POSetno: POSetno, GateNo: GateNo }),
+            success: function (data) {
+
+                if (data.length > 0) {
+                    $('#tableSelected').val(data[0].PRCat);
+                    $("#HiddenPOSetno").val(data[0].POSetno);
+                    $('#GEPRCat').val(data[0].PRCat);
+                    $('#GEVendorPONO').val(POSetno);
+                    $('#GEPRCat').attr("disabled", true);
+
+                    $('#GEPODate').val(data[0].POdate);
+                    $('#GEPOValidity').val(data[0].POValidity);
+                    $('#GEWorkNo').val(data[0].WorkNo);
+                    $('#GEDeliveryDate').val(data[0].DeliveryDate);
+                    $('#GEPOValidity').val(data[0].POValidity);
+                    $('#GEPORevNo').val(data[0].PORevNo);
+                    $('#GEItemCategory').val(data[0].ItemCategory);
+                    $('#GEModeOfTransport').val(data[0].ModeOfTransport);
+                    $('#GEGateControlNo').val(data[0].GateControlNo);
+                    $('#GESupplyTerms').val(data[0].SupplyTerms);
+                    $('#GateNo').val(data[0].GateNo);
+
+                    switch (data[0].PRCat) {
+                        case 'RM':
+                            $('#tableRM').show();
+                            $('#tableRM tbody').empty();
+
+                            $.each(data, function (i, item) {
+                                $('#tableRM > tbody:last-child').append('<tr><td><span>' + item.SN + '</span></td><td><span>' + item.RMdescription + '</span></td><td><span>' + item.PRqty + '<span></td><td><span>' + item.UOM + '<span></td><td><span>' + item.UnitPrice + '<span></td><td><span>' + item.Discount + '</span>%</td><td><span>' + item.TotalPrice + '</span></td><td><input type="text" name="LotQty" class="form-control" placeholder="Enter Lot Name" /></td><td><input type="text" name="LotDate" class="form-control NoEndDate" placeholder="Enter Lot Date" /></td><td><input type="text" name="LotQty" class="form-control" placeholder="Enter Lot Qty" /></td></tr>');
+                            })
+
+                            break;
+                        case 'BOI':
+                            $('.tableBOI').show();
+                            break;
+                        case 'JW':
+                            $('.tableJW').show();
+                            break;
+                        case 'GI':
+                            $('.tableGI').show();
+                            break;
+                        case 'C':
+                            $('.tableC').show();
+                            break;
+                        case 'O':
+                            $('.tableO').show();
+                            break;
+                        default:
+                            break;
+                    }
+
+
+                }
+            },
+            error: function (res) {
+                alert(res);
+            }
+        })
+    }
+
+    // $scope.GetPODetailsFromSupplyType = function() {
+    //    let SupplyType = $('#GESupplyTypes').val();
+
+    //    $.ajax({
+    //        type: 'POST',
+    //        url: window.GetPODetailFromSupplyType,
+    //        data: JSON.stringify({ SupplyType: SupplyType }),
+    //        contentType: "application/json; charset=utf-8",
+    //        dataType: "json",
+    //        success: function (data) {
+    //            $('#GEVendorPONO').empty();
+    //            $.each(data, function (i, item) {
+    //                $('#GEVendorPONO').append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
+    //            })
+    //        }, error: function (x, e) {
+    //            alert('Some error is occurred, Please try after some time.');
+    //        }
+    //    })
+    //}
 
 
 

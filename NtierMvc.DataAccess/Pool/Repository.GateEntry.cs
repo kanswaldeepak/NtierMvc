@@ -16,80 +16,26 @@ namespace NtierMvc.DataAccess.Pool
     {
         #region Class Methods
 
-        public string SaveGateEntry(GateEntryEntity Model)
+        public DataSet FetchInboundList(int pageIndex, int pageSize, string SearchType = null, string SearchVendorNature = null, string SearchVendorName = null, string SearchPONo = null)
         {
-            string msgCode = "";
-            var Params = new Dictionary<string, object>();
-            //Params.Add("@GateEntryId", Model.Id == 0 ? 0 : Model.Id);
-            //Params.Add("@UserInitial", Model.UserInitial);
-            //Params.Add("@UnitNo", Model.UnitNo);
+            var parms = new Dictionary<string, object>();
+            parms.Add("@pageIndex", pageIndex);
+            parms.Add("@pageSize", pageSize);
+            parms.Add("@SearchType", SearchType);
+            parms.Add("@SearchVendorNature", SearchVendorNature);
+            parms.Add("@SearchVendorName", SearchVendorName);
+            parms.Add("@SearchPONo", SearchPONo);
 
-            //Params.Add("@VendorNatureId", Model.VendorNatureId);
-            //Params.Add("@VendorId", Model.VendorId);
-            //Params.Add("@VendorName", Model.VendorName);
-            //Params.Add("@City", Model.City);
-            //Params.Add("@Type", Model.Type);
-            //Params.Add("@EndUse", Model.EndUse);
-            //Params.Add("@EndUseNo", Model.EndUseNo);
-            //Params.Add("@FunctionalAreaId", Model.FunctionalAreaId);
-            //Params.Add("@VendorPONO", Model.VendorPONO);
-            //Params.Add("@VendorPODate", Model.VendorPODate);
-            //Params.Add("@SupplyType", Model.SupplyType);
-            //Params.Add("@BillNo", Model.BillNo);
-            //Params.Add("@BillDate", Model.BillDate);
-            //Params.Add("@ItemDescription", Model.ItemDescription);
-            //Params.Add("@Uom", Model.Uom);
-            //Params.Add("@Qty", Model.Qty);
-            //Params.Add("@Currency", Model.Currency);
-            //Params.Add("@UnitRate", Model.UnitRate);
-            //Params.Add("@BillAmount", Model.BillAmount);
-            //Params.Add("@PaymentDueDate", Model.PaymentDueDate);
-            //Params.Add("@SCCNO", Model.SCCNO);
-            //Params.Add("@GSTPercent", Model.GSTPercent);
-            //Params.Add("@GSTAmount", Model.GSTAmount);
-            //Params.Add("@PassedBy", Model.PassedBy);
-            //Params.Add("@ApprovedBy", Model.ApprovedBy);
-            //Params.Add("@ApprovedStatus", Model.ApprovedStatus);
-            //Params.Add("@ApprovalDate", Model.ApprovalDate);
-            //Params.Add("@ControlNo", Model.ControlNo);
-            //Params.Add("@ForwardedTo", Model.ForwardedTo);
-            //Params.Add("@CostCenter", Model.CostCenter);
-            //Params.Add("@VehicleNo", Model.VehicleNo);
-            //Params.Add("@DriverName", Model.DriverName);
-            //Params.Add("@DriverContactNo", Model.DriverContactNo);
-            //Params.Add("@TimeIn", Model.TimeIn);
-            //Params.Add("@TimeOut", Model.TimeOut);
-            //Params.Add("@VehicleReleased", Model.VehicleReleased);
-            //Params.Add("@PONumber", Model.PONumber);
-
-            var SPName = ConfigurationManager.AppSettings["SaveGateEntryDetails"];
-            _dbAccess.ExecuteNonQuery(SPName, Params, "@o_MsgCode", out msgCode);
-
-            return msgCode;
+            string spName = ConfigurationManager.AppSettings["FetchInboundList"];
+            return _dbAccess.GetDataSet(spName, parms);
         }
 
-        //public DataSet GetGateEntryList(int pageIndex, int pageSize, string SearchType = null, string SearchVendorNature = null, string SearchVendorName = null, string SearchBillNo = null, string SearchBillDate = null, string SearchItemDescription = null, string SearchCurrency = null, string SearchApprovalStatus = null)
-        //{
-        //    var parms = new Dictionary<string, object>();
-        //    parms.Add("@pageIndex", pageIndex);
-        //    parms.Add("@pageSize", pageSize);
-        //    parms.Add("@SearchType", SearchType);
-        //    parms.Add("@SearchVendorNature", SearchVendorNature);
-        //    parms.Add("@SearchVendorName", SearchVendorName);
-        //    parms.Add("@SearchBillNo", SearchBillNo);
-        //    parms.Add("@SearchBillDate", SearchBillDate);
-        //    parms.Add("@SearchCurrency", SearchCurrency);
-        //    parms.Add("@SearchApprovalStatus", SearchApprovalStatus);
-
-        //    string spName = ConfigurationManager.AppSettings["GetGateEntryList"];
-        //    return _dbAccess.GetDataSet(spName, parms);
-        //}
-
-        public DataSet GetPOTableDetailsForGateEntry(string POSetno)
+        public DataSet GetPOTableDetailsForGateEntry(string POSetno, string GateNo = null)
         {
             var SPName = ConfigurationManager.AppSettings["GetPOTableDetailsForGateEntry"];
             var Params = new Dictionary<string, object>();
             Params.Add("@POSetno", POSetno);
+            Params.Add("@GateNo", GateNo);
             return _dbAccess.GetDataSet(SPName, Params);
         }
 
@@ -121,6 +67,30 @@ namespace NtierMvc.DataAccess.Pool
 
             return msgCode;
         }
+
+        public DataSet InboundDetailsPopup(string GateNo)
+        {
+            var SPName = ConfigurationManager.AppSettings["GetPOTableDetailsForGateEntry"];
+            var Params = new Dictionary<string, object>();
+            Params.Add("@POSetno", null);
+            Params.Add("@GateNo", GateNo);
+            return _dbAccess.GetDataSet(SPName, Params);
+        }
+
+        public List<DropDownEntity> GetPoNoDetailsForGE()
+        {
+            var parms = new Dictionary<string, object>();
+            //parms.Add("@NoType", EndUse);
+            //parms.Add("@quoteTypeId", quoteType);
+            var spName = ConfigurationManager.AppSettings["GetPoNoDetailsForGE"];
+            return DataTableToStringList(_dbAccess.GetDataTable(spName, parms));
+        }
+
+
+
+
+
+
 
         #endregion
     }

@@ -20,19 +20,19 @@ namespace NtierMvc.API.Controllers.Application
     {
         IGateEntryWorker _repository = new GateEntryWorker();
 
-        //[HttpGet]
-        //[Route("api/GateEntryDetails/GetGateEntryList")]
-        //public IHttpActionResult GetGateEntryList(int pageIndex, int pageSize, string SearchType = null, string SearchVendorNature = null, string SearchVendorName = null, string SearchBillNo = null, string SearchBillDate = null, string SearchItemDescription = null, string SearchCurrency = null, string SearchApprovalStatus = null)
-        //{
-        //    return Ok(_repository.GetGateEntryList(Convert.ToInt32(pageIndex), Convert.ToInt32(pageSize), SearchType, SearchVendorNature, SearchVendorName, SearchBillNo, SearchBillDate, SearchItemDescription, SearchCurrency, SearchApprovalStatus));
-        //}
+        [HttpGet]
+        [Route("api/GateEntryDetails/FetchInboundList")]
+        public IHttpActionResult FetchInboundList(int pageIndex, int pageSize, string SearchType = null, string SearchVendorNature = null, string SearchVendorName = null, string SearchPONo = null)
+        {
+            return Ok(_repository.FetchInboundList(Convert.ToInt32(pageIndex), Convert.ToInt32(pageSize), SearchType, SearchVendorNature, SearchVendorName, SearchPONo));
+        }
 
 
         [HttpGet]
         [Route("api/GateEntryDetails/GetPOTableDetailsForGateEntry")]
-        public IHttpActionResult GetPOTableDetailsForGateEntry(string POSetno)
+        public IHttpActionResult GetPOTableDetailsForGateEntry(string POSetno, string GateNo = null)
         {
-            return Ok(_repository.GetPOTableDetailsForGateEntry(POSetno));
+            return Ok(_repository.GetPOTableDetailsForGateEntry(POSetno, GateNo));
         }
 
         [HttpPost]
@@ -42,6 +42,21 @@ namespace NtierMvc.API.Controllers.Application
         {
             return Ok(_repository.SaveGateEntryDetails(iEntity));
         }
+
+        [HttpGet]
+        [Route("api/GateEntryDetails/InboundDetailsPopup")]
+        public IHttpActionResult InboundDetailsPopup(string GateNo)
+        {
+            return Ok(_repository.InboundDetailsPopup(GateNo));
+        }
+
+        [HttpGet]
+        [Route("api/GateEntryDetails/GetPoNoDetailsForGE")]
+        public IHttpActionResult GetPoNoDetailsForGE()
+        {
+            return Ok(_repository.GetPoNoDetailsForGE());
+        }
+
 
 
     }

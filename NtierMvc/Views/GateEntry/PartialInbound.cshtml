@@ -9,16 +9,16 @@
     </div>
     <div class="col-md-10">
         <div class="row">
-            <table class="text-center">
+            <table>
                 <tr>
                     <td>Type</td>
                     <td>Vendor Nature</td>
                     <td>Vendor Name</td>
-                    <td>Function Area</td>
+                    <td>PO No</td>
                 </tr>
                 <tr>
                     <td>
-                        @Html.DropDownList("Type", new SelectList(@ViewBag.ListType, "DataStringValueField", "DataTextField", "Select"),
+                        @Html.DropDownList("Type", new SelectList(@ViewBag.ListSupplyType, "DataStringValueField", "DataTextField", "Select"),
                            new
                            {
                                @class = "form-control",
@@ -48,16 +48,16 @@
                            })
                     </td>
                     <td>
-                        @Html.DropDownList("FunctionArea", new SelectList(@ViewBag.ListFunctionArea, "DataStringValueField", "DataTextField", "Select"),
+                        @Html.DropDownList("PONo", new SelectList(@ViewBag.ListPONo, "DataStringValueField", "DataTextField", "Select"),
                                                    new
                                                    {
                                                        @class = "form-control",
-                                                       ng_model = "SearchFunctionArea",
-                                                       @id = "INBFunctionAreaList"
+                                                       ng_model = "SearchPONo",
+                                                       @id = "INBPONoList"
                                                    })
                     </td>
                     <td>
-                        <button class="btn btn-link" type="button" id="btnSearch" ng-click="FetchVendorsMasterList()">
+                        <button class="btn btn-link" type="button" id="btnSearch" ng-click="FetchInboundList()">
                             <i class="fa fa-search"></i>
                         </button>
                     </td>
@@ -69,7 +69,7 @@
 
 <div class="wrapper">
     <div class="container">
-        <table class="text-center">
+        <table>
             <thead class="tblhead">
                 <tr>
                     <th>
@@ -85,85 +85,60 @@
                         </div>
                     </th>
                     <th>
-                        Vendor Nature
+                        Gate Control No
                         <div class="c2">
-                            VendorNature
+                            Gate Control No
                         </div>
                     </th>
                     <th>
-                        Vendor Name
+                        Vehicle No
                         <div class="c2">
-                            Vendor Name
+                            Vehicle No
                         </div>
-                    </th>
+                    </th>                    
                     <th>
-                        Control No
+                        Time In Date Time
                         <div class="c2">
-                            Control No
+                            Time In Date Time
                         </div>
                     </th>
                     <th>
-                        Approval Date
+                        Time Out Date Time
                         <div class="c2">
-                            Approval Date
+                            Time Out Date Time
                         </div>
                     </th>
-                    <th>
-                        Bill No
-                        <div class="c2">
-                            Bill No
-                        </div>
-                    </th>
-                    <th>
-                        Currency
-                        <div class="c3">
-                            Currency
-                        </div>
-                    </th>
-                    <th>
-                        Bill Amount
-                        <div class="c3">
-                            Bill Amount
-                        </div>
-                    </th>
-
                 </tr>
             </thead>
             <tbody>
                 <tr ng-repeat="L in InboundList">
                     <td>
-                        <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="VIEW" ng-click="LoadInboundPopup(L.Id)">
+                        <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="VIEW" ng-click="LoadInboundViewPopup(L.GateNo)">
                             <i class="fa fa-eye"></i>
                         </button>
-                        <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="EDIT" ng-click="LoadInboundPopup(L.Id)">
-                            <i class="fa fa-edit"></i>
-                        </button>
-                    </td>
-                    <td>
-                        {{L.Type}}
-                    </td>
-                    <td>
-                        {{L.VendorNature}}
-                    </td>
-                    <td>
-                        {{L.VendorName}}
-                    </td>
-                    <td>
-                        {{L.ControlNo}}
-                    </td>
-                    <td>
-                        {{L.ApprovalDate}}
-                    </td>
-                    <td>
-                        {{L.BillNo}}
-                    </td>
-                    <td>
-                        {{L.Currency}}
-                    </td>
-                    <td>
-                        {{L.BillAmount}}
-                    </td>
+                        <div ng-if="L.TimeIn && !L.TimeOut">
+                            <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="EDIT" ng-click="LoadInboundEditPopup(L.GateNo)">
+                                <i class="fa fa-edit"></i>
+                            </button>
+                        </div>
 
+                    </td>
+                    <td>
+                        {{L.SupplyType}}
+                    </td>
+                    <td>
+                        {{L.GateControlNo}}
+                    </td>
+                    <td>
+                        {{L.VehicleNo}}
+                    </td>
+                    <td>
+                        {{L.TimeInDate}}
+                    </td>
+                    <td>
+                        {{L.TimeOutDate}}
+                    </td>
+                    
                 </tr>
             </tbody>
             <tfoot>
@@ -210,7 +185,7 @@
     $(document).ready(function () {
         window.InboundPopUp = '@Url.Action("InboundPopUp", "GateEntry")';
         window.GetDdlDetailsForInboundList = '@Url.Action("GetDdlDetailsForList", "GateEntry")';
-        window.FetchInboundList = '@Url.Action("FetchInboundList", "GateEntry")';
+        window.GetPOTableDetailsForGateEntry = '@Url.Action("GetPOTableDetailsForGateEntry", "GateEntry")';
     });
 
 </script>

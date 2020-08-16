@@ -68,14 +68,21 @@
     @RenderSection("scripts", required: false)
     @RenderSection("PageCustomStyles", required: false)
 
-    <script type="text/javascript">
+<script type="text/javascript">
+
+        $(document).ready(function () {
+            window.FetchCustomerList = '@Url.Action("FetchCustomerList", "Customer")';
+            window.FetchEnquiryList = '@Url.Action("FetchEnquiryList", "Enquiry")';
+            window.FetchInboundsList = '@Url.Action("FetchInboundList", "GateEntry")';
+        });
+
         $(document).ajaxError(function (xhr, props) {
             if (props.status === 401) {
                 window.location.href = location.href;
                 //  location.reload();
             }
         });
-    </script>
+</script>
 
     @*@RenderSection("PageScripts", required: false)*@
 </head>
@@ -217,7 +224,7 @@
                             <a class="nav-link" href="@Url.Action("QualityMaster","Quality")">Quality Control</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" ng-click="FetchInboundList()" href="@Url.Action("StoresMaster","Stores", new { Area="Stores"})">Stores</a>
+                            <a class="nav-link" href="@Url.Action("StoresMaster","Stores", new { Area="Stores"})">Stores</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="@Url.Action("TradeMaster","Trade")">Trade Finance</a>
@@ -419,9 +426,11 @@
         // $('#m_aside_left_offcanvas_toggle_1').click(function(){
         // 	$('#m_aside_left_offcanvas_toggle').click();
         // });
+
         $('#m_aside_header_topbar_mobile_toggle_1').click(function () {
             $('#m_aside_header_topbar_mobile_toggle').click();
         });
+
     </script>
 
 </body>
