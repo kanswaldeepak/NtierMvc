@@ -170,6 +170,8 @@ namespace NtierMvc.BusinessLogic.Worker
                         Model.DriverContactNo = dr1.IsNull("DriverContactNo") ? "" : Convert.ToString(dr1["DriverContactNo"]);
                         Model.TimeIn = dr1.IsNull("TimeIn") ? false : Convert.ToBoolean(dr1["TimeIn"]);
                         Model.TimeOut = dr1.IsNull("TimeOut") ? false : Convert.ToBoolean(dr1["TimeOut"]);
+                        Model.TimeInDate = dr1.IsNull("TimeInDate") ? "" : Convert.ToString(dr1["TimeInDate"]);
+                        Model.TimeOutDate = dr1.IsNull("TimeOutDate") ? "" : Convert.ToString(dr1["TimeOutDate"]);
                         Model.VehicleReleased = dr1.IsNull("VehicleReleased") ? "" : Convert.ToString(dr1["VehicleReleased"]);
                         Model.SupplyType = dr1.IsNull("SupplyType") ? "" : Convert.ToString(dr1["SupplyType"]);
 

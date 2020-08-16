@@ -106,44 +106,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="bin\Debug\NtierMvc.BusinessLogic.dll.config" />
-    <None Include="bin\Release\NtierMvc.BusinessLogic.dll.config" />
     <None Include="obj\Release\NtierMvc.BusinessLogic.csproj.CopyComplete" />
     <None Include="obj\Release\NtierMvc.BusinessLogic.csproj.CoreCompileInputs.cache" />
     <None Include="obj\Release\NtierMvc.BusinessLogic.csprojAssemblyReference.cache" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="bin\Debug\DocumentFormat.OpenXml.dll" />
-    <Content Include="bin\Debug\DocumentFormat.OpenXml.xml" />
-    <Content Include="bin\Debug\itextsharp.dll" />
-    <Content Include="bin\Debug\itextsharp.xml" />
-    <Content Include="bin\Debug\Newtonsoft.Json.dll" />
-    <Content Include="bin\Debug\Newtonsoft.Json.pdb" />
-    <Content Include="bin\Debug\Newtonsoft.Json.xml" />
-    <Content Include="bin\Debug\NtierMvc.BusinessLogic.dll" />
-    <Content Include="bin\Debug\NtierMvc.BusinessLogic.pdb" />
-    <Content Include="bin\Debug\NtierMvc.Common.dll" />
-    <Content Include="bin\Debug\NtierMvc.Common.pdb" />
-    <Content Include="bin\Debug\NtierMvc.DataAccess.dll" />
-    <Content Include="bin\Debug\NtierMvc.DataAccess.pdb" />
-    <Content Include="bin\Debug\NtierMvc.Model.dll" />
-    <Content Include="bin\Debug\NtierMvc.Model.pdb" />
-    <Content Include="bin\Release\DocumentFormat.OpenXml.dll" />
-    <Content Include="bin\Release\DocumentFormat.OpenXml.xml" />
-    <Content Include="bin\Release\itextsharp.dll" />
-    <Content Include="bin\Release\itextsharp.xml" />
-    <Content Include="bin\Release\Newtonsoft.Json.dll" />
-    <Content Include="bin\Release\Newtonsoft.Json.pdb" />
-    <Content Include="bin\Release\Newtonsoft.Json.xml" />
-    <Content Include="bin\Release\NtierMvc.BusinessLogic.dll" />
-    <Content Include="bin\Release\NtierMvc.BusinessLogic.pdb" />
-    <Content Include="bin\Release\NtierMvc.Common.dll" />
-    <Content Include="bin\Release\NtierMvc.Common.pdb" />
-    <Content Include="bin\Release\NtierMvc.DataAccess.dll" />
-    <Content Include="bin\Release\NtierMvc.DataAccess.pdb" />
-    <Content Include="bin\Release\NtierMvc.Model.dll" />
-    <Content Include="bin\Release\NtierMvc.Model.pdb" />
     <Content Include="obj\Release\NtierMvc.BusinessLogic.csproj.FileListAbsolute.txt" />
     <Content Include="obj\Release\NtierMvc.BusinessLogic.dll" />
     <Content Include="obj\Release\NtierMvc.BusinessLogic.pdb" />

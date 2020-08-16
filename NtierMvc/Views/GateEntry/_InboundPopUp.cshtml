@@ -67,7 +67,7 @@
         <div class="col-md-12">
             @Html.HiddenFor(m => m.Id)
             @Html.HiddenFor(m => m.GateNo)
-            @Html.TextBoxFor(m => m.ViewType, new { @id = "GEViewType" })
+            @Html.HiddenFor(m => m.ViewType, new { @id = "GEViewType" })
 
             <aside class="info-block" style="margin-top: 100px">
                 <section class="file-marker">
@@ -540,14 +540,22 @@
                                             <label class="control-label">
                                                 Time In <span class="required">*</span>
                                             </label>
-                                            @Html.CheckBoxFor(m => m.TimeIn, new { @class = "form-control requiredValidation" })
+                                            <div class="row">
+                                                <div class="col-md-2">
+                                                    @Html.CheckBoxFor(m => m.TimeIn, new { @class = "form-control requiredValidation", @style = "width: 15px; height: 15px;" })
+                                                </div>
+                                                <div class="col-md-10">
+                                                    @Html.DisplayFor(m => m.TimeInDate, new { @class = "form-control requiredValidation", @disabled = "disabled" })
+                                                </div>
+                                            </div>
+                                            
                                             @*@Html.TextBoxFor(m => m.TimeIn, new
-                                                {
-                                                    @class = "form-control requiredValidation clearField ",
-                                                    @id = "GETimeIn",
-                                                    @placeholder = "Enter Time In",
-                                                    @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
-                                                })*@
+                                            {
+                                                @class = "form-control requiredValidation clearField ",
+                                                @id = "GETimeIn",
+                                                @placeholder = "Enter Time In",
+                                                @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                                            })*@
                                             <span class="HideValidMsg">Enter Time In</span>
                                         </div>
                                     </div>
@@ -556,14 +564,22 @@
                                             <label class="control-label">
                                                 Time Out <span class="required">*</span>
                                             </label>
-                                            @Html.CheckBoxFor(m => m.TimeOut, new { @class = "form-control requiredValidation" })
+                                            <div class="row">
+                                                <div class="col-md-2">
+                                                    @Html.CheckBoxFor(m => m.TimeOut, new { @class = "form-control requiredValidation", @style = "width: 15px; height: 15px;" })
+                                                </div>
+                                                <div class="col-md-10">
+                                                    @Html.DisplayFor(m => m.TimeOutDate, new { @class = "form-control requiredValidation", @disabled = "disabled" })
+                                                </div>
+                                            </div>
+                                            
                                             @*@Html.TextBoxFor(m => m.TimeOut, new
-                                                {
-                                                    @class = "form-control clearField ",
-                                                    @id = "GETimeOut",
-                                                    @placeholder = "Enter Time Out",
-                                                    @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
-                                                })*@
+        {
+            @class = "form-control clearField ",
+            @id = "GETimeOut",
+            @placeholder = "Enter Time Out",
+            @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+        })*@
                                             <span class="HideValidMsg">Enter Time Out</span>
                                         </div>
                                     </div>

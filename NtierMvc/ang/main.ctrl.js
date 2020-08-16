@@ -1015,7 +1015,7 @@ angular.module('App').controller("MainController", function ($scope, $http, $tim
                 //$scope.GetPODetailsFromSupplyType();
 
                 $scope.GetPOTableDetailsForGateEntry();   
-                $('#formInbound input[type=radio],input[type=text], select').prop("disabled", true);
+                $('#formInbound input[type=checkbox],input[type=radio],input[type=text], select').prop("disabled", true);
                 $('.save_results').css('display', 'none');
                 $('.cancel_results').css('display', 'none');
 
