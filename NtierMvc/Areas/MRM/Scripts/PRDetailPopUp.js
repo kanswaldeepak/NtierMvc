@@ -93,7 +93,7 @@ function saveButtonPRDetail(data) {
 }
 
 
-function CalcTotal(ob) {
+function CalcTotalForPR(ob) {
     let trob = $(ob).closest('tr');
     let qty = parseFloat($.trim(trob.find(".RMPRqty").val()));
     if (!qty || isNaN(qty)) {
@@ -102,8 +102,10 @@ function CalcTotal(ob) {
     let unitprice = parseFloat($.trim(trob.find(".RMUnitPrice").val()));
     if (!unitprice || isNaN(unitprice)) {
         unitprice = 0;
-    }
-    trob.find(".RMTotalPrice").val(Math.round(qty * unitprice));
+    } 
+
+    var totalPrice = qty * unitprice;
+    trob.find(".RMTotalPrice").val(Math.round(totalPrice * Math.pow(10, 2)) / Math.pow(10, 2));
 }
 
 function showRequestedSign(id,level) {
@@ -306,9 +308,9 @@ function addNewRM(e) {
     $trNew.find("#RMQtyReqd").attr('class', 'form-control');
     $trNew.find("#RMQtyStock").attr('class', 'form-control');
     $trNew.find("#RMPRqty").attr('class', 'form-control RMPRqty');
-    $trNew.find("#RMPRqty").attr('onkeyup', 'CalcTotal(this)');
+    $trNew.find("#RMPRqty").attr('onkeyup', 'CalcTotalForPR(this)');
     $trNew.find("#RMUnitPrice").attr('class', 'form-control RMUnitPrice');
-    $trNew.find("#RMUnitPrice").attr('onkeyup', 'CalcTotal(this)');
+    $trNew.find("#RMUnitPrice").attr('onkeyup', 'CalcTotalForPR(this)');
     $trNew.find("#RMTotalPrice").attr('class', 'form-control RMTotalPrice');
     $trNew.find("#RMHardness").attr('class', 'form-control');
 

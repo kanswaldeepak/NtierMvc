@@ -355,10 +355,10 @@
                                     <input name="QtyStock" type="text" class="form-control RMQtyStock" onkeypress="return AllowNumbers(event);" />
                                 </td>
                                 <td>
-                                    <input name="PRqty" type="text" class="form-control RMPRqty" onkeypress="return AllowNumbers(event);" onkeyup="CalcTotal(this)" />
+                                    <input name="PRqty" type="text" class="form-control RMPRqty" onkeypress="return AllowNumbers(event);" onkeyup="CalcTotalForPR(this)" />
                                 </td>
                                 <td>
-                                    <input name="UnitPrice" type="text" class="form-control RMUnitPrice" onkeyup="CalcTotal(this);" onkeypress="return validateDecimalNumbers(this, event);" />
+                                    <input name="UnitPrice" type="text" class="form-control RMUnitPrice" onkeyup="CalcTotalForPR(this);" onkeypress="return validateDecimalNumbers(this, event);" />
                                 </td>
                                 <td>
                                     <input name="TotalPrice" type="text" readonly="readonly" class="form-control RMTotalPrice" />

@@ -20,6 +20,7 @@
                        @class = "form-control requiredValidation",
                        data_id = "VendorTypeId",
                        data_select = "VendorType",
+                       @onchange = "SetVendorNature()",
                        @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
                    })
                     </div>
@@ -102,7 +103,7 @@
                 <div class="col-md-3">
                     <div class="form-group">
                         <label class="control-label">ADDRESS LINE 3</label>
-                        @Html.TextBoxFor(m => m.Address3,new
+                        @Html.TextBoxFor(m => m.Address3, new
                    {
                        @class = "form-control",
                        @placeholder = "ADDRESS3"
@@ -177,8 +178,7 @@
                                @class = "form-control MobileNumber",
                                @maxlength = "12",
                                @onkeypress = "return AllowNumbers(event)",
-                               @placeholder = "Telephone",
-                               @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                               @placeholder = "Telephone"
                            })<label class="HideValidMsg">Fields is Required *</label>
                             </div>
                         </div>
@@ -192,17 +192,16 @@
                        @class = "form-control MobileNumber",
                        @maxlength = "12",
                        @onkeypress = "return AllowNumbers(event)",
-                       @placeholder = "Telephone",
-                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                       @placeholder = "Telephone"
                    })<label class="HideValidMsg">Fields is Required *</label>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="form-group">
-                        <label class="control-label">MOBILE 1</label>
+                        <label class="control-label">MOBILE 1 <span class="required">*</span></label>
                         @Html.TextBoxFor(m => m.mob1, new
                    {
-                       @class = "form-control MobileNumber",
+                       @class = "form-control requiredValidation MobileNumber",
                        @maxlength = "12",
                        @onkeypress = "return AllowNumbers(event)",
                        @placeholder = "Mobile",
@@ -243,9 +242,8 @@
                    {
                        @id = "EMAIL2",
                        @class = "form-control EmailID",
-                       @placeholder = "Email ID",
+                       @placeholder = "Email ID"
                        //@style = "text-transform:uppercase;",
-                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
                    })<label class="HideValidMsg">Fields is Required *</label>
                     </div>
                 </div>
@@ -319,6 +317,14 @@
         });
     }
 
+    function SetVendorNature() {
+        
+        var VendorType = $('#VendorTypeId').val();
+        $('select[name^="VendorNatureId"] option:selected').attr("selected", null);
+
+        $('select[name^="VendorNatureId"] option[value="' + VendorType + '"]').attr("selected", "selected");
+    }
+
 
     //LEASE DATE AND EXP LEASE DATE VALIDATION
     $('.ApprovalDate').datepicker({
@@ -338,4 +344,3 @@
         endDate: 'today',
     });
 </script>
-<script src="~/Scripts/CustomJS/common.js"></script>
