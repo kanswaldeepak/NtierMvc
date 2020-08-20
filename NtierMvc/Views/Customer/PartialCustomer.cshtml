@@ -7,106 +7,90 @@
 }
 
 <div class="row mt-3">
-    <div class="col-md-2">
-        <button id="btnAdd" type="button" class="btn btn-outline-primary btn-sm" style="float: left;" ng-click="BindCustomerPopup()"><i class="fa fa-plus"></i> <b>Add New Customer</b></button>
-    </div>
-    <div class="col-md-8">
-        <div class="row text-center">
-            <div class="col-md-2">
-                <label>Vendor ID</label>
-            </div>
-            <div class="col-md-2">
+    <table>
+        <tr>
+            <td>
+                <button id="btnAdd" type="button" class="btn btn-outline-primary btn-sm" style="float: left;" ng-click="BindCustomerPopup()"><i class="fa fa-plus"></i> <b>Add New Customer</b></button>
+            </td>
+            <td>
                 <label>Vendor Type</label>
-            </div>
-            <div class="col-md-2">
+            </td>
+            <td>
                 <label>Vendor Nature</label>
-            </div>
-            <div class="col-md-2">
-                <label>Function Area</label>
-            </div>
-            <div class="col-md-2">
+            </td>
+            <td>
+                <label>Vendor ID</label>
+            </td>
+            <td>
                 <label>Vendor Name</label>
-            </div>
-            <div class="col-md-2">
+            </td>
+            <td>
+                <label>Function Area</label>
+            </td>
+            <td>
                 <label>Quote Type</label>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-md-2">
-    </div>
-    <div class="col-md-8">
-        <div class="row">
-            <div class="col-md-2">
-                <div class="input-group">
-                    @Html.DropDownList("VendorId", new SelectList(@ViewBag.ListVendorId, "DataStringValueField", "DataTextField", "Select"),
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>
+                @Html.DropDownList("VendorType", new SelectList(@ViewBag.ListVendorType, "DataStringValueField", "DataTextField", "Select"),
                            new
                            {
                                @class = "form-control",
-                               ng_model= "SearchCustVendorID"
+                               ng_model = "SearchCustVendorType"
                            })
-                </div>
-            </div>
-            <div class="col-md-2">
-                <div class="input-group">
-                    @Html.DropDownList("VendorType", new SelectList(@ViewBag.ListVendorType, "DataStringValueField", "DataTextField", "Select"),
+            </td>
+            <td>
+                @Html.DropDownList("VendorNatureId", new SelectList(@ViewBag.ListVendorNature, "DataStringValueField", "DataTextField", "Select"),
                            new
                            {
                                @class = "form-control",
-                               ng_model= "SearchCustVendorType"
+                               ng_model = "SearchCustVendorNature",
+                               @onchange = "GetVendorListForCust()"
                            })
-                </div>
-            </div>
-            <div class="col-md-2">
-                <div class="input-group">
-                    @Html.DropDownList("VendorNatureId", new SelectList(@ViewBag.ListVendorNature, "DataStringValueField", "DataTextField", "Select"),
+            </td>
+            <td>
+                @Html.DropDownList("VendorId", new SelectList(@ViewBag.ListVendorId, "DataStringValueField", "DataTextField", "Select"),
                            new
                            {
                                @class = "form-control",
-                               ng_model= "SearchCustVendorNature"
+                               ng_model = "SearchCustVendorID"
                            })
-                </div>
-            </div>
-            <div class="col-md-2">
-                <div class="input-group">
-                    @Html.DropDownList("FunctionalAreaId", new SelectList(@ViewBag.ListFunctionalArea, "DataStringValueField", "DataTextField", "Select"),
+            </td>
+            <td>
+                @Html.DropDownList("VendorName", new SelectList(@ViewBag.ListVendorName, "DataStringValueField", "DataTextField", "Select"),
+                          new
+                          {
+                              @class = "form-control",
+                              ng_model = "SearchCustName"
+                          })
+            </td>
+            <td>
+                @Html.DropDownList("FunctionalAreaId", new SelectList(@ViewBag.ListFunctionalArea, "DataStringValueField", "DataTextField", "Select"),
                            new
                            {
                                @class = "form-control",
-                               ng_model= "SearchCustFunctionalArea"
+                               ng_model = "SearchCustFunctionalArea"
                            })
-                </div>
-            </div>
-            <div class="col-md-2">
-                <div class="input-group">
-                    @Html.DropDownList("VendorName", new SelectList(@ViewBag.ListVendorName, "DataStringValueField", "DataTextField", "Select"),
+            </td>
+            <td>
+                @Html.DropDownList("QuoteType", new SelectList(@ViewBag.ListQuoteType, "DataStringValueField", "DataTextField", "Select"),
                            new
                            {
                                @class = "form-control",
-                               ng_model= "SearchCustName"
+                               ng_model = "SearchQuoteType"
                            })
-                </div>
-            </div>
-            <div class="col-md-2">
-                <div class="input-group">
-                    @Html.DropDownList("QuoteType", new SelectList(@ViewBag.ListQuoteType, "DataStringValueField", "DataTextField", "Select"),
-                           new
-                           {
-                               @class = "form-control",
-                               ng_model= "SearchQuoteType"
-                           })
-                </div>
-            </div>
-            <div class="input-group-btn col-md-2">
+            </td>
+            <td>
                 <button class="btn btn-link" type="button" id="btnSearch" ng-click="FetchCustomerList()">
                     <i class="fa fa-search"></i>
                 </button>
-            </div>
-        </div>
-    </div>
+            </td>
+        </tr>
+    </table>
 </div>
+
 <div class="row mt-1">
     <div class="col-md-12">
         @*<div class="form-group text-right">
@@ -179,23 +163,23 @@
                         </div>
                     </th>
                     @*<th>
-                        State
-                        <div class="c3">
-                            State
-                        </div>
-                    </th>
-                    <th>
-                        Country
-                        <div class="c3">
-                            Country
-                        </div>
-                    </th>
-                    <th>
-            Email
-            <div class="c3">
-                Email
-            </div>
-        </th>*@
+                                        State
+                                        <div class="c3">
+                                            State
+                                        </div>
+                                    </th>
+                                    <th>
+                                        Country
+                                        <div class="c3">
+                                            Country
+                                        </div>
+                                    </th>
+                                    <th>
+                            Email
+                            <div class="c3">
+                                Email
+                            </div>
+                        </th>*@
                     <th>
                         Mobile
                         <div class="c3">
@@ -297,151 +281,6 @@
 </div>
 
 
-@*<div class="row">
-        <div class="col-md-12">
-            <div class="table-responsive tbl-content">
-                <table>
-                    <thead style="position: absolute">
-                        <tr>
-                            <th style="min-width: 110px;">
-                                Action
-                            </th>
-                            <th style="min-width: 100px;">
-                                Vendor Id
-                            </th>
-                            <th style="min-width:50px">
-                                Vendor Type
-                            </th>
-                            <th style="min-width: 125px;">
-                                Vendor Nature
-                            </th>
-                            <th style="min-width: 100px;">
-                                Function Area
-                            </th>
-                            <th style="min-width: 115px;">
-                                Vendor Name
-                            </th>
-                            <th style="min-width: 105px;">
-                                City
-                            </th>
-                            <th style="min-width: 80px;">
-                                State
-                            </th>
-                            <th style="min-width: 100px;">
-                                Contact Person
-                            </th>
-                            <th style="min-width: 115px;">
-                                Designation
-                            </th>
-                            <th style="min-width: 150px;">
-                                Country
-                            </th>
-                            <th style="min-width: 90px;">
-                                Email
-                            </th>
-                            <th style="min-width: 100px;">
-                                Mobile
-                            </th>
-                        </tr>
-                    </thead>
-                </table>
-                <table id="tblCustomerDetails" style="margin-top:45px">
-                    <tbody>
-                        <!--<tr>
-                                <td colspan="13" class="text-center">
-                                    <h3>
-                                        {{AvailableCustListTextToShow}}
-                                    </h3>
-                                </td>
-                            </tr>-->
-    <tr ng-repeat="L in AvailableCustomerList" style="min-width: 110px;">
-        <td style="min-width:125px">
-            <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="VIEW" ng-click="LoadCustomerViewPopup(L.CustomerId)">
-                <i class="fa fa-eye"></i>
-            </button>
-            <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="EDIT" ng-click="LoadCustomerEditPopup(L.CustomerId)">
-                <i class="fa fa-edit"></i>
-            </button>
-            <button type="button" class="btn btn-outline-danger btn-sm" data-toggle="tooltip" data-placement="bottom" title="DELETE" ng-click="DeleteCustomer(L.CustomerId)">
-                <i class="fa fa-trash"></i>
-            </button>
-        </td>
-        <td style="min-width: 100px;">
-            {{L.VendorId}}
-        </td>
-        <td style="min-width:50px">
-            {{L.VendorType}}
-        </td>
-        <td style="min-width:125px">
-            {{L.VendorNature}}
-        </td>
-        <td style="min-width:100px">
-            {{L.FunctionArea}}
-        </td>
-        <td style="min-width:115px">
-            {{L.VendorName}}
-        </td>
-        <td style="min-width:105px">
-            {{L.City}}
-        </td>
-        <td style="min-width:80px">
-            {{L.State}}
-        </td>
-        <td style="min-width:100px">
-            {{L.ContactPerson}}
-        </td>
-        <td style="min-width:115px">
-            {{L.Designation}}
-        </td>
-        <td style="min-width:150px">
-            {{L.Country}}
-        </td>
-        <td style="min-width:50px">
-            {{L.email1}}
-        </td>
-        <td style="min-width:50px">
-            {{L.mob1}}
-        </td>
-    </tr>
-                    </tbody>
-    <tfoot>
-        <tr>
-            <td align="center" colspan="13">
-                <div class="row">
-                    <div class="col-md-2">
-                        <span class="form-group pull-left page-size form-inline">
-                            <select id="ddlCustPageSize" class="form-control control-color"
-                                    ng-model="custPageSize"
-                                    ng-change="CustChangePageSize()">
-                                <option value="100000">All</option>
-                                <option value="5">5</option>
-                                <option value="10">10</option>
-                                <option value="25">25</option>
-                                <option value="50">50</option>
-                                <option value="100">100</option>
-                            </select>
-                        </span>
-                    </div>
-                    <div class="col-md-8 pull-right">
-                        <div class="row">
-                            <div class="col-md-8">
-                                <pagination total-items="custTotalCount" ng-change="CustPageChanged()" items-per-page="custPageSize" direction-links="true" ng-model="custPageIndex" max-size="maxsize" class="pagination" boundary-links="true" rotate="false" num-pages="custNumPages"></pagination>
-                            </div>
-                            <div class="col-md-4">
-                                <a class="btn btn-primary">Page: {{custPageIndex}} / {{custNumPages}}</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </td>
-        </tr>
-    </tfoot>
-                </table>
-            </div>
-        </div>
-    </div>*@
-
 <div class="modal" id="addCustomerDetails" tabindex="-1" role="dialog">
     @using (Ajax.BeginForm(actionName: "SaveCustomerDetails", controllerName: "Customer", ajaxOptions: new AjaxOptions
     {
@@ -539,6 +378,7 @@
         //$('#btnSearch').on("click", function () {
         //    CustomerDetails.OnSearch();
         //})
+        window.GetVendorListForCusts = '@Url.Action("GetVendorListForCust","Customer")';
     });
 
     //$(function () {
@@ -568,13 +408,36 @@
         var one1 = String(mobileNumber).charAt(0);
         var one_as_number1 = Number(one1);
         if (one1 != "") {
-            if (one_as_number1 < 7) {
+            if (one_as_number1 < 6) {
                 //$("#spn-Sucess-Failure").text('Mobile Number should start with 7 or 8 or 9')
                 //$("#Sucess-Failure").modal('show');
                 alertNotification('Please Enter valid Mobile Number');
                 $(e).val('');
             }
         }
+    }
+
+    function GetVendorListForCust() {
+        let VendorNature = $('#VendorNatureId').val();
+
+        $.ajax({
+            type: 'GET',
+            url: window.GetVendorListForCusts,
+            dataType: 'JSON',
+            data: { VendorNatureId: VendorNature },
+            contentType: 'application/json; charset=utf-8',
+            success: function (res) {
+                if (res.length > 0) {
+                    $("#VendorId").empty();
+                    $.each(res, function (i, item) {
+                        $("#VendorId").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
+                    })
+                }
+            },
+            error: function (res) {
+                alertNotification('Some Error Occurred. Please try later.');
+            }
+        })
     }
 
 

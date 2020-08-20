@@ -237,5 +237,11 @@ namespace NtierMvc.Controllers
             return new JsonResult { Data = StateList, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 
+        public JsonResult GetVendorListForCust(string VendorNatureId)
+        {
+            var Ddl = model.GetDropDownList("Clientele_Master",GeneralConstants.ListTypeD,"Id","VendorID",VendorNatureId, "VendorNatureId");
+            return new JsonResult { Data = Ddl, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+        }
+
     }
 }

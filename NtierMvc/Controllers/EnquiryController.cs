@@ -7,6 +7,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using NtierMvc.Infrastructure;
+using System.Web.UI.WebControls;
 
 namespace NtierMvc.Controllers
 {
@@ -15,7 +16,7 @@ namespace NtierMvc.Controllers
     {
         private LoggingHandler _loggingHandler = new LoggingHandler();
         EnquiryManager objManager = new EnquiryManager();
-        BaseModel model = new BaseModel();
+        BaseModel model;
 
         //public EnquiryController()
         //{
@@ -48,23 +49,18 @@ namespace NtierMvc.Controllers
         [HttpGet]
         public ActionResult Enquiry()
         {
-            
+
             EnquiryEntityDetails enq = new EnquiryEntityDetails();
             enq.enqEntity.UnitNo = Session["UserId"].ToString();
             enq.enqEntity = objManager.GetUserDetails(enq.enqEntity.UnitNo);
 
-            //BaseModel model = new BaseModel();
-            //ViewBag.EOQ = model.GetTaxonomyDropDownItems("", "Expression of Quote(EOQ)");
-            //ViewBag.LeadTimeDuration = model.GetTaxonomyDropDownItems("", "Time");
-            //ViewBag.YesNo = model.GetTaxonomyDropDownItems("", "YesNo");
-            //ViewBag.EnqThru = model.GetTaxonomyDropDownItems("", "Enquiry Through");
-
+            model = new BaseModel();
             return View(enq);
         }
 
         public JsonResult FetchEnquiryList(string pageIndex, string pageSize, string SearchEnqName, string SearchEnqVendorID = null, string SearchProductGroup = null, string SearchMonth = null, string SearchEOQ = null)
         {
-            
+
             SearchEnqName = SearchEnqName == "-1" ? string.Empty : SearchEnqName;
             SearchEnqVendorID = SearchEnqVendorID == "-1" ? string.Empty : SearchEnqVendorID;
             SearchProductGroup = SearchProductGroup == "-1" ? string.Empty : SearchProductGroup;
@@ -114,20 +110,18 @@ namespace NtierMvc.Controllers
         [HttpPost]
         public ActionResult EnquiryPopup(string actionType, string enquiryId)
         {
-
-            BaseModel bModel = new BaseModel();
-            ViewBag.ListEOQ = bModel.GetTaxonomyDropDownItems("", "Expression of Quote(EOQ)");
-            ViewBag.ListLeadTimeDuration = bModel.GetTaxonomyDropDownItems("", "Time");
-            ViewBag.YesNo = bModel.GetTaxonomyDropDownItems("", "YesNo");
-            ViewBag.ListEnqThru = bModel.GetTaxonomyDropDownItems("", "Enquiry Through");
-            ViewBag.ListEnqType = bModel.GetTaxonomyDropDownItems("", "Domestic/International");
-            ViewBag.ListCountry = bModel.GetMasterTableList("Master.Country", "Id","Country");
-            ViewBag.ListProdGrp = bModel.GetMasterTableList("Master.ProductLine", "Id", "Product");
-            ViewBag.ListEnqMode = bModel.GetTaxonomyDropDownItems("", "ContactType"); 
+            ViewBag.ListEOQ = model.GetTaxonomyDropDownItems("", "Expression of Quote(EOQ)");
+            ViewBag.ListLeadTimeDuration = model.GetTaxonomyDropDownItems("", "Time");
+            ViewBag.YesNo = model.GetTaxonomyDropDownItems("", "YesNo");
+            ViewBag.ListEnqThru = model.GetTaxonomyDropDownItems("", "Enquiry Through");
+            ViewBag.ListEnqType = model.GetTaxonomyDropDownItems("", "Domestic/International");
+            ViewBag.ListCountry = model.GetMasterTableList("Master.Country", "Id", "Country");
+            ViewBag.ListProdGrp = model.GetMasterTableList("Master.ProductLine", "Id", "Product");
+            ViewBag.ListEnqMode = model.GetTaxonomyDropDownItems("", "ContactType");
 
             EnquiryEntity eModel = new EnquiryEntity();
             eModel.UnitNo = Session["UserId"].ToString();
-            ViewBag.ListVendorId = bModel.GetMasterTableStringList("Clientele_Master", "Id", "VendorName", eModel.UnitNo, "UnitNo",GeneralConstants.ListTypeN);
+            ViewBag.ListVendorId = model.GetMasterTableStringList("Clientele_Master", "Id", "VendorName", eModel.UnitNo, "UnitNo", GeneralConstants.ListTypeN);
             ViewBag.ListCity = objManager.GetCityName();
 
             if (actionType == "VIEW" || actionType == "EDIT")
@@ -179,6 +173,17 @@ namespace NtierMvc.Controllers
             eModel = objManager.GetVendorDetailForEnquiry(vendorId);
             return new JsonResult { Data = eModel, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
+
+        public ActionResult GetDdlValueForEnquiry(string type, string EOQId = null, string ProductGroup = null, string VendorId = null)
+        {
+            List<DropDownEntity> ddl = new List<DropDownEntity>();
+            ddl = objManager.GetDdlValueForEnquiry(type, EOQId, ProductGroup, VendorId);
+            return new JsonResult { Data = ddl, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+        }
+
+
+
+
 
 
     }

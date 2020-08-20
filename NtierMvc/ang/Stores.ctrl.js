@@ -125,7 +125,7 @@ angular.module('App').controller("StoresController", function ($scope, $http, $t
             datatype: "JSON",
             url: window.GoodsRecieptViewPopup,
             success: function (html) {
-                SetModalTitle("Edit Purchase Order")
+                SetModalTitle("Edit Goods Reciept")
                 SetModalBody(html);
                 HideLoadder();
                 SetModalWidth("1500px");

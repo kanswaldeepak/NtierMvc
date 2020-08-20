@@ -11,12 +11,11 @@ using System.Net.Http;
 
 namespace NtierMvc.Model
 {
-    public class EnquiryManager : IDisposable
+    public class EnquiryManager
     {
         #region Class Declarations
 
         private LoggingHandler _loggingHandler;
-        private bool _bDisposed;
         EnquiryEntity objEntity;
 
 
@@ -26,26 +25,6 @@ namespace NtierMvc.Model
             objEntity = new EnquiryEntity();
         }
 
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        protected virtual void Dispose(bool bDisposing)
-        {
-            // Check to see if Dispose has already been called.
-            if (!_bDisposed)
-            {
-                if (bDisposing)
-                {
-                    // Dispose managed resources.
-                    _loggingHandler = null;
-                    objEntity = null;
-                }
-            }
-            _bDisposed = true;
-        }
         #endregion
 
         public string SaveEnquiryDetails(EnquiryEntity viewModel)
@@ -63,7 +42,7 @@ namespace NtierMvc.Model
             }
             return result;
         }
-        
+
         public EnquiryEntityDetails GetEnquiryDetails(int pageIndex, int pageSize, string SearchEnqName = null, string SearchEnqVendorID = null, string SearchProductGroup = null, string SearchMonth = null, string SearchEOQ = null)
         {
             var baseAddress = "EnquiryDetails";
@@ -177,6 +156,25 @@ namespace NtierMvc.Model
             }
             return objEntity;
         }
+
+        public List<DropDownEntity> GetDdlValueForEnquiry(string type, string EOQId = null, string ProductGroup = null, string VendorId = null)
+        {
+            var baseAddress = "EnquiryDetails";
+            List<DropDownEntity> newDdl = new List<DropDownEntity>();
+
+            using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
+            {
+                HttpResponseMessage response = client.GetAsync(baseAddress + "/GetDdlValueForEnquiry?Type=" + type + "&EOQId=" + EOQId + "&ProductGroup=" + ProductGroup + "&VendorId=" + VendorId).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    var data = response.Content.ReadAsStringAsync().Result;
+                    newDdl = JsonConvert.DeserializeObject<List<DropDownEntity>>(data);
+                }
+            }
+            return newDdl;
+        }
+
+
 
     }
 }

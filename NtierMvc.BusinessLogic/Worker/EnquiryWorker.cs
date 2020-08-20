@@ -114,7 +114,7 @@ namespace NtierMvc.BusinessLogic.Worker
         }
 
 
-        public EnquiryEntityDetails GetEnquiryDetails(int pageIndex, int pageSize, string SearchEnqName = null, string SearchEnqVendorID = null, string SearchProductGroup = null, string SearchMonth = null, string SearchEOQ = null )
+        public EnquiryEntityDetails GetEnquiryDetails(int pageIndex, int pageSize, string SearchEnqName = null, string SearchEnqVendorID = null, string SearchProductGroup = null, string SearchMonth = null, string SearchEOQ = null)
         {
             try
             {
@@ -367,7 +367,7 @@ namespace NtierMvc.BusinessLogic.Worker
             {
                 if (dtRecord.Rows.Count > 0)
                 {
-                    
+
                     oVendor.City = Convert.ToString(dtRecord.Rows[0]["City"]);
                     oVendor.Country = Convert.ToString(dtRecord.Rows[0]["Country"]);
                     oVendor.State = Convert.ToString(dtRecord.Rows[0]["State"]);
@@ -387,6 +387,63 @@ namespace NtierMvc.BusinessLogic.Worker
                 NtierMvc.DataAccess.ExceptionLogging.SendExcepToDB(Ex);
             }
             return oVendor;
+        }
+
+        public List<DropDownEntity> GetDdlValueForEnquiry(string type, string EOQId = null, string ProductGroup = null, string VendorId = null)
+        {
+            try
+            {
+                List<DropDownEntity> lstDdl = new List<DropDownEntity>();
+                DataTable dt = _repository.GetDdlValueForEnquiry(type, EOQId, ProductGroup, VendorId);
+                DropDownEntity entity;
+
+                if (dt.Rows.Count > 0)
+                {
+                    if (type == "ProductGroup")
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            entity = new DropDownEntity();
+                            if (dt.Columns.Contains("Id"))
+                                entity.DataValueField = Convert.ToInt32(dr["Id"] ?? 0);
+
+                            if (dt.Columns.Contains("ProdGrp"))
+                                entity.DataTextField = dr["ProdGrp"]?.ToString() ?? "";
+
+                            lstDdl.Add(entity);
+                        }
+                    else if(type=="VendorId")
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            entity = new DropDownEntity();
+                            if (dt.Columns.Contains("Id"))
+                                entity.DataValueField = Convert.ToInt32(dr["Id"] ?? 0);
+
+                            if (dt.Columns.Contains("VendorId"))
+                                entity.DataTextField = dr["VendorId"]?.ToString() ?? "";
+
+                            lstDdl.Add(entity);
+                        }
+                    else if (type == "VendorName")
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            entity = new DropDownEntity();
+                            if (dt.Columns.Contains("Id"))
+                                entity.DataValueField = Convert.ToInt32(dr["Id"] ?? 0);
+
+                            if (dt.Columns.Contains("VendorName"))
+                                entity.DataTextField = dr["VendorName"]?.ToString() ?? "";
+
+                            lstDdl.Add(entity);
+                        }
+                }
+
+                return lstDdl;
+            }
+            catch (Exception Ex)
+            {
+                NtierMvc.DataAccess.ExceptionLogging.SendExcepToDB(Ex);
+                throw Ex;
+            }
         }
 
     }
