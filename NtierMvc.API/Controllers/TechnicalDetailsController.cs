@@ -179,9 +179,9 @@ namespace NtierMvc.API.Controllers.Application
 
         [ResponseType(typeof(int))]
         [Route("api/TechnicalDetails/GetOrderDetails")]
-        public IHttpActionResult GetOrderDetails(int pageIndex, int pageSize, string SearchOrderVendorID = null, string SearchOrderVendorName = null, string SearchOrderQuoteNo = null, string SearchOrderProductGroup = null, string SearchOrderEnqFor = null, string SearchOrderQuoteType = null)
+        public IHttpActionResult GetOrderDetails(int pageIndex, int pageSize, string SearchQuoteType = null, string SearchVendorID = null, string SearchProductGroup = null, string SearchDeliveryTerms = null)
         {
-            return Ok(_repository.GetOrderDetails(pageIndex, pageSize, SearchOrderVendorID, SearchOrderVendorName , SearchOrderQuoteNo , SearchOrderProductGroup , SearchOrderEnqFor , SearchOrderQuoteType));
+            return Ok(_repository.GetOrderDetails(pageIndex, pageSize, SearchQuoteType, SearchVendorID, SearchProductGroup, SearchDeliveryTerms));
         }
 
 

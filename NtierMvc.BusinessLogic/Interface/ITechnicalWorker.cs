@@ -37,7 +37,7 @@ namespace NtierMvc.BusinessLogic.Interface
         OrderEntity GetVendorOrderDetails(string vendorId);
         string DeleteOrderDetail(int Id);
 
-        OrderEntityDetails GetOrderDetails(int pageIndex, int pageSize, string SearchOrderVendorID = null, string SearchOrderVendorName = null, string SearchOrderQuoteNo = null, string SearchOrderProductGroup = null, string SearchOrderEnqFor = null, string SearchOrderQuoteType = null);
+        OrderEntityDetails GetOrderDetails(int pageIndex, int pageSize, string SearchQuoteType = null, string SearchVendorID = null, string SearchProductGroup = null, string SearchDeliveryTerms = null);
 
         OrderEntity OrderDetailsPopup(OrderEntity Model);
         List<DropDownEntity> GetOrderQuoteDetails(string quoteType, string quotetypeId);

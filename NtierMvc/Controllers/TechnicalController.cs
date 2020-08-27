@@ -66,12 +66,13 @@ namespace NtierMvc.Controllers
         public ActionResult TechnicalMaster()
         {
             //Technical
-            ViewBag.ListVendorId = model.GetMasterTableStringList("Clientele_Master", "VendorId", "VendorId", "", "", GeneralConstants.ListTypeN);
+            ViewBag.ListVendorId = model.GetMasterTableStringList("Clientele_Master", "Id", "VendorId", "", "", GeneralConstants.ListTypeN);
             ViewBag.ListVendorName = model.GetMasterTableStringList("Clientele_Master", "Id", "VendorName", "", "", GeneralConstants.ListTypeN);
             ViewBag.ListQuoteNo = model.GetMasterTableStringList("QuotationRegister", "Id", "QUOTENO", "", "", GeneralConstants.ListTypeN);
             ViewBag.ListProdGrp = model.GetMasterTableStringList("Master.ProductLine", "Id", "Product", "", "", GeneralConstants.ListTypeN);
             ViewBag.ListEnqFor = model.GetMasterTableStringList("QuotationRegister", "EnqFor", "EnqFor", "", "", GeneralConstants.ListTypeD);
             ViewBag.ListQuoteType = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "QuoteType", "Property", GeneralConstants.ListTypeN);
+
 
             //Enquiry
             ViewBag.ListProdGrp = model.GetMasterTableStringList("Master.ProductLine", "Id", "Product", "", "", GeneralConstants.ListTypeN);
@@ -95,6 +96,9 @@ namespace NtierMvc.Controllers
             ListMonths.Add(dDE1);
 
             ViewBag.ListMonth = ListMonths;
+
+            //Quotation
+            ViewBag.ListDeliveryTerms = model.GetMasterTableStringList("Master.Taxonomy", "DropDownId", "DropDownValue", "DeliveryTerms", "ObjectName", GeneralConstants.ListTypeN);
 
 
             return View();
@@ -719,17 +723,15 @@ namespace NtierMvc.Controllers
             return new JsonResult { Data = lstProducts, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 
-        public JsonResult FetchOrdersList(string pageIndex, string pageSize, string SearchOrderVendorID, string SearchOrderVendorName, string SearchOrderQuoteNo, string SearchOrderProductGroup, string SearchOrderEnqFor, string SearchOrderQuoteType)
+        public JsonResult FetchOrdersList(string pageIndex, string pageSize, string SearchQuoteType = null, string SearchVendorID = null, string SearchProductGroup = null, string SearchDeliveryTerms = null)
         {
             OrderEntityDetails orderEntity = new OrderEntityDetails();
-            SearchOrderVendorID = SearchOrderVendorID == "undefined" ? string.Empty : SearchOrderVendorID;
-            SearchOrderVendorName = SearchOrderVendorName == "undefined" ? string.Empty : SearchOrderVendorName;
-            SearchOrderQuoteType = SearchOrderQuoteType == "undefined" ? string.Empty : SearchOrderQuoteType;
-            SearchOrderQuoteNo = SearchOrderQuoteNo == "undefined" ? string.Empty : SearchOrderQuoteNo;
-            SearchOrderProductGroup = SearchOrderProductGroup == "undefined" ? string.Empty : SearchOrderProductGroup;
-            SearchOrderEnqFor = SearchOrderEnqFor == "undefined" ? string.Empty : SearchOrderEnqFor;
+            SearchQuoteType = SearchQuoteType == "undefined" ? string.Empty : SearchQuoteType;
+            SearchVendorID = SearchVendorID == "undefined" ? string.Empty : SearchVendorID;
+            SearchProductGroup = SearchProductGroup == "undefined" ? string.Empty : SearchProductGroup;
+            SearchDeliveryTerms = SearchDeliveryTerms == "undefined" ? string.Empty : SearchDeliveryTerms;
 
-            orderEntity = objManager.GetOrderDetails(Convert.ToInt32(pageIndex), Convert.ToInt32(pageSize), SearchOrderVendorID, SearchOrderVendorName, SearchOrderQuoteNo, SearchOrderProductGroup, SearchOrderEnqFor, SearchOrderQuoteType);
+            orderEntity = objManager.GetOrderDetails(Convert.ToInt32(pageIndex), Convert.ToInt32(pageSize), SearchQuoteType, SearchVendorID, SearchProductGroup, SearchDeliveryTerms);
             return new JsonResult { Data = orderEntity, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 

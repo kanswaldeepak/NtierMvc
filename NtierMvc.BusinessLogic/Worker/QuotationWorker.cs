@@ -150,13 +150,13 @@ namespace NtierMvc.BusinessLogic.Worker
         }
 
 
-        public QuotationEntityDetails GetQuotationDetails(int pageIndex, int pageSize, string SearchQuoteType = null, string SearchQuoteNo = null, string SearchQuoteVendorID = null, string SearchQuoteVendorName = null, string SearchQuoteProductGroup = null, string SearchQuoteEnqFor = null)
+        public QuotationEntityDetails GetQuotationDetails(int pageIndex, int pageSize, string SearchQuoteType = null, string SearchQuoteVendorID = null, string SearchQuoteProductGroup = null, string SearchDeliveryTerms = null)
         {
             try
             {
                 QuotationEntityDetails qED = new QuotationEntityDetails();
                 qED.lstQuoteEntity = new List<QuotationEntity>();
-                DataSet ds = _repository.GetQuotationDetails(pageIndex, pageSize, SearchQuoteType, SearchQuoteNo, SearchQuoteVendorID, SearchQuoteVendorName, SearchQuoteProductGroup, SearchQuoteEnqFor);
+                DataSet ds = _repository.GetQuotationDetails(pageIndex, pageSize, SearchQuoteType, SearchQuoteVendorID, SearchQuoteProductGroup, SearchDeliveryTerms);
                 //DataTable dt = _repository.GetQuotationDetails();
 
                 if (ds.Tables.Count > 0)
@@ -390,6 +390,68 @@ namespace NtierMvc.BusinessLogic.Worker
                 throw Ex;
             }
         }
+
+        public List<DropDownEntity> GetDdlValueForQuote(string type, string VendorId = null, string QuoteType = null)
+        {
+            try
+            {
+                List<DropDownEntity> lstDdl = new List<DropDownEntity>();
+                DataTable dt = _repository.GetDdlValueForQuote(type, VendorId, QuoteType);
+                DropDownEntity entity;
+
+                if (dt.Rows.Count > 0)
+                {
+                    if (type == "ProductGroup")
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            entity = new DropDownEntity();
+                            if (dt.Columns.Contains("Id"))
+                                entity.DataStringValueField = Convert.ToString(dr["Id"] ?? "0");
+
+                            if (dt.Columns.Contains("Product"))
+                                entity.DataTextField = dr["Product"]?.ToString() ?? "";
+
+                            lstDdl.Add(entity);
+                        }
+                    else if (type == "VendorId")
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            entity = new DropDownEntity();
+                            if (dt.Columns.Contains("Id"))
+                                entity.DataStringValueField = Convert.ToString(dr["Id"] ?? "0");
+
+                            if (dt.Columns.Contains("VendorId"))
+                                entity.DataTextField = dr["VendorId"]?.ToString() ?? "";
+
+                            lstDdl.Add(entity);
+                        }
+                }
+
+                DropDownEntity entity1 = new DropDownEntity();
+                entity1.DataStringValueField = "";
+                entity1.DataTextField = "Select";
+
+                lstDdl.Insert(0, entity1);
+                return lstDdl;
+            }
+
+            catch (Exception Ex)
+            {
+                NtierMvc.DataAccess.ExceptionLogging.SendExcepToDB(Ex);
+                throw Ex;
+            }
+
+        }
+
+
+
+
+
+
+
+
+
+
 
     }
 }

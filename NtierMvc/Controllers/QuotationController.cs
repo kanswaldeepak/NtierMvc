@@ -76,22 +76,20 @@ namespace NtierMvc.Controllers
         {
             quote.quoteEntity.UnitNo = Session["UserId"].ToString();
             quote.quoteEntity = objManager.GetUserQuoteDetails(quote.quoteEntity.UnitNo);
-            
+
             //quote.lstQuoteEntity = objManager.GetQuotationDetails();
 
             return View(quote);
         }
 
-        public JsonResult FetchQuotationList(string pageIndex, string pageSize, string SearchQuoteType, string SearchQuoteNo, string SearchQuoteVendorID, string SearchQuoteVendorName, string SearchQuoteProductGroup, string SearchQuoteEnqFor)
+        public JsonResult FetchQuotationList(string pageIndex, string pageSize, string SearchQuoteType, string SearchQuoteVendorID, string SearchQuoteProductGroup, string SearchDeliveryTerms)
         {
             SearchQuoteType = SearchQuoteType == "-1" ? string.Empty : SearchQuoteType;
-            SearchQuoteNo = SearchQuoteNo == "-1" ? string.Empty : SearchQuoteNo;
             SearchQuoteVendorID = SearchQuoteVendorID == "-1" ? string.Empty : SearchQuoteVendorID;
-            SearchQuoteVendorName = SearchQuoteVendorName == "-1" ? string.Empty : SearchQuoteVendorName;
             SearchQuoteProductGroup = SearchQuoteProductGroup == "-1" ? string.Empty : SearchQuoteProductGroup;
-            SearchQuoteEnqFor = SearchQuoteEnqFor == "-1" ? string.Empty : SearchQuoteEnqFor;
+            SearchDeliveryTerms = SearchDeliveryTerms == "-1" ? string.Empty : SearchDeliveryTerms;
 
-            quote = objManager.GetQuotationDetails(Convert.ToInt32(pageIndex), Convert.ToInt32(pageSize), SearchQuoteType, SearchQuoteNo, SearchQuoteVendorID, SearchQuoteVendorName, SearchQuoteProductGroup, SearchQuoteEnqFor);
+            quote = objManager.GetQuotationDetails(Convert.ToInt32(pageIndex), Convert.ToInt32(pageSize), SearchQuoteType, SearchQuoteVendorID, SearchQuoteProductGroup, SearchDeliveryTerms);
             return new JsonResult { Data = quote, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
             //return QuotDetail.LstCusEnt;
         }
@@ -183,6 +181,17 @@ namespace NtierMvc.Controllers
             }
 
         }
+
+
+        public ActionResult GetDdlValueForQuote(string type, string VendorId = null, string QuoteType = null)
+        {
+            List<DropDownEntity> ddl = new List<DropDownEntity>();
+            ddl = objManager.GetDdlValueForQuote(type, VendorId, QuoteType);
+            return new JsonResult { Data = ddl, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+        }
+
+
+
 
     }
 }

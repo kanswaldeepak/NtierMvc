@@ -225,6 +225,95 @@ namespace NtierMvc.BusinessLogic.Worker
             }
             return Model;
         }
-        
+
+        public List<DropDownEntity> GetDdlValueForCustomer(string type, string VendorType = null, string VendorNatureId = null, string VendorName = null, string FunctionalArea = null)
+        {
+            try
+            {
+                List<DropDownEntity> lstDdl = new List<DropDownEntity>();
+                DataTable dt = _repository.GetDdlValueForCustomer(type, VendorType, VendorNatureId, VendorName, FunctionalArea);
+                DropDownEntity entity;
+
+                if (dt.Rows.Count > 0)
+                {
+                    if (type == "VendorNature")
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            entity = new DropDownEntity();
+                            if (dt.Columns.Contains("Id"))
+                                entity.DataStringValueField = Convert.ToString(dr["Id"] ?? "0");
+
+                            if (dt.Columns.Contains("VendorNature"))
+                                entity.DataTextField = dr["VendorNature"]?.ToString() ?? "";
+
+                            lstDdl.Add(entity);
+                        }
+                    else if (type == "VendorId")
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            entity = new DropDownEntity();
+                            if (dt.Columns.Contains("Id"))
+                                entity.DataStringValueField = Convert.ToString(dr["Id"] ?? "0");
+
+                            if (dt.Columns.Contains("VendorId"))
+                                entity.DataTextField = dr["VendorId"]?.ToString() ?? "";
+
+                            lstDdl.Add(entity);
+                        }
+                    else if (type == "VendorName")
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            entity = new DropDownEntity();
+                            if (dt.Columns.Contains("Id"))
+                                entity.DataStringValueField = Convert.ToString(dr["Id"] ?? "0");
+
+                            if (dt.Columns.Contains("VendorName"))
+                                entity.DataTextField = dr["VendorName"]?.ToString() ?? "";
+
+                            lstDdl.Add(entity);
+                        }
+
+                    else if (type == "FunctionalArea")
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            entity = new DropDownEntity();
+                            if (dt.Columns.Contains("Id"))
+                                entity.DataStringValueField = Convert.ToString(dr["Id"] ?? "0");
+
+                            if (dt.Columns.Contains("FunctionArea"))
+                                entity.DataTextField = dr["FunctionArea"]?.ToString() ?? "";
+
+                            lstDdl.Add(entity);
+                        }
+                }
+
+                DropDownEntity entity1 = new DropDownEntity();
+                entity1.DataStringValueField = "";
+                entity1.DataTextField = "Select";
+
+                lstDdl.Insert(0, entity1);
+                return lstDdl;
+            }
+
+            catch (Exception Ex)
+            {
+                NtierMvc.DataAccess.ExceptionLogging.SendExcepToDB(Ex);
+                throw Ex;
+            }
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
 }

@@ -7,97 +7,75 @@
 }
 
 <div class="row mt-3">
-    <div class="col-md-2">
-        <button id="btnAdd" type="button" class="btn btn-outline-primary btn-sm" style="float: left;" ng-click="BindQuotationPopup()"><i class="fa fa-plus"></i><b> Add New Quotation</b></button>   
-
-        <button id="btnRevisedQuote" type="button" class="btn btn-outline-info btn-sm" style="float: left;" ng-click="BindRevisedQuotationPopup()"><i class="fa fa-plus"></i><b> Add New Revised Quotation</b></button>   
-    </div>
-    <div class="col-md-8">
-        <div class="row text-center">
-            <div class="col-md-12">
-                <table>
-                    <tr>
-                        <td>Quote Type</td>
-                        <td style="width:10%">  Quote No  </td>
-                        <td>Vendor ID</td>
-                        <td>Vendor Name</td>
-                        <td>Product Group</td>
-                        <td>Enquiry For</td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>
-                            @Html.DropDownList("QuoteType", new SelectList(@ViewBag.ListQuoteType, "DataStringValueField", "DataTextField", "Select"),
-                                                       new
-                                                       {
-                                                           @class = "form-control",
-                                                           ng_model = "SearchQuoteType",
-                                                           @onchange = "GetQuoteNoForQuoteType()"
-                                                       })
-                        </td>
-                        <td style="width:10%">
-                            @Html.DropDownList("QuoteNo", new SelectList(@ViewBag.ListQuoteNo, "DataStringValueField", "DataTextField", "Select"),
-                           new
-                           {
-                               @class = "form-control",
-                               ng_model = "SearchQuoteNo"
-                           })
-                        </td>
-                        <td>
-                            @Html.DropDownList("VendorId", new SelectList(@ViewBag.ListVendorId, "DataStringValueField", "DataTextField", "Select"),
-                           new
-                           {
-                               @class = "form-control",
-                               ng_model = "SearchQuoteVendorID"
-                           })
-                        </td>
-                        <td>
-                            @Html.DropDownList("VendorName", new SelectList(@ViewBag.ListVendorName, "DataStringValueField", "DataTextField", "Select"),
-                           new
-                           {
-                               @class = "form-control",
-                               ng_model = "SearchQuoteVendorName"
-                           })
-                        </td>
-                        <td>
-                            @Html.DropDownList("ProductGroup", new SelectList(@ViewBag.ListProdGrp, "DataStringValueField", "DataTextField", "Select"),
-                           new
-                           {
-                               @class = "form-control",
-                               ng_model = "SearchQuoteProductGroup"
-                           })
-                        </td>
-                        <td>
-                            @Html.DropDownList("EnqFor", new SelectList(@ViewBag.ListEnqFor, "DataStringValueField", "DataTextField", "Select"),
-                           new
-                           {
-                               @class = "form-control",
-                               ng_model = "SearchQuoteEnqFor"
-                           })
-                        </td>
-                        <td>
-                            <button class="btn btn-link" type="button" id="btnSearch" ng-click="FetchQuotationList()">
-                                <i class="fa fa-search"></i>
-                            </button>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-        </div>
-    </div>
+    <table class="table-borderless">
+        <tr>
+            <td>
+                <button id="btnAdd" type="button" class="btn btn-outline-primary btn-sm" style="float: left;" ng-click="BindQuotationPopup()"><i class="fa fa-plus"></i><b> Add New Quotation</b></button>
+            </td>
+            <td>
+                <label>Quote Type</label>
+            </td>
+            <td>
+                <label>Vendor Id</label>
+            </td>
+            <td>
+                <label>Product Group</label>
+            </td>
+            <td>
+                <label>Delivery Terms</label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <button id="btnRevisedQuote" type="button" class="btn btn-outline-info btn-sm" style="float: left;" ng-click="BindRevisedQuotationPopup()"><i class="fa fa-plus"></i><b> Add New Revised Quotation</b></button>
+            </td>
+            <td>
+                @Html.DropDownList("QuoteType", new SelectList(@ViewBag.ListQuoteType, "DataStringValueField", "DataTextField", "Select"),
+                    new
+                    {
+                        @class = "form-control",
+                        ng_model = "SearchQuoteType",
+                        @id = "QTQuoteType"
+                    })
+            </td>
+            <td>
+                @Html.DropDownList("VendorId", new SelectList(@ViewBag.ListVendorId, "DataStringValueField", "DataTextField", "Select"),
+               new
+               {
+                   @class = "form-control",
+                   ng_model = "SearchQuoteVendorID",
+                   @id = "QTVendorId",
+                   @multiple = true
+               })
+            </td>
+            <td>
+                @Html.DropDownList("ProductGroup", new SelectList(@ViewBag.ListProdGrp, "DataStringValueField", "DataTextField", "Select"),
+               new
+               {
+                   @class = "form-control",
+                   ng_model = "SearchQuoteProductGroup",
+                   @id = "QTProductGroup",
+                   @multiple = true
+               })
+            </td>
+            <td>
+                @Html.DropDownList("DeliveryTerms", new SelectList(@ViewBag.ListDeliveryTerms, "DataStringValueField", "DataTextField", "Select"),
+               new
+               {
+                   @class = "form-control",
+                   ng_model = "SearchDeliveryTerms",
+                   @id = "QTDeliveryTerms",
+                   @multiple = true
+               })
+            </td>
+            <td>
+                <button class="btn btn-link" type="button" id="btnSearch" ng-click="FetchQuotationList()">
+                    <i class="fa fa-search"></i>
+                </button>
+            </td>
+        </tr>
+    </table>
 </div>
-
-<div class="row mt-1">
-    <div class="col-md-12">
-        @*<div class="form-group text-right">
-                @if (@ViewBag.PagewiseAccessEntity != null && @ViewBag.PagewiseAccessEntity.IsEditAllowed)
-                {
-                    <button type="button" id="btnSubmit" class="btn btn-primary">Add To List</button>
-                }
-            </div>*@
-    </div>
-</div>
-
 
 <div class="wrapper">
     <div class="container">
@@ -147,27 +125,9 @@
                         </div>
                     </th>
                     <th>
-                        File No.
-                        <div class="c3">
-                            File No.
-                        </div>
-                    </th>
-                    @*<th>
-            Enquiry Ref
-            <div class="c3">
-                Enquiry Ref
-            </div>
-        </th>*@
-                    <th>
                         Enquiry Date
                         <div class="c3">
                             Enquiry Date
-                        </div>
-                    </th>
-                    <th>
-                        Enquiry For
-                        <div class="c3">
-                            Enquiry For
                         </div>
                     </th>
                     <th>
@@ -222,16 +182,7 @@
                         {{L.Currency}}
                     </td>
                     <td>
-                        {{L.FileNo}}
-                    </td>
-                    @*<td>
-            {{L.EnqRef}}
-        </td>*@
-                    <td>
                         {{L.EnqDt}}
-                    </td>
-                    <td>
-                        {{L.EnqFor}}
                     </td>
                     <td>
                         {{L.ProdGrp}}
@@ -376,16 +327,120 @@
 <script type="text/javascript">
 
     $(document).ready(function () {
+
+        window.GetDdlValueForQuote = '@Url.Action("GetDdlValueForQuote","Quotation")';
         window.QuotationDetailsPopup = '@Url.Action("QuotationPopup", "Technical")';
         window.RevisedQuotationDetailsPopup = '@Url.Action("RevisedQuotationPopup", "Technical")';
         window.DeleteQuotationDetail = '@Url.Action("DeleteQuotationDetail", "Quotation")';
         window.FetchQuoteRegList = '@Url.Action("FetchQuoteRegList", "Technical")';
         window.GetPrepQuoteNo = '@Url.Action("GetPrepQuoteNo", "Technical")';
+        
+
+        $('#QTQuoteType').chosen({
+            width: "210px",
+            placeholder_text_single: "Select QuoteType",
+            placeholder_text_multiple: "Select QuoteType"
+        });
+
+        $('#QTVendorId').chosen({
+            width: "210px",
+            placeholder_text_single: "Select Vendor Id",
+            placeholder_text_multiple: "Select Vendor Id"
+        });
+
+        $('#QTProductGroup').chosen({
+            width: "210px",
+            placeholder_text_single: "Select Product Group",
+            placeholder_text_multiple: "Select Product Group"
+        });
+
+        $('#QTDeliveryTerms').chosen({
+            width: "210px",
+            placeholder_text_single: "Select Delivery Terms",
+            placeholder_text_multiple: "Select Delivery Terms"
+        });
+
+        $("#QTQuoteType").chosen().change(
+            function GetQuoteType() {
+                //var QuoteType = $('#QTQuoteType').val();
+                var QuoteType = '';
+                var x = document.getElementById("QTQuoteType");
+                for (var i = 0; i < x.options.length; i++) {
+                    if (x.options[i].selected == true) {
+                        //alert(x.options[i].value);
+                        QuoteType = QuoteType + x.options[i].value + ',';
+                    }
+                }
+
+                QuoteType = QuoteType.substring(0, QuoteType.length - 1);
+
+                return $.ajax({
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json',
+                    type: 'GET',
+                    url: window.GetDdlValueForQuote,
+                    data: { QuoteType: QuoteType, type: 'VendorId' },
+                    success: function (res) {
+                        if (res.length > 0) {
+                            $("#QTVendorId").empty();
+                            $.each(res, function (i, item) {
+                                $("#QTVendorId").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
+                                $("#QTVendorId").trigger("chosen:updated");
+                            })
+                        }
+                    },
+                    error: function (result) {
+                        alert(result)
+                    }
+                });
+            }
+        )
+
+        $("#QTVendorId").chosen().change(
+            function GetProductGroup() {
+                //var VendorId = $('#QTVendorId').val();
+                debugger;
+                var VendorId = '';
+                var x = document.getElementById("QTVendorId");
+                for (var i = 0; i < x.options.length; i++) {
+                    if (x.options[i].selected == true) {
+                        //alert(x.options[i].value);
+                        VendorId = VendorId + x.options[i].value + ',';
+                    }
+                }
+
+                VendorId = VendorId.substring(0, VendorId.length - 1);
+
+                return $.ajax({
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json',
+                    type: 'GET',
+                    url: window.GetDdlValueForQuote,
+                    data: { VendorId: VendorId, type: 'ProductGroup' },
+                    success: function (res) {
+                        if (res.length > 0) {
+                            $("#QTProductGroup").empty();
+                            $.each(res, function (i, item) {
+                                $("#QTProductGroup").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
+                                $("#QTProductGroup").trigger("chosen:updated");
+                            })
+                        }
+                    },
+                    error: function (result) {
+                        alert(result)
+                    }
+                });
+            }
+        )
+
+
     });
+
+
 
     function GetQuoteNoForQuoteType() {
         let QuoteType = $('#QuoteType').val();
-        
+
         $.ajax({
             type: 'POST',
             url: window.GetPrepQuoteNo,
@@ -406,7 +461,7 @@
             }
         })
     }
-    
+
 </script>
 
 

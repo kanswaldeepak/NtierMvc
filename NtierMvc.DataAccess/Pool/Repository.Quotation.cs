@@ -17,17 +17,15 @@ namespace NtierMvc.DataAccess.Pool
 
         #region Class Methods
 
-        public DataSet GetQuotationDetails(int pageIndex, int pageSize, string SearchQuoteType = null, string SearchQuoteNo = null, string SearchQuoteVendorID = null, string SearchQuoteVendorName = null, string SearchQuoteProductGroup = null, string SearchQuoteEnqFor = null)
+        public DataSet GetQuotationDetails(int pageIndex, int pageSize, string SearchQuoteType = null, string SearchQuoteVendorID = null, string SearchQuoteProductGroup = null, string SearchDeliveryTerms = null)
         {
             var parms = new Dictionary<string, object>();
             parms.Add("@pageIndex", pageIndex);
             parms.Add("@pageSize", pageSize);
             parms.Add("@SearchQuoteType", SearchQuoteType);
-            parms.Add("@SearchQuoteNo", SearchQuoteNo);
             parms.Add("@SearchQuoteVendorID", SearchQuoteVendorID);
-            parms.Add("@SearchQuoteVendorName", SearchQuoteVendorName);
             parms.Add("@SearchQuoteProductGroup", SearchQuoteProductGroup);
-            parms.Add("@SearchQuoteEnqFor", SearchQuoteEnqFor);
+            parms.Add("@SearchDeliveryTerms", SearchDeliveryTerms);
             string spName = ConfigurationManager.AppSettings["GetQuotationDetails"];
             return _dbAccess.GetDataSet(spName, parms);
         }
@@ -217,6 +215,19 @@ namespace NtierMvc.DataAccess.Pool
 
             return msgCode;
         }
+
+        public DataTable GetDdlValueForQuote(string type, string VendorId = null, string QuoteType = null)
+        {
+            var parms = new Dictionary<string, object>();
+            parms.Add("@Type", type);
+            parms.Add("@VendorId", VendorId);
+            parms.Add("@QuoteType", QuoteType);
+            string spName = ConfigurationManager.AppSettings["GetDdlValueForQuote"];
+            return _dbAccess.GetDataTable(spName, parms);
+        }
+
+
+
         #endregion
     }
 }

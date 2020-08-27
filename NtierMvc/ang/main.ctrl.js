@@ -339,11 +339,11 @@ angular.module('App').controller("MainController", function ($scope, $http, $tim
     $scope.SearchQuoteVendorName = "";
     $scope.SearchQuoteNo = "";
     $scope.SearchQuoteProductGroup = "";
-    $scope.SearchQuoteEnqFor = "";
+    $scope.SearchDeliveryTerms = "";
     $scope.SearchQuoteType = "";
 
     $scope.FetchQuotationList = function () {
-        $http.get(window.FetchQuotationList+"?pageIndex=" + $scope.quotPageIndex + "&pageSize=" + $scope.quotPageSize + "&SearchQuoteType=" + $scope.SearchQuoteType + "&SearchQuoteNo=" + $scope.SearchQuoteNo + "&SearchQuoteVendorID=" + $scope.SearchQuoteVendorID + "&SearchQuoteVendorName=" + $scope.SearchQuoteVendorName + "&SearchQuoteProductGroup=" + $scope.SearchQuoteProductGroup + "&SearchQuoteEnqFor=" + $scope.SearchQuoteEnqFor).success(function (response) {
+        $http.get(window.FetchQuotationList + "?pageIndex=" + $scope.quotPageIndex + "&pageSize=" + $scope.quotPageSize + "&SearchQuoteType=" + $scope.SearchQuoteType + "&SearchQuoteVendorID=" + $scope.SearchQuoteVendorID + "&SearchQuoteProductGroup=" + $scope.SearchQuoteProductGroup + "&SearchDeliveryTerms=" + $scope.SearchDeliveryTerms).success(function (response) {
             $scope.AvailableQuotationList = response.lstQuoteEntity;
             $scope.quotTotalCount = response.totalcount;
         }, function (error) {
@@ -681,10 +681,19 @@ angular.module('App').controller("MainController", function ($scope, $http, $tim
     };
     //For Pdf
 
-    //For Order
+    //Order Starts
+    $scope.orderTotalCount = 0;
+    $scope.orderPageIndex = 1;
+    $scope.orderPageSize = "50";
+    $scope.SearchOrderVendorID = "";
+    $scope.SearchOrderVendorName = "";
+    $scope.SearchOrderProductGroup = "";
+    $scope.SearchOrderDeliveryTerms = "";
+    $scope.SearchOrderQuoteType = "";
+
 
     $scope.FetchOrdersList = function () {
-        $http.get(window.FetchOrdersList+"?pageindex=" + $scope.custPageIndex + "&pagesize=" + $scope.custPageSize + "&SearcOrderVendorID=" + $scope.SearcOrderVendorID + "&SearchOrderVendorName=" + $scope.SearchOrderVendorName + "&SearchOrderQuoteType=" + $scope.SearchOrderQuoteType + "&SearchOrderQuoteNo=" + $scope.SearchOrderQuoteNo + "&SearchOrderProductGroup=" + $scope.SearchOrderProductGroup + "&SearchOrderEnqFor=" + $scope.SearchOrderEnqFor).success(function (response) {
+        $http.get(window.FetchOrdersList + "?pageindex=" + $scope.orderPageIndex + "&pagesize=" + $scope.orderPageSize + "&SearchQuoteType=" + $scope.SearchOrderQuoteType + "&SearchVendorID=" + $scope.SearchOrderVendorID + "&SearchProductGroup=" + $scope.SearchOrderProductGroup + "&SearchDeliveryTerms=" + $scope.SearchOrderDeliveryTerms).success(function (response) {
             $scope.AvailableOrdersList = response.lstOrderEntity;
             $scope.orderTotalCount = response.totalcount;
         }, function (error) {

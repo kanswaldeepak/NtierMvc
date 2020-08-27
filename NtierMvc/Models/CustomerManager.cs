@@ -132,6 +132,24 @@ namespace NtierMvc.Model
             }
             return msgCode;
         }
-        
+
+        public List<DropDownEntity> GetDdlValueForCustomer(string type, string VendorType = null, string VendorNatureId = null, string VendorName = null, string FunctionalArea = null)
+        {
+            var baseAddress = "CustomerDetails";
+            List<DropDownEntity> newDdl = new List<DropDownEntity>();
+
+            using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
+            {
+                HttpResponseMessage response = client.GetAsync(baseAddress + "/GetDdlValueForCustomer?Type=" + type + "&VendorType=" + VendorType + "&VendorNatureId=" + VendorNatureId + "&VendorName=" + VendorName + "&FunctionalArea=" + FunctionalArea).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    var data = response.Content.ReadAsStringAsync().Result;
+                    newDdl = JsonConvert.DeserializeObject<List<DropDownEntity>>(data);
+                }
+            }
+            return newDdl;
+        }
+
+
     }
 }

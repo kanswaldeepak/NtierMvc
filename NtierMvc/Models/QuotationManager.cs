@@ -64,13 +64,13 @@ namespace NtierMvc.Model
         //    return result;
         //}
         
-        public QuotationEntityDetails GetQuotationDetails(int pageIndex, int pageSize, string SearchQuoteType = null, string SearchQuoteNo = null, string SearchQuoteVendorID = null, string SearchQuoteVendorName = null, string SearchQuoteProductGroup = null, string SearchQuoteEnqFor = null)
+        public QuotationEntityDetails GetQuotationDetails(int pageIndex, int pageSize, string SearchQuoteType = null, string SearchQuoteVendorID = null, string SearchQuoteProductGroup = null, string SearchDeliveryTerms = null)
         {
             var baseAddress = "QuotationDetails";
             QuotationEntityDetails quote = new QuotationEntityDetails();
             using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
             {
-                HttpResponseMessage response = client.GetAsync(baseAddress + "/GetQuotationDetails?pageIndex=" + pageIndex + "&pageSize=" + pageSize + "&SearchQuoteType=" + SearchQuoteType + "&SearchQuoteNo=" + SearchQuoteNo + "&SearchQuoteVendorID=" + SearchQuoteVendorID + "&SearchQuoteVendorName=" + SearchQuoteVendorName + "&SearchQuoteProductGroup=" + SearchQuoteProductGroup + "&SearchQuoteEnqFor=" + SearchQuoteEnqFor).Result;
+                HttpResponseMessage response = client.GetAsync(baseAddress + "/GetQuotationDetails?pageIndex=" + pageIndex + "&pageSize=" + pageSize + "&SearchQuoteType=" + SearchQuoteType + "&SearchQuoteVendorID=" + SearchQuoteVendorID + "&SearchQuoteProductGroup=" + SearchQuoteProductGroup + "&SearchDeliveryTerms=" + SearchDeliveryTerms).Result;
                 if (response.IsSuccessStatusCode)
                 {
                     var data = response.Content.ReadAsStringAsync().Result;
@@ -177,6 +177,24 @@ namespace NtierMvc.Model
             }
             return LstCity;
         }
+
+        public List<DropDownEntity> GetDdlValueForQuote(string type, string VendorId = null, string QuoteType = null)
+        {
+            var baseAddress = "QuotationDetails";
+            List<DropDownEntity> newDdl = new List<DropDownEntity>();
+
+            using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
+            {
+                HttpResponseMessage response = client.GetAsync(baseAddress + "/GetDdlValueForQuote?Type=" + type + "&VendorId=" + VendorId + "&QuoteType=" + QuoteType).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    var data = response.Content.ReadAsStringAsync().Result;
+                    newDdl = JsonConvert.DeserializeObject<List<DropDownEntity>>(data);
+                }
+            }
+            return newDdl;
+        }
+
 
 
     }

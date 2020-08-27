@@ -58,7 +58,7 @@ namespace NtierMvc.Controllers
         {
             //Customer
             ViewBag.ListVendorName = model.GetMasterTableStringList("Clientele_Master", "VendorName", "VendorName", "", "", GeneralConstants.ListTypeN);
-            ViewBag.ListVendorId = model.GetMasterTableStringList("Clientele_Master", "VendorId", "VendorId", "", "", GeneralConstants.ListTypeN);
+            ViewBag.ListVendorId = model.GetMasterTableStringList("Clientele_Master", "Id", "VendorId", "", "", GeneralConstants.ListTypeN);
             ViewBag.ListVendorNature = model.GetMasterTableStringList("Master.Vendor", "Id", "VendorNature", "", "", GeneralConstants.ListTypeN);
             ViewBag.ListFunctionalArea = model.GetMasterTableStringList("Master.FunctionalArea", "Id", "FunctionArea", "", "", GeneralConstants.ListTypeN);
             ViewBag.ListVendorType = model.GetMasterTableStringList("Master.Vendor", "Id", "VendorType", "", "", GeneralConstants.ListTypeN);
@@ -66,7 +66,7 @@ namespace NtierMvc.Controllers
 
 
             //Enquiry
-            ViewBag.ListProdGrp = model.GetMasterTableStringList("Master.ProductLine", "Id", "Product", "", "", GeneralConstants.ListTypeN);
+            ViewBag.ListProdGrp = model.GetMasterTableStringList("Master.ProductLine", "Id", "Product", "", "", GeneralConstants.ListTypeN);            
             ViewBag.ListEOQ = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "Expression of Quote(EOQ)", "Property", GeneralConstants.ListTypeN);
             Dictionary<string, string> Months = new Dictionary<string, string>();
             Months.Add(Convert.ToString(DateTime.Now.Month), "Current Month");
@@ -87,8 +87,12 @@ namespace NtierMvc.Controllers
             ListMonths.Add(dDE1);
 
             ViewBag.ListMonth = ListMonths;
+
+            //Quotation
+            ViewBag.ListDeliveryTerms = model.GetMasterTableStringList("Master.Taxonomy", "DropDownId", "DropDownValue", "DeliveryTerms", "ObjectName", GeneralConstants.ListTypeN);
+
             //Order
-            ViewBag.ListQuoteNo = model.GetMasterTableStringList("QuotationRegister", "Id", "QUOTENO", "", "", GeneralConstants.ListTypeN);
+            ViewBag.ListQuoteNo = "";
             ViewBag.ListEnqFor = model.GetMasterTableStringList("QuotationRegister", "EnqFor", "EnqFor", "", "", GeneralConstants.ListTypeD);
             ViewBag.ListQuoteType = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "QuoteType", "Property", GeneralConstants.ListTypeN);
 
@@ -242,6 +246,16 @@ namespace NtierMvc.Controllers
             var Ddl = model.GetDropDownList("Clientele_Master",GeneralConstants.ListTypeD,"Id","VendorID",VendorNatureId, "VendorNatureId");
             return new JsonResult { Data = Ddl, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
+
+        public ActionResult GetDdlValueForCustomer(string type, string VendorType = null, string VendorNatureId = null, string VendorName = null, string FunctionalArea = null)
+        {
+            List<DropDownEntity> ddl = new List<DropDownEntity>();
+            ddl = objManager.GetDdlValueForCustomer(type, VendorType, VendorNatureId, VendorName, FunctionalArea);
+            return new JsonResult { Data = ddl, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+        }
+
+
+
 
     }
 }

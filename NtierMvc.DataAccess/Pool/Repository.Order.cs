@@ -17,17 +17,15 @@ namespace NtierMvc.DataAccess.Pool
 
         #region Class Methods
 
-        public DataSet GetOrderDetails(int pageIndex, int pageSize, string SearchOrderVendorID = null, string SearchOrderVendorName = null, string SearchOrderQuoteNo = null, string SearchOrderProductGroup = null, string SearchOrderEnqFor = null, string SearchOrderQuoteType = null)
+        public DataSet GetOrderDetails(int pageIndex, int pageSize, string SearchQuoteType = null, string SearchVendorID = null, string SearchProductGroup = null, string SearchDeliveryTerms = null)
         {
             var parms = new Dictionary<string, object>();
             parms.Add("@pageIndex", pageIndex);
             parms.Add("@pageSize", pageSize);
-            parms.Add("@SearchOrderVendorID", SearchOrderVendorID);
-            parms.Add("@SearchOrderVendorName", SearchOrderVendorName);
-            parms.Add("@SearchOrderProductGroup", SearchOrderProductGroup);
-            parms.Add("@SearchOrderEnqFor", SearchOrderEnqFor);
-            parms.Add("@SearchOrderQuoteNo", SearchOrderQuoteNo);
-            parms.Add("@SearchOrderQuoteType", SearchOrderQuoteType);
+            parms.Add("@SearchQuoteType", SearchQuoteType);
+            parms.Add("@SearchVendorID", SearchVendorID);
+            parms.Add("@SearchProductGroup", SearchProductGroup);
+            parms.Add("@SearchDeliveryTerms", SearchDeliveryTerms);
             string spName = ConfigurationManager.AppSettings["GetOrderDetails"];
             return _dbAccess.GetDataSet(spName, parms);
         }

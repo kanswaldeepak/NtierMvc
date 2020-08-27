@@ -7,100 +7,68 @@
 }
 
 <div class="row mt-3">
-    <div class="col-md-2">
-            
-    </div>
-    <div class="col-md-8">
-        <div class="row text-center">
-            <div class="col-md-2">
-                <label>Vendor ID</label>
-            </div>
-            <div class="col-md-2">
-                <label>Vendor Name</label>
-            </div>
-            <div class="col-md-2">
-                <label>Product Group</label>
-            </div>
-            <div class="col-md-2">
-                <label>Order For</label>
-            </div>
-            <div class="col-md-2">
+    <table class="table-borderless">
+        <tr>
+            <td>
                 <label>Quote Type</label>
-            </div>
-            <div class="col-md-2">
-                <label></label>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-md-2">
-    </div>
-    <div class="col-md-8">
-        <div class="row">
-            <div class="col-md-2">
-                <div class="input-group">
-                    @Html.DropDownList("VendorId", new SelectList(@ViewBag.ListVendorId, "DataStringValueField", "DataTextField", "Select"),
-                           new
-                           {
-                               @class = "form-control",
-                               ng_model= "SearcOrderVendorID"
-                           })
-                </div>
-            </div>
-            <div class="col-md-2">
-                <div class="input-group">
-                    @Html.DropDownList("VendorName", new SelectList(@ViewBag.ListVendorName, "DataStringValueField", "DataTextField", "Select"),
-                           new
-                           {
-                               @class = "form-control",
-                               ng_model= "SearchOrderVendorName"
-                           })
-                </div>
-            </div>
-            <div class="col-md-2">
-                <div class="input-group">
-                    @Html.DropDownList("ProductGroup", new SelectList(@ViewBag.ListProdGrp, "DataStringValueField", "DataTextField", "Select"),
-                           new
-                           {
-                               @class = "form-control",
-                               ng_model= "SearchOrderProductGroup"
-                           })
-                </div>
-            </div>
-            <div class="col-md-2">
-                <div class="input-group">
-                    @Html.DropDownList("EnqFor", new SelectList(@ViewBag.ListEnqFor, "DataStringValueField", "DataTextField", "Select"),
-                           new
-                           {
-                               @class = "form-control",
-                               ng_model= "SearchOrderEnqFor"
-                           })
-                </div>
-            </div>
-            <div class="col-md-2">
-                <div class="input-group">
-                    @Html.DropDownList("QuoteType", new SelectList(@ViewBag.ListQuoteType, "DataStringValueField", "DataTextField", "Select"),
-                           new
-                           {
-                               @class = "form-control",
-                               ng_model= "SearchOrderQuoteType"
-                           })
-                </div>
-            </div>
-            <div class="input-group-btn col-md-2">
+            </td>
+            <td>
+                <label>Vendor Id</label>
+            </td>
+            <td>
+                <label>Product Group</label>
+            </td>
+            <td>
+                <label>Delivery Terms</label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.DropDownList("QuoteType", new SelectList(@ViewBag.ListQuoteType, "DataStringValueField", "DataTextField", "Select"),
+                    new
+                    {
+                        @class = "form-control",
+                        ng_model = "SearchOrderQuoteType",
+                        @id = "ORQuoteType"
+                    })
+            </td>
+            <td>
+                @Html.DropDownList("VendorId", new SelectList(@ViewBag.ListVendorId, "DataStringValueField", "DataTextField", "Select"),
+               new
+               {
+                   @class = "form-control",
+                   ng_model = "SearchOrderVendorID",
+                   @id = "ORVendorId",
+                   @multiple = true
+               })
+            </td>
+            <td>
+                @Html.DropDownList("ProductGroup", new SelectList(@ViewBag.ListProdGrp, "DataStringValueField", "DataTextField", "Select"),
+               new
+               {
+                   @class = "form-control",
+                   ng_model = "SearchOrderProductGroup",
+                   @id = "ORProductGroup",
+                   @multiple = true
+               })
+            </td>
+            <td>
+                @Html.DropDownList("DeliveryTerms", new SelectList(@ViewBag.ListDeliveryTerms, "DataStringValueField", "DataTextField", "Select"),
+               new
+               {
+                   @class = "form-control",
+                   ng_model = "SearchOrderDeliveryTerms",
+                   @id = "ORDeliveryTerms",
+                   @multiple = true
+               })
+            </td>
+            <td>
                 <button class="btn btn-link" type="button" id="btnSearch" ng-click="FetchOrdersList()">
                     <i class="fa fa-search"></i>
                 </button>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="row mt-1">
-    <div class="col-md-12">
-        
-    </div>
+            </td>
+        </tr>
+    </table>
 </div>
 
 
@@ -176,7 +144,7 @@
                     <td>
                         <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="VIEW" ng-click="LoadOrderViewPopup(L.Id)">
                             <i class="fa fa-eye"></i>
-                        </button>                        
+                        </button>
                     </td>
                     <td>
                         {{L.SoNo}}
@@ -204,7 +172,7 @@
                     </td>
                     <td>
                         {{L.ConsigneeLocation}}
-                    </td>                    
+                    </td>
                 </tr>
             </tbody>
             <tfoot>
@@ -249,31 +217,31 @@
 
 <div class="modal" id="addOrderDetails" tabindex="-1" role="dialog">
     @*@using (Ajax.BeginForm(actionName: "SaveOrderDetails", controllerName: "Technical", ajaxOptions: new AjaxOptions
-    {
-        HttpMethod = "POST"
-        // OnSuccess = "BuildingSpaceDetails.UploadFiles"
-    },
-            routeValues: null,
-            htmlAttributes: new { id = "frmOrderDetails" }))
-    {*@
-        <div class="modal-dialog" style="width:80%; max-width: 80%;" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    @*@Html.HiddenFor(m => m.TrnBuildingHdrId)*@
-                    <h5 class="modal-title">Add Order Details</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div id="div-Staff-details" class="modal-body">
+        {
+            HttpMethod = "POST"
+            // OnSuccess = "BuildingSpaceDetails.UploadFiles"
+        },
+                routeValues: null,
+                htmlAttributes: new { id = "frmOrderDetails" }))
+        {*@
+    <div class="modal-dialog" style="width:80%; max-width: 80%;" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                @*@Html.HiddenFor(m => m.TrnBuildingHdrId)*@
+                <h5 class="modal-title">Add Order Details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div id="div-Staff-details" class="modal-body">
 
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" id="btnSubmit" class="btn btn-primary">Save</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" id="btnSubmit" class="btn btn-primary">Save</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             </div>
         </div>
+    </div>
     @*}*@
 </div>
 
@@ -338,10 +306,113 @@
 </div>
 <script type="text/javascript">
 
+
     $(document).ready(function () {
-        window.OrderDetailsPopup = '@Url.Action("OrderPopup", "Technical")';        
-        window.ItemDetailsPopup = '@Url.Action("ItemPopup", "Technical")';        
-        window.CallApi = '@Url.Action("CallApi", "Technical")';        
+
+        window.GetDdlValueForQuote = '@Url.Action("GetDdlValueForQuote","Quotation")';
+        window.OrderDetailsPopup = '@Url.Action("OrderPopup", "Technical")';
+        window.ItemDetailsPopup = '@Url.Action("ItemPopup", "Technical")';
+        window.CallApi = '@Url.Action("CallApi", "Technical")';
+
+
+        $('#ORQuoteType').chosen({
+            width: "210px",
+            placeholder_text_single: "Select QuoteType",
+            placeholder_text_multiple: "Select QuoteType"
+        });
+
+        $('#ORVendorId').chosen({
+            width: "210px",
+            placeholder_text_single: "Select Vendor Id",
+            placeholder_text_multiple: "Select Vendor Id"
+        });
+
+        $('#ORProductGroup').chosen({
+            width: "210px",
+            placeholder_text_single: "Select Product Group",
+            placeholder_text_multiple: "Select Product Group"
+        });
+
+        $('#ORDeliveryTerms').chosen({
+            width: "210px",
+            placeholder_text_single: "Select Delivery Terms",
+            placeholder_text_multiple: "Select Delivery Terms"
+        });
+
+        $("#ORQuoteType").chosen().change(
+            function GetQuoteType() {
+                //var QuoteType = $('#QTQuoteType').val();
+                var QuoteType = '';
+                var x = document.getElementById("ORQuoteType");
+                for (var i = 0; i < x.options.length; i++) {
+                    if (x.options[i].selected == true) {
+                        //alert(x.options[i].value);
+                        QuoteType = QuoteType + x.options[i].value + ',';
+                    }
+                }
+
+                QuoteType = QuoteType.substring(0, QuoteType.length - 1);
+
+                return $.ajax({
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json',
+                    type: 'GET',
+                    url: window.GetDdlValueForQuote,
+                    data: { QuoteType: QuoteType, type: 'VendorId' },
+                    success: function (res) {
+                        if (res.length > 0) {
+                            $("#ORVendorId").empty();
+                            $.each(res, function (i, item) {
+                                $("#ORVendorId").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
+                                $("#ORVendorId").trigger("chosen:updated");
+                            })
+                        }
+                    },
+                    error: function (result) {
+                        alert(result)
+                    }
+                });
+            }
+        )
+
+        $("#ORVendorId").chosen().change(
+            function GetProductGroup() {
+                //var VendorId = $('#QTVendorId').val();
+                debugger;
+                var VendorId = '';
+                var x = document.getElementById("ORVendorId");
+                for (var i = 0; i < x.options.length; i++) {
+                    if (x.options[i].selected == true) {
+                        //alert(x.options[i].value);
+                        VendorId = VendorId + x.options[i].value + ',';
+                    }
+                }
+
+                VendorId = VendorId.substring(0, VendorId.length - 1);
+
+                return $.ajax({
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json',
+                    type: 'GET',
+                    url: window.GetDdlValueForQuote,
+                    data: { VendorId: VendorId, type: 'ProductGroup' },
+                    success: function (res) {
+                        if (res.length > 0) {
+                            $("#ORProductGroup").empty();
+                            $.each(res, function (i, item) {
+                                $("#ORProductGroup").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
+                                $("#ORProductGroup").trigger("chosen:updated");
+                            })
+                        }
+                    },
+                    error: function (result) {
+                        alert(result)
+                    }
+                });
+            }
+        )
+
+
     });
 
     function CallApi() {
@@ -351,7 +422,7 @@
         var MultiQuoteNos = $('#MultiQuoteNos').val() + $("#QuoteOrderFormNo option:selected").text() + '/';
         if ($("#QuoteOrderFormNo option:selected").val() != '')
             $('#MultiQuoteNos').val(MultiQuoteNos);
-        debugger;
+
         $.ajax({
             type: 'POST',
             url: window.CallApi,

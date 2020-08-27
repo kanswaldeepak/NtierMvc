@@ -27,9 +27,9 @@
             <td>
                 <label>Function Area</label>
             </td>
-            <td>
+            @*<td>
                 <label>Quote Type</label>
-            </td>
+            </td>*@
         </tr>
         <tr>
             <td></td>
@@ -38,7 +38,8 @@
                            new
                            {
                                @class = "form-control",
-                               ng_model = "SearchCustVendorType"
+                               ng_model = "SearchCustVendorType",
+                               @id = "CUVendorType"
                            })
             </td>
             <td>
@@ -47,7 +48,8 @@
                            {
                                @class = "form-control",
                                ng_model = "SearchCustVendorNature",
-                               @onchange = "GetVendorListForCust()"
+                               @onchange = "GetVendorListForCust()",
+                               @id = "CUVendorNatureId"
                            })
             </td>
             <td>
@@ -55,7 +57,9 @@
                            new
                            {
                                @class = "form-control",
-                               ng_model = "SearchCustVendorID"
+                               ng_model = "SearchCustVendorID",
+                               @id = "CUVendorId",
+                               @multiple = "true"
                            })
             </td>
             <td>
@@ -63,7 +67,8 @@
                           new
                           {
                               @class = "form-control",
-                              ng_model = "SearchCustName"
+                              ng_model = "SearchCustName",
+                              @id = "CUVendorName"
                           })
             </td>
             <td>
@@ -71,17 +76,20 @@
                            new
                            {
                                @class = "form-control",
-                               ng_model = "SearchCustFunctionalArea"
+                               ng_model = "SearchCustFunctionalArea",
+                               @id = "CUFunctionalArea"
                            })
             </td>
-            <td>
+            @*<td>
                 @Html.DropDownList("QuoteType", new SelectList(@ViewBag.ListQuoteType, "DataStringValueField", "DataTextField", "Select"),
                            new
                            {
                                @class = "form-control",
-                               ng_model = "SearchQuoteType"
+                               ng_model = "SearchQuoteType",
+                               @id = "CUQuoteType",
+                               @multiple = "true"
                            })
-            </td>
+            </td>*@
             <td>
                 <button class="btn btn-link" type="button" id="btnSearch" ng-click="FetchCustomerList()">
                     <i class="fa fa-search"></i>
@@ -375,15 +383,157 @@
 
     $(document).ready(function () {
 
-        //$('#btnSearch').on("click", function () {
-        //    CustomerDetails.OnSearch();
-        //})
         window.GetVendorListForCusts = '@Url.Action("GetVendorListForCust","Customer")';
-    });
+        window.GetDdlValueForCustomer = '@Url.Action("GetDdlValueForCustomer", "Customer")';
 
-    //$(function () {
-    //    CustomerDetails.Load();
-    //});
+        $('#CUVendorType').chosen({
+            width: "150px",
+            placeholder_text_single: "Select VendorType"
+        });
+
+        $('#CUVendorNatureId').chosen({
+            width: "210px",
+            placeholder_text_single: "Select VendorNatureId"
+        });
+
+        $('#CUVendorId').chosen({
+            width: "150px",
+            placeholder_text_single: "Select VendorId"
+        });
+
+        $('#CUVendorName').chosen({
+            width: "210px",
+            placeholder_text_single: "Select VendorName"
+        });
+
+        $('#CUFunctionalArea').chosen({
+            width: "180px",
+            placeholder_text_single: "Select FunctionalArea"
+        });
+
+        //$('#CUQuoteType').chosen({
+        //    width: "120px",
+        //    placeholder_text_single: "Select QuoteType"
+        //});
+
+
+        $('#CUVendorType').chosen().change(
+            function GetVendorType() {
+                var VendorType = $('#CUVendorType').val();
+                
+                return $.ajax({
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json',
+                    type: 'GET',
+                    url: window.GetDdlValueForCustomer,
+                    data: { type: 'VendorNature', VendorType: VendorType },
+                    success: function (res) {
+                        if (res.length > 0) {
+                            $("#CUVendorNatureId").empty();
+                            $.each(res, function (i, item) {
+                                $("#CUVendorNatureId").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
+                                $("#CUVendorNatureId").trigger("chosen:updated");
+                            })
+                        }
+                    },
+                    error: function () {
+                        alert(result);
+                    }
+                });
+            }
+        )
+
+
+        $("#CUVendorNatureId").chosen().change(
+            function GetVendorName() {
+                var VendorNatureId = $('#CUVendorNatureId').val();
+
+                return $.ajax({
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json',
+                    type: 'GET',
+                    url: window.GetDdlValueForCustomer,
+                    data: { VendorNatureId: VendorNatureId, type: 'VendorId' },
+                    success: function (res) {
+                        if (res.length > 0) {
+                            $("#CUVendorId").empty();
+                            $.each(res, function (i, item) {
+                                $("#CUVendorId").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
+                                $("#CUVendorId").trigger("chosen:updated");
+                            })
+                        }
+                    },
+                    error: function () {
+                        alert(result);
+                    }
+                });
+            }
+        )
+
+        $("#CUVendorId").chosen().change(
+            function GetFunctionalArea() {
+                //var VendorNameId = $('#CUVendorId').val();
+                var VendorNameId = '';
+                var x = document.getElementById("CUVendorId");
+                for (var i = 0; i < x.options.length; i++) {
+                    if (x.options[i].selected == true) {
+                        //alert(x.options[i].value);
+                        VendorNameId = VendorNameId + x.options[i].value + ',';
+                    }
+                }
+
+                VendorNameId = VendorNameId.substring(0, VendorNameId.length - 1);
+
+                return $.ajax({
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json',
+                    type: 'GET',
+                    url: window.GetDdlValueForCustomer,
+                    data: { VendorName: VendorNameId, type: 'VendorName' },
+                    success: function (res) {
+                        if (res.length > 0) {
+                            $("#CUVendorName").empty();
+                            $.each(res, function (i, item) {
+                                $("#CUVendorName").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
+                                $("#CUVendorName").trigger("chosen:updated");
+                            })
+                        }
+                    },
+                    error: function () {
+                        alert(result);
+                    }
+                });
+            }
+        )
+
+        $("#CUVendorName").chosen().change(
+            function GetFunctionalArea() {
+                var VendorNameId = $('#CUVendorName').val();
+
+                return $.ajax({
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json',
+                    type: 'GET',
+                    url: window.GetDdlValueForCustomer,
+                    data: { VendorName: VendorNameId, type: 'FunctionalArea' },
+                    success: function (res) {
+                        if (res.length > 0) {
+                            $("#CUFunctionalArea").empty();
+                            $.each(res, function (i, item) {
+                                $("#CUFunctionalArea").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
+                                $("#CUFunctionalArea").trigger("chosen:updated");
+                            })
+                        }
+                    },
+                    error: function () {
+                        alert(result);
+                    }
+                });
+            }
+        )
+
+
+    });
 
     //COMPARING MOBILE NUMBER AND ALTERNATIVE MOBILE NUMBER
     var alterMobileNumber = $('#altrmobileNumber');
@@ -416,7 +566,7 @@
             }
         }
     }
-
+   
     function GetVendorListForCust() {
         let VendorNature = $('#VendorNatureId').val();
 

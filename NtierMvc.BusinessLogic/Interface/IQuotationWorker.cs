@@ -16,10 +16,10 @@ namespace NtierMvc.BusinessLogic.Interface
         QuotationEntity GetVendorQuoteDetails(string vendorId);
         string DeleteQuotationDetail(int QuotationId);
 
-        QuotationEntityDetails GetQuotationDetails(int pageIndex, int pageSize, string SearchQuoteType = null, string SearchQuoteNo = null, string SearchQuoteVendorID = null, string SearchQuoteVendorName = null, string SearchQuoteProductGroup = null, string SearchQuoteEnqFor = null);
+        QuotationEntityDetails GetQuotationDetails(int pageIndex, int pageSize, string SearchQuoteType = null, string SearchQuoteVendorID = null, string SearchQuoteProductGroup = null, string SearchDeliveryTerms = null);
 
         QuotationEntity QuotationDetailsPopup(QuotationEntity Model);
         List<DropDownEntity> GetCityName(string VendorName);
-        
+        List<DropDownEntity> GetDdlValueForQuote(string type, string VendorId = null, string QuoteType = null);
     }
 }

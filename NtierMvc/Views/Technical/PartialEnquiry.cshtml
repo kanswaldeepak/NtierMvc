@@ -6,96 +6,83 @@
 }
 
 <div class="row mt-3">
-    <div class="col-md-2">
-        <button id="btnAdd" type="button" class="btn btn-outline-primary btn-sm" style="float: left;" ng-click="BindEnquiryPopup()"><i class="fa fa-plus"></i> <b>Add New Enquiry</b></button>
-    </div>
-    <div class="col-md-8">
-        <div class="row text-center">
-            <div class="col-md-2">
-                <label>Vendor Name</label>
-            </div>
-            <div class="col-md-2">
-                <label>Vendor Id</label>
-            </div>
-            <div class="col-md-2">
-                <label>Product Group</label>
-            </div>
-            <div class="col-md-2">
+    <table class="table-borderless">
+        <tr>
+            <td>
+                <button id="btnAdd" type="button" class="btn btn-outline-primary btn-sm" style="float: left;" ng-click="BindEnquiryPopup()"><i class="fa fa-plus"></i> <b>Add New Enquiry</b></button>
+            </td>
+            <td>
                 <label>EOQ</label>
-            </div>
-            <div class="col-md-2">
+            </td>
+            <td>
+                <label>Product Group</label>
+            </td>
+            <td>
+                <label>Vendor Id</label>
+            </td>
+            @*<td>
+                    <label>Vendor Name</label>
+                </td>*@
+            <td>
                 <label>Month</label>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-md-2">
-    </div>
-    <div class="col-md-8">
-        <div class="row">
-            <div class="col-md-2">
-                <div class="input-group">
-                    @Html.DropDownList("VendorName", new SelectList(@ViewBag.ListVendorName, "DataStringValueField", "DataTextField", "Select"),
+            </td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>
+                @Html.DropDownList("EOQ", new SelectList(@ViewBag.ListEOQ, "DataStringValueField", "DataTextField", "Select"),
                            new
                            {
                                @class = "form-control",
-                               ng_model= "SearchEnqName"
+                               ng_model = "SearchEOQ",
+                               @onchange = "GetVendorEOQ()",
+                               @id = "EQEOQ"
                            })
-                </div>
-            </div>
-            <div class="col-md-2">
-                <div class="input-group">
-                    @Html.DropDownList("VendorId", new SelectList(@ViewBag.ListVendorId, "DataStringValueField", "DataTextField", "Select"),
+            </td>
+            <td>
+                @Html.DropDownList("ProductGroup", new SelectList(@ViewBag.ListProdGrp, "DataStringValueField", "DataTextField", "Select"),
                            new
                            {
                                @class = "form-control",
-                               ng_model= "SearchEnqVendorID"
+                               ng_model = "SearchProductGroup",
+                               @id = "EQProductGroup"
                            })
-                </div>
-            </div>
-            <div class="col-md-2">
-                <div class="input-group">
-                    @Html.DropDownList("ProductGroup", new SelectList(@ViewBag.ListProdGrp, "DataStringValueField", "DataTextField", "Select"),
+            </td>
+            <td>
+                @Html.DropDownList("VendorId", new SelectList(@ViewBag.ListVendorId, "DataStringValueField", "DataTextField", "Select"),
                            new
                            {
                                @class = "form-control",
-                               ng_model= "SearchProductGroup"
+                               ng_model = "SearchEnqVendorID",
+                               @id = "EQVendorId",
+                               @multiple = "true"
                            })
-                </div>
-            </div>
-            <div class="col-md-2">
-                <div class="input-group">
-                    @Html.DropDownList("EOQ", new SelectList(@ViewBag.ListEOQ, "DataStringValueField", "DataTextField", "Select"),
+            </td>
+            @*<td>
+                     @Html.DropDownList("VendorName", new SelectList(@ViewBag.ListVendorName, "DataStringValueField", "DataTextField", "Select"), new
+                {
+                    @class = "form-control",
+                    ng_model = "SearchEnqName",
+                    @id = "EQVendorName"
+                })
+                 </td>*@
+            <td>
+                @Html.DropDownList("Month", new SelectList(@ViewBag.ListMonth, "DataStringValueField", "DataTextField", "Select"),
                            new
                            {
                                @class = "form-control",
-                               ng_model= "SearchEOQ"
+                               ng_model = "SearchMonth",
+                               @id = "EQMonth"
                            })
-                </div>
-            </div>
-            <div class="col-md-2">
-                <div class="input-group">
-                    @Html.DropDownList("Month", new SelectList(@ViewBag.ListMonth, "DataStringValueField", "DataTextField", "Select"),
-                           new
-                           {
-                               @class = "form-control",
-                               ng_model= "SearchMonth"
-                           })
-                </div>
-            </div>
-            <div class="input-group-btn col-md-2">
+            </td>
+            <td>
                 <button class="btn btn-link" type="button" id="btnSearch" ng-click="FetchEnquiryList()">
                     <i class="fa fa-search"></i>
                 </button>
-            </div>
-            <div class="col-md-2">
-                <div class="input-group">
-                </div>
-            </div>
-        </div>
-    </div>
+            </td>
+        </tr>
+    </table>
 </div>
 
 <div class="wrapper">
@@ -138,13 +125,7 @@
                         <div class="c3">
                             Enq Date
                         </div>
-                    </th>
-                    <th>
-                        Enq Type
-                        <div class="c3">
-                            Enq Type
-                        </div>
-                    </th>
+                    </th>                    
                     <th>
                         Due Date
                         <div class="c3">
@@ -168,7 +149,7 @@
                         <div class="c3">
                             EOQ
                         </div>
-                    </th>                   
+                    </th>
                 </tr>
             </thead>
             <tbody>
@@ -198,9 +179,6 @@
                     </td>
                     <td>
                         {{L.EnqDt}}
-                    </td>
-                    <td>
-                        {{L.EnqType}}
                     </td>
                     <td>
                         {{L.DueDate}}
@@ -240,7 +218,7 @@
                                 <div class="col-md-8 pull-right p-0">
                                     <div class="row p-0">
                                         <div class="col-md-10 p-0">
-                                           <pagination total-items="enqTotalCount" ng-change="EnqPageChanged()" items-per-page="enqPageSize" direction-links="true" ng-model="enqPageIndex" max-size="maxsize" class="pagination pull-right" boundary-links="true" rotate="false" num-pages="enqNumPages"></pagination>
+                                            <pagination total-items="enqTotalCount" ng-change="EnqPageChanged()" items-per-page="enqPageSize" direction-links="true" ng-model="enqPageIndex" max-size="maxsize" class="pagination pull-right" boundary-links="true" rotate="false" num-pages="enqNumPages"></pagination>
                                         </div>
                                         <div class="col-md-2 p-0">
                                             <a class="btn btn-primary p-2 pull-right">Page: {{enqPageIndex}} / {{enqNumPages}}</a>
@@ -290,17 +268,11 @@
 
 <div class="modal fade" id="add_details" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 </div>
-@*<script src="~/Scripts/CustomJS/EnquiryDetails.js"></script>*@
-<script type="text/javascript">
 
-    $(document).ready(function () {
-        $('[data-toggle="tooltip"]').tooltip();
-    });
-
-</script>
 <script type="text/javascript">
         $(document).ready(function () {
             window.EnquiryDetailsPopup = '@Url.Action("EnquiryPopup", "Technical")';
+            window.GetDdlValueForEnquiry = '@Url.Action("GetDdlValueForEnquiry", "Enquiry")';
 
             var Data = '@TempData["StatusMsg"]';
             if (Data === "INSERTED SUCCESSFULLY" || Data === "UPDATED SUCCESSFULLY")
@@ -309,7 +281,84 @@
             }
 
         })
-        //$(function () {
-        //    EnquiryDetails.Load();
-        //});
+
+
+    $('#EQEOQ').chosen({
+        width: "210px",
+        placeholder_text_single: "Select EOQ"
+    });
+
+    $('#EQProductGroup').chosen({
+        width: "210px",
+        placeholder_text_single: "Select Product Group"
+    });
+
+    $('#EQVendorId').chosen({
+        width: "210px",
+        placeholder_text_single: "Select Vendor Id",
+        placeholder_text_multiple: "Select Vendor Ids"
+    });
+
+    $('#EQVendorName').chosen({
+        width: "210px",
+        placeholder_text_single: "Select Vendor Name"
+    });
+
+    $('#EQMonth').chosen({
+        width: "210px",
+        placeholder_text_single: "Select Month"
+    });
+
+    $("#EQEOQ").chosen().change(
+        function GetEQEOQ() {
+            var EOQId = $('#EQEOQ').val();
+
+            return $.ajax({
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                type: 'GET',
+                url: window.GetDdlValueForEnquiry,
+                data: { EOQId: EOQId, type: 'ProductGroup' },
+                success: function (res) {
+                    if (res.length > 0) {
+                        $("#EQProductGroup").empty();
+                        $.each(res, function (i, item) {
+                            $("#EQProductGroup").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
+                            $("#EQProductGroup").trigger("chosen:updated");
+                        })
+                    }
+                },
+                error: function () {
+                    alert(result)
+                }
+            });
+        }
+    )
+
+    $("#EQProductGroup").chosen().change(
+        function GetEQProductGroup() {
+            var EQProductGroupId = $('#EQProductGroup').val();
+
+            return $.ajax({
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                type: 'GET',
+                url: window.GetDdlValueForEnquiry,
+                data: { ProductGroup: EQProductGroupId, type: 'VendorId' },
+                success: function (res) {
+                    if (res.length > 0) {
+                        $("#EQVendorId").empty();
+                        $.each(res, function (i, item) {
+                            $("#EQVendorId").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
+                            $("#EQVendorId").trigger("chosen:updated");
+                        })
+                    }
+                },
+                error: function () {
+                    alert(result)
+                }
+            });
+        }
+    )
+
 </script>

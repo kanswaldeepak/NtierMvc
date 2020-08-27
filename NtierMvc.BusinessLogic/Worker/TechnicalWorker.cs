@@ -834,13 +834,13 @@ namespace NtierMvc.BusinessLogic.Worker
         }
 
 
-        public OrderEntityDetails GetOrderDetails(int pageIndex, int pageSize, string SearchOrderVendorID = null, string SearchOrderVendorName = null, string SearchOrderQuoteNo = null, string SearchOrderProductGroup = null, string SearchOrderEnqFor = null, string SearchOrderQuoteType = null)
+        public OrderEntityDetails GetOrderDetails(int pageIndex, int pageSize, string SearchQuoteType = null, string SearchVendorID = null, string SearchProductGroup = null, string SearchDeliveryTerms = null)
         {
             try
             {
                 OrderEntityDetails qED = new OrderEntityDetails();
                 qED.lstOrderEntity = new List<OrderEntity>();
-                DataSet ds = _repository.GetOrderDetails(pageIndex, pageSize, SearchOrderVendorID, SearchOrderVendorName, SearchOrderQuoteNo, SearchOrderProductGroup, SearchOrderEnqFor, SearchOrderQuoteType);
+                DataSet ds = _repository.GetOrderDetails(pageIndex, pageSize, SearchQuoteType, SearchVendorID, SearchProductGroup, SearchDeliveryTerms);
                 //DataTable dt = _repository.GetOrderDetails();
 
                 if (ds.Tables.Count > 0)

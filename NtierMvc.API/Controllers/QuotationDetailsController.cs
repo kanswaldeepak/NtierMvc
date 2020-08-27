@@ -53,9 +53,9 @@ namespace NtierMvc.API.Controllers.Application
 
         [ResponseType(typeof(int))]
         [Route("api/QuotationDetails/GetQuotationDetails")]
-        public IHttpActionResult GetQuotationDetails(int pageIndex, int pageSize, string SearchQuoteType = null, string SearchQuoteNo = null, string SearchQuoteVendorID = null, string SearchQuoteVendorName = null, string SearchQuoteProductGroup = null, string SearchQuoteEnqFor = null)
+        public IHttpActionResult GetQuotationDetails(int pageIndex, int pageSize, string SearchQuoteType = null, string SearchQuoteVendorID = null, string SearchQuoteProductGroup = null, string SearchDeliveryTerms = null)
         {
-            return Ok(_repository.GetQuotationDetails(pageIndex, pageSize, SearchQuoteType, SearchQuoteNo, SearchQuoteVendorID, SearchQuoteVendorName, SearchQuoteProductGroup, SearchQuoteEnqFor));
+            return Ok(_repository.GetQuotationDetails(pageIndex, pageSize, SearchQuoteType, SearchQuoteVendorID, SearchQuoteProductGroup, SearchDeliveryTerms));
         }
 
         [HttpGet]
@@ -81,6 +81,13 @@ namespace NtierMvc.API.Controllers.Application
         public IHttpActionResult QuotationDetailsPopup(QuotationEntity Model)
         {
             return Ok(_repository.QuotationDetailsPopup(Model));
+        }
+
+        [HttpGet]
+        [Route("api/QuotationDetails/GetDdlValueForQuote")]
+        public IHttpActionResult GetDdlValueForQuote(string type, string VendorId = null, string QuoteType = null)
+        {
+            return Ok(_repository.GetDdlValueForQuote(type, VendorId, QuoteType));
         }
 
     }

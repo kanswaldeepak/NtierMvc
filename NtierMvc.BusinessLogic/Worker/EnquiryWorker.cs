@@ -404,19 +404,19 @@ namespace NtierMvc.BusinessLogic.Worker
                         {
                             entity = new DropDownEntity();
                             if (dt.Columns.Contains("Id"))
-                                entity.DataValueField = Convert.ToInt32(dr["Id"] ?? 0);
+                                entity.DataStringValueField = Convert.ToString(dr["Id"] ?? "0");
 
-                            if (dt.Columns.Contains("ProdGrp"))
-                                entity.DataTextField = dr["ProdGrp"]?.ToString() ?? "";
+                            if (dt.Columns.Contains("Product"))
+                                entity.DataTextField = dr["Product"]?.ToString() ?? "";
 
                             lstDdl.Add(entity);
                         }
-                    else if(type=="VendorId")
+                    else if (type == "VendorId")
                         foreach (DataRow dr in dt.Rows)
                         {
                             entity = new DropDownEntity();
                             if (dt.Columns.Contains("Id"))
-                                entity.DataValueField = Convert.ToInt32(dr["Id"] ?? 0);
+                                entity.DataStringValueField = Convert.ToString(dr["Id"] ?? "0");
 
                             if (dt.Columns.Contains("VendorId"))
                                 entity.DataTextField = dr["VendorId"]?.ToString() ?? "";
@@ -428,7 +428,7 @@ namespace NtierMvc.BusinessLogic.Worker
                         {
                             entity = new DropDownEntity();
                             if (dt.Columns.Contains("Id"))
-                                entity.DataValueField = Convert.ToInt32(dr["Id"] ?? 0);
+                                entity.DataStringValueField = Convert.ToString(dr["Id"] ?? "0");
 
                             if (dt.Columns.Contains("VendorName"))
                                 entity.DataTextField = dr["VendorName"]?.ToString() ?? "";
@@ -437,14 +437,26 @@ namespace NtierMvc.BusinessLogic.Worker
                         }
                 }
 
+                DropDownEntity entity1 = new DropDownEntity();
+                entity1.DataStringValueField = "";
+                entity1.DataTextField = "Select";
+
+                lstDdl.Insert(0, entity1);
                 return lstDdl;
             }
+
             catch (Exception Ex)
             {
                 NtierMvc.DataAccess.ExceptionLogging.SendExcepToDB(Ex);
                 throw Ex;
             }
+
         }
+
+
+
+
+
 
     }
 }

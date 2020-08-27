@@ -57,7 +57,17 @@ namespace NtierMvc.API.Controllers.Application
         {
             return Ok(_repository.DeleteCustomerDetail(param[0]));
         }
-        
+
+        [HttpGet]
+        [Route("api/CustomerDetails/GetDdlValueForCustomer")]
+        public IHttpActionResult GetDdlValueForCustomer(string type, string VendorType = null, string VendorNatureId = null, string VendorName = null, string FunctionalArea = null)
+        {
+            return Ok(_repository.GetDdlValueForCustomer(type, VendorType, VendorNatureId, VendorName, FunctionalArea));
+        }
+
+
+
+
 
     }
 }

@@ -95,6 +95,23 @@ namespace NtierMvc.DataAccess.Pool
             return msgCode;
 
         }
-        
+
+        public DataTable GetDdlValueForCustomer(string type, string VendorType = null, string VendorNatureId = null, string VendorName = null, string FunctionalArea = null)
+        {
+            var parms = new Dictionary<string, object>();
+            parms.Add("@Type", type);
+            parms.Add("@VendorType", VendorType);
+            parms.Add("@VendorNatureId", VendorNatureId);
+            parms.Add("@VendorNameId", VendorName);
+            parms.Add("@FunctionalArea", FunctionalArea);
+            
+            string spName = ConfigurationManager.AppSettings["GetDdlValueForCustomer"];
+            return _dbAccess.GetDataTable(spName, parms);
+        }
+
+
+
+
+
     }
 }
