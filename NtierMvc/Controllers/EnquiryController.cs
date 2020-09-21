@@ -52,135 +52,13 @@ namespace NtierMvc.Controllers
 
             EnquiryEntityDetails enq = new EnquiryEntityDetails();
             enq.enqEntity.UnitNo = Session["UserId"].ToString();
-            enq.enqEntity = objManager.GetUserDetails(enq.enqEntity.UnitNo);
+            enq.enqEntity = objManager.GetUserDetailsForEnquiry(enq.enqEntity.UnitNo);
 
             model = new BaseModel();
             return View(enq);
         }
 
-        public JsonResult FetchEnquiryList(string pageIndex, string pageSize, string SearchEnqName, string SearchEnqVendorID = null, string SearchProductGroup = null, string SearchMonth = null, string SearchEOQ = null)
-        {
-
-            SearchEnqName = SearchEnqName == "-1" ? string.Empty : SearchEnqName;
-            SearchEnqVendorID = SearchEnqVendorID == "-1" ? string.Empty : SearchEnqVendorID;
-            SearchProductGroup = SearchProductGroup == "-1" ? string.Empty : SearchProductGroup;
-            SearchMonth = SearchMonth == "-1" ? string.Empty : SearchMonth;
-            SearchEOQ = SearchEOQ == "-1" ? string.Empty : SearchEOQ;
-
-            EnquiryEntityDetails enq = new EnquiryEntityDetails();
-            enq = objManager.GetEnquiryDetails(Convert.ToInt32(pageIndex), Convert.ToInt32(pageSize), SearchEnqName, SearchEnqVendorID, SearchProductGroup, SearchMonth, SearchEOQ);
-            return new JsonResult { Data = enq, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
-            //return custDetail.LstCusEnt;
-        }
-
-        [HttpGet]
-        public ActionResult PartialEnquiry()
-        {
-            EnquiryEntityDetails enq = new EnquiryEntityDetails();
-            enq.enqEntity.UnitNo = Session["UserId"].ToString();
-            enq.enqEntity = objManager.GetUserDetails(enq.enqEntity.UnitNo);
-
-            return View(enq);
-        }
-
-        [HttpPost]
-        public ActionResult SaveEnquiryDetails(EnquiryEntity cusE)
-        {
-            string result = objManager.SaveEnquiryDetails(cusE);
-
-            TempData["VendorName"] = cusE.VendorId;
-            TempData["UserName"] = cusE.UserInitial;
-            string data = string.Empty;
-            if (!string.IsNullOrEmpty(result) && (result == GeneralConstants.Inserted || result == GeneralConstants.Updated))
-            {
-                //Payment Gateway
-                //TempData["StatusMsg"] = "Success";
-                data = GeneralConstants.SavedSuccess;
-            }
-            else
-            {
-                //TempData["StatusMsg"] = "Error";
-                TempData["StatusMsgBody"] = result;
-                data = GeneralConstants.NotSavedError;
-            }
-
-            return new JsonResult { Data = data, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
-        }
-
-        [HttpPost]
-        public ActionResult EnquiryPopup(string actionType, string enquiryId)
-        {
-            ViewBag.ListEOQ = model.GetTaxonomyDropDownItems("", "Expression of Quote(EOQ)");
-            ViewBag.ListLeadTimeDuration = model.GetTaxonomyDropDownItems("", "Time");
-            ViewBag.YesNo = model.GetTaxonomyDropDownItems("", "YesNo");
-            ViewBag.ListEnqThru = model.GetTaxonomyDropDownItems("", "Enquiry Through");
-            ViewBag.ListEnqType = model.GetTaxonomyDropDownItems("", "Domestic/International");
-            ViewBag.ListCountry = model.GetMasterTableList("Master.Country", "Id", "Country");
-            ViewBag.ListProdGrp = model.GetMasterTableList("Master.ProductLine", "Id", "Product");
-            ViewBag.ListEnqMode = model.GetTaxonomyDropDownItems("", "ContactType");
-
-            EnquiryEntity eModel = new EnquiryEntity();
-            eModel.UnitNo = Session["UserId"].ToString();
-            ViewBag.ListVendorId = model.GetMasterTableStringList("Clientele_Master", "Id", "VendorName", eModel.UnitNo, "UnitNo", GeneralConstants.ListTypeN);
-            ViewBag.ListCity = objManager.GetCityName();
-
-            if (actionType == "VIEW" || actionType == "EDIT")
-            {
-                if (!string.IsNullOrEmpty(enquiryId))
-                    eModel.EnquiryId = Convert.ToInt32(enquiryId);
-                eModel = objManager.EnquiryDetailsPopup(eModel);
-            }
-            if (actionType == "ADD")
-            {
-                eModel = objManager.GetUserDetails(eModel.UnitNo);
-                //eModel = objManager.AddEnquiryDetailsPopup(eModel);
-            }
-
-            return PartialView("~/Views/Enquiry/_EnquiryDetails.cshtml", eModel);
-        }
-
-        public ActionResult DeleteEnquiryDetail(int id)
-        {
-            if (ModelState.IsValid)
-            {
-                string msgCode = objManager.DeleteEnquiryDetail(id);
-                if (msgCode == "")
-                {
-                    //return RedirectToAction("Customer");
-                    return new JsonResult { Data = GeneralConstants.DeleteSuccess, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
-                }
-                else
-                {
-                    return new JsonResult { Data = GeneralConstants.NotDeletedError, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
-                    //Response.StatusCode = 444;
-                    //Response.StatusDescription = "Not Saved";
-                    //return null;
-                }
-            }
-            else
-            {
-                Response.StatusCode = 444;
-                Response.Status = "Not Saved";
-                return null;
-            }
-
-        }
-
-        [HttpPost]
-        public ActionResult GetVendorDetailForEnquiry(string vendorId)
-        {
-            EnquiryEntity eModel = new EnquiryEntity();
-            eModel = objManager.GetVendorDetailForEnquiry(vendorId);
-            return new JsonResult { Data = eModel, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
-        }
-
-        public ActionResult GetDdlValueForEnquiry(string type, string EOQId = null, string ProductGroup = null, string VendorId = null)
-        {
-            List<DropDownEntity> ddl = new List<DropDownEntity>();
-            ddl = objManager.GetDdlValueForEnquiry(type, EOQId, ProductGroup, VendorId);
-            return new JsonResult { Data = ddl, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
-        }
-
+        
 
 
 

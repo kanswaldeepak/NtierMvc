@@ -25,6 +25,9 @@ namespace NtierMvc.Controllers
         QuotationPreparationEntity qPEntity;
         private TechnicalManager objManager;
         private QuotationManager objQuoteManager;
+        private EnquiryManager objEnquiryManager;
+        EnquiryEntityDetails enq;
+        QuotationManager objManagerQuote;
         BaseModel model;
 
         #region Constructor
@@ -36,7 +39,10 @@ namespace NtierMvc.Controllers
             qPEntity = new QuotationPreparationEntity();
             objManager = new TechnicalManager();
             objQuoteManager = new QuotationManager();
+            objEnquiryManager = new EnquiryManager();
             model = new BaseModel();
+            enq = new EnquiryEntityDetails();
+            objManagerQuote = new QuotationManager();
         }
 
         //protected override void Dispose(bool disposing)
@@ -151,19 +157,6 @@ namespace NtierMvc.Controllers
             return View();
         }
 
-        public JsonResult FetchQuotationList(string pageIndex, string pageSize, string SearchQuotRegVendorID, string SearchQuotRegVendorName, string SearchQuotRegQuoteNo, string SearchQuotRegProductGrp, string SearchQuotRegEnqFor, string SearchQuotRegQuoteType)
-        {
-            SearchQuotRegVendorID = SearchQuotRegVendorID == "-1" ? string.Empty : SearchQuotRegVendorID;
-            SearchQuotRegVendorName = SearchQuotRegVendorName == "-1" ? string.Empty : SearchQuotRegVendorName;
-            SearchQuotRegQuoteNo = SearchQuotRegQuoteNo == "-1" ? string.Empty : SearchQuotRegQuoteNo;
-            SearchQuotRegProductGrp = SearchQuotRegProductGrp == "-1" ? string.Empty : SearchQuotRegProductGrp;
-            SearchQuotRegEnqFor = SearchQuotRegEnqFor == "-1" ? string.Empty : SearchQuotRegEnqFor;
-            SearchQuotRegQuoteType = SearchQuotRegQuoteType == "-1" ? string.Empty : SearchQuotRegQuoteType;
-
-            techDetail = objManager.GetQuoteRegList(Convert.ToInt32(pageIndex), Convert.ToInt32(pageSize), SearchQuotRegVendorID, SearchQuotRegVendorName, SearchQuotRegQuoteNo, SearchQuotRegProductGrp, SearchQuotRegEnqFor, SearchQuotRegQuoteType);
-            return new JsonResult { Data = techDetail, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
-            //return techDetail.LstCusEnt;
-        }
 
         [HttpPost]
         public ActionResult SaveQuotationDetails(QuotationEntity cusE)
@@ -637,39 +630,6 @@ namespace NtierMvc.Controllers
             return new JsonResult { Data = qDetails, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 
-        public ActionResult EnquiryPopup(string actionType, string enquiryId)
-        {
-            BaseModel bModel = new BaseModel();
-            ViewBag.ListQuoteType = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "QuoteType", "Property", GeneralConstants.ListTypeN);
-            ViewBag.ListEOQ = bModel.GetTaxonomyDropDownItems("", "Expression of Quote(EOQ)");
-            ViewBag.ListLeadTimeDuration = bModel.GetTaxonomyDropDownItems("", "Time");
-            ViewBag.YesNo = bModel.GetTaxonomyDropDownItems("", "YesNo");
-            ViewBag.ListEnqThru = bModel.GetTaxonomyDropDownItems("", "Enquiry Through");
-            ViewBag.ListEnqType = bModel.GetTaxonomyDropDownItems("", "Domestic/International");
-            ViewBag.ListCountry = bModel.GetMasterTableList("Master.Country", "Id", "Country");
-            ViewBag.ListProdGrp = bModel.GetMasterTableList("Master.ProductLine", "Id", "Product");
-            ViewBag.ListEnqMode = bModel.GetTaxonomyDropDownItems("", "ContactType");
-
-            EnquiryEntity eModel = new EnquiryEntity();
-            eModel.UnitNo = Session["UserId"].ToString();
-            ViewBag.ListVendorId = bModel.GetMasterTableStringList("Clientele_Master", "Id", "VendorId", eModel.UnitNo, "UnitNo", GeneralConstants.ListTypeN);
-
-            EnquiryManager objEnqManager = new EnquiryManager();
-
-            if (actionType == "VIEW" || actionType == "EDIT")
-            {
-                if (!string.IsNullOrEmpty(enquiryId))
-                    eModel.EnquiryId = Convert.ToInt32(enquiryId);
-                eModel = objEnqManager.EnquiryDetailsPopup(eModel);
-            }
-            if (actionType == "ADD")
-            {
-                eModel = objEnqManager.GetUserDetails(eModel.UnitNo);
-                //eModel = objManager.AddEnquiryDetailsPopup(eModel);
-            }
-
-            return PartialView("~/Views/Technical/_EnquiryDetails.cshtml", eModel);
-        }
 
         public ActionResult GetPrepQuoteNo(string quotetypeId)
         {
@@ -1461,6 +1421,208 @@ namespace NtierMvc.Controllers
 
             //return new JsonResult { Data = msgCode, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
+
+
+        #region Enquiry
+        public JsonResult FetchEnquiryList(string pageIndex, string pageSize, string SearchEnqName, string SearchEnqVendorID = null, string SearchProductGroup = null, string SearchMonth = null, string SearchEOQ = null)
+        {
+
+            SearchEnqName = SearchEnqName == "-1" ? string.Empty : SearchEnqName;
+            SearchEnqVendorID = SearchEnqVendorID == "-1" ? string.Empty : SearchEnqVendorID;
+            SearchProductGroup = SearchProductGroup == "-1" ? string.Empty : SearchProductGroup;
+            SearchMonth = SearchMonth == "-1" ? string.Empty : SearchMonth;
+            SearchEOQ = SearchEOQ == "-1" ? string.Empty : SearchEOQ;
+
+            EnquiryEntityDetails enq = new EnquiryEntityDetails();
+            enq = objEnquiryManager.GetEnquiryDetails(Convert.ToInt32(pageIndex), Convert.ToInt32(pageSize), SearchEnqName, SearchEnqVendorID, SearchProductGroup, SearchMonth, SearchEOQ);
+            return new JsonResult { Data = enq, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+            //return custDetail.LstCusEnt;
+        }
+
+        [HttpGet]
+        public ActionResult PartialEnquiry()
+        {
+            EnquiryEntityDetails enq = new EnquiryEntityDetails();
+            enq.enqEntity.UnitNo = Session["UserId"].ToString();
+            enq.enqEntity = objEnquiryManager.GetUserDetailsForEnquiry(enq.enqEntity.UnitNo);
+
+            return View(enq);
+        }
+
+        [HttpGet]
+        public ActionResult EnquiryView()
+        {
+            EnquiryEntityDetails enq = new EnquiryEntityDetails();
+            enq.enqEntity.UnitNo = Session["UserId"].ToString();
+            enq.enqEntity = objEnquiryManager.GetUserDetailsForEnquiry(enq.enqEntity.UnitNo);
+
+            return View(enq);
+        }
+
+        public ActionResult EnquiryPopup(string actionType, string enquiryId)
+        {
+            BaseModel bModel = new BaseModel();
+            ViewBag.ListQuoteType = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "QuoteType", "Property", GeneralConstants.ListTypeN);
+            ViewBag.ListEOQ = bModel.GetTaxonomyDropDownItems("", "Expression of Quote(EOQ)");
+            ViewBag.ListLeadTimeDuration = bModel.GetTaxonomyDropDownItems("", "Time");
+            ViewBag.YesNo = bModel.GetTaxonomyDropDownItems("", "YesNo");
+            ViewBag.ListEnqThru = bModel.GetTaxonomyDropDownItems("", "Enquiry Through");
+            ViewBag.ListEnqType = bModel.GetTaxonomyDropDownItems("", "Domestic/International");
+            ViewBag.ListCountry = bModel.GetMasterTableList("Master.Country", "Id", "Country");
+            ViewBag.ListProdGrp = bModel.GetMasterTableList("Master.ProductLine", "Id", "Product");
+            ViewBag.ListEnqMode = bModel.GetTaxonomyDropDownItems("", "ContactType");
+
+            EnquiryEntity eModel = new EnquiryEntity();
+            eModel.UnitNo = Session["UserId"].ToString();
+            ViewBag.ListVendorId = bModel.GetMasterTableStringList("Clientele_Master", "Id", "VendorId", eModel.UnitNo, "UnitNo", GeneralConstants.ListTypeN);
+
+            EnquiryManager objEnqManager = new EnquiryManager();
+
+            if (actionType == "VIEW" || actionType == "EDIT")
+            {
+                if (!string.IsNullOrEmpty(enquiryId))
+                    eModel.EnquiryId = Convert.ToInt32(enquiryId);
+                eModel = objEnqManager.EnquiryDetailsPopup(eModel);
+            }
+            if (actionType == "ADD")
+            {
+                eModel = objEnqManager.GetUserDetailsForEnquiry(eModel.UnitNo);
+                //eModel = objManager.AddEnquiryDetailsPopup(eModel);
+            }
+
+            return PartialView("~/Views/Technical/_EnquiryDetails.cshtml", eModel);
+        }
+
+        [HttpPost]
+        public ActionResult SaveEnquiryDetails(EnquiryEntity cusE)
+        {
+            string result = objEnquiryManager.SaveEnquiryDetails(cusE);
+
+            TempData["VendorName"] = cusE.VendorId;
+            TempData["UserName"] = cusE.UserInitial;
+            string data = string.Empty;
+            if (!string.IsNullOrEmpty(result) && (result == GeneralConstants.Inserted || result == GeneralConstants.Updated))
+            {
+                //Payment Gateway
+                //TempData["StatusMsg"] = "Success";
+                data = GeneralConstants.SavedSuccess;
+            }
+            else
+            {
+                //TempData["StatusMsg"] = "Error";
+                TempData["StatusMsgBody"] = result;
+                data = GeneralConstants.NotSavedError;
+            }
+
+            return new JsonResult { Data = data, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+        }
+
+        public ActionResult DeleteEnquiryDetail(int id)
+        {
+            if (ModelState.IsValid)
+            {
+                string msgCode = objEnquiryManager.DeleteEnquiryDetail(id);
+                if (msgCode == "")
+                {
+                    //return RedirectToAction("Customer");
+                    return new JsonResult { Data = GeneralConstants.DeleteSuccess, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                }
+                else
+                {
+                    return new JsonResult { Data = GeneralConstants.NotDeletedError, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                    //Response.StatusCode = 444;
+                    //Response.StatusDescription = "Not Saved";
+                    //return null;
+                }
+            }
+            else
+            {
+                Response.StatusCode = 444;
+                Response.Status = "Not Saved";
+                return null;
+            }
+
+        }
+
+        [HttpPost]
+        public ActionResult GetVendorDetailForEnquiry(string vendorId)
+        {
+            EnquiryEntity eModel = new EnquiryEntity();
+            eModel = objEnquiryManager.GetVendorDetailForEnquiry(vendorId);
+            return new JsonResult { Data = eModel, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+        }
+
+        public ActionResult GetDdlValueForEnquiry(string type, string EOQId = null, string ProductGroup = null, string VendorId = null)
+        {
+            List<DropDownEntity> ddl = new List<DropDownEntity>();
+            ddl = objEnquiryManager.GetDdlValueForEnquiry(type, EOQId, ProductGroup, VendorId);
+            return new JsonResult { Data = ddl, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+        }
+
+        #endregion
+
+
+        #region Quotation
+
+        [HttpGet]
+        public ActionResult PartialQuotation()
+        {
+            QuotationEntity quote = new QuotationEntity();
+            quote.UnitNo = Session["UserId"].ToString();
+            quote = objQuoteManager.GetUserQuoteDetails(quote.UnitNo);
+
+            return View(quote);
+        }
+
+
+        public JsonResult FetchQuotationList(string pageIndex, string pageSize, string SearchQuoteType, string SearchQuoteVendorID, string SearchQuoteProductGroup, string SearchDeliveryTerms)
+        {
+            SearchQuoteType = SearchQuoteType == "-1" ? string.Empty : SearchQuoteType;
+            SearchQuoteVendorID = SearchQuoteVendorID == "-1" ? string.Empty : SearchQuoteVendorID;
+            SearchQuoteProductGroup = SearchQuoteProductGroup == "-1" ? string.Empty : SearchQuoteProductGroup;
+            SearchDeliveryTerms = SearchDeliveryTerms == "-1" ? string.Empty : SearchDeliveryTerms;
+
+            QuotationEntityDetails quote = new QuotationEntityDetails();
+            quote = objQuoteManager.GetQuotationDetails(Convert.ToInt32(pageIndex), Convert.ToInt32(pageSize), SearchQuoteType, SearchQuoteVendorID, SearchQuoteProductGroup, SearchDeliveryTerms);
+            return new JsonResult { Data = quote, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+            //return QuotDetail.LstCusEnt;
+        }
+
+
+        public ActionResult DeleteQuotationDetail(int id)
+        {
+            if (ModelState.IsValid)
+            {
+                string msgCode = objQuoteManager.DeleteQuotationDetail(id);
+                if (msgCode == "")
+                {
+                    return RedirectToAction("Quotation");
+                }
+                else
+                {
+                    Response.StatusCode = 444;
+                    Response.StatusDescription = "Not Saved";
+                    return null;
+                }
+            }
+            else
+            {
+                Response.StatusCode = 444;
+                Response.Status = "Not Saved";
+                return null;
+            }
+
+        }
+
+
+        public ActionResult GetDdlValueForQuote(string type, string VendorId = null, string QuoteType = null)
+        {
+            List<DropDownEntity> ddl = new List<DropDownEntity>();
+            ddl = objQuoteManager.GetDdlValueForQuote(type, VendorId, QuoteType);
+            return new JsonResult { Data = ddl, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+        }
+
+        #endregion
 
 
     }

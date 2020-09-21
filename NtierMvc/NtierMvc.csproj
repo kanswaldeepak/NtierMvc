@@ -183,6 +183,9 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\AdminController.cs" />
+    <Compile Include="Areas\Admin\Models\AdminManager.cs" />
     <Compile Include="Areas\DesignEng\Controllers\DesignEngController.cs" />
     <Compile Include="Areas\DesignEng\DesignEngAreaRegistration.cs" />
     <Compile Include="Areas\DesignEng\Models\DesignManager.cs" />
@@ -199,7 +202,7 @@
     <Compile Include="Controllers\TechnicalController.cs" />
     <Compile Include="Controllers\QuotationController.cs" />
     <Compile Include="Controllers\EnquiryController.cs" />
-    <Compile Include="Controllers\CustomerController.cs" />
+    <Compile Include="Controllers\CRMController.cs" />
     <Compile Include="Controllers\EmployeesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
@@ -250,6 +253,7 @@
     <Content Include="ang\Angular\ui-bootstrap-tpls-0.13.4.min.js" />
     <Content Include="ang\app.js" />
     <Content Include="ang\config.js" />
+    <Content Include="ang\Admin.ctrl.js" />
     <Content Include="ang\Stores.ctrl.js" />
     <Content Include="ang\Design.ctrl.js" />
     <Content Include="ang\hr.ctrl.js" />
@@ -259,6 +263,7 @@
     <Content Include="ang\MRM.ctrl.js" />
     <Content Include="ang\PdfFile\pdfmake.js" />
     <Content Include="ang\PdfFile\vfs_fonts.js" />
+    <Content Include="Areas\Admin\Scripts\Admin.js" />
     <Content Include="Areas\DesignEng\Scripts\BOMDetails.js" />
     <Content Include="Areas\DesignEng\Scripts\PRP.js" />
     <Content Include="Areas\MRM\Scripts\MRMBillMonitoring.js" />
@@ -1153,6 +1158,10 @@
     <Content Include="Areas\MRM\Views\MRM\PartialBOM.cshtml" />
     <Content Include="Areas\MRM\Views\MRM\PartialMRMBillMonitoring.cshtml" />
     <Content Include="Areas\MRM\Views\MRM\_MRMBillMonitoringPopUp.cshtml" />
+    <Content Include="Areas\Admin\Views\web.config" />
+    <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Admin\Views\Admin\AdminMaster.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\CustomJS\common.js" />
@@ -1223,26 +1232,20 @@
     <Content Include="Views\Shared\_NLayoutLoginandRegister.cshtml" />
     <Content Include="Views\Account\Registration.cshtml" />
     <Content Include="Views\Application\Dashboard.cshtml" />
-    <Content Include="Views\Customer\Customer.cshtml" />
-    <Content Include="Views\Enquiry\Enquiry.cshtml" />
-    <Content Include="Views\Enquiry\_EnquiryDetails.cshtml" />
+    <Content Include="Views\CRM\Customer.cshtml" />
     <Content Include="Views\Shared\_LayoutWithSession.cshtml" />
     <Content Include="Views\Shared\_LeftMenuNewAffiliation.cshtml" />
     <Content Include="Views\Shared\_LeftMenuCollegeUniversity.cshtml" />
     <Content Include="Views\Technical\_TechQuotationDetails.cshtml" />
-    <Content Include="Views\Quotation\Quotation.cshtml" />
-    <Content Include="Views\Customer\_CustomerDetails.cshtml" />
-    <Content Include="Views\Customer\CustomerMaster.cshtml" />
-    <Content Include="Views\Customer\PartialCustomer.cshtml" />
-    <Content Include="Views\Quotation\PartialQuotation.cshtml" />
-    <Content Include="Views\Enquiry\PartialEnquiry.cshtml" />
+    <Content Include="Views\CRM\_CustomerDetails.cshtml" />
+    <Content Include="Views\CRM\CRMMaster.cshtml" />
+    <Content Include="Views\CRM\PartialCustomer.cshtml" />
     <Content Include="Views\Technical\TechnicalMaster.cshtml" />
     <Content Include="Views\Technical\PartialQuoteReg.cshtml" />
     <Content Include="Views\Technical\PartialQuotePrep.cshtml" />
     <Content Include="Views\Technical\_TechQuotePrepDetails.cshtml" />
     <Content Include="Views\Technical\_EnquiryDetails.cshtml" />
     <Content Include="Views\Technical\PartialEnquiry.cshtml" />
-    <Content Include="Views\Quotation\QuotationPopup.cshtml" />
     <Content Include="Views\Technical\PartialOrders.cshtml" />
     <Content Include="Views\Technical\_TechOrderDetails.cshtml" />
     <Content Include="Views\Technical\_TechItemDetails.cshtml" />
@@ -1253,9 +1256,12 @@
     <Content Include="Views\GateEntry\GateEntryMaster.cshtml" />
     <Content Include="Views\GateEntry\PartialInbound.cshtml" />
     <Content Include="Views\GateEntry\_InboundPopUp.cshtml" />
+    <Content Include="Views\Technical\EnquiryView.cshtml" />
+    <Content Include="Views\Technical\PartialQuoteRegView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\Reports\Excel\PRReports\" />
+    <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\DesignEng\Views\Shared\" />
     <Folder Include="Areas\HRDepartment\EmployeeImage\" />
     <Folder Include="Areas\HRDepartment\Views\Shared\" />

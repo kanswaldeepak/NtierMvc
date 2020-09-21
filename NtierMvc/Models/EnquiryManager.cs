@@ -59,7 +59,7 @@ namespace NtierMvc.Model
             return enq;
         }
 
-        public EnquiryEntity GetUserDetails(string unitNo)
+        public EnquiryEntity GetUserDetailsForEnquiry(string unitNo)
         {
             var baseAddress = "EnquiryDetails";
             using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))

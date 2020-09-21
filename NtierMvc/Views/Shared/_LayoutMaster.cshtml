@@ -189,9 +189,9 @@
                 </button>
 
                 <div class="collapse navbar-collapse">
-                    <ul class="nav text-center font-weight-bold-500" style="font-size:18px">                        
+                    <ul class="nav text-center font-weight-bold-500" style="font-size:18px">
                         <li class="nav-item">
-                            <a class="nav-link" ng-click="FetchCustomerList()" href="@Url.Action("CustomerMaster","Customer", new { Area = "" }, null)">CRM</a>
+                            <a class="nav-link" ng-click="FetchCustomerList()" href="@Url.Action("CRMMaster","CRM", new { Area = "" }, null)">CRM</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href=@Url.Action("HRDepartmentMaster", "HR", new { Area = "HRDepartment" }, null)>HR & Payroll Management</a>
@@ -236,7 +236,7 @@
                             <a class="nav-link" href="@Url.Action("CommercialMaster","Commercial")">Commercial</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="@Url.Action("AdminMaster","Admin")">Admin</a>
+                            <a class="nav-link" href="@Url.Action("AdminMaster","Admin", new { Area = "Admin"})">Admin</a>
                         </li>
                     </ul>
                 </div>
@@ -247,63 +247,10 @@
             <div class="m-grid__item m-grid__item--fluid m-wrapper">
                 <div class="m--margin-10 m-content">
                     <div class="ERP-content-inner">
-
-                        @*<div class="ERP-content-page-top">
-                                <div class="d-flex align-items-center">
-                                    <div class="mr-auto">
-                                        <h3 class="m-subheader__title">Home</h3>
-                                    </div>
-                                    <div class="ml-auto ERP-breadcrumb  hide-mobile-section">
-                                        <p class="hall_venue_header text-right pt-2 pr-4">Home</p>
-                                        <nav aria-label="breadcrumb">
-                                            <ol class="breadcrumb">
-                                                <li class="breadcrumb-item"><a href="#"><i class="flaticon-home pr-2"></i> Dashboard</a></li>
-
-                                            </ol>
-                                        </nav>
-                                    </div>
-                                </div>
-                                <div class="ERP-breadcrumb show-mobile-section">
-                                    <nav aria-label="breadcrumb">
-                                        <ol class="breadcrumb ml-auto mr-auto">
-                                            <li class="breadcrumb-item"><a href="#"><i class="flaticon-home pr-2"></i> Dashboard</a></li>
-
-                                        </ol>
-                                    </nav>
-                                </div>
-                            </div>*@
-
                         <div class="main-body-content">
                             <div class="m-grid__item m-grid__item--fluid m-wrapper">
-
                                 <div class="m-content">
                                     <div class="ERP-content-inner">
-
-                                        @*<div class="ERP-content-page-top">
-                                                <div class="d-flex align-items-center">
-                                                    <div class="mr-auto">
-                                                        <h3 class="m-subheader__title commpageclass"></h3>
-                                                    </div>
-                                                    <div class="ml-auto ERP-breadcrumb  hide-mobile-section">
-                                                        <nav aria-label="breadcrumb">
-                                                            <ol class="breadcrumb">
-                                                                <li class="breadcrumb-item"><a href="@Url.Action("Home", "Application",new { Area=""})"><i class="flaticon-home pr-2"></i>Home</a></li>
-                                                                <li class="breadcrumb-item active" aria-current="page">Application Form</li>
-                                                                <li class="breadcrumb-item active commpageclass" aria-current="page"></li>
-                                                            </ol>
-                                                        </nav>
-                                                    </div>
-                                                </div>
-                                                <div class="ERP-breadcrumb show-mobile-section">
-                                                    <nav aria-label="breadcrumb">
-                                                        <ol class="breadcrumb ml-auto mr-auto">
-                                                            <li class="breadcrumb-item"><a href="@Url.Action("Home", "Application",new { Area=""})"><i class="flaticon-home pr-2"></i>Home</a></li>
-                                                            <li class="breadcrumb-item active" aria-current="page">Application Form</li>
-                                                            <li class="breadcrumb-item active commpageclass" aria-current="page"></li>
-                                                        </ol>
-                                                    </nav>
-                                                </div>
-                                            </div>*@
                                         <div class="main-body-content mt-3 pb-3">
                                             <div class="col-md-12">
                                                 @RenderBody()
@@ -328,6 +275,7 @@
             <script src="~/ang/Design.ctrl.js"></script>
             <script src="~/ang/MRM.ctrl.js"></script>
             <script src="~/ang/Stores.ctrl.js"></script>
+            <script src="~/ang/Admin.ctrl.js"></script>
 
             <span class="m-footer__copyright">
                 &copy; @DateTime.Now.Year Enterprise Resource Planning-ERP Corporation

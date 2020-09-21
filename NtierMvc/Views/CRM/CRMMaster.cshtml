@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewBag.Title = "CustomerMaster";
+    ViewBag.Title = "CRM Master";
     Layout = "~/Views/Shared/_LayoutMaster.cshtml";
 }
 
@@ -22,11 +22,11 @@
     </div>
 
     <div id="EnquiryPartialView" class="tabcontent">
-        @Html.Partial("../Enquiry/PartialEnquiry")
+        @Html.Partial("../Technical/EnquiryView")
     </div>
 
     <div id="QuotationPartialView" class="tabcontent">
-        @Html.Partial("../Quotation/PartialQuotation")
+        @Html.Partial("../Technical/PartialQuoteRegView")
     </div>
 
     <div id="OrdersPartialView" class="tabcontent">
@@ -39,25 +39,25 @@
     
     $(document).ready(function () {
 
-        window.OtherDetailsPopup = '@Url.Action("CustomerPopup", "Customer")';
-        window.CustomerWithSearch = '@Url.Action("CustomerWithSearch", "Customer")';
+        window.OtherDetailsPopup = '@Url.Action("CustomerPopup", "CRM")';
+        window.CustomerWithSearch = '@Url.Action("CustomerWithSearch", "CRM")';
         
-        window.SaveCustomer = '@Url.Action("SaveCustomerDetails", "Customer")';
-        window.StateDetail = '@Url.Action("GetStateDetail", "Customer")';      
+        window.SaveCustomer = '@Url.Action("SaveCustomerDetails", "CRM")';
+        window.StateDetail = '@Url.Action("GetStateDetail", "CRM")';      
         
-        window.OtherDetailsPopup = '@Url.Action("CustomerPopup", "Customer")';
-        window.CustomerWithSearch = '@Url.Action("CustomerWithSearch", "Customer")';
-        window.FetchCustomerList = '@Url.Action("FetchCustomerList", "Customer")';
-        window.DeleteCustomerDetail = '@Url.Action("DeleteCustomerDetail", "Customer")';
+        window.OtherDetailsPopup = '@Url.Action("CustomerPopup", "CRM")';
+        window.CustomerWithSearch = '@Url.Action("CustomerWithSearch", "CRM")';
+        window.FetchCustomerList = '@Url.Action("FetchCustomerList", "CRM")';
+        window.DeleteCustomerDetail = '@Url.Action("DeleteCustomerDetail", "CRM")';
         
         window.EnquiryDetailsPopup = '@Url.Action("EnquiryPopup", "Technical")';
-        window.FetchEnquiryList = '@Url.Action("FetchEnquiryList", "Enquiry")';
+        window.FetchEnquiryList = '@Url.Action("FetchEnquiryList", "Technical")';
         window.DeleteEnquiryDetail = '@Url.Action("DeleteEnquiryDetail", "Technical")';
 
         window.QuotationDetailsPopup = '@Url.Action("QuotationPopup", "Technical")';
         window.RevisedQuotationDetailsPopup = '@Url.Action("RevisedQuotationPopup", "Technical")';
         window.GetPrepQuoteNo = '@Url.Action("GetPrepQuoteNo", "Technical")';
-        window.FetchQuotationList = '@Url.Action("FetchQuotationList", "Quotation")';
+        window.FetchQuotationList = '@Url.Action("FetchQuotationList", "Technical")';
         window.FetchOrdersList = '@Url.Action("FetchOrdersList", "Technical")';
 
     })

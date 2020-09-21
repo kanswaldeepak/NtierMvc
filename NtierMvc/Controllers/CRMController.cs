@@ -12,7 +12,7 @@ using NtierMvc.Infrastructure;
 namespace NtierMvc.Controllers
 {
     [SessionExpire]
-    public class CustomerController : Controller
+    public class CRMController : Controller
     {
         private LoggingHandler _loggingHandler;
         CustomerEntity cus;
@@ -21,7 +21,7 @@ namespace NtierMvc.Controllers
         BaseModel model;
 
         #region Constructor
-        public CustomerController()
+        public CRMController()
         {
             _loggingHandler = new LoggingHandler();
             cus = new CustomerEntity();
@@ -54,7 +54,7 @@ namespace NtierMvc.Controllers
         // GET: Login
 
         [HttpGet]
-        public ActionResult CustomerMaster()
+        public ActionResult CRMMaster()
         {
             //Customer
             ViewBag.ListVendorName = model.GetMasterTableStringList("Clientele_Master", "VendorName", "VendorName", "", "", GeneralConstants.ListTypeN);
@@ -179,7 +179,7 @@ namespace NtierMvc.Controllers
         }
 
         [HttpPost]
-        public ActionResult CustomerPopup(string actionType, string CustomerId)
+        public ActionResult CustomerPopup(string actionType, string CustomerId=null)
         {
             string countryId = "0";
             ViewBag.ListState = model.GetStateDetail(countryId); //Given wrong CountryId to not get any value
@@ -204,7 +204,7 @@ namespace NtierMvc.Controllers
                 //eModel = objManager.AddCustomerDetailsPopup(eModel);
             }
 
-            return base.PartialView("~/Views/Customer/_CustomerDetails.cshtml", cus);
+            return base.PartialView("~/Views/CRM/_CustomerDetails.cshtml", cus);
         }
 
         public ActionResult DeleteCustomerDetail(int id)

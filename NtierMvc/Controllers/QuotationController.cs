@@ -71,28 +71,7 @@ namespace NtierMvc.Controllers
             return View(quote);
         }
 
-        [HttpGet]
-        public ActionResult PartialQuotation()
-        {
-            quote.quoteEntity.UnitNo = Session["UserId"].ToString();
-            quote.quoteEntity = objManager.GetUserQuoteDetails(quote.quoteEntity.UnitNo);
 
-            //quote.lstQuoteEntity = objManager.GetQuotationDetails();
-
-            return View(quote);
-        }
-
-        public JsonResult FetchQuotationList(string pageIndex, string pageSize, string SearchQuoteType, string SearchQuoteVendorID, string SearchQuoteProductGroup, string SearchDeliveryTerms)
-        {
-            SearchQuoteType = SearchQuoteType == "-1" ? string.Empty : SearchQuoteType;
-            SearchQuoteVendorID = SearchQuoteVendorID == "-1" ? string.Empty : SearchQuoteVendorID;
-            SearchQuoteProductGroup = SearchQuoteProductGroup == "-1" ? string.Empty : SearchQuoteProductGroup;
-            SearchDeliveryTerms = SearchDeliveryTerms == "-1" ? string.Empty : SearchDeliveryTerms;
-
-            quote = objManager.GetQuotationDetails(Convert.ToInt32(pageIndex), Convert.ToInt32(pageSize), SearchQuoteType, SearchQuoteVendorID, SearchQuoteProductGroup, SearchDeliveryTerms);
-            return new JsonResult { Data = quote, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
-            //return QuotDetail.LstCusEnt;
-        }
 
         //[HttpPost]
         //public ActionResult SaveQuotationDetails(QuotationEntity quoteE)
@@ -117,80 +96,6 @@ namespace NtierMvc.Controllers
 
         //    return new JsonResult { Data = data, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         //}
-
-        [HttpPost]
-        public ActionResult QuotationPopup(string actionType, string QuotationId)
-        {
-            string countryId = "0";
-            ViewBag.ListState = bModel.GetStateDetail(countryId); //Given wrong CountryId to not get any value
-            ViewBag.ListVendorId = bModel.GetMasterTableStringList("Clientele_Master", "Id", "VendorId", "", "", GeneralConstants.ListTypeN);
-            ViewBag.ListVENDORTYPE = bModel.GetMasterTableList("Master.Vendor", "Id", "VendorType");
-            ViewBag.ListVENDOR_NATURE = bModel.GetMasterTableList("Master.Vendor", "Id", "VendorNature");
-            ViewBag.ListFUNCTION_AREA = bModel.GetMasterTableList("Master.FunctionalArea", "Id", "FunctionArea");
-            ViewBag.ListCountry = bModel.GetMasterTableList("Master.Country", "Id", "Country");
-            ViewBag.ListProdGrpId = bModel.GetMasterTableStringList("Master.ProductLine", "Id", "Product", "", "", GeneralConstants.ListTypeN);
-            ViewBag.ListProdType = bModel.GetMasterTableStringList("ProductType", "Id", "TypeName", "", "", GeneralConstants.ListTypeN);
-            ViewBag.ListCurrency = bModel.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "Currency", "Property", GeneralConstants.ListTypeN);
-            ViewBag.ListQuoteType = bModel.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "QuoteType", "Property", GeneralConstants.ListTypeN);
-
-            eModel.UnitNo = Session["UserId"].ToString();
-
-
-            if (actionType == "VIEW" || actionType == "EDIT")
-            {
-                if (!string.IsNullOrEmpty(QuotationId))
-                    eModel.Id = Convert.ToInt32(QuotationId);
-                eModel = objManager.QuotationDetailsPopup(eModel);
-            }
-            if (actionType == "ADD")
-            {
-                eModel = objManager.GetUserQuoteDetails(eModel.UnitNo);
-                //eModel = objManager.AddQuotationDetailsPopup(eModel);
-            }
-
-            return PartialView("~/Views/Quotation/QuotationPopup.cshtml", eModel);
-        }
-
-        public ActionResult GetQuoteVendorDetail(string vendorId)
-        {
-            eModel = objManager.GetVendorQuoteDetails(vendorId);
-            return new JsonResult { Data = eModel.VendorName, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
-        }
-
-        public ActionResult DeleteQuotationDetail(int id)
-        {
-            if (ModelState.IsValid)
-            {
-                string msgCode = objManager.DeleteQuotationDetail(id);
-                if (msgCode == "")
-                {
-                    return RedirectToAction("Quotation");
-                }
-                else
-                {
-                    Response.StatusCode = 444;
-                    Response.StatusDescription = "Not Saved";
-                    return null;
-                }
-            }
-            else
-            {
-                Response.StatusCode = 444;
-                Response.Status = "Not Saved";
-                return null;
-            }
-
-        }
-
-
-        public ActionResult GetDdlValueForQuote(string type, string VendorId = null, string QuoteType = null)
-        {
-            List<DropDownEntity> ddl = new List<DropDownEntity>();
-            ddl = objManager.GetDdlValueForQuote(type, VendorId, QuoteType);
-            return new JsonResult { Data = ddl, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
-        }
-
-
 
 
     }

@@ -172,6 +172,7 @@
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\Account\LoginController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\AdminDetailsController.cs" />
     <Compile Include="Controllers\GateEntryDetailsController.cs" />
     <Compile Include="Controllers\StoresDetailsController.cs" />
     <Compile Include="Controllers\MRMDetailController.cs" />

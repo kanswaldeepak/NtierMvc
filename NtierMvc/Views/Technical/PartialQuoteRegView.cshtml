@@ -10,6 +10,9 @@
     <table class="table-borderless">
         <tr>
             <td>
+                
+            </td>
+            <td>
                 <label>Quote Type</label>
             </td>
             <td>
@@ -23,6 +26,9 @@
             </td>
         </tr>
         <tr>
+            <td>
+                
+            </td>
             <td>
                 @Html.DropDownList("QuoteType", new SelectList(@ViewBag.ListQuoteType, "DataStringValueField", "DataTextField", "Select"),
                     new
@@ -70,7 +76,6 @@
         </tr>
     </table>
 </div>
-
 
 <div class="wrapper">
     <div class="container">
@@ -120,27 +125,9 @@
                         </div>
                     </th>
                     <th>
-                        File No.
-                        <div class="c3">
-                            File No.
-                        </div>
-                    </th>
-                    @*<th>
-                            Enquiry Ref
-                            <div class="c3">
-                                Enquiry Ref
-                            </div>
-                        </th>*@
-                    <th>
                         Enquiry Date
                         <div class="c3">
                             Enquiry Date
-                        </div>
-                    </th>
-                    <th>
-                        Enquiry For
-                        <div class="c3">
-                            Enquiry For
                         </div>
                     </th>
                     <th>
@@ -168,13 +155,7 @@
                     <td>
                         <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="VIEW" ng-click="LoadQuotationViewPopup(L.Id)">
                             <i class="fa fa-eye"></i>
-                        </button>
-                        @*<button type="button" class="btn btn-outline-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="EDIT" ng-click="LoadQuotationEditPopup(L.Id)">
-                                <i class="fa fa-edit"></i>
-                            </button>
-                            <button type="button" class="btn btn-outline-danger btn-sm" data-toggle="tooltip" data-placement="bottom" title="DELETE" ng-click="DeleteCustomer(L.Id)">
-                                <i class="fa fa-trash"></i>
-                            </button>*@
+                        </button>                        
                     </td>
                     <td>
                         {{L.VendorId}}
@@ -195,16 +176,7 @@
                         {{L.Currency}}
                     </td>
                     <td>
-                        {{L.FileNo}}
-                    </td>
-                    @*<td>
-                            {{L.EnqRef}}
-                        </td>*@
-                    <td>
                         {{L.EnqDt}}
-                    </td>
-                    <td>
-                        {{L.EnqFor}}
                     </td>
                     <td>
                         {{L.ProdGrp}}
@@ -350,7 +322,13 @@
 
     $(document).ready(function () {
 
-        window.GetDdlValueForQuote = '@Url.Action("GetDdlValueForQuote","Quotation")';
+        window.GetDdlValueForQuote = '@Url.Action("GetDdlValueForQuote","Technical")';
+        window.QuotationDetailsPopup = '@Url.Action("QuotationPopup", "Technical")';
+        window.RevisedQuotationDetailsPopup = '@Url.Action("RevisedQuotationPopup", "Technical")';
+        window.DeleteQuotationDetail = '@Url.Action("DeleteQuotationDetail", "Technical")';
+        window.FetchQuoteRegList = '@Url.Action("FetchQuoteRegList", "Technical")';
+        window.GetPrepQuoteNo = '@Url.Action("GetPrepQuoteNo", "Technical")';
+        
 
         $('#QTQuoteType').chosen({
             width: "210px",
@@ -378,7 +356,7 @@
 
         $("#QTQuoteType").chosen().change(
             function GetQuoteType() {
-                //var QuoteType = $('#QTQuoteType').val();                
+                //var QuoteType = $('#QTQuoteType').val();
                 var QuoteType = '';
                 var x = document.getElementById("QTQuoteType");
                 for (var i = 0; i < x.options.length; i++) {
@@ -451,6 +429,32 @@
 
 
     });
+
+
+
+    function GetQuoteNoForQuoteType() {
+        let QuoteType = $('#QuoteType').val();
+
+        $.ajax({
+            type: 'POST',
+            url: window.GetPrepQuoteNo,
+            data: JSON.stringify({ quotetypeId: QuoteType }),
+            contentType: "application/json; charset=utf-8",
+            success: function (res) {
+                $("#QuoteNo").empty();
+                if (res.length > 0) {
+                    $.each(res, function (i, item) {
+                        $("#QuoteNo").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
+                    })
+                }
+            },
+            error: function (x, e) {
+                $('#spn-Sucess-Failure').text('Some error is occurred, Please try after some time.');
+                $('#spn-Sucess-Failure').addClass("important red");
+                $('#Sucess-Failure').modal('show');
+            }
+        })
+    }
 
 </script>
 

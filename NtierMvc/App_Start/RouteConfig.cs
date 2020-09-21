@@ -18,7 +18,7 @@ namespace NtierMvc
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}/{id2}/{id3}",
-                defaults: new { controller = "Customer", action = "Customer", id = UrlParameter.Optional, id2 = UrlParameter.Optional, id3 = UrlParameter.Optional }
+                defaults: new { controller = "CRM", action = "Customer", id = UrlParameter.Optional, id2 = UrlParameter.Optional, id3 = UrlParameter.Optional }
             );
         }
     }

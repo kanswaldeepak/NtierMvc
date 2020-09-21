@@ -1,0 +1,130 @@
+﻿
+@{
+    ViewBag.Title = "Admin Master";
+    Layout = "~/Views/Shared/_LayoutMaster.cshtml";
+}
+
+<div ng-controller="AdminController" class="row mt-1">
+    <div class="col-md-12">
+        <form id="formSaveRoleAuthentication">
+            <div class="col-md-12">
+
+                <label>Role Assign</label>
+
+                <div class="row">
+                    <hr style="width:100%" />
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+
+                        <table class="table table-bordered tableRadio" id="tableRM">
+                            <thead>
+                                <tr>
+                                    <td>
+                                        Role
+                                    </td>
+                                    <td>
+                                        Main Menu
+                                    </td>
+                                    <td>
+                                        Sub Menu
+                                    </td>
+                                    <td>
+                                    </td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        @Html.DropDownList("Role", new SelectList(@ViewBag.ListRole, "DataStringValueField", "DataTextField", "Select"),
+                                        new
+                                        {
+                                            @class = "form-control requiredValidation clearField",
+                                            @id = "AMRole",
+                                            @data_inneraction = "validationCall",
+                                            @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                                        })
+                                    </td>
+                                    <td>
+                                        @Html.DropDownList("MainMenu", new SelectList(@ViewBag.ListMainMenu, "DataStringValueField", "DataTextField", "Select"),
+                                        new
+                                        {
+                                            @class = "form-control requiredValidation clearField",
+                                            @id = "AMMainMenu",
+                                            @data_inneraction = "validationCall",
+                                            @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                                        })
+                                    </td>
+                                    <td>
+                                        @Html.DropDownList("SubMenu", new SelectList(@ViewBag.ListSubMenu, "DataStringValueField", "DataTextField", "Select"),
+                                        new
+                                        {
+                                            @class = "form-control requiredValidation clearField",
+                                            @id = "AMSubMenu",
+                                            @data_inneraction = "validationCall",
+                                            @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                                        })
+                                    </td>
+                                    <td>
+                                        @*<button id="btnAssignRole" type="button" class="btn btn-outline-primary btn-sm" onclick="AddRole()"><i class="fa fa-plus"></i> <b>Assign Role</b></button>*@
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12 pt-4 text-center">
+                        <button id="SaveRoleAssign" style="font-size:18px" type="button" class="btn btn-success btn-sm" onclick="SaveRoleAssignDetails()">Save</button>
+                    </div>
+                </div>
+
+                <div class="row mt-1">
+                    <div class="col-md-12">
+                        <table class="table table-bordered" id="RoleURLtable">
+                            <thead>
+                                <tr>
+                                    <td>
+                                        ID
+                                    </td>
+                                    <td>
+                                        SNo
+                                    </td>
+                                    <td>
+                                        Dept Name
+                                    </td>
+                                    <td>
+                                        Main Menu
+                                    </td>
+                                    <td>
+                                        Sub Menu
+                                    </td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    
+    $(document).ready(function () {
+        window.GetRoleURLDetails = '@Url.Action("GetRoleURLDetails","Admin")';
+        window.SaveRoleAssigns = '@Url.Action("SaveRoleAssigns", "Admin")';
+        //$('.redBG').removeClass('redBG').addClass('black');
+
+        getRoleAssignedURL();
+    });
+
+</script>
+
+<script src="~/Areas/Admin/Scripts/Admin.js"></script>

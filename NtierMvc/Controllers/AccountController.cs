@@ -200,7 +200,7 @@ namespace NtierMvc.Controllers
                             else
                             {
                                 //#if DEBUG
-                                 return RedirectToAction("CustomerMaster", "Customer");
+                                 return RedirectToAction("CRMMaster", "CRM");
                                 //#else
                                 //var objAgencyContext = new AgencyContext();
                                 //objAgencyContext.AppCode = usermodel.AppCode;

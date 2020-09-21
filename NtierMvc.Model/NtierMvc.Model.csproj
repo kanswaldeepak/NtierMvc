@@ -45,6 +45,7 @@
     <Compile Include="Account\LoginEntity.cs" />
     <Compile Include="Account\SessionLoginEntity.cs" />
     <Compile Include="Admin\ChangePswdEntity.cs" />
+    <Compile Include="Admin\RoleAssignEntity.cs" />
     <Compile Include="Admin\InspectionRegistrations.cs" />
     <Compile Include="Application\AccreditationRankingEntity.cs" />
     <Compile Include="Application\AgencyProfileEntity.cs" />

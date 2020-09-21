@@ -8,6 +8,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Configuration;
 using Newtonsoft.Json;
+using NtierMvc.Model.Account;
 
 namespace NtierMvc.Infrastructure
 {
@@ -48,6 +49,19 @@ namespace NtierMvc.Infrastructure
             //client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
             return client;
+        }
+
+        public static bool CheckUrlForPermission(string action, string controller)
+        {
+            var user = (UserEntity)HttpContext.Current.Session["UserModel"];
+            if (user != null)
+            {
+                return user.Permissions.Any(x => x.PermissionRoute == $"{controller}-{action}");
+            }
+            else
+            {
+                return false;
+            }
         }
 
     }

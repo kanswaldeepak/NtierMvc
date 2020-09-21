@@ -8,7 +8,8 @@
 <div class="row mt-3">
     <table class="table-borderless">
         <tr>
-            <td></td>
+            <td>                
+            </td>
             <td>
                 <label>EOQ</label>
             </td>
@@ -19,8 +20,8 @@
                 <label>Vendor Id</label>
             </td>
             @*<td>
-                <label>Vendor Name</label>
-            </td>*@
+                    <label>Vendor Name</label>
+                </td>*@
             <td>
                 <label>Month</label>
             </td>
@@ -58,13 +59,13 @@
                            })
             </td>
             @*<td>
-                @Html.DropDownList("VendorName", new SelectList(@ViewBag.ListVendorName, "DataStringValueField", "DataTextField", "Select"), new
-           {
-               @class = "form-control",
-               ng_model = "SearchEnqName",
-               @id = "EQVendorName"
-           })
-            </td>*@
+                     @Html.DropDownList("VendorName", new SelectList(@ViewBag.ListVendorName, "DataStringValueField", "DataTextField", "Select"), new
+                {
+                    @class = "form-control",
+                    ng_model = "SearchEnqName",
+                    @id = "EQVendorName"
+                })
+                 </td>*@
             <td>
                 @Html.DropDownList("Month", new SelectList(@ViewBag.ListMonth, "DataStringValueField", "DataTextField", "Select"),
                            new
@@ -123,13 +124,7 @@
                         <div class="c3">
                             Enq Date
                         </div>
-                    </th>
-                    <th>
-                        Enq Type
-                        <div class="c3">
-                            Enq Type
-                        </div>
-                    </th>
+                    </th>                    
                     <th>
                         Due Date
                         <div class="c3">
@@ -161,7 +156,7 @@
                     <td>
                         <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="VIEW" ng-click="LoadEnquiryViewPopup(L.EnquiryId)">
                             <i class="fa fa-eye"></i>
-                        </button>
+                        </button>                        
                     </td>
                     <td>
                         {{L.VendorName}}
@@ -177,9 +172,6 @@
                     </td>
                     <td>
                         {{L.EnqDt}}
-                    </td>
-                    <td>
-                        {{L.EnqType}}
                     </td>
                     <td>
                         {{L.DueDate}}
@@ -269,136 +261,97 @@
 
 <div class="modal fade" id="add_details" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 </div>
+
 <script type="text/javascript">
-
-    $(document).ready(function () {
-        window.GetDdlValueForEnquiry = '@Url.Action("GetDdlValueForEnquiry", "Enquiry")';
-
-        $('[data-toggle="tooltip"]').tooltip();
-
+        $(document).ready(function () {
+            window.EnquiryDetailsPopup = '@Url.Action("EnquiryPopup", "Technical")';
+            window.GetDdlValueForEnquiry = '@Url.Action("GetDdlValueForEnquiry", "Technical")';
 
             var Data = '@TempData["StatusMsg"]';
             if (Data === "INSERTED SUCCESSFULLY" || Data === "UPDATED SUCCESSFULLY")
             {
                 alertNotification(Data);
+            }
+
+        })
+
+
+    $('#EQEOQ').chosen({
+        width: "210px",
+        placeholder_text_single: "Select EOQ"
+    });
+
+    $('#EQProductGroup').chosen({
+        width: "210px",
+        placeholder_text_single: "Select Product Group"
+    });
+
+    $('#EQVendorId').chosen({
+        width: "210px",
+        placeholder_text_single: "Select Vendor Id",
+        placeholder_text_multiple: "Select Vendor Ids"
+    });
+
+    $('#EQVendorName').chosen({
+        width: "210px",
+        placeholder_text_single: "Select Vendor Name"
+    });
+
+    $('#EQMonth').chosen({
+        width: "210px",
+        placeholder_text_single: "Select Month"
+    });
+
+    $("#EQEOQ").chosen().change(
+        function GetEQEOQ() {
+            var EOQId = $('#EQEOQ').val();
+
+            return $.ajax({
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                type: 'GET',
+                url: window.GetDdlValueForEnquiry,
+                data: { EOQId: EOQId, type: 'ProductGroup' },
+                success: function (res) {
+                    if (res.length > 0) {
+                        $("#EQProductGroup").empty();
+                        $.each(res, function (i, item) {
+                            $("#EQProductGroup").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
+                            $("#EQProductGroup").trigger("chosen:updated");
+                        })
+                    }
+                },
+                error: function () {
+                    alert(result)
+                }
+            });
         }
+    )
 
+    $("#EQProductGroup").chosen().change(
+        function GetEQProductGroup() {
+            var EQProductGroupId = $('#EQProductGroup').val();
 
-        $('#EQEOQ').chosen({
-            width: "210px",
-            placeholder_text_single: "Select EOQ"
-        });
-
-        $('#EQProductGroup').chosen({
-            width: "210px",
-            placeholder_text_single: "Select Product Group"
-        });
-
-        $('#EQVendorId').chosen({
-            width: "210px",
-            placeholder_text_single: "Select Vendor Id",
-            placeholder_text_multiple: "Select Vendor Ids"
-        });
-
-        $('#EQVendorName').chosen({
-            width: "210px",
-            placeholder_text_single: "Select Vendor Name"
-        });
-
-        $('#EQMonth').chosen({
-            width: "210px",
-            placeholder_text_single: "Select Month"
-        });
-
-        $("#EQEOQ").chosen().change(
-            function GetEQEOQ() {
-                var EOQId = $('#EQEOQ').val();
-
-                return $.ajax({
-                    contentType: 'application/json; charset=utf-8',
-                    dataType: 'json',
-                    type: 'GET',
-                    url: window.GetDdlValueForEnquiry,
-                    data: { EOQId: EOQId, type: 'ProductGroup' },
-                    success: function (res) {
-                        if (res.length > 0) {
-                            $("#EQProductGroup").empty();
-                            $.each(res, function (i, item) {
-                                $("#EQProductGroup").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
-                                $("#EQProductGroup").trigger("chosen:updated");
-                            })
-                        }
-                    },
-                    error: function () {
-                        alert(result)
+            return $.ajax({
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                type: 'GET',
+                url: window.GetDdlValueForEnquiry,
+                data: { ProductGroup: EQProductGroupId, type: 'VendorId' },
+                success: function (res) {
+                    if (res.length > 0) {
+                        $("#EQVendorId").empty();
+                        $.each(res, function (i, item) {
+                            $("#EQVendorId").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
+                            $("#EQVendorId").trigger("chosen:updated");
+                        })
                     }
-                });
-            }
-        )
-
-        $("#EQProductGroup").chosen().change(
-            function GetEQProductGroup() {
-                var EQProductGroupId = $('#EQProductGroup').val();
-
-                return $.ajax({
-                    contentType: 'application/json; charset=utf-8',
-                    dataType: 'json',
-                    type: 'GET',
-                    url: window.GetDdlValueForEnquiry,
-                    data: { ProductGroup: EQProductGroupId, type: 'VendorId' },
-                    success: function (res) {
-                        if (res.length > 0) {
-                            $("#EQVendorId").empty();
-                            $.each(res, function (i, item) {
-                                $("#EQVendorId").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
-                                $("#EQVendorId").trigger("chosen:updated");
-                            })
-                        }
-                    },
-                    error: function () {
-                        alert(result)
-                    }
-                });
-            }
-        )
-
-        //$("#EQVendorId").chosen().change(
-        //    function GetEQProductGroup() {
-        //        //var EQVendorId = $('#EQVendorId').val();
-        //        var VendorId = '';
-        //        var x = document.getElementById("EQVendorId");
-        //        for (var i = 0; i < x.options.length; i++) {
-        //            if (x.options[i].selected == true) {
-        //                //alert(x.options[i].value);
-        //                VendorId = VendorId + x.options[i].value + ',';
-        //            }
-        //        }
-
-        //        VendorId = VendorId.substring(0, VendorId.length - 1);
-
-        //        return $.ajax({
-        //            contentType: 'application/json; charset=utf-8',
-        //            dataType: 'json',
-        //            type: 'GET',
-        //            url: window.GetDdlValueForEnquiry,
-        //            data: { VendorId: VendorId, type: 'VendorName' },
-        //            success: function (res) {
-        //                if (res.length > 0) {
-        //                    $("#EQVendorName").empty();
-        //                    $.each(res, function (i, item) {
-        //                        $("#EQVendorName").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
-        //                        $("#EQVendorName").trigger("chosen:updated");
-        //                    })
-        //                }
-        //            },
-        //            error: function () {
-        //                alert(result)
-        //            }
-        //        });
-        //    }
-        //)
-
-    })
-
+                },
+                error: function () {
+                    alert(result)
+                }
+            });
+        }
+    )
 
 </script>
