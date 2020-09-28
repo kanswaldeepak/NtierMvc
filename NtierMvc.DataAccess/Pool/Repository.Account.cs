@@ -97,7 +97,7 @@ namespace NtierMvc.DataAccess.Pool
 
         public DataTable GetUserPermissions(string username)
         {
-            string spName = ConfigurationManager.AppSettings["ERP_GetUserPermissions"];
+            string spName = ConfigurationManager.AppSettings["GetUserPermissions"];
             var parms = new Dictionary<string, object>();
 
             parms.Add("@Username", username);

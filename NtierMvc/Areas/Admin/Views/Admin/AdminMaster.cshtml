@@ -31,6 +31,7 @@
                                         Sub Menu
                                     </td>
                                     <td>
+                                        Read/Write
                                     </td>
                                 </tr>
                             </thead>
@@ -67,7 +68,14 @@
                                         })
                                     </td>
                                     <td>
-                                        @*<button id="btnAssignRole" type="button" class="btn btn-outline-primary btn-sm" onclick="AddRole()"><i class="fa fa-plus"></i> <b>Assign Role</b></button>*@
+                                        @Html.DropDownList("ReadWrite", new SelectList(@ViewBag.ListReadWrite, "DataStringValueField", "DataTextField", "Select"),
+                                        new
+                                        {
+                                            @class = "form-control requiredValidation clearField",
+                                            @id = "AMReadWrite",
+                                            @data_inneraction = "validationCall",
+                                            @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                                        })
                                     </td>
                                 </tr>
                             </tbody>

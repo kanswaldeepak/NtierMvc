@@ -36,6 +36,8 @@ namespace NtierMvc.Model
         public static string DeleteSuccess = "Deleted Successfully!";
         public static string HomeLinkKey = "HomeLink";
         public static string FillAllMaterialDetails = "Kindly Fill All Material Details to Save!!";
+        public static string Read = "Read";
+        public static string Write = "Write";
 
         public static string FetchListMethod = "FetchListMethod";
 
@@ -56,7 +58,6 @@ namespace NtierMvc.Model
         public static string FalseValue = "False";
 
         public static string Contact = "Contact";
-        //public static string Connection = "server=184.168.194.62;database=gyanurDB_;User Id=gyanur; password=$gyanur123#.";
 
         public static string FileMessageSuccess = "Upload Successfully";
         public static string FileMessageFailure = "File upload failed! Please try again";

@@ -9,6 +9,7 @@ namespace NtierMvc.Model.Admin
         public string DeptName { get; set; }
         public string MainMenu { get; set; }
         public string SubMenu { get; set; }
+        public string ReadWrite { get; set; }
         public int totalcount { get; set; }
 
     }

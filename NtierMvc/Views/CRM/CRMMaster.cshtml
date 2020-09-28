@@ -1,4 +1,4 @@
-﻿
+﻿@using NtierMvc.Infrastructure
 @{
     ViewBag.Title = "CRM Master";
     Layout = "~/Views/Shared/_LayoutMaster.cshtml";
@@ -10,16 +10,28 @@
 
 <div ng-controller="MainController">
     <div class="tab">
-        <button class="tablinks" onclick="openCity(event, 'CustomerPartialView')" id="defaultOpen" ng-click="FetchCustomerList()">Customer</button>
-        <button class="tablinks" onclick="openCity(event, 'EnquiryPartialView')" ng-click="FetchEnquiryList()">Enquiry</button>
-        <button class="tablinks" onclick="openCity(event, 'QuotationPartialView')" ng-click="FetchQuotationList()">Quotation</button>
-        <button class="tablinks" onclick="openCity(event, 'OrdersPartialView')" ng-click="FetchOrdersList()">Order</button>
+        @if (LocalUtility.CheckUrlForPermission("", "CRM", "CRMMaster", "Customer"))
+        {
+            <button class="tablinks" onclick="openCity(event, 'CustomerPartialView')" id="defaultOpen" ng-click="FetchCustomerList()">Customer</button>
+        }
+        @if (LocalUtility.CheckUrlForPermission("", "CRM", "CRMMaster", "Enquiry"))
+        {
+            <button class="tablinks" onclick="openCity(event, 'EnquiryPartialView')" ng-click="FetchEnquiryList()">Enquiry</button>
+        }
+        @if (LocalUtility.CheckUrlForPermission("", "CRM", "CRMMaster", "Quotation"))
+        {
+            <button class="tablinks" onclick="openCity(event, 'QuotationPartialView')" ng-click="FetchQuotationList()">Quotation</button>
+        }
+        @if (LocalUtility.CheckUrlForPermission("", "CRM", "CRMMaster", "Order"))
+        {
+            <button class="tablinks" onclick="openCity(event, 'OrdersPartialView')" ng-click="FetchOrdersList()">Order</button>
+        }
     </div>
 
-    <!-- Tab content -->
     <div id="CustomerPartialView" class="tabcontent">
         @Html.Partial("PartialCustomer")
     </div>
+    <!-- Tab content -->
 
     <div id="EnquiryPartialView" class="tabcontent">
         @Html.Partial("../Technical/EnquiryView")
@@ -36,20 +48,20 @@
 
 <script>
         document.getElementById("defaultOpen").click();
-    
+
     $(document).ready(function () {
 
         window.OtherDetailsPopup = '@Url.Action("CustomerPopup", "CRM")';
         window.CustomerWithSearch = '@Url.Action("CustomerWithSearch", "CRM")';
-        
+
         window.SaveCustomer = '@Url.Action("SaveCustomerDetails", "CRM")';
-        window.StateDetail = '@Url.Action("GetStateDetail", "CRM")';      
-        
+        window.StateDetail = '@Url.Action("GetStateDetail", "CRM")';
+
         window.OtherDetailsPopup = '@Url.Action("CustomerPopup", "CRM")';
         window.CustomerWithSearch = '@Url.Action("CustomerWithSearch", "CRM")';
         window.FetchCustomerList = '@Url.Action("FetchCustomerList", "CRM")';
         window.DeleteCustomerDetail = '@Url.Action("DeleteCustomerDetail", "CRM")';
-        
+
         window.EnquiryDetailsPopup = '@Url.Action("EnquiryPopup", "Technical")';
         window.FetchEnquiryList = '@Url.Action("FetchEnquiryList", "Technical")';
         window.DeleteEnquiryDetail = '@Url.Action("DeleteEnquiryDetail", "Technical")';

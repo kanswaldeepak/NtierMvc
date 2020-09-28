@@ -34,7 +34,8 @@ namespace NtierMvc.Areas.Admin.Controllers
             ViewBag.ListRole = model.GetMasterTableStringList("Master.Department", "Id", "DeptName", "", "", GeneralConstants.ListTypeD);
             ViewBag.ListMainMenu = model.GetMasterTableStringList("MenuTable", "Id", "UrlName", "", "", GeneralConstants.ListTypeD);
             ViewBag.ListSubMenu = model.GetMasterTableStringList("SubMenuTable", "Id", "Name", "", "", GeneralConstants.ListTypeD);
-            
+            ViewBag.ListReadWrite = model.GetDropDownList("Master.Taxonomy",GeneralConstants.ListTypeD,"DropDownId", "DropDownValue", "ReadWrite", "Property");
+
             return View();
         }
 
@@ -75,12 +76,13 @@ namespace NtierMvc.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public ActionResult SaveRoleAssigns(string Role, string MainMenu, string SubMenu)
+        public ActionResult SaveRoleAssigns(string Role, string MainMenu, string SubMenu, string ReadWrite)
         {
             RoleAssignEntity raEntity = new RoleAssignEntity();
             raEntity.DeptName = Role;
             raEntity.MainMenu = MainMenu;
             raEntity.SubMenu = SubMenu;
+            raEntity.ReadWrite = ReadWrite;
             string result = objManager.SaveRoleAssigns(raEntity);
 
             string data = string.Empty;

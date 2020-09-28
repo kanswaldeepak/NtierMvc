@@ -37,6 +37,7 @@ namespace NtierMvc.DataAccess.Pool
             Params.Add("@Role", objRA.DeptName);
             Params.Add("@MainMenu", objRA.MainMenu);
             Params.Add("@SubMenu", objRA.SubMenu);
+            Params.Add("@ReadWrite", objRA.ReadWrite);
 
             var SPName = ConfigurationManager.AppSettings["SaveRoleAssigns"];
             _dbAccess.ExecuteNonQuery(SPName, Params, "@o_MsgCode", out msgCode);

@@ -31,7 +31,7 @@ namespace DVETPrivateITI.Web.Controllers
 
         public ActionResult Home()
         {
-            AccountManager accountMgr = new AccountManager();
+            //AccountManager accountMgr = new AccountManager();
             return View("~/Views/Application/Dashboard.cshtml");
 
             //ApplicationComplStatusEntity statusEntity = accountMgr.GetApplicationComplStatus(ERPContext.UserContext.RegistrationID);

@@ -83,9 +83,10 @@ namespace NtierMvc.Model.Account
     {
         public int RoleId { get; set; }
         public int PermissionId { get; set; }
-        public int MainMenu { get; set; }
-        public int SubMenu { get; set; }
+        public string MainMenu { get; set; }
+        public string SubMenu { get; set; }
         public string PermissionRoute { get; set; }
+        public string PermissionRouteWrite { get; set; }
     }
     public class ApplicationTypeDetails
     {

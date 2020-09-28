@@ -10,7 +10,10 @@
     <table>
         <tr>
             <td>
-                <button id="btnAdd" type="button" class="btn btn-outline-primary btn-sm" style="float: left;" ng-click="BindCustomerPopup()"><i class="fa fa-plus"></i> <b>Add New Customer</b></button>
+                @if (LocalUtility.CheckForWrite("", "CRM", "CRMMaster", "Customer") == GeneralConstants.Write)
+                {
+                    <button id="btnAdd" type="button" class="btn btn-outline-primary btn-sm" style="float: left;" ng-click="BindCustomerPopup()"><i class="fa fa-plus"></i> <b>Add New Customer</b></button>
+                }
             </td>
             <td>
                 <label>Vendor Type</label>
@@ -99,18 +102,6 @@
     </table>
 </div>
 
-<div class="row mt-1">
-    <div class="col-md-12">
-        @*<div class="form-group text-right">
-                @if (@ViewBag.PagewiseAccessEntity != null && @ViewBag.PagewiseAccessEntity.IsEditAllowed)
-                {
-                    <button type="button" id="btnSubmit" class="btn btn-primary">Add To List</button>
-                }
-            </div>*@
-    </div>
-</div>
-
-
 <div class="wrapper">
     <div class="container">
         <table class="table table-sm">
@@ -154,13 +145,16 @@
                         <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="VIEW" ng-click="LoadCustomerViewPopup(L.CustomerId)">
                             <i class="fa fa-eye"></i>
                         </button>
-                        <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="EDIT" ng-click="LoadCustomerEditPopup(L.CustomerId)">
-                            <i class="fa fa-edit"></i>
-                        </button>
-                        <button type="button" class="btn btn-outline-danger btn-sm" data-toggle="tooltip" data-placement="bottom" title="DELETE" ng-click="DeleteCustomer(L.CustomerId)">
-                            <i class="fa fa-trash"></i>
-                        </button>
-                    </td>
+                        @if (LocalUtility.CheckForWrite("", "CRM", "CRMMaster", "Customer") == GeneralConstants.Write)
+                        {
+                            <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="EDIT" ng-click="LoadCustomerEditPopup(L.CustomerId)">
+                                <i class="fa fa-edit"></i>
+                            </button>
+                            <button type="button" class="btn btn-outline-danger btn-sm" data-toggle="tooltip" data-placement="bottom" title="DELETE" ng-click="DeleteCustomer(L.CustomerId)">
+                                <i class="fa fa-trash"></i>
+                            </button>
+                        }
+                        </td>
                     <td>
                         {{L.VendorId}}
                     </td>

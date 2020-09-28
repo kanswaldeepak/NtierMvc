@@ -1232,7 +1232,6 @@
     <Content Include="Views\Shared\_NLayoutLoginandRegister.cshtml" />
     <Content Include="Views\Account\Registration.cshtml" />
     <Content Include="Views\Application\Dashboard.cshtml" />
-    <Content Include="Views\CRM\Customer.cshtml" />
     <Content Include="Views\Shared\_LayoutWithSession.cshtml" />
     <Content Include="Views\Shared\_LeftMenuNewAffiliation.cshtml" />
     <Content Include="Views\Shared\_LeftMenuCollegeUniversity.cshtml" />

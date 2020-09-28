@@ -126,9 +126,9 @@ namespace NtierMvc.Controllers
                                                 
                         UserRoleEntity userrole = new UserRoleEntity();
                         List<UserRoleEntity> lstRole = userRolesBusiness;
-                        //List<RolePermissionEntity> lstPermisssion = accountMgr.GetUserPermissions(usermodel.UserName);
+                        List<RolePermissionEntity> lstPermisssion = accountMgr.GetUserPermissions(usermodel.UserName);
                         usermodel.UserRoles = lstRole;
-                        //usermodel.Permissions = lstPermisssion;
+                        usermodel.Permissions = lstPermisssion;
                         Session["UserType"] = lstRole.Count > 0 ? lstRole[0].RoleName : "";
                         ERPContext.UserContext = usermodel;
 
@@ -200,7 +200,7 @@ namespace NtierMvc.Controllers
                             else
                             {
                                 //#if DEBUG
-                                 return RedirectToAction("CRMMaster", "CRM");
+                                 return RedirectToAction("Home", "Application");
                                 //#else
                                 //var objAgencyContext = new AgencyContext();
                                 //objAgencyContext.AppCode = usermodel.AppCode;
@@ -578,5 +578,6 @@ namespace NtierMvc.Controllers
             return RedirectToAction("Registration", "Account");
             //return RedirectToAction("MakePayment", "Payment");//redirecting from registration to payment page
         }
+
     }
 }

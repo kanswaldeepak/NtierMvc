@@ -51,18 +51,53 @@ namespace NtierMvc.Infrastructure
             return client;
         }
 
-        public static bool CheckUrlForPermission(string action, string controller)
+        public static bool CheckUrlForPermission(string area, string controller, string master, string action)
         {
             var user = (UserEntity)HttpContext.Current.Session["UserModel"];
             if (user != null)
             {
-                return user.Permissions.Any(x => x.PermissionRoute == $"{controller}-{action}");
+                if (!string.IsNullOrEmpty(area))
+                    return user.Permissions.Any(x => x.PermissionRoute == $"{area}-{controller}-{master}-{action}");
+                else
+                    return user.Permissions.Any(x => x.PermissionRoute == $"{controller}-{master}-{action}");
             }
             else
             {
                 return false;
             }
         }
+
+        public static string CheckForWrite(string area, string controller, string master, string action)
+        {
+            var user = (UserEntity)HttpContext.Current.Session["UserModel"];
+            if (user != null)
+            {
+                if (!string.IsNullOrEmpty(area) && user.Permissions.Any(x => x.PermissionRoute == $"{area}-{controller}-{master}-{action}"))
+                {
+                    var res = (from a in user.Permissions
+                               where a.PermissionRoute == $"{area}-{controller}-{master}-{action}"
+                               select a.PermissionRouteWrite).FirstOrDefault();
+
+                    return res.ToString();
+                }
+                else if (user.Permissions.Any(x => x.PermissionRoute == $"{controller}-{master}-{action}"))
+                {
+                    var res = (from a in user.Permissions
+                               where a.PermissionRoute == $"{controller}-{master}-{action}"
+                               select a.PermissionRouteWrite).FirstOrDefault();
+
+                    return res.ToString();
+                }
+                else
+                    return "Read";
+            }
+            else
+            {
+                return "Read";
+            }
+        }
+
+
 
     }
 }

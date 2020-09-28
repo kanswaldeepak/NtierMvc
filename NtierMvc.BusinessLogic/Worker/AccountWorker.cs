@@ -109,8 +109,11 @@ namespace NtierMvc.BusinessLogic.Worker
                 {
                     var permission = new RolePermissionEntity();
                     permission.PermissionRoute = $"{row["UrlRoute"]}";
+                    permission.PermissionRouteWrite = $"{row["UrlRouteReadWrite"]}";
                     permission.RoleId = row.IsNull("RoleID") ? 0 : (int)row["RoleID"];
-                    permission.PermissionId = row.IsNull("PermissionID") ? 0 : (int)row["PermissionID"];
+                    permission.MainMenu = row.IsNull("MainMenu") ? "" : (string)row["MainMenu"];
+                    permission.SubMenu = row.IsNull("SubMenu") ? "" : (string)row["SubMenu"];
+                    //permission.PermissionId = row.IsNull("PermissionID") ? 0 : (int)row["PermissionID"];
 
                     result.Add(permission);
                 }
