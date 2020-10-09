@@ -17,7 +17,7 @@ namespace NtierMvc.DataAccess.Pool
     public partial class Repository
     {
         
-        public DataTable GetRoleURLDetails(string skip = null, string pageSize = null, string sortColumn = null, string sortColumnDir = null, string search = null)
+        public DataTable GetRoleURLDetails(string skip = null, string pageSize = null, string sortColumn = null, string sortColumnDir = null, string search = null, string deptName = null, string mainMenu = null, string subMenu = null, string access = null)
         {
             var prams = new Dictionary<string, object>();
             prams.Add("@skip", skip);
@@ -25,6 +25,10 @@ namespace NtierMvc.DataAccess.Pool
             prams.Add("@sortColumn", sortColumn);
             prams.Add("@sortColumnDir", sortColumnDir);
             prams.Add("@search", search);
+            prams.Add("@deptName", deptName);
+            prams.Add("@mainMenu", mainMenu);
+            prams.Add("@subMenu", subMenu);
+            prams.Add("@access", access);
             string spName = ConfigurationManager.AppSettings["GetRoleURLDetails"];
             return _dbAccess.GetDataTable(spName, prams);
         }
@@ -44,6 +48,15 @@ namespace NtierMvc.DataAccess.Pool
 
             return msgCode;
         }
+
+        public DataTable GetSubMenus(string mainMenu)
+        {
+            var prams = new Dictionary<string, object>();
+            prams.Add("@MainMenu", mainMenu);
+            string spName = ConfigurationManager.AppSettings["GetSubMenus"];
+            return _dbAccess.GetDataTable(spName, prams);
+        }
+
 
     }
 }

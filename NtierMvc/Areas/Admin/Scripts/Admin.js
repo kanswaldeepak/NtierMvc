@@ -1,9 +1,28 @@
 ﻿
 
 function getRoleAssignedURL() {
-    var AMRoleId = $('#AMRole').val();
-    var AMMainMenuId = $('#AMSubMenu').val();
-    var AMSubMenuId = $('#AMSubMenu').val();
+    var MainMenu = '';
+    var x = document.getElementById("AMMainMenuSearch");
+    for (var i = 0; i < x.options.length; i++) {
+        if (x.options[i].selected == true) {
+            //alert(x.options[i].value);
+            MainMenu = MainMenu + x.options[i].value + ',';
+        }
+    }
+    MainMenu = MainMenu.substring(0, MainMenu.length - 1);
+
+    var SubMenu = '';
+    var x = document.getElementById("AMSubMenuSearch");
+    for (var i = 0; i < x.options.length; i++) {
+        if (x.options[i].selected == true) {
+            //alert(x.options[i].value);
+            SubMenu = SubMenu + x.options[i].value + ',';
+        }
+    }
+    SubMenu = SubMenu.substring(0, SubMenu.length - 1);
+
+    var DeptName = $('#AMDeptNameSearch').val();
+    var Access = $('#AMAccessSearch').val();
 
     $("#RoleURLtable").DataTable().destroy();
 
@@ -22,16 +41,20 @@ function getRoleAssignedURL() {
             "url": window.GetRoleURLDetails,
             "type": "POST",
             "datatype": "json",
-            "data": { AMRoleID: AMRoleId, AMMainMenuID: AMMainMenuId, AMSubMenuID: AMSubMenuId },
+            "data": { deptName: DeptName, mainMenu: MainMenu, subMenu: SubMenu, access: Access },
             "dataSrc": ""
         },
         'order': [[1, "asc"]],
         columns: [
             { title: "ID", "data": "ID", "name": "ID", "autoWidth": false, "visible": false },
             { title: "SNo", "data": "SNo", "name": "SNo", "autoWidth": false, "visible": true },
+            { title: "Emp Id", "data": "EmpId", "name": "EmpId", "autoWidth": false, "visible": false },
+            { title: "Emp Code", "data": "EmpCode", "name": "EmpCode", "autoWidth": false, "visible": true },
+            { title: "Emp Name", "data": "EmpName", "name": "EmpName", "autoWidth": false, "visible": true },
             { title: "Dept Name", "data": "DeptName", "name": "DeptName", "autoWidth": true, "visible": true },
             { title: "Main Menu", "data": "MainMenu", "name": "MainMenu", "autoWidth": true, "visible": true },
-            { title: "Sub Menu", "data": "SubMenu", "name": "SubMenu", "autoWidth": true }
+            { title: "Sub Menu", "data": "SubMenu", "name": "SubMenu", "autoWidth": true },
+            { title: "Access", "data": "Access", "name": "Access", "autoWidth": true }
         ],
         "fnCreatedRow": function (nRow, aData, iDataIndex) {
         },
@@ -61,7 +84,7 @@ function SaveRoleAssignDetails() {
     }
     else {
         $.ajax({
-            url: window.SaveRoleAssigns, type: 'POST', data: { Role: role, MainMenu: mainMenu, SubMenu: subMenu }, ContentType: undefined ,
+            url: window.SaveRoleAssigns, type: 'POST', data: { Role: role, MainMenu: mainMenu, SubMenu: subMenu }, ContentType: undefined,
             success:
                 function (res) {
                     if (res == 'Inserted Successfully!') {
@@ -73,7 +96,7 @@ function SaveRoleAssignDetails() {
                         HideLoadder();
                     }
                 }
-            , error: function (res) { showHttpErr(res); HideLoadder();}
+            , error: function (res) { showHttpErr(res); HideLoadder(); }
         })
     }
 }

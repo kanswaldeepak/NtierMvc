@@ -1,4 +1,5 @@
 ﻿using NtierMvc.Areas.Admin.Models;
+using NtierMvc.Common;
 using NtierMvc.Infrastructure;
 using NtierMvc.Model;
 using NtierMvc.Model.Admin;
@@ -31,7 +32,7 @@ namespace NtierMvc.Areas.Admin.Controllers
         [HttpGet]
         public ActionResult AdminMaster()
         {
-            ViewBag.ListRole = model.GetMasterTableStringList("Master.Department", "Id", "DeptName", "", "", GeneralConstants.ListTypeD);
+            ViewBag.ListDeptName = model.GetMasterTableStringList("Master.Department", "Id", "DeptName", "", "", GeneralConstants.ListTypeD);
             ViewBag.ListMainMenu = model.GetMasterTableStringList("MenuTable", "Id", "UrlName", "", "", GeneralConstants.ListTypeD);
             ViewBag.ListSubMenu = model.GetMasterTableStringList("SubMenuTable", "Id", "Name", "", "", GeneralConstants.ListTypeD);
             ViewBag.ListReadWrite = model.GetDropDownList("Master.Taxonomy",GeneralConstants.ListTypeD,"DropDownId", "DropDownValue", "ReadWrite", "Property");
@@ -46,23 +47,23 @@ namespace NtierMvc.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public ActionResult GetRoleURLDetails(string AMRoleID = null, string AMMainMenuID = null, string AMSubMenuID = null)
+        public ActionResult GetRoleURLDetails(string deptName = null, string mainMenu = null, string subMenu = null, string access = null)
         {
-            var draw = Request.Form["draw"];
-            var start = Request.Form["start"];
-            var length = Request.Form["length"];
+            var draw = Request.Form.GetValues("draw").FirstOrDefault();
+            var start = Request.Form.GetValues("start").FirstOrDefault();
+            var length = Request.Form.GetValues("length").FirstOrDefault();
             var totalRecords = 0;
             var objList = new List<RoleAssignEntity>();
             try
             {
-                var sortColumn = Request.Form["columns[" + Request.Form["order[0][column]"].FirstOrDefault() + "][name]"];
-                var sortColumnDir = Request.Form["order[0][dir]"];
-                var pageSize = length != "0" ? Convert.ToInt32(length) : 0;
-                var skip = start != "0" ? Convert.ToInt32(start) : 0;
-                var search = Request.Form["search[value]"];
+                var sortColumn = Request.Form.GetValues("columns[" + Request.Form["order[0][column]"].FirstOrDefault() + "][name]").FirstOrDefault();
+                var sortColumnDir = Request.Form.GetValues("order[0][dir]").FirstOrDefault();
+                var pageSize = length != null ? Convert.ToInt32(length) : 0;
+                var skip = start != null ? Convert.ToInt32(start) : 0;
+                var search = Request.Form.GetValues("search[value]").FirstOrDefault();
 
 
-                objList = objManager.GetRoleURLDetails(skip, pageSize, sortColumn, sortColumnDir, search);
+                objList = objManager.GetRoleURLDetails(skip, pageSize, sortColumn, sortColumnDir, search, deptName, mainMenu, subMenu, access);
                 totalRecords = objList[0].totalcount;
                 var v = (from a in objList select a);
                 objList = v.ToList();
@@ -72,7 +73,8 @@ namespace NtierMvc.Areas.Admin.Controllers
                 //ex.Message;
             }
 
-            return new JsonResult { Data = objList, JsonRequestBehavior = JsonRequestBehavior.AllowGet };            
+            return new JsonResult { Data = objList, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+            //return Json(new { draw = draw, recordsFiltered = totalRecords, recordsTotal = totalRecords, Data = objList }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
@@ -98,7 +100,20 @@ namespace NtierMvc.Areas.Admin.Controllers
             return new JsonResult { Data = data, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 
+        public JsonResult GetSubMenus(string mainMenu)
+        {
+            try
+            {
+                List<DropDownEntity> ddl = objManager.GetSubMenus(mainMenu);
+                return new JsonResult { Data = ddl, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+            }
+            catch (Exception ex)
+            {
+                return new JsonResult { Data = ex, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                throw;
+            }
 
+        }
 
     }
 }

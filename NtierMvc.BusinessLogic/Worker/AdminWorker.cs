@@ -1,21 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Data;
-using NtierMvc.DataAccess.Pool;
-using NtierMvc.BusinessLogic.Utility;
-using System.Configuration;
-using System.IO;
-using NtierMvc.BusinessLogic.Interface;
-using NtierMvc.Model.Account;
+﻿using NtierMvc.BusinessLogic.Interface;
 using NtierMvc.Common;
-using NtierMvc.Model;
-using System.Web;
-using Helper = NtierMvc.BusinessLogic.Utility.Helper;
-using NtierMvc.Model.Application;
+using NtierMvc.DataAccess.Pool;
 using NtierMvc.Model.Admin;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
 
 namespace NtierMvc.BusinessLogic.Worker
 {
@@ -53,12 +43,12 @@ namespace NtierMvc.BusinessLogic.Worker
         #endregion
         Repository _repository = new Repository();
 
-        public List<RoleAssignEntity> GetRoleURLDetails(string skip = null, string pageSize = null, string sortColumn = null, string sortColumnDir = null, string search = null)
+        public List<RoleAssignEntity> GetRoleURLDetails(string skip = null, string pageSize = null, string sortColumn = null, string sortColumnDir = null, string search = null, string deptName = null, string mainMenu = null, string subMenu = null, string access = null)
         {
             var entity = new List<RoleAssignEntity>();
             try
             {
-                var dt = _repository.GetRoleURLDetails(skip, pageSize, sortColumn, sortColumnDir, search);
+                var dt = _repository.GetRoleURLDetails(skip, pageSize, sortColumn, sortColumnDir, search, deptName, mainMenu, subMenu, access);
 
                 if (dt != null && dt.Rows.Count > 0)
                 {
@@ -67,9 +57,13 @@ namespace NtierMvc.BusinessLogic.Worker
                         RoleAssignEntity re = new RoleAssignEntity();
                         re.ID = dr.IsNull("Id") ? 0 : Convert.ToInt32(dr["Id"]);
                         re.SNo = dr.IsNull("SNo") ? 0 : Convert.ToInt32(dr["SNo"]);
+                        re.EmpId = dr.IsNull("EmpId") ? 0 : Convert.ToInt32(dr["EmpId"]);
+                        re.EmpCode = dr.IsNull("EmpCode") ? "" : Convert.ToString(dr["EmpCode"]);
+                        re.EmpName = dr.IsNull("EmpName") ? "" : Convert.ToString(dr["EmpName"]);
                         re.DeptName = dr.IsNull("DeptName") ? "" : Convert.ToString(dr["DeptName"]);
                         re.MainMenu = dr.IsNull("MainMenu") ? "" : Convert.ToString(dr["MainMenu"]);
                         re.SubMenu = dr.IsNull("SubMenu") ? "" : Convert.ToString(dr["SubMenu"]);
+                        re.Access = dr.IsNull("Access") ? "" : Convert.ToString(dr["Access"]);
 
                         re.totalcount = dr.IsNull("totalcount") ? 0 : Convert.ToInt32(dr["totalcount"]);
                         entity.Add(re);
@@ -96,5 +90,33 @@ namespace NtierMvc.BusinessLogic.Worker
             }
             return result;
         }
+
+
+        public List<DropDownEntity> GetSubMenus(string mainMenu)
+        {
+            var entity = new List<DropDownEntity>();
+            try
+            {
+                var dt = _repository.GetSubMenus(mainMenu);
+
+                if (dt != null && dt.Rows.Count > 0)
+                {
+                    foreach (DataRow dr in dt.Rows)
+                    {
+                        DropDownEntity ddE = new DropDownEntity();                        
+                        ddE.DataStringValueField = dr.IsNull("DataStringValueField") ? "" : Convert.ToString(dr["DataStringValueField"]);
+                        ddE.DataTextField = dr.IsNull("DataTextField") ? "" : Convert.ToString(dr["DataTextField"]);
+                        entity.Add(ddE);
+                    }
+                }
+            }
+            catch (Exception Ex)
+            {
+                NtierMvc.DataAccess.ExceptionLogging.SendExcepToDB(Ex);
+            }
+            return entity;
+        }
+
+
     }
 }
