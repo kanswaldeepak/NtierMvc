@@ -30,24 +30,6 @@ namespace NtierMvc.Controllers
             model = new BaseModel();
         }
 
-        //protected override void Dispose(bool disposing)
-        //{
-        //    if (disposing)
-        //    {
-        //        if (_loggingHandler != null)
-        //        {
-        //            _loggingHandler.Dispose();
-        //            _loggingHandler = null;
-        //        }
-        //        if (objManager != null)
-        //        {
-        //            objManager.Dispose();
-        //            objManager = null;
-        //        }
-        //    }
-
-        //    base.Dispose(disposing);
-        //}
         #endregion
 
         private static readonly log4net.ILog Logger = log4net.LogManager.GetLogger(typeof(AccountController));
@@ -99,27 +81,9 @@ namespace NtierMvc.Controllers
             return View();
         }
 
-        //public JsonResult DdlList()
-        //{
-        //    BaseModel model = new BaseModel();
-        //    List<DropDownEntity> Vname = model.GetMasterTableStringList("Clientele_Master", "VendorName", "VendorName");
-        //    List<DropDownEntity> Vid = model.GetMasterTableStringList("Clientele_Master", "VendorId", "VendorId");
-        //    List<DropDownEntity> Vnature = model.GetMasterTableList("Master.Vendor", "Id", "VendorNature");
-        //    List<DropDownEntity> Farea = model.GetMasterTableList("Master.FunctionalArea", "Id", "FunctionArea");
-        //    List<DropDownEntity> Vtype = model.GetMasterTableList("Master.Vendor", "Id", "VendorType");
-
-        //    var DdlData = Vname.Concat(Vid).Concat(Vnature).Concat(Farea).Concat(Vtype);
-
-        //    return new JsonResult { Data = DdlData, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
-        //}
-
         [HttpGet]
         public ActionResult PartialCustomer()
         {
-            //custDetail.cusEnt.UnitNo = Session["UserId"].ToString();
-            //custDetail.cusEnt = objManager.GetUserDetails(custDetail.cusEnt.UnitNo);
-            //custDetail.LstCusEnt = FetchCustomerList(string.Empty);
-
             return PartialView(custDetail);
         }
 

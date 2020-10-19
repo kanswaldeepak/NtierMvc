@@ -48,6 +48,7 @@ angular.module('App').controller("MainController", function ($scope, $http, $tim
                 SetModalTitle("Add New Customer")
                 SetModalBody(html);
                 HideLoadder();
+                SetModalWidth("1400px");
                 ShowModal();
 
                 if (!($('.modal.in').length)) {
@@ -86,6 +87,7 @@ angular.module('App').controller("MainController", function ($scope, $http, $tim
                 SetModalTitle("View Customer Details")
                 SetModalBody(html);
                 HideLoadder();
+                SetModalWidth("1400px");
                 $('#formSaveCustomerDetail input[type=radio],input[type=text], select').prop("disabled", true);
                 $('#save_results').css('display', 'none');
                 $('#cancel_results').css('display', 'none');

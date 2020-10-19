@@ -256,8 +256,9 @@ namespace NtierMvc.Controllers
                 ViewBag.StatusMsg = Convert.ToString(TempData["StatusMsg"]);
                 ViewBag.UserName = Convert.ToString(TempData["UserName"]);
             }
-            //BaseModel objBaseModel = new BaseModel();
+
             BaseModel model = new BaseModel();
+            ViewBag.EmployeeList = model.GetMasterTableList("Master.Employee","Id","EmpName","0","IsApproved");
             ViewBag.PermissionNames = model.GetTaxonomyDropDownItems("", "Permission");
             //ViewBag.FunctionalArea = model.GetTaxonomyDropDownItems("", "Functional Area");
             ViewBag.GenderType = model.GetTaxonomyDropDownItems("", "Gender");
@@ -510,42 +511,6 @@ namespace NtierMvc.Controllers
                 uE.PassportPhoto = objFileUpload;
             }
 
-            /*, HttpPostedFileBase passportPhoto, HttpPostedFileBase educationPermissionFile, HttpPostedFileBase resolutionPertainingAuthorizedPersonFile, string rbjrnSnrCollege*/
-            //viewModel.PromotingOrganizationModel.TypeofInstituteAttachedWithforCourses = rbjrnSnrCollege;
-
-            //if (passportPhoto != null)
-            //{
-            //    FileUploadEntity objFileUpload = new FileUploadEntity();
-            //    objFileUpload.ContentType = passportPhoto.ContentType;
-            //    objFileUpload.FileName = passportPhoto.FileName;
-            //    objFileUpload.FileExtension = System.IO.Path.GetExtension(objFileUpload.FileName);
-            //    byte[] uploadedFile = new byte[passportPhoto.InputStream.Length];
-            //    passportPhoto.InputStream.Read(uploadedFile, 0, uploadedFile.Length);
-            //    objFileUpload.FileByteArray = uploadedFile;
-            //    viewModel.AuthorizedRepresentativeModel.PassportPhoto = objFileUpload;
-            //}
-            //if (educationPermissionFile != null)
-            //{
-            //    FileUploadEntity objFileUpload = new FileUploadEntity();
-            //    objFileUpload.ContentType = educationPermissionFile.ContentType;
-            //    objFileUpload.FileName = educationPermissionFile.FileName;
-            //    objFileUpload.FileExtension = System.IO.Path.GetExtension(objFileUpload.FileName);
-            //    byte[] uploadedFile = new byte[educationPermissionFile.InputStream.Length];
-            //    educationPermissionFile.InputStream.Read(uploadedFile, 0, uploadedFile.Length);
-            //    objFileUpload.FileByteArray = uploadedFile;
-            //    viewModel.PromotingOrganizationModel.EducationPermissionFile = objFileUpload;
-            //}
-            //if (resolutionPertainingAuthorizedPersonFile != null)
-            //{
-            //    FileUploadEntity objFileUpload = new FileUploadEntity();
-            //    objFileUpload.ContentType = resolutionPertainingAuthorizedPersonFile.ContentType;
-            //    objFileUpload.FileName = resolutionPertainingAuthorizedPersonFile.FileName;
-            //    objFileUpload.FileExtension = System.IO.Path.GetExtension(objFileUpload.FileName);
-            //    byte[] uploadedFile = new byte[resolutionPertainingAuthorizedPersonFile.InputStream.Length];
-            //    resolutionPertainingAuthorizedPersonFile.InputStream.Read(uploadedFile, 0, uploadedFile.Length);
-            //    objFileUpload.FileByteArray = uploadedFile;
-            //    viewModel.AuthorizedRepresentativeModel.ResolutionPertainingAuthorizedPersonFile = objFileUpload;
-            //}
             var registraionID = objApplicationModel.SaveApplicationRegistraionDetails(uE);
             BaseModel objBase = new BaseModel();
             //var ApplicationType = objBase.GetApplicationTypeForReg(viewModel.RegistrationModel.ApplicationTypeID);
@@ -564,7 +529,7 @@ namespace NtierMvc.Controllers
                     TempData["StatusMsg"] = "Success";
                     TempData["UserName"] = registraionID.FirstOrDefault().Value;
                     TempData["FirstName"] = uE.FirstName;
-                    TempData["LastName"] = uE.LastName;
+                    //TempData["LastName"] = uE.LastName;
                     TempData["ErrorMsg"] = "";
                     //TempData["PromotingOrg"] = viewModel.PromotingOrganizationModel.SectorName;
                     //TempData["ApplicationType"] = ApplicationType;
@@ -578,6 +543,29 @@ namespace NtierMvc.Controllers
             return RedirectToAction("Registration", "Account");
             //return RedirectToAction("MakePayment", "Payment");//redirecting from registration to payment page
         }
+
+        public JsonResult GetEmployeeDetail(string EmpId)
+        {
+            UserEntity uE = new UserEntity();
+            AccountManager accountMgr = new AccountManager();
+
+            uE = accountMgr.GetEmployeeDetail(EmpId);
+            return new JsonResult { Data = uE, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+
+        }
+
+        public JsonResult GetUserNameAvailability(string UserName)
+        {
+            BaseModel bM = new BaseModel();
+            var UserAlreadyExists = bM.GetSingleColumnValues("UserDetails", "UserName", "UserName", "UserName", UserName);
+            if (!string.IsNullOrEmpty(UserAlreadyExists.DataValueField1))
+                return new JsonResult { Data = UserName + " is already present", JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+            else
+                return new JsonResult { Data = UserName + " is available", JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+        }
+
+
+
 
     }
 }

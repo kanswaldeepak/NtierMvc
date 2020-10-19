@@ -265,5 +265,24 @@ namespace NtierMvc.Model
             }
             return dic;
         }
+
+        public UserEntity GetEmployeeDetail(string EmpId)
+        {
+            UserEntity objEntity = new UserEntity();
+            var baseAddress = "Login";
+            using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
+            {
+                HttpResponseMessage response = client.GetAsync(baseAddress + "/GetEmployeeDetail?EmpId=" + EmpId.ToString()).Result;
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var data = response.Content.ReadAsStringAsync().Result;
+                    objEntity = JsonConvert.DeserializeObject<UserEntity>(data);
+                }
+            }
+            return objEntity;
+        }
+
+
     }
 }

@@ -27,11 +27,10 @@ namespace NtierMvc.BusinessLogic.Interface
 
         bool CheckUserDetails(ChangePasswodEntity entity);
 
-        // Added By Ganesh Jha 21 Jan. To Check the page wise access for logged In user for that section
-
         PagewiseAccessEntity GetPagewiseAccess(PagewiseAccessEntity entity);
 
         AffiliationTypeEntity GetAffiliationType(int RegistrationId);        
+        UserEntity GetEmployeeDetail(string EmpId);        
 
     }
 }

@@ -56,7 +56,9 @@ namespace NtierMvc.Infrastructure
             var user = (UserEntity)HttpContext.Current.Session["UserModel"];
             if (user != null)
             {
-                if (!string.IsNullOrEmpty(area))
+                if (user.DeptName == "Administration")
+                    return true;
+                else if (!string.IsNullOrEmpty(area))
                     return user.Permissions.Any(x => x.PermissionRoute == $"{area}-{controller}-{master}-{action}");
                 else
                     return user.Permissions.Any(x => x.PermissionRoute == $"{controller}-{master}-{action}");

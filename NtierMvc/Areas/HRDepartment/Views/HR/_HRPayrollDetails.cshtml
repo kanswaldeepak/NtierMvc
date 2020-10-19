@@ -3,12 +3,6 @@
 
 @model NtierMvc.Model.HR.PayrollEntity
 
-<div class="row mt-1">
-    <div class="col-md-12">
-
-    </div>
-</div>
-
 @*@using (Html.BeginForm("SaveQuotePreparation", "Technical", FormMethod.Post, new { @id = "formSavePayrollDetail" }))
     {*@
 <div ng-controller="HrController" class="row">
@@ -304,7 +298,7 @@
         <div class="row">
             <div class="col-md-12 pt-4 text-center">
                 @*<button type="button" class="btn btn-success btn-sm" data-dismiss="modal" id="save_results">Save</button>*@
-                <input style="font-size:18px" type="button" class="btn btn-success btn-sm" data-dismiss="modal" id="save_results" value="Save" ng-click="SavePayrollDetails()" />
+                <input style="font-size:18px" type="button" class="btn btn-success btn-sm" id="save_results" value="Save" ng-click="SavePayrollDetails()" />
             </div>
         </div>
     </form>

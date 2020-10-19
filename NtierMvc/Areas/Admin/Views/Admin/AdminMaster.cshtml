@@ -33,6 +33,9 @@
                                     <td>
                                         Read/Write
                                     </td>
+                                    <td>
+
+                                    </td>
                                 </tr>
                             </thead>
                             <tbody>
@@ -77,21 +80,24 @@
                                             @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
                                         })
                                     </td>
+                                    <td>
+                                        <button id="SaveRoleAssign" type="button" class="btn btn-success btn-sm" onclick="SaveRoleAssignDetails()">Save</button>
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
 
-                <div class="row">
+                @*<div class="row">
                     <div class="col-md-12 pt-4 text-center">
-                        <button id="SaveRoleAssign" style="font-size:18px" type="button" class="btn btn-success btn-sm" onclick="SaveRoleAssignDetails()">Save</button>
+                        
                     </div>
-                </div>
+                </div>*@
 
                 <div class="row mt-1">
                     <div class="col-md-12">
-                        <table>
+                        <table class="mt-4" style="margin: 0px auto;">
                             <tr>
                                 <td>
                                     <label>Dept Name</label>
@@ -149,7 +155,7 @@
                                 </td>
                             </tr>
                         </table>
-                        <table class="table table-bordered" id="RoleURLtable">
+                        <table class="table table-bordered mt-5" id="RoleURLtable">
                             <thead>
                                 <tr>
                                     <td>

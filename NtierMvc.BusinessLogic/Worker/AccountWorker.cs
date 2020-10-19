@@ -481,5 +481,35 @@ namespace NtierMvc.BusinessLogic.Worker
             }
         }
 
+        public UserEntity GetEmployeeDetail(string EmpId)
+        {
+            UserEntity entity = new UserEntity();
+            try
+            {
+                var dt = _repository.GetEmployeeDetail(EmpId);
+
+                if (dt != null && dt.Rows.Count > 0)
+                {
+                    entity.FirstName= dt.Rows[0]["EmpName"].ToString();
+                    entity.GenderTitleID = dt.Rows[0]["GenderTitle"].ToString();
+                    entity.GenderID = Convert.ToInt32(dt.Rows[0]["Gender"]);
+                    entity.DateofBirth = dt.Rows[0]["DOB"].ToString();
+                    entity.STDCodeM = 91;
+                    entity.MobileNumber = dt.Rows[0]["MobileNo"].ToString();
+                    entity.AlternativeMobileNumber = dt.Rows[0]["AlternateNo"].ToString();
+                    entity.EmailID = dt.Rows[0]["EMail"].ToString();
+                    entity.Department= dt.Rows[0]["Dept"].ToString();
+                }
+            }
+            catch (Exception Ex)
+            {
+                NtierMvc.DataAccess.ExceptionLogging.SendExcepToDB(Ex);
+            }
+
+            return entity;
+        }
+
+
+
     }
 }

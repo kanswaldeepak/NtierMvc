@@ -126,7 +126,7 @@ namespace NtierMvc.Areas.HRDepartment.Controllers
                 }
                 catch (Exception)
                 {
-                    Message = "File upload failed! Please try again";
+                    Message = " File upload failed! Please try again";
                 }
 
             }
@@ -152,7 +152,7 @@ namespace NtierMvc.Areas.HRDepartment.Controllers
                 }
             }
             else
-                data = GeneralConstants.NotSavedError;
+                data = GeneralConstants.NotSavedError + Message;
 
             return new JsonResult { Data = data, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }

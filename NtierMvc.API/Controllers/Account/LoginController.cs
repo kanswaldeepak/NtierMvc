@@ -123,6 +123,10 @@ namespace NtierMvc.API.Controllers.Account
             return Ok(_repository.GetAffiliationType(RegistrationId));
         }
 
+        public IHttpActionResult GetEmployeeDetail(string EmpId)
+        {
+            return Ok(_repository.GetEmployeeDetail(EmpId));
+        }
 
     }
 }

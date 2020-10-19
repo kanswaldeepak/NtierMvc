@@ -200,18 +200,19 @@ namespace NtierMvc.DataAccess.Pool
             parms.Add("@UserName", objUser.UserName);
             parms.Add("@Password", objUser.Password);
             parms.Add("@PasswordPhrase", objUser.PasswordPhrase);
-            parms.Add("@FirstName", objUser.FirstName);
-            parms.Add("@LastName", objUser.LastName);
-            parms.Add("@GenderTitleID", objUser.GenderTitleID);
-            parms.Add("@GenderID", objUser.GenderID);
-            parms.Add("@PermissionId", objUser.PermissionId);
-            parms.Add("@FunctionalAreaID", objUser.FunctionalAreaID);
-            parms.Add("@DateofBirth", objUser.DateofBirth);
+            parms.Add("@EmpId", objUser.EmpId);
+            //parms.Add("@FirstName", objUser.FirstName);
+            //parms.Add("@LastName", objUser.LastName);
+            //parms.Add("@GenderTitleID", objUser.GenderTitleID);
+            //parms.Add("@GenderID", objUser.GenderID);
+            //parms.Add("@PermissionId", objUser.PermissionId);
+            //parms.Add("@FunctionalAreaID", objUser.FunctionalAreaID);
+            //parms.Add("@DateofBirth", objUser.DateofBirth);
             parms.Add("@STDCodeM", objUser.STDCodeM);
-            parms.Add("@MobileNumber", objUser.MobileNumber);
-            parms.Add("@AlternativeMobileNumber", objUser.AlternativeMobileNumber);
-            parms.Add("@EmailID", objUser.EmailID);
-            parms.Add("@Department", objUser.Department);
+            //parms.Add("@MobileNumber", objUser.MobileNumber);
+            //parms.Add("@AlternativeMobileNumber", objUser.AlternativeMobileNumber);
+            //parms.Add("@EmailID", objUser.EmailID);
+            //parms.Add("@Department", objUser.Department);
             parms.Add("@STDCodeL", objUser.STDCodeL);
             parms.Add("@LandLineNumber1", objUser.LandLineNumber1);
             ////end////
@@ -219,6 +220,15 @@ namespace NtierMvc.DataAccess.Pool
 
             return _dbAccess.GetDataTable(spName, parms);
         }
+
+        public DataTable GetEmployeeDetail(string EmpId)
+        {
+            var prams = new Dictionary<string, object>();
+            prams.Add("@EmpId", EmpId);
+            var spName = ConfigurationManager.AppSettings["GetEmpDetailsForRegister"];
+            return _dbAccess.GetDataTable(spName, prams);
+        }
+
 
     }
 }

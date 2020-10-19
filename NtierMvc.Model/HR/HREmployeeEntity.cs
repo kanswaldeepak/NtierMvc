@@ -13,6 +13,7 @@ namespace NtierMvc.Model.HR
         public string ipAddress { get; set; }
         public string UserInitial { get; set; }
         public string UnitNo { get; set; }
+        public string GenderTitleID { get; set; }
         public string EmpName { get; set; }
         public string EmpCode { get; set; }
         public string Dept { get; set; }

@@ -250,21 +250,6 @@ angular.module('App').controller("HrController", function ($scope, $http, $timeo
                 SetModalPanelBody(html);
                 HideLoadder();
 
-                if (!($('.modal.in').length)) {
-                    $('.modal-dialog').css({
-                        top: '5%',
-                        left: '5%'
-                    });
-                }
-                $('#ModalPopup').modal({
-                    backdrop: false,
-                    show: true
-                });
-
-                $('.modal-dialog').draggable({
-                    handle: ".modal-body"
-                });
-
             },
             error: function (r) {
                 HideLoadder();
@@ -391,21 +376,6 @@ angular.module('App').controller("HrController", function ($scope, $http, $timeo
                 html = $compile(html)($scope);
                 SetModalPanelBody(html);
                 HideLoadder();
-
-                if (!($('.modal.in').length)) {
-                    $('.modal-dialog').css({
-                        top: '5%',
-                        left: '5%'
-                    });
-                }
-                $('#ModalPopup').modal({
-                    backdrop: false,
-                    show: true
-                });
-
-                $('.modal-dialog').draggable({
-                    handle: ".modal-body"
-                });
 
             },
             error: function (r) {

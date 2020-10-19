@@ -1,13 +1,6 @@
 ﻿@using NtierMvc.Model
 @using NtierMvc.Infrastructure
 
-<div class="row mt-1">
-    <div class="col-md-12">
-
-    </div>
-</div>
-
-
 <!--Modal Panel-->
 <div id="Panel">
     <div id="PanelContainer">
@@ -22,7 +15,8 @@
 
     $(document).ready(function () {
         window.SavePayroll = '@Url.Action("SavePayroll", "HR")';
-        $('.redBG').removeClass('redBG').addClass('black');
+        $('#ModalPopup').css("display", "none");
+        //$('.redBG').removeClass('redBG').addClass('black');
         });
 
 </script>

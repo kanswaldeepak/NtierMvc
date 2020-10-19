@@ -30,6 +30,7 @@ namespace NtierMvc.DataAccess.Pool
             parms.Add("@Dept", objEmp.Dept);
             parms.Add("@IdCard", objEmp.IdCard);
             parms.Add("@EmpInitial", objEmp.EmpInitial);
+            parms.Add("@GenderTitle", objEmp.GenderTitleID);
             parms.Add("@EmpName", objEmp.EmpName);
             parms.Add("@Gender", objEmp.Gender);
             parms.Add("@GUARDIANNAME", objEmp.GaurdianName);

@@ -103,13 +103,38 @@
                             <div class="form-group">
                                 @Html.TextBoxFor(m => m.UserName, new
                              {
+                                 @id= "UserName",
                                  @class = "form-control requiredValidation",
                                  @style = "text-transform:uppercase",
                                  @placeholder = "UserName",
                                  @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
                              })<label class="HideValidMsg">Fields is Required *</label>
-                                @*<input type="text" class="form-control" id="" placeholder="">
-                                    <span class="error_content">errror.</span>*@
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <button type="button" class="btn btn-secondary btn-sm" onclick="CheckUserAvailability()" >Check Availability</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label class="control-label">Select Employee <span class="required">*</span></label>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                @Html.DropDownListFor(m => m.EmpId, new SelectList(ViewBag.EmployeeList, "DataValueField", "DataTextField"), new
+                            {
+                                id = "EmpId",
+                                @class = "form-control requiredValidation",
+                                data_id = "EmpId",
+                                data_select = "EmpId",
+                                @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                                @onchange = "GetEmployeeDetails()"
+                            })
+                                <label class="HideValidMsg">Field is Required *</label>
                             </div>
                         </div>
                     </div>
@@ -119,58 +144,54 @@
                                 <label class="control-label">Title <span class="required">*</span></label>
                                 @Html.DropDownListFor(m => m.GenderTitleID, new SelectList(ViewBag.GenderTitle, "DataValueField", "DataTextField"), new
                             {
-                                id = "personTitle",
-                                @class = "form-control title-width requiredValidation",
+                                id = "GenderTitleID",
+                                @class = "form-control requiredValidation",
                                 data_id = "GenderTitle",
                                 data_select = "GenderTitle",
-                                @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
-                            })<label class="HideValidMsg">Fields is Required *</label>
-                                @*<select class="form-control" style="width:80px;">
-                                        <option>Mr </option>
-                                        <option>MS </option>
-                                    </select>
-                                    <span class="error_content">errror.</span>*@
+                                @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                                @disabled = "disabled"
+                            })
+                                <label class="HideValidMsg">Fields is Required *</label>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label class="control-label">First Name <span class="required">*</span></label>
+                                <label class="control-label">Name <span class="required">*</span></label>
                                 @Html.TextBoxFor(m => m.FirstName, new
                            {
                                @class = "form-control requiredValidation",
                                @style = "text-transform:uppercase",
                                @placeholder = "FirstName",
-                               @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
-                           })<label class="HideValidMsg">Fields is Required *</label>
-                                @*<select class="form-control">
-                                        <option>select </option>
-                                    </select>
-                                    <span class="error_content">errror.</span>*@
+                               @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                               @readonly = "readonly"
+                           })
+                                <label class="HideValidMsg">Fields is Required *</label>
                             </div>
                         </div>
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label class="control-label">LastName <span class="required">*</span></label>
-                                @Html.TextBoxFor(m => m.LastName, new
-                           {
-                               @class = "form-control requiredValidation",
-                               @style = "text-transform:uppercase",
-                               @placeholder = "LastName",
-                               @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
-                           })<label class="HideValidMsg">Fields is Required *</label>
-                            </div>
-                        </div>
+                        @*<div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="control-label">LastName <span class="required">*</span></label>
+                                    @Html.TextBoxFor(m => m.LastName, new
+                               {
+                                   @class = "form-control requiredValidation",
+                                   @style = "text-transform:uppercase",
+                                   @placeholder = "LastName",
+                                   @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                               })<label class="HideValidMsg">Fields is Required *</label>
+                                </div>
+                            </div>*@
                         <div class="col-md-2">
                             <div class="form-group">
                                 <label class="control-label">Gender <span class="required">*</span></label>
                                 @Html.DropDownListFor(m => m.GenderID, new SelectList(ViewBag.GenderType, "DataValueField", "DataTextField"), new
-                             {
-                                 id = "GenderType",
-                                 @class = "form-control requiredValidation",
-                                 data_id = "GenderType",
-                                 data_select = "GenderType",
-                                 @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
-                             })<label class="HideValidMsg">Fields is Required *</label>
+                           {
+                               id = "GenderID",
+                               @class = "form-control requiredValidation",
+                               data_id = "GenderType",
+                               data_select = "GenderType",
+                               @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                               @disabled = "disabled"
+                           })<label class="HideValidMsg">Fields is Required *</label>
                             </div>
                         </div>
                         <div class="col-md-3">
@@ -194,7 +215,7 @@
                                 <span style="display:none;font-size:12px; font-style:italic; color:#e9573f;" id="spnConPassword">Confirm password should match with password</span>
                             </div>
                         </div>
-                        <div class="col-md-3">
+                        @*<div class="col-md-3">
                             <div class="form-group">
                                 <label class="control-label">Permissions <span class="required">*</span></label>
                                 @Html.DropDownListFor(m => m.PermissionId, new SelectList(ViewBag.PermissionNames, "DataValueField", "DataTextField"), new
@@ -206,7 +227,7 @@
                                 @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
                             })<label class="HideValidMsg">Fields is Required *</label>
                             </div>
-                        </div>
+                        </div>*@
                         @*<div class="col-md-3">
                                 <div class="form-group">
                                     <label class="control-label">Functional Area<span class="required">*</span></label>
@@ -230,13 +251,13 @@
                                             <i class="la la-calendar-check-o"></i>
                                         </span>
                                     </div>
-                                    @Html.TextBoxFor(m => m.DateofBirth,
-                                    new
+                                    @Html.TextBoxFor(m => m.DateofBirth, new
                                     {
-                                    @class = "form-control commondateofbirth requiredValidation",
-                                    @placeholder = "DD/MM/YYYY",
-                                    @autocomplete = "off",
-                                    @style= "1px solid #dcd1d1;"
+                                        @class = "form-control requiredValidation",
+                                        @placeholder = "DD/MM/YYYY",
+                                        @autocomplete = "off",
+                                        @style = "1px solid #dcd1d1;",
+                                        @readonly = "readonly"
                                     })
                                 </div>
                             </div>
@@ -252,7 +273,8 @@
                                        @class = "form-control",
                                        @placeholder = "+91",
                                        @onkeypress = "return AllowNumbers(event)",
-                                       @style = "text-transform:uppercase"
+                                       @style = "text-transform:uppercase",
+                                       @readonly = "readonly"
                                    })
                                     </div>
                                     <div class="col-md-9 pl-0">
@@ -260,40 +282,35 @@
                                             @*<input type="text" class="form-control" placeholder="9437654382">*@
                                             @Html.TextBoxFor(m => m.MobileNumber, new
                                        {
+                                           @id = "mobileNumber",
                                            @class = "form-control requiredValidation MobileNumber",
                                            @maxlength = "12",
                                            @onkeypress = "return AllowNumbers(event)",
                                            @placeholder = "MobileNumber",
-                                           @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)" /*"MOBILE NO."*/
+                                           @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)" /*"MOBILE NO."*/,
+                                           @readonly = "readonly"
                                        })
-                                            <!-- <div class="empty"></div>
-                                                <div class="input-group-append">
-                                                    @*<button class="btn btn-success btn-sm" type="button">VERIFY</button>*@
-                                                    <button type="button" class="btn btn-success btn-sm" id="hrfMobileVerify" style="width: 82px;">Verify</button>
-                                                    <button type="button" class="btn btn-success fa fa-check" disabled id="hrfVerified" style="width: 90px; display:none;">Verified</button>
-                                                </div>
-                                             -->
                                         </div>
                                     </div>
                                 </div>
                                 <div class="ErrorMessages">
                                     <label id="IdVerifyMbNo">Please Verify Mobile Number.</label>
                                 </div>
-                                @*<span class="error_content">errror.</span>*@
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label class="control-label">Alternative Mobile Number <span class="required">*</span></label>
                                 @Html.TextBoxFor(m => m.AlternativeMobileNumber, new
-                            {
-                                @class = "form-control requiredValidation MobileNumber",
-                                @maxlength = "12",
-                                @onkeypress = "return AllowNumbers(event)",
-                                @placeholder = "AlternativeMobileNumber" /*"ALTERNATE MOBILE NO."*/,
-                                @style = "width:200px;",
-                                @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
-                            })<label class="HideValidMsg">Fields is Required *</label>
+                           {
+                               @id = "altrmobileNumber",
+                               @class = "form-control requiredValidation MobileNumber",
+                               @maxlength = "12",
+                               @onkeypress = "return AllowNumbers(event)",
+                               @placeholder = "AlternativeMobileNumber",
+                               @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                               @readonly = "readonly"
+                           })<label class="HideValidMsg">Fields is Required *</label>
                                 <span style="display:none;font-size:12px;color:#e9573f;font-style:italic;" id="sameMobileNumber"> Mobile number and Alternative mobile number should not be same</span>
                             </div>
                         </div>
@@ -301,46 +318,48 @@
                             <div class="form-group">
                                 <label class="control-label">Email ID <span class="required">*</span></label>
                                 @Html.TextBoxFor(m => m.EmailID, new
-                            {
-                                @id = "emailId",
-                                @class = "form-control requiredValidation EmailID",
-                                @placeholder = "Email ID",
-                                @style = "text-transform:uppercase;",
-                                @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
-                            })<label class="HideValidMsg">Fields is Required *</label>
+                           {
+                               @id = "EmailID",
+                               @class = "form-control requiredValidation EmailID",
+                               @placeholder = "Email ID",
+                               @style = "text-transform:uppercase;",
+                               @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                               @readonly = "readonly"
+                           })<label class="HideValidMsg">Fields is Required *</label>
                             </div>
                         </div>
                         <div class="col-md-2">
                             <div class="form-group">
                                 <label class="control-label">Department<span class="required">*</span></label>
                                 @Html.DropDownListFor(m => m.Department, new SelectList(@ViewBag.ListDepartment, "DataStringValueField", "DataTextField", "Select"), new
-                               {
-                                   @class = "form-control requiredValidation",
-                                   @id = "Designation",
-                                   @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
-                               })
+                           {
+                               @class = "form-control requiredValidation",
+                               @id = "Department",
+                               @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                               @disabled = "disabled"
+                           })
                                 <label class="HideValidMsg">Fields is Required *</label>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label class="control-label"> Std Code - LandLine No <span data-skin="dark" data-toggle="m-tooltip" data-placement="top" title="" data-original-title="(All communication shall be sent on this Mobile Number through SMS)"><i class="fa fa-info-circle"></i></span><span class="required">*</span></label>
+                                <label class="control-label"> Std Code - LandLine No <span data-skin="dark" data-toggle="m-tooltip" data-placement="top" title="" data-original-title="(All communication shall be sent on this Mobile Number through SMS)"><i class="fa fa-info-circle"></i></span></label>
                                 <div class="row">
                                     <div class="col-md-4 pr-2">
                                         @Html.TextBoxFor(m => m.STDCodeL, new
                                    {
-                                       @class = "form-control requiredValidation",
+                                       @class = "form-control",
                                        @placeholder = "STD Code",
                                        @onkeypress = "return AllowNumbers(event)",
                                        @id = "STDCodeL",
                                        @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
                                    })<label class="HideValidMsg">Fields is Required *</label>
-                                        @*<input type="text" class="form-control" id="" placeholder="011" disabled="disabled">*@
+                                        
                                     </div>
                                     <div class="col-md-8 pl-0">
                                         @Html.TextBoxFor(m => m.LandLineNumber1, new
                                    {
-                                       @class = "form-control requiredValidation",
+                                       @class = "form-control",
                                        @placeholder = "Land Line Number 1",
                                        @onkeypress = "return AllowNumbers(event)",
                                        @id = "LandLineNumber1",
@@ -390,140 +409,64 @@
                 Already have an account? <a href="@Url.Action("Login","Account")" class="btnForgetPwd" value="Login">Login</a>
             </div>
         }
+    </div>
+</div>
+
+<div class="modal fade" id="registor-Sucess-Failure" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6 class="modal-title">Notification</h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                &nbsp;&nbsp;<span id="spn-registor-Sucess-Failure"></span><span id="spnUserName" style="font-weight:bold"></span>&nbsp;&nbsp;<span id="spnUserNameMore"></span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" data-dismiss="modal" class="btn btn-primary">OK</button>
+            </div>
         </div>
     </div>
+</div>
 
-        <div class="modal fade" id="registor-Sucess-Failure" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h6 class="modal-title">Notification</h6>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <form>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        &nbsp;&nbsp;<span id="spn-registor-Sucess-Failure"></span><span id="spnUserName" style="font-weight:bold"></span>&nbsp;&nbsp;<span id="spnUserNameMore"></span>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" data-dismiss="modal" class="btn btn-primary">OK</button>
-                    </div>
-                </div>
+
+<div class="modal fade" id="Sucess-Failure" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6 class="modal-title">Notification</h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
-        </div>
-
-
-        <div class="modal fade" id="Sucess-Failure" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h6 class="modal-title">Notification</h6>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <form>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-group row">
-                                        &nbsp;&nbsp;<span id="spn-Sucess-Failure"></span>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" data-dismiss="modal" class="btn btn-primary">OK</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- OTP POPUP -->
-        <div class="modal fade" id="getotp">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
+            <div class="modal-body">
+                <form>
+                    <div class="row">
                         <div class="col-md-12">
-                            <form>
-                                <div class="row">
-                                    <div class="col-md-3 mt-1">
-                                        <label class="control-label">Enter OTP</label>
-                                    </div>
-                                    <div class="col-md-pull-6">
-                                        <input type="text" class="form-control" placeholder="Enter OTP" id="otpNumber" onkeypress="return AllowNumbers(event)">
-                                        <span id="opterrormsg" class="field-validation-error" style="color: #dc3545; display: none;">Entered wrong OTP.</span>
-                                        <br />
-                                        <span id="optotpmsg" class="field-validation-success" style="color: #5fba7d; display: none;">OTP successfully sent to the mobile number</span>
-                                        <div class="otpvalid">
-                                            <span class="text-danger">Please enter valid OTP</span>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </form>
+                            <div class="form-group row">
+                                &nbsp;&nbsp;<span id="spn-Sucess-Failure"></span>
+                            </div>
                         </div>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn" id="btnVerifyOTP">Submit</button>
-                        <button type="button" class="btn btn-primary" id="btnResetForOTP">Resend OTP</button>
-                    </div>
-                </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" data-dismiss="modal" class="btn btn-primary">OK</button>
             </div>
         </div>
-        <!-- /OTP POPUP -->
-        <!-- OTP E-MAIL POPUP -->
-        <div class="modal fade" id="getMailotp">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="col-md-12">
-                            <form>
-                                <div class="row">
-                                    <div class="col-md-3 mt-1">
-                                        <label class="control-label">Enter OTP</label>
-                                    </div>
-                                    <div class="col-md-pull-6">
-                                        <input type="text" class="form-control" placeholder="Enter OTP" id="otpMailNumber" onkeypress="return AllowNumbers(event)">
-                                        <span id="mailopterrormsg" class="field-validation-error" style="color: #dc3545; display: none;">Entered wrong OTP.</span>
-                                        <br />
-                                        <span id="mailoptotpmsg" class="field-validation-success" style="color: #5fba7d; display: none;">OTP successfully sent to your email address.</span>
-                                        <div class="mailOtpvalid">
-                                            <span class="text-danger">Please enter valid OTP</span>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn" id="btnVerifyEmailOTP">Submit</button>
-                        <button type="button" class="btn btn-primary" id="btnResetForEmailOTP">Resend OTP</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- /OTP E-MAIL POPUP -->
-        <script type="text/javascript">
+    </div>
+</div>
+<script type="text/javascript">
 
     window.GetMobileOtpURL = '@Url.Action("GetMobileOtp", "Base")';
     window.GetMobileOTPWithAadhaarDataURL = '@Url.Action("GetMobileOTPWithAadhaarData","Base")';
@@ -538,6 +481,8 @@
 
     window.GetCourseListByFacultyId = "@Url.Action("GetCourseListByFacultyId", "Base")";
     window.GetDegreeListByCourseId = "@Url.Action("GetDegreeListByCourseId", "Base")";
+    window.GetEmployeeDetail = "@Url.Action("GetEmployeeDetail", "Account")";
+    window.GetUserNameAvailability = "@Url.Action("GetUserNameAvailability", "Account")";
 
     //COMPARING MOBILE NUMBER AND ALTERNATIVE MOBILE NUMBER
     var alterMobileNumber = $('#altrmobileNumber');
@@ -550,122 +495,6 @@
                 $('#sameMobileNumber').show();
                 alterMobileNumber.val('');
             }
-        }
-    });
-
-
-
-    //$("#dateOfEst").datepicker({
-    //    format: 'dd/mm/yyyy',
-    //    autoclose: true,
-    //    changeMonth: true,
-    //    changeYear: true,
-    //    endDate: 'today'
-    //});
-
-    //$("#AuthorizedRepresentativeModel_DateofBirth").datepicker({
-    //    format: 'dd/mm/yyyy',
-    //    autoclose: true,
-    //    changeMonth: true,
-    //    changeYear: true,
-    //    endDate: '-18y'
-    //}).on('changeDate', function (ev) {
-    //    //debugger;
-    //    //alert($("#AuthorizedRepresentativeModel_DateofBirth").val());
-    //});
-
-    $("#applicationType").change(function () {
-
-        $(".bifo-designation").hide();
-        $(".resolution-authorized").hide();
-        var applicationFor = $('#applicationType').val();
-        var applicationForText = $("#applicationType option:selected").text();
-        if (applicationFor != -1) {
-            if (applicationForText == "Bi Focal" || applicationForText == "Pre SSC") {
-                //$(".div-school-education").show();
-                $(".div-education-permsision").show();
-                $('.pviti_new_applicant_section').hide();
-                $(".educationfile").show();
-                $(".date-of-registration").hide();
-                //if (applicationForText == "Bi Focal" || applicationForText == "Private Industrial Training Institute") {
-                $(".bifo-designation").show();
-                //}
-                $(".resolution-authorized").show();
-
-                $('.pviti_new_applicant_section').hide();
-                //$(".div-education-permsision").hide();
-                $(".div-TypeofInstitute").hide();
-                //    alertNotification("you can not register");
-                $('.upload-permission-letter').hide();
-                $('input:radio[name=isSchoolEduPerm]:nth(1)').prop('checked', true);
-                //$(".div-education-permsision").show();
-            }
-            else if (applicationForText == "MSBVEE") {
-                $(".div-education-permsision").hide();
-                $('.pviti_new_applicant_section').show();
-                //$(".div-education-permsision").show();
-                var applicationFor = $('#applicationType').val();
-                var applicationTypeText = $("#applicationType option:selected").text();
-
-                    $(".rdnTypeOfInstitute").hide();
-                    $(".div-TypeofInstitute").show();
-                    $('.preSSCLable').show();
-                    $('.nonPreSSCLable').hide();
-
-
-                $('.upload-permission-letter').show();
-
-            }
-            else {
-                //if (applicationForText == "Private Industrial Training Institute") {
-                //    $(".bifo-designation").show();
-                //}
-                $(".date-of-registration").show();
-                //$(".div-school-education").hide();
-                $(".div-education-permsision").hide();
-                $('.pviti_new_applicant_section').show();
-                $(".educationfile").hide();
-                $(".div-education-permsision").hide();
-                $(".div-TypeofInstitute").hide();
-            }
-
-        }
-        else {
-            //$(".div-school-education").hide();
-            $('.pviti_new_applicant_section').hide();
-        }
-        @*if (applicationFor != -1) {
-            if (applicant_type == 1) {
-                //$('._pvt-vti-mssds-container').removeClass("hide-model").addClass("show-model");
-                $('.pviti_new_applicant_section').removeClass("hide-model").addClass("show-model");
-            }
-            else {
-                window.location.href = '@Url.Action("Login", "Account")';
-                }
-        }
-    else {
-        $("#applicationType").val(-1);
-        $(".type_applicant").val("0");
-        //alert("Please select Applicatio for");
-            $("#spn-registor-Sucess-Failure").text('Please select Application for')
-        $("#registor-Sucess-Failure").modal('show');
-        var path = document.location.href.match(/[^\/]+$/)[0];//return current view
-    }*@
-    });
-    $(".registrationTypeMSSDS").click(function () {
-        var applicant_type = $('.type_applicant').val();
-        var applicationFor = $('#applicationType').val();
-        if (applicant_type == 1) {
-            $('.type_applicant').val(applicant_type);
-            $('#applicationType').val(applicationFor);
-            $('._pvt-vti-mssds-container').removeClass("show-model").addClass("hide-model");
-            //$('.pviti_new_applicant_section').show();
-            $('.pviti_new_applicant_section').removeClass("hide-model").addClass("show-model");
-        }
-        else {
-            /**/
-            window.location.href = '@Url.Action("Login", "Account")';
-            /**/
         }
     });
 
@@ -689,37 +518,10 @@
         /**/
         InstituteRegistrationApp.Load();
         if (statusMsg == 'Success') {
-            /**/
-            //var userName = '@ViewBag.UserName';
             var userName = '@TempData.Peek("UserName")';
             var FirstName = '@TempData["FirstName"]';
             var MiddleName = '@TempData["MiddleName"]';
             var LastName = '@TempData["LastName"]';
-            @*var SocityName = '@TempData["PromotingOrg"]';
-            var ApplicationType = '@TempData["ApplicationType"]';
-            var PaymentStatusMsg = '@TempData["PaymentStatusMsg"]';
-            var PaymentRefId = '@TempData["ReferenceId"]';*@
-            /**/
-            @*if (PaymentStatusMsg == "" || PaymentStatusMsg == null) {
-                $("#spn-registor-Sucess-Failure").text(' Dear ' + FirstName + ' ' + MiddleName + ' ' + LastName+' ')
-                $("#spnUserName").text(userName + ". Please Click on OK to Continue for Paying the Registration Fee to Proceed to Payment Gateway.");
-                $("#spnUserName").text("You have successfully registered for new " + ApplicationType + "  under" + SocityName + " Your Temporary Registration number is: " + userName + "; Your required to pay Registration fees of Rs:2000/- To Complete your application form  and submit for inspection process, Once the " + ApplicationType +" gets empanelled to maharashtra state council of vocational training you shall be assigned with parmanent registration number.");
-                //$("#spnUserNameMore").text(' The above user id is temporary. User shall be given permanent user id after getting empanelled');
-                $("#registor-Sucess-Failure").modal('show');
-                $('#registor-Sucess-Failure').on('hidden.bs.modal', function () {
-                    window.location.href = '@Url.Action("PaymentRegistration", "Payment", new {strUserName = "strpvtuserid"})'.replace("strpvtuserid", userName);
-                    //location.href='@Url.Action("Changelanguage","Application",new { LanguageID = "en" })'
-                });
-            }
-            else {
-                $("#spn-registor-Sucess-Failure").text(' Successfully payment Registration Fees. Received Registration fees of Rs.2000/- for application no: ' + userName + '. Payment Reference number is:' + PaymentRefId)
-                $("#spnUserNameMore").text('Complete the application form and submit for the inspection / Empanelment');
-                $("#registor-Sucess-Failure").modal('show');
-                $('#registor-Sucess-Failure').on('hidden.bs.modal', function () {
-                    window.location.href = '@Url.Action("Login", "Account")';
-                });
-            }*@
-
             $("#spn-registor-Sucess-Failure").text(' Dear ' + FirstName + ' ' + MiddleName + ' ' + LastName + ', ');
             $("#spnUserName").text(" You have successfully registered. Your UserName is: " + userName + ";");
             $("#spnUserNameMore").text(' Try to login with your UserName and Passwrod. If any Problem occurs conctact support team.');
@@ -738,45 +540,6 @@
         }
     });
 
-
-    //HIDING REG FORM WHEN USER RECHANGE APPLICATION TYPE
-    $("#applicationType").change(function () {
-        $(".type_applicant").val("0");
-        $('._pvt-vti-mssds-container').removeClass("show-model").addClass("hide-model");
-        $(".pviti_new_applicant_section").removeClass("show-model").addClass("hide-model");
-    });
-
-    $('#organizationType').change(function () {
-        var txt = $("#organizationType option:selected").text();
-        $("#poType").text(txt);
-        $("#lblOrgType").show('slow');
-    });
-
-
-    //DYNAMICALLY BINDING ORGANIZATION TYPE BASED ON APPLICATION TYPE ID
-    $("#applicationType").change(function () {
-        var applicant_type = $(this).val();
-        var applicationTypeId = $("#applicationType").val();
-        $.ajax({
-            type: "POST",
-            /**/
-            url: '@Url.Action("GetOrganizationType", "Application")',
-            /**/
-            dataType: "json",
-            data: { applicationType: applicationTypeId },
-            success: function (data) {
-                var appendData;
-                $("#organizationType").html("");
-                for (var i = 0; i < data.OrganizationType.length; i++) {
-                    appendData += '<option value="' + data.OrganizationType[i].DataValueField + '">' + data.OrganizationType[i].DataTextField + "</option>";
-                }
-                $("#organizationType").html(appendData);
-            }
-        });
-
-    });
-
-
     function validateMobileNumberforFirst(e) {
         var mobileNumber = $(e).val();
         var one1 = String(mobileNumber).charAt(0);
@@ -790,74 +553,49 @@
             }
         }
     }
-    $('#spnorganizationType').hide();
-    $('#organizationType').change(function () {
-        var orgtype = $('#organizationType').val();
-        $('#spnorganizationType').hide();
-        if (orgtype == -1) {
-            $('#spnorganizationType').show();
-        }
-        else {
-            $('#spnorganizationType').hide();
-        }
-    });
+    
+    function GetEmployeeDetails() {
+        var EmpId = $('#EmpId').val();
 
-    $("#personTitle").change(function () {
-        var title = $("#personTitle").val();
-        if ($("#personTitle").val() == 1) {
-            $(".ddgender").val('0')
-        }
-        else if ($("#personTitle").val() == 2) {
-            $(".ddgender").val('1')
-        }
-        else {
-            $(".ddgender").val()
-        }
-    })
-
-    $("input[name='isSchoolEduPerm']").change(function () {
-        var isap = $(this).val();
-        if (isap == 1) {
-            debugger;
-            //$('.pro_authorized_repre').show();
-            //$('.pro_new').hide();
-            $('.pviti_new_applicant_section').show();
-            //$(".div-education-permsision").show();
-            var applicationFor = $('#applicationType').val();
-            var applicationTypeText = $("#applicationType option:selected").text();
-            if (applicationTypeText == 'Pre SSC') {
-                $(".rdnTypeOfInstitute").hide();
-                $(".div-TypeofInstitute").show();
-                $('.preSSCLable').show();
-                $('.nonPreSSCLable').hide();
+        $.ajax({
+            url: window.GetEmployeeDetail,
+            type: 'POST',
+            data: JSON.stringify({ EmpId: EmpId }),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (data) {
+                    $('#FirstName').val(data.FirstName);
+                    $('#GenderTitleID').val(data.GenderTitleID);
+                    $('#GenderID').val(data.GenderID);
+                    $('#DateofBirth').val(data.DateofBirth);
+                    $('#STDCodeM').val(data.STDCodeM);
+                    $('#mobileNumber').val(data.MobileNumber);
+                $('#altrmobileNumber').val(data.AlternativeMobileNumber);
+                    $('#EmailID').val(data.EmailID);
+                    $('#Department').val(data.Department);
+            }, error: function (x, e) {
+                alert('Some error is occurred, Please try after some time.');
             }
-            else {
-                $(".div-TypeofInstitute").show();
-                $(".rdnTypeOfInstitute").show();
-                $('.nonPreSSCLable').show();
-                $('.preSSCLable').hide();
+        })
+    }
+
+    function CheckUserAvailability() {
+        var UserName = $('#UserName').val();
+
+        $.ajax({
+            url: window.GetUserNameAvailability,
+            type: 'POST',
+            data: JSON.stringify({ UserName: UserName }),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (data) {
+                alert(data);
+            }, error: function (x, e) {
+                alert('Some error is occurred, Please try after some time.');
             }
-            $('.upload-permission-letter').show();
-        }
-        else {
-            $('.pviti_new_applicant_section').hide();
-            //$(".div-education-permsision").hide();
-            $(".div-TypeofInstitute").hide();
-            alertNotification("you can not register");
-            $('.upload-permission-letter').hide();
-        }
-    });
+        })
+    }
 
-    //$("input[name='isSchoolEduPerm']").change(function () {
-    //    var isap = $(this).val();
-    //    if (isap == 1) {
-    //        //$('.pro_authorized_repre').show();
-    //        //$('.pro_new').hide();
-    //        $('.upload-permission-letter').show();
-    //    }
-    //    else {
-    //        $('.upload-permission-letter').hide();
-    //    }
-    //});
 
-        </script>
+
+</script>

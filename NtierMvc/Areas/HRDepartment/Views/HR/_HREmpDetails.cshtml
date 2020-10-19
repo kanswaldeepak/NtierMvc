@@ -19,7 +19,6 @@
                     @if (Model.EmpImage != null)
                     {
                         <img src="@Url.Content(Model.EmpImage)" alt="@Model.EmpName" class="img-responsive" style="height:100px; width:100px" />
-
                     }
                 </div>
                 <div class="col-md-3">
@@ -86,6 +85,19 @@
                                 @data_inneraction = "validationCall",
                                 @placeholder = "Employee Initial"
                             })<label class="HideValidMsg">Employee Initial is Required</label>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label class="control-label">Title <span class="required">*</span></label>
+                        @Html.DropDownListFor(m => m.GenderTitleID, new SelectList(ViewBag.GenderTitle, "DataValueField", "DataTextField"), new
+                    {
+                        id = "GenderTitleID",
+                        @class = "form-control requiredValidation",
+                        data_id = "GenderTitle",
+                        data_select = "GenderTitle",
+                        @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                    })<label class="HideValidMsg">Title is Required *</label>
                     </div>
                 </div>
                 <div class="col-md-3">
