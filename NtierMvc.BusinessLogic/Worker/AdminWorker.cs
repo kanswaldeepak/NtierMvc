@@ -57,7 +57,7 @@ namespace NtierMvc.BusinessLogic.Worker
                         RoleAssignEntity re = new RoleAssignEntity();
                         re.ID = dr.IsNull("Id") ? 0 : Convert.ToInt32(dr["Id"]);
                         re.SNo = dr.IsNull("SNo") ? 0 : Convert.ToInt32(dr["SNo"]);
-                        re.EmpId = dr.IsNull("EmpId") ? 0 : Convert.ToInt32(dr["EmpId"]);
+                        re.EmpId = dr.IsNull("EmpId") ? "" : Convert.ToString(dr["EmpId"]);
                         re.EmpCode = dr.IsNull("EmpCode") ? "" : Convert.ToString(dr["EmpCode"]);
                         re.EmpName = dr.IsNull("EmpName") ? "" : Convert.ToString(dr["EmpName"]);
                         re.DeptName = dr.IsNull("DeptName") ? "" : Convert.ToString(dr["DeptName"]);

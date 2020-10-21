@@ -70,9 +70,11 @@ function getRoleAssignedURL() {
 
 function SaveRoleAssignDetails() {
     var frm = $("#formSaveRoleAuthentication");
-    var role = $('#AMRole').val();
+    var role = $('#AMDept').val();
+    var EmpId = $('#AMEmployee').val();
     var mainMenu = $('#AMMainMenu').val();
     var subMenu = $('#AMSubMenu').val();
+    var readWrite = $('#AMReadWrite').val();
 
     ShowLoadder();
     var Status = false;
@@ -84,7 +86,7 @@ function SaveRoleAssignDetails() {
     }
     else {
         $.ajax({
-            url: window.SaveRoleAssigns, type: 'POST', data: { Role: role, MainMenu: mainMenu, SubMenu: subMenu }, ContentType: undefined,
+            url: window.SaveRoleAssigns, type: 'POST', data: { Role: role, EmpId: EmpId, MainMenu: mainMenu, SubMenu: subMenu, ReadWrite: readWrite }, ContentType: undefined,
             success:
                 function (res) {
                     if (res == 'Inserted Successfully!') {

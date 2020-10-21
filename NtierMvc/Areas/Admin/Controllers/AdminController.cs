@@ -33,6 +33,7 @@ namespace NtierMvc.Areas.Admin.Controllers
         public ActionResult AdminMaster()
         {
             ViewBag.ListDeptName = model.GetMasterTableStringList("Master.Department", "Id", "DeptName", "", "", GeneralConstants.ListTypeD);
+            ViewBag.ListEmployee = "";
             ViewBag.ListMainMenu = model.GetMasterTableStringList("MenuTable", "Id", "UrlName", "", "", GeneralConstants.ListTypeD);
             ViewBag.ListSubMenu = model.GetMasterTableStringList("SubMenuTable", "Id", "Name", "", "", GeneralConstants.ListTypeD);
             ViewBag.ListReadWrite = model.GetDropDownList("Master.Taxonomy",GeneralConstants.ListTypeD,"DropDownId", "DropDownValue", "ReadWrite", "Property");
@@ -78,10 +79,11 @@ namespace NtierMvc.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public ActionResult SaveRoleAssigns(string Role, string MainMenu, string SubMenu, string ReadWrite)
+        public ActionResult SaveRoleAssigns(string Role, string EmpId, string MainMenu, string SubMenu, string ReadWrite)
         {
             RoleAssignEntity raEntity = new RoleAssignEntity();
             raEntity.DeptName = Role;
+            raEntity.EmpId = EmpId;
             raEntity.MainMenu = MainMenu;
             raEntity.SubMenu = SubMenu;
             raEntity.ReadWrite = ReadWrite;
@@ -105,6 +107,22 @@ namespace NtierMvc.Areas.Admin.Controllers
             try
             {
                 List<DropDownEntity> ddl = objManager.GetSubMenus(mainMenu);
+                return new JsonResult { Data = ddl, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+            }
+            catch (Exception ex)
+            {
+                return new JsonResult { Data = ex, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                throw;
+            }
+
+        }
+
+        public JsonResult GetEmployeeForDept(string deptId)
+        {
+            try
+            {
+                //List<DropDownEntity> ddl = objManager.GetSubMenus(EmpId);
+                var ddl = model.GetDropDownList("Master.Employee", GeneralConstants.ListTypeD, "ID", "EMPNAME", deptId, "Dept");
                 return new JsonResult { Data = ddl, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
             }
             catch (Exception ex)

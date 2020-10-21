@@ -22,7 +22,10 @@
                             <thead>
                                 <tr>
                                     <td>
-                                        Role
+                                        Department
+                                    </td>
+                                    <td>
+                                        Employee
                                     </td>
                                     <td>
                                         Main Menu
@@ -34,18 +37,28 @@
                                         Read/Write
                                     </td>
                                     <td>
-
                                     </td>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
                                     <td>
-                                        @Html.DropDownList("Role", new SelectList(@ViewBag.ListDeptName, "DataStringValueField", "DataTextField", "Select"),
+                                        @Html.DropDownList("Dept", new SelectList(@ViewBag.ListDeptName, "DataStringValueField", "DataTextField", "Select"),
                                         new
                                         {
                                             @class = "form-control requiredValidation clearField",
-                                            @id = "AMRole",
+                                            @id = "AMDept",
+                                            @data_inneraction = "validationCall",
+                                            @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                                            @onchange = "GetEmployeeForDepts()"
+                                        })
+                                    </td>
+                                    <td>
+                                        @Html.DropDownList("Employee", new SelectList(@ViewBag.ListEmployee, "DataStringValueField", "DataTextField", "Select"),
+                                        new
+                                        {
+                                            @class = "form-control requiredValidation clearField",
+                                            @id = "AMEmployee",
                                             @data_inneraction = "validationCall",
                                             @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
                                         })
@@ -204,6 +217,7 @@
         window.GetRoleURLDetails = '@Url.Action("GetRoleURLDetails","Admin")';
         window.SaveRoleAssigns = '@Url.Action("SaveRoleAssigns", "Admin")';
         window.GetSubMenus = '@Url.Action("GetSubMenus", "Admin")';
+        window.GetEmployeeForDept = '@Url.Action("GetEmployeeForDept", "Admin")';
         //$('.redBG').removeClass('redBG').addClass('black');
 
         getRoleAssignedURL();
@@ -269,7 +283,28 @@
         }
     );
 
+    function GetEmployeeForDepts() {
+        var DeptId = $('#AMDept').val();
 
+        $.ajax({
+            url: window.GetEmployeeForDept,
+            dataType: 'json',
+            type: 'GET',
+            contentType: 'application/json; charset=utf-8',
+            data: { deptId: DeptId },
+            success: function (res) {
+                if (res.length > 0) {
+                    ShowLoadder();
+                    $('#AMEmployee').empty();
+                    $.each(res, function (i, item) {
+                        $("#AMEmployee").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
+                        $("#AMEmployee").trigger("chosen:updated");
+                    })
+                    HideLoadder();
+                }
+            }
+        })
+    }
 
 </script>
 

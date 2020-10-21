@@ -11,7 +11,7 @@ namespace NtierMvc.Model.Admin
         public string SubMenu { get; set; }
         public string ReadWrite { get; set; }
 
-        public int EmpId { get; set; }
+        public string EmpId { get; set; }
         public string EmpCode { get; set; }
         public string EmpName { get; set; }
         public string Access { get; set; }

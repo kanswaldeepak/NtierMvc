@@ -39,6 +39,7 @@ namespace NtierMvc.DataAccess.Pool
             string msgCode = "";
             var Params = new Dictionary<string, object>();
             Params.Add("@Role", objRA.DeptName);
+            Params.Add("@EmpId", objRA.EmpId);
             Params.Add("@MainMenu", objRA.MainMenu);
             Params.Add("@SubMenu", objRA.SubMenu);
             Params.Add("@ReadWrite", objRA.ReadWrite);
