@@ -69,7 +69,7 @@ function getRoleAssignedURL() {
 }
 
 function SaveRoleAssignDetails() {
-    var frm = $("#formSaveRoleAuthentication");
+ 
     var role = $('#AMDept').val();
     var EmpId = $('#AMEmployee').val();
     var mainMenu = $('#AMMainMenu').val();
@@ -101,4 +101,80 @@ function SaveRoleAssignDetails() {
             , error: function (res) { showHttpErr(res); HideLoadder(); }
         })
     }
+}
+
+function SaveAdminAssignDetails() {
+
+    var dept = $('#AADept').val();
+    var EmpId = $('#AAEmployee').val();
+
+    ShowLoadder();
+    var Status = false;
+    Status = GetFormValidationStatus("#formSaveAssignAdmin");
+
+    if (!Status) {
+        alert("Kindly Fill all mandatory fields");
+        HideLoadder();
+    }
+    else {
+        $.ajax({
+            url: window.SaveAdminAssigns, type: 'POST', data: { DeptId: dept, EmpId: EmpId }, ContentType: undefined,
+            success:
+                function (res) {
+                    if (res == 'Inserted Successfully!') {
+                        HideLoadder();
+                        alert(res);
+                    }
+                    else {
+                        HideLoadder();
+                        alert(res);
+                    }
+                }
+            , error: function (res) { HideLoadder(); showHttpErr(res);  }
+        })
+    }
+}
+
+function getAdminAssign() {
+    
+    var DeptId = $('#AADept').val();
+    var EmpId = $('#AAEmployee').val();
+
+    $("#AdminAsignedTableRoles").DataTable().destroy();
+
+    var req = {
+        "processing": true,
+        "language": {
+            processing: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span> '
+        },
+        "serverSide": true,
+        "paging": true,
+        "lengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
+        "pageLength": 5,
+        "searching": true,
+        "filter": true,
+        "ajax": {
+            "url": window.GetAdminAssigns,
+            "type": "POST",
+            "datatype": "json",
+            "data": { deptId: DeptId, empId: EmpId},
+            "dataSrc": ""
+        },
+        'order': [[1, "asc"]],
+        columns: [
+            { title: "ID", "data": "ID", "name": "ID", "autoWidth": false, "visible": false },
+            { title: "Emp Id", "data": "EmpId", "name": "EmpId", "autoWidth": false, "visible": false },
+            { title: "Emp Name", "data": "EmpName", "name": "EmpName", "autoWidth": false, "visible": true },
+            { title: "Dept Name", "data": "DeptName", "name": "DeptName", "autoWidth": true, "visible": true }
+        ],
+        "fnCreatedRow": function (nRow, aData, iDataIndex) {
+        },
+        "drawCallback": function (settings) {
+        },
+        "footerCallback": function (row, data, start, end, display) {
+
+        }
+    }
+    $("#AdminAsignedTableRoles").DataTable(req);
+    $("#AdminAsignedTableRoles tbody").show();
 }

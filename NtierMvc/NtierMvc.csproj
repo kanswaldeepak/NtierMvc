@@ -1163,6 +1163,8 @@
     <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Admin\Views\Admin\AdminMaster.cshtml" />
+    <Content Include="Areas\Admin\Views\Admin\PartialAdminDashboard.cshtml" />
+    <Content Include="Areas\Admin\Views\Admin\PartialAssignAdmin.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\CustomJS\common.js" />

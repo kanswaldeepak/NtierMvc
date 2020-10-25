@@ -36,5 +36,20 @@ namespace NtierMvc.API.Controllers.Application
             return Ok(_repository.GetSubMenus(mainMenu));
         }
 
+        [HttpPost]
+        [ResponseType(typeof(string))]
+        [Route("api/AdminDetails/SaveAdminAssigns")]
+        public IHttpActionResult SaveAdminAssigns(RoleAssignEntity viewModel)
+        {
+            return Ok(_repository.SaveAdminAssigns(viewModel));
+        }
+
+        [Route("api/AdminDetails/GetAdminAssigns")]
+        public IHttpActionResult GetAdminAssigns(string skip = null, string pageSize = null, string sortColumn = null, string sortColumnDir = null, string search = null)
+        {
+            return Ok(_repository.GetAdminAssigns(skip, pageSize, sortColumn, sortColumnDir, search));
+        }
+
+
     }
 }

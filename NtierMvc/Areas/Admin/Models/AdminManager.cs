@@ -62,5 +62,38 @@ namespace NtierMvc.Areas.Admin.Models
             return subList;
         }
 
+        public string SaveAdminAssigns(RoleAssignEntity raEntity)
+        {
+            string result = "0";
+            var baseAddress = "AdminDetails";
+            using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
+            {
+                HttpResponseMessage response = client.PostAsJsonAsync(baseAddress + "/SaveAdminAssigns", raEntity).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    var data = response.Content.ReadAsStringAsync().Result;
+                    result = JsonConvert.DeserializeObject<string>(data);
+                }
+            }
+            return result;
+        }
+
+        public List<RoleAssignEntity> GetAdminAssigns(int skip, int pageSize, string sortColumn, string sortColumnDir, string search)
+        {
+            List<RoleAssignEntity> prpList = new List<RoleAssignEntity>();
+            var baseAddress = "AdminDetails";
+            using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
+            {
+                HttpResponseMessage response = client.GetAsync(baseAddress + "/GetAdminAssigns?skip=" + skip + "&pageSize=" + pageSize + "&sortColumn=" + sortColumn + "&sortColumnDir=" + sortColumnDir + "&deptName=" + search).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    var data = response.Content.ReadAsStringAsync().Result;
+                    prpList = JsonConvert.DeserializeObject<List<RoleAssignEntity>>(data);
+                }
+            }
+            return prpList;
+        }
+
+
     }
 }

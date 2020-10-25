@@ -17,7 +17,11 @@ namespace NtierMvc.BusinessLogic.Interface
         List<RoleAssignEntity> GetRoleURLDetails(string skip = null, string pageSize = null, string sortColumn = null, string sortColumnDir = null, string search = null, string deptName = null, string mainMenu = null, string subMenu = null, string access = null);
 
         string SaveRoleAssigns(RoleAssignEntity objBill);
+        string SaveAdminAssigns(RoleAssignEntity objBill);
 
         List<DropDownEntity> GetSubMenus(string mainMenu);
+
+        List<RoleAssignEntity> GetAdminAssigns(string skip = null, string pageSize = null, string sortColumn = null, string sortColumnDir = null, string search = null);
+
     }
 }

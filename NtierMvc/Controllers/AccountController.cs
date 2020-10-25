@@ -14,6 +14,7 @@ using BotDetect.Web.Mvc;
 using NtierMvc.Models;
 using Helper = NtierMvc.Infrastructure.Helper;
 using NtierMvc.Model.Application;
+using NtierMvc.Areas.Admin.Models;
 
 namespace NtierMvc.Controllers
 {
@@ -120,10 +121,11 @@ namespace NtierMvc.Controllers
                         Session["UserName"] = usermodel.UserName;
                         Session["UserModel"] = usermodel;
 
-                        //return RedirectToAction("Home", "Application", new { Area = "" });
+                        AdminManager objManager = new AdminManager();
+                        Session["AdminAssigns"] = objManager.GetAdminAssigns(0, 500, "", "asc", "");
 
                         var userRolesBusiness = accountMgr.GetUserRoles(model.UserName);
-                                                
+
                         UserRoleEntity userrole = new UserRoleEntity();
                         List<UserRoleEntity> lstRole = userRolesBusiness;
                         List<RolePermissionEntity> lstPermisssion = accountMgr.GetUserPermissions(usermodel.UserName);
@@ -200,7 +202,7 @@ namespace NtierMvc.Controllers
                             else
                             {
                                 //#if DEBUG
-                                 return RedirectToAction("Home", "Application");
+                                return RedirectToAction("Home", "Application");
                                 //#else
                                 //var objAgencyContext = new AgencyContext();
                                 //objAgencyContext.AppCode = usermodel.AppCode;
@@ -258,7 +260,7 @@ namespace NtierMvc.Controllers
             }
 
             BaseModel model = new BaseModel();
-            ViewBag.EmployeeList = model.GetMasterTableList("Master.Employee","Id","EmpName","0","IsApproved");
+            ViewBag.EmployeeList = model.GetMasterTableList("Master.Employee", "Id", "EmpName", "0", "IsApproved");
             ViewBag.PermissionNames = model.GetTaxonomyDropDownItems("", "Permission");
             //ViewBag.FunctionalArea = model.GetTaxonomyDropDownItems("", "Functional Area");
             ViewBag.GenderType = model.GetTaxonomyDropDownItems("", "Gender");
@@ -275,7 +277,7 @@ namespace NtierMvc.Controllers
                 HttpCookie authCookie = Request.Cookies[ConfigurationManager.AppSettings["CookieURL"].ToString()];
                 if (authCookie != null)
                 {
-                    var decryptedObject = AesCipher.Decrypt(authCookie.Value,ConfigurationManager.AppSettings["CookieEncryptionKey"]);
+                    var decryptedObject = AesCipher.Decrypt(authCookie.Value, ConfigurationManager.AppSettings["CookieEncryptionKey"]);
                     var user = JsonConvert.DeserializeObject<UserEntity>(decryptedObject);
                     SessionLoginEntity objSessionLogin = new SessionLoginEntity();
                     objSessionLogin.SessionId = user.SessionId;

@@ -9,6 +9,7 @@ using System.Net.Http.Headers;
 using System.Configuration;
 using Newtonsoft.Json;
 using NtierMvc.Model.Account;
+using NtierMvc.Model.Admin;
 
 namespace NtierMvc.Infrastructure
 {
@@ -56,7 +57,9 @@ namespace NtierMvc.Infrastructure
             var user = (UserEntity)HttpContext.Current.Session["UserModel"];
             if (user != null)
             {
-                if (user.DeptName == "Administration")
+                var list = HttpContext.Current.Session["AdminAssigns"] as List<RoleAssignEntity>;
+
+                if (list.Any(x => x.DeptName == user.DeptName))
                     return true;
                 else if (!string.IsNullOrEmpty(area))
                     return user.Permissions.Any(x => x.PermissionRoute == $"{area}-{controller}-{master}-{action}");

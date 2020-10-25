@@ -6,6 +6,7 @@ namespace NtierMvc.Model.Admin
     {
         public int ID { get; set; }
         public int SNo { get; set; }
+        public string DeptId { get; set; }
         public string DeptName { get; set; }
         public string MainMenu { get; set; }
         public string SubMenu { get; set; }

@@ -1,0 +1,116 @@
+﻿
+@{
+    ViewBag.Title = "PartialAssignAdmin";
+}
+
+<form id="formSaveAssignAdmin" style="width:100%">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-6">
+
+                <table class="table table-bordered tableRadio" id="tableRM">
+                    <thead>
+                        <tr>
+                            <td>
+                                Department
+                            </td>
+                            <td>
+                                Employee
+                            </td>
+                            <td>
+                            </td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                @Html.DropDownList("Dept", new SelectList(@ViewBag.ListDeptName, "DataStringValueField", "DataTextField", "Select"),
+                                new
+                                {
+                                    @class = "form-control requiredValidation clearField",
+                                    @id = "AADept",
+                                    @data_inneraction = "validationCall",
+                                    @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                                    @onchange = "GetEmployeeForDepts()"
+                                })
+                            </td>
+                            <td>
+                                @Html.DropDownList("Employee", new SelectList(@ViewBag.ListEmployee, "DataStringValueField", "DataTextField", "Select"),
+                                new
+                                {
+                                    @class = "form-control requiredValidation clearField",
+                                    @id = "AAEmployee",
+                                    @data_inneraction = "validationCall",
+                                    @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                                })
+                            </td>
+                            <td>
+                                <button id="SaveAdminAssign" type="button" class="btn btn-success btn-sm" onclick="SaveAdminAssignDetails()">Save</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="row mt-1">
+            <div class="col-md-12">
+                <table class="table table-bordered mt-5" id="AdminAsignedTableRoles">
+                    <thead>
+                        <tr>
+                            <td>
+                                ID
+                            </td>                            
+                            <td>
+                                Emp Id
+                            </td>
+                            <td>
+                                Emp Name
+                            </td>
+                            <td>
+                                Dept Name
+                            </td>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</form>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        window.SaveAdminAssigns = '@Url.Action("SaveAdminAssigns", "Admin")';
+        window.GetEmployeeForDept = '@Url.Action("GetEmployeeForDept", "Admin")';
+        window.GetAdminAssigns = '@Url.Action("GetAdminAssigns", "Admin")';
+
+        getAdminAssign();
+    });
+
+    function GetEmployeeForDepts() {
+        var DeptId = $('#AADept').val();
+
+        $.ajax({
+            url: window.GetEmployeeForDept,
+            dataType: 'json',
+            type: 'GET',
+            contentType: 'application/json; charset=utf-8',
+            data: { deptId: DeptId },
+            success: function (res) {
+                if (res.length > 0) {
+                    ShowLoadder();
+                    $('#AAEmployee').empty();
+                    $.each(res, function (i, item) {
+                        $("#AAEmployee").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
+                        $("#AAEmployee").trigger("chosen:updated");
+                    })
+                    HideLoadder();
+                }
+            }
+        })
+    }
+
+</script>

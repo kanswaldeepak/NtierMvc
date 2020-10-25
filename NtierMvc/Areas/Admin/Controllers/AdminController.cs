@@ -121,7 +121,6 @@ namespace NtierMvc.Areas.Admin.Controllers
         {
             try
             {
-                //List<DropDownEntity> ddl = objManager.GetSubMenus(EmpId);
                 var ddl = model.GetDropDownList("Master.Employee", GeneralConstants.ListTypeD, "ID", "EMPNAME", deptId, "Dept");
                 return new JsonResult { Data = ddl, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
             }
@@ -131,6 +130,63 @@ namespace NtierMvc.Areas.Admin.Controllers
                 throw;
             }
 
+        }
+
+        [HttpGet]
+        public ActionResult PartialAssignAdmin()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult SaveAdminAssigns(string DeptId, string EmpId)
+        {
+            RoleAssignEntity raEntity = new RoleAssignEntity();
+            raEntity.DeptId = DeptId;
+            raEntity.EmpId = EmpId;
+            string result = objManager.SaveAdminAssigns(raEntity);
+
+            string data = string.Empty;
+            if (!string.IsNullOrEmpty(result) && (result == GeneralConstants.Inserted || result == GeneralConstants.Updated))
+            {
+                data = GeneralConstants.SavedSuccess;
+            }
+            else
+            {
+                data = GeneralConstants.NotSavedError + ". Reason: " + result;
+            }
+
+            return new JsonResult { Data = data, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+        }
+
+        [HttpPost]
+        public ActionResult GetAdminAssigns()
+        {
+            var draw = Request.Form.GetValues("draw").FirstOrDefault();
+            var start = Request.Form.GetValues("start").FirstOrDefault();
+            var length = Request.Form.GetValues("length").FirstOrDefault();
+            var totalRecords = 0;
+            var objList = new List<RoleAssignEntity>();
+            try
+            {
+                var sortColumn = Request.Form.GetValues("columns[" + Request.Form["order[0][column]"].FirstOrDefault() + "][name]").FirstOrDefault();
+                var sortColumnDir = Request.Form.GetValues("order[0][dir]").FirstOrDefault();
+                var pageSize = length != null ? Convert.ToInt32(length) : 0;
+                var skip = start != null ? Convert.ToInt32(start) : 0;
+                var search = Request.Form.GetValues("search[value]").FirstOrDefault();
+
+
+                objList = objManager.GetAdminAssigns(skip, pageSize, sortColumn, sortColumnDir, search);
+                totalRecords = objList[0].totalcount;
+                var v = (from a in objList select a);
+                objList = v.ToList();
+            }
+            catch (Exception ex)
+            {
+                //ex.Message;
+            }
+
+            return new JsonResult { Data = objList, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 
     }

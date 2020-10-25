@@ -1,0 +1,299 @@
+﻿
+@{
+    ViewBag.Title = "PartialAdminDashboard";
+}
+
+<div ng-controller="AdminController" class="row">
+    <form id="formSaveRoleAuthentication" style="width:100%">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-12">
+
+                    <table class="table table-bordered tableRadio" id="tableAdminRoles">
+                        <thead>
+                            <tr>
+                                <td>
+                                    Department
+                                </td>
+                                <td>
+                                    Employee
+                                </td>
+                                <td>
+                                    Main Menu
+                                </td>
+                                <td>
+                                    Sub Menu
+                                </td>
+                                <td>
+                                    Read/Write
+                                </td>
+                                <td>
+                                </td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    @Html.DropDownList("Dept", new SelectList(@ViewBag.ListDeptName, "DataStringValueField", "DataTextField", "Select"),
+                                    new
+                                    {
+                                        @class = "form-control requiredValidation clearField",
+                                        @id = "AMDept",
+                                        @data_inneraction = "validationCall",
+                                        @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                                        @onchange = "GetEmployeeForDepts()"
+                                    })
+                                </td>
+                                <td>
+                                    @Html.DropDownList("Employee", new SelectList(@ViewBag.ListEmployee, "DataStringValueField", "DataTextField", "Select"),
+                                    new
+                                    {
+                                        @class = "form-control requiredValidation clearField",
+                                        @id = "AMEmployee",
+                                        @data_inneraction = "validationCall",
+                                        @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                                    })
+                                </td>
+                                <td>
+                                    @Html.DropDownList("MainMenu", new SelectList(@ViewBag.ListMainMenu, "DataStringValueField", "DataTextField", "Select"),
+                                    new
+                                    {
+                                        @class = "form-control requiredValidation clearField",
+                                        @id = "AMMainMenu",
+                                        @data_inneraction = "validationCall",
+                                        @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                                    })
+                                </td>
+                                <td>
+                                    @Html.DropDownList("SubMenu", new SelectList(@ViewBag.ListSubMenu, "DataStringValueField", "DataTextField", "Select"),
+                                    new
+                                    {
+                                        @class = "form-control requiredValidation clearField",
+                                        @id = "AMSubMenu",
+                                        @data_inneraction = "validationCall",
+                                        @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                                    })
+                                </td>
+                                <td>
+                                    @Html.DropDownList("ReadWrite", new SelectList(@ViewBag.ListReadWrite, "DataStringValueField", "DataTextField", "Select"),
+                                    new
+                                    {
+                                        @class = "form-control requiredValidation clearField",
+                                        @id = "AMReadWrite",
+                                        @data_inneraction = "validationCall",
+                                        @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                                    })
+                                </td>
+                                <td>
+                                    <button id="SaveRoleAssign" type="button" class="btn btn-success btn-sm" onclick="SaveRoleAssignDetails()">Save</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            @*<div class="row">
+                    <div class="col-md-12 pt-4 text-center">
+
+                    </div>
+                </div>*@
+
+            <div class="row mt-1">
+                <div class="col-md-12">
+                    <table class="mt-4" style="margin: 0px auto;">
+                        <tr>
+                            <td>
+                                <label>Dept Name</label>
+                            </td>
+                            <td>
+                                <label>Main Menu</label>
+                            </td>
+                            <td>
+                                <label>Sub Menu</label>
+                            </td>
+                            <td>
+                                <label>Access</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                @Html.DropDownList("DeptName", new SelectList(@ViewBag.ListDeptName, "DataStringValueField", "DataTextField", "Select"),
+                                           new
+                                           {
+                                               @class = "form-control",
+                                               @id = "AMDeptNameSearch"
+                                           })
+                            </td>
+                            <td>
+                                @Html.DropDownList("MainMenu", new SelectList(@ViewBag.ListMainMenu, "DataStringValueField", "DataTextField", "Select"),
+                                           new
+                                           {
+                                               @class = "form-control",
+                                               @id = "AMMainMenuSearch",
+                                               @multiple = "true"
+                                           })
+                            </td>
+                            <td>
+                                @Html.DropDownList("SubMenu", new SelectList(@ViewBag.ListSubMenu, "DataStringValueField", "DataTextField", "Select"),
+                                           new
+                                           {
+                                               @class = "form-control",
+                                               @id = "AMSubMenuSearch",
+                                               @multiple = "true"
+                                           })
+                            </td>
+                            <td>
+                                @Html.DropDownList("Access", new SelectList(@ViewBag.ListReadWrite, "DataStringValueField", "DataTextField", "Select"),
+                                           new
+                                           {
+                                               @class = "form-control",
+                                               @id = "AMAccessSearch"
+                                           })
+                            </td>
+                            <td>
+                                <button class="btn btn-link" type="button" id="btnSearch" onclick="getRoleAssignedURL()">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                                <button class="btn btn-sm btn-info" type="button" id="btnClearSearchAM">Clear</button>
+                            </td>
+                        </tr>
+                    </table>
+                    <table class="table table-bordered mt-5" id="RoleURLtable">
+                        <thead>
+                            <tr>
+                                <td>
+                                    ID
+                                </td>
+                                <td>
+                                    SNo
+                                </td>
+                                <td>
+                                    Emp Id
+                                </td>
+                                <td>
+                                    Emp Code
+                                </td>
+                                <td>
+                                    Emp Name
+                                </td>
+                                <td>
+                                    Dept Name
+                                </td>
+                                <td>
+                                    Main Menu
+                                </td>
+                                <td>
+                                    Sub Menu
+                                </td>
+                                <td>
+                                    Access
+                                </td>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </form>
+</div>
+
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        window.GetRoleURLDetails = '@Url.Action("GetRoleURLDetails","Admin")';
+        window.SaveRoleAssigns = '@Url.Action("SaveRoleAssigns", "Admin")';
+        window.GetSubMenus = '@Url.Action("GetSubMenus", "Admin")';
+        window.GetEmployeeForDept = '@Url.Action("GetEmployeeForDept", "Admin")';
+
+        getRoleAssignedURL();
+    });
+
+    $('#AMDeptNameSearch').chosen({
+        width: "210px",
+        placeholder_text_single: "Select Dept Name",
+        placeholder_text_multiple: "Select Dept Name"
+    });
+
+    $('#AMMainMenuSearch').chosen({
+        width: "210px",
+        placeholder_text_single: "Select Main Menu",
+        placeholder_text_multiple: "Select Main Menu"
+    });
+
+    $('#AMSubMenuSearch').chosen({
+        width: "210px",
+        placeholder_text_single: "Select Sub Menu",
+        placeholder_text_multiple: "Select Sub Menu"
+    });
+
+    $('#AMAccessSearch').chosen({
+        width: "210px",
+        placeholder_text_single: "Select Access",
+        placeholder_text_multiple: "Select Sub Menu"
+    });
+
+
+    $("#AMMainMenuSearch").chosen().change(
+        function AMGetSubMenu() {
+
+            var MainMenu = '';
+            var x = document.getElementById("AMMainMenuSearch");
+            for (var i = 0; i < x.options.length; i++) {
+                if (x.options[i].selected == true) {
+                    //alert(x.options[i].value);
+                    MainMenu = MainMenu + x.options[i].value + ',';
+                }
+            }
+            MainMenu = MainMenu.substring(0, MainMenu.length - 1);
+
+            return $.ajax({
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                type: 'GET',
+                url: window.GetSubMenus,
+                data: { mainMenu: MainMenu },
+                success: function (res) {
+                    if (res.length > 0) {
+                        $("#AMSubMenuSearch").empty();
+                        $.each(res, function (i, item) {
+                            $("#AMSubMenuSearch").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
+                            $("#AMSubMenuSearch").trigger("chosen:updated");
+                        })
+                    }
+                },
+                error: function () {
+                    alert(result)
+                }
+            });
+        }
+    );
+
+    function GetEmployeeForDepts() {
+        var DeptId = $('#AMDept').val();
+
+        $.ajax({
+            url: window.GetEmployeeForDept,
+            dataType: 'json',
+            type: 'GET',
+            contentType: 'application/json; charset=utf-8',
+            data: { deptId: DeptId },
+            success: function (res) {
+                if (res.length > 0) {
+                    ShowLoadder();
+                    $('#AMEmployee').empty();
+                    $.each(res, function (i, item) {
+                        $("#AMEmployee").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
+                        $("#AMEmployee").trigger("chosen:updated");
+                    })
+                    HideLoadder();
+                }
+            }
+        })
+    }
+
+</script>
+

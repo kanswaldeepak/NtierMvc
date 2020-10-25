@@ -117,6 +117,53 @@ namespace NtierMvc.BusinessLogic.Worker
             return entity;
         }
 
+        public string SaveAdminAssigns(RoleAssignEntity objRA)
+        {
+            string result = string.Empty;
+            try
+            {
+                result = _repository.SaveAdminAssigns(objRA);
+            }
+            catch (Exception Ex)
+            {
+                NtierMvc.DataAccess.ExceptionLogging.SendExcepToDB(Ex);
+            }
+            return result;
+        }
+
+        public List<RoleAssignEntity> GetAdminAssigns(string skip = null, string pageSize = null, string sortColumn = null, string sortColumnDir = null, string search = null)
+        {
+            var entity = new List<RoleAssignEntity>();
+            try
+            {
+                var dt = _repository.GetAdminAssigns(skip, pageSize, sortColumn, sortColumnDir, search);
+
+                if (dt != null && dt.Rows.Count > 0)
+                {
+                    foreach (DataRow dr in dt.Rows)
+                    {
+                        RoleAssignEntity re = new RoleAssignEntity();
+                        re.ID = dr.IsNull("Id") ? 0 : Convert.ToInt32(dr["Id"]);
+                        re.SNo = dr.IsNull("SNo") ? 0 : Convert.ToInt32(dr["SNo"]);
+                        re.EmpId = dr.IsNull("EmpId") ? "" : Convert.ToString(dr["EmpId"]);
+                        re.EmpCode = dr.IsNull("EmpCode") ? "" : Convert.ToString(dr["EmpCode"]);
+                        re.EmpName = dr.IsNull("EmpName") ? "" : Convert.ToString(dr["EmpName"]);
+                        re.DeptName = dr.IsNull("DeptName") ? "" : Convert.ToString(dr["DeptName"]);
+
+                        re.totalcount = dr.IsNull("totalcount") ? 0 : Convert.ToInt32(dr["totalcount"]);
+                        entity.Add(re);
+                    }
+                }
+            }
+            catch (Exception Ex)
+            {
+                NtierMvc.DataAccess.ExceptionLogging.SendExcepToDB(Ex);
+            }
+            return entity;
+        }
+
+
+
 
     }
 }

@@ -58,6 +58,31 @@ namespace NtierMvc.DataAccess.Pool
             return _dbAccess.GetDataTable(spName, prams);
         }
 
+        public string SaveAdminAssigns(RoleAssignEntity objRA)
+        {
+            string msgCode = "";
+            var Params = new Dictionary<string, object>();
+            Params.Add("@DeptId", objRA.DeptId);
+            Params.Add("@EmpId", objRA.EmpId);
+
+            var SPName = ConfigurationManager.AppSettings["SaveAdminAssigns"];
+            _dbAccess.ExecuteNonQuery(SPName, Params, "@o_MsgCode", out msgCode);
+
+            return msgCode;
+        }
+
+        public DataTable GetAdminAssigns(string skip = null, string pageSize = null, string sortColumn = null, string sortColumnDir = null, string search = null)
+        {
+            var prams = new Dictionary<string, object>();
+            prams.Add("@skip", skip);
+            prams.Add("@pageSize", pageSize);
+            prams.Add("@sortColumn", sortColumn);
+            prams.Add("@sortColumnDir", sortColumnDir);
+            prams.Add("@search", search);
+            string spName = ConfigurationManager.AppSettings["GetAdminAssigns"];
+            return _dbAccess.GetDataTable(spName, prams);
+        }
+
 
     }
 }
