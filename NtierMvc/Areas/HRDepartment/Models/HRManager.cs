@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using NtierMvc.Common;
 using NtierMvc.Infrastructure;
+using NtierMvc.Model;
 using NtierMvc.Model.HR;
 using System;
 using System.Collections.Generic;
@@ -193,5 +194,23 @@ namespace NtierMvc.Areas.HRDepartment.Models
             }
             return lstModel;
         }
+
+        public string SaveExperienceDetailsList(BulkUploadEntity objBU)
+        {
+            string result = "0";
+            var baseAddress = "HRDetails";
+            using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
+            {
+                HttpResponseMessage response = client.PostAsJsonAsync(baseAddress + "/SaveExperienceDetailsList", objBU).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    var data = response.Content.ReadAsStringAsync().Result;
+                    result = JsonConvert.DeserializeObject<string>(data);
+                }
+            }
+            return result;
+        }
+
+
     }
 }

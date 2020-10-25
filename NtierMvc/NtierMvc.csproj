@@ -266,6 +266,7 @@
     <Content Include="Areas\Admin\Scripts\Admin.js" />
     <Content Include="Areas\DesignEng\Scripts\BOMDetails.js" />
     <Content Include="Areas\DesignEng\Scripts\PRP.js" />
+    <Content Include="Areas\HRDepartment\Scripts\HREmpDetails.js" />
     <Content Include="Areas\MRM\Scripts\MRMBillMonitoring.js" />
     <Content Include="Areas\MRM\Scripts\PODetailPopUp.js" />
     <Content Include="Areas\MRM\Scripts\PRDetailPopUp.js" />

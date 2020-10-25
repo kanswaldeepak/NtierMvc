@@ -366,5 +366,20 @@ namespace NtierMvc.BusinessLogic.Worker
             }
         }
 
+        public string SaveExperienceDetailsList(BulkUploadEntity entity)
+        {
+            string result = string.Empty;
+            try
+            {
+                result = _repository.SaveExperienceDetailsList(entity);
+            }
+            catch (Exception Ex)
+            {
+                NtierMvc.DataAccess.ExceptionLogging.SendExcepToDB(Ex);
+            }
+            return result;
+        }
+
+
     }
 }

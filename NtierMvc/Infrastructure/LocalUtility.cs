@@ -74,7 +74,9 @@ namespace NtierMvc.Infrastructure
             var user = (UserEntity)HttpContext.Current.Session["UserModel"];
             if (user != null)
             {
-                if (!string.IsNullOrEmpty(area) && user.Permissions.Any(x => x.PermissionRoute == $"{area}-{controller}-{master}-{action}"))
+                if (user.DeptName == "Administration")
+                    return "Write";
+                else if (!string.IsNullOrEmpty(area) && user.Permissions.Any(x => x.PermissionRoute == $"{area}-{controller}-{master}-{action}"))
                 {
                     var res = (from a in user.Permissions
                                where a.PermissionRoute == $"{area}-{controller}-{master}-{action}"

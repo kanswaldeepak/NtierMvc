@@ -35,19 +35,19 @@
                         <label class="HideValidMsg">Employee Type is Required</label>
                     </div>
                 </div>
-                <div class="col-md-3">
-                    <div class="form-group">
-                        <label class="control-label">Unit<span class="required">*</span></label>
-                        @Html.TextBoxFor(m => m.Unit,
-                            new
-                            {
-                                @class = "form-control requiredValidation",
-                                @id = "Unit",
-                                @data_inneraction = "validationCall",
-                                @placeholder = "Enter Unit"
-                            })<label class="HideValidMsg">Unit is Required</label>
-                    </div>
+                @*<div class="col-md-3" hidden>
+                <div class="form-group">
+                    <label class="control-label">Unit<span class="required">*</span></label>
+                    @Html.TextBoxFor(m => m.Unit,
+                        new
+                        {
+                            @class = "form-control requiredValidation",
+                            @id = "Unit",
+                            @data_inneraction = "validationCall",
+                            @placeholder = "Enter Unit"
+                        })<label class="HideValidMsg">Unit is Required</label>
                 </div>
+            </div>*@
                 <div class="col-md-3">
                     <div class="form-group">
                         <label class="control-label">Department<span class="required">*</span></label>
@@ -61,19 +61,19 @@
                         })<label class="HideValidMsg">Department is Required</label>
                     </div>
                 </div>
-                <div class="col-md-3">
-                    <div class="form-group">
-                        <label class="control-label">ID Card<span class="required">*</span></label>
-                        @Html.TextBoxFor(m => m.IdCard,
-                            new
-                            {
-                                @class = "form-control requiredValidation",
-                                @id = "IdCard",
-                                @data_inneraction = "validationCall",
-                                @placeholder = "ID Card"
-                            })<label class="HideValidMsg">ID Card is Required</label>
-                    </div>
+                @*<div class="col-md-3">
+                <div class="form-group">
+                    <label class="control-label">ID Card<span class="required">*</span></label>
+                    @Html.TextBoxFor(m => m.IdCard,
+                        new
+                        {
+                            @class = "form-control requiredValidation",
+                            @id = "IdCard",
+                            @data_inneraction = "validationCall",
+                            @placeholder = "ID Card"
+                        })<label class="HideValidMsg">ID Card is Required</label>
                 </div>
+            </div>*@
                 <div class="col-md-3">
                     <div class="form-group">
                         <label class="control-label">Employee Initial<span class="required">*</span></label>
@@ -90,14 +90,13 @@
                 <div class="col-md-3">
                     <div class="form-group">
                         <label class="control-label">Title <span class="required">*</span></label>
-                        @Html.DropDownListFor(m => m.GenderTitleID, new SelectList(ViewBag.GenderTitle, "DataValueField", "DataTextField"), new
+                        @Html.DropDownListFor(m => m.GenderTitleID, new SelectList(ViewBag.GenderTitleList, "DataStringValueField", "DataTextField"), new
                     {
                         id = "GenderTitleID",
                         @class = "form-control requiredValidation",
                         data_id = "GenderTitle",
-                        data_select = "GenderTitle",
-                        @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
-                    })<label class="HideValidMsg">Title is Required *</label>
+                        data_select = "GenderTitle"
+                    })<label class="HideValidMsg">Title is Required</label>
                     </div>
                 </div>
                 <div class="col-md-3">
@@ -260,23 +259,23 @@
                     </div>
                 </div>
                 @*<div class="col-md-3">
-            <div class="form-group">
-                <label class="control-label">COUNTRY <span class="required">*</span></label>
-                <div class="input-group date">
-                    @Html.DropDownListFor(m => m.Country, new SelectList(@ViewBag.ListCountry, "DataValueField", "DataTextField", Model.Country),
-                new
-                {
-                    @class = "form-control requiredValidation",
-                    @id = "Country",
-                    @data_inneraction = "validationCall",
-                    @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
-                    ng_model="Country",
-                    ng_change = "GetState(Country)"
-                })
-                    <span class="HideValidMsg">Please Enter Valid Country</span>
+                <div class="form-group">
+                    <label class="control-label">COUNTRY <span class="required">*</span></label>
+                    <div class="input-group date">
+                        @Html.DropDownListFor(m => m.Country, new SelectList(@ViewBag.ListCountry, "DataValueField", "DataTextField", Model.Country),
+                    new
+                    {
+                        @class = "form-control requiredValidation",
+                        @id = "Country",
+                        @data_inneraction = "validationCall",
+                        @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                        ng_model="Country",
+                        ng_change = "GetState(Country)"
+                    })
+                        <span class="HideValidMsg">Please Enter Valid Country</span>
+                    </div>
                 </div>
-            </div>
-        </div>*@
+            </div>*@
                 <div class="col-md-3">
                     <div class="form-group">
                         <label class="control-label">STATE<span class="required">*</span></label>
@@ -288,8 +287,8 @@
                        @placeholder = "State"
                    })
                         @*<select id="State" name="State" class="form-control requiredValidation ng-pristine ng-untouched ng-valid ng-empty" onfocusout="return ValidateRequiredFieldsOnFocusOut(this)">
-                    <option data-ng-repeat="st in ListState" value="{{st.Id}}">{{st.State}}</option>
-                </select>*@
+                        <option data-ng-repeat="st in ListState" value="{{st.Id}}">{{st.State}}</option>
+                    </select>*@
                     </div>
                 </div>
                 <div class="col-md-3">
@@ -533,7 +532,7 @@
             </div>
             <div class="row">
                 <hr style="width:100%" />
-                    <h4 class="control-label" style="margin-left:10px; font-size: 20px">Academical Details</h4>
+                <h4 class="control-label" style="margin-left:10px; font-size: 20px">Academical Details</h4>
                 <hr style="width:100%" />
             </div>
             <div class="row">
@@ -600,65 +599,121 @@
                            @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
                        })<label class="HideValidMsg">Professional Qualification is Required</label>
                             </th>
-                        </tr>                        
+                        </tr>
                     </table>
                 </div>
                 @*<div class="col-md-3">
-            <div class="form-group">
-                <label class="control-label">Technical Qualification<span class="required">*</span></label>
-                @Html.TextBoxFor(m => m.TechQual, new
-           {
-               @class = "form-control",
-               @id = "TechQual",
-               @data_inneraction = "validationCall",
-               @placeholder = "Technical Qualification",
-               @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
-           })<label class="HideValidMsg">Technical Qualification is Required</label>
+                <div class="form-group">
+                    <label class="control-label">Technical Qualification<span class="required">*</span></label>
+                    @Html.TextBoxFor(m => m.TechQual, new
+               {
+                   @class = "form-control",
+                   @id = "TechQual",
+                   @data_inneraction = "validationCall",
+                   @placeholder = "Technical Qualification",
+                   @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+               })<label class="HideValidMsg">Technical Qualification is Required</label>
+                </div>
             </div>
-        </div>
-        <div class="col-md-3">
-            <div class="form-group">
-                <label class="control-label">Education Degree<span class="required">*</span></label>
-                @Html.TextBoxFor(m => m.EduDeg, new
-           {
-               @class = "form-control requiredValidation",
-               @id = "EduDeg",
-               @data_inneraction = "validationCall",
-               @placeholder = "Education Degree",
-               //@style = "text-transform:uppercase",
-               @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
-           })<label class="HideValidMsg">Emergency Contact No is Required</label>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label class="control-label">Education Degree<span class="required">*</span></label>
+                    @Html.TextBoxFor(m => m.EduDeg, new
+               {
+                   @class = "form-control requiredValidation",
+                   @id = "EduDeg",
+                   @data_inneraction = "validationCall",
+                   @placeholder = "Education Degree",
+                   //@style = "text-transform:uppercase",
+                   @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+               })<label class="HideValidMsg">Emergency Contact No is Required</label>
+                </div>
             </div>
-        </div>
-        <div class="col-md-3">
-            <div class="form-group">
-                <label class="control-label">Post Graduation<span class="required">*</span></label>
-                @Html.TextBoxFor(m => m.EduPG, new
-           {
-               @class = "form-control",
-               @id = "EduPG",
-               @data_inneraction = "validationCall",
-               @placeholder = "Education Post Graduation",
-               //@style = "text-transform:uppercase",
-               @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
-           })<label class="HideValidMsg">Education Post Graduation is Required</label>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label class="control-label">Post Graduation<span class="required">*</span></label>
+                    @Html.TextBoxFor(m => m.EduPG, new
+               {
+                   @class = "form-control",
+                   @id = "EduPG",
+                   @data_inneraction = "validationCall",
+                   @placeholder = "Education Post Graduation",
+                   //@style = "text-transform:uppercase",
+                   @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+               })<label class="HideValidMsg">Education Post Graduation is Required</label>
+                </div>
             </div>
-        </div>
-        <div class="col-md-3">
-            <div class="form-group">
-                <label class="control-label">Professional Qualification<span class="required">*</span></label>
-                @Html.TextBoxFor(m => m.ProfQual, new
-           {
-               @class = "form-control requiredValidation",
-               @id = "ProfQual",
-               @data_inneraction = "validationCall",
-               @placeholder = "Professional Qualification",
-               @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
-           })<label class="HideValidMsg">Professional Qualification is Required</label>
-            </div>
-        </div>*@
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label class="control-label">Professional Qualification<span class="required">*</span></label>
+                    @Html.TextBoxFor(m => m.ProfQual, new
+               {
+                   @class = "form-control requiredValidation",
+                   @id = "ProfQual",
+                   @data_inneraction = "validationCall",
+                   @placeholder = "Professional Qualification",
+                   @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+               })<label class="HideValidMsg">Professional Qualification is Required</label>
+                </div>
+            </div>*@
 
             </div>
+            
+            <div class="row">
+                <hr style="width:100%" />
+                <h4 class="control-label" style="margin-left:10px; font-size: 20px">Experience (Present to Past)</h4>
+                <hr style="width:100%" />
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <table id="tableExp" class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <td>
+                                    SN
+                                </td>
+                                <td>
+                                    Employer
+                                </td>
+                                <td>
+                                    Designation
+                                </td>
+                                <td>
+                                    Period From
+                                </td>
+                                <td>
+                                    Period To
+                                </td>
+                                <td>
+                                    <button class="btn btn-sm btn-info" id="btnAddExperience" onclick="addNewExp(event)">Add Experience</button>
+                                </td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <label class="ExpSN">1</label>
+                                </td>
+                                <td>
+                                    <input class="form-control" name="HREmployer" placeholder="Employer" />
+                                </td>
+                                <td>
+                                    <input class="form-control" name="HRDesignation" placeholder="Designation" />
+                                </td>
+                                <td>
+                                    <input class="form-control CalenderTillTodayDate" name="HRPeriodFrom" placeholder="Period From" />
+                                </td>
+                                <td>
+                                    <input class="form-control CalenderTillTodayDate" name="HRPeriodTo" placeholder="Period To" />
+                                </td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
             <div class="row">
                 <div class="col-md-12 pt-4 text-center">
                     <button style="font-size:18px" type="button" class="btn btn-success btn-sm" id="save_results" ng-click="SaveEmployee()">Save</button>
@@ -666,6 +721,8 @@
 
                 </div>
             </div>
+
+
         </div>
     </form>
     @* } *@
@@ -676,9 +733,13 @@
         //$('.multiple-checkboxes').multiselect();
 
         window.SaveEmployee = '@Url.Action("SaveEmployeeDetails", "HR")';
+        window.SaveExperienceDetails = '@Url.Action("SaveExperienceDetails", "HR")';
         window.StateDetail = '@Url.Action("GetStateDetail", "HR")';
 
     });
+
+
+
 
     //LEASE DATE AND EXP LEASE DATE VALIDATION
     $('.CalenderDate').datepicker({
@@ -698,3 +759,4 @@
         endDate: 'today',
     });
 </script>
+

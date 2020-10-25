@@ -62,8 +62,9 @@ angular.module('App').controller("HrController", function ($scope, $http, $timeo
 
     $scope.SaveEmployee = function () {
 
+        ShowLoadder();
         var Status = false;
-        Status = GetFormValidationStatus();
+        Status = GetFormValidationStatus("#formSaveEmployeeDetail");
 
         $scope.ChechFileValid($scope.SelectedFileForUpload);
         var frm = $("#formSaveEmployeeDetail");
@@ -72,19 +73,30 @@ angular.module('App').controller("HrController", function ($scope, $http, $timeo
 
         if (!Status) {
             alert("Kindly Fill all mandatory fields");
+            HideLoadder();
         }
         else {
             $http({ url: window.SaveEmployee, method: 'POST', data: formData, headers: { 'Content-Type': undefined } }).success(
                 function (res) {
-                    if (res == 'Saved Successfully!') {
+                    if (res > 0) {
                         $scope.FetchEmployeeList();
+                        SaveExpDetails(res);
                         $("#ModalPopup").modal('hide');
                     }
-                    else {
-                        alert(res)
-                    }
+                    else
+                        alert("Not Saved! Please Contact Support.")
+
+                    HideLoadder();
+
+                    //if (res == 'Saved Successfully!') {
+
+                    //}
+                    //else {
+                    //    alert(res);
+                    //    HideLoadder();
+                    //}
                 }
-            ).error(function (res) { showHttpErr(res); });
+            ).error(function (res) { showHttpErr(res); HideLoadder(); });
         }
 
 
@@ -340,7 +352,7 @@ angular.module('App').controller("HrController", function ($scope, $http, $timeo
         var EmpId = $scope.EmpId;
         var Year = $scope.Year;
 
-        $http({ url: window.GetEmpPayrollData, method: 'POST', data: { EmpId: EmpId, Yr: Year, mnth:Month } }).success(
+        $http({ url: window.GetEmpPayrollData, method: 'POST', data: { EmpId: EmpId, Yr: Year, mnth: Month } }).success(
             function (res) {
                 //alert(res);
                 $scope.UserInitial = res.UserInitial;
@@ -415,7 +427,7 @@ angular.module('App').controller("HrController", function ($scope, $http, $timeo
     }
 
     $scope.GetEmpLeaveDetails = function (EmpId) {
-        $http({ url: window.GetEmpLeaveDetails, method: 'POST', data: { empId: EmpId }  }).success(
+        $http({ url: window.GetEmpLeaveDetails, method: 'POST', data: { empId: EmpId } }).success(
             function (res) {
                 $scope.AvailableEmpLeavesList = res.ListLeaveMgmt;
             }

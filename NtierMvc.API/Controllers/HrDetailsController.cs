@@ -5,6 +5,7 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using NtierMvc.BusinessLogic.Interface;
 using NtierMvc.BusinessLogic.Worker;
+using NtierMvc.Model;
 using NtierMvc.Model.HR;
 
 namespace NtierMvc.API.Controllers.Application
@@ -80,6 +81,14 @@ namespace NtierMvc.API.Controllers.Application
         public IHttpActionResult GetEmpLeaveList(int EmpId)
         {
             return Ok(_repository.GetEmpLeaveList(EmpId));
+        }
+
+        [HttpPost]
+        [ResponseType(typeof(string))]
+        [Route("api/HrDetails/SaveExperienceDetailsList")]
+        public IHttpActionResult SaveExperienceDetailsList(BulkUploadEntity iEntity)
+        {
+            return Ok(_repository.SaveExperienceDetailsList(iEntity));
         }
 
     }

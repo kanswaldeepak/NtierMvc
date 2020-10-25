@@ -10,6 +10,7 @@ using NtierMvc.Infrastructure;
 using NtierMvc.Model.HR;
 using NtierMvc.Areas.HRDepartment.Models;
 using NtierMvc.Controllers;
+using System.Data;
 
 namespace NtierMvc.Areas.HRDepartment.Controllers
 {
@@ -139,20 +140,19 @@ namespace NtierMvc.Areas.HRDepartment.Controllers
             if (flag)
             {
                 result = objManager.SaveEmployeeDetails(hrE);
-                if (!string.IsNullOrEmpty(result) && (result == GeneralConstants.Inserted || result == GeneralConstants.Updated))
-                {
-                    //TempData["StatusMsg"] = "Success";
-                    data = GeneralConstants.SavedSuccess;
-                }
+                if (Convert.ToInt32(result) > 0)
+                    data = result;
                 else
-                {
-                    //TempData["StatusMsg"] = "Error";
-                    //TempData["StatusMsgBody"] = result;
-                    data = GeneralConstants.NotSavedError;
-                }
+                    data = "0";
+
+                //if (!string.IsNullOrEmpty(result) && (result == GeneralConstants.Inserted || result == GeneralConstants.Updated))
+                //{
+                //    data = GeneralConstants.SavedSuccess;
+                //}
+
             }
             else
-                data = GeneralConstants.NotSavedError + Message;
+                data = "0";
 
             return new JsonResult { Data = data, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
@@ -165,6 +165,7 @@ namespace NtierMvc.Areas.HRDepartment.Controllers
             ViewBag.ListEmpType = model.GetMasterTableList("Master.EmpType", "Id", "EmpTypeName");
             ViewBag.ListCountry = model.GetMasterTableList("Master.Country", "Id", "Country");
             ViewBag.ListGender = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "Gender", "Property", GeneralConstants.ListTypeN);
+            ViewBag.GenderTitleList = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "title", "Property", GeneralConstants.ListTypeN);
             ViewBag.ListBloodGroup = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "BloodGroup", "Property", GeneralConstants.ListTypeN);
             ViewBag.ListBloodGroupType = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "BloodGroupType", "Property", GeneralConstants.ListTypeN);
             ViewBag.ListDesignation = model.GetMasterTableStringList("Master.Designation", "Id", "DesignationName");
@@ -351,5 +352,64 @@ namespace NtierMvc.Areas.HRDepartment.Controllers
         }
 
         //Leave Management End
+
+        [HttpPost]
+        public ActionResult SaveExperienceDetails(HRExperienceEntity[] ExpDetails)
+        {
+            model = new BaseModel();
+
+            try
+            {
+                if (ExpDetails != null)
+                {
+                    BulkUploadEntity objBU = new BulkUploadEntity();
+                    objBU.DataRecordTable = new DataTable();
+
+                    List<HRExperienceEntity> prList = new List<HRExperienceEntity>();
+                    List<HRExperienceEntityBulkSave> itemListBulk = new List<HRExperienceEntityBulkSave>();
+                    prList = ExpDetails.OfType<HRExperienceEntity>().ToList();
+
+                    foreach (var item in prList)
+                    {
+                        HRExperienceEntityBulkSave newObj = new HRExperienceEntityBulkSave();
+
+                        newObj.EmpId = item.EmpId;
+                        newObj.SN = item.SN;
+                        newObj.Employer = item.Employer;
+                        newObj.Designation = item.Designation;
+                        newObj.PeriodFrom = item.PeriodFrom;
+                        newObj.PeriodTo = item.PeriodTo;
+
+                        itemListBulk.Add(newObj);
+                    }
+
+                    string result = string.Empty;
+                    ExtensionMethods lsttodt = new ExtensionMethods();
+                    objBU.DataRecordTable = lsttodt.ToDataTable(itemListBulk);
+                    objBU.IdentityNo = ExpDetails[0].EmpId;
+                    result = objManager.SaveExperienceDetailsList(objBU);
+
+                    string data = string.Empty;
+                    if (!string.IsNullOrEmpty(result) && (result == GeneralConstants.Inserted || result == GeneralConstants.Updated))
+                    {
+                        data = GeneralConstants.SavedSuccess;
+                    }
+                    else
+                    {
+                        data = GeneralConstants.NotSavedError + " Reason: " + result;
+                    }
+
+                    return new JsonResult { Data = data, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+
+                }
+                return Json("Unable to save Item Details! Please Provide correct information", JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception)
+            {
+                return Json("Unable to save your Item Details! Please try again later.", JsonRequestBehavior.AllowGet);
+            }
+        }
+
+
     }
 }

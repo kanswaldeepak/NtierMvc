@@ -23,6 +23,7 @@ namespace NtierMvc.BusinessLogic.Interface
         EmployeeEntity EmployeeDetailsPopup(EmployeeEntity Model);
         PayrollEntity GetEmpPayrollData(int EmpId, int Yr = 0, int mnth = 0);
         LeaveManagementEntityDetails GetEmpLeaveList(int EmpId);
+        string SaveExperienceDetailsList(BulkUploadEntity bEntity);
 
     }
 }

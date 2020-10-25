@@ -24,7 +24,7 @@ namespace NtierMvc.DataAccess.Pool
 
             parms.Add("@EmployeeId", objEmp.Id == 0 ? 0 : objEmp.Id);
             parms.Add("@userinitial", objEmp.UserInitial);
-            parms.Add("@unitno", objEmp.UnitNo);
+            parms.Add("@unitno", "1");
             parms.Add("@EmpType", objEmp.EmpType);
             parms.Add("@Unit", objEmp.Unit);
             parms.Add("@Dept", objEmp.Dept);
@@ -190,5 +190,27 @@ namespace NtierMvc.DataAccess.Pool
             Params.Add("@EmpId", EmpId);
             return _dbAccess.GetDataSet(SPName, Params);
         }
+
+        public string SaveExperienceDetailsList(BulkUploadEntity entity)
+        {
+            string msgCode = "";
+            entity.DestinationTable = "EmployeeExperience";
+
+            //if (!string.IsNullOrEmpty(entity.IdentityNo.ToString()) && entity.IdentityNo != 0)
+            //{
+            //    string spName = ConfigurationManager.AppSettings["DeletePurchaseRequestDetails"];
+            //    var parms = new Dictionary<string, object>();
+            //    parms.Add("@PRSetno", entity.IdentityNo);
+            //    _dbAccess.ExecuteNonQuery(spName, parms, "@o_MsgCode", out msgCode);
+            //}
+
+            msgCode = _dbAccess.BulkUpload(entity.DataRecordTable, entity.DestinationTable);
+
+
+            return msgCode;
+        }
+
+
+
     }
 }
