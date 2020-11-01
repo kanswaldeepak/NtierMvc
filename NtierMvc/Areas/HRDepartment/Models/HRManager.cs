@@ -185,7 +185,7 @@ namespace NtierMvc.Areas.HRDepartment.Models
             LeaveManagementEntityDetails lstModel = new LeaveManagementEntityDetails();
             using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
             {
-                HttpResponseMessage response = client.GetAsync(baseAddress + "/GetEmpLeaveList?EmpId="+ EmpId).Result;
+                HttpResponseMessage response = client.GetAsync(baseAddress + "/GetEmpLeaveList?EmpId=" + EmpId).Result;
                 if (response.IsSuccessStatusCode)
                 {
                     var data = response.Content.ReadAsStringAsync().Result;
@@ -202,6 +202,59 @@ namespace NtierMvc.Areas.HRDepartment.Models
             using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
             {
                 HttpResponseMessage response = client.PostAsJsonAsync(baseAddress + "/SaveExperienceDetailsList", objBU).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    var data = response.Content.ReadAsStringAsync().Result;
+                    result = JsonConvert.DeserializeObject<string>(data);
+                }
+            }
+            return result;
+        }
+
+        //public HRCertificatesEntity HRCertificates(int EmpId)
+        //{
+        //    var baseAddress = "HRDetails";
+        //    HRCertificatesEntity Model = new HRCertificatesEntity();
+        //    using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
+        //    {
+        //        HttpResponseMessage response = client.GetAsync(baseAddress + "/HRCertificates?EmpId=" + EmpId).Result;
+        //        if (response.IsSuccessStatusCode)
+        //        {
+        //            var data = response.Content.ReadAsStringAsync().Result;
+        //            Model = JsonConvert.DeserializeObject<HRCertificatesEntity>(data);
+        //        }
+        //    }
+        //    return Model;
+        //}
+
+        public HRCertificatesEntity HRCertificates(int EmpId)
+        {
+            var baseAddress = "HRDetails";
+            HRCertificatesEntity Model = new HRCertificatesEntity();
+            using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
+            {
+                HttpResponseMessage response = client.GetAsync(baseAddress + "/HRCertificates?EmpId=" + EmpId).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    var data = response.Content.ReadAsStringAsync().Result;
+                    Model = JsonConvert.DeserializeObject<HRCertificatesEntity>(data);
+                }
+            }
+            return Model;
+        }
+
+        public string SaveEmpCertificates(string CertificateName, string EmpId)
+        {
+            string result = "0";
+            var baseAddress = "HRDetails";
+            HRCertificatesEntity viewModel = new HRCertificatesEntity();
+
+            viewModel.EmpId = EmpId;
+            viewModel.CertValue = CertificateName;
+
+            using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
+            {
+                HttpResponseMessage response = client.PostAsJsonAsync(baseAddress + "/SaveEmpCertificates", viewModel).Result;
                 if (response.IsSuccessStatusCode)
                 {
                     var data = response.Content.ReadAsStringAsync().Result;

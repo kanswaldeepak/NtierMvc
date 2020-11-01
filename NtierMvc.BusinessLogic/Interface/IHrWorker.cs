@@ -13,6 +13,7 @@ namespace NtierMvc.BusinessLogic.Interface
     public interface IHrWorker
     {
         string SaveEmployeeDetails(EmployeeEntity entity);
+        string SaveEmpCertificates(HRCertificatesEntity entity);
         string SavePayrollDetails(PayrollEntity payE);
         string SaveEmpLeaveDetails(LeaveManagement leaveM);
         EmployeeEntity GetUserEmployeeDetails(string unitNo);
@@ -24,6 +25,7 @@ namespace NtierMvc.BusinessLogic.Interface
         PayrollEntity GetEmpPayrollData(int EmpId, int Yr = 0, int mnth = 0);
         LeaveManagementEntityDetails GetEmpLeaveList(int EmpId);
         string SaveExperienceDetailsList(BulkUploadEntity bEntity);
+        HRCertificatesEntity HRCertificates(int EmpId);
 
     }
 }

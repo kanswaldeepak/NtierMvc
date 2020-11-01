@@ -435,6 +435,88 @@ angular.module('App').controller("HrController", function ($scope, $http, $timeo
     }
 
 
+    $scope.LoadCertificateViewPopup = function (_EmpId) {
+        var _actionType = "VIEW";
+
+        $.ajax({
+            type: "POST",
+            data: { actionType: _actionType, EmpId: _EmpId },
+            datatype: "JSON",
+            url: window.CertificatePopup,
+            success: function (html) {
+                SetModalTitle("View Certificate Certificates");
+                SetModalBody(html);
+                HideLoadder();
+                //SetModalWidth("1400px");
+                $('#formSaveCertificateDetail input[type=radio],input[type=text], select').prop("disabled", true);
+                $('#saveCertificate').css('display', 'none');
+                $('.bs-tooltip-top').css('display', 'none');
+                ShowModal();
+
+                if (!($('.modal.in').length)) {
+                    $('.modal-dialog').css({
+                        top: '5%',
+                        left: '1%'
+                    });
+                }
+                $('#ModalPopup').modal({
+                    backdrop: false,
+                    show: true
+                });
+
+                $('.modal-dialog').draggable({
+                    handle: ".modal-body"
+                });
+            },
+            error: function () {
+                HideLoadder();
+                alert(window.ErrorMsg);
+            }
+        })
+    }
+
+
+    $scope.LoadCertificateEditPopup = function (_EmpId) {
+        var _actionType = "EDIT";
+        //var ID = e.target.id;
+        $.ajax({
+            type: "POST",
+            data: { actionType: _actionType, EmpId: _EmpId },
+            datatype: "JSON",
+            url: window.CertificatePopup,
+            success: function (res) {
+                var html = $compile(res)($scope);
+                SetModalTitle("Edit Certificate Details")
+                SetModalBody(html);
+                HideLoadder();
+                $('.bs-tooltip-top').css('display', 'none');
+                //SetModalWidth("1200px");
+                ShowModal();
+
+                if (!($('.modal.in').length)) {
+                    $('.modal-dialog').css({
+                        top: '5%',
+                        left: '1%'
+                    });
+                }
+                $('#ModalPopup').modal({
+                    backdrop: false,
+                    show: true
+                });
+
+                $('.modal-dialog').draggable({
+                    handle: ".modal-body"
+                });
+
+            },
+            error: function () {
+                HideLoadder();
+                alert(window.ErrorMsg);
+            }
+        })
+    }
+
+
 });
 
 //EOF

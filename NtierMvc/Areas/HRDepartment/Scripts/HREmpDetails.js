@@ -138,3 +138,48 @@ function saveExperienceDetail(data) {
         }
     });
 }
+
+function SaveCertificates() {
+    var fileTech = $("#fileTech").get(0).files;
+    var empId = $("#EmpId").val();
+    //var fileEduc = $("#fileEduc").get(0).files;
+    //var filePostGrad = $("#filePostGrad").get(0).files;
+
+    var fileData = new FormData();
+    fileData.append("fileTech", fileTech);
+    fileData.append("EmpId", empId);
+    //fileData.append("fileEduc", fileEduc);
+    //fileData.append("filePostGrad", filePostGrad);
+    //fileData.append("fileProfQual", fileProfQual);
+
+
+    for (var i = 0; i < fileTech.length; i++) {
+        fileData.append("fileInput", fileTech[i]);
+    }
+
+    $.ajax({
+        type: "POST",
+        url: "/HR/SaveEmpCertificates",
+        dataType: "json",
+        contentType: false, // Not to set any content header
+        processData: false, // Not to process data
+        data: fileData,
+        success: function (result, status, xhr) {
+            alert(result);
+        },
+        error: function (xhr, status, error) {
+            alert(status);
+        }
+    });
+};
+
+$(document).ajaxStart(function () {
+    $("#loadingImg").show();
+    $("#fileButton").prop('disabled', true);
+});
+
+$(document).ajaxStop(function () {
+    $("#loadingImg").hide();
+    $("#fileButton").prop('disabled', false);
+    $("#fileInput").val("");
+});

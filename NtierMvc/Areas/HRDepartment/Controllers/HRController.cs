@@ -11,6 +11,9 @@ using NtierMvc.Model.HR;
 using NtierMvc.Areas.HRDepartment.Models;
 using NtierMvc.Controllers;
 using System.Data;
+using System.Web;
+using System.Configuration;
+using System.Text;
 
 namespace NtierMvc.Areas.HRDepartment.Controllers
 {
@@ -353,6 +356,20 @@ namespace NtierMvc.Areas.HRDepartment.Controllers
 
         //Leave Management End
 
+        public ActionResult HRCertificatePopup(string actionType, string EmpId)
+        {
+            HRCertificatesEntity hrCE = new HRCertificatesEntity();
+            if (actionType == "VIEW" || actionType == "EDIT")
+            {
+                if (!string.IsNullOrEmpty(EmpId))
+                {
+                    hrCE = objManager.HRCertificates(Convert.ToInt32(EmpId));
+                }
+            }
+
+            return base.PartialView("~/Areas/HRDepartment/Views/HR/_HRCertificates.cshtml", hrCE);
+        }
+
         [HttpPost]
         public ActionResult SaveExperienceDetails(HRExperienceEntity[] ExpDetails)
         {
@@ -408,6 +425,59 @@ namespace NtierMvc.Areas.HRDepartment.Controllers
             {
                 return Json("Unable to save your Item Details! Please try again later.", JsonRequestBehavior.AllowGet);
             }
+        }
+
+
+        [HttpPost]
+        public ActionResult SaveEmpCertificates(string EmpId)
+        {
+            string path = System.Web.HttpContext.Current.Server.MapPath(ConfigurationManager.AppSettings["EmployeeCertificates"]);
+            StringBuilder strB = new StringBuilder();
+            HttpFileCollectionBase files = Request.Files;
+            string result = string.Empty;
+            string fname = string.Empty;
+            string CertificateName = string.Empty;
+
+            for (int i = 0; i < files.Count; i++)
+            {
+                HttpPostedFileBase file = files[i];
+
+                if (Request.Browser.Browser.ToUpper() == "IE" || Request.Browser.Browser.ToUpper() == "INTERNETEXPLORER")
+                {
+                    string[] testfiles = file.FileName.Split(new char[] { '\\' });
+                    fname = testfiles[testfiles.Length - 1];
+                }
+                else
+                {
+                    string extension = System.IO.Path.GetExtension(file.FileName);
+                    string Name = file.FileName.Substring(0, file.FileName.Length - extension.Length);
+
+                    fname = Name + DateTime.Now.Millisecond + extension;
+                }
+
+                if (!System.IO.Directory.Exists(path))
+                    System.IO.Directory.CreateDirectory(Server.MapPath(path));
+
+                file.SaveAs(path + fname);
+                CertificateName = fname.ToString();
+                result = objManager.SaveEmpCertificates(CertificateName, EmpId);
+
+                if (string.IsNullOrEmpty(result) && (result != GeneralConstants.Inserted))
+                {
+                    if (System.IO.File.Exists(fname))
+                        System.IO.File.Delete(fname);
+
+                    result = GeneralConstants.NotSavedError + " DataBase Problem.";
+                }
+                else
+                {
+                    result = GeneralConstants.SavedSuccess + " File Saved.";
+                }
+
+                //HttpPostedFileBase file = files[i];
+                //file.SaveAs(path + file.FileName);
+            }
+            return Json(result + files.Count + " Files Uploaded!");
         }
 
 

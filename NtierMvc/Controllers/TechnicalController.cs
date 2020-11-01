@@ -1153,7 +1153,6 @@ namespace NtierMvc.Controllers
         [HttpPost]
         public ActionResult ClarificationOrderFileUpload(string SoNo)
         {
-            // Checking no of files injected in Request object  
             if (Request.Files.Count > 0)
             {
                 try

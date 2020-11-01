@@ -210,6 +210,38 @@ namespace NtierMvc.DataAccess.Pool
             return msgCode;
         }
 
+        public DataSet HRCertificates(int EmpId)
+        {
+            var SPName = ConfigurationManager.AppSettings["GetHRCertificates"];
+            var Params = new Dictionary<string, object>();
+            Params.Add("@EmpId", EmpId);
+            return _dbAccess.GetDataSet(SPName, Params);
+        }
+
+        public string SaveEmpCertificates(HRCertificatesEntity objCE)
+        {
+            var parms = new Dictionary<string, object>();
+            var spName = string.Empty;
+            string msgCode = "";
+
+            parms.Add("@Id", objCE.Id == 0 ? 0 : objCE.Id);
+            parms.Add("@EmpId", objCE.EmpId);
+            parms.Add("@CertValue", objCE.CertValue);
+
+            spName = ConfigurationManager.AppSettings["SaveEmpCertificates"];
+
+            _dbAccess.ExecuteNonQuery(spName, parms, "@o_MsgCode", out msgCode);
+            return msgCode;
+        }
+
+
+
+
+
+
+
+
+
 
 
     }

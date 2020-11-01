@@ -380,6 +380,56 @@ namespace NtierMvc.BusinessLogic.Worker
             return result;
         }
 
+        public HRCertificatesEntity HRCertificates(int EmpId)
+        {
+            try
+            {
+                HRCertificatesEntity objC = new HRCertificatesEntity();
+
+                DataSet ds = _repository.HRCertificates(EmpId);
+
+                if (ds.Tables.Count > 0)
+                {
+                    DataTable dt1 = ds.Tables[0];
+
+                    if (dt1 != null && dt1.Rows.Count > 0)
+                    {
+                        if (dt1.Rows.Count > 0)
+                        {
+                            objC.EmpId = dt1.Rows[0]["EmpId"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["EmpId"]);
+                            objC.EmpName = dt1.Rows[0]["EmpName"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["EmpName"]);
+                            objC.EmpCode = dt1.Rows[0]["EmpCode"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["EmpCode"]);
+                            objC.CertType = dt1.Rows[0]["CertType"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["CertType"]);
+                            objC.CertValue = dt1.Rows[0]["CertValue"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["CertValue"]);
+
+                        }
+                    }
+                }
+
+                return objC;
+            }
+            catch (Exception Ex)
+            {
+                NtierMvc.DataAccess.ExceptionLogging.SendExcepToDB(Ex);
+                throw Ex;
+            }
+        }
+
+
+        public string SaveEmpCertificates(HRCertificatesEntity entity)
+        {
+            string result = "";
+            try
+            {
+                result = _repository.SaveEmpCertificates(entity);
+            }
+            catch (Exception Ex)
+            {
+                NtierMvc.DataAccess.ExceptionLogging.SendExcepToDB(Ex);
+            }
+            return result;
+        }
+
 
     }
 }

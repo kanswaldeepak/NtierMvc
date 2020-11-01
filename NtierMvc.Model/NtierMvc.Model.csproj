@@ -59,6 +59,8 @@
     <Compile Include="Application\UploadDocumentEntity.cs" />
     <Compile Include="Application\UserGrievanceEntity.cs" />
     <Compile Include="BulkUploadEntity.cs" />
+    <Compile Include="HR\HRCertificatesEntity.cs" />
+    <Compile Include="Vendor\VendorEntity.cs" />
     <Compile Include="ExtensionMethods.cs" />
     <Compile Include="BillMonitoringEntity.cs" />
     <Compile Include="GateEntryEntity.cs" />

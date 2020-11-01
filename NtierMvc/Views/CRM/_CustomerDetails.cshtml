@@ -9,9 +9,9 @@
     @* { *@
     <form id="formSaveCustomerDetail">
         <div class="col-md-12">
-            @Html.HiddenFor(m => m.CustomerId)
+            @Html.HiddenFor(m => m.Id)
             <div class="row">
-                <div class="col-md-3">
+                @*<div class="col-md-3">
                     <div class="form-group">
                         <label class="control-label">VENDOR TYPE<span class="required">*</span></label>
                         @Html.DropDownListFor(m => m.VendorTypeId, new SelectList(ViewBag.ListVENDORTYPE, "DataStringValueField", "DataTextField", Model.VendorTypeId), new
@@ -37,20 +37,20 @@
                        @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
                    })
                     </div>
-                </div>
+                </div>*@
                 <div class="col-md-3">
                     <div class="form-group">
                         <label class="control-label">
-                            Vendor Initial <span class="required">*</span>
+                            Customer Initial <span class="required">*</span>
                         </label>
-                        @Html.TextBoxFor(m => m.VendorInitial, new
-                        {
-                            @class = "form-control requiredValidation",
-                            @id = "VendorInitial",
-                            @name = "VendorInitial",
-                            @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
-                        })
-                        <span class="HideValidMsg">Please Enter Vendor Initial</span>
+                        @Html.TextBoxFor(m => m.CustomerInitial, new
+                   {
+                       @class = "form-control requiredValidation",
+                       @id = "CustomerInitial",
+                       @name = "CustomerInitial",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                   })
+                    <span class="HideValidMsg">Please Enter Customer Initial </span>
                     </div>
                 </div>
                 <div class="col-md-3">
@@ -68,12 +68,12 @@
                 </div>
                 <div class="col-md-3">
                     <div class="form-group">
-                        <label class="control-label">Vendor Name <span class="required">*</span></label>
-                        @Html.TextBoxFor(m => m.VendorName,
+                        <label class="control-label">Customer Name <span class="required">*</span></label>
+                        @Html.TextBoxFor(m => m.CustomerName,
                             new
                             {
                                 @class = "form-control requiredValidation",
-                                @placeholder = "Vendor Name",
+                                @placeholder = "Customer Name",
                                 @autocomplete = "off"
                             })<label class="HideValidMsg">Fields is Required *</label>
                     </div>

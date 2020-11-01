@@ -23,6 +23,7 @@ namespace NtierMvc.API.Controllers.Application
             return Ok(_repository.SaveEmployeeDetails(viewModel));
         }
 
+
         [HttpGet]
         [Route("api/HrDetails/GetUserDetails")]
         public IHttpActionResult GetUserDetails(string unitNo)
@@ -89,6 +90,21 @@ namespace NtierMvc.API.Controllers.Application
         public IHttpActionResult SaveExperienceDetailsList(BulkUploadEntity iEntity)
         {
             return Ok(_repository.SaveExperienceDetailsList(iEntity));
+        }
+
+        [HttpGet]
+        [Route("api/HrDetails/HRCertificates")]
+        public IHttpActionResult HRCertificates(int EmpId)
+        {
+            return Ok(_repository.HRCertificates(EmpId));
+        }
+
+        [HttpPost]
+        [ResponseType(typeof(string))]
+        [Route("api/HrDetails/SaveEmpCertificates")]
+        public IHttpActionResult SaveEmpCertificates(HRCertificatesEntity viewModel)
+        {
+            return Ok(_repository.SaveEmpCertificates(viewModel));
         }
 
     }

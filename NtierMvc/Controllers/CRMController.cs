@@ -113,8 +113,6 @@ namespace NtierMvc.Controllers
         [HttpPost]
         public ActionResult SaveCustomerDetails(CustomerEntity cusE)
         {
-            ViewBag.ListVENDORTYPE = model.GetMasterTableList("Master.Vendor", "Id", "VendorType");
-            ViewBag.ListVENDOR_NATURE = model.GetMasterTableList("Master.Vendor", "Id", "VendorNature");
             ViewBag.ListFUNCTION_AREA = model.GetMasterTableList("Master.FunctionalArea", "Id", "FunctionArea");
 
             cusE.UserInitial = Session["UserName"].ToString();
@@ -123,19 +121,15 @@ namespace NtierMvc.Controllers
 
             string result = objManager.SaveCustomerDetails(cusE);
 
-            TempData["VendorName"] = cusE.VendorName;
+            TempData["VendorName"] = cusE.CustomerName;
             TempData["UserName"] = cusE.UserInitial;
             string data = string.Empty;
             if (!string.IsNullOrEmpty(result) && (result == GeneralConstants.Inserted || result == GeneralConstants.Updated))
             {
-                //Payment Gateway
-                //TempData["StatusMsg"] = "Success";
                 data = GeneralConstants.SavedSuccess;
             }
             else
             {
-                //TempData["StatusMsg"] = "Error";
-                //TempData["StatusMsgBody"] = result;
                 data = GeneralConstants.NotSavedError;
             }
 
@@ -148,8 +142,8 @@ namespace NtierMvc.Controllers
             string countryId = "0";
             ViewBag.ListState = model.GetStateDetail(countryId); //Given wrong CountryId to not get any value
 
-            ViewBag.ListVENDORTYPE = model.GetMasterTableStringList("Master.Vendor", "Id", "VendorType");
-            ViewBag.ListVENDOR_NATURE = model.GetMasterTableStringList("Master.Vendor", "Id", "VendorNature");
+            //ViewBag.ListVENDORTYPE = model.GetMasterTableStringList("Master.Vendor", "Id", "VendorType");
+            //ViewBag.ListVENDOR_NATURE = model.GetMasterTableStringList("Master.Vendor", "Id", "VendorNature");
             ViewBag.ListFUNCTION_AREA = model.GetMasterTableStringList("Master.FunctionalArea", "Id", "FunctionArea");
             ViewBag.ListCountry = model.GetMasterTableStringList("Master.Country", "Id", "Country");
 
@@ -159,7 +153,7 @@ namespace NtierMvc.Controllers
             if (actionType == "VIEW" || actionType == "EDIT")
             {
                 if (!string.IsNullOrEmpty(CustomerId))
-                    cus.CustomerId = Convert.ToInt32(CustomerId);
+                    cus.Id = Convert.ToInt32(CustomerId);
                 cus = objManager.CustomerDetailsPopup(cus);
             }
             if (actionType == "ADD")

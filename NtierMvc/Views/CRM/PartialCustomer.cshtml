@@ -16,16 +16,10 @@
                 }
             </td>
             <td>
-                <label>Vendor Type</label>
+                <label>Customer ID</label>
             </td>
             <td>
-                <label>Vendor Nature</label>
-            </td>
-            <td>
-                <label>Vendor ID</label>
-            </td>
-            <td>
-                <label>Vendor Name</label>
+                <label>Customer Name</label>
             </td>
             <td>
                 <label>Function Area</label>
@@ -36,7 +30,7 @@
         </tr>
         <tr>
             <td></td>
-            <td>
+            @*<td>
                 @Html.DropDownList("VendorType", new SelectList(@ViewBag.ListVendorType, "DataStringValueField", "DataTextField", "Select"),
                            new
                            {
@@ -54,7 +48,7 @@
                                @onchange = "GetVendorListForCust()",
                                @id = "CUVendorNatureId"
                            })
-            </td>
+            </td>*@
             <td>
                 @Html.DropDownList("VendorId", new SelectList(@ViewBag.ListVendorId, "DataStringValueField", "DataTextField", "Select"),
                            new
@@ -111,19 +105,13 @@
                         Action
                     </td>
                     <td>
-                        Vendor Id
-                    </td>
-                    <td>
-                        Vendor Type
-                    </td>
-                    <td>
-                        Vendor Nature
+                        Customer Id
                     </td>
                     <td>
                         Function Area
                     </td>
                     <td>
-                        Vendor Name
+                        Customer Name
                     </td>
                     <td>
                         City
@@ -142,33 +130,27 @@
             <tbody>
                 <tr ng-repeat="L in AvailableCustomerList">
                     <td>
-                        <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="VIEW" ng-click="LoadCustomerViewPopup(L.CustomerId)">
+                        <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="VIEW" ng-click="LoadCustomerViewPopup(L.Id)">
                             <i class="fa fa-eye"></i>
                         </button>
                         @if (LocalUtility.CheckForWrite("", "CRM", "CRMMaster", "Customer") == GeneralConstants.Write)
                         {
-                            <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="EDIT" ng-click="LoadCustomerEditPopup(L.CustomerId)">
+                            <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="EDIT" ng-click="LoadCustomerEditPopup(L.Id)">
                                 <i class="fa fa-edit"></i>
                             </button>
-                            <button type="button" class="btn btn-outline-danger btn-sm" data-toggle="tooltip" data-placement="bottom" title="DELETE" ng-click="DeleteCustomer(L.CustomerId)">
+                            <button type="button" class="btn btn-outline-danger btn-sm" data-toggle="tooltip" data-placement="bottom" title="DELETE" ng-click="DeleteCustomer(L.Id)">
                                 <i class="fa fa-trash"></i>
                             </button>
                         }
                         </td>
                     <td>
-                        {{L.VendorId}}
-                    </td>
-                    <td>
-                        {{L.VendorType}}
-                    </td>
-                    <td>
-                        {{L.VendorNature}}
-                    </td>
+                        {{L.CustomerId}}
+                    </td>                    
                     <td>
                         {{L.FunctionArea}}
                     </td>
                     <td>
-                        {{L.VendorName}}
+                        {{L.CustomerName}}
                     </td>
                     <td>
                         {{L.City}}

@@ -24,10 +24,10 @@ namespace NtierMvc.DataAccess.Pool
 
             parms.Add("@userinitial", objUser.UserInitial);
             parms.Add("@unitno", objUser.UnitNo);
-            parms.Add("@vendortypeid", objUser.VendorTypeId);
-            parms.Add("@vendornatureid", objUser.VendorNatureId);
+            //parms.Add("@vendortypeid", objUser.VendorTypeId);
+            //parms.Add("@vendornatureid", objUser.VendorNatureId);
             parms.Add("@functionareaid", objUser.FunctionAreaId);
-            parms.Add("@vendorname", objUser.VendorName);
+            parms.Add("@CustomerName", objUser.CustomerName);
             parms.Add("@address1", objUser.Address1);
             parms.Add("@address2", objUser.Address2);
             parms.Add("@address3", objUser.Address3);
@@ -44,8 +44,8 @@ namespace NtierMvc.DataAccess.Pool
             parms.Add("@email2", objUser.email2);
             parms.Add("@contactperson", objUser.ContactPerson);
             parms.Add("@designation", objUser.Designation);
-            parms.Add("@CustomerId", objUser.CustomerId);
-            parms.Add("@VendorInitial", objUser.VendorInitial);
+            parms.Add("@Id", objUser.Id);
+            parms.Add("@CustomerInitial", objUser.CustomerInitial);
             parms.Add("@ipAddress", objUser.ipAddress);
             spName = ConfigurationManager.AppSettings["SaveCustomerDetails"];
 
@@ -81,7 +81,7 @@ namespace NtierMvc.DataAccess.Pool
         {
             var SPName = ConfigurationManager.AppSettings["GetCustomerDetails"];
             var Params = new Dictionary<string, object>();
-            Params.Add("@CustomerId", Model.CustomerId);
+            Params.Add("@CustomerId", Model.Id);
             return _dbAccess.GetDataSet(SPName, Params);
         }
 

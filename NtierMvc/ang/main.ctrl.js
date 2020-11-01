@@ -54,7 +54,7 @@ angular.module('App').controller("MainController", function ($scope, $http, $tim
                 if (!($('.modal.in').length)) {
                     $('.modal-dialog').css({
                         top: '5%',
-                        left: '5%'
+                        left: '1%'
                     });
                 }
                 $('#ModalPopup').modal({
@@ -89,15 +89,14 @@ angular.module('App').controller("MainController", function ($scope, $http, $tim
                 HideLoadder();
                 SetModalWidth("1400px");
                 $('#formSaveCustomerDetail input[type=radio],input[type=text], select').prop("disabled", true);
-                $('#save_results').css('display', 'none');
-                $('#cancel_results').css('display', 'none');
+                $('#saveCust').css('display', 'none');
                 $('.bs-tooltip-top').css('display', 'none');
                 ShowModal();
 
                 if (!($('.modal.in').length)) {
                     $('.modal-dialog').css({
-                        top: '15%',
-                        left: '15%'
+                        top: '5%',
+                        left: '1%'
                     });
                 }
                 $('#ModalPopup').modal({
@@ -130,13 +129,14 @@ angular.module('App').controller("MainController", function ($scope, $http, $tim
                 SetModalTitle("Edit Customer Details")
                 SetModalBody(html);
                 HideLoadder();
+                SetModalWidth("1400px");
                 $('.bs-tooltip-top').css('display', 'none');
                 ShowModal();
 
                 if (!($('.modal.in').length)) {
                     $('.modal-dialog').css({
                         top: '15%',
-                        left: '15%'
+                        left: '1%'
                     });
                 }
                 $('#ModalPopup').modal({
@@ -215,11 +215,12 @@ angular.module('App').controller("MainController", function ($scope, $http, $tim
                 SetModalBody(html);
                 HideLoadder();
                 ShowModal();
+                SetModalWidth("1400px");
 
                 if (!($('.modal.in').length)) {
                     $('.modal-dialog').css({
                         top: '5%',
-                        left: '25%'
+                        left: '1%'
                     });
                 }
                 $('#ModalPopup').modal({
@@ -256,11 +257,12 @@ angular.module('App').controller("MainController", function ($scope, $http, $tim
                 $('#cancel_results').css('display', 'none');
                 $('.bs-tooltip-top').css('display', 'none');
                 ShowModal();
+                SetModalWidth("1400px");
 
                 if (!($('.modal.in').length)) {
                     $('.modal-dialog').css({
                         top: '5%',
-                        left: '10%'
+                        left: '1%'
                     });
                 }
                 $('#ModalPopup').modal({
@@ -294,11 +296,12 @@ angular.module('App').controller("MainController", function ($scope, $http, $tim
                 HideLoadder();
                 $('.bs-tooltip-top').css('display', 'none');
                 ShowModal();
+                SetModalWidth("1400px");
 
                 if (!($('.modal.in').length)) {
                     $('.modal-dialog').css({
                         top: '5%',
-                        left: '10%'
+                        left: '1%'
                     });
                 }
                 $('#ModalPopup').modal({
@@ -388,6 +391,7 @@ angular.module('App').controller("MainController", function ($scope, $http, $tim
                 SetModalBody(html);
                 HideLoadder();
                 ShowModal();
+                SetModalWidth("1400px");
 
                 if (!($('.modal.in').length)) {
                     $('.modal-dialog').css({
@@ -429,11 +433,12 @@ angular.module('App').controller("MainController", function ($scope, $http, $tim
                 $('#cancel_results').css('display', 'none');
                 $('.bs-tooltip-top').css('display', 'none');
                 ShowModal();
+                SetModalWidth("1400px");
 
                 if (!($('.modal.in').length)) {
                     $('.modal-dialog').css({
                         top: '5%',
-                        left: '25%'
+                        left: '1%'
                     });
                 }
                 $('#ModalPopup').modal({
@@ -467,11 +472,12 @@ angular.module('App').controller("MainController", function ($scope, $http, $tim
                 HideLoadder();
                 $('.bs-tooltip-top').css('display', 'none');
                 ShowModal();
+                SetModalWidth("1400px");
 
                 if (!($('.modal.in').length)) {
                     $('.modal-dialog').css({
                         top: '5%',
-                        left: '25%'
+                        left: '1%'
                     });
                 }
                 $('#ModalPopup').modal({
@@ -1180,9 +1186,6 @@ angular.module('App').controller("MainController", function ($scope, $http, $tim
     //        }
     //    })
     //}
-
-
-
 
 });
 

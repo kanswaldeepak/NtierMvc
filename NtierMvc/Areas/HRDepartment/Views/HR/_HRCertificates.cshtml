@@ -1,0 +1,103 @@
+﻿@model NtierMvc.Model.HR.HRCertificatesEntity
+
+@{
+    ViewBag.Title = "HR Details";
+}
+
+<div class="row">
+    <form id="formSaveCertificateDetail">
+        <div class="col-md-12">
+            @Html.HiddenFor(m => m.Id)
+            @Html.HiddenFor(m => m.EmpId)
+
+            <div class="row">
+                <hr style="width:100%" />
+                <h4 class="control-label" style="margin-left:10px; font-size: 20px">Academical Details</h4>
+                <hr style="width:100%" />
+            </div>
+
+            <div class="row">
+                <div class="col-md-5">
+                    <table class="table table-bordered">
+                        <tr>
+                            <td>
+                                Employee Name
+                            </td>
+                            <td>
+                                @Model.EmpName
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Employee Code
+                            </td>
+                            <td>
+                                @Model.EmpCode
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                Technical Qualification
+                            </th>
+                            <th>
+                                <input type="file" id="fileTech" multiple />
+
+                                @*@Html.TextBoxFor(m => m.TechQual, new
+                            {
+                                @class = "form-control",
+                                @id = "TechQual",
+                                @data_inneraction = "validationCall",
+                                @placeholder = "Technical Qualification",
+                                @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                            })*@
+                            </th>
+                        </tr>
+
+                    </table>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-md-12 pt-4 text-center">
+                    <input type="button" id="btnUpload" class="btn btn-primary btn-sm" value="Upload Files" onclick="SaveCertificates()" />
+                    <button style="font-size:18px" type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+
+        </div>
+    </form>
+</div>
+<script>
+
+    $(document).ready(function () {
+        //$('.multiple-checkboxes').multiselect();
+
+        window.SaveEmployee = '@Url.Action("SaveEmployeeDetails", "HR")';
+        window.SaveExperienceDetails = '@Url.Action("SaveExperienceDetails", "HR")';
+        window.StateDetail = '@Url.Action("GetStateDetail", "HR")';
+
+    });
+
+
+
+
+    //LEASE DATE AND EXP LEASE DATE VALIDATION
+    $('.CalenderDate').datepicker({
+
+        format: 'dd/mm/yyyy',
+        autoclose: true,
+        changeMonth: true,
+        changeYear: true,
+        endDate: '',
+    });
+    $('.CalenderTillTodayDate').datepicker({
+
+        format: 'dd/mm/yyyy',
+        autoclose: true,
+        changeMonth: true,
+        changeYear: true,
+        endDate: 'today',
+    });
+</script>
+

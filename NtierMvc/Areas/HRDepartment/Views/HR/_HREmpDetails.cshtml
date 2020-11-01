@@ -118,7 +118,7 @@
                         @Html.TextBoxFor(m => m.GaurdianName,
                             new
                             {
-                                @class = "form-control requiredValidation",
+                                @class = "form-control",
                                 @id = "GaurdianName",
                                 @data_inneraction = "validationCall",
                                 @placeholder = "Enter Gaurdian Name"
@@ -145,7 +145,7 @@
                         @Html.DropDownListFor(m => m.BloodGroup, new SelectList(@ViewBag.ListBloodGroup, "DataStringValueField", "DataTextField", Model.BloodGroup),
                         new
                         {
-                            @class = "form-control requiredValidation",
+                            @class = "form-control",
                             @id = "BloodGroup",
                             @data_inneraction = "validationCall",
                             @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
@@ -159,7 +159,7 @@
                         @Html.DropDownListFor(m => m.BloodGroupType, new SelectList(@ViewBag.ListBloodGroupType, "DataStringValueField", "DataTextField", Model.BloodGroupType),
                         new
                         {
-                            @class = "form-control requiredValidation",
+                            @class = "form-control",
                             @id = "BloodGroupType",
                             @data_inneraction = "validationCall",
                             @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
@@ -226,7 +226,7 @@
                         @Html.TextBoxFor(m => m.Address1,
                             new
                             {
-                                @class = "form-control requiredValidation",
+                                @class = "form-control",
                                 @id = "Address1",
                                 @data_inneraction = "validationCall",
                                 @placeholder = "ADDRESS LINE 1"
@@ -239,7 +239,7 @@
                         @Html.TextBoxFor(m => m.Address2,
                             new
                             {
-                                @class = "form-control requiredValidation",
+                                @class = "form-control",
                                 @id = "Address2",
                                 @data_inneraction = "validationCall",
                                 @placeholder = "ADDRESS2"
@@ -251,7 +251,7 @@
                         <label class="control-label">City<span class="required">*</span></label>
                         @Html.TextBoxFor(m => m.City, new
                    {
-                       @class = "form-control requiredValidation",
+                       @class = "form-control",
                        @id = "City",
                        @data_inneraction = "validationCall",
                        @placeholder = "City"
@@ -297,7 +297,7 @@
                         <div class="pr-2">
                             @Html.TextBoxFor(m => m.ZipCode, new
                        {
-                           @class = "form-control requiredValidation",
+                           @class = "form-control",
                            @id = "ZipCode",
                            @data_inneraction = "validationCall",
                            @placeholder = "ZIP CODE",
@@ -375,7 +375,7 @@
                         <label class="control-label">Passport Number<span class="required">*</span></label>
                         @Html.TextBoxFor(m => m.PassportNo, new
                    {
-                       @class = "form-control requiredValidation",
+                       @class = "form-control",
                        @id = "PassportNo",
                        @data_inneraction = "validationCall",
                        @placeholder = "Passport Number",
@@ -388,7 +388,7 @@
                         <label class="control-label">Passport Date<span class="required">*</span></label>
                         @Html.TextBoxFor(m => m.PassportDate, new
                    {
-                       @class = "form-control requiredValidation CalenderTillTodayDate",
+                       @class = "form-control CalenderTillTodayDate",
                        @id = "PassportDate",
                        @placeholder = "dd/MM/yyyy",
                        @style = "disabled :disabled",
@@ -416,7 +416,7 @@
                         <label class="control-label">Driving License Number<span class="required">*</span></label>
                         @Html.TextBoxFor(m => m.DlNo, new
                    {
-                       @class = "form-control requiredValidation",
+                       @class = "form-control",
                        @id = "DlNo",
                        @data_inneraction = "validationCall",
                        @placeholder = "Driving License",
@@ -429,7 +429,7 @@
                         <label class="control-label">Driving License Expiry<span class="required">*</span></label>
                         @Html.TextBoxFor(m => m.DlExp, new
                    {
-                       @class = "form-control requiredValidation CalenderTillTodayDate",
+                       @class = "form-control CalenderTillTodayDate",
                        @id = "DlExp",
                        @placeholder = "dd/MM/yyyy",
                        @style = "disabled :disabled",
@@ -443,7 +443,7 @@
                         <label class="control-label">Aadhar No<span class="required">*</span></label>
                         @Html.TextBoxFor(m => m.AadharNo, new
                    {
-                       @class = "form-control requiredValidation",
+                       @class = "form-control",
                        @id = "AadharNo",
                        @data_inneraction = "validationCall",
                        @placeholder = "Aadhar No",
@@ -456,7 +456,7 @@
                         <label class="control-label">PAN No<span class="required">*</span></label>
                         @Html.TextBoxFor(m => m.PanNo, new
                    {
-                       @class = "form-control requiredValidation",
+                       @class = "form-control",
                        @id = "PanNo",
                        @data_inneraction = "validationCall",
                        @placeholder = "PAN No",
@@ -469,7 +469,7 @@
                         <label class="control-label">Bank Account Number<span class="required">*</span></label>
                         @Html.TextBoxFor(m => m.BankAcctNo, new
                    {
-                       @class = "form-control requiredValidation",
+                       @class = "form-control",
                        @id = "BankActNo",
                        @data_inneraction = "validationCall",
                        @placeholder = "Bank Account Number",
@@ -482,7 +482,7 @@
                         <label class="control-label">Bank Name<span class="required">*</span></label>
                         @Html.TextBoxFor(m => m.BankName, new
                    {
-                       @class = "form-control requiredValidation",
+                       @class = "form-control",
                        @id = "BankName",
                        @data_inneraction = "validationCall",
                        @placeholder = "Bank Name",
@@ -495,7 +495,7 @@
                         <label class="control-label">Bank Branch<span class="required">*</span></label>
                         @Html.TextBoxFor(m => m.BankBranch, new
                    {
-                       @class = "form-control requiredValidation",
+                       @class = "form-control",
                        @id = "BankBranch",
                        @data_inneraction = "validationCall",
                        @placeholder = "Bank Branch",
@@ -508,7 +508,7 @@
                         <label class="control-label">Bank Location<span class="required">*</span></label>
                         @Html.TextBoxFor(m => m.BankLoc, new
                    {
-                       @class = "form-control requiredValidation",
+                       @class = "form-control",
                        @id = "BankLoc",
                        @data_inneraction = "validationCall",
                        @placeholder = "Bank Location",
@@ -521,7 +521,7 @@
                         <label class="control-label">IFSC Code<span class="required">*</span></label>
                         @Html.TextBoxFor(m => m.IFScode, new
                    {
-                       @class = "form-control requiredValidation",
+                       @class = "form-control",
                        @id = "IFSCcode",
                        @data_inneraction = "validationCall",
                        @placeholder = "IFSC Code",
@@ -530,7 +530,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
+            @*<div class="row">
                 <hr style="width:100%" />
                 <h4 class="control-label" style="margin-left:10px; font-size: 20px">Academical Details</h4>
                 <hr style="width:100%" />
@@ -592,7 +592,7 @@
                             <th>
                                 @Html.TextBoxFor(m => m.ProfQual, new
                        {
-                           @class = "form-control requiredValidation",
+                           @class = "form-control",
                            @id = "ProfQual",
                            @data_inneraction = "validationCall",
                            @placeholder = "Professional Qualification",
@@ -602,62 +602,8 @@
                         </tr>
                     </table>
                 </div>
-                @*<div class="col-md-3">
-                <div class="form-group">
-                    <label class="control-label">Technical Qualification<span class="required">*</span></label>
-                    @Html.TextBoxFor(m => m.TechQual, new
-               {
-                   @class = "form-control",
-                   @id = "TechQual",
-                   @data_inneraction = "validationCall",
-                   @placeholder = "Technical Qualification",
-                   @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
-               })<label class="HideValidMsg">Technical Qualification is Required</label>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="form-group">
-                    <label class="control-label">Education Degree<span class="required">*</span></label>
-                    @Html.TextBoxFor(m => m.EduDeg, new
-               {
-                   @class = "form-control requiredValidation",
-                   @id = "EduDeg",
-                   @data_inneraction = "validationCall",
-                   @placeholder = "Education Degree",
-                   //@style = "text-transform:uppercase",
-                   @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
-               })<label class="HideValidMsg">Emergency Contact No is Required</label>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="form-group">
-                    <label class="control-label">Post Graduation<span class="required">*</span></label>
-                    @Html.TextBoxFor(m => m.EduPG, new
-               {
-                   @class = "form-control",
-                   @id = "EduPG",
-                   @data_inneraction = "validationCall",
-                   @placeholder = "Education Post Graduation",
-                   //@style = "text-transform:uppercase",
-                   @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
-               })<label class="HideValidMsg">Education Post Graduation is Required</label>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="form-group">
-                    <label class="control-label">Professional Qualification<span class="required">*</span></label>
-                    @Html.TextBoxFor(m => m.ProfQual, new
-               {
-                   @class = "form-control requiredValidation",
-                   @id = "ProfQual",
-                   @data_inneraction = "validationCall",
-                   @placeholder = "Professional Qualification",
-                   @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
-               })<label class="HideValidMsg">Professional Qualification is Required</label>
-                </div>
+                
             </div>*@
-
-            </div>
             
             <div class="row">
                 <hr style="width:100%" />
@@ -686,7 +632,7 @@
                                     Period To
                                 </td>
                                 <td>
-                                    <button class="btn btn-sm btn-info" id="btnAddExperience" onclick="addNewExp(event)">Add Experience</button>
+                                    <button class="btn btn-sm btn-info" id="btnAddExperience" onclick="addNewExp(event)">Add New Experience</button>
                                 </td>
                             </tr>
                         </thead>
