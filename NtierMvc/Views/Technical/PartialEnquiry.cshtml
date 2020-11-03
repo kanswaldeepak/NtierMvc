@@ -17,12 +17,12 @@
             <td>
                 <label>Product Group</label>
             </td>
-            <td>
-                <label>Vendor Id</label>
-            </td>
             @*<td>
-                    <label>Vendor Name</label>
-                </td>*@
+            <label>Vendor Id</label>
+        </td>
+        <td>
+                <label>Vendor Name</label>
+            </td>*@
             <td>
                 <label>Month</label>
             </td>
@@ -49,24 +49,24 @@
                                @id = "EQProductGroup"
                            })
             </td>
-            <td>
-                @Html.DropDownList("VendorId", new SelectList(@ViewBag.ListVendorId, "DataStringValueField", "DataTextField", "Select"),
-                           new
-                           {
-                               @class = "form-control",
-                               ng_model = "SearchEnqVendorID",
-                               @id = "EQVendorId",
-                               @multiple = "true"
-                           })
-            </td>
             @*<td>
-                     @Html.DropDownList("VendorName", new SelectList(@ViewBag.ListVendorName, "DataStringValueField", "DataTextField", "Select"), new
-                {
-                    @class = "form-control",
-                    ng_model = "SearchEnqName",
-                    @id = "EQVendorName"
-                })
-                 </td>*@
+            @Html.DropDownList("VendorId", new SelectList(@ViewBag.ListVendorId, "DataStringValueField", "DataTextField", "Select"),
+                       new
+                       {
+                           @class = "form-control",
+                           ng_model = "SearchEnqVendorID",
+                           @id = "EQVendorId",
+                           @multiple = "true"
+                       })
+        </td>
+        <td>
+                 @Html.DropDownList("VendorName", new SelectList(@ViewBag.ListVendorName, "DataStringValueField", "DataTextField", "Select"), new
+            {
+                @class = "form-control",
+                ng_model = "SearchEnqName",
+                @id = "EQVendorName"
+            })
+             </td>*@
             <td>
                 @Html.DropDownList("Month", new SelectList(@ViewBag.ListMonth, "DataStringValueField", "DataTextField", "Select"),
                            new
@@ -234,37 +234,6 @@
         </table>
     </div>
 </div>
-
-<div class="modal" id="addEnquiryDetails" tabindex="-1" role="dialog">
-    @using (Ajax.BeginForm(actionName: "SaveEnquiryDetails", controllerName: "Enquiry", ajaxOptions: new AjaxOptions
-    {
-        HttpMethod = "POST"
-        // OnSuccess = "BuildingSpaceDetails.UploadFiles"
-    },
-            routeValues: null,
-            htmlAttributes: new { id = "frmEnquiryDetails" }))
-    {
-        <div class="modal-dialog" style="width:80%; max-width: 80%;" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    @*@Html.HiddenFor(m => m.TrnBuildingHdrId)*@
-                    <h5 class="modal-title">Add Enquiry Details</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div id="div-Staff-details" class="modal-body">
-
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" id="btnSubmit" class="btn btn-primary">Save</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    }
-</div>
-
 
 <div class="modal fade" id="add_details" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 </div>

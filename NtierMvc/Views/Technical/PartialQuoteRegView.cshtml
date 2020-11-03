@@ -15,9 +15,9 @@
             <td>
                 <label>Quote Type</label>
             </td>
-            <td>
+            @*<td>
                 <label>Vendor Id</label>
-            </td>
+            </td>*@
             <td>
                 <label>Product Group</label>
             </td>
@@ -38,7 +38,7 @@
                         @id = "QTQuoteType"
                     })
             </td>
-            <td>
+            @*<td>
                 @Html.DropDownList("VendorId", new SelectList(@ViewBag.ListVendorId, "DataStringValueField", "DataTextField", "Select"),
                new
                {
@@ -47,7 +47,7 @@
                    @id = "QTVendorId",
                    @multiple = true
                })
-            </td>
+            </td>*@
             <td>
                 @Html.DropDownList("ProductGroup", new SelectList(@ViewBag.ListProdGrp, "DataStringValueField", "DataTextField", "Select"),
                new
@@ -228,37 +228,6 @@
         </table>
     </div>
 </div>
-
-<div class="modal" id="addCustomerDetails" tabindex="-1" role="dialog">
-    @using (Ajax.BeginForm(actionName: "SaveCustomerDetails", controllerName: "Customer", ajaxOptions: new AjaxOptions
-    {
-        HttpMethod = "POST"
-        // OnSuccess = "BuildingSpaceDetails.UploadFiles"
-    },
-            routeValues: null,
-            htmlAttributes: new { id = "frmCustomerDetails" }))
-    {
-        <div class="modal-dialog" style="width:80%; max-width: 80%;" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    @*@Html.HiddenFor(m => m.TrnBuildingHdrId)*@
-                    <h5 class="modal-title">Add Customer Details</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div id="div-Staff-details" class="modal-body">
-
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" id="btnSubmit" class="btn btn-primary">Save</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    }
-</div>
-
 
 <div class="modal fade" id="add_details" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 </div>

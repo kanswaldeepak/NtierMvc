@@ -113,13 +113,13 @@ namespace NtierMvc.BusinessLogic.Worker
         }
 
 
-        public CustomerEntityDetails GetCustomerDetails(int pageIndex, int pageSize, string SearchCustName = null, string SearchCustVendorID = null, string SearchCustVendorType = null, string SearchCustVendorNature = null, string SearchCustFunctionalArea = null)
+        public CustomerEntityDetails GetCustomerDetails(int pageIndex, int pageSize, string SearchCustomerName = null, string SearchCustomerID = null)
         {
             try
             {
                 CustomerEntityDetails cED = new CustomerEntityDetails();
                 cED.LstCusEnt = new List<CustomerEntity>();
-                DataSet ds = _repository.GetCustomerDetails(pageIndex, pageSize, SearchCustName, SearchCustVendorID, SearchCustVendorType, SearchCustVendorNature, SearchCustFunctionalArea);
+                DataSet ds = _repository.GetCustomerDetails(pageIndex, pageSize, SearchCustomerName, SearchCustomerID);
 
                 if (ds.Tables.Count > 0)
                 {
@@ -142,8 +142,8 @@ namespace NtierMvc.BusinessLogic.Worker
                                 //obj.VendorType = dr1.IsNull("VendorType") ? string.Empty : Convert.ToString(dr1["VendorType"]);
                                 //obj.VendorNatureId = dr1.IsNull("VendorNatureId") ? string.Empty : Convert.ToString(dr1["VendorNatureId"]);
                                 //obj.VendorNature = dr1.IsNull("VendorNature") ? string.Empty : Convert.ToString(dr1["VendorNature"]);
-                                obj.FunctionAreaId = dr1.IsNull("FunctionAreaId") ? string.Empty : Convert.ToString(dr1["FunctionAreaId"]);
-                                obj.FunctionArea = dr1.IsNull("FunctionArea") ? string.Empty : Convert.ToString(dr1["FunctionArea"]);
+                                //obj.FunctionAreaId = dr1.IsNull("FunctionAreaId") ? string.Empty : Convert.ToString(dr1["FunctionAreaId"]);
+                                //obj.FunctionArea = dr1.IsNull("FunctionArea") ? string.Empty : Convert.ToString(dr1["FunctionArea"]);
                                 obj.CustomerName = dr1.IsNull("CustomerName") ? string.Empty : Convert.ToString(dr1["CustomerName"]);
                                 obj.City = dr1.IsNull("City") ? string.Empty : Convert.ToString(dr1["City"]);
                                 obj.State = dr1.IsNull("State") ? string.Empty : Convert.ToString(dr1["State"]);
@@ -226,62 +226,25 @@ namespace NtierMvc.BusinessLogic.Worker
             return Model;
         }
 
-        public List<DropDownEntity> GetDdlValueForCustomer(string type, string VendorType = null, string VendorNatureId = null, string VendorName = null, string FunctionalArea = null)
+        public List<DropDownEntity> GetDdlValueForCustomer(string type, string CustomerId = null)
         {
             try
             {
                 List<DropDownEntity> lstDdl = new List<DropDownEntity>();
-                DataTable dt = _repository.GetDdlValueForCustomer(type, VendorType, VendorNatureId, VendorName, FunctionalArea);
+                DataTable dt = _repository.GetDdlValueForCustomer(type, CustomerId);
                 DropDownEntity entity;
 
                 if (dt.Rows.Count > 0)
                 {
-                    if (type == "VendorNature")
+                    if (type == "CustomerName")
                         foreach (DataRow dr in dt.Rows)
                         {
                             entity = new DropDownEntity();
                             if (dt.Columns.Contains("Id"))
                                 entity.DataStringValueField = Convert.ToString(dr["Id"] ?? "0");
 
-                            if (dt.Columns.Contains("VendorNature"))
-                                entity.DataTextField = dr["VendorNature"]?.ToString() ?? "";
-
-                            lstDdl.Add(entity);
-                        }
-                    else if (type == "VendorId")
-                        foreach (DataRow dr in dt.Rows)
-                        {
-                            entity = new DropDownEntity();
-                            if (dt.Columns.Contains("Id"))
-                                entity.DataStringValueField = Convert.ToString(dr["Id"] ?? "0");
-
-                            if (dt.Columns.Contains("VendorId"))
-                                entity.DataTextField = dr["VendorId"]?.ToString() ?? "";
-
-                            lstDdl.Add(entity);
-                        }
-                    else if (type == "VendorName")
-                        foreach (DataRow dr in dt.Rows)
-                        {
-                            entity = new DropDownEntity();
-                            if (dt.Columns.Contains("Id"))
-                                entity.DataStringValueField = Convert.ToString(dr["Id"] ?? "0");
-
-                            if (dt.Columns.Contains("VendorName"))
-                                entity.DataTextField = dr["VendorName"]?.ToString() ?? "";
-
-                            lstDdl.Add(entity);
-                        }
-
-                    else if (type == "FunctionalArea")
-                        foreach (DataRow dr in dt.Rows)
-                        {
-                            entity = new DropDownEntity();
-                            if (dt.Columns.Contains("Id"))
-                                entity.DataStringValueField = Convert.ToString(dr["Id"] ?? "0");
-
-                            if (dt.Columns.Contains("FunctionArea"))
-                                entity.DataTextField = dr["FunctionArea"]?.ToString() ?? "";
+                            if (dt.Columns.Contains("CustomerName"))
+                                entity.DataTextField = dr["CustomerName"]?.ToString() ?? "";
 
                             lstDdl.Add(entity);
                         }

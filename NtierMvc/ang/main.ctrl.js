@@ -7,14 +7,11 @@ angular.module('App').controller("MainController", function ($scope, $http, $tim
     $scope.custTotalCount = 0;
     $scope.custPageIndex = 1;
     $scope.custPageSize = "50";
-    $scope.SearchCustName = "";
-    $scope.SearchCustVendorID = "";
-    $scope.SearchCustVendorType = "";
-    $scope.SearchCustVendorNature = "";
-    $scope.SearchCustFunctionalArea = "";
+    $scope.SearchCustomerName = "";
+    $scope.SearchCustomerID = "";
 
     $scope.FetchCustomerList = function () {
-        $http.get(window.FetchCustomerList + "?pageindex=" + $scope.custPageIndex + "&pagesize=" + $scope.custPageSize + "&SearchCustName=" + $scope.SearchCustName + "&SearchCustVendorType=" + $scope.SearchCustVendorType + "&SearchCustVendorID=" + $scope.SearchCustVendorID + "&SearchCustVendorNature=" + $scope.SearchCustVendorNature + "&SearchCustFunctionalArea=" + $scope.SearchCustFunctionalArea).success(function (response) {
+        $http.get(window.FetchCustomerList + "?pageindex=" + $scope.custPageIndex + "&pagesize=" + $scope.custPageSize + "&SearchCustomerName=" + $scope.SearchCustomerName + "&SearchCustomerID=" + $scope.SearchCustomerID).success(function (response) {
             $scope.AvailableCustomerList = response.LstCusEnt;
             $scope.custTotalCount = response.totalcount;
         }, function (error) {

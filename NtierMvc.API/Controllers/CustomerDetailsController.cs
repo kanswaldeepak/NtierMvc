@@ -45,9 +45,9 @@ namespace NtierMvc.API.Controllers.Application
         }
 
         [Route("api/CustomerDetails/GetCustomerDetails")]
-        public IHttpActionResult GetCustomerDetails(int pageIndex, int pageSize, string SearchCustName = null, string SearchCustVendorID = null, string SearchCustVendorType = null, string SearchCustVendorNature = null, string SearchCustFunctionalArea = null)
+        public IHttpActionResult GetCustomerDetails(int pageIndex, int pageSize, string SearchCustomerName = null, string SearchCustomerID = null)
         {
-            return Ok(_repository.GetCustomerDetails(pageIndex, pageSize, SearchCustName, SearchCustVendorID, SearchCustVendorType, SearchCustVendorNature, SearchCustFunctionalArea));
+            return Ok(_repository.GetCustomerDetails(pageIndex, pageSize, SearchCustomerName, SearchCustomerID));
         }
 
         [HttpPost]
@@ -60,9 +60,9 @@ namespace NtierMvc.API.Controllers.Application
 
         [HttpGet]
         [Route("api/CustomerDetails/GetDdlValueForCustomer")]
-        public IHttpActionResult GetDdlValueForCustomer(string type, string VendorType = null, string VendorNatureId = null, string VendorName = null, string FunctionalArea = null)
+        public IHttpActionResult GetDdlValueForCustomer(string type, string CustomerId = null)
         {
-            return Ok(_repository.GetDdlValueForCustomer(type, VendorType, VendorNatureId, VendorName, FunctionalArea));
+            return Ok(_repository.GetDdlValueForCustomer(type, CustomerId));
         }
 
 

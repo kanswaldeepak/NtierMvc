@@ -16,9 +16,9 @@ namespace NtierMvc.BusinessLogic.Interface
         CustomerEntity GetUserCustDetails(string unitNo);
         string DeleteCustomerDetail(int CustomerId);
 
-        CustomerEntityDetails GetCustomerDetails(int pageIndex, int pageSize, string SearchCustName = null, string SearchCustVendorID = null, string SearchCustVendorType = null, string SearchCustVendorNature = null, string SearchCustFunctionalArea = null);
+        CustomerEntityDetails GetCustomerDetails(int pageIndex, int pageSize, string SearchCustomerName = null, string SearchCustomerID = null);
 
         CustomerEntity CustomerDetailsPopup(CustomerEntity Model);
-        List<DropDownEntity> GetDdlValueForCustomer(string type, string VendorType = null, string VendorNatureId = null, string VendorName = null, string FunctionalArea = null);
+        List<DropDownEntity> GetDdlValueForCustomer(string type, string CustomerId = null);
     }
 }

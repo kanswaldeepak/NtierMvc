@@ -95,13 +95,13 @@ namespace NtierMvc.Model
             return Model;
         }
 
-        public CustomerEntityDetails GetCustomerDetails(int pageIndex, int pageSize, string SearchCustName = null, string SearchCustVendorID = null, string SearchCustVendorType = null, string SearchCustVendorNature = null, string SearchCustFunctionalArea = null)
+        public CustomerEntityDetails GetCustomerDetails(int pageIndex, int pageSize, string SearchCustomerName = null, string SearchCustomerID = null)
         {
             var baseAddress = "CustomerDetails";
             CustomerEntityDetails cusEnt = new CustomerEntityDetails();
             using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
             {
-                HttpResponseMessage response = client.GetAsync(baseAddress + "/GetCustomerDetails?pageIndex="+ pageIndex + "&pageSize=" + pageSize+ "&SearchCustName=" + SearchCustName+ "&SearchCustVendorType=" + SearchCustVendorType + "&SearchCustVendorID=" + SearchCustVendorID + "&SearchCustVendorNature=" + SearchCustVendorNature + "&SearchCustFunctionalArea=" + SearchCustFunctionalArea).Result;
+                HttpResponseMessage response = client.GetAsync(baseAddress + "/GetCustomerDetails?pageIndex="+ pageIndex + "&pageSize=" + pageSize+ "&SearchCustomerName=" + SearchCustomerName + "&SearchCustomerID=" + SearchCustomerID).Result;
                 if (response.IsSuccessStatusCode)
                 {
                     var data = response.Content.ReadAsStringAsync().Result;
@@ -133,14 +133,14 @@ namespace NtierMvc.Model
             return msgCode;
         }
 
-        public List<DropDownEntity> GetDdlValueForCustomer(string type, string VendorType = null, string VendorNatureId = null, string VendorName = null, string FunctionalArea = null)
+        public List<DropDownEntity> GetDdlValueForCustomer(string type, string CustomerId = null)
         {
             var baseAddress = "CustomerDetails";
             List<DropDownEntity> newDdl = new List<DropDownEntity>();
 
             using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
             {
-                HttpResponseMessage response = client.GetAsync(baseAddress + "/GetDdlValueForCustomer?Type=" + type + "&VendorType=" + VendorType + "&VendorNatureId=" + VendorNatureId + "&VendorName=" + VendorName + "&FunctionalArea=" + FunctionalArea).Result;
+                HttpResponseMessage response = client.GetAsync(baseAddress + "/GetDdlValueForCustomer?Type=" + type + "&CustomerId=" + CustomerId).Result;
                 if (response.IsSuccessStatusCode)
                 {
                     var data = response.Content.ReadAsStringAsync().Result;

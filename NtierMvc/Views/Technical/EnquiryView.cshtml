@@ -9,7 +9,7 @@
 <div class="row mt-3">
     <table class="table-borderless">
         <tr>
-            <td>                
+            <td>
             </td>
             <td>
                 <label>EOQ</label>
@@ -17,12 +17,12 @@
             <td>
                 <label>Product Group</label>
             </td>
-            <td>
-                <label>Vendor Id</label>
-            </td>
             @*<td>
-                    <label>Vendor Name</label>
-                </td>*@
+            <label>Vendor Id</label>
+        </td>
+        <td>
+                <label>Vendor Name</label>
+            </td>*@
             <td>
                 <label>Month</label>
             </td>
@@ -49,24 +49,24 @@
                                @id = "EQProductGroup"
                            })
             </td>
-            <td>
-                @Html.DropDownList("VendorId", new SelectList(@ViewBag.ListVendorId, "DataStringValueField", "DataTextField", "Select"),
-                           new
-                           {
-                               @class = "form-control",
-                               ng_model = "SearchEnqVendorID",
-                               @id = "EQVendorId",
-                               @multiple = "true"
-                           })
-            </td>
             @*<td>
-                     @Html.DropDownList("VendorName", new SelectList(@ViewBag.ListVendorName, "DataStringValueField", "DataTextField", "Select"), new
-                {
-                    @class = "form-control",
-                    ng_model = "SearchEnqName",
-                    @id = "EQVendorName"
-                })
-                 </td>*@
+            @Html.DropDownList("VendorId", new SelectList(@ViewBag.ListVendorId, "DataStringValueField", "DataTextField", "Select"),
+                       new
+                       {
+                           @class = "form-control",
+                           ng_model = "SearchEnqVendorID",
+                           @id = "EQVendorId",
+                           @multiple = "true"
+                       })
+        </td>
+        <td>
+                 @Html.DropDownList("VendorName", new SelectList(@ViewBag.ListVendorName, "DataStringValueField", "DataTextField", "Select"), new
+            {
+                @class = "form-control",
+                ng_model = "SearchEnqName",
+                @id = "EQVendorName"
+            })
+             </td>*@
             <td>
                 @Html.DropDownList("Month", new SelectList(@ViewBag.ListMonth, "DataStringValueField", "DataTextField", "Select"),
                            new

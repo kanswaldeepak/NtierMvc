@@ -63,16 +63,13 @@ namespace NtierMvc.DataAccess.Pool
             return dt;
         }
 
-        public DataSet GetCustomerDetails(int pageIndex, int pageSize, string SearchCustName = null, string SearchCustVendorID = null, string SearchCustVendorType = null, string SearchCustVendorNature = null, string SearchCustFunctionalArea = null)
+        public DataSet GetCustomerDetails(int pageIndex, int pageSize, string SearchCustomerName = null, string SearchCustomerID = null)
         {
             var parms = new Dictionary<string, object>();
             parms.Add("@pageIndex", pageIndex);
             parms.Add("@pageSize", pageSize);
-            parms.Add("@SearchCustName", SearchCustName);
-            parms.Add("@SearchCustVendorID", SearchCustVendorID);
-            parms.Add("@SearchCustVendorType", SearchCustVendorType);
-            parms.Add("@SearchCustVendorNature", SearchCustVendorNature);
-            parms.Add("@SearchCustFunctionalArea", SearchCustFunctionalArea);
+            parms.Add("@SearchCustomerName", SearchCustomerName);
+            parms.Add("@SearchCustomerID", SearchCustomerID);
             string spName = ConfigurationManager.AppSettings["GetCustomerDetails"];
             return _dbAccess.GetDataSet(spName, parms);
         }
@@ -96,14 +93,11 @@ namespace NtierMvc.DataAccess.Pool
 
         }
 
-        public DataTable GetDdlValueForCustomer(string type, string VendorType = null, string VendorNatureId = null, string VendorName = null, string FunctionalArea = null)
+        public DataTable GetDdlValueForCustomer(string type, string CustomerId = null)
         {
             var parms = new Dictionary<string, object>();
             parms.Add("@Type", type);
-            parms.Add("@VendorType", VendorType);
-            parms.Add("@VendorNatureId", VendorNatureId);
-            parms.Add("@VendorNameId", VendorName);
-            parms.Add("@FunctionalArea", FunctionalArea);
+            parms.Add("@CustomerId", CustomerId);
             
             string spName = ConfigurationManager.AppSettings["GetDdlValueForCustomer"];
             return _dbAccess.GetDataTable(spName, parms);

@@ -16,81 +16,81 @@
                 }
             </td>
             <td>
+                <label>Country</label>
+            </td>
+            <td>
                 <label>Customer ID</label>
             </td>
             <td>
                 <label>Customer Name</label>
             </td>
-            <td>
-                <label>Function Area</label>
-            </td>
-            @*<td>
-                <label>Quote Type</label>
-            </td>*@
+            @*    <td>
+            <label>Quote Type</label>
+        </td>*@
         </tr>
         <tr>
             <td></td>
             @*<td>
-                @Html.DropDownList("VendorType", new SelectList(@ViewBag.ListVendorType, "DataStringValueField", "DataTextField", "Select"),
+            @Html.DropDownList("VendorType", new SelectList(@ViewBag.ListVendorType, "DataStringValueField", "DataTextField", "Select"),
+                       new
+                       {
+                           @class = "form-control",
+                           ng_model = "SearchCustVendorType",
+                           @id = "CUVendorType"
+                       })
+        </td>*@
+            <td>
+                @Html.DropDownList("Country", new SelectList(@ViewBag.ListCountry, "DataStringValueField", "DataTextField", "Select"),
                            new
                            {
                                @class = "form-control",
-                               ng_model = "SearchCustVendorType",
-                               @id = "CUVendorType"
+                               ng_model = "SearchCountry",
+                               @id = "CUCountryId"
                            })
             </td>
             <td>
-                @Html.DropDownList("VendorNatureId", new SelectList(@ViewBag.ListVendorNature, "DataStringValueField", "DataTextField", "Select"),
+                @Html.DropDownList("CustomerId", new SelectList(@ViewBag.ListCustomerId, "DataStringValueField", "DataTextField", "Select"),
                            new
                            {
                                @class = "form-control",
-                               ng_model = "SearchCustVendorNature",
-                               @onchange = "GetVendorListForCust()",
-                               @id = "CUVendorNatureId"
-                           })
-            </td>*@
-            <td>
-                @Html.DropDownList("VendorId", new SelectList(@ViewBag.ListVendorId, "DataStringValueField", "DataTextField", "Select"),
-                           new
-                           {
-                               @class = "form-control",
-                               ng_model = "SearchCustVendorID",
-                               @id = "CUVendorId",
+                               ng_model = "SearchCustomerID",
+                               @id = "CUCustomerId",
                                @multiple = "true"
                            })
             </td>
             <td>
-                @Html.DropDownList("VendorName", new SelectList(@ViewBag.ListVendorName, "DataStringValueField", "DataTextField", "Select"),
+                @Html.DropDownList("CustomerName", new SelectList(@ViewBag.ListCustomerName, "DataStringValueField", "DataTextField", "Select"),
                           new
                           {
                               @class = "form-control",
-                              ng_model = "SearchCustName",
-                              @id = "CUVendorName"
+                              ng_model = "SearchCustomerName",
+                              @id = "CUCustomerName",
+                              @multiple = "true"
                           })
-            </td>
-            <td>
-                @Html.DropDownList("FunctionalAreaId", new SelectList(@ViewBag.ListFunctionalArea, "DataStringValueField", "DataTextField", "Select"),
-                           new
-                           {
-                               @class = "form-control",
-                               ng_model = "SearchCustFunctionalArea",
-                               @id = "CUFunctionalArea"
-                           })
-            </td>
-            @*<td>
-                @Html.DropDownList("QuoteType", new SelectList(@ViewBag.ListQuoteType, "DataStringValueField", "DataTextField", "Select"),
-                           new
-                           {
-                               @class = "form-control",
-                               ng_model = "SearchQuoteType",
-                               @id = "CUQuoteType",
-                               @multiple = "true"
-                           })
-            </td>*@
-            <td>
                 <button class="btn btn-link" type="button" id="btnSearch" ng-click="FetchCustomerList()">
                     <i class="fa fa-search"></i>
                 </button>
+            </td>
+            @*<td>
+                @Html.DropDownList("CountryId", new SelectList(@ViewBag.ListCountry, "DataStringValueField", "DataTextField", "Select"),
+                           new
+                           {
+                               @class = "form-control",
+                               ng_model = "SearchCustCountry",
+                               @id = "CUCountry"
+                           })
+            </td>
+            <td>
+            @Html.DropDownList("QuoteType", new SelectList(@ViewBag.ListQuoteType, "DataStringValueField", "DataTextField", "Select"),
+                       new
+                       {
+                           @class = "form-control",
+                           ng_model = "SearchQuoteType",
+                           @id = "CUQuoteType",
+                           @multiple = "true"
+                       })
+        </td>*@
+            <td>
             </td>
         </tr>
     </table>
@@ -108,13 +108,10 @@
                         Customer Id
                     </td>
                     <td>
-                        Function Area
-                    </td>
-                    <td>
                         Customer Name
                     </td>
                     <td>
-                        City
+                        Country
                     </td>
                     <td>
                         Contact Person
@@ -142,20 +139,16 @@
                                 <i class="fa fa-trash"></i>
                             </button>
                         }
-                        </td>
+                    </td>
                     <td>
                         {{L.CustomerId}}
-                    </td>                    
-                    <td>
-                        {{L.FunctionArea}}
                     </td>
                     <td>
                         {{L.CustomerName}}
                     </td>
                     <td>
-                        {{L.City}}
+                        {{L.Country}}
                     </td>
-
                     <td>
                         {{L.ContactPerson}}
                     </td>
@@ -163,14 +156,11 @@
                         {{L.Designation}}
                     </td>
                     @*<td>
-                        {{L.State}}
-                        </td>
-                        <td>
-                            {{L.Country}}
-                        </td>
-                        <td>
-                            {{L.email1}}
-                        </td>*@
+        {{L.State}}
+        </td>
+        <td>
+            {{L.email1}}
+        </td>*@
                     <td>
                         {{L.mob1}}
                     </td>
@@ -214,37 +204,6 @@
             </tfoot>
         </table>
     </div>
-</div>
-
-
-<div class="modal" id="addCustomerDetails" tabindex="-1" role="dialog">
-    @using (Ajax.BeginForm(actionName: "SaveCustomerDetails", controllerName: "Customer", ajaxOptions: new AjaxOptions
-    {
-        HttpMethod = "POST"
-        // OnSuccess = "BuildingSpaceDetails.UploadFiles"
-    },
-            routeValues: null,
-            htmlAttributes: new { id = "frmCustomerDetails" }))
-    {
-        <div class="modal-dialog" style="width:80%; max-width: 80%;" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    @*@Html.HiddenFor(m => m.TrnBuildingHdrId)*@
-                    <h5 class="modal-title">Add Customer Details</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div id="div-Staff-details" class="modal-body">
-
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" id="btnSubmit" class="btn btn-primary">Save</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    }
 </div>
 
 
@@ -311,32 +270,24 @@
 
     $(document).ready(function () {
 
-        window.GetVendorListForCusts = '@Url.Action("GetVendorListForCust","Customer")';
-        window.GetDdlValueForCustomer = '@Url.Action("GetDdlValueForCustomer", "Customer")';
+        window.GetCustomerListForCusts = '@Url.Action("GetCustomerListForCust","CRM")';
+        window.GetDdlValueForCustomer = '@Url.Action("GetDdlValueForCustomer", "CRM")';
 
-        $('#CUVendorType').chosen({
+        $('#CUCustomerId').chosen({
             width: "150px",
-            placeholder_text_single: "Select VendorType"
+            placeholder_text_single: "Select CustomerId",
+            placeholder_text_multiple: "Select CustomerIds"
         });
 
-        $('#CUVendorNatureId').chosen({
+        $('#CUCustomerName').chosen({
             width: "210px",
-            placeholder_text_single: "Select VendorNatureId"
+            placeholder_text_single: "Select CustomerName"
         });
 
-        $('#CUVendorId').chosen({
-            width: "150px",
-            placeholder_text_single: "Select VendorId"
-        });
-
-        $('#CUVendorName').chosen({
-            width: "210px",
-            placeholder_text_single: "Select VendorName"
-        });
-
-        $('#CUFunctionalArea').chosen({
+        $('#CUCountry').chosen({
             width: "180px",
-            placeholder_text_single: "Select FunctionalArea"
+            placeholder_text_single: "Select Country",
+            placeholder_text_multiple: "Select Countries"
         });
 
         //$('#CUQuoteType').chosen({
@@ -344,117 +295,64 @@
         //    placeholder_text_single: "Select QuoteType"
         //});
 
-
-        $('#CUVendorType').chosen().change(
-            function GetVendorType() {
-                var VendorType = $('#CUVendorType').val();
-                
-                return $.ajax({
-                    contentType: 'application/json; charset=utf-8',
-                    dataType: 'json',
-                    type: 'GET',
-                    url: window.GetDdlValueForCustomer,
-                    data: { type: 'VendorNature', VendorType: VendorType },
-                    success: function (res) {
-                        if (res.length > 0) {
-                            $("#CUVendorNatureId").empty();
-                            $.each(res, function (i, item) {
-                                $("#CUVendorNatureId").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
-                                $("#CUVendorNatureId").trigger("chosen:updated");
-                            })
-                        }
-                    },
-                    error: function () {
-                        alert(result);
-                    }
-                });
-            }
-        )
-
-
-        $("#CUVendorNatureId").chosen().change(
-            function GetVendorName() {
-                var VendorNatureId = $('#CUVendorNatureId').val();
+        $("#CUCountryId").chosen().change(
+            function GetCustomerId() {
+                var CountryId = $('#CUCountryId').val();
 
                 return $.ajax({
                     contentType: 'application/json; charset=utf-8',
                     dataType: 'json',
                     type: 'GET',
                     url: window.GetDdlValueForCustomer,
-                    data: { VendorNatureId: VendorNatureId, type: 'VendorId' },
+                    data: { type: 'CustomerId', CountryId: CountryId, CustomerId: '' },
                     success: function (res) {
                         if (res.length > 0) {
-                            $("#CUVendorId").empty();
+                            $("#CUCustomerId").empty();
                             $.each(res, function (i, item) {
-                                $("#CUVendorId").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
-                                $("#CUVendorId").trigger("chosen:updated");
+                                $("#CUCustomerId").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
+                                $("#CUCustomerId").trigger("chosen:updated");
                             })
                         }
                     },
-                    error: function () {
-                        alert(result);
+                    error: function (res) {
+                        alert(res);
                     }
                 });
             }
         )
 
-        $("#CUVendorId").chosen().change(
+
+        $("#CUCustomerId").chosen().change(
             function GetFunctionalArea() {
-                //var VendorNameId = $('#CUVendorId').val();
-                var VendorNameId = '';
-                var x = document.getElementById("CUVendorId");
+                //var CustomerNameId = $('#CUCustomerId').val();
+                var CustomerId = '';
+                var x = document.getElementById("CUCustomerId");
                 for (var i = 0; i < x.options.length; i++) {
                     if (x.options[i].selected == true) {
                         //alert(x.options[i].value);
-                        VendorNameId = VendorNameId + x.options[i].value + ',';
+                        CustomerId = CustomerId + x.options[i].value + ',';
                     }
                 }
 
-                VendorNameId = VendorNameId.substring(0, VendorNameId.length - 1);
+                CustomerId = CustomerId.substring(0, CustomerId.length - 1);
 
                 return $.ajax({
                     contentType: 'application/json; charset=utf-8',
                     dataType: 'json',
                     type: 'GET',
                     url: window.GetDdlValueForCustomer,
-                    data: { VendorName: VendorNameId, type: 'VendorName' },
+                    data: { type: 'CustomerName', CountryId: '', CustomerId: CustomerId },
                     success: function (res) {
                         if (res.length > 0) {
-                            $("#CUVendorName").empty();
+                            $("#CUCustomerName").empty();
                             $.each(res, function (i, item) {
-                                $("#CUVendorName").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
-                                $("#CUVendorName").trigger("chosen:updated");
+                                $("#CUCustomerName").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
+                                $("#CUCustomerName").trigger("chosen:updated");
                             })
                         }
                     },
-                    error: function () {
-                        alert(result);
-                    }
-                });
-            }
-        )
-
-        $("#CUVendorName").chosen().change(
-            function GetFunctionalArea() {
-                var VendorNameId = $('#CUVendorName').val();
-
-                return $.ajax({
-                    contentType: 'application/json; charset=utf-8',
-                    dataType: 'json',
-                    type: 'GET',
-                    url: window.GetDdlValueForCustomer,
-                    data: { VendorName: VendorNameId, type: 'FunctionalArea' },
-                    success: function (res) {
-                        if (res.length > 0) {
-                            $("#CUFunctionalArea").empty();
-                            $.each(res, function (i, item) {
-                                $("#CUFunctionalArea").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
-                                $("#CUFunctionalArea").trigger("chosen:updated");
-                            })
-                        }
-                    },
-                    error: function () {
-                        alert(result);
+                    error: function (res) {
+                        alert(res);
                     }
                 });
             }
@@ -494,7 +392,7 @@
             }
         }
     }
-   
+
     function GetVendorListForCust() {
         let VendorNature = $('#VendorNatureId').val();
 
@@ -506,9 +404,9 @@
             contentType: 'application/json; charset=utf-8',
             success: function (res) {
                 if (res.length > 0) {
-                    $("#VendorId").empty();
+                    $("#CustomerId").empty();
                     $.each(res, function (i, item) {
-                        $("#VendorId").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
+                        $("#CustomerId").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
                     })
                 }
             },

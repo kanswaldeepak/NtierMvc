@@ -39,16 +39,13 @@ namespace NtierMvc.Controllers
         public ActionResult CRMMaster()
         {
             //Customer
-            ViewBag.ListVendorName = model.GetMasterTableStringList("Clientele_Master", "VendorName", "VendorName", "", "", GeneralConstants.ListTypeN);
-            ViewBag.ListVendorId = model.GetMasterTableStringList("Clientele_Master", "Id", "VendorId", "", "", GeneralConstants.ListTypeN);
-            ViewBag.ListVendorNature = model.GetMasterTableStringList("Master.Vendor", "Id", "VendorNature", "", "", GeneralConstants.ListTypeN);
-            ViewBag.ListFunctionalArea = model.GetMasterTableStringList("Master.FunctionalArea", "Id", "FunctionArea", "", "", GeneralConstants.ListTypeN);
-            ViewBag.ListVendorType = model.GetMasterTableStringList("Master.Vendor", "Id", "VendorType", "", "", GeneralConstants.ListTypeN);
-            ViewBag.ListQuoteType = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "QuoteType", "Property", GeneralConstants.ListTypeN);
+            ViewBag.ListCustomerName = model.GetMasterTableStringList("Customer", "CustomerName", "CustomerName", "", "", GeneralConstants.ListTypeN);
+            ViewBag.ListCustomerId = model.GetMasterTableStringList("Customer", "Id", "CustomerId", "", "", GeneralConstants.ListTypeN);
+            ViewBag.ListCountry = model.GetMasterTableStringList("Master.Country", "Id", "Country", "", "", GeneralConstants.ListTypeN);
 
 
             //Enquiry
-            ViewBag.ListProdGrp = model.GetMasterTableStringList("Master.ProductLine", "Id", "Product", "", "", GeneralConstants.ListTypeN);            
+            ViewBag.ListProdGrp = model.GetMasterTableStringList("Master.ProductLine", "Id", "Product", "", "", GeneralConstants.ListTypeN);
             ViewBag.ListEOQ = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "Expression of Quote(EOQ)", "Property", GeneralConstants.ListTypeN);
             Dictionary<string, string> Months = new Dictionary<string, string>();
             Months.Add(Convert.ToString(DateTime.Now.Month), "Current Month");
@@ -97,15 +94,12 @@ namespace NtierMvc.Controllers
             return View(custDetail);
         }
 
-        public JsonResult FetchCustomerList(string pageIndex, string pageSize, string SearchCustName, string SearchCustVendorType, string SearchCustVendorID, string SearchCustVendorNature, string SearchCustFunctionalArea)
+        public JsonResult FetchCustomerList(string pageIndex, string pageSize, string SearchCustomerName, string SearchCustomerID)
         {
-            SearchCustName = SearchCustName == "-1" ? string.Empty : SearchCustName;
-            SearchCustVendorID = SearchCustVendorID == "-1" ? string.Empty : SearchCustVendorID;
-            SearchCustVendorType = SearchCustVendorType == "-1" ? string.Empty : SearchCustVendorType;
-            SearchCustVendorNature = SearchCustVendorNature == "-1" ? string.Empty : SearchCustVendorNature;
-            SearchCustFunctionalArea = SearchCustFunctionalArea == "-1" ? string.Empty : SearchCustFunctionalArea;
+            SearchCustomerName = SearchCustomerName == "-1" ? string.Empty : SearchCustomerName;
+            SearchCustomerID = SearchCustomerID == "-1" ? string.Empty : SearchCustomerID;
 
-            custDetail = objManager.GetCustomerDetails(Convert.ToInt32(pageIndex), Convert.ToInt32(pageSize), SearchCustName, SearchCustVendorID, SearchCustVendorType, SearchCustVendorNature, SearchCustFunctionalArea);
+            custDetail = objManager.GetCustomerDetails(Convert.ToInt32(pageIndex), Convert.ToInt32(pageSize), SearchCustomerName, SearchCustomerID);
             return new JsonResult { Data = custDetail, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
             //return custDetail.LstCusEnt;
         }
@@ -137,7 +131,7 @@ namespace NtierMvc.Controllers
         }
 
         [HttpPost]
-        public ActionResult CustomerPopup(string actionType, string CustomerId=null)
+        public ActionResult CustomerPopup(string actionType, string CustomerId = null)
         {
             string countryId = "0";
             ViewBag.ListState = model.GetStateDetail(countryId); //Given wrong CountryId to not get any value
@@ -201,17 +195,21 @@ namespace NtierMvc.Controllers
 
         public JsonResult GetVendorListForCust(string VendorNatureId)
         {
-            var Ddl = model.GetDropDownList("Clientele_Master",GeneralConstants.ListTypeD,"Id","VendorID",VendorNatureId, "VendorNatureId");
+            var Ddl = model.GetDropDownList("Clientele_Master", GeneralConstants.ListTypeD, "Id", "VendorID", VendorNatureId, "VendorNatureId");
             return new JsonResult { Data = Ddl, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 
-        public ActionResult GetDdlValueForCustomer(string type, string VendorType = null, string VendorNatureId = null, string VendorName = null, string FunctionalArea = null)
+        public ActionResult GetDdlValueForCustomer(string type, string CountryId = null, string CustomerId = null)
         {
             List<DropDownEntity> ddl = new List<DropDownEntity>();
-            ddl = objManager.GetDdlValueForCustomer(type, VendorType, VendorNatureId, VendorName, FunctionalArea);
+
+            if (type == "CustomerId")
+                ddl = model.GetDropDownList("Customer", GeneralConstants.ListTypeD, "Id", "CustomerID", CountryId, "Country");
+            else if (type == "CustomerName")
+                ddl = objManager.GetDdlValueForCustomer(type, CustomerId);
+
             return new JsonResult { Data = ddl, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
-
 
 
 
