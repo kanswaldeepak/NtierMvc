@@ -480,6 +480,14 @@ namespace NtierMvc.Areas.HRDepartment.Controllers
             return Json(result + files.Count + " Files Uploaded!");
         }
 
+        public JsonResult GetEmpCertificates(string EmpId)
+        {
+            List<TableRecordsEntity> NewStr = new List<TableRecordsEntity>();
+            NewStr = model.GetTableDataList(GeneralConstants.ListTypeD, "EmpCertificate", "EmpId", EmpId, "", "", "", "", "", "", "", "", "Id", "CertValue");
+            return Json(NewStr);
+        }
+
+
 
     }
 }

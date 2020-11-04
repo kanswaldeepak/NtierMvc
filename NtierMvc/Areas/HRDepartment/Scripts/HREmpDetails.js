@@ -145,6 +145,7 @@ function SaveCertificates() {
     //var fileEduc = $("#fileEduc").get(0).files;
     //var filePostGrad = $("#filePostGrad").get(0).files;
 
+    ShowLoadder();
     var fileData = new FormData();
     fileData.append("fileTech", fileTech);
     fileData.append("EmpId", empId);
@@ -159,16 +160,19 @@ function SaveCertificates() {
 
     $.ajax({
         type: "POST",
-        url: "/HR/SaveEmpCertificates",
+        url: window.SaveEmpCertificates,
         dataType: "json",
         contentType: false, // Not to set any content header
         processData: false, // Not to process data
         data: fileData,
         success: function (result, status, xhr) {
             alert(result);
+            HideLoadder();
+            $("#ModalPopup").modal('hide');
         },
         error: function (xhr, status, error) {
             alert(status);
+            HideLoadder();
         }
     });
 };
