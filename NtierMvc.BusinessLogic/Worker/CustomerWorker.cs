@@ -195,8 +195,8 @@ namespace NtierMvc.BusinessLogic.Worker
                     //Model.VendorType = dt1.Rows[0]["VendorType"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["VendorType"]);
                     //Model.VendorNatureId = dt1.Rows[0]["VendorNatureId"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["VendorNatureId"]);
                     //Model.VendorNature = dt1.Rows[0]["VendorNature"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["VendorNature"]);
-                    Model.FunctionAreaId = dt1.Rows[0]["FunctionAreaId"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["FunctionAreaId"]);
-                    Model.FunctionArea = dt1.Rows[0]["FunctionArea"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["FunctionArea"]);
+                    //Model.FunctionAreaId = dt1.Rows[0]["FunctionAreaId"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["FunctionAreaId"]);
+                    //Model.FunctionArea = dt1.Rows[0]["FunctionArea"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["FunctionArea"]);
                     Model.CustomerName = dt1.Rows[0]["CustomerName"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["CustomerName"]);
                     Model.Address1 = dt1.Rows[0]["Address1"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["Address1"]);
                     Model.Address2 = dt1.Rows[0]["Address2"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["Address2"]);
@@ -204,6 +204,7 @@ namespace NtierMvc.BusinessLogic.Worker
                     Model.City = dt1.Rows[0]["City"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["City"]);
                     Model.State = dt1.Rows[0]["State"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["State"]);
                     Model.Country = dt1.Rows[0]["Country"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["Country"]);
+                    Model.CountryId = dt1.Rows[0]["CountryId"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["CountryId"]);
 
                     Model.ZipCode = dt1.Rows[0]["ZipCode"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["ZipCode"]);
                     Model.tel1 = dt1.Rows[0]["tel1"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["tel1"]);
@@ -226,12 +227,12 @@ namespace NtierMvc.BusinessLogic.Worker
             return Model;
         }
 
-        public List<DropDownEntity> GetDdlValueForCustomer(string type, string CustomerId = null)
+        public List<DropDownEntity> GetDdlValueForCustomer(string type, string CountryId, string CustomerId = null)
         {
             try
             {
                 List<DropDownEntity> lstDdl = new List<DropDownEntity>();
-                DataTable dt = _repository.GetDdlValueForCustomer(type, CustomerId);
+                DataTable dt = _repository.GetDdlValueForCustomer(type, CountryId, CustomerId);
                 DropDownEntity entity;
 
                 if (dt.Rows.Count > 0)
@@ -248,6 +249,20 @@ namespace NtierMvc.BusinessLogic.Worker
 
                             lstDdl.Add(entity);
                         }
+
+                    else if (type == "CountryId")
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            entity = new DropDownEntity();
+                            if (dt.Columns.Contains("Id"))
+                                entity.DataStringValueField = Convert.ToString(dr["Id"] ?? "0");
+
+                            if (dt.Columns.Contains("CustomerID"))
+                                entity.DataTextField = dr["CustomerID"]?.ToString() ?? "";
+
+                            lstDdl.Add(entity);
+                        }
+
                 }
 
                 DropDownEntity entity1 = new DropDownEntity();

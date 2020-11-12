@@ -33,7 +33,7 @@ namespace NtierMvc.DataAccess.Pool
             parms.Add("@address3", objUser.Address3);
             parms.Add("@city", objUser.City);
             parms.Add("@state", objUser.State);
-            parms.Add("@country", objUser.Country);
+            parms.Add("@country", objUser.CountryId);
             parms.Add("@zipcode", objUser.ZipCode);
             parms.Add("@tel1", objUser.tel1);
             parms.Add("@tel2", objUser.tel2);
@@ -93,10 +93,11 @@ namespace NtierMvc.DataAccess.Pool
 
         }
 
-        public DataTable GetDdlValueForCustomer(string type, string CustomerId = null)
+        public DataTable GetDdlValueForCustomer(string type, string CountryId, string CustomerId = null)
         {
             var parms = new Dictionary<string, object>();
             parms.Add("@Type", type);
+            parms.Add("@CountryId", CountryId);
             parms.Add("@CustomerId", CustomerId);
             
             string spName = ConfigurationManager.AppSettings["GetDdlValueForCustomer"];

@@ -19,6 +19,6 @@ namespace NtierMvc.BusinessLogic.Interface
         CustomerEntityDetails GetCustomerDetails(int pageIndex, int pageSize, string SearchCustomerName = null, string SearchCustomerID = null);
 
         CustomerEntity CustomerDetailsPopup(CustomerEntity Model);
-        List<DropDownEntity> GetDdlValueForCustomer(string type, string CustomerId = null);
+        List<DropDownEntity> GetDdlValueForCustomer(string type, string CountryId, string CustomerId = null);
     }
 }

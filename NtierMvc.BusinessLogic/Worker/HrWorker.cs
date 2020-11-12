@@ -258,8 +258,7 @@ namespace NtierMvc.BusinessLogic.Worker
                     Model.BankLoc = dt1.Rows[0]["BANKLOC"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["BANKLOC"]);
                     Model.IFScode = dt1.Rows[0]["IFSCODE"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["IFSCODE"]);
                     Model.BankLoc = dt1.Rows[0]["BANKLOC"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["BANKLOC"]);
-                    Model.BankLoc = dt1.Rows[0]["BANKLOC"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["BANKLOC"]);
-
+                    
                     Model.EmpImage = dt1.Rows[0]["EmpImage"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["EmpImage"]);
                 }
             }

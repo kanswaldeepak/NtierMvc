@@ -163,8 +163,10 @@ namespace NtierMvc.Controllers
         {
             if (ModelState.IsValid)
             {
-                string msgCode = objManager.DeleteCustomerDetail(id);
-                if (msgCode == "")
+                //string msgCode = objManager.DeleteCustomerDetail(id);
+                string msgCode = model.DeleteFormTable("Customer","Id",id.ToString());
+
+                if (msgCode == GeneralConstants.DeleteSuccess)
                 {
                     //return RedirectToAction("Customer");
                     return new JsonResult { Data = GeneralConstants.DeleteSuccess, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
@@ -203,10 +205,11 @@ namespace NtierMvc.Controllers
         {
             List<DropDownEntity> ddl = new List<DropDownEntity>();
 
-            if (type == "CustomerId")
-                ddl = model.GetDropDownList("Customer", GeneralConstants.ListTypeD, "Id", "CustomerID", CountryId, "Country");
+            if (type == "CountryId")
+                ddl = objManager.GetDdlValueForCustomer(type, CountryId);
+            //ddl = model.GetDropDownList("Customer", GeneralConstants.ListTypeD, "Id", "CustomerID", CountryId, "Country");
             else if (type == "CustomerName")
-                ddl = objManager.GetDdlValueForCustomer(type, CustomerId);
+                ddl = objManager.GetDdlValueForCustomer(type, "", CustomerId);
 
             return new JsonResult { Data = ddl, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }

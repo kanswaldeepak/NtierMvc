@@ -124,7 +124,7 @@
                     <div class="form-group">
                         <label class="control-label">COUNTRY <span class="required">*</span></label>
                         <div class="input-group">
-                            @Html.DropDownListFor(m => m.Country, new SelectList(ViewBag.ListCountry, "DataStringValueField", "DataTextField", Model.Country), new
+                            @Html.DropDownListFor(m => m.CountryId, new SelectList(ViewBag.ListCountry, "DataStringValueField", "DataTextField", Model.Country), new
                        {
                            id = "Country",
                            @class = "form-control requiredValidation",

@@ -60,9 +60,9 @@ namespace NtierMvc.API.Controllers.Application
 
         [HttpGet]
         [Route("api/CustomerDetails/GetDdlValueForCustomer")]
-        public IHttpActionResult GetDdlValueForCustomer(string type, string CustomerId = null)
+        public IHttpActionResult GetDdlValueForCustomer(string type, string CountryId, string CustomerId = null)
         {
-            return Ok(_repository.GetDdlValueForCustomer(type, CustomerId));
+            return Ok(_repository.GetDdlValueForCustomer(type, CountryId, CustomerId));
         }
 
 

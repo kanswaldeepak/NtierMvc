@@ -133,14 +133,14 @@ namespace NtierMvc.Model
             return msgCode;
         }
 
-        public List<DropDownEntity> GetDdlValueForCustomer(string type, string CustomerId = null)
+        public List<DropDownEntity> GetDdlValueForCustomer(string type, string CountryId, string CustomerId = null)
         {
             var baseAddress = "CustomerDetails";
             List<DropDownEntity> newDdl = new List<DropDownEntity>();
 
             using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
             {
-                HttpResponseMessage response = client.GetAsync(baseAddress + "/GetDdlValueForCustomer?Type=" + type + "&CustomerId=" + CustomerId).Result;
+                HttpResponseMessage response = client.GetAsync(baseAddress + "/GetDdlValueForCustomer?Type=" + type + "&CountryId=" + CountryId + "&CustomerId=" + CustomerId).Result;
                 if (response.IsSuccessStatusCode)
                 {
                     var data = response.Content.ReadAsStringAsync().Result;

@@ -6,7 +6,7 @@
     ViewBag.Title = "Customer";
 }
 
-<div class="row mt-3">
+<div id="MainController" class="row mt-3">
     <table>
         <tr>
             <td>
@@ -45,7 +45,8 @@
                            {
                                @class = "form-control",
                                ng_model = "SearchCountry",
-                               @id = "CUCountryId"
+                               @id = "CUCountryId",
+                               @multiple = "true"
                            })
             </td>
             <td>
@@ -67,9 +68,10 @@
                               @id = "CUCustomerName",
                               @multiple = "true"
                           })
-                <button class="btn btn-link" type="button" id="btnSearch" ng-click="FetchCustomerList()">
+                <button class="btn btn-link" type="button" id="btnSearchCustomer" ng-click="FetchCustomerList()">
                     <i class="fa fa-search"></i>
                 </button>
+                <button class="btn btn-sm btn-info" type="button" id="btnClearSearchCustomer">Clear</button>
             </td>
             @*<td>
                 @Html.DropDownList("CountryId", new SelectList(@ViewBag.ListCountry, "DataStringValueField", "DataTextField", "Select"),
@@ -284,7 +286,7 @@
             placeholder_text_single: "Select CustomerName"
         });
 
-        $('#CUCountry').chosen({
+        $('#CUCountryId').chosen({
             width: "180px",
             placeholder_text_single: "Select Country",
             placeholder_text_multiple: "Select Countries"
@@ -297,14 +299,24 @@
 
         $("#CUCountryId").chosen().change(
             function GetCustomerId() {
-                var CountryId = $('#CUCountryId').val();
+
+                var CountryId = '';
+                var x = document.getElementById("CUCountryId");
+                for (var i = 0; i < x.options.length; i++) {
+                    if (x.options[i].selected == true) {
+                        //alert(x.options[i].value);
+                        CountryId = CountryId + x.options[i].value + ',';
+                    }
+                }
+
+                CountryId = CountryId.substring(0, CountryId.length - 1);
 
                 return $.ajax({
                     contentType: 'application/json; charset=utf-8',
                     dataType: 'json',
                     type: 'GET',
                     url: window.GetDdlValueForCustomer,
-                    data: { type: 'CustomerId', CountryId: CountryId, CustomerId: '' },
+                    data: { type: 'CountryId', CountryId: CountryId, CustomerId: '' },
                     success: function (res) {
                         if (res.length > 0) {
                             $("#CUCustomerId").empty();
@@ -415,6 +427,20 @@
             }
         })
     }
+
+    $('#btnClearSearchCustomer').click(
+        function ClearFields() {
+
+            //$('#CUCountryId').val('').trigger('chosen:updated');
+            $('#CUCountryId').val([]).trigger('chosen:updated');
+            $('#CUCustomerId').val([]).trigger('chosen:updated');
+            $('#CUCustomerName').val([]).trigger('chosen:updated');
+            //$('#POSearchDeliveryDateFrom').val('');
+            //$('#POSearchDeliveryDateTo').val('');
+            
+            //angular.element(document.getElementById('#MainController')).scope().myfunction('FetchCustomerList');
+        }
+    );
 
 
 </script>

@@ -16,20 +16,22 @@
     <div class="col-md-8">
         <div class="row text-center">
             <div class="col-md-2">
-                <label>Employee Name</label>
+                <label>Department</label>
             </div>
             <div class="col-md-2">
                 <label>Designation</label>
             </div>
             <div class="col-md-2">
-                <label>Department</label>
+                <label>Employee Name</label>
             </div>
-            <div class="col-md-2">
-                <label></label>
-            </div>
-            <div class="col-md-2">
-                <label></label>
-            </div>
+
+
+            @*<div class="col-md-2">
+                    <label></label>
+                </div>
+                <div class="col-md-2">
+                    <label></label>
+                </div>*@
 
         </div>
     </div>
@@ -42,14 +44,15 @@
         <div class="row">
             <div class="col-md-2">
                 <div class="input-group">
-                    @Html.DropDownList("EmployeeName", new SelectList(@ViewBag.ListEmployeeName, "DataStringValueField", "DataTextField", "Select"),
+                    @Html.DropDownList("Department", new SelectList(@ViewBag.ListDepartment, "DataStringValueField", "DataTextField", "Select"),
                            new
                            {
                                @class = "form-control",
-                               ng_model = "SearchEmployeeNameId"
+                               ng_model = "SearchDepartment"
                            })
                 </div>
             </div>
+
             <div class="col-md-2">
                 <div class="input-group">
                     @Html.DropDownList("Designation", new SelectList(@ViewBag.ListDesignation, "DataStringValueField", "DataTextField", "Select"),
@@ -60,13 +63,14 @@
                            })
                 </div>
             </div>
+
             <div class="col-md-2">
                 <div class="input-group">
-                    @Html.DropDownList("Department", new SelectList(@ViewBag.ListDepartment, "DataStringValueField", "DataTextField", "Select"),
+                    @Html.DropDownList("EmployeeName", new SelectList(@ViewBag.ListEmployeeName, "DataStringValueField", "DataTextField", "Select"),
                            new
                            {
                                @class = "form-control",
-                               ng_model = "SearchDepartment"
+                               ng_model = "SearchEmployeeNameId"
                            })
                 </div>
             </div>
@@ -120,24 +124,24 @@
                             Dept
                         </div>
                     </th>
-                    <th>
-                        DateOfBirth
-                        <div class="c3">
-                            DateOfBirth
-                        </div>
-                    </th>
                     @*<th>
-            Unit
-            <div class="c3">
-                Unit
-            </div>
-        </th>*@
-                    <th>
-                        DateOfJoining
-                        <div class="c3">
-                            DateOfJoining
-                        </div>
-                    </th>
+                                        DateOfBirth
+                                        <div class="c3">
+                                            DateOfBirth
+                                        </div>
+                                    </th>
+                                    <th>
+                            Unit
+                            <div class="c3">
+                                Unit
+                            </div>
+                        </th>
+                                    <th>
+                                        DateOfJoining
+                                        <div class="c3">
+                                            DateOfJoining
+                                        </div>
+                                    </th>*@
                     <th>
                         Designation
                         <div class="c3">
@@ -145,17 +149,17 @@
                         </div>
                     </th>
                     @*<th>
-            Mobile
-            <div class="c3">
-                Mobile
-            </div>
-        </th>
-        <th>
-            Email
-            <div class="c3">
-                Email
-            </div>
-        </th>*@
+                            Mobile
+                            <div class="c3">
+                                Mobile
+                            </div>
+                        </th>
+                        <th>
+                            Email
+                            <div class="c3">
+                                Email
+                            </div>
+                        </th>*@
                     <th>
                         State
                         <div class="c3">
@@ -212,24 +216,24 @@
                     <td>
                         {{L.Dept}}
                     </td>
-                    <td>
-                        {{L.DateOfBirth}}
-                    </td>
                     @*<td>
-                            {{L.Unit}}
-                        </td>*@
-                    <td>
-                        {{L.DateOfJoining}}
-                    </td>
+                {{L.DateOfBirth}}
+            </td>
+            <td>
+                    {{L.Unit}}
+                </td>
+        <td>
+            {{L.DateOfJoining}}
+        </td>*@
                     <td>
                         {{L.Designation}}
                     </td>
                     @*<td>
-                            {{L.mob1}}
-                        </td>
-                        <td>
-                            {{L.email}}
-                        </td>*@
+            {{L.mob1}}
+        </td>
+        <td>
+            {{L.email}}
+        </td>*@
                     <td>
                         {{L.State}}
                     </td>
