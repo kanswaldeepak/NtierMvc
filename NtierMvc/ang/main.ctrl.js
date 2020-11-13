@@ -18,9 +18,7 @@ angular.module('App').controller("MainController", function ($scope, $http, $tim
             alert('failed');
         });
     }
-    
-    $scope.FetchCustomerList();
-    
+        
     $scope.CustPageChanged = function () {
         $scope.FetchCustomerList();
     }

@@ -12,19 +12,19 @@
     <div class="tab">
         @if (LocalUtility.CheckUrlForPermission("", "CRM", "CRMMaster", "Customer"))
         {
-            <button class="tablinks" onclick="openCity(event, 'CustomerPartialView')" id="defaultOpen" ng-click="FetchCustomerList()">Customer</button>
+            <button id="defaultOpen" class="tablinks" onclick="openCity(event, 'CustomerPartialView')" ng-click="FetchCustomerList()">Customer</button>
         }
         @if (LocalUtility.CheckUrlForPermission("", "CRM", "CRMMaster", "Enquiry"))
         {
-            <button class="tablinks" onclick="openCity(event, 'EnquiryPartialView')" ng-click="FetchEnquiryList()">Enquiry</button>
+            <button id="EnquiryViewLink" class="tablinks" onclick="openCity(event, 'EnquiryPartialView')" ng-click="FetchEnquiryList()">Enquiry</button>
         }
         @if (LocalUtility.CheckUrlForPermission("", "CRM", "CRMMaster", "Quotation"))
         {
-            <button class="tablinks" onclick="openCity(event, 'QuotationPartialView')" ng-click="FetchQuotationList()">Quotation</button>
+            <button id="QuotationViewLink" class="tablinks" onclick="openCity(event, 'QuotationPartialView')" ng-click="FetchQuotationList()">Quotation</button>
         }
         @if (LocalUtility.CheckUrlForPermission("", "CRM", "CRMMaster", "Order"))
         {
-            <button class="tablinks" onclick="openCity(event, 'OrdersPartialView')" ng-click="FetchOrdersList()">Order</button>
+            <button id="OrdersViewLink" class="tablinks" onclick="openCity(event, 'OrdersPartialView')" ng-click="FetchOrdersList()">Order</button>
         }
     </div>
 
