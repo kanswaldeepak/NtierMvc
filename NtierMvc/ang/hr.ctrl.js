@@ -20,7 +20,7 @@ angular.module('App').controller("HrController", function ($scope, $http, $timeo
         });
     }
 
-    $scope.FetchEmployeeList();
+    //$scope.FetchEmployeeList();
 
     $scope.EmpPageChanged = function () {
         $scope.FetchEmployeeList();

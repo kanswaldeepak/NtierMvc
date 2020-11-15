@@ -16,8 +16,8 @@ namespace NtierMvc.Model.Customer
         public string UserInitial { get; set; }
         public string UnitNo { get; set; }
         public string CustomerId { get; set; }
-        public string VendorTypeId { get; set; }
-        public string VendorType { get; set; }
+        public string CustomerTypeId { get; set; }
+        public string CustomerType { get; set; }
         public string VendorNatureId { get; set; }
         public string VendorNature { get; set; }
         public string FunctionAreaId { get; set; }

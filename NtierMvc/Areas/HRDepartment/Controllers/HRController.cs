@@ -474,8 +474,6 @@ namespace NtierMvc.Areas.HRDepartment.Controllers
                     result = GeneralConstants.SavedSuccess + " File Saved.";
                 }
 
-                //HttpPostedFileBase file = files[i];
-                //file.SaveAs(path + file.FileName);
             }
             return Json(result + files.Count + " Files Uploaded!");
         }
@@ -487,7 +485,36 @@ namespace NtierMvc.Areas.HRDepartment.Controllers
             return Json(NewStr);
         }
 
+        [HttpPost]
+        public JsonResult DeleteCertificates(string CertId)
+        {
+            string result = "";
+            SingleColumnEntity scE = new SingleColumnEntity();
 
+            try
+            {
+                scE = model.GetSingleColumnValues("EmpCertificate", "CertValue", "CertValue", "Id", CertId);
+
+                if (!string.IsNullOrEmpty(scE.DataValueField1))
+                {
+                    string path = System.Web.HttpContext.Current.Server.MapPath(ConfigurationManager.AppSettings["EmployeeCertificates"]);
+
+                    if (System.IO.File.Exists(path + scE.DataValueField1))
+                        System.IO.File.Delete(path + scE.DataValueField1);
+
+                result = model.DeleteFormTable("EmpCertificate", "Id", CertId);
+                }
+
+
+            }
+            catch (Exception Ex)
+            {
+                result = GeneralConstants.NotDeletedError + " " + Ex.Message;
+            }
+
+
+            return new JsonResult { Data = result, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+        }
 
     }
 }

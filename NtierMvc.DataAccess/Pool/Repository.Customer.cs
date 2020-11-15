@@ -24,7 +24,7 @@ namespace NtierMvc.DataAccess.Pool
 
             parms.Add("@userinitial", objUser.UserInitial);
             parms.Add("@unitno", objUser.UnitNo);
-            //parms.Add("@vendortypeid", objUser.VendorTypeId);
+            //parms.Add("@CustomerTypeId", objUser.CustomerTypeId);
             //parms.Add("@vendornatureid", objUser.VendorNatureId);
             parms.Add("@functionareaid", objUser.FunctionAreaId);
             parms.Add("@CustomerName", objUser.CustomerName);

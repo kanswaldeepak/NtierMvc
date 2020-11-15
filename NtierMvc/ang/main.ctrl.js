@@ -195,7 +195,7 @@ angular.module('App').controller("MainController", function ($scope, $http, $tim
         $scope.FetchEnquiryList();
     }
 
-    $scope.FetchEnquiryList();
+    //$scope.FetchEnquiryList();
 
     $scope.BindEnquiryPopup = function () {
         var _actionType = "ADD"
@@ -1007,7 +1007,7 @@ angular.module('App').controller("MainController", function ($scope, $http, $tim
         $scope.FetchInboundList();
     }
 
-    $scope.FetchInboundList();
+    //$scope.FetchInboundList();
 
 
     $scope.LoadInboundViewPopup = function (_GateNo) {

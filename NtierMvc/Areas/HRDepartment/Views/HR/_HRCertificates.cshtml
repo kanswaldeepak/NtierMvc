@@ -60,7 +60,7 @@
             </div>
             <div class="row">
                 <div class="col-md-6" style="background-color:white; min-height: 100px;">
-                    <ul id="MailList" style="list-style-type:none; padding-left: 0px;"></ul>
+                    <ul id="CertificateList" style="list-style-type:none; padding-left: 0px;"></ul>
                 </div>
             </div>
             <div class="row">
@@ -84,38 +84,11 @@
         window.StateDetail = '@Url.Action("GetStateDetail", "HR")';
         window.GetEmpCertificates = '@Url.Action("GetEmpCertificates", "HR")';
         window.SaveEmpCertificates = '@Url.Action("SaveEmpCertificates", "HR")';
+        window.DeleteCertificates = '@Url.Action("DeleteCertificates", "HR")';
 
-        var EmpId = $('#EmpId').val();
-
-        $.ajax({
-            type: 'POST',
-            url: window.GetEmpCertificates,
-            data: JSON.stringify({ EmpId: EmpId }),
-            contentType: "application/json; charset=utf-8",
-            success: function (data) {
-                if (data.length > 0) {
-                    $("#MailList").empty();
-                    $.each(data, function (i, item) {
-                        if (item.RequiredColumn1 != "")
-                            $("#MailList").append("<li><a target='_blank' href='/Images/Certificates/Employee/EmployeeCertificates/" + item.RequiredColumn2 + "'><label>" + item.RequiredColumn2 + "</label></a></li>");
-                    })
-                }
-                else {
-                    
-                }
-            },
-            error: function (x, e) {
-                alert('Some error is occurred, Please try after some time.');
-                //$('#spn-Sucess-Failure').text('Some error is occurred, Please try after some time.');
-                //$('#spn-Sucess-Failure').addClass("important red");
-                //$('#Sucess-Failure').modal('show');
-            }
-        })
+        GetCertificateDetails();
 
     });
-
-
-
 
     //LEASE DATE AND EXP LEASE DATE VALIDATION
     $('.CalenderDate').datepicker({

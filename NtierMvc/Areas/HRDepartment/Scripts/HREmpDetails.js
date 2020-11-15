@@ -1,5 +1,50 @@
 ﻿
 
+function GetCertificateDetails() {
+
+    var EmpId = $('#EmpId').val();
+
+    $.ajax({
+        type: 'POST',
+        url: window.GetEmpCertificates,
+        data: JSON.stringify({ EmpId: EmpId }),
+        contentType: "application/json; charset=utf-8",
+        success: function (data) {
+            if (data.length > 0) {
+                $("#CertificateList").empty();
+                $.each(data, function (i, item) {
+                    if (item.RequiredColumn1 != "")
+                        $("#CertificateList").append("<li><a target='_blank' href='/Images/Certificates/Employee/EmployeeCertificates/" + item.RequiredColumn2 + "'><label>" + item.RequiredColumn2 + "</label></a> <button type='button' class='btn btn -outline-danger btn-sm' onclick='DeleteCertificate(" + item.RequiredColumn1 + ")' data-toggle='tooltip' data-placement='bottom' title='DELETE' ><i class='fa fa-trash'></i></button></li>");
+                })
+            }
+        },
+        error: function (x, e) {
+            alert('Some error is occurred, Please try after some time.');
+            //$('#spn-Sucess-Failure').text('Some error is occurred, Please try after some time.');
+            //$('#spn-Sucess-Failure').addClass("important red");
+            //$('#Sucess-Failure').modal('show');
+        }
+    })
+}
+
+function DeleteCertificate(CertId) {
+
+    $.ajax({
+        type: 'POST',
+        url: window.DeleteCertificates,
+        data: JSON.stringify({ CertId: CertId }),
+        contentType: "application/json; charset=utf-8",
+        success: function (data) {
+            GetCertificateDetails();
+            alert(data);
+        },
+        error: function (data) {
+            alert(data);
+        }
+    })
+}
+
+
 function addNewExp(e) {
     e.preventDefault();
     var $tableBody = $("#tableExp");
@@ -166,13 +211,13 @@ function SaveCertificates() {
         processData: false, // Not to process data
         data: fileData,
         success: function (result, status, xhr) {
-            alert(result);
             HideLoadder();
             $("#ModalPopup").modal('hide');
+            alert(result);
         },
         error: function (xhr, status, error) {
-            alert(status);
             HideLoadder();
+            alert(status);
         }
     });
 };

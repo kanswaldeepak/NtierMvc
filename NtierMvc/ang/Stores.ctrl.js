@@ -23,7 +23,7 @@ angular.module('App').controller("StoresController", function ($scope, $http, $t
         });
     }
 
-    $scope.FetchGoodsRecieptList();
+    //$scope.FetchGoodsRecieptList();
 
     $scope.GRPageChanged = function () {
         $scope.FetchGoodsRecieptList();

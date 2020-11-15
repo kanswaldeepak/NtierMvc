@@ -33,5 +33,9 @@
         window.FetchGoodsRecieptList = '@Url.Action("FetchGoodsRecieptList", "Stores")';
     });
 
+    window.onload = function () {
+        angular.element(document.getElementById('TblGoodsRecieptList')).scope().FetchGoodsRecieptList();
+    }
+
     //$timeout($scope.FetchGoodsRecieptList);
 </script>

@@ -22,7 +22,7 @@ angular.module('App').controller("MRMController", function ($scope, $http, $time
         });
     }
 
-    $scope.FetchPRDetailsList();
+    //$scope.FetchPRDetailsList();
 
     $scope.PRPageChanged = function () {
         $scope.FetchPRDetailsList();

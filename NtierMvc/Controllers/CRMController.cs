@@ -41,6 +41,7 @@ namespace NtierMvc.Controllers
             //Customer
             ViewBag.ListCustomerName = model.GetMasterTableStringList("Customer", "CustomerName", "CustomerName", "", "", GeneralConstants.ListTypeN);
             ViewBag.ListCustomerId = model.GetMasterTableStringList("Customer", "Id", "CustomerId", "", "", GeneralConstants.ListTypeN);
+            
             ViewBag.ListCountry = model.GetMasterTableStringList("Master.Country", "Id", "Country", "", "", GeneralConstants.ListTypeN);
 
 
@@ -138,11 +139,12 @@ namespace NtierMvc.Controllers
 
             //ViewBag.ListVENDORTYPE = model.GetMasterTableStringList("Master.Vendor", "Id", "VendorType");
             //ViewBag.ListVENDOR_NATURE = model.GetMasterTableStringList("Master.Vendor", "Id", "VendorNature");
+            ViewBag.ListCustomerType = model.GetMasterTableStringList("Master.Taxonomy", "DropDownId", "DropDownValue", "Domestic/International", "Property", GeneralConstants.ListTypeN);
             ViewBag.ListFUNCTION_AREA = model.GetMasterTableStringList("Master.FunctionalArea", "Id", "FunctionArea");
             ViewBag.ListCountry = model.GetMasterTableStringList("Master.Country", "Id", "Country");
 
-
-            cus.UnitNo = Session["UserId"].ToString();
+            if (!string.IsNullOrEmpty(Session["UserId"].ToString()))
+                cus.UnitNo = Session["UserId"].ToString();
 
             if (actionType == "VIEW" || actionType == "EDIT")
             {
@@ -164,7 +166,7 @@ namespace NtierMvc.Controllers
             if (ModelState.IsValid)
             {
                 //string msgCode = objManager.DeleteCustomerDetail(id);
-                string msgCode = model.DeleteFormTable("Customer","Id",id.ToString());
+                string msgCode = model.DeleteFormTable("Customer", "Id", id.ToString());
 
                 if (msgCode == GeneralConstants.DeleteSuccess)
                 {

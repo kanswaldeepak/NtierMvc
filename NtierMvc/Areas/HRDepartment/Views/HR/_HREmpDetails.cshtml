@@ -5,8 +5,6 @@
 }
 
 <div class="row">
-    @*@using (Html.BeginForm("SaveEmployeeDetails", "Employee", FormMethod.Post, new { enctype = "multipart/form-data", id = "formSaveEmployeeDetail" }))*@
-    @* { *@
     <form id="formSaveEmployeeDetail">
         <div class="col-md-12">
             @Html.HiddenFor(m => m.Id)

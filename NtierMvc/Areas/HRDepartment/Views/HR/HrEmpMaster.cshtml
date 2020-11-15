@@ -85,7 +85,7 @@
 
 <div class="wrapper">
     <div class="container">
-        <table class="text-center">
+        <table id="TblEmployeeList" class="text-center">
             <thead class="tblhead">
                 <tr>
                     <th>
@@ -360,6 +360,9 @@
         }
     }
 
+    window.onload = function () {
+        angular.element(document.getElementById('TblEmployeeList')).scope().FetchEmployeeList();
+    }
 
 </script>
 

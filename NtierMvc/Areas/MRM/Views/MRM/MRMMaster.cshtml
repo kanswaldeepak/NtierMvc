@@ -43,4 +43,8 @@
         window.PurchaseTab = '@Url.Action("PartialPurchase", "MRM")';
         window.BOMTab = '@Url.Action("PartialBOM", "MRM")';
     });
+
+    window.onload = function () {
+        angular.element(document.getElementById('TblPRPlanningList')).scope().FetchPRDetailsList();
+    }
 </script>
