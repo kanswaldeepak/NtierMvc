@@ -1,5 +1,6 @@
 angular.module('App').controller("MainController", function ($scope, $http, $timeout, $compile) {
-    $scope.VendorId = "";
+
+    console.log('Hello');
     //For Pagination
     $scope.maxsize = 5;
     
@@ -29,10 +30,7 @@ angular.module('App').controller("MainController", function ($scope, $http, $tim
     }
 
     $scope.BindCustomerPopup = function () {
-        //$(".btn-Add-CustomerDetails").on("click", function (e) {
         var _actionType = "ADD"
-        //var _CustomerDetailsId = $(this).parents("tr:first").find("#CustomerDetailsId").val();
-        //var _staffProfileName = $(this).parents("tr:first").find("#StaffFirstName").val();
         $.ajax({
             type: "POST",
             data: { actionType: _actionType },

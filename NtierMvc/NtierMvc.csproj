@@ -972,7 +972,10 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\Common\LoginLogo.png" />
     <Content Include="Images\Common\Logo.jpg" />
+    <Content Include="Images\Common\Products_Range.jpg" />
+    <Content Include="Images\Common\QP.jpg" />
     <Content Include="Images\doc.png" />
     <Content Include="Images\excel.png" />
     <Content Include="Images\MailIcon.png" />

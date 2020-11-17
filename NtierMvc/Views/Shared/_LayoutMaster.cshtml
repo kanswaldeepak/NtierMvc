@@ -191,10 +191,10 @@
                 <div class="collapse navbar-collapse">
                     <ul class="nav text-center font-weight-bold-500" style="font-size:18px">
                         <li class="nav-item">
-                            <a class="nav-link" href="@Url.Action("Dashboard","Application")">Home</a>
+                            <a class="nav-link" href="@Url.Action("Home","Application")">Home</a>
                         </li>
                         <li class="nav-item">                            
-                                <a class="nav-link" ng-click="FetchCustomerList()" href="@Url.Action("CRMMaster","CRM", new { Area = "" }, null)">CRM</a>
+                                <a class="nav-link" href="@Url.Action("CRMMaster","CRM", new { Area = "" }, null)">CRM</a>
                         </li>
                         <li class="nav-item">
                                 <a class="nav-link" href=@Url.Action("HRDepartmentMaster", "HR", new { Area = "HRDepartment" }, null)>HR & Payroll Management</a>
