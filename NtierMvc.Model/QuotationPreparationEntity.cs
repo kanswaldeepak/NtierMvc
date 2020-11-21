@@ -34,6 +34,7 @@ namespace NtierMvc.Model
         public int CasingWT { get; set; }
         public int RecordCount { get; set; }
         public string ipAddress { get; set; }
+        public string WallThickness { get; set; }
 
         //For Product Table Details
         public int ViewProductId { get; set; }

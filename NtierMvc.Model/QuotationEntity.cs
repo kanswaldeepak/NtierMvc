@@ -43,6 +43,10 @@ namespace NtierMvc.Model
         public string ipAddress { get; set; }
         public string RevisedQuoteNo { get; set; }
         public string ViewRevisedQuoteNo { get; set; }
+        public string DeliveryTime { get; set; }
+        public string PaymentTerms { get; set; }
+        public string SalesPerson { get; set; }
+        public string Subject { get; set; }
 
     }
 

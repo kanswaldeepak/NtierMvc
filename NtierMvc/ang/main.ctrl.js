@@ -389,7 +389,7 @@ angular.module('App').controller("MainController", function ($scope, $http, $tim
                 if (!($('.modal.in').length)) {
                     $('.modal-dialog').css({
                         top: '5%',
-                        left: '25%'
+                        left: '1%'
                     });
                 }
                 $('#ModalPopup').modal({

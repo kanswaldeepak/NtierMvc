@@ -339,6 +339,21 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label class="control-label">
+                            Delivery Time
+                        </label>
+                        @Html.TextBoxFor(m => m.DeliveryTime, new
+                   {
+                       @class = "form-control",
+                       @id = "DeliveryTime",
+                       @placeholder = "Enter Delivery Time",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                   })
+                        <span class="HideValidMsg">Please Enter Delivery Time</span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="control-label">
                             Mode Of Despatch
                         </label>
                         @Html.TextBoxFor(m => m.ModeOfDespatch, new
@@ -379,24 +394,54 @@
                             @name = "Currency",
                             @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
                         })
-                    <span class="HideValidMsg">Please Select Currency</span>
+                        <span class="HideValidMsg">Please Select Currency</span>
                     </div>
                 </div>
-                @*<div class="col-md-4">
-            <div class="form-group">
-                <label class="control-label">
-                    Lead Time
-                </label>
-                @Html.TextBoxFor(m => m.LeadTime, new
-           {
-               @class = "form-control",
-               @id = "LeadTime",
-               @placeholder = "Enter Lead Time",
-               @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
-           })
-                <span class="HideValidMsg">Please Enter LeadTime</span>
-            </div>
-        </div>*@
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="control-label">
+                            Payment Terms
+                        </label>
+                        @Html.TextBoxFor(m => m.PaymentTerms, new
+                   {
+                       @class = "form-control",
+                       @id = "PaymentTerms",
+                       @placeholder = "Enter Payment Terms",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                   })
+                        <span class="HideValidMsg">Please Enter Payment Terms</span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="control-label">
+                            Sales Person
+                        </label>
+                        @Html.TextBoxFor(m => m.SalesPerson, new
+                   {
+                       @class = "form-control",
+                       @id = "SalesPerson",
+                       @placeholder = "Enter Sales Person",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                   })
+                        <span class="HideValidMsg">Please Enter Sales Person</span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="control-label">
+                            Payment Terms
+                        </label>
+                        @Html.TextBoxFor(m => m.Subject, new
+                   {
+                       @class = "form-control",
+                       @id = "Subject ",
+                       @placeholder = "Enter Subject",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                   })
+                        <span class="HideValidMsg">Please Enter Subject </span>
+                    </div>
+                </div>
             </div>
             <div class="row">
                 <div class="col-md-12">
@@ -471,7 +516,7 @@
             contentType: "application/json; charset=utf-8",
             success: function (res) {
                 $('#QuoteEnqDt').val(res.DataValueField1.split(' ')[0]);
-                $('#QuoteEnqFor').val(res.DataValueField2);                
+                $('#QuoteEnqFor').val(res.DataValueField2);
             },
             error: function (x, e) {
                 alert('Some error is occurred, Please try after some time.' + e);
@@ -482,7 +527,7 @@
         })
     }
 
-    function GetQuoteNumbers() {        
+    function GetQuoteNumbers() {
         //var QuoteType = $("#QuoteFormType option:selected").text();
         var QuoteType = $("#QuoteFormType").val();
         var QuoteTypeText = $("#QuoteFormType option:selected").text();

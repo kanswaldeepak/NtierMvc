@@ -69,7 +69,10 @@ namespace NtierMvc.DataAccess.Pool
             Params.Add("@DeliveryTerms", Model.DeliveryTerms);
             Params.Add("@ModeOfDespatch", Model.ModeOfDespatch);
             Params.Add("@PortOfDischarge", Model.PortOfDischarge);
-            Params.Add("@LeadTime", Model.LeadTime);
+            Params.Add("@DeliveryTime", Model.DeliveryTime);
+            Params.Add("@PaymentTerms", Model.PaymentTerms);
+            Params.Add("@SalesPerson", Model.SalesPerson);
+            Params.Add("@Subject", Model.Subject);
 
             var SPName = ConfigurationManager.AppSettings["SaveQuotationDetails"];
             _dbAccess.ExecuteNonQuery(SPName, Params, "@o_MsgCode", out msgCode);
@@ -100,6 +103,7 @@ namespace NtierMvc.DataAccess.Pool
             Params.Add("@OpenHoleSize", Model.OpenHoleSize);
             Params.Add("@Currency", Model.Currency);
             Params.Add("@BallSize", Model.BallSize);
+            Params.Add("@WallThickness", Model.WallThickness);
 
             //For Product Table
             Params.Add("@ViewProductId", Model.ViewProductId);

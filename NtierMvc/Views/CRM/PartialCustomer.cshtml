@@ -441,8 +441,7 @@
     );
 
     window.onload = function () {
-        console.log('Deepak');
-        angular.element(document.getElementById('TblCustomer')).scope().FetchCustomerList();
+        setTimeout(function () { angular.element(document.getElementById('TblCustomer')).scope().FetchCustomerList(); }, 500);
     }
 
 </script>

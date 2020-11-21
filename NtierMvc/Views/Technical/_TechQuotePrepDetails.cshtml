@@ -73,14 +73,14 @@
                            })
 
                             @*@Html.DropDownListFor(m => m.VendorName, new SelectList(ViewBag.ListVendorName, "DataStringValueField", "DataTextField", Model.VendorName), new
-                                {
-                                    @class = "form-control requiredValidation",
-                                    @id = "VendorName",
-                                    @name = "VendorName",
-                                    @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
-                                    ng_model = "ProductType",
-                                    ng_change = "GetProductNameForProductType(VendorName)"
-                                })*@
+                {
+                    @class = "form-control requiredValidation",
+                    @id = "VendorName",
+                    @name = "VendorName",
+                    @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                    ng_model = "ProductType",
+                    ng_change = "GetProductNameForProductType(VendorName)"
+                })*@
                             <span class="HideValidMsg">Please Select Vendor Name</span>
                         </div>
                     </div>
@@ -118,13 +118,13 @@
                                })
 
                             @*@Html.TextBoxFor(m => m.EnqSrNo, new SelectList(ViewBag.ListEnqNo, "DataStringValueField", "DataTextField", Model.EnqSrNo),
-                                new
-                                {
-                                    @class = "form-control requiredValidation clearField",
-                                    @id = "EnqNo",
-                                    @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                new
+                {
+                    @class = "form-control requiredValidation clearField",
+                    @id = "EnqNo",
+                    @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
 
-                                })*@
+                })*@
                             <span class="HideValidMsg">Please Select EnqSrNo</span>
                         </div>
                     </div>
@@ -143,8 +143,8 @@
 
                        })
                             @*<select id="ProductName" name="ProductName" ng-model="ProductName" class="form-control requiredValidation clearField ng-pristine ng-untouched ng-valid ng-empty" onfocusout="return ValidateRequiredFieldsOnFocusOut(this)" ng-change="GetProductNumber(ProductName)">
-                                    <option data-ng-repeat="pN in ProductNameList" value="{{pN.DataStringValueField}}">{{pN.DataTextField}}</option>
-                                </select>*@
+                    <option data-ng-repeat="pN in ProductNameList" value="{{pN.DataStringValueField}}">{{pN.DataTextField}}</option>
+                </select>*@
                             <span class="HideValidMsg">Please Select Product Name</span>
                         </div>
                     </div>
@@ -252,7 +252,7 @@
                             <span class="HideValidMsg">Please Select Material Grade</span>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-6" hidden>
                         <div class="form-group">
                             <label class="control-label">
                                 Open Hole Size
@@ -265,7 +265,7 @@
                             <span class="HideValidMsg">Please Select Hole Size Range Inch</span>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-6" hidden>
                         <div class="form-group">
                             <label class="control-label">
                                 Ball Size
@@ -292,7 +292,7 @@
                             <span class="HideValidMsg">Please Select Currency</span>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-6" hidden>
                         <div class="form-group">
                             <label class="control-label">
                                 Casing Weight
@@ -303,6 +303,21 @@
                            @id = "CasingWT"
                        })
                             <span class="HideValidMsg">Please Select Casing Weight</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label">
+                                Wall Thickness
+                            </label>
+                            @Html.TextBoxFor(m => m.WallThickness, new
+                       {
+                           @class = "form-control requiredValidation clearField",
+                           @id = "WallThickness",
+                           @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                           @onkeypress = "return AllowNumbers(event); "
+                       })
+                            <span class="HideValidMsg">Please Enter Wall Thickness</span>
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -603,7 +618,7 @@ function GetProductDetails() {
                             case 'DES2.2':
                                 finalString = item.Pos1 + ' ' + $('#ProductNo').val() + ', \r\n ' + item.Pos2 + ' '
                                     + $("#CasingSize option:selected").text() + ', ' + item.Pos3 + ', ' + ' '
-                                    + $("#MaterialGrade option:selected").text() + $("#CasingPpf option:selected").text()
+                                    + $("#WallThickness").val() + $("#CasingPpf option:selected").text()
                                     + item.Pos4 + ', ' + $("#Connection option:selected").text()
                                     + item.Pos5;
                                 break;

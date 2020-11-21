@@ -330,4 +330,8 @@
         }
     )
 
+    window.onload = function () {
+        setTimeout(function () { angular.element(document.getElementById('TblEnquiry')).scope().FetchEnquiryList(); }, 500);
+    }
+
 </script>
