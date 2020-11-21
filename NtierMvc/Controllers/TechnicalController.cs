@@ -72,8 +72,8 @@ namespace NtierMvc.Controllers
         public ActionResult TechnicalMaster()
         {
             //Technical
-            ViewBag.ListVendorId = model.GetMasterTableStringList("Clientele_Master", "Id", "VendorId", "", "", GeneralConstants.ListTypeN);
-            ViewBag.ListVendorName = model.GetMasterTableStringList("Clientele_Master", "Id", "VendorName", "", "", GeneralConstants.ListTypeN);
+            ViewBag.ListCustomerId = model.GetMasterTableStringList("Customer", "Id", "CustomerId", "", "", GeneralConstants.ListTypeN);
+            ViewBag.ListCustomerName = model.GetMasterTableStringList("Customer", "Id", "CustomerName", "", "", GeneralConstants.ListTypeN);
             ViewBag.ListQuoteNo = model.GetMasterTableStringList("QuotationRegister", "Id", "QUOTENO", "", "", GeneralConstants.ListTypeN);
             ViewBag.ListProdGrp = model.GetMasterTableStringList("Master.ProductLine", "Id", "Product", "", "", GeneralConstants.ListTypeN);
             ViewBag.ListEnqFor = model.GetMasterTableStringList("QuotationRegister", "EnqFor", "EnqFor", "", "", GeneralConstants.ListTypeD);
@@ -172,7 +172,7 @@ namespace NtierMvc.Controllers
 
             string result = objManager.SaveTechnicalQuoteDetails(cusE);
 
-            TempData["VendorName"] = cusE.VendorName;
+            TempData["VendorName"] = cusE.CustomerName;
             TempData["UserName"] = cusE.UserInitial;
             string data = string.Empty;
             if (!string.IsNullOrEmpty(result) && (result == GeneralConstants.Inserted || result == GeneralConstants.Updated))
@@ -1045,7 +1045,7 @@ namespace NtierMvc.Controllers
 
             string result = objManager.SaveRevisedTechnicalQuoteDetails(cusE);
 
-            TempData["VendorName"] = cusE.VendorName;
+            TempData["VendorName"] = cusE.CustomerName;
             TempData["UserName"] = cusE.UserInitial;
             string data = string.Empty;
             if (!string.IsNullOrEmpty(result) && (result == GeneralConstants.Inserted || result == GeneralConstants.Updated))

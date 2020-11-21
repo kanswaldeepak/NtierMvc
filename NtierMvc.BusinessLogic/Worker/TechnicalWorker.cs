@@ -114,8 +114,8 @@ namespace NtierMvc.BusinessLogic.Worker
                 if (dtRecord.Rows.Count > 0)
                 {
                     oVendor.UnitNo = Convert.ToString(dtRecord.Rows[0]["Id"]);
-                    oVendor.VendorId = Convert.ToString(dtRecord.Rows[0]["VENDORID"]);
-                    oVendor.VendorName = Convert.ToString(dtRecord.Rows[0]["VendorName"]);
+                    oVendor.CustomerId = Convert.ToString(dtRecord.Rows[0]["VENDORID"]);
+                    oVendor.CustomerName = Convert.ToString(dtRecord.Rows[0]["VendorName"]);
                 }
             }
             catch (Exception Ex)
@@ -185,8 +185,8 @@ namespace NtierMvc.BusinessLogic.Worker
                                 obj.Id = dr1.IsNull("Id") ? 0 : Convert.ToInt32(dr1["Id"]);
                                 obj.UserInitial = dr1.IsNull("UserInitial") ? string.Empty : Convert.ToString(dr1["UserInitial"]);
                                 obj.UnitNo = dr1.IsNull("UnitNo") ? string.Empty : Convert.ToString(dr1["UnitNo"]);
-                                obj.VendorId = dr1.IsNull("VendorId") ? string.Empty : Convert.ToString(dr1["VendorId"]);
-                                obj.VendorName = dr1.IsNull("VendorName") ? string.Empty : Convert.ToString(dr1["VendorName"]);
+                                obj.CustomerId = dr1.IsNull("VendorId") ? string.Empty : Convert.ToString(dr1["VendorId"]);
+                                obj.CustomerName = dr1.IsNull("VendorName") ? string.Empty : Convert.ToString(dr1["VendorName"]);
                                 obj.QuoteType = dr1.IsNull("QuoteType") ? string.Empty : Convert.ToString(dr1["QuoteType"]);
                                 obj.FileNo = dr1.IsNull("FileNo") ? string.Empty : Convert.ToString(dr1["FileNo"]);
                                 obj.EnqRef = dr1.IsNull("EnqRef") ? string.Empty : Convert.ToString(dr1["EnqRef"]);
@@ -241,8 +241,8 @@ namespace NtierMvc.BusinessLogic.Worker
                     Model.Id = dt1.Rows[0]["Id"] == DBNull.Value ? 0 : Convert.ToInt32(dt1.Rows[0]["Id"]);
                     Model.UserInitial = dt1.Rows[0]["UserInitial"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["UserInitial"]);
                     Model.UnitNo = dt1.Rows[0]["UnitNo"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["UnitNo"]);
-                    Model.VendorId = dt1.Rows[0]["VendorId"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["VendorId"]);
-                    Model.VendorName = dt1.Rows[0]["VendorName"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["VendorName"]);
+                    Model.CustomerId = dt1.Rows[0]["VendorId"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["VendorId"]);
+                    Model.CustomerName = dt1.Rows[0]["VendorName"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["VendorName"]);
                     Model.QuoteType = dt1.Rows[0]["QuoteType"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["QuoteType"]);
                     Model.FileNo = dt1.Rows[0]["FileNo"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["FileNo"]);
                     Model.EnqRef = dt1.Rows[0]["EnqRef"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["EnqRef"]);

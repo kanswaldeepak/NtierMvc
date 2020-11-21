@@ -358,7 +358,7 @@
     }
 
     window.onload = function () {
-        angular.element(document.getElementById('TblEmployeeList')).scope().FetchEmployeeList();
+        setTimeout(function () { angular.element(document.getElementById('TblEmployeeList')).scope().FetchEmployeeList(), 500}) ;
     }
 
 </script>

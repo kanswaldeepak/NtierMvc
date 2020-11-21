@@ -67,7 +67,7 @@
                         <label class="control-label">
                             VendorId
                         </label>
-                        @Html.DropDownListFor(m => m.VendorId, new SelectList(@ViewBag.ListVendorId, "DataStringValueField", "DataTextField", Model.VendorId),
+                        @Html.DropDownListFor(m => m.CustomerId, new SelectList(@ViewBag.ListVendorId, "DataStringValueField", "DataTextField", Model.CustomerId),
                            new
                            {
                                @class = "form-control requiredValidation",
@@ -85,7 +85,7 @@
                         <label class="control-label">
                             Vendor Name
                         </label>
-                        @Html.TextBoxFor(m => m.VendorName, new
+                        @Html.TextBoxFor(m => m.CustomerName, new
                    {
                        @class = "form-control requiredValidation",
                        @id = "VendorFormName",

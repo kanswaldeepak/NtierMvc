@@ -143,10 +143,19 @@ namespace NtierMvc.Areas.HRDepartment.Controllers
             if (flag)
             {
                 result = objManager.SaveEmployeeDetails(hrE);
-                if (Convert.ToInt32(result) > 0)
-                    data = result;
+                int sets;
+
+                bool set = int.TryParse(result, out sets);
+
+                if (set)
+                {
+                    if (Convert.ToInt32(result) > 0)
+                        data = result;
+                    else
+                        data = "0";
+                }
                 else
-                    data = "0";
+                    data = result;
 
                 //if (!string.IsNullOrEmpty(result) && (result == GeneralConstants.Inserted || result == GeneralConstants.Updated))
                 //{

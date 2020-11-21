@@ -45,8 +45,8 @@ namespace NtierMvc.DataAccess.Pool
             Params.Add("@QuotationId", Model.Id == 0 ? 0 : Model.Id);
             Params.Add("@UserInitial", Model.UserInitial);
             Params.Add("@UnitNo", Model.UnitNo);
-            Params.Add("@VendorId", Model.VendorId);
-            Params.Add("@VendorName", Model.VendorName);
+            Params.Add("@VendorId", Model.CustomerId);
+            Params.Add("@VendorName", Model.CustomerName);
             Params.Add("@QuoteType", Model.QuoteType);
             Params.Add("@FileNo", Model.FileNo);
             Params.Add("@EnqRef", Model.EnqRef);
@@ -168,8 +168,8 @@ namespace NtierMvc.DataAccess.Pool
             Params.Add("@UserInitial", Model.UserInitial);
             Params.Add("@UnitNo", Model.UnitNo);
             Params.Add("@QuoteType", Model.QuoteType);
-            Params.Add("@VendorId", Model.VendorId);
-            Params.Add("@VendorName", Model.VendorName);
+            Params.Add("@VendorId", Model.CustomerId);
+            Params.Add("@VendorName", Model.CustomerName);
             Params.Add("@Country", Model.CountryId);
             Params.Add("@QuoteNo", Model.QuoteNo);
             Params.Add("@QuoteDate", Model.QuoteDate);

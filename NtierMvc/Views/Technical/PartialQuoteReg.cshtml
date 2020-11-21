@@ -16,7 +16,7 @@
                 <label>Quote Type</label>
             </td>
             <td>
-                <label>Vendor Id</label>
+                <label>Customer Id</label>
             </td>
             <td>
                 <label>Product Group</label>
@@ -39,12 +39,12 @@
                     })
             </td>
             <td>
-                @Html.DropDownList("VendorId", new SelectList(@ViewBag.ListVendorId, "DataStringValueField", "DataTextField", "Select"),
+                @Html.DropDownList("CustomerId", new SelectList(@ViewBag.ListCustomerId, "DataStringValueField", "DataTextField", "Select"),
                new
                {
                    @class = "form-control",
-                   ng_model = "SearchQuoteVendorID",
-                   @id = "QTVendorId",
+                   ng_model = "SearchQuoteCustomerID",
+                   @id = "QTCustomerId",
                    @multiple = true
                })
             </td>
@@ -79,8 +79,8 @@
 
 <div class="wrapper">
     <div class="container">
-        <table class="text-center">
-            <thead class="tblhead">
+        <table class="table table-sm">
+            <thead style="font-weight: bold">
                 <tr>
                     <th>
                         Action
@@ -89,15 +89,15 @@
                         </div>
                     </th>
                     <th>
-                        Vendor Id
+                        Customer Id
                         <div class="c2">
-                            Vendor Id
+                            Customer Id
                         </div>
                     </th>
                     <th>
-                        Vendor Name
+                        Customer Name
                         <div class="c3">
-                            Vendor Name
+                            Customer Name
                         </div>
                     </th>
                     <th>
@@ -164,10 +164,10 @@
                         </button>
                     </td>
                     <td>
-                        {{L.VendorId}}
+                        {{L.CustomerId}}
                     </td>
                     <td>
-                        {{L.VendorName}}
+                        {{L.CustomerName}}
                     </td>
                     <td>
                         {{L.Country}}
@@ -235,11 +235,10 @@
     </div>
 </div>
 
-<div class="modal" id="addCustomerDetails" tabindex="-1" role="dialog">
+@*<div class="modal" id="addCustomerDetails" tabindex="-1" role="dialog">
     @using (Ajax.BeginForm(actionName: "SaveCustomerDetails", controllerName: "Customer", ajaxOptions: new AjaxOptions
     {
         HttpMethod = "POST"
-        // OnSuccess = "BuildingSpaceDetails.UploadFiles"
     },
             routeValues: null,
             htmlAttributes: new { id = "frmCustomerDetails" }))
@@ -247,7 +246,6 @@
         <div class="modal-dialog" style="width:80%; max-width: 80%;" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    @*@Html.HiddenFor(m => m.TrnBuildingHdrId)*@
                     <h5 class="modal-title">Add Customer Details</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -323,7 +321,9 @@
             </div>
         </div>
     </div>
-</div>
+</div>*@
+
+
 <script type="text/javascript">
 
     $(document).ready(function () {
@@ -342,10 +342,10 @@
             placeholder_text_multiple: "Select QuoteType"
         });
 
-        $('#QTVendorId').chosen({
+        $('#QTCustomerId').chosen({
             width: "210px",
-            placeholder_text_single: "Select Vendor Id",
-            placeholder_text_multiple: "Select Vendor Id"
+            placeholder_text_single: "Select Customer Id",
+            placeholder_text_multiple: "Select Customer Id"
         });
 
         $('#QTProductGroup').chosen({
@@ -379,13 +379,13 @@
                     dataType: 'json',
                     type: 'GET',
                     url: window.GetDdlValueForQuote,
-                    data: { QuoteType: QuoteType, type: 'VendorId' },
+                    data: { QuoteType: QuoteType, type: 'CustomerId' },
                     success: function (res) {
                         if (res.length > 0) {
-                            $("#QTVendorId").empty();
+                            $("#QTCustomerId").empty();
                             $.each(res, function (i, item) {
-                                $("#QTVendorId").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
-                                $("#QTVendorId").trigger("chosen:updated");
+                                $("#QTCustomerId").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
+                                $("#QTCustomerId").trigger("chosen:updated");
                             })
                         }
                     },
@@ -396,27 +396,27 @@
             }
         )
 
-        $("#QTVendorId").chosen().change(
+        $("#QTCustomerId").chosen().change(
             function GetProductGroup() {
-                //var VendorId = $('#QTVendorId').val();
+                //var CustomerId = $('#QTCustomerId').val();
                 debugger;
-                var VendorId = '';
-                var x = document.getElementById("QTVendorId");
+                var CustomerId = '';
+                var x = document.getElementById("QTCustomerId");
                 for (var i = 0; i < x.options.length; i++) {
                     if (x.options[i].selected == true) {
                         //alert(x.options[i].value);
-                        VendorId = VendorId + x.options[i].value + ',';
+                        CustomerId = CustomerId + x.options[i].value + ',';
                     }
                 }
 
-                VendorId = VendorId.substring(0, VendorId.length - 1);
+                CustomerId = CustomerId.substring(0, CustomerId.length - 1);
 
                 return $.ajax({
                     contentType: 'application/json; charset=utf-8',
                     dataType: 'json',
                     type: 'GET',
                     url: window.GetDdlValueForQuote,
-                    data: { VendorId: VendorId, type: 'ProductGroup' },
+                    data: { CustomerId: CustomerId, type: 'ProductGroup' },
                     success: function (res) {
                         if (res.length > 0) {
                             $("#QTProductGroup").empty();
