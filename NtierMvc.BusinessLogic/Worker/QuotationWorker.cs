@@ -100,8 +100,8 @@ namespace NtierMvc.BusinessLogic.Worker
                 if (dtRecord.Rows.Count > 0)
                 {
                     oVendor.UnitNo = Convert.ToString(dtRecord.Rows[0]["Id"]);
-                    oVendor.CustomerId = Convert.ToString(dtRecord.Rows[0]["VENDORID"]);
-                    oVendor.CustomerName = Convert.ToString(dtRecord.Rows[0]["VendorName"]);
+                    oVendor.CustomerId = Convert.ToString(dtRecord.Rows[0]["CustomerID"]);
+                    oVendor.CustomerName = Convert.ToString(dtRecord.Rows[0]["CustomerName"]);
                     oVendor.Country = Convert.ToString(dtRecord.Rows[0]["CountryName"]);
                     oVendor.CountryId = Convert.ToString(dtRecord.Rows[0]["CountryId"]);
                     oVendor.GeoArea = Convert.ToString(dtRecord.Rows[0]["Geo_Area"]);
@@ -232,8 +232,8 @@ namespace NtierMvc.BusinessLogic.Worker
                     Model.Id = dt1.Rows[0]["Id"] == DBNull.Value ? 0 : Convert.ToInt32(dt1.Rows[0]["Id"]);
                     Model.UserInitial = dt1.Rows[0]["UserInitial"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["UserInitial"]);
                     Model.UnitNo = dt1.Rows[0]["UnitNo"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["UnitNo"]);
-                    Model.CustomerId = dt1.Rows[0]["VendorId"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["VendorId"]);
-                    Model.CustomerName = dt1.Rows[0]["VendorName"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["VendorName"]);
+                    Model.CustomerId = dt1.Rows[0]["CustomerId"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["CustomerId"]);
+                    Model.CustomerName = dt1.Rows[0]["CustomerName"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["CustomerName"]);
                     Model.Country = dt1.Rows[0]["Country"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["Country"]);
                     Model.CountryId = dt1.Rows[0]["CountryId"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["CountryId"]);
                     Model.QuoteType = dt1.Rows[0]["QuoteType"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["QuoteType"]);

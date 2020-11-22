@@ -133,7 +133,7 @@ namespace NtierMvc.Controllers
             ViewBag.ListQuoteNo = DdlList(); //objManager.GetQuoteNoList(string.Empty); 
 
             ViewBag.ListProdGrp = model.GetMasterTableStringList("Master.ProductLine", "Id", "Product", "", "", GeneralConstants.ListTypeN);
-            ViewBag.ListVendorName = model.GetMasterTableStringList("QuotationRegister", "VendorId", "VendorName", "", "", GeneralConstants.ListTypeD);
+            ViewBag.ListVendorName = model.GetMasterTableStringList("QuotationRegister", "CustomerId", "CustomerName", "", "", GeneralConstants.ListTypeD);
 
             ViewBag.CasingSize = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "CasingSize", "Property", GeneralConstants.ListTypeN);
             ViewBag.CasingPpf = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "Ppf", "Property", GeneralConstants.ListTypeN);
@@ -162,9 +162,9 @@ namespace NtierMvc.Controllers
         public ActionResult SaveQuotationDetails(QuotationEntity cusE)
         {
             model = new BaseModel();
-            ViewBag.ListVENDORTYPE = model.GetMasterTableList("Master.Vendor", "Id", "VendorType");
-            ViewBag.ListVENDOR_NATURE = model.GetMasterTableList("Master.Vendor", "Id", "VendorNature");
-            ViewBag.ListFUNCTION_AREA = model.GetMasterTableList("Master.FunctionalArea", "Id", "FunctionArea");
+            //ViewBag.ListVENDORTYPE = model.GetMasterTableList("Master.Vendor", "Id", "VendorType");
+            //ViewBag.ListVENDOR_NATURE = model.GetMasterTableList("Master.Vendor", "Id", "VendorNature");
+            //ViewBag.ListFUNCTION_AREA = model.GetMasterTableList("Master.FunctionalArea", "Id", "FunctionArea");
 
             cusE.UserInitial = Session["UserName"].ToString();
             cusE.ipAddress = ERPContext.UserContext.IpAddress;
@@ -225,7 +225,7 @@ namespace NtierMvc.Controllers
             model = new BaseModel();
             string countryId = "0";
             ViewBag.ListState = model.GetStateDetail(countryId); //Given wrong CountryId to not get any value
-            ViewBag.ListVendorId = model.GetMasterTableStringList("Clientele_Master", "Id", "VendorId", "", "", GeneralConstants.ListTypeN);
+            ViewBag.ListCustomerId = model.GetMasterTableStringList("Customer", "Id", "CustomerId", "", "", GeneralConstants.ListTypeN);
             ViewBag.ListVENDORTYPE = model.GetMasterTableList("Master.Vendor", "Id", "VendorType");
             ViewBag.ListVENDOR_NATURE = model.GetMasterTableList("Master.Vendor", "Id", "VendorNature");
             ViewBag.ListFUNCTION_AREA = model.GetMasterTableList("Master.FunctionalArea", "Id", "FunctionArea");
@@ -670,7 +670,7 @@ namespace NtierMvc.Controllers
             //lstQuoteNo.Insert(0, objTbl);
 
             List<DropDownEntity> lstQuoteNo = new List<DropDownEntity>();
-            lstQuoteNo = model.GetMasterTableStringList("QuotationRegister", "VendorId", "VendorName", "", "", GeneralConstants.ListTypeD);
+            lstQuoteNo = model.GetMasterTableStringList("QuotationRegister", "CustomerId", "CustomerName", "", "", GeneralConstants.ListTypeD);
 
             return new JsonResult { Data = lstQuoteNo, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
@@ -711,7 +711,7 @@ namespace NtierMvc.Controllers
             model = new BaseModel();
             ViewBag.ListQuoteNo = model.GetMasterTableStringList("QuotationRegister", "Id", "QUOTENO", "", "", GeneralConstants.ListTypeN);
             ViewBag.ListItemNo = DdlList();
-            ViewBag.ListVendorId = model.GetMasterTableStringList("Clientele_Master", "Id", "VendorId", "", "", GeneralConstants.ListTypeN);
+            ViewBag.ListCustomerId = model.GetMasterTableStringList("QuotationRegister", "Id", "CustomerId", "", "", GeneralConstants.ListTypeN);
             ViewBag.ListQuoteType = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "QuoteType", "Property", GeneralConstants.ListTypeN);
             ViewBag.ListQuoteQtyType = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "SingleMultiple", "Property", GeneralConstants.ListTypeN);
             ViewBag.ListCurr = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "Currency", "Property", GeneralConstants.ListTypeN);
@@ -831,7 +831,7 @@ namespace NtierMvc.Controllers
         public ActionResult ItemPopup(string actionType, string Id = null)
         {
             model = new BaseModel();
-            ViewBag.ListVendorId = model.GetMasterTableStringList("Clientele_Master", "Id", "VendorId", "", "", GeneralConstants.ListTypeN);
+            ViewBag.ListCustomerId = model.GetMasterTableStringList("Customer", "Id", "CustomerId", "", "", GeneralConstants.ListTypeN);
             ViewBag.ListQuoteType = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "QuoteType", "Property", GeneralConstants.ListTypeN);
             ViewBag.ListCurr = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "Currency", "Property", GeneralConstants.ListTypeN);
             ViewBag.ListOrderType = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "QuoteType", "Property", GeneralConstants.ListTypeN);
@@ -1005,7 +1005,7 @@ namespace NtierMvc.Controllers
             model = new BaseModel();
             string countryId = "0";
             ViewBag.ListState = model.GetStateDetail(countryId); //Given wrong CountryId to not get any value
-            ViewBag.ListVendorId = model.GetMasterTableStringList("Clientele_Master", "Id", "VendorId", "", "", GeneralConstants.ListTypeN);
+            ViewBag.ListCustomerId = model.GetMasterTableStringList("Clientele_Master", "Id", "CustomerId", "", "", GeneralConstants.ListTypeN);
             ViewBag.ListVENDORTYPE = model.GetMasterTableList("Master.Vendor", "Id", "VendorType");
             ViewBag.ListVENDOR_NATURE = model.GetMasterTableList("Master.Vendor", "Id", "VendorNature");
             ViewBag.ListFUNCTION_AREA = model.GetMasterTableList("Master.FunctionalArea", "Id", "FunctionArea");
@@ -1223,7 +1223,7 @@ namespace NtierMvc.Controllers
         {
             ClarificationEntity cEntity = new ClarificationEntity();
             ViewBag.ListQuoteNo = DdlList(); //objManager.GetQuoteNoList(string.Empty);             
-            ViewBag.ListVendorName = model.GetMasterTableStringList("QuotationRegister", "VendorId", "VendorName", "", "", GeneralConstants.ListTypeD);
+            ViewBag.ListVendorName = model.GetMasterTableStringList("QuotationRegister", "CustomerId", "CustomerName", "", "", GeneralConstants.ListTypeD);
             ViewBag.ListQuoteType = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "QuoteType", "Property", GeneralConstants.ListTypeN);
             ViewBag.ListSoNo = model.GetMasterTableStringList("Orders", "SoNo", "SoNo", "", "", GeneralConstants.ListTypeD);
             //qPEntity = new QuotationPreparationEntity();
@@ -1285,7 +1285,7 @@ namespace NtierMvc.Controllers
             //return new JsonResult { Data = newList, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
 
             SingleColumnEntity objSingle = new SingleColumnEntity();
-            objSingle = model.GetSingleColumnValues("QuotationRegister", "VendorName", "VendorName", "QuoteType", quoteType, "Currency", "QuoteNo", quoteNo);
+            objSingle = model.GetSingleColumnValues("QuotationRegister", "CustomerName", "CustomerName", "QuoteType", quoteType, "Currency", "QuoteNo", quoteNo);
 
             return new JsonResult { Data = objSingle, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
@@ -1473,7 +1473,7 @@ namespace NtierMvc.Controllers
 
             EnquiryEntity eModel = new EnquiryEntity();
             eModel.UnitNo = Session["UserId"].ToString();
-            ViewBag.ListVendorId = bModel.GetMasterTableStringList("Clientele_Master", "Id", "VendorId", eModel.UnitNo, "UnitNo", GeneralConstants.ListTypeN);
+            ViewBag.ListCustomerId = bModel.GetMasterTableStringList("Customer", "Id", "CustomerId", eModel.UnitNo, "UnitNo", GeneralConstants.ListTypeN);
 
             EnquiryManager objEnqManager = new EnquiryManager();
 

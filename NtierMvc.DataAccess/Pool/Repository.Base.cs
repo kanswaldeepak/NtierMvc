@@ -1345,7 +1345,7 @@ namespace NtierMvc.DataAccess.Pool
             ParamDict.Add("@Param2",Param2);
             
 
-            var SPName = ConfigurationManager.AppSettings["DeleteFormTable"];
+            var SPName = ConfigurationManager.AppSettings["DeleteFromTable"];
             _dbAccess.ExecuteNonQuery(SPName, ParamDict, "@o_MsgCode", out msgCode);
 
             return msgCode;
@@ -1435,7 +1435,7 @@ namespace NtierMvc.DataAccess.Pool
 
             if (!string.IsNullOrEmpty(entity.IdentityNo.ToString()) && entity.IdentityNo != 0)
             {
-                string spName = ConfigurationManager.AppSettings["DeleteFormTable"];
+                string spName = ConfigurationManager.AppSettings["DeleteFromTable"];
                 var parms = new Dictionary<string, object>();
                 parms.Add("@TableName", entity.DestinationTable);
                 parms.Add("@ColumnName1", entity.IdentityNoColumnName);

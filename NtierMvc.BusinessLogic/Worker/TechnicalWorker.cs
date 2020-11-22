@@ -554,8 +554,8 @@ namespace NtierMvc.BusinessLogic.Worker
                             entity.DataTextField = dr["QuoteTypeNo"]?.ToString() ?? "";
 
 
-                        if (dt.Columns.Contains("VENDORNAME"))
-                            entity.DataAltValueField = dr["VENDORNAME"]?.ToString() ?? "";
+                        if (dt.Columns.Contains("CustomerName"))
+                            entity.DataAltValueField = dr["CustomerName"]?.ToString() ?? "";
 
                         //if (dt.Columns.Contains("CourseCode"))
                         //    entity.DataCodeField = dr["CourseCode"]?.ToString() ?? "";
@@ -1212,8 +1212,8 @@ namespace NtierMvc.BusinessLogic.Worker
                         if (dt.Columns.Contains("Id"))
                             entity.DataStringValueField = Convert.ToString(dr["Id"] ?? 0);
 
-                        if (dt.Columns.Contains("VENDORID"))
-                            entity.DataTextField = dr["VENDORID"]?.ToString() ?? "";
+                        if (dt.Columns.Contains("CustomerID"))
+                            entity.DataTextField = dr["CustomerID"]?.ToString() ?? "";
 
                         //if (dt.Columns.Contains("ItemNo"))
                         //    entity.DataAltValueField = dr["ItemNo"]?.ToString() ?? "";

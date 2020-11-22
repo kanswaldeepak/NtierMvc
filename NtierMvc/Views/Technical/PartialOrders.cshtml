@@ -17,7 +17,7 @@
                 <label>Quote Type</label>
             </td>
             <td>
-                <label>Vendor Id</label>
+                <label>Customer Id</label>
             </td>
             <td>
                 <label>Product Group</label>
@@ -40,12 +40,12 @@
                     })
             </td>
             <td>
-                @Html.DropDownList("VendorId", new SelectList(@ViewBag.ListVendorId, "DataStringValueField", "DataTextField", "Select"),
+                @Html.DropDownList("CustomerId", new SelectList(@ViewBag.ListCustomerId, "DataStringValueField", "DataTextField", "Select"),
                new
                {
                    @class = "form-control",
-                   ng_model = "SearchOrderVendorID",
-                   @id = "ORVendorId",
+                   ng_model = "SearchOrderCustomerId",
+                   @id = "ORCustomerId",
                    @multiple = true
                })
             </td>
@@ -340,7 +340,7 @@
             placeholder_text_multiple: "Select QuoteType"
         });
 
-        $('#ORVendorId').chosen({
+        $('#ORCustomerId').chosen({
             width: "210px",
             placeholder_text_single: "Select Vendor Id",
             placeholder_text_multiple: "Select Vendor Id"
@@ -377,13 +377,13 @@
                     dataType: 'json',
                     type: 'GET',
                     url: window.GetDdlValueForQuote,
-                    data: { QuoteType: QuoteType, type: 'VendorId' },
+                    data: { QuoteType: QuoteType, type: 'CustomerId' },
                     success: function (res) {
                         if (res.length > 0) {
-                            $("#ORVendorId").empty();
+                            $("#ORCustomerId").empty();
                             $.each(res, function (i, item) {
-                                $("#ORVendorId").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
-                                $("#ORVendorId").trigger("chosen:updated");
+                                $("#ORCustomerId").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
+                                $("#ORCustomerId").trigger("chosen:updated");
                             })
                         }
                     },
@@ -394,27 +394,27 @@
             }
         )
 
-        $("#ORVendorId").chosen().change(
+        $("#ORCustomerId").chosen().change(
             function GetProductGroup() {
                 //var VendorId = $('#QTVendorId').val();
                 debugger;
-                var VendorId = '';
-                var x = document.getElementById("ORVendorId");
+                var CustomerId = '';
+                var x = document.getElementById("ORCustomerId");
                 for (var i = 0; i < x.options.length; i++) {
                     if (x.options[i].selected == true) {
                         //alert(x.options[i].value);
-                        VendorId = VendorId + x.options[i].value + ',';
+                        CustomerId = CustomerId + x.options[i].value + ',';
                     }
                 }
 
-                VendorId = VendorId.substring(0, VendorId.length - 1);
+                CustomerId = CustomerId.substring(0, CustomerId.length - 1);
 
                 return $.ajax({
                     contentType: 'application/json; charset=utf-8',
                     dataType: 'json',
                     type: 'GET',
                     url: window.GetDdlValueForQuote,
-                    data: { VendorId: VendorId, type: 'ProductGroup' },
+                    data: { CustomerId: CustomerId, type: 'ProductGroup' },
                     success: function (res) {
                         if (res.length > 0) {
                             $("#ORProductGroup").empty();
