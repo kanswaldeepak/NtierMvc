@@ -145,11 +145,11 @@ function SaveExpDetails(EmpId) {
                 //Id: $("#Id").val(),
                 
                 EmpId: EmpId,
-                SN: $(this).find('td:eq(0) label').text(),
+                SN: $(this).find('td:eq(0) span').text(),
                 Employer: $(this).find('td:eq(1) input').val(),
                 Designation: $(this).find('td:eq(2) input').val(),
                 PeriodFrom: $(this).find('td:eq(3) input').val(),
-                PeriodTo: $(this).find('td:eq(4) select').val()
+                PeriodTo: $(this).find('td:eq(4) input').val()
 
             });
         });

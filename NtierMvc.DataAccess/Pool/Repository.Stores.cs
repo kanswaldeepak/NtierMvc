@@ -27,7 +27,7 @@ namespace NtierMvc.DataAccess.Pool
 
             if (!string.IsNullOrEmpty(entity.IdentityNo.ToString()) && entity.IdentityNo != 0)
             {
-                string spName = ConfigurationManager.AppSettings["DeleteFormTable"];
+                string spName = ConfigurationManager.AppSettings["DeleteFromTable"];
                 var parms = new Dictionary<string, object>();
                 parms.Add("@TableName", entity.DestinationTable);
                 parms.Add("@ColumnName1", "GRno");

@@ -65,34 +65,34 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label class="control-label">
-                            VendorId
+                            Customer Id
                         </label>
-                        @Html.DropDownListFor(m => m.CustomerId, new SelectList(@ViewBag.ListVendorId, "DataStringValueField", "DataTextField", Model.CustomerId),
+                        @Html.DropDownListFor(m => m.CustomerId, new SelectList(@ViewBag.ListCustomerId, "DataStringValueField", "DataTextField", Model.CustomerId),
                            new
                            {
                                @class = "form-control requiredValidation",
-                               @id = "VendorFormId",
+                               @id = "QRCustomerId",
                                @data_inneraction = "validationCall",
                                @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
                                @onchange = "GetVendorAndEnquiryDetails()"
 
                            })
-                        <span class="HideValidMsg">Please Select VendorId</span>
+                        <span class="HideValidMsg">Please Select CustomerId</span>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
                         <label class="control-label">
-                            Vendor Name
+                            Customer Name
                         </label>
                         @Html.TextBoxFor(m => m.CustomerName, new
                    {
                        @class = "form-control requiredValidation",
-                       @id = "VendorFormName",
+                       @id = "QRCustomerName",
                        @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
                        @readonly = "readonly"
                    })
-                        <span class="HideValidMsg">Please Select VendorId</span>
+                        <span class="HideValidMsg">Please Select CustomerId</span>
                     </div>
                 </div>
                 <div class="col-md-4">
@@ -430,7 +430,7 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label class="control-label">
-                            Payment Terms
+                            Subject
                         </label>
                         @Html.TextBoxFor(m => m.Subject, new
                    {
@@ -479,14 +479,14 @@
     });
 
     function GetVendorAndEnquiryDetails() {
-        var VendorId = $("#VendorFormId").val();
+        var VendorId = $("#QRCustomerId").val();
         $.ajax({
             type: 'POST',
             url: window.VendorDetail,
             data: JSON.stringify({ vendorId: VendorId }),
             contentType: "application/json; charset=utf-8",
             success: function (res) {
-                $("#VendorFormName").val(res.quoteEntity.VendorName);
+                $("#QRCustomerName").val(res.quoteEntity.CustomerName);
                 $("#Country").val(res.quoteEntity.Country);
                 $("#CountryId").val(res.quoteEntity.CountryId);
                 $("#GeoArea").val(res.quoteEntity.GeoArea);
@@ -553,10 +553,10 @@
                 else if (QuoteTypeText == 'Service')
                     $('#QuoteTypeNo').val('SE-' + res.QuoteNo);
 
-                $("#VendorFormId").empty();
+                $("#QRCustomerId").empty();
                 if (res.lstVendors.length > 0) {
                     $.each(res.lstVendors, function (i, item) {
-                        $("#VendorFormId").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
+                        $("#QRCustomerId").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
                     })
                 }
 

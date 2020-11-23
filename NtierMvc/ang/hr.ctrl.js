@@ -201,6 +201,50 @@ angular.module('App').controller("HrController", function ($scope, $http, $timeo
                 SetModalWidth("1200px");
                 ShowModal();
 
+                $.ajax({
+                    type: "GET",
+                    data: { EmpId: _EmployeeDetailsId },
+                    datatype: "JSON",
+                    url: window.GetEmpExpDetails,
+                    success: function (data) {
+
+                        if (data.length > 0) {
+                            $('#tableExp tbody').empty();
+                            $.each(data, function (i, item) {
+                                let rowHtml = '<tr sn=${item.SN}> <td><span class="HRSN">${item.SN}</span></td><td><input type="text" class="HREmployer form-control" /></td><td><input type="text" class="HRDesignation form-control " /></td><td><input type="text" class="HRPeriodFrom form-control " /></td><td><input type="text" class="HRPeriodTo form-control " /></td><td><a href="#" class="removeHR">Remove</a></td></tr>';
+                                // create object from html string
+                                let $row = $(rowHtml)
+                                // set value of the select within this row instance
+                                $row.find('.HRSN').text(item.RequiredColumn1);
+                                $row.find('.HREmployer').val(item.RequiredColumn2);
+                                $row.find('.HRDesignation').val(item.RequiredColumn3);
+                                $row.find('.HRPeriodFrom').val(item.RequiredColumn4);
+                                $row.find('.HRPeriodTo').val(item.RequiredColumn5);
+                                // append updated object to DOM
+                                $('#tableExp > tbody:last-child').append($row);
+
+                            })
+
+                            $('.CalenderTillTodayDate').datepicker({
+                                format: 'dd/mm/yyyy',
+                                autoclose: true,
+                                changeMonth: true,
+                                changeYear: true,
+                                endDate: 'today',
+                            });
+
+                            $('.removeHR').on("click", function (e) {
+                                e.preventDefault();
+                                $(this).parent().parent().remove();
+                            });
+
+                        }
+
+
+                    }
+
+                })
+
                 if (!($('.modal.in').length)) {
                     $('.modal-dialog').css({
                         top: '5%',

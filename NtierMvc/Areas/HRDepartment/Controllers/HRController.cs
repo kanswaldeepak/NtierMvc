@@ -511,7 +511,7 @@ namespace NtierMvc.Areas.HRDepartment.Controllers
                     if (System.IO.File.Exists(path + scE.DataValueField1))
                         System.IO.File.Delete(path + scE.DataValueField1);
 
-                result = model.DeleteFormTable("EmpCertificate", "Id", CertId);
+                    result = model.DeleteFormTable("EmpCertificate", "Id", CertId);
                 }
 
 
@@ -523,6 +523,13 @@ namespace NtierMvc.Areas.HRDepartment.Controllers
 
 
             return new JsonResult { Data = result, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+        }
+
+        public JsonResult GetEmpExpDetails(string EmpId)
+        {
+            var masterList = model.GetTableDataList(GeneralConstants.ListTypeD,"EmployeeExperience", "EmpId", EmpId,"","", "", "", "", "", "", "","SN","Employer","Designation","PeriodFrom","PeriodTo");
+
+            return new JsonResult { Data = masterList, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 
     }

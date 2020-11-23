@@ -222,6 +222,7 @@ namespace NtierMvc.BusinessLogic.Worker
                     Model.IdCard = dt1.Rows[0]["IdCard"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["IdCard"]);
                     Model.EmpInitial = dt1.Rows[0]["EmpInitial"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["EmpInitial"]);
                     Model.EmpName = dt1.Rows[0]["EmpName"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["EmpName"]);
+                    Model.GenderTitleID = dt1.Rows[0]["GenderTitle"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["GenderTitle"]);
                     Model.Gender = dt1.Rows[0]["Gender"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["Gender"]);
                     Model.GaurdianName = dt1.Rows[0]["GUARDIANNAME"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["GUARDIANNAME"]);
                     Model.BloodGroup = dt1.Rows[0]["BloodGroup"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["BloodGroup"]);
