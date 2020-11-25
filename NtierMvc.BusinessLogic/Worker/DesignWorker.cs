@@ -394,7 +394,7 @@ namespace NtierMvc.BusinessLogic.Worker
                             {
                                 DropDownEntity obj = new DropDownEntity();
                                 obj.DataStringValueField = dr1.IsNull("Id") ? "" : Convert.ToString(dr1["Id"]);
-                                obj.DataTextField = dr1.IsNull("VendorId") ? "" : Convert.ToString(dr1["VendorId"]);
+                                obj.DataTextField = dr1.IsNull("CustomerId") ? "" : Convert.ToString(dr1["CustomerId"]);
 
                                 listVendor.Add(obj);
                             }
@@ -422,8 +422,8 @@ namespace NtierMvc.BusinessLogic.Worker
                 {
                     DataRow dr1 = ds.Tables[0].Rows[0];
 
-                    oE.VendorId = dr1.IsNull("VendorId") ? string.Empty : Convert.ToString(dr1["VendorId"]);
-                    oE.VendorName = dr1.IsNull("VendorName") ? string.Empty : Convert.ToString(dr1["VendorName"]);
+                    oE.CustomerId = dr1.IsNull("VendorId") ? string.Empty : Convert.ToString(dr1["VendorId"]);
+                    oE.CustomerName = dr1.IsNull("VendorName") ? string.Empty : Convert.ToString(dr1["VendorName"]);
                     oE.SoNo = dr1.IsNull("SoNo") ? string.Empty : Convert.ToString(dr1["SoNo"]);
                     oE.PoNo = dr1.IsNull("PoNo") ? string.Empty : Convert.ToString(dr1["PoNo"]);
                     oE.PoDate = dr1.IsNull("PoDate") ? string.Empty : Convert.ToString(dr1["PoDate"]);

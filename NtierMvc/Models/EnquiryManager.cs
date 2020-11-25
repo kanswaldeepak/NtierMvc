@@ -142,12 +142,12 @@ namespace NtierMvc.Model
             return LstCity;
         }
 
-        public EnquiryEntity GetVendorDetailForEnquiry(string vendorId)
+        public EnquiryEntity GetVendorDetailForEnquiry(string CustomerId)
         {
             var baseAddress = "EnquiryDetails";
             using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
             {
-                HttpResponseMessage response = client.GetAsync(baseAddress + "/GetVendorDetailForEnquiry?vendorId=" + vendorId).Result;
+                HttpResponseMessage response = client.GetAsync(baseAddress + "/GetVendorDetailForEnquiry?CustomerId=" + CustomerId).Result;
                 if (response.IsSuccessStatusCode)
                 {
                     var data = response.Content.ReadAsStringAsync().Result;

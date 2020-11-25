@@ -392,8 +392,8 @@ namespace NtierMvc.Controllers
 
                 //Getting Single Fields
                 xlWorkbook.Worksheets[1].Cells.Replace("#QuoteDate", resultData.Rows[0]["QuoteDate"]);
-                xlWorkbook.Worksheets[1].Cells.Replace("#VendorName", "M/s." + resultData.Rows[0]["vendorname"]);
-                xlWorkbook.Worksheets[1].Cells.Replace("#VendorAddress", resultData.Rows[0]["VendorAddress"]);
+                xlWorkbook.Worksheets[1].Cells.Replace("#CustomerName", "M/s." + resultData.Rows[0]["CustomerNAME"]);
+                xlWorkbook.Worksheets[1].Cells.Replace("#CustomerAddress", resultData.Rows[0]["CustomerAddress"]);
                 xlWorkbook.Worksheets[1].Cells.Replace("#EnqNo", resultData.Rows[0]["enqno"]);
                 xlWorkbook.Worksheets[1].Cells.Replace("#EnqDt", resultData.Rows[0]["enqDt"]);
                 xlWorkbook.Worksheets[1].Cells.Replace("#CompanyName", resultData.Rows[0]["CompanyName"]);
@@ -484,8 +484,8 @@ namespace NtierMvc.Controllers
 
                 //Getting Single Fields
                 xlWorkbook.Worksheets[1].Cells.Replace("#QuoteDate", resultData.Rows[0]["QuoteDate"]);
-                xlWorkbook.Worksheets[1].Cells.Replace("#VendorName", "M/s." + resultData.Rows[0]["vendorname"]);
-                xlWorkbook.Worksheets[1].Cells.Replace("#VendorAddress", resultData.Rows[0]["VendorAddress"]);
+                xlWorkbook.Worksheets[1].Cells.Replace("#CustomerName", "M/s." + resultData.Rows[0]["CustomerNAME"]);
+                xlWorkbook.Worksheets[1].Cells.Replace("#CustomerAddress", resultData.Rows[0]["CustomerAddress"]);
                 xlWorkbook.Worksheets[1].Cells.Replace("#EnqNo", resultData.Rows[0]["enqno"]);
                 xlWorkbook.Worksheets[1].Cells.Replace("#EnqDt", resultData.Rows[0]["enqDt"]);
                 xlWorkbook.Worksheets[1].Cells.Replace("#CompanyName", resultData.Rows[0]["CompanyName"]);
@@ -800,7 +800,7 @@ namespace NtierMvc.Controllers
                 return Json("Error occurred. Error details: " + ex.Message);
             }
 
-            TempData["VendorName"] = orderE.VendorName;
+            TempData["VendorName"] = orderE.CustomerName;
             TempData["UserName"] = orderE.UserInitial;
 
             return new JsonResult { Data = data, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
@@ -938,8 +938,8 @@ namespace NtierMvc.Controllers
 
                         newObj.Id = item.Id;
                         newObj.UnitNo = Session["UserId"].ToString();
-                        newObj.VendorId = item.VendorId;
-                        newObj.VendorName = item.VendorName;
+                        newObj.VendorId = item.CustomerId;
+                        newObj.VendorName = item.CustomerName;
                         newObj.QuoteNo = item.QuoteNo;
                         newObj.QuoteType = item.QuoteType;
                         newObj.SoNo = item.SoNo;
@@ -1497,7 +1497,7 @@ namespace NtierMvc.Controllers
         {
             string result = objEnquiryManager.SaveEnquiryDetails(cusE);
 
-            TempData["VendorName"] = cusE.VendorId;
+            TempData["CustomerName"] = cusE.CustomerId;
             TempData["UserName"] = cusE.UserInitial;
             string data = string.Empty;
             if (!string.IsNullOrEmpty(result) && (result == GeneralConstants.Inserted || result == GeneralConstants.Updated))
@@ -1544,10 +1544,10 @@ namespace NtierMvc.Controllers
         }
 
         [HttpPost]
-        public ActionResult GetVendorDetailForEnquiry(string vendorId)
+        public ActionResult GetVendorDetailForEnquiry(string CustomerId)
         {
             EnquiryEntity eModel = new EnquiryEntity();
-            eModel = objEnquiryManager.GetVendorDetailForEnquiry(vendorId);
+            eModel = objEnquiryManager.GetVendorDetailForEnquiry(CustomerId);
             return new JsonResult { Data = eModel, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 

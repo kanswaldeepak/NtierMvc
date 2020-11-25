@@ -139,8 +139,8 @@ namespace NtierMvc.BusinessLogic.Worker
                                 obj.QuoteType = dr1.IsNull("QuoteType") ? string.Empty : Convert.ToString(dr1["QuoteType"]);
                                 obj.UserInitial = dr1.IsNull("UserInitial") ? string.Empty : Convert.ToString(dr1["UserInitial"]);
                                 obj.UnitNo = dr1.IsNull("UnitNo") ? string.Empty : Convert.ToString(dr1["UnitNo"]);
-                                obj.VendorName = dr1.IsNull("VendorName") ? string.Empty : Convert.ToString(dr1["VendorName"]);
-                                obj.VendorType = dr1.IsNull("VendorType") ? string.Empty : Convert.ToString(dr1["VendorType"]);
+                                obj.CustomerName = dr1.IsNull("CustomerName") ? string.Empty : Convert.ToString(dr1["CustomerName"]);
+                                //obj.VendorType = dr1.IsNull("VendorType") ? string.Empty : Convert.ToString(dr1["VendorType"]);
                                 obj.City = dr1.IsNull("City") ? string.Empty : Convert.ToString(dr1["City"]);
                                 obj.Country = dr1.IsNull("Country") ? string.Empty : Convert.ToString(dr1["Country"]);
                                 obj.EnqRef = dr1.IsNull("EnqRef") ? string.Empty : Convert.ToString(dr1["EnqRef"]);
@@ -197,8 +197,8 @@ namespace NtierMvc.BusinessLogic.Worker
                     Model.EnquiryId = dt1.Rows[0]["EnquiryId"] == DBNull.Value ? 0 : Convert.ToInt32(dt1.Rows[0]["EnquiryId"]);
                     Model.UserInitial = dt1.Rows[0]["UserInitial"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["UserInitial"]);
                     Model.UnitNo = dt1.Rows[0]["UnitNo"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["UnitNo"]);
-                    Model.VendorId = dt1.Rows[0]["VendorId"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["VendorId"]);
-                    Model.VendorName = dt1.Rows[0]["VendorName"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["VendorName"]);
+                    Model.CustomerId = dt1.Rows[0]["CustomerId"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["CustomerId"]);
+                    Model.CustomerName = dt1.Rows[0]["CustomerName"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["CustomerName"]);
                     Model.QuoteType = dt1.Rows[0]["QuoteType"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["QuoteType"]);
                     Model.City = dt1.Rows[0]["City"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["City"]);
                     Model.StateId = dt1.Rows[0]["StateId"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["StateId"]);
@@ -346,12 +346,12 @@ namespace NtierMvc.BusinessLogic.Worker
             }
         }
 
-        public EnquiryEntity GetVendorDetailForEnquiry(string vendorId)
+        public EnquiryEntity GetVendorDetailForEnquiry(string CustomerId)
         {
             EnquiryEntity result = new EnquiryEntity();
             try
             {
-                result = DT2Vendor(_repository.GetVendorDetailForEnquiry(vendorId));
+                result = DT2Vendor(_repository.GetVendorDetailForEnquiry(CustomerId));
             }
             catch (Exception Ex)
             {
@@ -378,7 +378,7 @@ namespace NtierMvc.BusinessLogic.Worker
                     oVendor.StateId = Convert.ToString(dtRecord.Rows[0]["StateId"]);
                     oVendor.EnqTypeId = Convert.ToString(dtRecord.Rows[0]["EnqTypeId"]);
 
-                    oVendor.VendorName = Convert.ToString(dtRecord.Rows[0]["VendorName"]);
+                    oVendor.CustomerName = Convert.ToString(dtRecord.Rows[0]["VendorName"]);
 
                 }
             }

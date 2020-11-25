@@ -566,8 +566,8 @@ namespace NtierMvc.BusinessLogic.Worker
                         MRMBillMonitoringEntity Model = new MRMBillMonitoringEntity();
 
                         Model.VendorNatureId = dr1.IsNull("VendorNatureId") ? string.Empty : Convert.ToString(dr1["VendorNatureId"]);
-                        Model.VendorId = dr1.IsNull("VendorId") ? 0 : Convert.ToInt32(dr1["VendorId"]);
-                        Model.VendorName = dr1.IsNull("VendorName") ? string.Empty : Convert.ToString(dr1["VendorName"]);
+                        Model.CustomerId = dr1.IsNull("VendorId") ? 0 : Convert.ToInt32(dr1["VendorId"]);
+                        Model.CustomerName = dr1.IsNull("VendorName") ? string.Empty : Convert.ToString(dr1["VendorName"]);
                         Model.City = dr1.IsNull("City") ? string.Empty : Convert.ToString(dr1["City"]);
                         Model.EndUse = dr1.IsNull("EndUse") ? string.Empty : Convert.ToString(dr1["EndUse"]);
                         Model.EndUseNo = dr1.IsNull("EndUseNo") ? string.Empty : Convert.ToString(dr1["EndUseNo"]);
@@ -643,9 +643,9 @@ namespace NtierMvc.BusinessLogic.Worker
                         Model.SupplierInvNo = dr1.IsNull("SupplierInvNo") ? string.Empty : Convert.ToString(dr1["SupplierInvNo"]);
                         Model.SupplierInvDate = dr1.IsNull("SupplierDate") ? string.Empty : Convert.ToString(dr1["SupplierDate"]);
 
-                        Model.VendorNatureId = dr1.IsNull("VendorNatureId") ? string.Empty : Convert.ToString(dr1["VendorNatureId"]);
-                        Model.VendorId = dr1.IsNull("VendorId") ? 0 : Convert.ToInt32(dr1["VendorId"]);
-                        Model.VendorName = dr1.IsNull("VendorName") ? string.Empty : Convert.ToString(dr1["VendorName"]);
+                        //Model.VendorNatureId = dr1.IsNull("VendorNatureId") ? string.Empty : Convert.ToString(dr1["VendorNatureId"]);
+                        Model.CustomerId = dr1.IsNull("CustomerID") ? 0 : Convert.ToInt32(dr1["CustomerID"]);
+                        Model.CustomerName = dr1.IsNull("CustomerNAME") ? string.Empty : Convert.ToString(dr1["CustomerNAME"]);
                         Model.City = dr1.IsNull("City") ? string.Empty : Convert.ToString(dr1["City"]);
                         Model.EndUse = dr1.IsNull("EndUse") ? string.Empty : Convert.ToString(dr1["EndUse"]);
                         Model.EndUseNo = dr1.IsNull("EndUseNo") ? string.Empty : Convert.ToString(dr1["EndUseNo"]);
@@ -746,8 +746,8 @@ namespace NtierMvc.BusinessLogic.Worker
                                 obj.SupplyType = dr1.IsNull("SupplyType") ? string.Empty : Convert.ToString(dr1["SupplyType"]);
                                 obj.GateControlNo = dr1.IsNull("GateControlNo") ? string.Empty : Convert.ToString(dr1["GateControlNo"]);
 
-                                //obj.VendorId = dr1.IsNull("VendorId") ? 0 : Convert.ToInt32(dr1["VendorId"]);
-                                obj.VendorName = dr1.IsNull("VendorName") ? string.Empty : Convert.ToString(dr1["VendorName"]);
+                                obj.CustomerId = dr1.IsNull("CustomerId") ? 0 : Convert.ToInt32(dr1["CustomerId"]);
+                                obj.CustomerName = dr1.IsNull("CustomerName") ? string.Empty : Convert.ToString(dr1["CustomerName"]);
                                 obj.SupplierInvNo = dr1.IsNull("SupplierInvNo") ? string.Empty : Convert.ToString(dr1["SupplierInvNo"]);
                                 obj.SupplierInvDate = dr1.IsNull("SupplierInvDate") ? "" : Convert.ToString(dr1["SupplierInvDate"]);
                                 obj.GRNo = dr1.IsNull("GRNo") ? string.Empty : Convert.ToString(dr1["GRNo"]);

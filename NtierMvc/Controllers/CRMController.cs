@@ -125,7 +125,7 @@ namespace NtierMvc.Controllers
             }
             else
             {
-                data = GeneralConstants.NotSavedError;
+                data = GeneralConstants.NotSavedError + result;
             }
 
             return new JsonResult { Data = data, JsonRequestBehavior = JsonRequestBehavior.AllowGet };

@@ -13,9 +13,8 @@ namespace NtierMvc.Model
         public string QuoteType { get; set; }
         public string UserInitial { get; set; }
         public string UnitNo { get; set; }
-        public string VendorId { get; set; }
-        public string VendorType { get; set; }
-        public string VendorName { get; set; }
+        public string CustomerId { get; set; }
+        public string CustomerName { get; set; }
         public string City { get; set; }
         public string State { get; set; }
         public string Country { get; set; }

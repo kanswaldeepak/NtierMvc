@@ -41,34 +41,34 @@
             </div>
             <div class="col-md-4">
                 <div class="form-group">
-                    <label class="control-label">Vendor ID <span class="required">*</span></label>
+                    <label class="control-label">Customer ID <span class="required">*</span></label>
                     <div class="input-group">
-                        @Html.DropDownListFor(m => m.VendorId, new SelectList(ViewBag.ListVendorId, "DataStringValueField", "DataTextField", Model.VendorId), new
+                        @Html.DropDownListFor(m => m.CustomerId, new SelectList(ViewBag.ListCustomerId, "DataStringValueField", "DataTextField", Model.CustomerId), new
                    {
-                       id = "VendorFormId",
+                       id = "EDCustomerId",
                        @class = "form-control requiredValidation",
-                       data_id = "VendorFormId",
-                       data_select = "VendorFormId",
+                       data_id = "EDCustomerId",
+                       data_select = "EDCustomerId",
                        @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
                        @onchange = "GetVendorDetailsForEnquiry()"
                    })
-                        <span class="HideValidMsg">Please Select Vendor ID</span>
+                        <span class="HideValidMsg">Please Select Customer ID</span>
                     </div>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="form-group">
                     <label class="control-label">
-                        Vendor Name
+                        Customer Name
                     </label>
-                    @Html.TextBoxFor(m => m.VendorName, new
+                    @Html.TextBoxFor(m => m.CustomerName, new
                {
                    @class = "form-control requiredValidation",
-                   @id = "VendorEnquiryFormName",
+                   @id = "EDCustomerName",
                    @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
                    @readonly = "readonly"
                })
-                    <span class="HideValidMsg">Please Select VendorId</span>
+                    <span class="HideValidMsg">Please Select Customer ID</span>
                 </div>
             </div>
             <div class="col-md-4">
@@ -80,10 +80,10 @@
                {
                    @class = "form-control requiredValidation",
                    @id= "City",
-                   @placeholder = "Select Vendor ID",
+                   @placeholder = "Select Customer ID",
                    @readonly = "readonly"
                })
-                    <span class="HideValidMsg">Please Select Vendor ID</span>
+                    <span class="HideValidMsg">Please Select Customer ID</span>
                 </div>
             </div>
             <div class="col-md-4">
@@ -95,11 +95,11 @@
                {
                    @class = "form-control requiredValidation",
                    @id= "State",
-                   @placeholder = "Select Vendor ID",
+                   @placeholder = "Select Customer ID",
                    @readonly = "readonly"
                })
                     @Html.HiddenFor(m => m.StateId)
-                    <span class="HideValidMsg">Please Select Vendor ID</span>
+                    <span class="HideValidMsg">Please Select Customer ID</span>
                 </div>
             </div>
             <div class="col-md-4">
@@ -111,11 +111,11 @@
                {
                    @class = "form-control requiredValidation",
                    @id= "Country",
-                   @placeholder = "Select Vendor ID",
+                   @placeholder = "Select Customer ID",
                    @readonly = "readonly"
                })
                     @Html.HiddenFor(m => m.CountryId)
-                    <span class="HideValidMsg">Please Select Vendor ID</span>
+                    <span class="HideValidMsg">Please Select Customer ID</span>
                 </div>
             </div>
             <div class="col-md-4">
@@ -157,7 +157,7 @@
                        {
                            @class = "form-control requiredValidation",
                            @id= "EnqType",
-                           @placeholder = "Select Vendor Name",
+                           @placeholder = "Select Customer Name",
                            @readonly = "readonly",
                            @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
                        })
@@ -382,22 +382,21 @@
 <script>
     $(document).ready(function () {
 
-        window.SaveEnquiry = '@Url.Action("SaveEnquiryDetails", "Enquiry")';
-        window.VendorDetailForEnquiry = '@Url.Action("GetVendorDetailForEnquiry", "Enquiry")';
+        window.SaveEnquiry = '@Url.Action("SaveEnquiryDetails", "Technical")';
+        window.VendorDetailForEnquiry = '@Url.Action("GetVendorDetailForEnquiry", "Technical")';
         window.VendorDetail = '@Url.Action("GetQuoteVendorDetail", "Technical")';
         window.GetDeliveryItems = '@Url.Action("GetDeliveryItems", "Technical")';
     });
 
 
     function GetVendorDetailsForEnquiry() {
-        var VendorId = $("#VendorFormId").val();
+        var CustomerId = $("#CustomerFormId").val();
         $.ajax({
             type: 'POST',
             url: window.VendorDetailForEnquiry,
-            data: JSON.stringify({ vendorId: VendorId }),
+            data: JSON.stringify({ CustomerId: CustomerId }),
             contentType: "application/json; charset=utf-8",
             success: function (data) {
-                debugger;
                 $("#City").val(data.City);
                 $("#State").val(data.State);
                 $("#Country").val(data.Country);
@@ -405,7 +404,7 @@
                 $("#StateId").val(data.StateId);
                 $("#CountryId").val(data.CountryId);
                 $("#EnqTypeId").val(data.EnqTypeId);
-                $("#VendorEnquiryFormName").val(data.VendorName);
+                $("#EDCustomerName").val(data.VendorName);
             },
             error: function (x, e) {
                 $('#alertmsg').text('Some error is occurred, Please try after some time.');
@@ -433,10 +432,10 @@
                 else if (QuoteType == '371')
                     $('#QuoteTypeNo').val('SE-' + res.QuoteNo);
 
-                $("#VendorFormId").empty();
+                $("#EDCustomerId").empty();
                 if (res.lstVendors.length > 0) {
                     $.each(res.lstVendors, function (i, item) {
-                        $("#VendorFormId").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
+                        $("#EDCustomerId").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
                     })
                 }
 
@@ -467,4 +466,3 @@
         endDate: 'today',
     });
 </script>
-<script src="~/Scripts/CustomJS/common.js"></script>

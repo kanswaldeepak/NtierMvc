@@ -13,8 +13,8 @@ namespace NtierMvc.Model
         public int Id { get; set; }
         public string UserInitial { get; set; }
         public string UnitNo { get; set; }
-        public string VendorId { get; set; }
-        public string VendorName { get; set; }
+        public string CustomerId { get; set; }
+        public string CustomerName { get; set; }
         public string QuoteTypeValue { get; set; }
         public string QuoteQtyType { get; set; }
         public string QuoteType { get; set; }
@@ -53,8 +53,8 @@ namespace NtierMvc.Model
     {
         public int Id { get; set; }
         public string UnitNo { get; set; }
-        public string VendorId { get; set; }
-        public string VendorName { get; set; }
+        public string CustomerId { get; set; }
+        public string CustomerName { get; set; }
         public string QuoteNo { get; set; }
 
         public string QuoteType { get; set; }

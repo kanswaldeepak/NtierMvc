@@ -225,7 +225,7 @@ namespace NtierMvc.DataAccess.Pool
         {
             var parms = new Dictionary<string, object>();
             parms.Add("@Type", type);
-            parms.Add("@VendorId", VendorId);
+            parms.Add("@CustomerId", VendorId);
             parms.Add("@QuoteType", QuoteType);
             string spName = ConfigurationManager.AppSettings["GetDdlValueForQuote"];
             return _dbAccess.GetDataTable(spName, parms);

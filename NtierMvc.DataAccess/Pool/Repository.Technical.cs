@@ -57,7 +57,7 @@ namespace NtierMvc.DataAccess.Pool
         {
             DataTable dt = new DataTable();
             var parms = new Dictionary<string, object>();
-            parms.Add("@vendorId", vendorId);
+            parms.Add("@CustomerId", vendorId);
             var spName = ConfigurationManager.AppSettings["GetEnqNoList"];
             dt = _dbAccess.GetDataTable(spName, parms);
             return dt;

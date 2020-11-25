@@ -55,7 +55,7 @@ namespace NtierMvc.DataAccess.Pool
             Params.Add("@UserInitial", Model.UserInitial);
             Params.Add("@UnitNo", Model.UnitNo);
             Params.Add("@QuoteType", Model.QuoteType);
-            Params.Add("@VendorId", Model.VendorId);
+            Params.Add("@VendorId", Model.CustomerId);
             Params.Add("@City", Model.City);
             Params.Add("@State", Model.StateId);
             Params.Add("@Country", Model.CountryId);
@@ -92,11 +92,11 @@ namespace NtierMvc.DataAccess.Pool
 
         }
 
-        public DataTable GetVendorDetailForEnquiry(string vendorId)
+        public DataTable GetVendorDetailForEnquiry(string CustomerId)
         {
             DataTable dt = new DataTable();
             var parms = new Dictionary<string, object>();
-            parms.Add("@vendorId", vendorId);
+            parms.Add("@CustomerId", CustomerId);
             var spName = ConfigurationManager.AppSettings["GetVendorDetailForEnquiry"];
             dt = _dbAccess.GetDataTable(spName, parms);
             return dt;

@@ -78,9 +78,9 @@ namespace NtierMvc.API.Controllers.Application
 
         [HttpGet]
         [Route("api/EnquiryDetails/GetVendorDetailForEnquiry")]
-        public IHttpActionResult GetVendorDetailForEnquiry(string vendorId)
+        public IHttpActionResult GetVendorDetailForEnquiry(string CustomerId)
         {
-            return Ok(_repository.GetVendorDetailForEnquiry(vendorId));
+            return Ok(_repository.GetVendorDetailForEnquiry(CustomerId));
         }
 
         [HttpGet]

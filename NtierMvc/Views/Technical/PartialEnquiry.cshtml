@@ -87,69 +87,36 @@
 
 <div class="wrapper">
     <div class="container">
-        <table id="TblEnquiry">
-            <thead class="tblhead">
+        <table id="TblEnquiry" class="table table-sm">
+            <thead>
                 <tr>
-                    <th>
-                        Action
-                        <div class="c1">
-                            Action
-                        </div>
-                    </th>
-                    <th>
-                        Vendor Name
-                        <div class="c2">
-                            Vendor Name
-                        </div>
-                    </th>
-                    <th>
-                        Vendor Type
-                        <div class="c3">
-                            Vendor Type
-                        </div>
-                    </th>
-                    <th>
+                    <td>
+                        Action                     
+                    </td>
+                    <td>
+                        Customer Name
+                    </td>
+                    <td>
                         Country
-                        <div class="c3">
-                            Country
-                        </div>
-                    </th>
-                    <th>
+                    </td>
+                    <td>
                         Enq Ref
-                        <div class="c3">
-                            Enq Ref
-                        </div>
-                    </th>
-                    <th>
+                    </td>
+                    <td>
                         Enq Date
-                        <div class="c3">
-                            Enq Date
-                        </div>
-                    </th>                    
-                    <th>
+                    </td>                    
+                    <td>
                         Due Date
-                        <div class="c3">
-                            Due Date
-                        </div>
-                    </th>
-                    <th>
+                    </td>
+                    <td>
                         Prod Grp
-                        <div class="c3">
-                            Prod Grp
-                        </div>
-                    </th>
-                    <th>
+                    </td>
+                    <td>
                         Enq For
-                        <div class="c3">
-                            Enq For
-                        </div>
-                    </th>
-                    <th>
+                    </td>
+                    <td>
                         EOQ
-                        <div class="c3">
-                            EOQ
-                        </div>
-                    </th>
+                    </td>
                 </tr>
             </thead>
             <tbody>
@@ -166,11 +133,8 @@
                         </button>
                     </td>
                     <td>
-                        {{L.VendorName}}
-                    </td>
-                    <td>
-                        {{L.VendorType}}
-                    </td>
+                        {{L.CustomerName}}
+                    </td>                    
                     <td>
                         {{L.Country}}
                     </td>
@@ -262,15 +226,15 @@
         placeholder_text_single: "Select Product Group"
     });
 
-    $('#EQVendorId').chosen({
+    $('#EQCustomerId').chosen({
         width: "210px",
-        placeholder_text_single: "Select Vendor Id",
-        placeholder_text_multiple: "Select Vendor Ids"
+        placeholder_text_single: "Select Customer Id",
+        placeholder_text_multiple: "Select Customer Ids"
     });
 
-    $('#EQVendorName').chosen({
+    $('#EQCustomerName').chosen({
         width: "210px",
-        placeholder_text_single: "Select Vendor Name"
+        placeholder_text_single: "Select Customer Name"
     });
 
     $('#EQMonth').chosen({
@@ -313,13 +277,13 @@
                 dataType: 'json',
                 type: 'GET',
                 url: window.GetDdlValueForEnquiry,
-                data: { ProductGroup: EQProductGroupId, type: 'VendorId' },
+                data: { ProductGroup: EQProductGroupId, type: 'CustomerId' },
                 success: function (res) {
                     if (res.length > 0) {
-                        $("#EQVendorId").empty();
+                        $("#EQCustomerId").empty();
                         $.each(res, function (i, item) {
-                            $("#EQVendorId").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
-                            $("#EQVendorId").trigger("chosen:updated");
+                            $("#EQCustomerId").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
+                            $("#EQCustomerId").trigger("chosen:updated");
                         })
                     }
                 },

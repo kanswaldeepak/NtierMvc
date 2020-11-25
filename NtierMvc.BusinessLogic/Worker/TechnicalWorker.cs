@@ -789,8 +789,8 @@ namespace NtierMvc.BusinessLogic.Worker
                 if (dtRecord.Rows.Count > 0)
                 {
                     oVendor.UnitNo = Convert.ToString(dtRecord.Rows[0]["Id"]);
-                    oVendor.VendorId = Convert.ToString(dtRecord.Rows[0]["VENDORID"]);
-                    oVendor.VendorName = Convert.ToString(dtRecord.Rows[0]["VendorName"]);
+                    oVendor.CustomerId = Convert.ToString(dtRecord.Rows[0]["VENDORID"]);
+                    oVendor.CustomerName = Convert.ToString(dtRecord.Rows[0]["VendorName"]);
                 }
             }
             catch (Exception Ex)
@@ -927,8 +927,8 @@ namespace NtierMvc.BusinessLogic.Worker
                     Model.Id = dt1.Rows[0]["Id"] == DBNull.Value ? 0 : Convert.ToInt32(dt1.Rows[0]["Id"]);
                     Model.UserInitial = dt1.Rows[0]["UserInitial"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["UserInitial"]);
                     Model.UnitNo = dt1.Rows[0]["UnitNo"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["UnitNo"]);
-                    Model.VendorId = dt1.Rows[0]["VendorId"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["VendorId"]);
-                    Model.VendorName = dt1.Rows[0]["VendorName"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["VendorName"]);
+                    Model.CustomerId = dt1.Rows[0]["VendorId"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["VendorId"]);
+                    Model.CustomerName = dt1.Rows[0]["VendorName"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["VendorName"]);
                     Model.QuoteTypeValue = dt1.Rows[0]["QuoteTypeValue"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["QuoteTypeValue"]);
                     Model.QuoteQtyType = dt1.Rows[0]["QuoteQtyType"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["QuoteQtyType"]);
                     Model.QuoteType = dt1.Rows[0]["QuoteType"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["QuoteType"]);
@@ -1069,11 +1069,11 @@ namespace NtierMvc.BusinessLogic.Worker
                         if (dt.Columns.Contains("Id"))
                             orderEntity.Id = Convert.ToInt32(dr["Id"] ?? 0);
 
-                        if (dt.Columns.Contains("VENDORID"))
-                            orderEntity.VendorId = dr["VENDORID"]?.ToString() ?? "";
+                        if (dt.Columns.Contains("CustomerID"))
+                            orderEntity.CustomerId = dr["CustomerID"]?.ToString() ?? "";
 
-                        if (dt.Columns.Contains("VENDORNAME"))
-                            orderEntity.VendorName = dr["VENDORNAME"]?.ToString() ?? "";
+                        if (dt.Columns.Contains("CustomerNAME"))
+                            orderEntity.CustomerName = dr["CustomerNAME"]?.ToString() ?? "";
 
                         if (dt.Columns.Contains("FILENO"))
                             orderEntity.FileNo = dr["FILENO"]?.ToString() ?? "";
@@ -1115,11 +1115,11 @@ namespace NtierMvc.BusinessLogic.Worker
                         if (dt.Columns.Contains("PONO"))
                             itemEntity.PoNo = dr["PONO"]?.ToString() ?? "";
 
-                        if (dt.Columns.Contains("VENDORID"))
-                            itemEntity.VendorId = dr["VENDORID"]?.ToString() ?? "";
+                        if (dt.Columns.Contains("CustomerID"))
+                            itemEntity.CustomerId = dr["CustomerID"]?.ToString() ?? "";
 
-                        if (dt.Columns.Contains("VENDORNAME"))
-                            itemEntity.VendorName = dr["VENDORNAME"]?.ToString() ?? "";
+                        if (dt.Columns.Contains("CustomerNAME"))
+                            itemEntity.CustomerName = dr["CustomerNAME"]?.ToString() ?? "";
 
                         if (dt.Columns.Contains("PODATE"))
                             itemEntity.PoDate = dr["PODATE"]?.ToString() ?? "";
@@ -1382,17 +1382,17 @@ namespace NtierMvc.BusinessLogic.Worker
                             quoteEntity.Id = Convert.ToInt32(dr["Id"] ?? 0);
 
                         if (dt.Columns.Contains("VendorId"))
-                            quoteEntity.VendorId = dr["VendorId"]?.ToString() ?? "";
+                            quoteEntity.CustomerId = dr["VendorId"]?.ToString() ?? "";
 
                         if (dt.Columns.Contains("VENDORNAME"))
-                            quoteEntity.VendorName = dr["VENDORNAME"]?.ToString() ?? "";
+                            quoteEntity.CustomerName = dr["VENDORNAME"]?.ToString() ?? "";
 
                         if (dt.Columns.Contains("QuoteNo"))
                             quoteEntity.QuoteNo = dr["QuoteNo"]?.ToString() ?? "";
 
 
                         if (dt.Columns.Contains("VendorName"))
-                            quoteEntity.VendorName = dr["VendorName"]?.ToString() ?? "";
+                            quoteEntity.CustomerName = dr["VendorName"]?.ToString() ?? "";
 
                         if (dt.Columns.Contains("FileNo"))
                             quoteEntity.FileNo = dr["FileNo"]?.ToString() ?? "";
