@@ -124,8 +124,9 @@ namespace NtierMvc.Areas.HRDepartment.Controllers
 
                 try
                 {
-                    file.SaveAs(Path.Combine(Server.MapPath("~/Areas/HRDepartment/EmployeeImage"), fileName));
-                    hrE.EmpImage = "/Areas/HRDepartment/EmployeeImage/" + fileName;
+                    System.IO.Directory.CreateDirectory(Server.MapPath(ConfigurationManager.AppSettings["EmployeeImage"]));
+                    file.SaveAs(Path.Combine(Server.MapPath(ConfigurationManager.AppSettings["EmployeeImage"]), fileName));
+                    hrE.EmpImage = fileName;
                     flag = true;
                 }
                 catch (Exception)
@@ -173,9 +174,9 @@ namespace NtierMvc.Areas.HRDepartment.Controllers
         public ActionResult HREmpPopup(string actionType, string HREmpId)
         {
             string countryId = "0";
-            ViewBag.ListState = model.GetStateDetail(countryId); //Given wrong CountryId to not get any value
+            ViewBag.ListState = model.GetMasterTableStringList("Master.State", "Id", "State"); //Given wrong CountryId to not get any value
             ViewBag.ListEmpType = model.GetMasterTableList("Master.EmpType", "Id", "EmpTypeName");
-            ViewBag.ListCountry = model.GetMasterTableList("Master.Country", "Id", "Country");
+            ViewBag.ListCountry = model.GetMasterTableStringList("Master.Country", "Id", "Country");
             ViewBag.ListGender = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "Gender", "Property", GeneralConstants.ListTypeN);
             ViewBag.GenderTitleList = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "title", "Property", GeneralConstants.ListTypeN);
             ViewBag.ListBloodGroup = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "BloodGroup", "Property", GeneralConstants.ListTypeN);
@@ -227,10 +228,12 @@ namespace NtierMvc.Areas.HRDepartment.Controllers
 
         }
 
+        [HttpPost]
         public ActionResult GetStateDetail(string countryId)
         {
-            List<GeographyEntity> StateList = new List<GeographyEntity>();
-            StateList = model.GetStateDetail(countryId);
+            //List<GeographyEntity> StateList = new List<GeographyEntity>();
+            //StateList = model.GetStateDetail(countryId);
+            var StateList = model.GetDropDownList("Master.State", GeneralConstants.ListTypeD, "Id", "State", countryId, "CountryId");
             return new JsonResult { Data = StateList, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 
@@ -386,7 +389,7 @@ namespace NtierMvc.Areas.HRDepartment.Controllers
 
             try
             {
-                if (ExpDetails != null)
+                if (ExpDetails != null && ExpDetails.Length > 1)
                 {
                     BulkUploadEntity objBU = new BulkUploadEntity();
                     objBU.DataRecordTable = new DataTable();
@@ -428,11 +431,11 @@ namespace NtierMvc.Areas.HRDepartment.Controllers
                     return new JsonResult { Data = data, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
 
                 }
-                return Json("Unable to save Item Details! Please Provide correct information", JsonRequestBehavior.AllowGet);
+                return Json("No Data Entered Or Found for Experience Details. Employee Details Saved Successfully!", JsonRequestBehavior.AllowGet);
             }
             catch (Exception)
             {
-                return Json("Unable to save your Item Details! Please try again later.", JsonRequestBehavior.AllowGet);
+                return Json("Unable to save your Experience Details! Please try again later.", JsonRequestBehavior.AllowGet);
             }
         }
 
@@ -527,7 +530,7 @@ namespace NtierMvc.Areas.HRDepartment.Controllers
 
         public JsonResult GetEmpExpDetails(string EmpId)
         {
-            var masterList = model.GetTableDataList(GeneralConstants.ListTypeD,"EmployeeExperience", "EmpId", EmpId,"","", "", "", "", "", "", "","SN","Employer","Designation","PeriodFrom","PeriodTo");
+            var masterList = model.GetTableDataList(GeneralConstants.ListTypeD, "EmployeeExperience", "EmpId", EmpId, "", "", "", "", "", "", "", "", "SN", "Employer", "Designation", "PeriodFrom", "PeriodTo");
 
             return new JsonResult { Data = masterList, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }

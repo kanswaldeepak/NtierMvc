@@ -8,6 +8,7 @@
     <form id="formSaveEmployeeDetail">
         <div class="col-md-12">
             @Html.HiddenFor(m => m.Id)
+            @Html.HiddenFor(m => m.EmpCode)
             <div class="row">
                 <div class="col-md-3">
                     <div id="EmpImageUpload" class="form-group">
@@ -16,7 +17,7 @@
                     </div>
                     @if (Model.EmpImage != null)
                     {
-                        <img src="@Url.Content(Model.EmpImage)" alt="@Model.EmpName" class="img-responsive" style="height:100px; width:100px" />
+                        <img src="~/Images/EmployeeImage/@Model.EmpImage" alt="@Model.EmpName" class="img-responsive" style="height:100px; width:100px" />
                     }
                 </div>
                 <div class="col-md-3">
@@ -256,11 +257,11 @@
                    })
                     </div>
                 </div>
-                @*<div class="col-md-3">
+                <div class="col-md-3">
                 <div class="form-group">
                     <label class="control-label">COUNTRY <span class="required">*</span></label>
                     <div class="input-group date">
-                        @Html.DropDownListFor(m => m.Country, new SelectList(@ViewBag.ListCountry, "DataValueField", "DataTextField", Model.Country),
+                        @Html.DropDownListFor(m => m.Country, new SelectList(@ViewBag.ListCountry, "DataStringValueField", "DataTextField", Model.Country),
                     new
                     {
                         @class = "form-control requiredValidation",
@@ -268,25 +269,23 @@
                         @data_inneraction = "validationCall",
                         @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
                         ng_model="Country",
-                        ng_change = "GetState(Country)"
+                        @onchange = "GetState()"
                     })
                         <span class="HideValidMsg">Please Enter Valid Country</span>
                     </div>
                 </div>
-            </div>*@
+            </div>
                 <div class="col-md-3">
                     <div class="form-group">
                         <label class="control-label">STATE<span class="required">*</span></label>
-                        @Html.TextBoxFor(m => m.State, new
-                   {
-                       @class = "form-control requiredValidation",
-                       @id = "State",
-                       @data_inneraction = "validationCall",
-                       @placeholder = "State"
-                   })
-                        @*<select id="State" name="State" class="form-control requiredValidation ng-pristine ng-untouched ng-valid ng-empty" onfocusout="return ValidateRequiredFieldsOnFocusOut(this)">
-                        <option data-ng-repeat="st in ListState" value="{{st.Id}}">{{st.State}}</option>
-                    </select>*@
+                        @Html.DropDownListFor(m => m.State, new SelectList(ViewBag.ListState, "DataStringValueField", "DataTextField", Model.State), new
+                       {
+                           id = "State",
+                           @class = "form-control requiredValidation",
+                           data_id = "State",
+                           data_select = "State",
+                           @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                       })
                     </div>
                 </div>
                 <div class="col-md-3">

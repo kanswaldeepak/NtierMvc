@@ -236,6 +236,7 @@ namespace NtierMvc.BusinessLogic.Worker
                     Model.City = dt1.Rows[0]["City"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["City"]);
                     Model.State = dt1.Rows[0]["State"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["State"]);
                     Model.ZipCode = dt1.Rows[0]["ZipCode"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["ZipCode"]);
+                    Model.Country = dt1.Rows[0]["Country"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["Country"]);
                     Model.mob1 = dt1.Rows[0]["mob1"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["mob1"]);
                     Model.mob2 = dt1.Rows[0]["mob2"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["mob2"]);
                     Model.email = dt1.Rows[0]["email"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["email"]);

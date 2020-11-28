@@ -44,10 +44,12 @@ angular.module('App').controller("HrController", function ($scope, $http, $timeo
                 isValid = true;
             }
             else {
+                alert("Selected file is Invalid. (only file type png, jpeg and gif and 512 kb size allowed)");
                 $scope.FileInvalidMessage = "Selected file is Invalid. (only file type png, jpeg and gif and 512 kb size allowed)";
             }
         }
         else {
+            alert("Image required!");
             $scope.FileInvalidMessage = "Image required!";
         }
         $scope.IsFileValid = isValid;
@@ -62,7 +64,6 @@ angular.module('App').controller("HrController", function ($scope, $http, $timeo
 
     $scope.SaveEmployee = function () {
 
-        ShowLoadder();
         var Status = false;
         Status = GetFormValidationStatus("#formSaveEmployeeDetail");
 
@@ -72,7 +73,10 @@ angular.module('App').controller("HrController", function ($scope, $http, $timeo
         formData.append("file", $scope.SelectedFileForUpload);
 
         if (!Status) {
+            HideLoadder();
             alert("Kindly Fill all mandatory fields");
+        }
+        else if ($scope.FileInvalidMessage != '') {
             HideLoadder();
         }
         else {

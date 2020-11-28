@@ -1,4 +1,31 @@
 ﻿
+function GetState() {
+
+    let CountryId = $('#Country option:selected').val();
+
+    $.ajax({
+        type: 'POST',
+        url: window.StateDetail,
+        data: JSON.stringify({ countryId: CountryId }),
+        contentType: "application/json; charset=utf-8",
+        success: function (data) {
+            if (data.length > 0) {
+                $("#State").empty();
+                if (data.length > 0) {
+                    $.each(data, function (i, item) {
+                        $("#State").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
+                    })
+                }
+            }
+        },
+        error: function (x, e) {
+            alert('Some error is occurred, Please try after some time.');
+            //$('#spn-Sucess-Failure').text('Some error is occurred, Please try after some time.');
+            //$('#spn-Sucess-Failure').addClass("important red");
+            //$('#Sucess-Failure').modal('show');
+        }
+    })
+}
 
 function GetCertificateDetails() {
 
@@ -143,7 +170,7 @@ function SaveExpDetails(EmpId) {
         $.each($(tableSelected + " tbody tr"), function () {
             arr.push({
                 //Id: $("#Id").val(),
-                
+
                 EmpId: EmpId,
                 SN: $(this).find('td:eq(0) span').text(),
                 Employer: $(this).find('td:eq(1) input').val(),
@@ -174,12 +201,12 @@ function saveExperienceDetail(data) {
         url: window.SaveExperienceDetails,
         data: data,
         success: function (result) {
-            alert(result);
             HideLoadder();
+            alert(result);
         },
         error: function () {
-            alert(result);
             HideLoadder();
+            alert(result);
         }
     });
 }
@@ -190,7 +217,7 @@ function SaveCertificates() {
     //var fileEduc = $("#fileEduc").get(0).files;
     //var filePostGrad = $("#filePostGrad").get(0).files;
 
-    ShowLoadder();
+
     var fileData = new FormData();
     fileData.append("fileTech", fileTech);
     fileData.append("EmpId", empId);

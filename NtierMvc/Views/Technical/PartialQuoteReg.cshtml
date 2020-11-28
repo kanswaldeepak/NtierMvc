@@ -79,42 +79,75 @@
 
 <div class="wrapper">
     <div class="container">
-        <table class="table table-sm">
-            <thead style="font-weight: bold">
+        <table>
+            <thead class="tblhead">
                 <tr>
-                    <td>
-                        Action                       
-                    </td>
-                    <td>
+                    <th>
+                        Action
+                        <div class="c1">
+                            Action
+                        </div>
+                    </th>
+                    <th>
                         Customer Id
-                    </td>
-                    <td>
+                        <div class="c2">
+                            Customer Id
+                        </div>
+                    </th>
+                    <th>
                         Customer Name
-                    </td>
-                    <td>
+                        <div class="c3">
+                            Customer Name
+                        </div>
+                    </th>
+                    <th>
                         Country
-                    </td>
-                    <td>
+                        <div class="c3">
+                            Country
+                        </div>
+                    </th>
+                    <th>
                         Quote No.
-                    </td>
-                    <td>
+                        <div class="c3">
+                            Quote No.
+                        </div>
+                    </th>
+                    <th>
                         Date
-                    </td>
-                    <td>
+                        <div class="c3">
+                            Date
+                        </div>
+                    </th>
+                    <th>
                         Currency
-                    </td>
-                    <td>
+                        <div class="c3">
+                            Currency
+                        </div>
+                    </th>
+                    <th>
                         Enquiry Date
-                    </td>
-                    <td>
+                        <div class="c3">
+                            Enquiry Date
+                        </div>
+                    </th>
+                    <th>
                         Prod Grp
-                    </td>
-                    <td>
+                        <div class="c3">
+                            Prod Grp
+                        </div>
+                    </th>
+                    <th>
                         Geo Area
-                    </td>
-                    <td>
+                        <div class="c3">
+                            Geo Area
+                        </div>
+                    </th>
+                    <th>
                         Status
-                    </td>
+                        <div class="c3">
+                            Status
+                        </div>
+                    </th>
                 </tr>
             </thead>
             <tbody>
@@ -295,10 +328,10 @@
 
     $(document).ready(function () {
 
-        window.GetDdlValueForQuote = '@Url.Action("GetDdlValueForQuote","Quotation")';
+        window.GetDdlValueForQuote = '@Url.Action("GetDdlValueForQuote","Technical")';
         window.QuotationDetailsPopup = '@Url.Action("QuotationPopup", "Technical")';
         window.RevisedQuotationDetailsPopup = '@Url.Action("RevisedQuotationPopup", "Technical")';
-        window.DeleteQuotationDetail = '@Url.Action("DeleteQuotationDetail", "Quotation")';
+        window.DeleteQuotationDetail = '@Url.Action("DeleteQuotationDetail", "Technical")';
         window.FetchQuoteRegList = '@Url.Action("FetchQuoteRegList", "Technical")';
         window.GetPrepQuoteNo = '@Url.Action("GetPrepQuoteNo", "Technical")';
         

@@ -43,6 +43,7 @@ namespace NtierMvc.DataAccess.Pool
             parms.Add("@address2", objEmp.Address2);
             parms.Add("@City", objEmp.City);
             parms.Add("@state", objEmp.State);
+            parms.Add("@Country", objEmp.Country);
             parms.Add("@zipcode", objEmp.ZipCode);
             parms.Add("@mob1", objEmp.mob1);
             parms.Add("@mob2", objEmp.mob2);
