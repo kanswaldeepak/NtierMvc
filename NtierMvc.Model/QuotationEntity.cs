@@ -21,7 +21,9 @@ namespace NtierMvc.Model
         public string EnqDt { get; set; }
         public string EnqFor { get; set; }
         public string EnqNo { get; set; }
-        public string ProdGrp { get; set; }
+        public string MainProdGrp { get; set; }
+        public string SubProdGrp { get; set; }
+        public string ProdName { get; set; }
         public string QuoteNo { get; set; }
         public string QuoteTypeNo { get; set; }
         public string GeoArea { get; set; }

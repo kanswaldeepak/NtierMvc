@@ -190,7 +190,7 @@ namespace NtierMvc.BusinessLogic.Worker
                                 obj.Country = dr1.IsNull("Country") ? string.Empty : Convert.ToString(dr1["Country"]);
                                 obj.GeoArea = dr1.IsNull("GeoArea") ? string.Empty : Convert.ToString(dr1["GeoArea"]);
                                 obj.EnqFor = dr1.IsNull("EnqFor") ? string.Empty : Convert.ToString(dr1["EnqFor"]);
-                                obj.ProdGrp = dr1.IsNull("ProdGrp") ? string.Empty : Convert.ToString(dr1["ProdGrp"]);
+                                obj.MainProdGrp = dr1.IsNull("ProdGrp") ? string.Empty : Convert.ToString(dr1["ProdGrp"]);
                                 obj.Status = dr1.IsNull("Status") ? string.Empty : Convert.ToString(dr1["Status"]);
                                 obj.Remarks = dr1.IsNull("Remarks") ? string.Empty : Convert.ToString(dr1["Remarks"]);
                                 obj.Currency = dr1.IsNull("Currency") ? string.Empty : Convert.ToString(dr1["Currency"]);
@@ -258,7 +258,7 @@ namespace NtierMvc.BusinessLogic.Worker
                     Model.BgReq = dt1.Rows[0]["BgReq"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["BgReq"]);
                     Model.Inspection = dt1.Rows[0]["Inspection"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["Inspection"]);
                     Model.Remarks = dt1.Rows[0]["Remarks"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["Remarks"]);
-                    Model.ProdGrp = dt1.Rows[0]["ProdGrp"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["ProdGrp"]);
+                    Model.MainProdGrp = dt1.Rows[0]["ProdGrp"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["ProdGrp"]);
                     Model.GeoArea = dt1.Rows[0]["GeoArea"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["GeoArea"]);
                     Model.GeoCode = dt1.Rows[0]["GeoCode"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["GeoCode"]);
                     Model.Status = dt1.Rows[0]["Status"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["Status"]);
@@ -267,6 +267,9 @@ namespace NtierMvc.BusinessLogic.Worker
                     Model.PortOfDischarge = dt1.Rows[0]["PortOfDischarge"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["PortOfDischarge"]);
                     Model.Currency = dt1.Rows[0]["Currency"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["Currency"]);
                     Model.LeadTime = dt1.Rows[0]["LeadTime"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["LeadTime"]);
+                    Model.PaymentTerms = dt1.Rows[0]["PaymentTerms"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["PaymentTerms"]);
+                    Model.SalesPerson = dt1.Rows[0]["SalesPerson"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["SalesPerson"]);
+                    Model.Subject = dt1.Rows[0]["Subject"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["Subject"]);
                 }
             }
 

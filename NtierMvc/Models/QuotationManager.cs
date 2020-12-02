@@ -66,11 +66,11 @@ namespace NtierMvc.Model
         
         public QuotationEntityDetails GetQuotationDetails(int pageIndex, int pageSize, string SearchQuoteType = null, string SearchQuoteVendorID = null, string SearchQuoteProductGroup = null, string SearchDeliveryTerms = null)
         {
-            var baseAddress = "QuotationDetails";
+            var baseAddress = "TechnicalDetails";
             QuotationEntityDetails quote = new QuotationEntityDetails();
             using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
             {
-                HttpResponseMessage response = client.GetAsync(baseAddress + "/GetQuotationDetails?pageIndex=" + pageIndex + "&pageSize=" + pageSize + "&SearchQuoteType=" + SearchQuoteType + "&SearchQuoteVendorID=" + SearchQuoteVendorID + "&SearchQuoteProductGroup=" + SearchQuoteProductGroup + "&SearchDeliveryTerms=" + SearchDeliveryTerms).Result;
+                HttpResponseMessage response = client.GetAsync(baseAddress + "/GetQuoteRegList?pageIndex=" + pageIndex + "&pageSize=" + pageSize + "&SearchQuoteType=" + SearchQuoteType + "&SearchQuoteVendorID=" + SearchQuoteVendorID + "&SearchQuoteProductGroup=" + SearchQuoteProductGroup + "&SearchDeliveryTerms=" + SearchDeliveryTerms).Result;
                 if (response.IsSuccessStatusCode)
                 {
                     var data = response.Content.ReadAsStringAsync().Result;

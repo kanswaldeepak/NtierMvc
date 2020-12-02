@@ -53,7 +53,9 @@ namespace NtierMvc.DataAccess.Pool
             Params.Add("@EnqNo", Model.EnqNo);
             Params.Add("@EnqDt", Model.EnqDt);
             Params.Add("@EnqFor", Model.EnqFor);
-            Params.Add("@ProdGrp", Model.ProdGrp);
+            Params.Add("@MainProdGrp", Model.MainProdGrp);
+            Params.Add("@SubProdGrp", Model.SubProdGrp);
+            Params.Add("@ProdName", Model.ProdName);
             Params.Add("@QuoteNo", Model.QuoteNo);
             Params.Add("@GeoCode", Model.GeoCode);
             Params.Add("@QuoteDate", Model.QuoteDate);
@@ -90,7 +92,7 @@ namespace NtierMvc.DataAccess.Pool
             Params.Add("@QuoteNo", Model.QuoteNo);
             Params.Add("@ItemNo", Model.ItemNo);
             Params.Add("@EnqSrNo", Model.EnqSrNo);
-            Params.Add("@VendorName", Model.VendorName);
+            Params.Add("@VendorName", Model.CustomerName);
             Params.Add("@ProductLine", Model.ProductLine);
             Params.Add("@ProductName", Model.ProductName);
             Params.Add("@ProductNo", Model.ProductNo);

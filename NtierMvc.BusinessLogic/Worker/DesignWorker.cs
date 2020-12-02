@@ -427,7 +427,7 @@ namespace NtierMvc.BusinessLogic.Worker
                     oE.SoNo = dr1.IsNull("SoNo") ? string.Empty : Convert.ToString(dr1["SoNo"]);
                     oE.PoNo = dr1.IsNull("PoNo") ? string.Empty : Convert.ToString(dr1["PoNo"]);
                     oE.PoDate = dr1.IsNull("PoDate") ? string.Empty : Convert.ToString(dr1["PoDate"]);
-                    oE.ProductGroup = dr1.IsNull("ProductGroup") ? string.Empty : Convert.ToString(dr1["ProductGroup"]);
+                    oE.MainProdGrp = dr1.IsNull("ProductGroup") ? string.Empty : Convert.ToString(dr1["ProductGroup"]);
 
                 }
             }

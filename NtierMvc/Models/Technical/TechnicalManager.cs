@@ -43,7 +43,7 @@ namespace NtierMvc.Model
         }
         #endregion
 
-        public string SaveTechnicalQuoteDetails(QuotationEntity viewModel)
+        public string SaveQuotationDetails(QuotationEntity viewModel)
         {
             string result = "0";
             var baseAddress = "TechnicalDetails";

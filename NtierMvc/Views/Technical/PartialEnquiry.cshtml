@@ -41,7 +41,7 @@
                            })
             </td>
             <td>
-                @Html.DropDownList("ProductGroup", new SelectList(@ViewBag.ListProdGrp, "DataStringValueField", "DataTextField", "Select"),
+                @Html.DropDownList("ProdName", new SelectList(@ViewBag.ListProdName, "DataStringValueField", "DataTextField", "Select"),
                            new
                            {
                                @class = "form-control",
@@ -87,36 +87,63 @@
 
 <div class="wrapper">
     <div class="container">
-        <table id="TblEnquiry" class="table table-sm">
-            <thead>
+        <table id="TblEnquiry">
+            <thead class="tblhead">
                 <tr>
-                    <td>
-                        Action                     
-                    </td>
-                    <td>
+                    <th>
+                        Action    
+                        <div class="c1">
+                            Action
+                        </div>
+                    </th>
+                    <th>
                         Customer Name
-                    </td>
-                    <td>
+                        <div class="c1">
+                            Customer Name
+                        </div>
+                    </th>
+                    <th>
                         Country
-                    </td>
-                    <td>
+                        <div class="c1">
+                            Country
+                        </div>
+                    </th>
+                    <th>
                         Enq Ref
-                    </td>
-                    <td>
+                        <div class="c1">
+                            Enq Ref
+                        </div>
+                    </th>
+                    <th>
                         Enq Date
-                    </td>                    
-                    <td>
+                        <div class="c1">
+                            Enq Date
+                        </div>
+                    </th>                    
+                    <th>
                         Due Date
-                    </td>
-                    <td>
+                        <div class="c1">
+                            Due Date
+                        </div>
+                    </th>
+                    <th>
                         Prod Grp
-                    </td>
-                    <td>
+                        <div class="c1">
+                            Prod Grp
+                        </div>
+                    </th>
+                    <th>
                         Enq For
-                    </td>
-                    <td>
+                        <div class="c1">
+                            Enq For
+                        </div>
+                    </th>
+                    <th>
                         EOQ
-                    </td>
+                        <div class="c1">
+                            EOQ
+                        </div>
+                    </th>
                 </tr>
             </thead>
             <tbody>
@@ -199,9 +226,7 @@
     </div>
 </div>
 
-<div class="modal fade" id="add_details" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-</div>
-
+<script src="~/Scripts/CustomJS/EnquiryDetails.js"></script>
 <script type="text/javascript">
         $(document).ready(function () {
             window.EnquiryDetailsPopup = '@Url.Action("EnquiryPopup", "Technical")';

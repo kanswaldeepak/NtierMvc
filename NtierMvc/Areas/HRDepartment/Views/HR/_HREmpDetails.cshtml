@@ -308,11 +308,12 @@
                         <label class="control-label">MOBILE 1</label>
                         @Html.TextBoxFor(m => m.mob1, new
                    {
+                       @id = "mobile",
                        @class = "form-control MobileNumber",
                        @maxlength = "12",
                        @onkeypress = "return AllowNumbers(event)",
                        @placeholder = "Mobile",
-                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this); "
                    })<label class="HideValidMsg">Mobile is Required</label>
                     </div>
                 </div>

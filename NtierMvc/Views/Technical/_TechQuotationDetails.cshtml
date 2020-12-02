@@ -219,16 +219,46 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label class="control-label">
-                            Product Group
+                            Main Product Group
                         </label>
-                        @Html.DropDownListFor(m => m.ProdGrp, new SelectList(ViewBag.ListProdGrpId, "DataStringValueField", "DataTextField", Model.ProdGrp),
+                        @Html.DropDownListFor(m => m.MainProdGrp, new SelectList(ViewBag.ListMainProdGrp, "DataStringValueField", "DataTextField", Model.MainProdGrp),
                            new
                            {
                                @class = "form-control requiredValidation",
-                               @id = "ProdGrp",
+                               @id = "MainProdGrp",
                                @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
                            })
-                        <span class="HideValidMsg">Please Select Product Group</span>
+                        <span class="HideValidMsg">Please Select Main Product Group</span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="control-label">
+                            Sub Product Group
+                        </label>
+                        @Html.DropDownListFor(m => m.SubProdGrp, new SelectList(ViewBag.ListSubProdGrp, "DataStringValueField", "DataTextField", Model.SubProdGrp),
+                           new
+                           {
+                               @class = "form-control requiredValidation",
+                               @id = "SubProdGrp",
+                               @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                           })
+                        <span class="HideValidMsg">Please Select Sub Product Group</span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="control-label">
+                            Product Name
+                        </label>
+                        @Html.DropDownListFor(m => m.ProdName, new SelectList(ViewBag.ListProdName, "DataStringValueField", "DataTextField", Model.ProdName),
+                           new
+                           {
+                               @class = "form-control requiredValidation",
+                               @id = "ProdName",
+                               @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                           })
+                        <span class="HideValidMsg">Please Select Product Name</span>
                     </div>
                 </div>
                 @*<div class="col-md-4">
@@ -539,6 +569,10 @@
             contentType: "application/json; charset=utf-8",
             success: function (res) {
                 $("#DeliveryTerms").empty();
+                $('#QuoteFormNo').val('');
+                $('#QuoteTypeNo').val('');
+
+
                 if (res.lstQuoteTypeEntity.length > 0) {
                     $.each(res.lstQuoteTypeEntity, function (i, item) {
                         $("#DeliveryTerms").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
@@ -546,12 +580,21 @@
                 }
                 $('#QuoteFormNo').val(res.QuoteNo);
 
-                if (QuoteTypeText == 'Domestic')
-                    $('#QuoteTypeNo').val('DQ-' + res.QuoteNo);
-                else if (QuoteTypeText == 'Export')
-                    $('#QuoteTypeNo').val('EQ-' + res.QuoteNo);
-                else if (QuoteTypeText == 'Service')
-                    $('#QuoteTypeNo').val('SE-' + res.QuoteNo);
+                var currentDate = new Date();
+                if (currentDate.getMonth() >= 3)
+                    $('#QuoteTypeNo').val('QTMOT-' + (currentDate.getFullYear()).toString().substr(currentDate.getFullYear().toString().length - 2) + (currentDate.getFullYear() + 1).toString().substr((currentDate.getFullYear() + 1).toString().length - 2) + res.QuoteNo);
+                else
+                    $('#QuoteTypeNo').val('QTMOT-' + (currentDate.getFullYear() - 1).toString().substr((currentDate.getFullYear() + 1).toString().length - 2) + currentDate.getFullYear().toString().substr(currentDate.getFullYear().toString().length - 2) + res.QuoteNo);
+
+
+                //$('#QuoteTypeNo').val('QTMOT-' + res.QuoteNo);
+
+                //if (QuoteTypeText == 'Domestic')
+                //    $('#QuoteTypeNo').val('DQ-' + res.QuoteNo);
+                //else if (QuoteTypeText == 'Export')
+                //    $('#QuoteTypeNo').val('EQ-' + res.QuoteNo);
+                //else if (QuoteTypeText == 'Service')
+                //    $('#QuoteTypeNo').val('SE-' + res.QuoteNo);
 
                 $("#QRCustomerId").empty();
                 if (res.lstVendors.length > 0) {

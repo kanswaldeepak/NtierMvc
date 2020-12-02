@@ -75,13 +75,15 @@ namespace NtierMvc.Controllers
             ViewBag.ListCustomerId = model.GetMasterTableStringList("Customer", "Id", "CustomerId", "", "", GeneralConstants.ListTypeN);
             ViewBag.ListCustomerName = model.GetMasterTableStringList("Customer", "Id", "CustomerName", "", "", GeneralConstants.ListTypeN);
             ViewBag.ListQuoteNo = model.GetMasterTableStringList("QuotationRegister", "Id", "QUOTENO", "", "", GeneralConstants.ListTypeN);
-            ViewBag.ListProdGrp = model.GetMasterTableStringList("Master.ProductLine", "Id", "Product", "", "", GeneralConstants.ListTypeN);
+            ViewBag.ListMainProdGrp = model.GetMasterTableStringList("Master.ProductLine", "Id", "MainPLName", "", "", GeneralConstants.ListTypeN);
+            ViewBag.ListSubProdGrp = model.GetMasterTableStringList("SubProductLine", "Id", "SubPLName", "", "", GeneralConstants.ListTypeN);
+            ViewBag.ListProdName = model.GetMasterTableStringList("Master.Product", "Id", "ProductName", "", "", GeneralConstants.ListTypeN);
             ViewBag.ListEnqFor = model.GetMasterTableStringList("QuotationRegister", "EnqFor", "EnqFor", "", "", GeneralConstants.ListTypeD);
             ViewBag.ListQuoteType = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "QuoteType", "Property", GeneralConstants.ListTypeN);
 
 
             //Enquiry
-            ViewBag.ListProdGrp = model.GetMasterTableStringList("Master.ProductLine", "Id", "Product", "", "", GeneralConstants.ListTypeN);
+           // ViewBag.ListProdGrp = model.GetMasterTableStringList("Master.ProductLine", "Id", "Product", "", "", GeneralConstants.ListTypeN);
             ViewBag.ListEOQ = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "Expression of Quote(EOQ)", "Property", GeneralConstants.ListTypeN);
             Dictionary<string, string> Months = new Dictionary<string, string>();
             Months.Add(Convert.ToString(DateTime.Now.Month), "Current Month");
@@ -132,7 +134,9 @@ namespace NtierMvc.Controllers
         {
             ViewBag.ListQuoteNo = DdlList(); //objManager.GetQuoteNoList(string.Empty); 
 
-            ViewBag.ListProdGrp = model.GetMasterTableStringList("Master.ProductLine", "Id", "Product", "", "", GeneralConstants.ListTypeN);
+            ViewBag.ListMainProdGrp = model.GetMasterTableStringList("Master.ProductLine", "Id", "MainPLName", "", "", GeneralConstants.ListTypeN);
+            ViewBag.ListSubProdGrp = model.GetMasterTableStringList("SubProductLine", "Id", "SubPLName", "", "", GeneralConstants.ListTypeN);
+            ViewBag.ListProdName = model.GetMasterTableStringList("Master.Product", "Id", "ProductName", "", "", GeneralConstants.ListTypeN);
             ViewBag.ListVendorName = model.GetMasterTableStringList("QuotationRegister", "CustomerId", "CustomerName", "", "", GeneralConstants.ListTypeD);
 
             ViewBag.CasingSize = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "CasingSize", "Property", GeneralConstants.ListTypeN);
@@ -170,7 +174,7 @@ namespace NtierMvc.Controllers
             cusE.ipAddress = ERPContext.UserContext.IpAddress;
             cusE.UnitNo = Session["UserId"].ToString();
 
-            string result = objManager.SaveTechnicalQuoteDetails(cusE);
+            string result = objManager.SaveQuotationDetails(cusE);
 
             TempData["VendorName"] = cusE.CustomerName;
             TempData["UserName"] = cusE.UserInitial;
@@ -230,7 +234,9 @@ namespace NtierMvc.Controllers
             ViewBag.ListVENDOR_NATURE = model.GetMasterTableList("Master.Vendor", "Id", "VendorNature");
             ViewBag.ListFUNCTION_AREA = model.GetMasterTableList("Master.FunctionalArea", "Id", "FunctionArea");
             ViewBag.ListCountry = model.GetMasterTableList("Master.Country", "Id", "Country");
-            ViewBag.ListProdGrpId = model.GetMasterTableStringList("Master.ProductLine", "Id", "Product", "", "", GeneralConstants.ListTypeN);
+            ViewBag.ListMainProdGrp = model.GetMasterTableStringList("Master.ProductLine", "Id", "MainPLName", "", "", GeneralConstants.ListTypeN);
+            ViewBag.ListSubProdGrp = model.GetMasterTableStringList("SubProductLine", "Id", "SubPLName", "", "", GeneralConstants.ListTypeN);
+            ViewBag.ListProdName = model.GetMasterTableStringList("Master.Product", "Id", "ProductName", "", "", GeneralConstants.ListTypeN);
             ViewBag.ListProdType = model.GetMasterTableStringList("ProductType", "Id", "TypeName", "", "", GeneralConstants.ListTypeN);
             ViewBag.ListQuoteType = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "QuoteType", "Property", GeneralConstants.ListTypeN);
             ViewBag.ListCurrency = model.GetDropDownList("Master.Taxonomy", GeneralConstants.ListTypeD, "dropdownId", "dropdownvalue", "Currency", "Property");
@@ -717,7 +723,9 @@ namespace NtierMvc.Controllers
             ViewBag.ListCurr = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "Currency", "Property", GeneralConstants.ListTypeN);
             ViewBag.ListOrderType = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "QuoteType", "Property", GeneralConstants.ListTypeN);
             ViewBag.ListSupplyTerms = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "SupplyTerms", "Property", GeneralConstants.ListTypeN);
-            ViewBag.ListProdGrpId = model.GetMasterTableStringList("Master.ProductLine", "Id", "Product", "", "", GeneralConstants.ListTypeN);
+            ViewBag.ListMainProdGrp = model.GetMasterTableStringList("Master.ProductLine", "Id", "MainPLName", "", "", GeneralConstants.ListTypeN);
+            ViewBag.ListSubProdGrp = model.GetMasterTableStringList("SubProductLine", "Id", "SubPLName", "", "", GeneralConstants.ListTypeN);
+            ViewBag.ListProdName = model.GetMasterTableStringList("Master.Product", "Id", "ProductName", "", "", GeneralConstants.ListTypeN);
             ViewBag.ListSoNo = model.GetMasterTableStringList("Orders", "SoNo", "SoNo", "", "", GeneralConstants.ListTypeD);
             ViewBag.ListSoNo.RemoveAt(0);
             DropDownEntity obj = new DropDownEntity();
@@ -1010,7 +1018,9 @@ namespace NtierMvc.Controllers
             ViewBag.ListVENDOR_NATURE = model.GetMasterTableList("Master.Vendor", "Id", "VendorNature");
             ViewBag.ListFUNCTION_AREA = model.GetMasterTableList("Master.FunctionalArea", "Id", "FunctionArea");
             ViewBag.ListCountry = model.GetMasterTableList("Master.Country", "Id", "Country");
-            ViewBag.ListProdGrpId = model.GetMasterTableStringList("Master.ProductLine", "Id", "Product", "", "", GeneralConstants.ListTypeN);
+            ViewBag.ListMainProdGrp = model.GetMasterTableStringList("Master.ProductLine", "Id", "MainPLName", "", "", GeneralConstants.ListTypeN);
+            ViewBag.ListSubProdGrp = model.GetMasterTableStringList("SubProductLine", "Id", "SubPLName", "", "", GeneralConstants.ListTypeN);
+            ViewBag.ListProdName = model.GetMasterTableStringList("Master.Product", "Id", "ProductName", "", "", GeneralConstants.ListTypeN);
             ViewBag.ListQuoteType = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "QuoteType", "Property", GeneralConstants.ListTypeN);
 
             quotE.UnitNo = Session["UserId"].ToString();
@@ -1468,7 +1478,9 @@ namespace NtierMvc.Controllers
             ViewBag.ListEnqThru = bModel.GetTaxonomyDropDownItems("", "Enquiry Through");
             ViewBag.ListEnqType = bModel.GetTaxonomyDropDownItems("", "Domestic/International");
             ViewBag.ListCountry = bModel.GetMasterTableList("Master.Country", "Id", "Country");
-            ViewBag.ListProdGrp = bModel.GetMasterTableList("Master.ProductLine", "Id", "Product");
+            ViewBag.ListMainProdGrp = model.GetMasterTableStringList("Master.ProductLine", "Id", "MainPLName", "", "", GeneralConstants.ListTypeN);
+            ViewBag.ListSubProdGrp = model.GetMasterTableStringList("SubProductLine", "Id", "SubPLName", "", "", GeneralConstants.ListTypeN);
+            ViewBag.ListProdName = model.GetMasterTableStringList("Master.Product", "Id", "ProductName", "", "", GeneralConstants.ListTypeN);
             ViewBag.ListEnqMode = bModel.GetTaxonomyDropDownItems("", "ContactType");
 
             EnquiryEntity eModel = new EnquiryEntity();
@@ -1623,6 +1635,21 @@ namespace NtierMvc.Controllers
 
         #endregion
 
+
+        [HttpPost]
+        public ActionResult GetSubProdGrp(string MainProdGrpId)
+        {
+            var SubProdGrpList = model.GetDropDownList("SubProductLine", GeneralConstants.ListTypeD, "Id", "SubPLName", MainProdGrpId, "MainPLId");
+            return new JsonResult { Data = SubProdGrpList, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+        }
+
+
+        [HttpPost]
+        public ActionResult GetProdName(string MainProdGrpId, string SubProdGrpId)
+        {
+            var ProdNameList = model.GetDropDownList("Master.Product", GeneralConstants.ListTypeD, "Id", "ProductName", MainProdGrpId, "PL", "", "", SubProdGrpId, "SubPL");
+            return new JsonResult { Data = ProdNameList, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+        }
 
     }
 

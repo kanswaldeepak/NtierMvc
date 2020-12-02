@@ -26,7 +26,7 @@ namespace NtierMvc.Model
         public string Connection { get; set; }
         public string Qty { get; set; }
         public string Uom { get; set; }
-        public string VendorName { get; set; }
+        public string CustomerName { get; set; }
         public int OpenHoleSize { get; set; }        
         public int BallSize { get; set; }
         public int UnitPrice { get; set; }

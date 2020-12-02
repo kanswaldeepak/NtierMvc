@@ -22,7 +22,9 @@ namespace NtierMvc.Model
         public string EnqDt { get; set; }
         public string EnqType { get; set; }
         public string DueDate { get; set; }
-        public string ProdGrp { get; set; }
+        public string MainProdGrp { get; set; }
+        public string SubProdGrp { get; set; }
+        public string ProdName { get; set; }
         public string EnqFor { get; set; }
         public string Eoq { get; set; }
         public int LeadTime { get; set; }
@@ -41,6 +43,7 @@ namespace NtierMvc.Model
         public string StateId { get; set; }
         public string CountryId { get; set; }
         public string EnqTypeId { get; set; }
+        public string AgentName { get; set; }
 
     }
 

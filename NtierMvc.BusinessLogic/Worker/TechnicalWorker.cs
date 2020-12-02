@@ -114,8 +114,8 @@ namespace NtierMvc.BusinessLogic.Worker
                 if (dtRecord.Rows.Count > 0)
                 {
                     oVendor.UnitNo = Convert.ToString(dtRecord.Rows[0]["Id"]);
-                    oVendor.CustomerId = Convert.ToString(dtRecord.Rows[0]["VENDORID"]);
-                    oVendor.CustomerName = Convert.ToString(dtRecord.Rows[0]["VendorName"]);
+                    oVendor.CustomerId = Convert.ToString(dtRecord.Rows[0]["CustomerId"]);
+                    oVendor.CustomerName = Convert.ToString(dtRecord.Rows[0]["CustomerName"]);
                 }
             }
             catch (Exception Ex)
@@ -185,8 +185,8 @@ namespace NtierMvc.BusinessLogic.Worker
                                 obj.Id = dr1.IsNull("Id") ? 0 : Convert.ToInt32(dr1["Id"]);
                                 obj.UserInitial = dr1.IsNull("UserInitial") ? string.Empty : Convert.ToString(dr1["UserInitial"]);
                                 obj.UnitNo = dr1.IsNull("UnitNo") ? string.Empty : Convert.ToString(dr1["UnitNo"]);
-                                obj.CustomerId = dr1.IsNull("VendorId") ? string.Empty : Convert.ToString(dr1["VendorId"]);
-                                obj.CustomerName = dr1.IsNull("VendorName") ? string.Empty : Convert.ToString(dr1["VendorName"]);
+                                obj.CustomerId = dr1.IsNull("CustomerId") ? string.Empty : Convert.ToString(dr1["CustomerId"]);
+                                obj.CustomerName = dr1.IsNull("CustomerName") ? string.Empty : Convert.ToString(dr1["CustomerName"]);
                                 obj.QuoteType = dr1.IsNull("QuoteType") ? string.Empty : Convert.ToString(dr1["QuoteType"]);
                                 obj.FileNo = dr1.IsNull("FileNo") ? string.Empty : Convert.ToString(dr1["FileNo"]);
                                 obj.EnqRef = dr1.IsNull("EnqRef") ? string.Empty : Convert.ToString(dr1["EnqRef"]);
@@ -199,7 +199,7 @@ namespace NtierMvc.BusinessLogic.Worker
                                 obj.Remarks = dr1.IsNull("Remarks") ? string.Empty : Convert.ToString(dr1["Remarks"]);
                                 obj.Country = dr1.IsNull("Country") ? string.Empty : Convert.ToString(dr1["Country"]);
                                 obj.EnqFor = dr1.IsNull("EnqFor") ? string.Empty : Convert.ToString(dr1["EnqFor"]);
-                                obj.ProdGrp = dr1.IsNull("ProdGrp") ? string.Empty : Convert.ToString(dr1["ProdGrp"]);
+                                obj.MainProdGrp = dr1.IsNull("ProdGrp") ? string.Empty : Convert.ToString(dr1["ProdGrp"]);
                                 obj.GeoArea = dr1.IsNull("GeoArea") ? string.Empty : Convert.ToString(dr1["GeoArea"]);
                                 obj.Status = dr1.IsNull("Status") ? string.Empty : Convert.ToString(dr1["Status"]);
                                 obj.Currency = dr1.IsNull("Currency") ? string.Empty : Convert.ToString(dr1["Currency"]);
@@ -247,7 +247,7 @@ namespace NtierMvc.BusinessLogic.Worker
                     Model.FileNo = dt1.Rows[0]["FileNo"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["FileNo"]);
                     Model.EnqRef = dt1.Rows[0]["EnqRef"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["EnqRef"]);
                     Model.EnqDt = dt1.Rows[0]["EnqDt"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["EnqDt"]);
-                    Model.QuoteNo = dt1.Rows[0]["QuoteNo"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["QuoteNo"]);
+                    Model.QuoteNo = dt1.Rows[0]["QuoteNoView"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["QuoteNoView"]);
                     Model.QuoteDate = dt1.Rows[0]["QuoteDate"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["QuoteDate"]);
                     Model.QuoteValidity = dt1.Rows[0]["QuoteValidity"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["QuoteValidity"]);
                     Model.BgReq = dt1.Rows[0]["BgReq"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["BgReq"]);
@@ -955,7 +955,7 @@ namespace NtierMvc.BusinessLogic.Worker
                     Model.ExWorkValue = dt1.Rows[0]["ExWorkValue"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["ExWorkValue"]);
                     Model.Inspection = dt1.Rows[0]["Inspection"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["Inspection"]);
                     Model.EndUser = dt1.Rows[0]["EndUser"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["EndUser"]);
-                    Model.ProductGroup = dt1.Rows[0]["ProductGroup"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["ProductGroup"]);
+                    Model.MainProdGrp = dt1.Rows[0]["ProductGroup"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["ProductGroup"]);
                     Model.MultiQuoteNos = dt1.Rows[0]["MultiQuoteNos"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["MultiQuoteNos"]);
                 }
             }
@@ -1082,7 +1082,7 @@ namespace NtierMvc.BusinessLogic.Worker
                             orderEntity.SoNo = dr["SoNo"]?.ToString() ?? "";
 
                         if (dt.Columns.Contains("ProdGrp"))
-                            orderEntity.ProductGroup = dr["ProdGrp"]?.ToString() ?? "";
+                            orderEntity.MainProdGrp = dr["ProdGrp"]?.ToString() ?? "";
                     }
                 }
 
@@ -1249,7 +1249,7 @@ namespace NtierMvc.BusinessLogic.Worker
                             quoteEntity.Id = Convert.ToInt32(dr["Id"] ?? 0);
 
                         if (dt.Columns.Contains("VENDORNAME"))
-                            quoteEntity.VendorName = dr["VENDORNAME"]?.ToString() ?? "";
+                            quoteEntity.CustomerName = dr["VENDORNAME"]?.ToString() ?? "";
 
                         if (dt.Columns.Contains("EnqSrNo"))
                             quoteEntity.EnqSrNo = dr["EnqSrNo"]?.ToString() ?? "";
@@ -1398,7 +1398,7 @@ namespace NtierMvc.BusinessLogic.Worker
                             quoteEntity.FileNo = dr["FileNo"]?.ToString() ?? "";
 
                         if (dt.Columns.Contains("ProductGroup"))
-                            quoteEntity.ProductGroup = dr["ProductGroup"]?.ToString() ?? "";
+                            quoteEntity.MainProdGrp = dr["ProductGroup"]?.ToString() ?? "";
 
                         if (dt.Columns.Contains("PoEntity"))
                             quoteEntity.PoEntity = dr["PoEntity"]?.ToString() ?? "";

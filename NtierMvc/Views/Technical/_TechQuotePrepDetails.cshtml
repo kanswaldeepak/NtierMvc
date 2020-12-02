@@ -47,7 +47,7 @@
                             <label class="control-label">
                                 Product Line
                             </label>
-                            @Html.DropDownListFor(m => m.ProductLine, new SelectList(@ViewBag.ListProdGrp, "DataStringValueField", "DataTextField", Model.ProductLine), new
+                            @Html.DropDownListFor(m => m.ProductLine, new SelectList(@ViewBag.ListMainProdGrp, "DataStringValueField", "DataTextField", Model.ProductLine), new
                             {
                                 @class = "form-control requiredValidation clearField",
                                 @id = "ProductLine",
@@ -62,9 +62,9 @@
                     <div class="col-md-6">
                         <div class="form-group text-left">
                             <label class="control-label">
-                                Vendor Name
+                                Customer Name
                             </label>
-                            @Html.TextBoxFor(m => m.VendorName, new
+                            @Html.TextBoxFor(m => m.CustomerName, new
                            {
                                @class = "form-control requiredValidation",
                                @id = "QuotePrepVendorName",
@@ -81,7 +81,7 @@
                     ng_model = "ProductType",
                     ng_change = "GetProductNameForProductType(VendorName)"
                 })*@
-                            <span class="HideValidMsg">Please Select Vendor Name</span>
+                        <span class="HideValidMsg">Please Select Customer Name</span>
                         </div>
                     </div>
 

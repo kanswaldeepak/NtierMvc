@@ -147,7 +147,7 @@ namespace NtierMvc.BusinessLogic.Worker
                                 obj.EnqDt = dr1.IsNull("EnqDt") ? string.Empty : Convert.ToString(dr1["EnqDt"]);
                                 //obj.EnqType = dr1.IsNull("EnqType") ? string.Empty : Convert.ToString(dr1["EnqType"]);
                                 obj.DueDate = dr1.IsNull("DueDate") ? string.Empty : Convert.ToString(dr1["DueDate"]);
-                                obj.ProdGrp = dr1.IsNull("ProdGrp") ? string.Empty : Convert.ToString(dr1["ProdGrp"]);
+                                obj.MainProdGrp = dr1.IsNull("ProdGrp") ? string.Empty : Convert.ToString(dr1["ProdGrp"]);
                                 obj.EnqFor = dr1.IsNull("EnqFor") ? string.Empty : Convert.ToString(dr1["EnqFor"]);
                                 obj.Eoq = dr1.IsNull("Eoq") ? string.Empty : Convert.ToString(dr1["Eoq"]);
                                 obj.LeadTime = dr1.IsNull("LeadTime") ? 0 : Convert.ToInt32(dr1["LeadTime"]);
@@ -160,6 +160,7 @@ namespace NtierMvc.BusinessLogic.Worker
                                 obj.EnqMode = dr1.IsNull("EnqMode") ? string.Empty : Convert.ToString(dr1["EnqMode"]);
                                 obj.EnqThru = dr1.IsNull("EnqThru") ? string.Empty : Convert.ToString(dr1["EnqThru"]);
                                 obj.EnqBGreq = dr1.IsNull("EnqBGreq") ? 0 : Convert.ToInt32(dr1["EnqBGreq"]);
+                                obj.AgentName = dr1.IsNull("AgentName") ? "" : Convert.ToString(dr1["AgentName"]);
 
                                 eEd.lstEnqEntity.Add(obj);
                             }
@@ -209,7 +210,7 @@ namespace NtierMvc.BusinessLogic.Worker
                     Model.EnqDt = dt1.Rows[0]["EnqDt"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["EnqDt"]);
                     Model.EnqType = dt1.Rows[0]["EnqType"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["EnqType"]);
                     Model.DueDate = dt1.Rows[0]["DueDate"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["DueDate"]);
-                    Model.ProdGrp = dt1.Rows[0]["ProdGrp"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["ProdGrp"]);
+                    Model.MainProdGrp = dt1.Rows[0]["ProdGrp"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["ProdGrp"]);
                     Model.EnqFor = dt1.Rows[0]["EnqFor"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["EnqFor"]);
                     Model.Eoq = dt1.Rows[0]["Eoq"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["Eoq"]);
                     Model.LeadTime = dt1.Rows[0]["LeadTime"] == DBNull.Value ? 0 : Convert.ToInt32(dt1.Rows[0]["LeadTime"]);
@@ -378,7 +379,7 @@ namespace NtierMvc.BusinessLogic.Worker
                     oVendor.StateId = Convert.ToString(dtRecord.Rows[0]["StateId"]);
                     oVendor.EnqTypeId = Convert.ToString(dtRecord.Rows[0]["EnqTypeId"]);
 
-                    oVendor.CustomerName = Convert.ToString(dtRecord.Rows[0]["VendorName"]);
+                    oVendor.CustomerName = Convert.ToString(dtRecord.Rows[0]["CustomerName"]);
 
                 }
             }

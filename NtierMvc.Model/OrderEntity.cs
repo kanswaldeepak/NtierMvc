@@ -43,7 +43,9 @@ namespace NtierMvc.Model
         public string PaymentTerms { get; set; }
         public string Inspection { get; set; }
         public string EndUser { get; set; }
-        public string ProductGroup { get; set; }        
+        public string MainProdGrp { get; set; }        
+        public string SubProdGrp { get; set; }        
+        public string ProdName { get; set; }        
         public string ipAddress { get; set; }        
         public string MultiQuoteNos { get; set; }
         public string UploadedFile { get; set; }

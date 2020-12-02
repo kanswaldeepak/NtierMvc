@@ -72,12 +72,17 @@ angular.module('App').controller("HrController", function ($scope, $http, $timeo
         var formData = new FormData(frm[0]);
         formData.append("file", $scope.SelectedFileForUpload);
 
+        var MobileLen = $('#mobile').val();
+
         if (!Status) {
             HideLoadder();
             alert("Kindly Fill all mandatory fields");
         }
         else if ($scope.FileInvalidMessage != '') {
             HideLoadder();
+        }
+        else if (MobileLen.length < 10) {
+            alert('Mobile Value should be 10 digits long');
         }
         else {
             $http({ url: window.SaveEmployee, method: 'POST', data: formData, headers: { 'Content-Type': undefined } }).success(
@@ -159,7 +164,6 @@ angular.module('App').controller("HrController", function ($scope, $http, $timeo
                 HideLoadder();
                 $('#formSaveEmployeeDetail input[type=radio],input[type=text], select').prop("disabled", true);
                 $('#save_results').css('display', 'none');
-                $('#cancel_results').css('display', 'none');
                 $('#EmpImageUpload').css('display', 'none');
                 $('.bs-tooltip-top').css('display', 'none');
                 SetModalWidth("1200px");

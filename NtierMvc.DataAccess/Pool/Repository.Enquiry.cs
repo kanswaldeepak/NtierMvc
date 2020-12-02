@@ -63,7 +63,9 @@ namespace NtierMvc.DataAccess.Pool
             Params.Add("@EnqDt", Model.EnqDt);
             Params.Add("@EnqType", Model.EnqTypeId);
             Params.Add("@DueDate", Model.DueDate);
-            Params.Add("@ProdGrp", Model.ProdGrp);
+            Params.Add("@MainProdGrp", Model.MainProdGrp);
+            Params.Add("@SubProdGrp", Model.SubProdGrp);
+            Params.Add("@ProdName", Model.ProdName);
             Params.Add("@EnqFor", Model.EnqFor);
             Params.Add("@EOQ", Model.Eoq);
             Params.Add("@LeadTime", Model.LeadTime);
@@ -75,6 +77,7 @@ namespace NtierMvc.DataAccess.Pool
             Params.Add("@EnqMode", Model.EnqMode);
             Params.Add("@EnqThru", Model.EnqThru);
             Params.Add("@EnqBGreq", Model.EnqBGreq);
+            Params.Add("@AgentName", Model.AgentName);
 
             var spName = ConfigurationManager.AppSettings["SaveEnquiryDetails"];
             _dbAccess.ExecuteNonQuery(spName, Params, "@o_MsgCode", out msgCode);

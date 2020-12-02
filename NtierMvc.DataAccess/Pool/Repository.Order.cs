@@ -79,7 +79,7 @@ namespace NtierMvc.DataAccess.Pool
             Params.Add("@ExWorkValue", Model.ExWorkValue);
             Params.Add("@Inspection", Model.Inspection);
             Params.Add("@EndUser", Model.EndUser);
-            Params.Add("@ProductGroup", Model.ProductGroup);
+            Params.Add("@ProductGroup", Model.MainProdGrp);
             Params.Add("@MultiQuoteNos", Model.MultiQuoteNos);
             //Params.Add("@UploadedFile", Model.UploadedFile);
 
