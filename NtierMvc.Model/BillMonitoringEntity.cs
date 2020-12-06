@@ -51,6 +51,8 @@ namespace NtierMvc.Model
         public string PONumber { get; set; }
         public string GRNNo { get; set; }
         public string GRNDate { get; set; }
+        public string MRNNo { get; set; }
+        public string MRNDate { get; set; }
 
     }
 

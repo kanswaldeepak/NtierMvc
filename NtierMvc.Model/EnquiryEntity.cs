@@ -10,7 +10,6 @@ namespace NtierMvc.Model
     public class EnquiryEntity
     {
         public int EnquiryId { get; set; }
-        public string QuoteType { get; set; }
         public string UserInitial { get; set; }
         public string UnitNo { get; set; }
         public string CustomerId { get; set; }

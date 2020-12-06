@@ -12,68 +12,71 @@
                 <button id="btnAdd" type="button" class="btn btn-outline-primary btn-sm" style="float: left;" ng-click="BindEnquiryPopup()"><i class="fa fa-plus"></i> <b>Add New Enquiry</b></button>
             </td>
             <td>
+                <label>Enquiry Type</label>
+            </td>
+            <td>
+                <label>Customer</label>
+            </td>
+            <td>
+                <label>Enq For</label>
+            </td>
+            <td>
+                <label>Due Date</label>
+            </td>
+            <td>
                 <label>EOQ</label>
-            </td>
-            <td>
-                <label>Product Group</label>
-            </td>
-            @*<td>
-            <label>Vendor Id</label>
-        </td>
-        <td>
-                <label>Vendor Name</label>
-            </td>*@
-            <td>
-                <label>Month</label>
             </td>
             <td></td>
         </tr>
         <tr>
             <td></td>
             <td>
+                @Html.DropDownList("EnqType", new SelectList(@ViewBag.ListEnqType, "DataStringValueField", "DataTextField", "Select"),
+                           new
+                           {
+                               @class = "form-control",
+                               ng_model = "SearchEQEnqType",
+                               @id = "EQEnqType"
+                           })
+            </td>
+            <td>
+                @Html.DropDownList("CustomerName", new SelectList(@ViewBag.ListCustomerName, "DataStringValueField", "DataTextField", "Select"), new
+           {
+               @class = "form-control",
+               ng_model = "SearchCustomerName",
+               @id = "EQCustomer",
+               @multiple = "true"
+           })
+
+            </td>
+            <td>
+                @Html.DropDownList("EnqFor", new SelectList(@ViewBag.ListEnqFor, "DataStringValueField", "DataTextField", "Select"),
+             new
+             {
+                 @class = "form-control",
+                 ng_model = "SearchEnqFor",
+                 @id = "EQEnqFor",
+                 @multiple = "true"
+             })
+            </td>
+            <td>
+                @Html.DropDownList("DueDate", new SelectList(@ViewBag.ListDueDate, "DataStringValueField", "DataTextField", "Select"),
+                           new
+                           {
+                               @class = "form-control",
+                               ng_model = "SearchDueDate",
+                               @id = "EQDueDate",
+                               @multiple = "true"
+                           })
+            </td>
+            <td>
                 @Html.DropDownList("EOQ", new SelectList(@ViewBag.ListEOQ, "DataStringValueField", "DataTextField", "Select"),
                            new
                            {
                                @class = "form-control",
                                ng_model = "SearchEOQ",
-                               @onchange = "GetVendorEOQ()",
-                               @id = "EQEOQ"
-                           })
-            </td>
-            <td>
-                @Html.DropDownList("ProdName", new SelectList(@ViewBag.ListProdName, "DataStringValueField", "DataTextField", "Select"),
-                           new
-                           {
-                               @class = "form-control",
-                               ng_model = "SearchProductGroup",
-                               @id = "EQProductGroup"
-                           })
-            </td>
-            @*<td>
-            @Html.DropDownList("VendorId", new SelectList(@ViewBag.ListVendorId, "DataStringValueField", "DataTextField", "Select"),
-                       new
-                       {
-                           @class = "form-control",
-                           ng_model = "SearchEnqVendorID",
-                           @id = "EQVendorId",
-                           @multiple = "true"
-                       })
-        </td>
-        <td>
-                 @Html.DropDownList("VendorName", new SelectList(@ViewBag.ListVendorName, "DataStringValueField", "DataTextField", "Select"), new
-            {
-                @class = "form-control",
-                ng_model = "SearchEnqName",
-                @id = "EQVendorName"
-            })
-             </td>*@
-            <td>
-                @Html.DropDownList("Month", new SelectList(@ViewBag.ListMonth, "DataStringValueField", "DataTextField", "Select"),
-                           new
-                           {
-                               @class = "form-control",
-                               ng_model = "SearchMonth",
-                               @id = "EQMonth"
+                               @id = "EQEOQ",
+                               @multiple = "true"
                            })
             </td>
             <td>
@@ -91,7 +94,7 @@
             <thead class="tblhead">
                 <tr>
                     <th>
-                        Action    
+                        Action
                         <div class="c1">
                             Action
                         </div>
@@ -119,19 +122,19 @@
                         <div class="c1">
                             Enq Date
                         </div>
-                    </th>                    
+                    </th>
                     <th>
                         Due Date
                         <div class="c1">
                             Due Date
                         </div>
                     </th>
-                    <th>
-                        Prod Grp
-                        <div class="c1">
+                    @*<th>
                             Prod Grp
-                        </div>
-                    </th>
+                            <div class="c1">
+                                Prod Grp
+                            </div>
+                        </th>*@
                     <th>
                         Enq For
                         <div class="c1">
@@ -161,7 +164,7 @@
                     </td>
                     <td>
                         {{L.CustomerName}}
-                    </td>                    
+                    </td>
                     <td>
                         {{L.Country}}
                     </td>
@@ -174,9 +177,9 @@
                     <td>
                         {{L.DueDate}}
                     </td>
-                    <td>
-                        {{L.ProdGrp}}
-                    </td>
+                    @*<td>
+                            {{L.ProdGrp}}
+                        </td>*@
                     <td>
                         {{L.EnqFor}}
                     </td>
@@ -231,58 +234,90 @@
         $(document).ready(function () {
             window.EnquiryDetailsPopup = '@Url.Action("EnquiryPopup", "Technical")';
             window.GetDdlValueForEnquiry = '@Url.Action("GetDdlValueForEnquiry", "Technical")';
-
-            var Data = '@TempData["StatusMsg"]';
-            if (Data === "INSERTED SUCCESSFULLY" || Data === "UPDATED SUCCESSFULLY")
-            {
-                alertNotification(Data);
-            }
-
         })
 
 
+    $('#EQEnqType').chosen({
+        width: "210px",
+        placeholder_text_single: "Select Enq Type"
+    });
+
+    $('#EQCustomer').chosen({
+        width: "210px",
+        placeholder_text_single: "Select Customer"
+    });
+
+    $('#EQEnqFor').chosen({
+        width: "210px",
+        placeholder_text_single: "Select Enq For",
+        placeholder_text_multiple: "Select Enq For"
+    });
+
+    $('#EQDueDate').chosen({
+        width: "210px",
+        placeholder_text_single: "Select Due Date",
+        placeholder_text_multiple: "Select Due Date"
+    });
+
     $('#EQEOQ').chosen({
         width: "210px",
-        placeholder_text_single: "Select EOQ"
+        placeholder_text_single: "Select EOQ",
+        placeholder_text_multiple: "Select EOQ"
     });
 
-    $('#EQProductGroup').chosen({
-        width: "210px",
-        placeholder_text_single: "Select Product Group"
-    });
-
-    $('#EQCustomerId').chosen({
-        width: "210px",
-        placeholder_text_single: "Select Customer Id",
-        placeholder_text_multiple: "Select Customer Ids"
-    });
-
-    $('#EQCustomerName').chosen({
-        width: "210px",
-        placeholder_text_single: "Select Customer Name"
-    });
-
-    $('#EQMonth').chosen({
-        width: "210px",
-        placeholder_text_single: "Select Month"
-    });
-
-    $("#EQEOQ").chosen().change(
-        function GetEQEOQ() {
-            var EOQId = $('#EQEOQ').val();
+    $("#EQEnqType").chosen().change(
+        function GetEnqType() {
+            
+            var EnqType = $("#EQEnqType").val();
 
             return $.ajax({
                 contentType: 'application/json; charset=utf-8',
                 dataType: 'json',
                 type: 'GET',
                 url: window.GetDdlValueForEnquiry,
-                data: { EOQId: EOQId, type: 'ProductGroup' },
+                data: { EnqType: EnqType, type: 'Customer' },
                 success: function (res) {
                     if (res.length > 0) {
-                        $("#EQProductGroup").empty();
+                        $("#EQCustomer").empty();
                         $.each(res, function (i, item) {
-                            $("#EQProductGroup").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
-                            $("#EQProductGroup").trigger("chosen:updated");
+                            $("#EQCustomer").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
+                            $("#EQCustomer").trigger("chosen:updated");
+                        })
+                    }
+                },
+                error: function (result) {
+                    alert(result)
+                }
+            });
+        }
+    )
+
+    $("#EQCustomer").chosen().change(
+        function GetEnqFor() {
+            
+            var EQCustomerId = '';
+            var x = document.getElementById("EQCustomer");
+            for (var i = 0; i < x.options.length; i++) {
+                if (x.options[i].selected == true) {
+                    //alert(x.options[i].value);
+                    EQCustomerId = EQCustomerId + x.options[i].value + ',';
+                }
+            }
+
+            EQCustomerId = EQCustomerId.substring(0, EQCustomerId.length - 1);
+
+            return $.ajax({
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                type: 'GET',
+                url: window.GetDdlValueForEnquiry,
+                data: { CustomerId: EQCustomerId, type: 'EnqFor' },
+                success: function (res) {
+                    if (res.length > 0) {
+                        $("#EQEnqFor").empty();
+                        $.each(res, function (i, item) {
+                            $("#EQEnqFor").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
+                            $("#EQEnqFor").trigger("chosen:updated");
                         })
                     }
                 },
@@ -293,22 +328,32 @@
         }
     )
 
-    $("#EQProductGroup").chosen().change(
-        function GetEQProductGroup() {
-            var EQProductGroupId = $('#EQProductGroup').val();
+    $("#EQEnqFor").chosen().change(
+        function GetEQEnqFor() {
+            
+            var EQEnqFor = '';
+            var x = document.getElementById("EQEnqFor");
+            for (var i = 0; i < x.options.length; i++) {
+                if (x.options[i].selected == true) {
+                    //alert(x.options[i].value);
+                    EQEnqFor = EQEnqFor + x.options[i].value + ',';
+                }
+            }
+
+            EQEnqFor = EQEnqFor.substring(0, EQEnqFor.length - 1);
 
             return $.ajax({
                 contentType: 'application/json; charset=utf-8',
                 dataType: 'json',
                 type: 'GET',
                 url: window.GetDdlValueForEnquiry,
-                data: { ProductGroup: EQProductGroupId, type: 'CustomerId' },
+                data: { EnqFor: EQEnqFor, type: 'DueDate' },
                 success: function (res) {
                     if (res.length > 0) {
-                        $("#EQCustomerId").empty();
+                        $("#EQDueDate").empty();
                         $.each(res, function (i, item) {
-                            $("#EQCustomerId").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
-                            $("#EQCustomerId").trigger("chosen:updated");
+                            $("#EQDueDate").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
+                            $("#EQDueDate").trigger("chosen:updated");
                         })
                     }
                 },
@@ -318,6 +363,44 @@
             });
         }
     )
+
+    $("#EQDueDate").chosen().change(
+        function GetEnqType() {
+
+            var DueDate = '';
+            var x = document.getElementById("EQDueDate");
+
+            for (var i = 0; i < x.options.length; i++) {
+                if (x.options[i].selected == true) {
+                    //alert(x.options[i].value);
+                    DueDate = DueDate + formatDate(x.options[i].value, 'yyyy-MM-dd') + ',';
+                }
+            }
+
+            DueDate = DueDate.substring(0, DueDate.length - 1);
+
+            return $.ajax({
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                type: 'GET',
+                url: window.GetDdlValueForEnquiry,
+                data: { type: 'EOQ', DueDate: DueDate },
+                success: function (res) {
+                    if (res.length > 0) {
+                        $("#EQEOQ").empty();
+                        $.each(res, function (i, item) {
+                            $("#EQEOQ").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
+                            $("#EQEOQ").trigger("chosen:updated");
+                        })
+                    }
+                },
+                error: function (result) {
+                    alert(result)
+                }
+            });
+        }
+    )
+
 
     window.onload = function () {
         setTimeout(function () { angular.element(document.getElementById('TblEnquiry')).scope().FetchEnquiryList(); }, 500);

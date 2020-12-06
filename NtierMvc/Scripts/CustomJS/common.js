@@ -7,6 +7,41 @@ function AllowNumbers(evt) {
     return true;
 }
 
+function formatDate(dateObject, convertTo) {
+    //var d = new Date(dateObject);
+    var d = new Date(dateObject.split("/").reverse().join("-"));
+
+    var day = d.getDate();
+    var month = d.getMonth() + 1;
+    var year = d.getFullYear();
+    if (day < 10) {
+        day = "0" + day;
+    }
+    if (month < 10) {
+        month = "0" + month;
+    }
+
+    var date = '';
+
+    switch (convertTo) {
+        case 'dd/MM/yyyy':
+            date = day + "/" + month + "/" + year;
+            break;
+        case 'dd-MM-yyyy':
+            date = day + "-" + month + "-" + year;
+            break;
+        case 'yyyy-MM-dd':
+            date = year + "-" + month + "-" + day;
+            break;
+        default:
+            date = day + "/" + month + "/" + year;
+            break;
+    }
+    
+
+    return date;
+};
+
 function formatAMPM(date) {
     var hours = date.getHours();
     var minutes = date.getMinutes();
@@ -392,11 +427,11 @@ function SetParamModalPanelWidth(ParamPanelId, width) {
     $("#" + ParamPanelId).prop("style", "max-width:" + width);
 }
 
-function SetParamModalPanelTitle(ParamPanelHeadingId,Title) {
+function SetParamModalPanelTitle(ParamPanelHeadingId, Title) {
     $("#" + ParamPanelHeadingId).text(Title);
 }
 
-function SetParamModalPanelBody(ParamPanelBodyId,Data) {
+function SetParamModalPanelBody(ParamPanelBodyId, Data) {
     $("#" + ParamPanelBodyId).html(Data);
 }
 
@@ -817,7 +852,7 @@ function GetFormValidationStatus(formName) {
 function setReadOnly(formName) {
     var Status = true;
     $(formName).find(".applyDisabled").each(function () {
-        $(this).attr("disabled", true);        
+        $(this).attr("disabled", true);
     })
     return Status;
 }

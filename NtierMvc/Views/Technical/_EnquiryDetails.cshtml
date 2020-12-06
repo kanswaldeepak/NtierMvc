@@ -6,7 +6,7 @@
 
 <div ng-controller="ModalController">
     <form id="formSaveEnquiryDetail">
-        @Html.HiddenFor(m => m.EnquiryId)
+        @*@Html.HiddenFor(m => m.EnquiryId)*@
         <div class="row">
             <div class="col-md-4" hidden>
                 <div class="form-group">
@@ -27,12 +27,12 @@
                     <label class="control-label">
                         Enquiry Type <span class="required">*</span>
                     </label>
-                    @Html.DropDownListFor(m => m.QuoteType, new SelectList(@ViewBag.ListQuoteType, "DataStringValueField", "DataTextField", "Export"),
+                    @Html.DropDownListFor(m => m.EnqTypeId, new SelectList(@ViewBag.ListQuoteType, "DataStringValueField", "DataTextField", "Select"),
                     new
                     {
                         @class = "form-control requiredValidation",
-                        @id = "QuoteEnquiryFormType",
-                        @name = "QuoteEnquiryType",
+                        @id = "EDEnquiryType",
+                        @name = "EDEnquiryType",
                         @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
                         @onchange = "GetQuoteNumbers()"
                     })
@@ -267,7 +267,7 @@
                         Lead Time
                     </label>
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             @Html.TextBoxFor(m => m.LeadTime, new
                        {
                            @class = "form-control",
@@ -275,7 +275,7 @@
                            @placeholder = "Lead Time"
                        })
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             @Html.DropDownListFor(m => m.LeadTimeDuration, new SelectList(@ViewBag.ListLeadTimeDuration, "DataValueField", "DataTextField", Model.LeadTimeDuration),
                     new
                     {
@@ -433,8 +433,9 @@
         window.GetSubProdGrp = '@Url.Action("GetSubProdGrp", "Technical")';
         window.GetProdNames = '@Url.Action("GetProdName", "Technical")';
 
-        $('#divAgentName').hide();
     });
+
+    setTimeout(function () { AgentShowHide() }, 500);
 
     //LEASE DATE AND EXP LEASE DATE VALIDATION
     $('.ApprovalDate').datepicker({

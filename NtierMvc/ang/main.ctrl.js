@@ -1,6 +1,5 @@
 angular.module('App').controller("MainController", function ($scope, $http, $timeout, $compile) {
 
-    console.log('Hello');
     //For Pagination
     $scope.maxsize = 5;
     
@@ -168,15 +167,14 @@ angular.module('App').controller("MainController", function ($scope, $http, $tim
     $scope.enqTotalCount = 0;
     $scope.enqPageIndex = 1;
     $scope.enqPageSize = "50";
-    $scope.SearchEnquiryString = "";
-    $scope.SearchEnqName = "";
-    $scope.SearchEnqVendorID = "";
-    $scope.SearchProductGroup = "";
+    $scope.SearchEQEnqType = "";
+    $scope.SearchCustomerName = "";
+    $scope.SearchEnqFor = "";
+    $scope.SearchEQDueDate = "";
     $scope.SearchEOQ = "";
-    $scope.SearchMonth = "";
 
     $scope.FetchEnquiryList = function () {
-        $http.get(window.FetchEnquiryList+"?pageindex=" + $scope.enqPageIndex + "&pagesize=" + $scope.enqPageSize + "&SearchEnqName=" + $scope.SearchEnqName + "&SearchEnqVendorID=" + $scope.SearchEnqVendorID + "&SearchProductGroup=" + $scope.SearchProductGroup + "&SearchMonth=" + $scope.SearchMonth + "&SearchEOQ=" + $scope.SearchEOQ).success(function (response) {
+        $http.get(window.FetchEnquiryList + "?pageindex=" + $scope.enqPageIndex + "&pagesize=" + $scope.enqPageSize + "&SearchEQEnqType=" + $scope.SearchEQEnqType + "&SearchCustomerName=" + $scope.SearchCustomerName + "&SearchEnqFor=" + $scope.SearchEnqFor + "&SearchEQDueDate=" + $scope.SearchEQDueDate + "&SearchEOQ=" + $scope.SearchEOQ).success(function (response) {
             $scope.AvailableEnquiryList = response.lstEnqEntity;
             $scope.enqTotalCount = response.totalcount;
         }, function (error) {
@@ -266,6 +264,7 @@ angular.module('App').controller("MainController", function ($scope, $http, $tim
                 $('.modal-dialog').draggable({
                     handle: ".modal-body"
                 });
+
             },
             error: function () {
                 HideLoadder();

@@ -229,7 +229,8 @@ function GetVendorDetailsForEnquiry() {
 }
 
 function GetQuoteNumbers() {
-    var QuoteType = $("#QuoteEnquiryFormType").val();
+    var QuoteType = $("#EDEnquiryType").val();
+
     $.ajax({
         type: 'POST',
         url: window.GetDeliveryItems,
@@ -315,6 +316,8 @@ function AgentShowHide() {
 
     if (EnqThruVal == 'Agent')
         $('#divAgentName').show();
-    else
+    else {
         $('#divAgentName').hide();
+        $('#AgentName').val('');
+    }
 }

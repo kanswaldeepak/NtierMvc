@@ -83,27 +83,29 @@ namespace NtierMvc.Controllers
 
 
             //Enquiry
-           // ViewBag.ListProdGrp = model.GetMasterTableStringList("Master.ProductLine", "Id", "Product", "", "", GeneralConstants.ListTypeN);
+            ViewBag.ListEnqType = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "QuoteType", "Property", GeneralConstants.ListTypeN);
             ViewBag.ListEOQ = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "Expression of Quote(EOQ)", "Property", GeneralConstants.ListTypeN);
-            Dictionary<string, string> Months = new Dictionary<string, string>();
-            Months.Add(Convert.ToString(DateTime.Now.Month), "Current Month");
-            Months.Add(Convert.ToString(DateTime.Now.Month + 3), "Next 3 Months");
+            ViewBag.ListEnqFor = model.GetMasterTableStringList("EnquiryRegister", "EnquiryId", "EnqFor", "", "", GeneralConstants.ListTypeD);
+            ViewBag.ListDueDate = model.GetMasterTableStringList("EnquiryRegister", "EnquiryId", "DueDate", "", "", GeneralConstants.ListTypeD);
+            //Dictionary<string, string> Months = new Dictionary<string, string>();
+            //Months.Add(Convert.ToString(DateTime.Now.Month), "Current Month");
+            //Months.Add(Convert.ToString(DateTime.Now.Month + 3), "Next 3 Months");
 
-            List<DropDownEntity> ListMonths = new List<DropDownEntity>();
-            DropDownEntity dDE0 = new DropDownEntity();
-            dDE0.DataStringValueField = "";
-            dDE0.DataTextField = "Select";
-            ListMonths.Add(dDE0);
-            DropDownEntity dDE = new DropDownEntity();
-            dDE.DataStringValueField = Convert.ToString(DateTime.Now.Month);
-            dDE.DataTextField = "Current Month";
-            ListMonths.Add(dDE);
-            DropDownEntity dDE1 = new DropDownEntity();
-            dDE1.DataStringValueField = Convert.ToString(DateTime.Now.Month + 3);
-            dDE1.DataTextField = "Next 3 Months";
-            ListMonths.Add(dDE1);
+            //List<DropDownEntity> ListMonths = new List<DropDownEntity>();
+            //DropDownEntity dDE0 = new DropDownEntity();
+            //dDE0.DataStringValueField = "";
+            //dDE0.DataTextField = "Select";
+            //ListMonths.Add(dDE0);
+            //DropDownEntity dDE = new DropDownEntity();
+            //dDE.DataStringValueField = Convert.ToString(DateTime.Now.Month);
+            //dDE.DataTextField = "Current Month";
+            //ListMonths.Add(dDE);
+            //DropDownEntity dDE1 = new DropDownEntity();
+            //dDE1.DataStringValueField = Convert.ToString(DateTime.Now.Month + 3);
+            //dDE1.DataTextField = "Next 3 Months";
+            //ListMonths.Add(dDE1);
 
-            ViewBag.ListMonth = ListMonths;
+            //ViewBag.ListMonth = ListMonths;
 
             //Quotation
             ViewBag.ListDeliveryTerms = model.GetMasterTableStringList("Master.Taxonomy", "DropDownId", "DropDownValue", "DeliveryTerms", "ObjectName", GeneralConstants.ListTypeN);
@@ -138,7 +140,7 @@ namespace NtierMvc.Controllers
             ViewBag.ListSubProdGrp = model.GetMasterTableStringList("SubProductLine", "Id", "SubPLName", "", "", GeneralConstants.ListTypeN);
             ViewBag.ListProdName = model.GetMasterTableStringList("Master.Product", "Id", "ProductName", "", "", GeneralConstants.ListTypeN);
             ViewBag.ListVendorName = model.GetMasterTableStringList("QuotationRegister", "CustomerId", "CustomerName", "", "", GeneralConstants.ListTypeD);
-
+            ViewBag.ListLeadTimeDuration = model.GetTaxonomyDropDownItems("", "Time");
             ViewBag.CasingSize = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "CasingSize", "Property", GeneralConstants.ListTypeN);
             ViewBag.CasingPpf = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "Ppf", "Property", GeneralConstants.ListTypeN);
             ViewBag.MaterialGrade = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "MatGrade", "Property", GeneralConstants.ListTypeN);
@@ -240,6 +242,7 @@ namespace NtierMvc.Controllers
             ViewBag.ListProdType = model.GetMasterTableStringList("ProductType", "Id", "TypeName", "", "", GeneralConstants.ListTypeN);
             ViewBag.ListQuoteType = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "QuoteType", "Property", GeneralConstants.ListTypeN);
             ViewBag.ListCurrency = model.GetDropDownList("Master.Taxonomy", GeneralConstants.ListTypeD, "dropdownId", "dropdownvalue", "Currency", "Property");
+            ViewBag.ListLeadTimeDuration = model.GetTaxonomyDropDownItems("", "Time");
 
             quotE.UnitNo = Session["UserId"].ToString();
 
@@ -1433,17 +1436,17 @@ namespace NtierMvc.Controllers
 
 
         #region Enquiry
-        public JsonResult FetchEnquiryList(string pageIndex, string pageSize, string SearchEnqName, string SearchEnqVendorID = null, string SearchProductGroup = null, string SearchMonth = null, string SearchEOQ = null)
+        public JsonResult FetchEnquiryList(string pageIndex, string pageSize, string SearchEQEnqType, string SearchCustomerName = null, string SearchEnqFor = null, string SearchEQDueDate = null, string SearchEOQ = null)
         {
 
-            SearchEnqName = SearchEnqName == "-1" ? string.Empty : SearchEnqName;
-            SearchEnqVendorID = SearchEnqVendorID == "-1" ? string.Empty : SearchEnqVendorID;
-            SearchProductGroup = SearchProductGroup == "-1" ? string.Empty : SearchProductGroup;
-            SearchMonth = SearchMonth == "-1" ? string.Empty : SearchMonth;
+            SearchEQEnqType = SearchEQEnqType == "-1" ? string.Empty : SearchEQEnqType;
+            SearchCustomerName = SearchCustomerName == "-1" ? string.Empty : SearchCustomerName;
+            SearchEnqFor = SearchEnqFor == "-1" ? string.Empty : SearchEnqFor;
+            SearchEQDueDate = SearchEQDueDate == "-1" ? string.Empty : SearchEQDueDate;
             SearchEOQ = SearchEOQ == "-1" ? string.Empty : SearchEOQ;
 
             EnquiryEntityDetails enq = new EnquiryEntityDetails();
-            enq = objEnquiryManager.GetEnquiryDetails(Convert.ToInt32(pageIndex), Convert.ToInt32(pageSize), SearchEnqName, SearchEnqVendorID, SearchProductGroup, SearchMonth, SearchEOQ);
+            enq = objEnquiryManager.GetEnquiryDetails(Convert.ToInt32(pageIndex), Convert.ToInt32(pageSize), SearchEQEnqType, SearchCustomerName, SearchEnqFor, SearchEQDueDate, SearchEOQ);
             return new JsonResult { Data = enq, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
             //return custDetail.LstCusEnt;
         }
@@ -1470,22 +1473,21 @@ namespace NtierMvc.Controllers
 
         public ActionResult EnquiryPopup(string actionType, string enquiryId)
         {
-            BaseModel bModel = new BaseModel();
-            ViewBag.ListQuoteType = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "QuoteType", "Property", GeneralConstants.ListTypeN);
-            ViewBag.ListEOQ = bModel.GetTaxonomyDropDownItems("", "Expression of Quote(EOQ)");
-            ViewBag.ListLeadTimeDuration = bModel.GetTaxonomyDropDownItems("", "Time");
-            ViewBag.YesNo = bModel.GetTaxonomyDropDownItems("", "YesNo");
-            ViewBag.ListEnqThru = bModel.GetTaxonomyDropDownItems("", "Enquiry Through");
-            ViewBag.ListEnqType = bModel.GetTaxonomyDropDownItems("", "Domestic/International");
-            ViewBag.ListCountry = bModel.GetMasterTableList("Master.Country", "Id", "Country");
-            ViewBag.ListMainProdGrp = model.GetMasterTableStringList("Master.ProductLine", "Id", "MainPLName", "", "", GeneralConstants.ListTypeN);
-            ViewBag.ListSubProdGrp = model.GetMasterTableStringList("SubProductLine", "Id", "SubPLName", "", "", GeneralConstants.ListTypeN);
-            ViewBag.ListProdName = model.GetMasterTableStringList("Master.Product", "Id", "ProductName", "", "", GeneralConstants.ListTypeN);
-            ViewBag.ListEnqMode = bModel.GetTaxonomyDropDownItems("", "ContactType");
+            ViewBag.ListQuoteType = this.model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "QuoteType", "Property", GeneralConstants.ListTypeN);
+            ViewBag.ListEOQ = model.GetTaxonomyDropDownItems("", "Expression of Quote(EOQ)");
+            ViewBag.ListLeadTimeDuration = model.GetTaxonomyDropDownItems("", "Time");
+            ViewBag.YesNo = model.GetTaxonomyDropDownItems("", "YesNo");
+            ViewBag.ListEnqThru = model.GetTaxonomyDropDownItems("", "Enquiry Through");
+            ViewBag.ListEnqType = model.GetTaxonomyDropDownItems("", "Domestic/International");
+            ViewBag.ListCountry = model.GetMasterTableList("Master.Country", "Id", "Country");
+            ViewBag.ListMainProdGrp = this.model.GetMasterTableStringList("Master.ProductLine", "Id", "MainPLName", "", "", GeneralConstants.ListTypeN);
+            ViewBag.ListSubProdGrp = this.model.GetMasterTableStringList("SubProductLine", "Id", "SubPLName", "", "", GeneralConstants.ListTypeN);
+            ViewBag.ListProdName = this.model.GetMasterTableStringList("Master.Product", "Id", "ProductName", "", "", GeneralConstants.ListTypeN);
+            ViewBag.ListEnqMode = model.GetTaxonomyDropDownItems("", "ContactType");
 
             EnquiryEntity eModel = new EnquiryEntity();
             eModel.UnitNo = Session["UserId"].ToString();
-            ViewBag.ListCustomerId = bModel.GetMasterTableStringList("Customer", "Id", "CustomerId", eModel.UnitNo, "UnitNo", GeneralConstants.ListTypeN);
+            ViewBag.ListCustomerId = model.GetMasterTableStringList("Customer", "Id", "CustomerId", eModel.UnitNo, "UnitNo", GeneralConstants.ListTypeN);
 
             EnquiryManager objEnqManager = new EnquiryManager();
 
@@ -1563,10 +1565,31 @@ namespace NtierMvc.Controllers
             return new JsonResult { Data = eModel, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 
-        public ActionResult GetDdlValueForEnquiry(string type, string EOQId = null, string ProductGroup = null, string VendorId = null)
+        public ActionResult GetDdlValueForEnquiry(string type, string EnqType = null, string CustomerId = null, string EnqFor = null, string DueDate = null)
         {
             List<DropDownEntity> ddl = new List<DropDownEntity>();
-            ddl = objEnquiryManager.GetDdlValueForEnquiry(type, EOQId, ProductGroup, VendorId);
+            //ddl = objEnquiryManager.GetDdlValueForEnquiry(type, EOQId, ProductGroup, VendorId);
+
+            switch(type)
+            {
+                case "Customer" :
+                    ddl = objEnquiryManager.GetDdlValueForEnquiry(type, EnqType);
+                    break;
+                case "EnqFor":
+                    ddl = objEnquiryManager.GetDdlValueForEnquiry(type, CustomerId);
+                    break;
+                case "DueDate":
+                    ddl = objEnquiryManager.GetDdlValueForEnquiry(type, EnqFor);
+                    break;
+                case "EOQ":
+                    ddl = objEnquiryManager.GetDdlValueForEnquiry(type, DueDate);
+                    break;
+                default:
+                    ddl = objEnquiryManager.GetDdlValueForEnquiry(type, EnqType);
+                    break;
+            }
+            
+
             return new JsonResult { Data = ddl, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 

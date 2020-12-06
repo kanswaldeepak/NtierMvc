@@ -216,7 +216,7 @@
                         <span class="HideValidMsg">Please Enter Enquiry For</span>
                     </div>
                 </div>
-                <div class="col-md-4">
+                @*<div class="col-md-4">
                     <div class="form-group">
                         <label class="control-label">
                             Main Product Group
@@ -260,7 +260,7 @@
                            })
                         <span class="HideValidMsg">Please Select Product Name</span>
                     </div>
-                </div>
+                </div>*@
                 @*<div class="col-md-4">
             <div class="form-group">
                 <label class="control-label">
@@ -287,7 +287,7 @@
                         </label>
                         @Html.TextBoxFor(m => m.QuoteValidity, new
                    {
-                       @class = "form-control requiredValidation ApprovalDate",
+                       @class = "form-control requiredValidation AfterCurrentDateOnly",
                        autocomplete = "off",
                        @id = "QuoteValidity",
                        @placeholder = "dd/MM/yyyy",
@@ -369,16 +369,27 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label class="control-label">
-                            Delivery Time
+                            Lead Time
                         </label>
-                        @Html.TextBoxFor(m => m.DeliveryTime, new
-                   {
-                       @class = "form-control",
-                       @id = "DeliveryTime",
-                       @placeholder = "Enter Delivery Time",
-                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
-                   })
-                        <span class="HideValidMsg">Please Enter Delivery Time</span>
+                        <div class="row">
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(m => m.LeadTime, new
+                           {
+                               @class = "form-control",
+                               @id = "LeadTime",
+                               @placeholder = "Lead Time",
+                               @onkeypress = "return AllowNumbers(event); "
+                           })
+                            </div>
+                            <div class="col-md-4">
+                                @Html.DropDownListFor(m => m.LeadTimeDuration, new SelectList(@ViewBag.ListLeadTimeDuration, "DataValueField", "DataTextField", Model.LeadTimeDuration),
+                        new
+                        {
+                            @class = "form-control",
+                            @id = "LeadTimeDuration"
+                        })
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="col-md-4">
@@ -627,6 +638,17 @@
         changeMonth: true,
         changeYear: true,
         endDate: 'today',
+    });
+
+    var date = new Date();
+    $('.AfterCurrentDateOnly').datepicker({
+
+        format: 'dd/mm/yyyy',
+        startDate: date,
+        autoclose: true,
+        changeMonth: true,
+        changeYear: true,
+        endDate: ''
     });
 </script>
 <script src="~/Scripts/CustomJS/common.js"></script>

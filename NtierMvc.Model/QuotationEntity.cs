@@ -1,10 +1,6 @@
 ﻿using NtierMvc.Common;
 using NtierMvc.Model.Customer;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NtierMvc.Model
 {
@@ -42,6 +38,7 @@ namespace NtierMvc.Model
         public string ModeOfDespatch { get; set; }
         public string PortOfDischarge { get; set; }
         public string LeadTime { get; set; }
+        public string LeadTimeDuration { get; set; }
         public string ipAddress { get; set; }
         public string RevisedQuoteNo { get; set; }
         public string ViewRevisedQuoteNo { get; set; }
