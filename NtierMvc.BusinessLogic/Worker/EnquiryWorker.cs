@@ -139,6 +139,7 @@ namespace NtierMvc.BusinessLogic.Worker
                                 //obj.QuoteType = dr1.IsNull("QuoteType") ? string.Empty : Convert.ToString(dr1["QuoteType"]);
                                 obj.UserInitial = dr1.IsNull("UserInitial") ? string.Empty : Convert.ToString(dr1["UserInitial"]);
                                 obj.UnitNo = dr1.IsNull("UnitNo") ? string.Empty : Convert.ToString(dr1["UnitNo"]);
+                                obj.CustomerId = dr1.IsNull("CustomerId") ? string.Empty : Convert.ToString(dr1["CustomerId"]);
                                 obj.CustomerName = dr1.IsNull("CustomerName") ? string.Empty : Convert.ToString(dr1["CustomerName"]);
                                 //obj.VendorType = dr1.IsNull("VendorType") ? string.Empty : Convert.ToString(dr1["VendorType"]);
                                 obj.City = dr1.IsNull("City") ? string.Empty : Convert.ToString(dr1["City"]);

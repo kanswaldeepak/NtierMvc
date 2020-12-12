@@ -244,7 +244,9 @@ namespace NtierMvc.Controllers
             ViewBag.ListProdType = model.GetMasterTableStringList("ProductType", "Id", "TypeName", "", "", GeneralConstants.ListTypeN);
             ViewBag.ListQuoteType = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "QuoteType", "Property", GeneralConstants.ListTypeN);
             ViewBag.ListCurrency = model.GetDropDownList("Master.Taxonomy", GeneralConstants.ListTypeD, "dropdownId", "dropdownvalue", "Currency", "Property");
+            ViewBag.ListInspection = model.GetDropDownList("Master.Taxonomy", GeneralConstants.ListTypeD, "dropdownId", "dropdownvalue", "Inspection", "Property");
             ViewBag.ListLeadTimeDuration = model.GetTaxonomyDropDownItems("", "Time");
+            ViewBag.ListModeOfDespatch = model.GetDropDownList("Master.Taxonomy", GeneralConstants.ListTypeD, "dropdownId", "dropdownvalue", "Transport", "Property");
 
             quotE.UnitNo = Session["UserId"].ToString();
 
@@ -1536,11 +1538,10 @@ namespace NtierMvc.Controllers
         {
             if (ModelState.IsValid)
             {
-                string msgCode = objEnquiryManager.DeleteEnquiryDetail(id);
-                if (msgCode == "")
+                string msgCode = model.DeleteFormTable("EnquiryRegister", "EnquiryId", id.ToString());
+                if (msgCode == GeneralConstants.DeleteSuccess)
                 {
-                    //return RedirectToAction("Customer");
-                    return new JsonResult { Data = GeneralConstants.DeleteSuccess, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                    return new JsonResult { Data = msgCode, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
                 }
                 else
                 {
@@ -1549,6 +1550,20 @@ namespace NtierMvc.Controllers
                     //Response.StatusDescription = "Not Saved";
                     //return null;
                 }
+
+                //string msgCode = objEnquiryManager.DeleteEnquiryDetail(id);
+                //if (msgCode == "")
+                //{
+                //    //return RedirectToAction("Customer");
+                //    return new JsonResult { Data = GeneralConstants.DeleteSuccess, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                //}
+                //else
+                //{
+                //    return new JsonResult { Data = GeneralConstants.NotDeletedError, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                //    //Response.StatusCode = 444;
+                //    //Response.StatusDescription = "Not Saved";
+                //    //return null;
+                //}
             }
             else
             {

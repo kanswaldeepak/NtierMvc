@@ -89,7 +89,7 @@
     </table>
 </div>
 
-<div class="wrapper">
+<div class="mt-3 wrapper">
     <div class="container">
         <table id="TblEnquiry">
             <thead class="tblhead">
@@ -98,6 +98,12 @@
                         Action
                         <div class="c1">
                             Action
+                        </div>
+                    </th>
+                    <th>
+                        Customer ID
+                        <div class="c1">
+                            Customer ID
                         </div>
                     </th>
                     <th>
@@ -125,21 +131,15 @@
                         </div>
                     </th>
                     <th>
-                        Due Date
-                        <div class="c1">
-                            Due Date
-                        </div>
-                    </th>
-                    @*<th>
-                            Prod Grp
-                            <div class="c1">
-                                Prod Grp
-                            </div>
-                        </th>*@
-                    <th>
                         Enq For
                         <div class="c1">
                             Enq For
+                        </div>
+                    </th>
+                    <th>
+                        Due Date
+                        <div class="c1">
+                            Due Date
                         </div>
                     </th>
                     <th>
@@ -164,6 +164,9 @@
                         </button>
                     </td>
                     <td>
+                        {{L.CustomerId}}
+                    </td>
+                    <td>
                         {{L.CustomerName}}
                     </td>
                     <td>
@@ -176,13 +179,10 @@
                         {{L.EnqDt}}
                     </td>
                     <td>
-                        {{L.DueDate}}
-                    </td>
-                    @*<td>
-                            {{L.ProdGrp}}
-                        </td>*@
-                    <td>
                         {{L.EnqFor}}
+                    </td>
+                    <td>
+                        {{L.DueDate}}
                     </td>
                     <td>
                         {{L.Eoq}}
@@ -235,6 +235,7 @@
         $(document).ready(function () {
             window.EnquiryDetailsPopup = '@Url.Action("EnquiryPopup", "Technical")';
             window.GetDdlValueForEnquiry = '@Url.Action("GetDdlValueForEnquiry", "Technical")';
+            window.DeleteEnquiryDetail = '@Url.Action("DeleteEnquiryDetail", "Technical")';
         })
 
 

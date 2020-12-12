@@ -175,13 +175,26 @@ angular.module('App').controller("MainController", function ($scope, $http, $tim
         $scope.SearchEQEnqType = "";
         $scope.SearchCustomerName = "";
         $scope.SearchEnqFor = "";
-        $scope.SearchEQDueDate = "";
+        $scope.SearchDueDate = "";
         $scope.SearchEOQ = "";
     }
 
 
     $scope.FetchEnquiryList = function () {
-        $http.get(window.FetchEnquiryList + "?pageindex=" + $scope.enqPageIndex + "&pagesize=" + $scope.enqPageSize + "&SearchEQEnqType=" + $scope.SearchEQEnqType + "&SearchCustomerName=" + $scope.SearchCustomerName + "&SearchEnqFor=" + $scope.SearchEnqFor + "&SearchEQDueDate=" + $scope.SearchEQDueDate + "&SearchEOQ=" + $scope.SearchEOQ).success(function (response) {
+        var x = document.getElementById("EQDueDate");
+        var DueDate = '';
+        if (x != '') {
+            for (var i = 0; i < x.options.length; i++) {
+                if (x.options[i].selected == true) {
+                    //alert(x.options[i].value);
+                    DueDate = DueDate + formatDate(x.options[i].value, 'yyyy-MM-dd') + ',';
+                }
+            }
+
+            DueDate = DueDate.substring(0, DueDate.length - 1);
+        }
+        
+        $http.get(window.FetchEnquiryList + "?pageindex=" + $scope.enqPageIndex + "&pagesize=" + $scope.enqPageSize + "&SearchEQEnqType=" + $scope.SearchEQEnqType + "&SearchCustomerName=" + $scope.SearchCustomerName + "&SearchEnqFor=" + $scope.SearchEnqFor + "&SearchEQDueDate=" + DueDate + "&SearchEOQ=" + $scope.SearchEOQ).success(function (response) {
             $scope.AvailableEnquiryList = response.lstEnqEntity;
             $scope.enqTotalCount = response.totalcount;
         }, function (error) {

@@ -270,6 +270,7 @@ namespace NtierMvc.BusinessLogic.Worker
                     Model.PortOfDischarge = dt1.Rows[0]["PortOfDischarge"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["PortOfDischarge"]);
                     Model.Currency = dt1.Rows[0]["Currency"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["Currency"]);
                     Model.LeadTime = dt1.Rows[0]["LeadTime"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["LeadTime"]);
+                    Model.LeadTimeDuration = dt1.Rows[0]["LeadTimeDuration"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["LeadTimeDuration"]);
                     Model.PaymentTerms = dt1.Rows[0]["PaymentTerms"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["PaymentTerms"]);
                     Model.SalesPerson = dt1.Rows[0]["SalesPerson"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["SalesPerson"]);
                     Model.Subject = dt1.Rows[0]["Subject"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["Subject"]);
