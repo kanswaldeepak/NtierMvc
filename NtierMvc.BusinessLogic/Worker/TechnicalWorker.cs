@@ -160,13 +160,13 @@ namespace NtierMvc.BusinessLogic.Worker
         }
 
 
-        public QuotationEntityDetails GetQuoteRegList(int pageIndex, int pageSize, string SearchQuotRegVendorID = null, string SearchQuotRegVendorName = null, string SearchQuotRegQuoteNo = null, string SearchQuotRegProductGrp = null, string SearchQuotRegEnqFor = null, string SearchQuotRegQuoteType = null)
+        public QuotationEntityDetails GetQuoteRegList(int pageIndex, int pageSize, string SearchQuoteType = null, string SearchQuoteCustomerID = null, string SearchSubject = null, string SearchDeliveryTerms = null)
         {
             try
             {
                 QuotationEntityDetails qED = new QuotationEntityDetails();
                 qED.lstQuoteEntity = new List<QuotationEntity>();
-                DataSet ds = _repository.GetQuoteRegList(pageIndex, pageSize, SearchQuotRegVendorID, SearchQuotRegVendorName, SearchQuotRegQuoteNo, SearchQuotRegProductGrp, SearchQuotRegEnqFor, SearchQuotRegQuoteType);
+                DataSet ds = _repository.GetQuoteRegList(pageIndex, pageSize, SearchQuoteType, SearchQuoteCustomerID, SearchSubject, SearchDeliveryTerms);
                 //DataTable dt = _repository.GetQuotationDetails();
 
                 if (ds.Tables.Count > 0)
@@ -203,6 +203,10 @@ namespace NtierMvc.BusinessLogic.Worker
                                 obj.GeoArea = dr1.IsNull("GeoArea") ? string.Empty : Convert.ToString(dr1["GeoArea"]);
                                 obj.Status = dr1.IsNull("Status") ? string.Empty : Convert.ToString(dr1["Status"]);
                                 obj.Currency = dr1.IsNull("Currency") ? string.Empty : Convert.ToString(dr1["Currency"]);
+                                obj.EnqDt = dr1.IsNull("EnqDt") ? string.Empty : Convert.ToString(dr1["EnqDt"]);
+                                obj.EnqNo = dr1.IsNull("EnqNo") ? string.Empty : Convert.ToString(dr1["EnqNo"]);
+                                obj.Subject = dr1.IsNull("Subject") ? string.Empty : Convert.ToString(dr1["Subject"]);
+                                obj.DeliveryTerms = dr1.IsNull("DeliveryTerms") ? string.Empty : Convert.ToString(dr1["DeliveryTerms"]);
 
                                 qED.lstQuoteEntity.Add(obj);
                             }

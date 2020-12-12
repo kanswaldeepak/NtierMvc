@@ -40,14 +40,18 @@ namespace NtierMvc.Controllers
         {
             //Customer
             ViewBag.ListCustomerName = model.GetMasterTableStringList("Customer", "CustomerName", "CustomerName", "", "", GeneralConstants.ListTypeN);
-            ViewBag.ListCustomerId = model.GetMasterTableStringList("Customer", "Id", "CustomerId", "", "", GeneralConstants.ListTypeN);
-            
+            ViewBag.ListCustomerId = model.GetMasterTableStringList("Customer", "Id", "CustomerId", "", "", GeneralConstants.ListTypeN);            
             ViewBag.ListCountry = model.GetMasterTableStringList("Master.Country", "Id", "Country", "", "", GeneralConstants.ListTypeN);
 
-
             //Enquiry
-            ViewBag.ListProdGrp = model.GetMasterTableStringList("Master.ProductLine", "Id", "Product", "", "", GeneralConstants.ListTypeN);
-            ViewBag.ListEOQ = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "Expression of Quote(EOQ)", "Property", GeneralConstants.ListTypeN);
+            ViewBag.ListEnqType = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "QuoteType", "Property", GeneralConstants.ListTypeN);
+            ViewBag.ListEnqFor = "";
+            ViewBag.ListProdGrp = "";
+            ViewBag.ListEOQ = ""; // model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "Expression of Quote(EOQ)", "Property", GeneralConstants.ListTypeN);
+            ViewBag.ListDueDate = "";
+            ViewBag.ListDeliveryTerms = "";
+            ViewBag.ListSubject = "";
+
             Dictionary<string, string> Months = new Dictionary<string, string>();
             Months.Add(Convert.ToString(DateTime.Now.Month), "Current Month");
             Months.Add(Convert.ToString(DateTime.Now.Month + 3), "Next 3 Months");

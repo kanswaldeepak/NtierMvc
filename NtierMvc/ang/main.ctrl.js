@@ -2,13 +2,16 @@ angular.module('App').controller("MainController", function ($scope, $http, $tim
 
     //For Pagination
     $scope.maxsize = 5;
-    
-    //Customer Starts
     $scope.custTotalCount = 0;
     $scope.custPageIndex = 1;
     $scope.custPageSize = "50";
-    $scope.SearchCustomerName = "";
-    $scope.SearchCustomerID = "";
+
+    //Customer Starts
+    $scope.DefaultCustomerList = function () {
+        $scope.SearchCountry = "";
+        $scope.SearchCustomerName = "";
+        $scope.SearchCustomerID = "";
+    }
 
     $scope.FetchCustomerList = function () {
         $http.get(window.FetchCustomerList + "?pageindex=" + $scope.custPageIndex + "&pagesize=" + $scope.custPageSize + "&SearchCustomerName=" + $scope.SearchCustomerName + "&SearchCustomerID=" + $scope.SearchCustomerID).success(function (response) {
@@ -18,7 +21,7 @@ angular.module('App').controller("MainController", function ($scope, $http, $tim
             alert('failed');
         });
     }
-        
+
     $scope.CustPageChanged = function () {
         $scope.FetchCustomerList();
     }
@@ -163,15 +166,19 @@ angular.module('App').controller("MainController", function ($scope, $http, $tim
         ).error(function (res) { showHttpErr(res); });
     }
 
-    //Enquiry Starts
     $scope.enqTotalCount = 0;
     $scope.enqPageIndex = 1;
     $scope.enqPageSize = "50";
-    $scope.SearchEQEnqType = "";
-    $scope.SearchCustomerName = "";
-    $scope.SearchEnqFor = "";
-    $scope.SearchEQDueDate = "";
-    $scope.SearchEOQ = "";
+
+    //Enquiry Starts
+    $scope.DefaultEnquiryList = function () {
+        $scope.SearchEQEnqType = "";
+        $scope.SearchCustomerName = "";
+        $scope.SearchEnqFor = "";
+        $scope.SearchEQDueDate = "";
+        $scope.SearchEOQ = "";
+    }
+
 
     $scope.FetchEnquiryList = function () {
         $http.get(window.FetchEnquiryList + "?pageindex=" + $scope.enqPageIndex + "&pagesize=" + $scope.enqPageSize + "&SearchEQEnqType=" + $scope.SearchEQEnqType + "&SearchCustomerName=" + $scope.SearchCustomerName + "&SearchEnqFor=" + $scope.SearchEnqFor + "&SearchEQDueDate=" + $scope.SearchEQDueDate + "&SearchEOQ=" + $scope.SearchEOQ).success(function (response) {
@@ -328,19 +335,21 @@ angular.module('App').controller("MainController", function ($scope, $http, $tim
         ).error(function (res) { showHttpErr(res); });
     }
 
-    //Quotation Starts
     $scope.quotTotalCount = 0;
     $scope.quotPageIndex = 1;
     $scope.quotPageSize = "50";
-    $scope.SearchQuoteVendorID = "";
-    $scope.SearchQuoteVendorName = "";
-    $scope.SearchQuoteNo = "";
-    $scope.SearchQuoteProductGroup = "";
-    $scope.SearchDeliveryTerms = "";
-    $scope.SearchQuoteType = "";
+
+    //Quotation Starts
+    $scope.DefaultQuotationList = function () {
+        $scope.SearchQuoteType = "";
+        $scope.SearchQuoteCustomerID = "";
+        $scope.SearchSubject = "";
+        $scope.SearchDeliveryTerms = "";
+    }
+
 
     $scope.FetchQuotationList = function () {
-        $http.get(window.FetchQuotationList + "?pageIndex=" + $scope.quotPageIndex + "&pageSize=" + $scope.quotPageSize + "&SearchQuoteType=" + $scope.SearchQuoteType + "&SearchQuoteVendorID=" + $scope.SearchQuoteVendorID + "&SearchQuoteProductGroup=" + $scope.SearchQuoteProductGroup + "&SearchDeliveryTerms=" + $scope.SearchDeliveryTerms).success(function (response) {
+        $http.get(window.FetchQuotationList + "?pageIndex=" + $scope.quotPageIndex + "&pageSize=" + $scope.quotPageSize + "&SearchQuoteType=" + $scope.SearchQuoteType + "&SearchQuoteCustomerID=" + $scope.SearchQuoteCustomerID + "&SearchSubject=" + $scope.SearchSubject + "&SearchDeliveryTerms=" + $scope.SearchDeliveryTerms).success(function (response) {
             $scope.AvailableQuotationList = response.lstQuoteEntity;
             $scope.quotTotalCount = response.totalcount;
         }, function (error) {
@@ -407,7 +416,7 @@ angular.module('App').controller("MainController", function ($scope, $http, $tim
         })
         //});
     }
-        
+
     $scope.LoadQuotationViewPopup = function (_QuotationDetailsId) {
         var _actionType = "VIEW"
         //var ID = e.target.id;
@@ -503,7 +512,7 @@ angular.module('App').controller("MainController", function ($scope, $http, $tim
             }
         ).error(function (res) { showHttpErr(res); });
     }
-    
+
     //Quotation Registration Starts
     $scope.quotRegTotalCount = 0;
     $scope.quotRegPageIndex = 1;
@@ -515,7 +524,7 @@ angular.module('App').controller("MainController", function ($scope, $http, $tim
     $scope.SearchQuotRegEnqFor = "";
     $scope.SearchQuotRegQuoteType = "";
     $scope.FetchQuoteRegList = function () {
-        $http.get(window.FetchQuoteRegList+"?pageindex=" + $scope.quotPageIndex + "&pagesize=" + $scope.quotPageSize + "&SearchQuotRegVendorID=" + $scope.SearchQuotRegVendorID + "&SearchQuotRegVendorName=" + $scope.SearchQuotRegVendorName + "&SearchQuotRegQuoteNo=" + $scope.SearchQuotRegQuoteNo + "&SearchQuotRegProductGrp=" + $scope.SearchQuotRegProductGrp + "&SearchQuotRegEnqFor=" + $scope.SearchQuotRegEnqFor + "&SearchQuotRegQuoteType=" + $scope.SearchQuotRegQuoteType).success(function (response) {
+        $http.get(window.FetchQuoteRegList + "?pageindex=" + $scope.quotPageIndex + "&pagesize=" + $scope.quotPageSize + "&SearchQuotRegVendorID=" + $scope.SearchQuotRegVendorID + "&SearchQuotRegVendorName=" + $scope.SearchQuotRegVendorName + "&SearchQuotRegQuoteNo=" + $scope.SearchQuotRegQuoteNo + "&SearchQuotRegProductGrp=" + $scope.SearchQuotRegProductGrp + "&SearchQuotRegEnqFor=" + $scope.SearchQuotRegEnqFor + "&SearchQuotRegQuoteType=" + $scope.SearchQuotRegQuoteType).success(function (response) {
             $scope.AvailableQuoteRegList = response.lstQuoteRegEntity;
             $scope.quotTotalCount = response.totalcount;
         }, function (error) {
@@ -531,7 +540,7 @@ angular.module('App').controller("MainController", function ($scope, $http, $tim
         $scope.quotPageIndex = 1;
         $scope.FetchQuoteRegList();
     }
-    
+
     //Quotation Preparation Starts
     $scope.BindQuotePrepPopup = function () {
         //$(".btn-Add-QuotationDetails").on("click", function (e) {
@@ -564,7 +573,7 @@ angular.module('App').controller("MainController", function ($scope, $http, $tim
             }
         ).error(function (res) { showHttpErr(res); });
     }
-    
+
     $scope.GetProductNumber = function (ProductName) {
         var ProductType = $scope.ProductType;
         $http({ url: window.GetProductNumber, method: 'POST', data: { productNameId: ProductName, productType: ProductType } }).success(
@@ -573,7 +582,7 @@ angular.module('App').controller("MainController", function ($scope, $http, $tim
             }
         ).error(function (res) { showHttpErr(res); });
     }
-    
+
     //For Pdf
     var getLayout = function () {
         return {
@@ -591,7 +600,7 @@ angular.module('App').controller("MainController", function ($scope, $http, $tim
             }
         };
     };
-    
+
     var getTable = function () {
         return [
             { text: 'PDF Print Test', fontSize: 20, bold: false, alignment: 'center', style: ['lineSpacing', 'headingColor'] },
@@ -613,7 +622,7 @@ angular.module('App').controller("MainController", function ($scope, $http, $tim
 
         ];
     };
-    
+
     $scope.GenerateQuoteReport = function () {
         var docDefinition = {
             pageMargins: [72, 80, 40, 60],
@@ -681,15 +690,18 @@ angular.module('App').controller("MainController", function ($scope, $http, $tim
     };
     //For Pdf
 
-    //Order Starts
     $scope.orderTotalCount = 0;
     $scope.orderPageIndex = 1;
     $scope.orderPageSize = "50";
-    $scope.SearchOrderVendorID = "";
-    $scope.SearchOrderVendorName = "";
-    $scope.SearchOrderProductGroup = "";
-    $scope.SearchOrderDeliveryTerms = "";
-    $scope.SearchOrderQuoteType = "";
+
+    //Order Starts
+    $scope.DefaultOrdersList = function () {
+        $scope.SearchOrderVendorID = "";
+        $scope.SearchOrderVendorName = "";
+        $scope.SearchOrderProductGroup = "";
+        $scope.SearchOrderDeliveryTerms = "";
+        $scope.SearchOrderQuoteType = "";
+    }
 
 
     $scope.FetchOrdersList = function () {
@@ -876,7 +888,7 @@ angular.module('App').controller("MainController", function ($scope, $http, $tim
 
     //For Quote Revised Form
     $scope.BindRevisedQuotationPopup = function () {
-        
+
         var _actionType = "ADD"
         $.ajax({
             type: "POST",
@@ -926,7 +938,7 @@ angular.module('App').controller("MainController", function ($scope, $http, $tim
             url: window.Clarification,
             success: function (html) {
                 html = $compile(html)($scope);
-                SetParamModalPanelBody('ClarificationPanelBody',html);
+                SetParamModalPanelBody('ClarificationPanelBody', html);
                 HideLoadder();
             },
             error: function (r) {
@@ -976,7 +988,7 @@ angular.module('App').controller("MainController", function ($scope, $http, $tim
         })
         //});
     }
-    
+
     //Gate Entry List Starts
     $scope.INBTotalCount = 0;
     $scope.INBPageIndex = 1;
@@ -994,7 +1006,7 @@ angular.module('App').controller("MainController", function ($scope, $http, $tim
             alert('failed');
         });
     }
-    
+
     $scope.INBPageChanged = function () {
         $scope.FetchInboundList();
     }
@@ -1023,7 +1035,7 @@ angular.module('App').controller("MainController", function ($scope, $http, $tim
                 ShowModal();
                 //$scope.GetPODetailsFromSupplyType();
 
-                $scope.GetPOTableDetailsForGateEntry();   
+                $scope.GetPOTableDetailsForGateEntry();
                 $('#formInbound input[type=checkbox],input[type=radio],input[type=text], select').prop("disabled", true);
                 $('.save_results').css('display', 'none');
                 $('.cancel_results').css('display', 'none');
@@ -1066,7 +1078,7 @@ angular.module('App').controller("MainController", function ($scope, $http, $tim
                 SetModalWidth("1400px");
                 ShowModal();
                 //$scope.GetPODetailsFromSupplyType();
-                $scope.GetPOTableDetailsForGateEntry();   
+                $scope.GetPOTableDetailsForGateEntry();
 
                 if (!($('.modal.in').length)) {
                     $('.modal-dialog').css({
@@ -1090,10 +1102,10 @@ angular.module('App').controller("MainController", function ($scope, $http, $tim
         })
     }
 
-    $scope.GetPOTableDetailsForGateEntry = function() {
+    $scope.GetPOTableDetailsForGateEntry = function () {
         var POSetno = $('#GEVendorPONO').val();
         var GateNo = $('#GateNo').val();
-        
+
         $.ajax({
             url: window.GetPOTableDetailsForGateEntry,
             type: 'POST',

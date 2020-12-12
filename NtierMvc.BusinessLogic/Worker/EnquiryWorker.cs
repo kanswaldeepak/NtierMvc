@@ -208,7 +208,7 @@ namespace NtierMvc.BusinessLogic.Worker
                     Model.Country = dt1.Rows[0]["Country"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["Country"]);
                     Model.EnqRef = dt1.Rows[0]["EnqRef"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["EnqRef"]);
                     Model.EnqDt = dt1.Rows[0]["EnqDt"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["EnqDt"]);
-                    Model.EnqType = dt1.Rows[0]["EnqType"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["EnqType"]);
+                    Model.EnqTypeId = dt1.Rows[0]["EnqType"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["EnqType"]);
                     Model.DueDate = dt1.Rows[0]["DueDate"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["DueDate"]);
                     Model.MainProdGrp = dt1.Rows[0]["ProdGrp"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["ProdGrp"]);
                     Model.EnqFor = dt1.Rows[0]["EnqFor"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["EnqFor"]);
@@ -391,12 +391,12 @@ namespace NtierMvc.BusinessLogic.Worker
             return oVendor;
         }
 
-        public List<DropDownEntity> GetDdlValueForEnquiry(string type, string Value = null)
+        public List<DropDownEntity> GetDdlValueForEnquiry(string type, string EnqType = null, string CustomerId = null, string EnqFor = null, string DueDate = null)
         {
             try
             {
                 List<DropDownEntity> lstDdl = new List<DropDownEntity>();
-                DataTable dt = _repository.GetDdlValueForEnquiry(type, Value);
+                DataTable dt = _repository.GetDdlValueForEnquiry(type, EnqType, CustomerId, EnqFor, DueDate);
                 DropDownEntity entity;
 
                 if (dt.Rows.Count > 0)

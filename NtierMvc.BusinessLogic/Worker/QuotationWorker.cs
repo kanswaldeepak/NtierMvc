@@ -181,6 +181,7 @@ namespace NtierMvc.BusinessLogic.Worker
                                 obj.FileNo = dr1.IsNull("FileNo") ? string.Empty : Convert.ToString(dr1["FileNo"]);
                                 obj.EnqRef = dr1.IsNull("EnqRef") ? string.Empty : Convert.ToString(dr1["EnqRef"]);
                                 obj.EnqDt = dr1.IsNull("EnqDt") ? string.Empty : Convert.ToString(dr1["EnqDt"]);
+                                obj.EnqNo = dr1.IsNull("EnqNo") ? string.Empty : Convert.ToString(dr1["EnqNo"]);
                                 obj.QuoteNo = dr1.IsNull("QuoteNo") ? string.Empty : Convert.ToString(dr1["QuoteNo"]);
                                 obj.QuoteDate = dr1.IsNull("QuoteDate") ? string.Empty : Convert.ToString(dr1["QuoteDate"]);
                                 obj.QuoteValidity = dr1.IsNull("QuoteValidity") ? string.Empty : Convert.ToString(dr1["QuoteValidity"]);
@@ -194,6 +195,8 @@ namespace NtierMvc.BusinessLogic.Worker
                                 obj.Status = dr1.IsNull("Status") ? string.Empty : Convert.ToString(dr1["Status"]);
                                 obj.Remarks = dr1.IsNull("Remarks") ? string.Empty : Convert.ToString(dr1["Remarks"]);
                                 obj.Currency = dr1.IsNull("Currency") ? string.Empty : Convert.ToString(dr1["Currency"]);
+                                obj.DeliveryTerms = dr1.IsNull("DeliveryTerms") ? string.Empty : Convert.ToString(dr1["DeliveryTerms"]);
+                                obj.Subject = dr1.IsNull("Subject") ? string.Empty : Convert.ToString(dr1["Subject"]);
 
                                 qED.lstQuoteEntity.Add(obj);
                             }
@@ -394,40 +397,40 @@ namespace NtierMvc.BusinessLogic.Worker
             }
         }
 
-        public List<DropDownEntity> GetDdlValueForQuote(string type, string VendorId = null, string QuoteType = null)
+        public List<DropDownEntity> GetDdlValueForQuote(string type, string VendorId = null, string QuoteType = null, string SubjectId = null)
         {
             try
             {
                 List<DropDownEntity> lstDdl = new List<DropDownEntity>();
-                DataTable dt = _repository.GetDdlValueForQuote(type, VendorId, QuoteType);
+                DataTable dt = _repository.GetDdlValueForQuote(type, VendorId, QuoteType, SubjectId);
                 DropDownEntity entity;
 
                 if (dt.Rows.Count > 0)
                 {
-                    if (type == "ProductGroup")
+                    //if (type == "ProductGroup")
                         foreach (DataRow dr in dt.Rows)
                         {
                             entity = new DropDownEntity();
                             if (dt.Columns.Contains("Id"))
                                 entity.DataStringValueField = Convert.ToString(dr["Id"] ?? "0");
 
-                            if (dt.Columns.Contains("Product"))
-                                entity.DataTextField = dr["Product"]?.ToString() ?? "";
+                            if (dt.Columns.Contains("Value"))
+                                entity.DataTextField = dr["Value"]?.ToString() ?? "";
 
                             lstDdl.Add(entity);
                         }
-                    else if (type == "VendorId")
-                        foreach (DataRow dr in dt.Rows)
-                        {
-                            entity = new DropDownEntity();
-                            if (dt.Columns.Contains("Id"))
-                                entity.DataStringValueField = Convert.ToString(dr["Id"] ?? "0");
+                    //else if (type == "CustomerId")
+                    //    foreach (DataRow dr in dt.Rows)
+                    //    {
+                    //        entity = new DropDownEntity();
+                    //        if (dt.Columns.Contains("Id"))
+                    //            entity.DataStringValueField = Convert.ToString(dr["Id"] ?? "0");
 
-                            if (dt.Columns.Contains("VendorId"))
-                                entity.DataTextField = dr["VendorId"]?.ToString() ?? "";
+                    //        if (dt.Columns.Contains("CustomerId"))
+                    //            entity.DataTextField = dr["CustomerId"]?.ToString() ?? "";
 
-                            lstDdl.Add(entity);
-                        }
+                    //        lstDdl.Add(entity);
+                    //    }
                 }
 
                 DropDownEntity entity1 = new DropDownEntity();

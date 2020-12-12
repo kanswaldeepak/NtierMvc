@@ -264,6 +264,20 @@
             <div class="col-md-4">
                 <div class="form-group">
                     <label class="control-label">
+                        Reason For Regret
+                    </label>
+                    @Html.TextBoxFor(m => m.ReasonForRegret, new
+               {
+                   @class = "form-control",
+                   @id = "ReasonForRegret",
+                   @placeholder = "Reason For Regret"
+               })
+                    <span class="HideValidMsg">Please Select Reason for Regret</span>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label class="control-label">
                         Lead Time
                     </label>
                     <div class="row">
@@ -290,7 +304,7 @@
             <div class="col-md-4">
                 <div class="form-group">
                     <label class="control-label">
-                        End User <span class="required">*</span>
+                        End User
                     </label>
                     @Html.TextBoxFor(m => m.EndUser, new
                {
@@ -315,20 +329,6 @@
                        @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
                    })
                     <span class="HideValidMsg">Please Select Api Monogram Requirement</span>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="form-group">
-                    <label class="control-label">
-                        Reason For Regret
-                    </label>
-                    @Html.TextBoxFor(m => m.ReasonForRegret, new
-               {
-                   @class = "form-control",
-                   @id = "ReasonForRegret",
-                   @placeholder = "Reason For Regret"
-               })
-                    <span class="HideValidMsg">Please Select Reason for Regret</span>
                 </div>
             </div>
             <div class="col-md-4">
@@ -377,7 +377,7 @@
                        @id = "AgentName",
                        @placeholder = "Agent Name"
                    })
-                <span class="HideValidMsg">Please Select Agent Name</span>
+                    <span class="HideValidMsg">Please Select Agent Name</span>
                 </div>
             </div>
             <div class="col-md-4">

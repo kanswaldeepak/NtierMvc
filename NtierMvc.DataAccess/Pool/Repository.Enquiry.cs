@@ -131,13 +131,14 @@ namespace NtierMvc.DataAccess.Pool
             return _dbAccess.GetDataTable(spName, parms);
         }
 
-        public DataTable GetDdlValueForEnquiry(string type, string Value)
+        public DataTable GetDdlValueForEnquiry(string type, string EnqType = null, string CustomerId = null, string EnqFor = null, string DueDate = null)
         {
             var parms = new Dictionary<string, object>();
             parms.Add("@Type", type);
-            parms.Add("@Value", Value);
-            //parms.Add("@ProductGroup", ProductGroup);
-            //parms.Add("@VendorId", VendorId);
+            parms.Add("@EnqType", EnqType);
+            parms.Add("@CustomerId", CustomerId);
+            parms.Add("@EnqFor", EnqFor);
+            parms.Add("@DueDate", DueDate);
             string spName = ConfigurationManager.AppSettings["GetProductGroups"];
             return _dbAccess.GetDataTable(spName, parms);
         }

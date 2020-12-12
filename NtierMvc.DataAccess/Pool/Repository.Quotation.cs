@@ -224,12 +224,13 @@ namespace NtierMvc.DataAccess.Pool
             return msgCode;
         }
 
-        public DataTable GetDdlValueForQuote(string type, string VendorId = null, string QuoteType = null)
+        public DataTable GetDdlValueForQuote(string type, string VendorId = null, string QuoteType = null, string SubjectId = null)
         {
             var parms = new Dictionary<string, object>();
             parms.Add("@Type", type);
             parms.Add("@CustomerId", VendorId);
             parms.Add("@QuoteType", QuoteType);
+            parms.Add("@SubjectId", SubjectId);
             string spName = ConfigurationManager.AppSettings["GetDdlValueForQuote"];
             return _dbAccess.GetDataTable(spName, parms);
         }

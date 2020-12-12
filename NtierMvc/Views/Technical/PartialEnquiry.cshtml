@@ -80,9 +80,10 @@
                            })
             </td>
             <td>
-                <button class="btn btn-link" type="button" id="btnSearch" ng-click="FetchEnquiryList()">
-                    <i class="fa fa-search"></i>
+                <button class="btn btn-sm btn-success" type="button" id="btnSearch" ng-click="FetchEnquiryList()">
+                    Search
                 </button>
+                <button class="btn btn-sm btn-info" type="button" id="btnClearSearchEnquiry" ng-click="DefaultEnquiryList(); FetchEnquiryList();">Clear</button>
             </td>
         </tr>
     </table>
@@ -294,7 +295,8 @@
 
     $("#EQCustomer").chosen().change(
         function GetEnqFor() {
-            
+
+            var EnqType = $("#EQEnqType").val();
             var EQCustomerId = '';
             var x = document.getElementById("EQCustomer");
             for (var i = 0; i < x.options.length; i++) {
@@ -311,7 +313,7 @@
                 dataType: 'json',
                 type: 'GET',
                 url: window.GetDdlValueForEnquiry,
-                data: { CustomerId: EQCustomerId, type: 'EnqFor' },
+                data: { EnqType: EnqType, CustomerId: EQCustomerId, type: 'EnqFor' },
                 success: function (res) {
                     if (res.length > 0) {
                         $("#EQEnqFor").empty();
@@ -332,11 +334,24 @@
         function GetEQEnqFor() {
             
             var EQEnqFor = '';
-            var x = document.getElementById("EQEnqFor");
+            var EnqType = $("#EQEnqType").val();
+
+            var EQCustomerId = '';
+            var x = document.getElementById("EQCustomer");
             for (var i = 0; i < x.options.length; i++) {
                 if (x.options[i].selected == true) {
                     //alert(x.options[i].value);
-                    EQEnqFor = EQEnqFor + x.options[i].value + ',';
+                    EQCustomerId = EQCustomerId + x.options[i].value + ',';
+                }
+            }
+
+            EQCustomerId = EQCustomerId.substring(0, EQCustomerId.length - 1);
+
+            var y = document.getElementById("EQEnqFor");
+            for (var i = 0; i < y.options.length; i++) {
+                if (y.options[i].selected == true) {
+                    //alert(x.options[i].value);
+                    EQEnqFor = EQEnqFor + y.options[i].value + ',';
                 }
             }
 
@@ -347,7 +362,7 @@
                 dataType: 'json',
                 type: 'GET',
                 url: window.GetDdlValueForEnquiry,
-                data: { EnqFor: EQEnqFor, type: 'DueDate' },
+                data: { EnqType: EnqType, CustomerId: EQCustomerId, EnqFor: EQEnqFor, type: 'DueDate' },
                 success: function (res) {
                     if (res.length > 0) {
                         $("#EQDueDate").empty();
@@ -366,6 +381,28 @@
 
     $("#EQDueDate").chosen().change(
         function GetEnqType() {
+            var EnqType = $("#EQEnqType").val();
+
+            var EQCustomerId = '';
+            var x = document.getElementById("EQCustomer");
+            for (var i = 0; i < x.options.length; i++) {
+                if (x.options[i].selected == true) {
+                    //alert(x.options[i].value);
+                    EQCustomerId = EQCustomerId + x.options[i].value + ',';
+                }
+            }
+
+            EQCustomerId = EQCustomerId.substring(0, EQCustomerId.length - 1);
+
+            var y = document.getElementById("EQEnqFor");
+            for (var i = 0; i < y.options.length; i++) {
+                if (y.options[i].selected == true) {
+                    //alert(x.options[i].value);
+                    EQEnqFor = EQEnqFor + y.options[i].value + ',';
+                }
+            }
+
+            EQEnqFor = EQEnqFor.substring(0, EQEnqFor.length - 1);
 
             var DueDate = '';
             var x = document.getElementById("EQDueDate");
@@ -384,7 +421,7 @@
                 dataType: 'json',
                 type: 'GET',
                 url: window.GetDdlValueForEnquiry,
-                data: { type: 'EOQ', DueDate: DueDate },
+                data: { EnqType: EnqType, CustomerId: EQCustomerId, EnqFor: EQEnqFor, DueDate: DueDate, type: 'EOQ' },
                 success: function (res) {
                     if (res.length > 0) {
                         $("#EQEOQ").empty();
@@ -401,9 +438,24 @@
         }
     )
 
+    $('#btnClearSearchEnquiry').click(
+        function ClearFields() {
+
+            $('#EQEnqType').val([]).trigger('chosen:updated');
+            $('#EQCustomer').val([]).trigger('chosen:updated');
+            $('#EQEnqFor').val([]).trigger('chosen:updated');
+            $('#EQDueDate').val([]).trigger('chosen:updated');
+            $('#EQEOQ').val([]).trigger('chosen:updated');         
+
+        }
+    );
+
 
     window.onload = function () {
-        setTimeout(function () { angular.element(document.getElementById('TblEnquiry')).scope().FetchEnquiryList(); }, 500);
+        setTimeout(function () {
+            angular.element(document.getElementById('TblEnquiry')).scope().DefaultEnquiryList();
+            angular.element(document.getElementById('TblEnquiry')).scope().FetchEnquiryList();
+        }, 500);
     }
 
 </script>

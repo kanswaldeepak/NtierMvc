@@ -78,7 +78,7 @@ namespace NtierMvc.Controllers
             ViewBag.ListMainProdGrp = model.GetMasterTableStringList("Master.ProductLine", "Id", "MainPLName", "", "", GeneralConstants.ListTypeN);
             ViewBag.ListSubProdGrp = model.GetMasterTableStringList("SubProductLine", "Id", "SubPLName", "", "", GeneralConstants.ListTypeN);
             ViewBag.ListProdName = model.GetMasterTableStringList("Master.Product", "Id", "ProductName", "", "", GeneralConstants.ListTypeN);
-            ViewBag.ListEnqFor = model.GetMasterTableStringList("QuotationRegister", "EnqFor", "EnqFor", "", "", GeneralConstants.ListTypeD);
+            //ViewBag.ListEnqFor = model.GetMasterTableStringList("QuotationRegister", "EnqFor", "EnqFor", "", "", GeneralConstants.ListTypeD);
             ViewBag.ListQuoteType = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "QuoteType", "Property", GeneralConstants.ListTypeN);
 
 
@@ -86,7 +86,7 @@ namespace NtierMvc.Controllers
             ViewBag.ListEnqType = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "QuoteType", "Property", GeneralConstants.ListTypeN);
             ViewBag.ListEOQ = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "Expression of Quote(EOQ)", "Property", GeneralConstants.ListTypeN);
             ViewBag.ListEnqFor = model.GetMasterTableStringList("EnquiryRegister", "EnquiryId", "EnqFor", "", "", GeneralConstants.ListTypeD);
-            ViewBag.ListDueDate = model.GetMasterTableStringList("EnquiryRegister", "EnquiryId", "DueDate", "", "", GeneralConstants.ListTypeD);
+            ViewBag.ListDueDate = "";
             //Dictionary<string, string> Months = new Dictionary<string, string>();
             //Months.Add(Convert.ToString(DateTime.Now.Month), "Current Month");
             //Months.Add(Convert.ToString(DateTime.Now.Month + 3), "Next 3 Months");
@@ -108,7 +108,9 @@ namespace NtierMvc.Controllers
             //ViewBag.ListMonth = ListMonths;
 
             //Quotation
-            ViewBag.ListDeliveryTerms = model.GetMasterTableStringList("Master.Taxonomy", "DropDownId", "DropDownValue", "DeliveryTerms", "ObjectName", GeneralConstants.ListTypeN);
+            //ViewBag.ListDeliveryTerms = model.GetMasterTableStringList("Master.Taxonomy", "DropDownId", "DropDownValue", "DeliveryTerms", "ObjectName", GeneralConstants.ListTypeN);
+            ViewBag.ListDeliveryTerms = "";
+            ViewBag.ListSubject = "";
 
 
             return View();
@@ -1576,13 +1578,13 @@ namespace NtierMvc.Controllers
                     ddl = objEnquiryManager.GetDdlValueForEnquiry(type, EnqType);
                     break;
                 case "EnqFor":
-                    ddl = objEnquiryManager.GetDdlValueForEnquiry(type, CustomerId);
+                    ddl = objEnquiryManager.GetDdlValueForEnquiry(type, EnqType, CustomerId);
                     break;
                 case "DueDate":
-                    ddl = objEnquiryManager.GetDdlValueForEnquiry(type, EnqFor);
+                    ddl = objEnquiryManager.GetDdlValueForEnquiry(type, EnqType, CustomerId, EnqFor);
                     break;
                 case "EOQ":
-                    ddl = objEnquiryManager.GetDdlValueForEnquiry(type, DueDate);
+                    ddl = objEnquiryManager.GetDdlValueForEnquiry(type, EnqType, CustomerId, EnqFor, DueDate);
                     break;
                 default:
                     ddl = objEnquiryManager.GetDdlValueForEnquiry(type, EnqType);
@@ -1609,34 +1611,35 @@ namespace NtierMvc.Controllers
         }
 
 
-        public JsonResult FetchQuotationList(string pageIndex, string pageSize, string SearchQuoteType, string SearchQuoteVendorID, string SearchQuoteProductGroup, string SearchDeliveryTerms)
+        public JsonResult FetchQuotationList(string pageIndex, string pageSize, string SearchQuoteType, string SearchQuoteCustomerID, string SearchSubject, string SearchDeliveryTerms)
         {
             SearchQuoteType = SearchQuoteType == "-1" ? string.Empty : SearchQuoteType;
-            SearchQuoteVendorID = SearchQuoteVendorID == "-1" ? string.Empty : SearchQuoteVendorID;
-            SearchQuoteProductGroup = SearchQuoteProductGroup == "-1" ? string.Empty : SearchQuoteProductGroup;
+            SearchQuoteCustomerID = SearchQuoteCustomerID == "-1" ? string.Empty : SearchQuoteCustomerID;
+            SearchSubject = SearchSubject == "-1" ? string.Empty : SearchSubject;
             SearchDeliveryTerms = SearchDeliveryTerms == "-1" ? string.Empty : SearchDeliveryTerms;
 
             QuotationEntityDetails quote = new QuotationEntityDetails();
-            quote = objQuoteManager.GetQuotationDetails(Convert.ToInt32(pageIndex), Convert.ToInt32(pageSize), SearchQuoteType, SearchQuoteVendorID, SearchQuoteProductGroup, SearchDeliveryTerms);
+            quote = objQuoteManager.GetQuotationDetails(Convert.ToInt32(pageIndex), Convert.ToInt32(pageSize), SearchQuoteType, SearchQuoteCustomerID, SearchSubject, SearchDeliveryTerms);
             return new JsonResult { Data = quote, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
             //return QuotDetail.LstCusEnt;
         }
 
-
+        [HttpPost]
         public ActionResult DeleteQuotationDetail(int id)
         {
             if (ModelState.IsValid)
             {
-                string msgCode = objQuoteManager.DeleteQuotationDetail(id);
-                if (msgCode == "")
+                string msgCode = model.DeleteFormTable("QuotationRegister", "Id", id.ToString()); //objQuoteManager.DeleteQuotationDetail(id);
+                if (msgCode == GeneralConstants.DeleteSuccess)
                 {
-                    return RedirectToAction("Quotation");
+                    return new JsonResult { Data = msgCode, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
                 }
                 else
                 {
-                    Response.StatusCode = 444;
-                    Response.StatusDescription = "Not Saved";
-                    return null;
+                    return new JsonResult { Data = GeneralConstants.NotDeletedError, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                    //Response.StatusCode = 444;
+                    //Response.StatusDescription = "Not Saved";
+                    //return null;
                 }
             }
             else
@@ -1649,10 +1652,10 @@ namespace NtierMvc.Controllers
         }
 
 
-        public ActionResult GetDdlValueForQuote(string type, string VendorId = null, string QuoteType = null)
+        public ActionResult GetDdlValueForQuote(string type, string CustomerId = null, string QuoteType = null, string SubjectId = null)
         {
             List<DropDownEntity> ddl = new List<DropDownEntity>();
-            ddl = objQuoteManager.GetDdlValueForQuote(type, VendorId, QuoteType);
+            ddl = objQuoteManager.GetDdlValueForQuote(type, CustomerId, QuoteType, SubjectId);
             return new JsonResult { Data = ddl, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 

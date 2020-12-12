@@ -38,17 +38,15 @@ namespace NtierMvc.DataAccess.Pool
             return dt;
         }
 
-        public DataSet GetQuoteRegList(int pageIndex, int pageSize, string SearchQuotRegVendorID = null, string SearchQuotRegVendorName = null, string SearchQuotRegQuoteNo = null, string SearchQuotRegProductGrp = null, string SearchQuotRegEnqFor = null, string SearchQuotRegQuoteType = null)
+        public DataSet GetQuoteRegList(int pageIndex, int pageSize, string SearchQuoteType = null, string SearchQuoteCustomerID = null, string SearchSubject = null, string SearchDeliveryTerms = null)
         {
             var parms = new Dictionary<string, object>();
             parms.Add("@pageIndex", pageIndex);
             parms.Add("@pageSize", pageSize);
-            parms.Add("@SearchQuotRegVendorID", SearchQuotRegVendorID);
-            parms.Add("@SearchQuotRegVendorName", SearchQuotRegVendorName);
-            parms.Add("@SearchQuotRegQuoteNo", SearchQuotRegQuoteNo);
-            parms.Add("@SearchQuotRegProductGrp", SearchQuotRegProductGrp);
-            parms.Add("@SearchQuotRegEnqFor", SearchQuotRegEnqFor);
-            parms.Add("@SearchQuotRegQuoteType", SearchQuotRegQuoteType);
+            parms.Add("@SearchDeliveryTerms", SearchDeliveryTerms);
+            parms.Add("@SearchSubject", SearchSubject);
+            parms.Add("@SearchQuoteCustomerID", SearchQuoteCustomerID);
+            parms.Add("@SearchQuoteType", SearchQuoteType);
             string spName = ConfigurationManager.AppSettings["GetQuoteReg"];
             return _dbAccess.GetDataSet(spName, parms);
         }

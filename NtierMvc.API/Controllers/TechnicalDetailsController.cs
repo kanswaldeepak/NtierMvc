@@ -61,9 +61,9 @@ namespace NtierMvc.API.Controllers.Application
 
         [ResponseType(typeof(int))]
         [Route("api/TechnicalDetails/GetQuoteRegList")]
-        public IHttpActionResult GetQuoteRegList(int pageIndex, int pageSize, string SearchQuotRegVendorID = null, string SearchQuotRegVendorName = null, string SearchQuotRegQuoteNo = null, string SearchQuotRegProductGrp = null, string SearchQuotRegEnqFor = null, string SearchQuotRegQuoteType = null)
+        public IHttpActionResult GetQuoteRegList(int pageIndex, int pageSize, string SearchQuoteType = null, string SearchQuoteCustomerID = null, string SearchSubject = null, string SearchDeliveryTerms = null)
         {
-            return Ok(_repository.GetQuoteRegList(pageIndex, pageSize, SearchQuotRegVendorID, SearchQuotRegVendorName, SearchQuotRegQuoteNo, SearchQuotRegProductGrp, SearchQuotRegEnqFor, SearchQuotRegQuoteType));
+            return Ok(_repository.GetQuoteRegList(pageIndex, pageSize, SearchQuoteType, SearchQuoteCustomerID, SearchSubject, SearchDeliveryTerms));
         }
 
         [HttpGet]

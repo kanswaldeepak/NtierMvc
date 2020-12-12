@@ -20,6 +20,6 @@ namespace NtierMvc.BusinessLogic.Interface
 
         QuotationEntity QuotationDetailsPopup(QuotationEntity Model);
         List<DropDownEntity> GetCityName(string VendorName);
-        List<DropDownEntity> GetDdlValueForQuote(string type, string VendorId = null, string QuoteType = null);
+        List<DropDownEntity> GetDdlValueForQuote(string type, string VendorId = null, string QuoteType = null, string SubjectId = null);
     }
 }

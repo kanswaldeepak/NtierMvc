@@ -20,7 +20,7 @@ namespace NtierMvc.BusinessLogic.Interface
         EnquiryEntity EnquiryDetailsPopup(EnquiryEntity Model);
         List<DropDownEntity> GetCityName(string VendorName);
         EnquiryEntity GetVendorDetailForEnquiry(string CustomerId);
-        List<DropDownEntity> GetDdlValueForEnquiry(string type, string Value=null);
+        List<DropDownEntity> GetDdlValueForEnquiry(string type, string EnqType = null, string CustomerId = null, string EnqFor = null, string DueDate = null);
 
     }
 }
