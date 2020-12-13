@@ -141,6 +141,7 @@ function GetPlSoNoDetails() {
 
 function GetQuoteNos() {
     var QuoteType = $("#QuoteTypePRP").val();
+
     $.ajax({
         type: 'POST',
         url: window.GetPrepQuoteNo,

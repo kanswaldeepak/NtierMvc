@@ -1198,6 +1198,7 @@
     <Content Include="Scripts\CustomJS\CustomerDetails.js" />
     <Content Include="Scripts\CustomJS\Inbound.js" />
     <Content Include="Scripts\CustomJS\MyCustomJS.js" />
+    <Content Include="Scripts\CustomJS\QuotationPrep.js" />
     <Content Include="Scripts\CustomJS\QuotationDetails.js" />
     <Content Include="Scripts\CustomJS\EnquiryDetails.js" />
     <Content Include="Scripts\CustomJS\GetIPAddress.js" />

@@ -10,7 +10,7 @@
     <table class="table-borderless">
         <tr>
             <td>
-                <button id="btnAdd" type="button" class="btn btn-outline-primary btn-sm" style="float: left;" ng-click="BindQuotationPopup()"><i class="fa fa-plus"></i><b> Add New Quotation</b></button>
+                
             </td>
             <td>
                 <label>Quote Type</label>
@@ -27,7 +27,7 @@
         </tr>
         <tr>
             <td>
-                <button id="btnRevisedQuote" type="button" class="btn btn-outline-info btn-sm" style="float: left;" ng-click="BindRevisedQuotationPopup()"><i class="fa fa-plus"></i><b> Add New Revised Quotation</b></button>
+                
             </td>
             <td>
                 @Html.DropDownList("QuoteType", new SelectList(@ViewBag.ListQuoteType, "DataStringValueField", "DataTextField", "Select"),
@@ -157,12 +157,7 @@
                         <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="VIEW" ng-click="LoadQuotationViewPopup(L.Id)">
                             <i class="fa fa-eye"></i>
                         </button>
-                        <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="EDIT" ng-click="LoadQuotationEditPopup(L.Id)">
-                            <i class="fa fa-edit"></i>
-                        </button>
-                        <button type="button" class="btn btn-outline-danger btn-sm" data-toggle="tooltip" data-placement="bottom" title="DELETE" ng-click="DeleteQuotation(L.Id)">
-                            <i class="fa fa-trash"></i>
-                        </button>
+                
                     </td>
                     <td>
                         {{L.CustomerId}}

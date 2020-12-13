@@ -1,23 +1,4 @@
 ﻿
-function ChangeTransport() {
-
-    var QuoteType = $('#QuoteFormType option:selected').text();
-
-    if (QuoteType == 'Domestic') {
-        $("#ModeOfDespatch").find("option:contains(Road)").show();
-        $("#ModeOfDespatch").find("option:contains(Hand)").show();
-        $("#ModeOfDespatch").find("option:contains(Sea)").hide();
-
-        $('#divPortOfDischarge').hide();
-    }
-    else {
-        $("#ModeOfDespatch").find("option:contains(Road)").hide();
-        $("#ModeOfDespatch").find("option:contains(Hand)").hide();
-        $("#ModeOfDespatch").find("option:contains(Sea)").show();
-
-        $('#divPortOfDischarge').show();
-    }
-}
 
 function ShowHideStatus() {
     var InspectionValue = $('#Inspection option:selected').text();
@@ -26,6 +7,15 @@ function ShowHideStatus() {
         $('#divStatus').hide();
     else
         $('#divStatus').show();
+}
+
+function ShowHideReasonForRegret() {
+    var EoqValue = $('#Eoq option:selected').text();
+
+    if (EoqValue == 'Quote')
+        $('#divReasonForRegret').hide();
+    else
+        $('#divReasonForRegret').show();
 }
 
 function GetQuoteNoForQuoteType() {
@@ -155,4 +145,24 @@ function GetQuoteNumbers() {
             $('#Sucess-Failure').modal('show');
         }
     })
+}
+
+function ChangeTransport() {
+
+    var QuoteType = $('#QuoteFormType option:selected').text();
+
+    if (QuoteType == 'Domestic') {
+        $("#ModeOfDespatch").find("option:contains(Road)").show();
+        $("#ModeOfDespatch").find("option:contains(Hand)").show();
+        $("#ModeOfDespatch").find("option:contains(Sea)").hide();
+
+        $('#divPortOfDischarge').hide();
+    }
+    else {
+        $("#ModeOfDespatch").find("option:contains(Road)").hide();
+        $("#ModeOfDespatch").find("option:contains(Hand)").hide();
+        $("#ModeOfDespatch").find("option:contains(Sea)").show();
+
+        $('#divPortOfDischarge').show();
+    }
 }

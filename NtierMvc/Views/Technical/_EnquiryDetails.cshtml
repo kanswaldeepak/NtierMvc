@@ -254,14 +254,15 @@
                     {
                         @class = "form-control requiredValidation",
                         @id = "Eoq",
-                        @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                        @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                        @onchange= "ShowHideReasonForRegret()"
                     })
                     <span class="HideValidMsg">
                         Please Select Expression of Quote(EOQ)
                     </span>
                 </div>
             </div>
-            <div class="col-md-4">
+            <div id="divReasonForRegret" class="col-md-4">
                 <div class="form-group">
                     <label class="control-label">
                         Reason For Regret

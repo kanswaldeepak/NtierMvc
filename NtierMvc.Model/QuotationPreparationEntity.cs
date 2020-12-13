@@ -17,7 +17,8 @@ namespace NtierMvc.Model
         public string QuoteNo { get; set; }
         public string ItemNo { get; set; }
         public string EnqSrNo { get; set; }
-        public string ProductLine { get; set; }
+        public string MainProdGrp { get; set; }
+        public string SubProdGrp { get; set; }
         public string ProductName { get; set; }
         public string ProductNo { get; set; }
         public string CasingSize { get; set; }

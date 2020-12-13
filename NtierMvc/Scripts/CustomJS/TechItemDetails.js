@@ -68,6 +68,7 @@ function GetVendorDetails() {
 
 function GetQuoteNos() {
     var QuoteType = $("#OrderFormQuoteType").val();
+    debugger;
     $.ajax({
         type: 'POST',
         url: window.GetPrepQuoteNo,

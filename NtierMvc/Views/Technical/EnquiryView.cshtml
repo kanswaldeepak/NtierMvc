@@ -9,7 +9,7 @@
     <table class="table-borderless">
         <tr>
             <td>
-                <button id="btnAdd" type="button" class="btn btn-outline-primary btn-sm" style="float: left;" ng-click="BindEnquiryPopup()"><i class="fa fa-plus"></i> <b>Add New Enquiry</b></button>
+                
             </td>
             <td>
                 <label>Enquiry Type</label>
@@ -156,12 +156,7 @@
                         <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="VIEW" ng-click="LoadEnquiryViewPopup(L.EnquiryId)">
                             <i class="fa fa-eye"></i>
                         </button>
-                        <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="EDIT" ng-click="LoadEnquiryEditPopup(L.EnquiryId)">
-                            <i class="fa fa-edit"></i>
-                        </button>
-                        <button type="button" class="btn btn-outline-danger btn-sm" data-toggle="tooltip" data-placement="bottom" title="DELETE" ng-click="DeleteEnquiry(L.EnquiryId)">
-                            <i class="fa fa-trash"></i>
-                        </button>
+                       
                     </td>
                     <td>
                         {{L.CustomerName}}
