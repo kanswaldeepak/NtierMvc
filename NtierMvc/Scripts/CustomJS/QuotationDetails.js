@@ -92,6 +92,33 @@ function GetEnquiryDetails() {
     })
 }
 
+function GetQuoteNumbersForRevised() {
+    var QuoteType = $("#QuoteTypeRevised").val();
+
+    $.ajax({
+        type: 'POST',
+        url: window.GetPrepQuoteNo,
+        data: JSON.stringify({ quotetypeId: QuoteType }),
+        contentType: "application/json; charset=utf-8",
+        success: function (data) {
+            $("#RevisedFormQuoteNo").empty();
+            $("#CustomerNameRevised").empty();
+            if (data.length > 0) {
+                $.each(data, function (i, item) {
+                    $("#RevisedFormQuoteNo").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
+                    //$("#VendorName").append($('<option></option>').val(item.DataStringValueField).html(item.DataAltValueField));
+                    //$("#QuotePrepVendorName").val(item.DataStringValueField);
+                })
+            }
+        },
+        error: function (x, e) {
+            $('#spn-Sucess-Failure').text('Some error is occurred, Please try after some time.');
+            $('#spn-Sucess-Failure').addClass("important red");
+            $('#Sucess-Failure').modal('show');
+        }
+    })
+}
+
 function GetQuoteNumbers() {
     //var QuoteType = $("#QuoteFormType option:selected").text();
     var QuoteType = $("#QuoteFormType").val();

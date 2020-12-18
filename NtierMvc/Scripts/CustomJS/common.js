@@ -53,7 +53,7 @@ function formatAMPM(date) {
     return strTime;
 }
 
-// Added by Sachin Ingle
+
 function validateDecimalNumbers(el, evt) {
     var charCode = (evt.which) ? evt.which : event.keyCode;
     var number = el.value.split('.');

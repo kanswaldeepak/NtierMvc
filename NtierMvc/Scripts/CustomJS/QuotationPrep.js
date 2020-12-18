@@ -36,10 +36,10 @@ function GetProdName() {
         contentType: "application/json; charset=utf-8",
         success: function (res) {
 
-            $("#ProdName").empty();
+            $("#ProductName").empty();
             if (res.length > 0) {
                 $.each(res, function (i, item) {
-                    $("#ProdName").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
+                    $("#ProductName").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
                 })
             }
 
@@ -249,22 +249,26 @@ function GetProductDetails() {
                                     + item.Pos7;
                                 break;
                             default:
-                                finalString = item.Pos1 + ' ' + $('#ProductNo').val() + ', \r\n ' + item.Pos2 + ' '
-                                    + $("#CasingSize option:selected").text() + ', ' + item.Pos3 + ' '
-                                    + $("#CasingSize option:selected").text() + ', ' + item.Pos4
-                                    + $("#CasingPpf option:selected").text()
-                                    + ' ' + $("#MaterialGrade option:selected").text() + ' ' + $("#CasingWT option:selected").text() + ' ' + item.Pos6
-                                    + ', ' + $("#Connection option:selected").text()
-                                    + item.Pos7;
+                                finalString = item.Pos1 + ' ' + $("#CasingSize option:selected").text() + ',' + item.Pos2 + ' \r\n '
+                                    + ', ' + item.Pos3 + ' '
+                                    + $("#CasingPpf option:selected").text() + 'lbs/ft,  \r\n ' + item.Pos4
+                                    + $("#Connection option:selected").text() + ' \r\n ' + item.Pos5
+                                    + $("#MaterialGrade option:selected").text();
                                 break;
                         }
-                        //$('#ViewPos1').text(item.Pos1); $('#ViewProductNo').text($('#ProductNo').val());
-                        //$('#ViewPos2').text(item.Pos2); $('.ViewCasingSize').text($("#CasingSize option:selected").text());
-                        //$('#ViewPos3').text(item.Pos3); $('#ViewCasingPpf').text($("#CasingPpf option:selected").text());
-                        //$('#ViewPos4').text(item.Pos4); $('#ViewMaterialGrade').text($("#MaterialGrade option:selected").text());
-                        //$('#ViewPos5').text(item.Pos5); $('#ViewConnection').text($("#Connection option:selected").text());
+                        $('#ViewPos1').val(item.Pos1); 
+                        $('#ViewPos2').val(item.Pos2); 
+                        $('#ViewPos3').val(item.Pos3); 
+                        $('#ViewPos4').val(item.Pos4); 
+                        $('#ViewPos5').val(item.Pos5); 
+                        //$('#ViewProductNo').text($('#ProductNo').val());
+                        //$('.ViewCasingSize').text($("#CasingSize option:selected").text());
+                        //$('#ViewCasingPpf').text($("#CasingPpf option:selected").text());
+                        //$('#ViewMaterialGrade').text($("#MaterialGrade option:selected").text());
+                        //$('#ViewConnection').text($("#Connection option:selected").text());
 
-                        finalString = finalString + ' ' + item.subProductDetails;
+
+                        //finalString = finalString + ' ' + item.subProductDetails;
                         //finalString = item.Pos1 + ' ' + $('#ProductNo').val() + ', \r\n ' + item.Pos2 + ' '
                         //    + $("#CasingSize option:selected").text() + ', ' + item.Pos3 + ' '
                         //    + $("#CasingSize option:selected").text() + ', ' + item.Pos4 + $("#CasingPpf option:selected").text()

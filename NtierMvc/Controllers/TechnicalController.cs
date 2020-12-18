@@ -358,21 +358,21 @@ namespace NtierMvc.Controllers
         public ActionResult CreateDownloadDocument(string downloadTypeId, string quoteTypeId, string quoteNumberId, string quoteTypeText)
         {
             string quoteNoForFileName = "";
-            switch (quoteTypeText)
-            {
-                case "Domestic":
-                    quoteNoForFileName = "DQ";
-                    break;
-                case "Export":
-                    quoteNoForFileName = "EQ";
-                    break;
-                case "Service":
-                    quoteNoForFileName = "SR";
-                    break;
-                default:
-                    quoteNoForFileName = "SR";
-                    break;
-            }
+            //switch (quoteTypeText)
+            //{
+            //    case "Domestic":
+            //        quoteNoForFileName = "DQ";
+            //        break;
+            //    case "Export":
+            //        quoteNoForFileName = "EQ";
+            //        break;
+            //    case "Service":
+            //        quoteNoForFileName = "SR";
+            //        break;
+            //    default:
+            //        quoteNoForFileName = "SR";
+            //        break;
+            //}
 
             quoteNoForFileName = quoteNoForFileName + "-" + quoteNumberId + ".xlsx";
             string fullPath = Path.Combine(Server.MapPath(ConfigurationManager.AppSettings["TempFolder"].ToString()), quoteNoForFileName);
@@ -489,25 +489,33 @@ namespace NtierMvc.Controllers
                 string path = System.Web.HttpContext.Current.Server.MapPath(ConfigurationManager.AppSettings["QuotePrepExcel"]);
                 //string path = System.IO.Path.GetFullPath(ConfigurationManager.AppSettings["QuotePrepExcel"]);
                 Microsoft.Office.Interop.Excel.Workbook xlWorkbook = excelApp.Workbooks.Open(Filename: @path, Editable: true);
-                Microsoft.Office.Interop.Excel.Worksheet ws = (Microsoft.Office.Interop.Excel.Worksheet)xlWorkbook.Sheets["Sheet1"];
+                Microsoft.Office.Interop.Excel.Worksheet ws = (Microsoft.Office.Interop.Excel.Worksheet)xlWorkbook.Sheets["MOT F SM 08 Rev.00"];
 
 
                 DataTable resultData = objManager.GetDataForDocument(downloadTypeId, quoteTypeId, quoteNumberId);
                 DataTable resultList = objManager.GetListForDocument(downloadTypeId, quoteTypeId, quoteNumberId);
 
                 //Getting Single Fields
+                xlWorkbook.Worksheets[1].Cells.Replace("#QuoteNoAndRev", resultData.Rows[0]["QuoteNoView"]);
                 xlWorkbook.Worksheets[1].Cells.Replace("#QuoteDate", resultData.Rows[0]["QuoteDate"]);
+                xlWorkbook.Worksheets[1].Cells.Replace("#FileNo", resultData.Rows[0]["FILENO"]);
+                xlWorkbook.Worksheets[1].Cells.Replace("#EnqRef", resultData.Rows[0]["ENQNo"]);
+                xlWorkbook.Worksheets[1].Cells.Replace("#QuoteValidity", resultData.Rows[0]["QuoteValidity"]);
+                xlWorkbook.Worksheets[1].Cells.Replace("#Currency", resultData.Rows[0]["Currency"]);
+                xlWorkbook.Worksheets[1].Cells.Replace("#PaymentTerms", resultData.Rows[0]["PaymentTerms"]);
+                xlWorkbook.Worksheets[1].Cells.Replace("#SalesPerson", resultData.Rows[0]["SalesPerson"]);
+
                 xlWorkbook.Worksheets[1].Cells.Replace("#CustomerName", "M/s." + resultData.Rows[0]["CustomerNAME"]);
                 xlWorkbook.Worksheets[1].Cells.Replace("#CustomerAddress", resultData.Rows[0]["CustomerAddress"]);
-                xlWorkbook.Worksheets[1].Cells.Replace("#EnqNo", resultData.Rows[0]["enqno"]);
-                xlWorkbook.Worksheets[1].Cells.Replace("#EnqDt", resultData.Rows[0]["enqDt"]);
-                xlWorkbook.Worksheets[1].Cells.Replace("#CompanyName", resultData.Rows[0]["CompanyName"]);
-                xlWorkbook.Worksheets[1].Cells.Replace("#QuotationNo", resultData.Rows[0]["QuotationNo"]);
-                //xlWorkbook.Worksheets[1].Cells.Replace("#Year", result.Rows[0]["Year"]);
-                xlWorkbook.Worksheets[1].Cells.Replace("#CompanyInitial", resultData.Rows[0]["CompanyInitial"]);
-                xlWorkbook.Worksheets[1].Cells.Replace("#UserInitial", resultData.Rows[0]["UserInitial"]);
-                xlWorkbook.Worksheets[1].Cells.Replace("#FileNo", resultData.Rows[0]["FILENO"]);
-                xlWorkbook.Worksheets[1].Cells.Replace("#EnqFor", resultData.Rows[0]["ENQFOR"]);
+                xlWorkbook.Worksheets[1].Cells.Replace("#CustomerEmail", resultData.Rows[0]["CustomerEmail"]);
+                xlWorkbook.Worksheets[1].Cells.Replace("#Subject", resultData.Rows[0]["Subject"]);
+
+                //xlWorkbook.Worksheets[1].Cells.Replace("#EnqNo", resultData.Rows[0]["enqno"]);
+                //xlWorkbook.Worksheets[1].Cells.Replace("#EnqDt", resultData.Rows[0]["enqDt"]);
+                //xlWorkbook.Worksheets[1].Cells.Replace("#CompanyName", resultData.Rows[0]["CompanyName"]);
+                ////xlWorkbook.Worksheets[1].Cells.Replace("#Year", result.Rows[0]["Year"]);
+                //xlWorkbook.Worksheets[1].Cells.Replace("#CompanyInitial", resultData.Rows[0]["CompanyInitial"]);
+                //xlWorkbook.Worksheets[1].Cells.Replace("#UserInitial", resultData.Rows[0]["UserInitial"]);
 
                 //Removing for Table in Excel
                 //result.Columns.Remove("vendorname");
@@ -522,8 +530,31 @@ namespace NtierMvc.Controllers
                 //result.Columns.Remove("FILENO");
                 //result.Columns.Remove("ENQFOR");
 
-                Microsoft.Office.Interop.Excel.Range c1 = (Microsoft.Office.Interop.Excel.Range)ws.Cells[21, 1];
-                Microsoft.Office.Interop.Excel.Range c2 = (Microsoft.Office.Interop.Excel.Range)ws.Cells[(resultList.Rows.Count - 2) + 21, resultList.Columns.Count];
+                ////////////////For Image////////////////////
+                #region Image
+                Microsoft.Office.Interop.Excel.Range cells = xlWorkbook.Worksheets[1].Cells;
+
+                //ReqBy
+                Microsoft.Office.Interop.Excel.Range matchReqBy = cells.Find("#OwnerSign", LookAt: Microsoft.Office.Interop.Excel.XlLookAt.xlPart) as Microsoft.Office.Interop.Excel.Range;
+                xlWorkbook.Worksheets[1].Cells.Replace("#OwnerSign", "");
+
+                string matchAdd = matchReqBy != null ? matchReqBy.Address : null;
+                if (matchReqBy != null)
+                {
+                    Microsoft.Office.Interop.Excel.Range oRange = (Microsoft.Office.Interop.Excel.Range)ws.Cells[matchReqBy.Row, matchReqBy.Column];
+                    float Left = (float)((double)oRange.Left);
+                    float Top = (float)((double)oRange.Top);
+                    const float ImageSize = 40;
+                    string filePath = Path.Combine(Server.MapPath(ConfigurationManager.AppSettings["OwnerSignImage"]));
+                    if (System.IO.File.Exists(filePath))
+                        ws.Shapes.AddPicture(filePath, Microsoft.Office.Core.MsoTriState.msoFalse, Microsoft.Office.Core.MsoTriState.msoCTrue, Left, Top, ImageSize, ImageSize);
+                }
+
+                #endregion
+                ////////////////For Image////////////////////
+
+                Microsoft.Office.Interop.Excel.Range c1 = (Microsoft.Office.Interop.Excel.Range)ws.Cells[16, 1];
+                Microsoft.Office.Interop.Excel.Range c2 = (Microsoft.Office.Interop.Excel.Range)ws.Cells[(resultList.Rows.Count - 2) + 16, resultList.Columns.Count];
                 //Microsoft.Office.Interop.Excel.Range c2 = (Microsoft.Office.Interop.Excel.Range)ws.Cells[1, 1];
                 Microsoft.Office.Interop.Excel.Range range = ws.get_Range(c1, c2);
                 range.Insert(Microsoft.Office.Interop.Excel.XlInsertShiftDirection.xlShiftDown);
@@ -535,27 +566,39 @@ namespace NtierMvc.Controllers
                 for (int r = 0; r <= resultList.Rows.Count - 1; r++)
                 {
                     DataRow dr = resultList.Rows[r];
-                    for (int c = 0; c < resultList.Columns.Count - 3; c++)
+                    for (int c = 0; c < resultList.Columns.Count - 4; c++)
                     {
                         arr[r, c] = dr[c];
                     }
-                    sum = sum + Convert.ToInt32(dr[5]);
-                    NetWt = NetWt + Convert.ToInt32(dr[6]);
-                    GrWt = GrWt + Convert.ToInt32(dr[7]);
-                    CubMtr = CubMtr + Convert.ToDouble(dr[8]);
+                    sum = sum + Convert.ToInt32(dr[6]);
+                    NetWt = NetWt + Convert.ToInt32(dr[8]);
+                    GrWt = GrWt + Convert.ToInt32(dr[9]);
+                    CubMtr = CubMtr + Convert.ToDouble(dr[10]);
                 }
 
                 xlWorkbook.Worksheets[1].Cells.Replace("#TotalPrice", sum.ToString());
+                xlWorkbook.Worksheets[1].Cells.Replace("#AmountInWords", model.NumberToWords(sum.ToString()));
                 xlWorkbook.Worksheets[1].Cells.Replace("#NetWeight", NetWt.ToString());
                 xlWorkbook.Worksheets[1].Cells.Replace("#GrossWeight", GrWt.ToString());
                 xlWorkbook.Worksheets[1].Cells.Replace("#CubicMeter", CubMtr.ToString());
 
-                Microsoft.Office.Interop.Excel.Range c3 = (Microsoft.Office.Interop.Excel.Range)ws.Cells[21, 1];
-                Microsoft.Office.Interop.Excel.Range c4 = (Microsoft.Office.Interop.Excel.Range)ws.Cells[(resultList.Rows.Count - 1) + 21, resultList.Columns.Count];
+                Microsoft.Office.Interop.Excel.Range c3 = (Microsoft.Office.Interop.Excel.Range)ws.Cells[16, 1];
+                Microsoft.Office.Interop.Excel.Range c4 = (Microsoft.Office.Interop.Excel.Range)ws.Cells[(resultList.Rows.Count - 1) + 16, resultList.Columns.Count];
                 //Microsoft.Office.Interop.Excel.Range c2 = (Microsoft.Office.Interop.Excel.Range)ws.Cells[1, 1];
                 Microsoft.Office.Interop.Excel.Range range1 = ws.get_Range(c3, c4);
                 ws.get_Range(c3, c4).Cells.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignLeft;
-                range1.EntireRow.Font.Bold = true;
+
+                //Microsoft.Office.Interop.Excel.Range c5 = (Microsoft.Office.Interop.Excel.Range)ws.Cells[16, 1];
+                //Microsoft.Office.Interop.Excel.Range c6 = (Microsoft.Office.Interop.Excel.Range)ws.Cells[16, 2];
+                //Microsoft.Office.Interop.Excel.Range c7 = (Microsoft.Office.Interop.Excel.Range)ws.Cells[16, 4];
+                //Microsoft.Office.Interop.Excel.Range c8 = (Microsoft.Office.Interop.Excel.Range)ws.Cells[16, 5];
+                //c5.Cells.VerticalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignCenter;
+                //c6.Cells.VerticalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignCenter;
+                //c7.Cells.VerticalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignCenter;
+                //c8.Cells.VerticalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignCenter;
+
+                //range1.EntireRow.Font.Bold = true;
+                range1.WrapText = true;
                 range1.Value = arr;
 
                 xlWorkbook.SaveAs(fullPath);
@@ -1091,9 +1134,9 @@ namespace NtierMvc.Controllers
         public ActionResult GetRevisedQuoteNo(string quoteTypeId, string quoteNumberId)
         {
             SingleColumnEntity objSingle = new SingleColumnEntity();
-            objSingle = model.GetSingleColumnValues("QuotationRegister", "RevisedQuoteNo", "RevisedQuoteNo", "QuoteType", quoteTypeId, "", "", "QuoteNo", quoteNumberId);
+            objSingle = model.GetSingleColumnValues("QuotationRegister", "RevisedQuoteNo", "RevisedQuoteNo", "QuoteType", quoteTypeId, "QuoteDate", "","", "QuoteNo", quoteNumberId, "", "QuoteValidity");
 
-            return new JsonResult { Data = objSingle.DataValueField1, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+            return new JsonResult { Data = objSingle, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 
         [HttpPost]

@@ -1080,7 +1080,7 @@ namespace NtierMvc.Models
             return lstDropDownEntity;
         }
 
-        public List<DropDownEntity> GetMasterTableStringList(string TableName, string DataValueField, string DataTextField, string Property, string ColumnName, string ListType=null)
+        public List<DropDownEntity> GetMasterTableStringList(string TableName, string DataValueField, string DataTextField, string Property, string ColumnName, string ListType = null)
         {
             List<DropDownEntity> lstDropDownEntity = new List<DropDownEntity>();
             var baseAddress = "Base";
@@ -1150,7 +1150,7 @@ namespace NtierMvc.Models
         //    return lstTableRecordsEntity;
         //}
 
-        public List<TableRecordsEntity> GetTableDataList(string ListType, string TableName, string Column1 = null, string Param1 = null, string Column2 = null, string Param2 = null, string Column3 = null, string Param3 = null, string Column4 = null, string Param4 = null, string Column5 = null, string Param5 = null,  string RequiredColumn1 = null, string RequiredColumn2 = null, string RequiredColumn3 = null, string RequiredColumn4 = null, string RequiredColumn5 = null, string RequiredColumn6 = null, string RequiredColumn7 = null, string RequiredColumn8 = null, string RequiredColumn9 = null, string RequiredColumn10 = null)
+        public List<TableRecordsEntity> GetTableDataList(string ListType, string TableName, string Column1 = null, string Param1 = null, string Column2 = null, string Param2 = null, string Column3 = null, string Param3 = null, string Column4 = null, string Param4 = null, string Column5 = null, string Param5 = null, string RequiredColumn1 = null, string RequiredColumn2 = null, string RequiredColumn3 = null, string RequiredColumn4 = null, string RequiredColumn5 = null, string RequiredColumn6 = null, string RequiredColumn7 = null, string RequiredColumn8 = null, string RequiredColumn9 = null, string RequiredColumn10 = null)
         {
             List<TableRecordsEntity> lstTableRecordsEntity = new List<TableRecordsEntity>();
             var baseAddress = "Base";
@@ -1219,7 +1219,7 @@ namespace NtierMvc.Models
         {
             string result = "0";
             var baseAddress = "Base";
-            
+
             using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
             {
                 HttpResponseMessage response = client.GetAsync(baseAddress + "/DeleteFormTable?TableName=" + TableName + "&ColumnName1=" + ColumnName1 + "&Param1=" + Param1 + "&ColumnName2=" + ColumnName2 + "&Param2=" + Param2).Result;
@@ -1287,7 +1287,7 @@ namespace NtierMvc.Models
             }
             return lstDropDownEntity;
         }
-        
+
         public DataTable GetDataTableForDocument(string ListType, string TableName, string[] DataColumn, string[] DataParam, string[] RequiredColumn)
         {
             DataTable lstTable = new DataTable();
@@ -1417,8 +1417,11 @@ namespace NtierMvc.Models
             }
 
             if (isNegative) { dollars = "Negative " + dollars; }
-            return dollars + " and Cents " + cents;
 
+            if (!string.IsNullOrEmpty(cents.Trim()))
+                return dollars + " and Cents " + cents;
+            else
+                return dollars;
         }
 
         public string SaveBulkEntryDetails(BulkUploadEntity objBU)

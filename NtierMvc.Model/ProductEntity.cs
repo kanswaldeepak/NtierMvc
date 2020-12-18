@@ -10,9 +10,9 @@ namespace NtierMvc.Model
     public class ProductEntity
     {
         public int Id { get; set; }
-        public string ProductName { get; set; }
-        public string ProductCode { get; set; }
-        public string PL { get; set; }
+        public string CasingSize { get; set; }
+        public string Connection { get; set; }
+        public string MaterialGrade { get; set; }
         public string ProductNo { get; set; }
         public string Pos1 { get; set; }
         public string Pos2 { get; set; }

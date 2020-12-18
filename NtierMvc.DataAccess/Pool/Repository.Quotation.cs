@@ -94,7 +94,8 @@ namespace NtierMvc.DataAccess.Pool
             Params.Add("@ItemNo", Model.ItemNo);
             Params.Add("@EnqSrNo", Model.EnqSrNo);
             Params.Add("@VendorName", Model.CustomerName);
-            Params.Add("@ProductLine", Model.MainProdGrp);
+            Params.Add("@MainProdGrp", Model.MainProdGrp);
+            Params.Add("@SubProdGrp", Model.SubProdGrp);
             Params.Add("@ProductName", Model.ProductName);
             Params.Add("@ProductNo", Model.ProductNo);
             Params.Add("@CasingSize", Model.CasingSize);

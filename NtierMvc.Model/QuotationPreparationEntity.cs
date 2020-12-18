@@ -56,6 +56,8 @@ namespace NtierMvc.Model
         public string ViewDES { get; set; }
         public string ViewProductDetails { get; set; }
         public string TotalPrice { get; set; }
+        public string ODSize { get; set; }
+        public string TotalBows { get; set; }
 
 
     }

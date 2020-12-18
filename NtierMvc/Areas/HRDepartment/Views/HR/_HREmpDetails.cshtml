@@ -310,7 +310,6 @@
                    {
                        @id = "mobile",
                        @class = "form-control MobileNumber",
-                       @maxlength = "12",
                        @onkeypress = "return AllowNumbers(event)",
                        @placeholder = "Mobile",
                        @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this); "
@@ -323,7 +322,6 @@
                         @Html.TextBoxFor(m => m.mob2, new
                    {
                        @class = "form-control MobileNumber",
-                       @maxlength = "12",
                        @onkeypress = "return AllowNumbers(event)",
                        @placeholder = "Alternative Mobile"
                    })

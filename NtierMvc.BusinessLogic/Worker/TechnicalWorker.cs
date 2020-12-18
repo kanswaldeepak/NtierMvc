@@ -627,20 +627,15 @@ namespace NtierMvc.BusinessLogic.Worker
                     entity = new ProductEntity();
 
                     //Start
-                    if (dt.Columns.Contains("Id"))
-                        entity.Id = Convert.ToInt32(dt.Rows[0]["Id"] ?? 0);
+                    
+                    if (dt.Columns.Contains("CasingSize"))
+                        entity.CasingSize = dt.Rows[0]["CasingSize"]?.ToString() ?? "";
+                    if (dt.Columns.Contains("Connection"))
+                        entity.Connection = dt.Rows[0]["Connection"]?.ToString() ?? "";
+                    if (dt.Columns.Contains("MaterialGrade"))
+                        entity.MaterialGrade = dt.Rows[0]["MaterialGrade"]?.ToString() ?? "";
 
-                    if (dt.Columns.Contains("ProductName"))
-                        entity.ProductName = dt.Rows[0]["ProductName"]?.ToString() ?? "";
 
-                    if (dt.Columns.Contains("ProductCode"))
-                        entity.ProductCode = dt.Rows[0]["ProductCode"]?.ToString() ?? "";
-
-                    if (dt.Columns.Contains("PL"))
-                        entity.PL = dt.Rows[0]["PL"]?.ToString() ?? "";
-
-                    if (dt.Columns.Contains("ProductNo"))
-                        entity.ProductNo = dt.Rows[0]["ProductNo"]?.ToString() ?? "";
                     if (dt.Columns.Contains("Pos1"))
                         entity.Pos1 = dt.Rows[0]["Pos1"]?.ToString() ?? "";
                     if (dt.Columns.Contains("Pos2"))
@@ -651,18 +646,18 @@ namespace NtierMvc.BusinessLogic.Worker
                         entity.Pos4 = dt.Rows[0]["Pos4"]?.ToString() ?? "";
                     if (dt.Columns.Contains("Pos5"))
                         entity.Pos5 = dt.Rows[0]["Pos5"]?.ToString() ?? "";
-                    if (dt.Columns.Contains("Pos6"))
-                        entity.Pos6 = dt.Rows[0]["Pos6"]?.ToString() ?? "";
-                    if (dt.Columns.Contains("Pos7"))
-                        entity.Pos7 = dt.Rows[0]["Pos7"]?.ToString() ?? "";
-                    if (dt.Columns.Contains("Pos8"))
-                        entity.Pos8 = dt.Rows[0]["Pos8"]?.ToString() ?? "";
-                    if (dt.Columns.Contains("Pos9"))
-                        entity.Pos9 = dt.Rows[0]["Pos9"]?.ToString() ?? "";
-                    if (dt.Columns.Contains("Pos10"))
-                        entity.Pos10 = dt.Rows[0]["Pos10"]?.ToString() ?? "";
-                    if (dt.Columns.Contains("DES"))
-                        entity.DES = dt.Rows[0]["DES"]?.ToString() ?? "";
+                    //if (dt.Columns.Contains("Pos6"))
+                    //    entity.Pos6 = dt.Rows[0]["Pos6"]?.ToString() ?? "";
+                    //if (dt.Columns.Contains("Pos7"))
+                    //    entity.Pos7 = dt.Rows[0]["Pos7"]?.ToString() ?? "";
+                    //if (dt.Columns.Contains("Pos8"))
+                    //    entity.Pos8 = dt.Rows[0]["Pos8"]?.ToString() ?? "";
+                    //if (dt.Columns.Contains("Pos9"))
+                    //    entity.Pos9 = dt.Rows[0]["Pos9"]?.ToString() ?? "";
+                    //if (dt.Columns.Contains("Pos10"))
+                    //    entity.Pos10 = dt.Rows[0]["Pos10"]?.ToString() ?? "";
+                    //if (dt.Columns.Contains("DES"))
+                    //    entity.DES = dt.Rows[0]["DES"]?.ToString() ?? "";
 
                     if (dt.Columns.Contains("NET_WEIGHT"))
                         entity.NetWeight = dt.Rows[0]["NET_WEIGHT"]?.ToString() ?? "";
@@ -672,35 +667,35 @@ namespace NtierMvc.BusinessLogic.Worker
 
                     //End
 
-                    StringBuilder sb = new StringBuilder();
-                    foreach (DataRow dr in dt.Rows)
-                    {
-                        ProductAccessories entity1 = new ProductAccessories();
+                    //StringBuilder sb = new StringBuilder();
+                    //foreach (DataRow dr in dt.Rows)
+                    //{
+                    //    ProductAccessories entity1 = new ProductAccessories();
 
-                        if (dt.Columns.Contains("ProductNamePA"))
-                            entity1.ProductNamePA = dr["ProductNamePA"]?.ToString() ?? "";
+                    //    if (dt.Columns.Contains("ProductNamePA"))
+                    //        entity1.ProductNamePA = dr["ProductNamePA"]?.ToString() ?? "";
 
-                        //if (dt.Columns.Contains("ProductCodePA"))
-                        //    entity1.ProductCodePA = dr["ProductCodePA"]?.ToString() ?? "";
+                    //    //if (dt.Columns.Contains("ProductCodePA"))
+                    //    //    entity1.ProductCodePA = dr["ProductCodePA"]?.ToString() ?? "";
 
-                        //if (dt.Columns.Contains("MasterProductName"))
-                        //    entity1.MasterProductName = dr["MasterProductName"]?.ToString() ?? "";
+                    //    //if (dt.Columns.Contains("MasterProductName"))
+                    //    //    entity1.MasterProductName = dr["MasterProductName"]?.ToString() ?? "";
 
-                        //if (dt.Columns.Contains("Pos1PA"))
-                        //    entity1.Pos1PA = dr["Pos1PA"]?.ToString() ?? "";
-                        //if (dt.Columns.Contains("Pos2PA"))
-                        //    entity1.Pos2PA = dr["Pos2PA"]?.ToString() ?? "";
-                        //if (dt.Columns.Contains("Pos3PA"))
-                        //    entity1.Pos3PA = dr["Pos3PA"]?.ToString() ?? "";
-                        //if (dt.Columns.Contains("Pos4PA"))
-                        //    entity1.Pos4PA = dr["Pos4PA"]?.ToString() ?? "";
-                        //if (dt.Columns.Contains("Pos5PA"))
-                        //    entity1.Pos5PA = dr["Pos5PA"]?.ToString() ?? "";
+                    //    //if (dt.Columns.Contains("Pos1PA"))
+                    //    //    entity1.Pos1PA = dr["Pos1PA"]?.ToString() ?? "";
+                    //    //if (dt.Columns.Contains("Pos2PA"))
+                    //    //    entity1.Pos2PA = dr["Pos2PA"]?.ToString() ?? "";
+                    //    //if (dt.Columns.Contains("Pos3PA"))
+                    //    //    entity1.Pos3PA = dr["Pos3PA"]?.ToString() ?? "";
+                    //    //if (dt.Columns.Contains("Pos4PA"))
+                    //    //    entity1.Pos4PA = dr["Pos4PA"]?.ToString() ?? "";
+                    //    //if (dt.Columns.Contains("Pos5PA"))
+                    //    //    entity1.Pos5PA = dr["Pos5PA"]?.ToString() ?? "";
 
-                        sb.Append(entity1.ProductNamePA + "\r\n");
-                    }
+                    //    sb.Append(entity1.ProductNamePA + "\r\n");
+                    //}
 
-                    entity.subProductDetails = sb.ToString();
+                    //entity.subProductDetails = sb.ToString();
 
                     lstProdEnt.Add(entity);
                 }
