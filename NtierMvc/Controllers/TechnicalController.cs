@@ -8,11 +8,9 @@ using System.Configuration;
 using System.Data;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
-using Excel = Microsoft.Office.Interop.Excel;
 
 namespace NtierMvc.Controllers
 {
@@ -400,8 +398,8 @@ namespace NtierMvc.Controllers
                 Microsoft.Office.Interop.Excel.Worksheet ws = (Microsoft.Office.Interop.Excel.Worksheet)xlWorkbook.Sheets["Sheet1"];
 
 
-                DataTable resultData = objManager.GetDataForDocument(downloadTypeId, quoteTypeId, quoteNumberId);
-                DataTable resultList = objManager.GetListForDocument(downloadTypeId, quoteTypeId, quoteNumberId);
+                System.Data.DataTable resultData = objManager.GetDataForDocument(downloadTypeId, quoteTypeId, quoteNumberId);
+                System.Data.DataTable resultList = objManager.GetListForDocument(downloadTypeId, quoteTypeId, quoteNumberId);
 
                 //Getting Single Fields
                 xlWorkbook.Worksheets[1].Cells.Replace("#QuoteDate", resultData.Rows[0]["QuoteDate"]);
@@ -492,8 +490,8 @@ namespace NtierMvc.Controllers
                 Microsoft.Office.Interop.Excel.Worksheet ws = (Microsoft.Office.Interop.Excel.Worksheet)xlWorkbook.Sheets["MOT F SM 08 Rev.00"];
 
 
-                DataTable resultData = objManager.GetDataForDocument(downloadTypeId, quoteTypeId, quoteNumberId);
-                DataTable resultList = objManager.GetListForDocument(downloadTypeId, quoteTypeId, quoteNumberId);
+                System.Data.DataTable resultData = objManager.GetDataForDocument(downloadTypeId, quoteTypeId, quoteNumberId);
+                System.Data.DataTable resultList = objManager.GetListForDocument(downloadTypeId, quoteTypeId, quoteNumberId);
 
                 //Getting Single Fields
                 xlWorkbook.Worksheets[1].Cells.Replace("#QuoteNoAndRev", resultData.Rows[0]["QuoteNoView"]);
@@ -634,14 +632,14 @@ namespace NtierMvc.Controllers
             //string fullPath = Path.Combine(Server.MapPath(ConfigurationManager.AppSettings["TempFolder"]), fileName);
 
             string fullPath = Path.Combine(Server.MapPath(ConfigurationManager.AppSettings["TempFolder"]), fileName);
-            var excelApp = new Excel.Application();
+            var excelApp = new Microsoft.Office.Interop.Excel.Application();
             excelApp.Visible = true;
 
             if (System.IO.File.Exists(fullPath))
             {
                 ////Get the temp folder and file path in server
-                Excel.Workbooks books = excelApp.Workbooks;
-                Excel.Workbook sheet = books.Open(fullPath, 0, true, 5, "", "", false, Microsoft.Office.Interop.Excel.XlPlatform.xlWindows, "\t", true, false, 0, true, 1, Microsoft.Office.Interop.Excel.XlCorruptLoad.xlNormalLoad);
+                Microsoft.Office.Interop.Excel.Workbooks books = excelApp.Workbooks;
+                Microsoft.Office.Interop.Excel.Workbook sheet = books.Open(fullPath, 0, true, 5, "", "", false, Microsoft.Office.Interop.Excel.XlPlatform.xlWindows, "\t", true, false, 0, true, 1, Microsoft.Office.Interop.Excel.XlCorruptLoad.xlNormalLoad);
                 System.IO.File.Delete(fullPath);
                 //return Json(new { data = "", errorMessage = "" }, JsonRequestBehavior.AllowGet);
             }
@@ -984,7 +982,7 @@ namespace NtierMvc.Controllers
                 if (ItemDetails != null)
                 {
                     BulkUploadEntity objBU = new BulkUploadEntity();
-                    objBU.DataRecordTable = new DataTable();
+                    objBU.DataRecordTable = new System.Data.DataTable();
 
                     List<ItemEntity> itemList = new List<ItemEntity>();
                     List<ItemEntityBulkSave> itemListBulk = new List<ItemEntityBulkSave>();
