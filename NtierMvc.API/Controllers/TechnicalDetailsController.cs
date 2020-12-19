@@ -142,9 +142,9 @@ namespace NtierMvc.API.Controllers.Application
 
         [HttpGet]
         [Route("api/TechnicalDetails/GetPrepProductNames")]
-        public IHttpActionResult GetPrepProductNames(string productId,  string casingSize)
+        public IHttpActionResult GetPrepProductNames(string productId,  string casingSize, string type=null)
         {
-            return Ok(_repository.GetPrepProductNames(productId, casingSize));
+            return Ok(_repository.GetPrepProductNames(productId, casingSize, type));
         }
 
         [HttpPost]

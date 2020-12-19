@@ -29,7 +29,7 @@ namespace NtierMvc.BusinessLogic.Interface
         List<DropDownEntity> GetQuoteItemSlNoList(string quotetypeId="", string SoNo = null);
         List<DropDownEntity> GetEnqNoList(string vendorId = null);
         List<DropDownEntity> GetQuoteEnqNoList(QuotationEntity qE);
-        List<ProductEntity> GetPrepProductNames(string productNameId, string productTypeId);
+        List<ProductEntity> GetPrepProductNames(string productNameId, string productTypeId, string type = null);
 
         //Order Methods
         string SaveOrderDetail(OrderEntity orderEntity);

@@ -612,12 +612,12 @@ namespace NtierMvc.BusinessLogic.Worker
             }
         }
 
-        public List<ProductEntity> GetPrepProductNames(string productId, string casingSize)
+        public List<ProductEntity> GetPrepProductNames(string productId, string casingSize, string type = null)
         {
             try
             {
                 List<ProductEntity> lstProdEnt = new List<ProductEntity>();
-                DataTable dt = _repository.GetPrepProductNames(productId, casingSize);
+                DataTable dt = _repository.GetPrepProductNames(productId, casingSize, type);
                 ProductEntity entity;
                 ProductDetails eDet;
 
@@ -656,8 +656,9 @@ namespace NtierMvc.BusinessLogic.Worker
                     //    entity.Pos9 = dt.Rows[0]["Pos9"]?.ToString() ?? "";
                     //if (dt.Columns.Contains("Pos10"))
                     //    entity.Pos10 = dt.Rows[0]["Pos10"]?.ToString() ?? "";
-                    //if (dt.Columns.Contains("DES"))
-                    //    entity.DES = dt.Rows[0]["DES"]?.ToString() ?? "";
+
+                    if (dt.Columns.Contains("DES"))
+                        entity.DES = dt.Rows[0]["DES"]?.ToString() ?? "";
 
                     if (dt.Columns.Contains("NET_WEIGHT"))
                         entity.NetWeight = dt.Rows[0]["NET_WEIGHT"]?.ToString() ?? "";
@@ -1082,6 +1083,15 @@ namespace NtierMvc.BusinessLogic.Worker
 
                         if (dt.Columns.Contains("ProdGrp"))
                             orderEntity.MainProdGrp = dr["ProdGrp"]?.ToString() ?? "";
+
+                        if (dt.Columns.Contains("Country"))
+                            orderEntity.PoLocation = dr["Country"]?.ToString() ?? "";
+
+                        if (dt.Columns.Contains("Currency"))
+                            orderEntity.Curr = dr["Currency"]?.ToString() ?? "";
+
+                        if (dt.Columns.Contains("DeliveryTerms"))
+                            orderEntity.DeliveryTerms = dr["DeliveryTerms"]?.ToString() ?? "";
                     }
                 }
 

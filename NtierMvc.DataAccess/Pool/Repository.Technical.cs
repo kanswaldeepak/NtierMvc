@@ -107,12 +107,13 @@ namespace NtierMvc.DataAccess.Pool
             return dt;
         }
 
-        public DataTable GetPrepProductNames(string productId, string casingSize)
+        public DataTable GetPrepProductNames(string productId, string casingSize, string type = null)
         {
             DataTable dt = new DataTable();
             var parms = new Dictionary<string, object>();
             parms.Add("@productId", productId);
             parms.Add("@casingSize", casingSize);
+            parms.Add("@type", type);
             var spName = ConfigurationManager.AppSettings["FetchProductDetailsById"];
             dt = _dbAccess.GetDataTable(spName, parms);
             return dt;

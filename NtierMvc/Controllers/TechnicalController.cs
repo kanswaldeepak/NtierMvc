@@ -730,10 +730,10 @@ namespace NtierMvc.Controllers
         }
 
 
-        public ActionResult GetPrepProductNames(string productId, string casingSize)
+        public ActionResult GetPrepProductNames(string productId, string casingSize, string type)
         {
             List<ProductEntity> lstProducts = new List<ProductEntity>();
-            lstProducts = objManager.GetPrepProductNames(productId, casingSize);
+            lstProducts = objManager.GetPrepProductNames(productId, casingSize, type);
             return new JsonResult { Data = lstProducts, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 
@@ -765,7 +765,7 @@ namespace NtierMvc.Controllers
             model = new BaseModel();
             ViewBag.ListQuoteNo = model.GetMasterTableStringList("QuotationRegister", "Id", "QUOTENO", "", "", GeneralConstants.ListTypeN);
             ViewBag.ListItemNo = DdlList();
-            ViewBag.ListCustomerId = model.GetMasterTableStringList("QuotationRegister", "Id", "CustomerId", "", "", GeneralConstants.ListTypeN);
+            ViewBag.ListCustomerId = model.GetMasterTableStringList("Customer", "Id", "CustomerId", "", "", GeneralConstants.ListTypeN);
             ViewBag.ListQuoteType = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "QuoteType", "Property", GeneralConstants.ListTypeN);
             ViewBag.ListQuoteQtyType = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "SingleMultiple", "Property", GeneralConstants.ListTypeN);
             ViewBag.ListCurr = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "Currency", "Property", GeneralConstants.ListTypeN);
@@ -776,6 +776,8 @@ namespace NtierMvc.Controllers
             ViewBag.ListProdName = model.GetMasterTableStringList("Master.Product", "Id", "ProductName", "", "", GeneralConstants.ListTypeN);
             ViewBag.ListSoNo = model.GetMasterTableStringList("Orders", "SoNo", "SoNo", "", "", GeneralConstants.ListTypeD);
             ViewBag.ListSoNo.RemoveAt(0);
+            ViewBag.ListModeOfDespatch = model.GetDropDownList("Master.Taxonomy", GeneralConstants.ListTypeD, "dropdownId", "dropdownvalue", "Transport", "Property");
+
             DropDownEntity obj = new DropDownEntity();
             obj.DataStringValueField = "";
             obj.DataTextField = "New";

@@ -274,13 +274,13 @@ namespace NtierMvc.Model
             return enqNoList;
         }
 
-        public List<ProductEntity> GetPrepProductNames(string productId, string casingSize)
+        public List<ProductEntity> GetPrepProductNames(string productId, string casingSize, string type=null)
         {
             var baseAddress = "TechnicalDetails";
             List<ProductEntity> QuoteNoList = new List<ProductEntity>();
             using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
             {
-                HttpResponseMessage response = client.GetAsync(baseAddress + "/GetPrepProductNames?productId=" + productId + "&casingSize=" + casingSize).Result;
+                HttpResponseMessage response = client.GetAsync(baseAddress + "/GetPrepProductNames?productId=" + productId + "&casingSize=" + casingSize + "&type=" + type).Result;
                 if (response.IsSuccessStatusCode)
                 {
                     var data = response.Content.ReadAsStringAsync().Result;
