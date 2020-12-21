@@ -1,7 +1,30 @@
 ﻿
+function CopyAddress() {
+
+    var checked = $('#ChckAddress').is(':checked');
+
+    if (checked) {
+        $('#PerAddress1').val($('#PresAddress1').val());
+        $('#PerAddress2').val($('#PresAddress2').val());
+        $('#PerCity').val($('#PresCity').val());
+        $('#PerCountry').val($('#PresCountry').val());
+        $('#PerState').val($('#PresState').val());
+        $('#PerZipCode').val($('#PresZipCode').val());
+    }
+    else {
+        $('#PerAddress1').val('');
+        $('#PerAddress2').val('');
+        $('#PerCity').val('');
+        $('#PerCountry').val('');
+        $('#PerState').val('');
+        $('#PerZipCode').val('');
+    }
+    
+}
+
 function GetState() {
 
-    let CountryId = $('#Country option:selected').val();
+    let CountryId = $('#PresCountry option:selected').val();
 
     $.ajax({
         type: 'POST',
@@ -10,10 +33,10 @@ function GetState() {
         contentType: "application/json; charset=utf-8",
         success: function (data) {
             if (data.length > 0) {
-                $("#State").empty();
+                $("#PresState").empty();
                 if (data.length > 0) {
                     $.each(data, function (i, item) {
-                        $("#State").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
+                        $("#PresState").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
                     })
                 }
             }

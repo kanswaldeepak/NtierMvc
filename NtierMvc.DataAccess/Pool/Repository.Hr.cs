@@ -39,12 +39,19 @@ namespace NtierMvc.DataAccess.Pool
             parms.Add("@Designation", objEmp.Designation);
             parms.Add("@DOB", objEmp.DateOfBirth);
             parms.Add("@DOJ", objEmp.DateOfJoining);
-            parms.Add("@address1", objEmp.Address1);
-            parms.Add("@address2", objEmp.Address2);
-            parms.Add("@City", objEmp.City);
-            parms.Add("@state", objEmp.State);
-            parms.Add("@Country", objEmp.Country);
-            parms.Add("@zipcode", objEmp.ZipCode);
+            parms.Add("@PresAddress1", objEmp.PresAddress1);
+            parms.Add("@PresAddress2", objEmp.PresAddress2);
+            parms.Add("@PresCity", objEmp.PresCity);
+            parms.Add("@PresState", objEmp.PresState);
+            parms.Add("@PresCountry", objEmp.PresCountry);
+            parms.Add("@PresZipCode", objEmp.PresZipCode);
+            parms.Add("@PerAddress1", objEmp.PerAddress1);
+            parms.Add("@PerAddress2", objEmp.PerAddress2);
+            parms.Add("@PerCity", objEmp.PerCity);
+            parms.Add("@PerState", objEmp.PerState);
+            parms.Add("@PerCountry", objEmp.PerCountry);
+            parms.Add("@PerZipCode", objEmp.PerZipCode);
+
             parms.Add("@mob1", objEmp.mob1);
             parms.Add("@mob2", objEmp.mob2);
             parms.Add("@email", objEmp.email);

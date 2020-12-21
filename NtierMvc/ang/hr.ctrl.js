@@ -496,7 +496,7 @@ angular.module('App').controller("HrController", function ($scope, $http, $timeo
             datatype: "JSON",
             url: window.CertificatePopup,
             success: function (html) {
-                SetModalTitle("View Certificate Certificates");
+                SetModalTitle("View Certificate Details");
                 SetModalBody(html);
                 HideLoadder();
                 //SetModalWidth("1400px");

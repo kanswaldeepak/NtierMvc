@@ -21,15 +21,23 @@ namespace NtierMvc.Model.HR
         public string DateOfBirth { get; set; }
         public string Unit { get; set; }
         public string DateOfJoining { get; set; }        
-        public string Address1 { get; set; }
-        public string Address2 { get; set; }
-        public string Address3 { get; set; }
+        public string PresAddress1 { get; set; }
+        public string PresAddress2 { get; set; }
+        public string PresAddress3 { get; set; }
         public string Location { get; set; }
-        public string District { get; set; }        
-        public string City { get; set; }
-        public string State { get; set; }
-        public string Country { get; set; }
-        public string ZipCode { get; set; }
+        public string PresDistrict { get; set; }        
+        public string PresCity { get; set; }
+        public string PresState { get; set; }
+        public string PresCountry { get; set; }
+        public string PresZipCode { get; set; }
+        public string PerAddress1 { get; set; }
+        public string PerAddress2 { get; set; }
+        public string PerAddress3 { get; set; }        
+        public string PerDistrict { get; set; }
+        public string PerCity { get; set; }
+        public string PerState { get; set; }
+        public string PerCountry { get; set; }
+        public string PerZipCode { get; set; }
         public string tel1 { get; set; }
         public string tel2 { get; set; }
         public string mob1 { get; set; }

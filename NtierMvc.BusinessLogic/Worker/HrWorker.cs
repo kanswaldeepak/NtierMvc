@@ -173,7 +173,7 @@ namespace NtierMvc.BusinessLogic.Worker
                                 obj.Designation = dr1.IsNull("Designation") ? string.Empty : Convert.ToString(dr1["Designation"]);
                                 obj.mob1 = dr1.IsNull("MOB1") ? string.Empty : Convert.ToString(dr1["MOB1"]);
                                 obj.email = dr1.IsNull("EMAIL") ? string.Empty : Convert.ToString(dr1["EMAIL"]);
-                                obj.State = dr1.IsNull("State") ? string.Empty : Convert.ToString(dr1["State"]);
+                                obj.PresState = dr1.IsNull("PresState") ? string.Empty : Convert.ToString(dr1["PresState"]);
                                 obj.EmergContPerson = dr1.IsNull("EmergContPerson") ? string.Empty : Convert.ToString(dr1["EmergContPerson"]);
                                 obj.EmergContNo = dr1.IsNull("EmergContNo") ? string.Empty : Convert.ToString(dr1["EmergContNo"]);
                                 //obj.EmpImage = dr1.IsNull("EmpImage") ? string.Empty : Convert.ToString(dr1["EmpImage"]);
@@ -231,12 +231,20 @@ namespace NtierMvc.BusinessLogic.Worker
                     Model.Designation = dt1.Rows[0]["Designation"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["Designation"]);
                     Model.DateOfBirth = dt1.Rows[0]["DOB"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["DOB"]);
                     Model.DateOfJoining = dt1.Rows[0]["DOJ"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["DOJ"]);
-                    Model.Address1 = dt1.Rows[0]["Address1"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["Address1"]);
-                    Model.Address2 = dt1.Rows[0]["Address2"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["Address2"]);
-                    Model.City = dt1.Rows[0]["City"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["City"]);
-                    Model.State = dt1.Rows[0]["State"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["State"]);
-                    Model.ZipCode = dt1.Rows[0]["ZipCode"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["ZipCode"]);
-                    Model.Country = dt1.Rows[0]["Country"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["Country"]);
+                    Model.PresAddress1 = dt1.Rows[0]["PresAddress1"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["PresAddress1"]);
+                    Model.PresAddress2 = dt1.Rows[0]["PresAddress2"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["PresAddress2"]);
+                    Model.PresCity = dt1.Rows[0]["PresCity"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["PresCity"]);
+                    Model.PresState = dt1.Rows[0]["PresState"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["PresState"]);
+                    Model.PresZipCode = dt1.Rows[0]["PresZipCode"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["PresZipCode"]);
+                    Model.PresCountry = dt1.Rows[0]["PresCountry"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["PresCountry"]);
+
+                    Model.PerAddress1 = dt1.Rows[0]["PerAddress1"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["PerAddress1"]);
+                    Model.PerAddress2 = dt1.Rows[0]["PerAddress2"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["PerAddress2"]);
+                    Model.PerCity = dt1.Rows[0]["PerCity"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["PerCity"]);
+                    Model.PerState = dt1.Rows[0]["PerState"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["PerState"]);
+                    Model.PerZipCode = dt1.Rows[0]["PerZipCode"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["PerZipCode"]);
+                    Model.PerCountry = dt1.Rows[0]["PerCountry"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["PerCountry"]);
+
                     Model.mob1 = dt1.Rows[0]["mob1"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["mob1"]);
                     Model.mob2 = dt1.Rows[0]["mob2"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["mob2"]);
                     Model.email = dt1.Rows[0]["email"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["email"]);
