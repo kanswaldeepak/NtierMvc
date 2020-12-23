@@ -496,7 +496,7 @@ angular.module('App').controller("HrController", function ($scope, $http, $timeo
             datatype: "JSON",
             url: window.CertificatePopup,
             success: function (html) {
-                SetModalTitle("View Certificate Details");
+                SetModalTitle("Upload - View Certificates");
                 SetModalBody(html);
                 HideLoadder();
                 //SetModalWidth("1400px");
@@ -528,45 +528,45 @@ angular.module('App').controller("HrController", function ($scope, $http, $timeo
     }
 
 
-    $scope.LoadCertificateEditPopup = function (_EmpId) {
-        var _actionType = "EDIT";
-        //var ID = e.target.id;
-        $.ajax({
-            type: "POST",
-            data: { actionType: _actionType, EmpId: _EmpId },
-            datatype: "JSON",
-            url: window.CertificatePopup,
-            success: function (res) {
-                var html = $compile(res)($scope);
-                SetModalTitle("Edit Certificate Details")
-                SetModalBody(html);
-                HideLoadder();
-                $('.bs-tooltip-top').css('display', 'none');
-                //SetModalWidth("1200px");
-                ShowModal();
+    //$scope.LoadCertificateEditPopup = function (_EmpId) {
+    //    var _actionType = "EDIT";
+    //    //var ID = e.target.id;
+    //    $.ajax({
+    //        type: "POST",
+    //        data: { actionType: _actionType, EmpId: _EmpId },
+    //        datatype: "JSON",
+    //        url: window.CertificatePopup,
+    //        success: function (res) {
+    //            var html = $compile(res)($scope);
+    //            SetModalTitle("Edit Certificate Details")
+    //            SetModalBody(html);
+    //            HideLoadder();
+    //            $('.bs-tooltip-top').css('display', 'none');
+    //            //SetModalWidth("1200px");
+    //            ShowModal();
 
-                if (!($('.modal.in').length)) {
-                    $('.modal-dialog').css({
-                        top: '5%',
-                        left: '1%'
-                    });
-                }
-                $('#ModalPopup').modal({
-                    backdrop: false,
-                    show: true
-                });
+    //            if (!($('.modal.in').length)) {
+    //                $('.modal-dialog').css({
+    //                    top: '5%',
+    //                    left: '1%'
+    //                });
+    //            }
+    //            $('#ModalPopup').modal({
+    //                backdrop: false,
+    //                show: true
+    //            });
 
-                $('.modal-dialog').draggable({
-                    handle: ".modal-body"
-                });
+    //            $('.modal-dialog').draggable({
+    //                handle: ".modal-body"
+    //            });
 
-            },
-            error: function () {
-                HideLoadder();
-                alert(window.ErrorMsg);
-            }
-        })
-    }
+    //        },
+    //        error: function () {
+    //            HideLoadder();
+    //            alert(window.ErrorMsg);
+    //        }
+    //    })
+    //}
 
 
 });

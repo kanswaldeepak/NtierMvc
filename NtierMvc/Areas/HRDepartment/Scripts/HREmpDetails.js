@@ -1,4 +1,5 @@
 ﻿
+
 function CopyAddress() {
 
     var checked = $('#ChckAddress').is(':checked');

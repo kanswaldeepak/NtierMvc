@@ -142,7 +142,7 @@ namespace NtierMvc.Controllers
             ViewBag.ListVendorName = model.GetMasterTableStringList("QuotationRegister", "CustomerId", "CustomerName", "", "", GeneralConstants.ListTypeD);
             ViewBag.ListLeadTimeDuration = model.GetTaxonomyDropDownItems("", "Time");
             ViewBag.CasingSize = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "CasingSize", "Property", GeneralConstants.ListTypeN);
-            ViewBag.CasingPpf = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "Ppf", "Property", GeneralConstants.ListTypeN);
+            ViewBag.CasingPpf = model.GetDropDownList("Master.Taxonomy", GeneralConstants.ListTypeD, "dropdownId", "dropdownvalue", "Ppf", "Property", true);
             ViewBag.MaterialGrade = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "MatGrade", "Property", GeneralConstants.ListTypeN);
             ViewBag.Connection = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "Connection", "Property", GeneralConstants.ListTypeN);
             ViewBag.ProductNameList = model.GetMasterTableStringList("Master.Product", "Id", "ProductName", "", "", GeneralConstants.ListTypeN);
@@ -939,7 +939,7 @@ namespace NtierMvc.Controllers
             OrderEntity oEntity = new OrderEntity();
             oEntity = objManager.GetQuoteOrderDetails(quoteType, quoteNoId);
             List<DropDownEntity> soNo = new List<DropDownEntity>();
-            soNo = model.GetDropDownList("Orders", GeneralConstants.ListTypeD, "SoNo", "SoNo", quoteType, "QuoteType", "", "", quoteNoId, "QuoteNo");
+            soNo = model.GetDropDownList("Orders", GeneralConstants.ListTypeD, "SoNo", "SoNo", quoteType, "QuoteType", false, "", "", quoteNoId, "QuoteNo");
             var result = new { oEntity, soNo };
             return new JsonResult { Data = result, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
@@ -1411,7 +1411,7 @@ namespace NtierMvc.Controllers
         public ActionResult GetQuoteItemSlNos(string quoteType, string quoteNo)
         {
             List<DropDownEntity> QuoteItemSlNoList = new List<DropDownEntity>();
-            QuoteItemSlNoList = model.GetDropDownList("QuotePreparationTbl", GeneralConstants.ListTypeD, "Id", "ItemNo", quoteNo, "QuoteNo", "", "", quoteType, "QuoteType");
+            QuoteItemSlNoList = model.GetDropDownList("QuotePreparationTbl", GeneralConstants.ListTypeD, "Id", "ItemNo", quoteNo, "QuoteNo",false, "", "", quoteType, "QuoteType");
 
             return new JsonResult { Data = QuoteItemSlNoList, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
@@ -1441,7 +1441,7 @@ namespace NtierMvc.Controllers
         {
             List<DropDownEntity> lstSoNos = new List<DropDownEntity>();
 
-            lstSoNos = model.GetDropDownList("Orders", GeneralConstants.ListTypeD, "SoNo", "SoNo", "QuoteType", quotetypeId, "", "", "QuoteNo", quoteNoId);
+            lstSoNos = model.GetDropDownList("Orders", GeneralConstants.ListTypeD, "SoNo", "SoNo", "QuoteType", quotetypeId,false, "", "", "QuoteNo", quoteNoId);
             return new JsonResult { Data = lstSoNos, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
 
         }
@@ -1731,7 +1731,7 @@ namespace NtierMvc.Controllers
         [HttpPost]
         public ActionResult GetProdName(string MainProdGrpId, string SubProdGrpId)
         {
-            var ProdNameList = model.GetDropDownList("Master.Product", GeneralConstants.ListTypeD, "Id", "ProductName", MainProdGrpId, "PL", "", "", SubProdGrpId, "SubPL");
+            var ProdNameList = model.GetDropDownList("Master.Product", GeneralConstants.ListTypeD, "Id", "ProductName", MainProdGrpId, "PL", false, "", "", SubProdGrpId, "SubPL");
             return new JsonResult { Data = ProdNameList, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 

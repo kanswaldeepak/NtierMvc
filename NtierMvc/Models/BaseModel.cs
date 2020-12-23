@@ -1237,13 +1237,13 @@ namespace NtierMvc.Models
             return result;
         }
 
-        public List<DropDownEntity> GetDropDownList(string TableName, string ListType, string DataValueField, string DataTextField, string Param, string ColumnName, string orderBy = null, string orderByColumn = null, string Param1 = null, string ColumnName1 = null, string Param2 = null, string ColumnName2 = null, string Param3 = null, string ColumnName3 = null, string Param4 = null, string ColumnName4 = null)
+        public List<DropDownEntity> GetDropDownList(string TableName, string ListType, string DataValueField, string DataTextField, string Param, string ColumnName, bool Others = false, string orderBy = null, string orderByColumn = null, string Param1 = null, string ColumnName1 = null, string Param2 = null, string ColumnName2 = null, string Param3 = null, string ColumnName3 = null, string Param4 = null, string ColumnName4 = null)
         {
             List<DropDownEntity> lstDropDownEntity = new List<DropDownEntity>();
             var baseAddress = "Base";
             using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
             {
-                HttpResponseMessage response = client.GetAsync(baseAddress + "/GetDropDownList?TableName=" + TableName + "&ListType=" + ListType + "&DataValueField=" + DataValueField + "&DataTextField=" + DataTextField + "&Param=" + Param + "&ColumnName=" + ColumnName + "&orderBy=" + orderBy + "&orderByColumn=" + orderByColumn + "&Param1=" + Param1 + "&ColumnName1=" + ColumnName1 + "&Param2=" + Param2 + "&ColumnName2=" + ColumnName2 + "&Param3=" + Param3 + "&ColumnName3=" + ColumnName3 + "&Param4=" + Param4 + "&ColumnName4=" + ColumnName4).Result;
+                HttpResponseMessage response = client.GetAsync(baseAddress + "/GetDropDownList?TableName=" + TableName + "&ListType=" + ListType + "&DataValueField=" + DataValueField + "&DataTextField=" + DataTextField + "&Param=" + Param + "&ColumnName=" + ColumnName + "&Others=" + Others + "&orderBy=" + orderBy + "&orderByColumn=" + orderByColumn + "&Param1=" + Param1 + "&ColumnName1=" + ColumnName1 + "&Param2=" + Param2 + "&ColumnName2=" + ColumnName2 + "&Param3=" + Param3 + "&ColumnName3=" + ColumnName3 + "&Param4=" + Param4 + "&ColumnName4=" + ColumnName4).Result;
                 if (response.IsSuccessStatusCode)
                 {
                     var data = response.Content.ReadAsStringAsync().Result;

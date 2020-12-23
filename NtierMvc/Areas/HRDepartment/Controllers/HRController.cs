@@ -181,7 +181,7 @@ namespace NtierMvc.Areas.HRDepartment.Controllers
             ViewBag.GenderTitleList = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "title", "Property", GeneralConstants.ListTypeN);
             ViewBag.ListBloodGroup = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "BloodGroup", "Property", GeneralConstants.ListTypeN);
             ViewBag.ListBloodGroupType = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "BloodGroupType", "Property", GeneralConstants.ListTypeN);
-            ViewBag.ListDesignation = model.GetMasterTableStringList("Master.Designation", "Id", "DesignationName");
+            ViewBag.ListDesignation = model.GetDropDownList("Master.Designation", GeneralConstants.ListTypeD, "Id", "DesignationName", "", "", true);
             ViewBag.ListDepartment = model.GetMasterTableStringList("Master.Department", "Id", "DeptName", "", "", GeneralConstants.ListTypeD);
 
             empObj.UnitNo = Session["UserId"].ToString();

@@ -22,7 +22,7 @@
                 </div>
                 <div class="col-md-3">
                     <div class="form-group">
-                        <label class="control-label">Employee Type<span class="required">*</span></label>
+                        <label class="control-label">Emp Group<span class="required">*</span></label>
                         @Html.DropDownListFor(m => m.EmpType, new SelectList(@ViewBag.ListEmpType, "DataValueField", "DataTextField", Model.EmpType),
                         new
                         {
@@ -35,18 +35,18 @@
                     </div>
                 </div>
                 @*<div class="col-md-3" hidden>
-                <div class="form-group">
-                    <label class="control-label">Unit<span class="required">*</span></label>
-                    @Html.TextBoxFor(m => m.Unit,
-                        new
-                        {
-                            @class = "form-control requiredValidation",
-                            @id = "Unit",
-                            @data_inneraction = "validationCall",
-                            @placeholder = "Enter Unit"
-                        })<label class="HideValidMsg">Unit is Required</label>
-                </div>
-            </div>*@
+            <div class="form-group">
+                <label class="control-label">Unit<span class="required">*</span></label>
+                @Html.TextBoxFor(m => m.Unit,
+                    new
+                    {
+                        @class = "form-control requiredValidation",
+                        @id = "Unit",
+                        @data_inneraction = "validationCall",
+                        @placeholder = "Enter Unit"
+                    })<label class="HideValidMsg">Unit is Required</label>
+            </div>
+        </div>*@
                 <div class="col-md-3">
                     <div class="form-group">
                         <label class="control-label">Department<span class="required">*</span></label>
@@ -61,18 +61,18 @@
                     </div>
                 </div>
                 @*<div class="col-md-3">
-                <div class="form-group">
-                    <label class="control-label">ID Card<span class="required">*</span></label>
-                    @Html.TextBoxFor(m => m.IdCard,
-                        new
-                        {
-                            @class = "form-control requiredValidation",
-                            @id = "IdCard",
-                            @data_inneraction = "validationCall",
-                            @placeholder = "ID Card"
-                        })<label class="HideValidMsg">ID Card is Required</label>
-                </div>
-            </div>*@
+            <div class="form-group">
+                <label class="control-label">ID Card<span class="required">*</span></label>
+                @Html.TextBoxFor(m => m.IdCard,
+                    new
+                    {
+                        @class = "form-control requiredValidation",
+                        @id = "IdCard",
+                        @data_inneraction = "validationCall",
+                        @placeholder = "ID Card"
+                    })<label class="HideValidMsg">ID Card is Required</label>
+            </div>
+        </div>*@
                 <div class="col-md-3">
                     <div class="form-group">
                         <label class="control-label">Employee Initial<span class="required">*</span></label>
@@ -163,7 +163,7 @@
                             @data_inneraction = "validationCall",
                             @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
                         })
-                        <label class="HideValidMsg">BloodGroupType is Required</label>
+                        <label class="HideValidMsg">Blood Group Type is Required</label>
                     </div>
                 </div>
                 <div class="col-md-3">
@@ -173,11 +173,27 @@
                         new
                         {
                             @class = "form-control requiredValidation",
-                            @id = "Designation",
+                            @id = "EDDesignation",
                             @data_inneraction = "validationCall",
-                            @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                            @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                            @onchange = "DisplayNewItemInDdl(this)"
                         })
                         <label class="HideValidMsg">Designation is Required</label>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label class="control-label">Date Of Joining<span class="required">*</span></label>
+                        @Html.TextBoxFor(m => m.DateOfJoining,
+                            new
+                            {
+                                @class = "form-control requiredValidation CalenderTillTodayDate",
+                                @id = "DateOfJoining",
+                                @placeholder = "dd/MM/yyyy",
+                                @style = "disabled :disabled",
+                                @autocomplete = "off",
+                                @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                            })<label class="HideValidMsg">DateOfJoining is Required</label>
                     </div>
                 </div>
             </div>
@@ -188,7 +204,7 @@
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    Present Address
+                    <h3>Present Address</h3>
                 </div>
             </div>
             <div class="row">
@@ -279,14 +295,14 @@
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    Permanent Address
+                    <h3> Permanent Address </h3>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-3">
-                    <div class="form-group">
-                        <input id="ChckAddress" type="checkbox" class="form-control form-inline" style="height:15px" onclick="CopyAddress()" />
-                        <label class="form-control-label form-inline">Same As Present Address</label>
+                    <div class="form-group mt-4">
+                        <input id="ChckAddress" type="checkbox" style="height:15px" onclick="CopyAddress()" />
+                        <label>Same As Present Address</label>
                     </div>
                 </div>
                 <div class="col-md-3">
@@ -391,21 +407,6 @@
                     </div>
                 </div>
 
-                <div class="col-md-3">
-                    <div class="form-group">
-                        <label class="control-label">Date Of Joining<span class="required">*</span></label>
-                        @Html.TextBoxFor(m => m.DateOfJoining,
-                            new
-                            {
-                                @class = "form-control requiredValidation CalenderTillTodayDate",
-                                @id = "DateOfJoining",
-                                @placeholder = "dd/MM/yyyy",
-                                @style = "disabled :disabled",
-                                @autocomplete = "off",
-                                @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
-                            })<label class="HideValidMsg">DateOfJoining is Required</label>
-                    </div>
-                </div>
                 <div class="col-md-3">
                     <div class="form-group">
                         <label class="control-label">MOBILE 1</label>
@@ -617,79 +618,79 @@
                 </div>
             </div>
             @*<div class="row">
-            <hr style="width:100%" />
-            <h4 class="control-label" style="margin-left:10px; font-size: 20px">Academical Details</h4>
-            <hr style="width:100%" />
-        </div>
-        <div class="row">
-            <div class="col-md-5">
-                <table class="table table-bordered">
-                    <tr>
-                        <th>
-                            Technical Qualification
-                        </th>
-                        <th>
-                            @Html.TextBoxFor(m => m.TechQual, new
-                   {
-                       @class = "form-control",
-                       @id = "TechQual",
-                       @data_inneraction = "validationCall",
-                       @placeholder = "Technical Qualification",
-                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
-                   })
-                        </th>
-                    </tr>
-                    <tr>
-                        <th>
-                            Education Degree
-                        </th>
-                        <th>
-                            @Html.TextBoxFor(m => m.EduDeg, new
-                   {
-                       @class = "form-control requiredValidation",
-                       @id = "EduDeg",
-                       @data_inneraction = "validationCall",
-                       @placeholder = "Education Degree",
-                       //@style = "text-transform:uppercase",
-                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
-                   })
-                        </th>
-                    </tr>
-                    <tr>
-                        <th>
-                            Post Graduation
-                        </th>
-                        <th>
-                            @Html.TextBoxFor(m => m.EduPG, new
-                   {
-                       @class = "form-control",
-                       @id = "EduPG",
-                       @data_inneraction = "validationCall",
-                       @placeholder = "Post Graduation",
-                       //@style = "text-transform:uppercase",
-                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
-                   })<label class="HideValidMsg">Post Graduation is Required</label>
-                        </th>
-                    </tr>
-                    <tr>
-                        <th>
-                            Professional Qualification
-                        </th>
-                        <th>
-                            @Html.TextBoxFor(m => m.ProfQual, new
-                   {
-                       @class = "form-control",
-                       @id = "ProfQual",
-                       @data_inneraction = "validationCall",
-                       @placeholder = "Professional Qualification",
-                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
-                   })<label class="HideValidMsg">Professional Qualification is Required</label>
-                        </th>
-                    </tr>
-                </table>
-            </div>
+                    <hr style="width:100%" />
+                    <h4 class="control-label" style="margin-left:10px; font-size: 20px">Academical Details</h4>
+                    <hr style="width:100%" />
+                </div>
+                <div class="row">
+                    <div class="col-md-5">
+                        <table class="table table-bordered">
+                            <tr>
+                                <th>
+                                    Technical Qualification
+                                </th>
+                                <th>
+                                    @Html.TextBoxFor(m => m.TechQual, new
+                           {
+                               @class = "form-control",
+                               @id = "TechQual",
+                               @data_inneraction = "validationCall",
+                               @placeholder = "Technical Qualification",
+                               @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                           })
+                                </th>
+                            </tr>
+                            <tr>
+                                <th>
+                                    Education Degree
+                                </th>
+                                <th>
+                                    @Html.TextBoxFor(m => m.EduDeg, new
+                           {
+                               @class = "form-control requiredValidation",
+                               @id = "EduDeg",
+                               @data_inneraction = "validationCall",
+                               @placeholder = "Education Degree",
+                               //@style = "text-transform:uppercase",
+                               @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                           })
+                                </th>
+                            </tr>
+                            <tr>
+                                <th>
+                                    Post Graduation
+                                </th>
+                                <th>
+                                    @Html.TextBoxFor(m => m.EduPG, new
+                           {
+                               @class = "form-control",
+                               @id = "EduPG",
+                               @data_inneraction = "validationCall",
+                               @placeholder = "Post Graduation",
+                               //@style = "text-transform:uppercase",
+                               @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                           })<label class="HideValidMsg">Post Graduation is Required</label>
+                                </th>
+                            </tr>
+                            <tr>
+                                <th>
+                                    Professional Qualification
+                                </th>
+                                <th>
+                                    @Html.TextBoxFor(m => m.ProfQual, new
+                           {
+                               @class = "form-control",
+                               @id = "ProfQual",
+                               @data_inneraction = "validationCall",
+                               @placeholder = "Professional Qualification",
+                               @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                           })<label class="HideValidMsg">Professional Qualification is Required</label>
+                                </th>
+                            </tr>
+                        </table>
+                    </div>
 
-        </div>*@
+                </div>*@
 
             <div class="row">
                 <hr style="width:100%" />
@@ -770,8 +771,24 @@
 
     });
 
-
-
+    //$("#EDDesignation").change(function () {
+    //    debugger;
+    //    var item = $(this).find("option:selected");
+    //    var value = item.val(); //get the selected option value
+    //    var text = item.html(); //get the selected option text
+    //    if (text == "Others") {
+    //        $("#div_content").css("display", "block"); //display the add new dialog
+    //    }
+    //});
+    //$("#btnAddNewItem").click(function () {
+    //    debugger;
+    //    var newitem = $("#txtNewOption").val(); //get the new value
+    //    //alert(newitem);
+    //    var newOption = "<option value='" + newitem + "'>" + newitem + "</option>";
+    //    $(newOption).insertBefore($("#EDDesignation option:last")); //add new option
+    //    $("#EDDesignation").val(newitem);
+    //    return false;
+    //});
 
     //LEASE DATE AND EXP LEASE DATE VALIDATION
     $('.CalenderDate').datepicker({

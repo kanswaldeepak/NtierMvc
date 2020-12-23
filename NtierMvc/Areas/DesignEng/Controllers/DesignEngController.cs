@@ -418,7 +418,7 @@ namespace NtierMvc.Areas.DesignEng.Controllers
         public ActionResult GetPlSoNoDetails(string SoNo)
         {
             List<DropDownEntity> ddE = new List<DropDownEntity>();
-            ddE = model.GetDropDownList("Items", GeneralConstants.ListTypeD, "Id", "PoSlNo", SoNo, "SoNo", "asc", "PoSlNo");
+            ddE = model.GetDropDownList("Items", GeneralConstants.ListTypeD, "Id", "PoSlNo", SoNo, "SoNo", false, "asc", "PoSlNo");
 
             return new JsonResult { Data = ddE, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }

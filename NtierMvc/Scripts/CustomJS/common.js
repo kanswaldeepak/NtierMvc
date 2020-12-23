@@ -1,4 +1,42 @@
-﻿var regexExp = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,}/
+﻿
+function DisplayNewItemInDdl(selectedId) {
+    debugger;
+    var item = $(selectedId).find("option:selected");
+    var value = item.val(); //get the selected option value
+    var text = item.html(); //get the selected option text
+    if (text == "Others") {
+        $('#SelectedDdlId').val(selectedId.id);
+        $('#TblName').val(selectedId.id);
+        if (!($('.modal.in').length)) {
+            $('.modalAddNewItemContent').css({
+                top: '35%',
+                left: '30%'
+            });
+        }
+        $('#AddNewItemContent').modal({
+            backdrop: true,
+            show: true
+        });
+
+        $('.modal-dialog').draggable({
+            handle: ".modal-body"
+        });
+    }
+};
+
+function AddNewItemInDdl(txtNewOption, SelectedDdlId) {
+    var newitem = $("#" + txtNewOption.id).val(); //get the new value
+    //alert(newitem);
+    var newOption = "<option value='" + newitem + "'>" + newitem + "</option>";
+    $(newOption).insertBefore($("#" + SelectedDdlId.value + " option:last")); //add new option 
+    $("#" + SelectedDdlId.value).val(newitem);
+    $("#" + txtNewOption.id).val('');
+    $("#AddNewItemContent").modal('hide');
+    return false;
+};
+
+
+var regexExp = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,}/
 function AllowNumbers(evt) {
     var keyCode = (evt.which) ? evt.which : event.keyCode;
     if (keyCode < 48 || keyCode >= 58 && keyCode != 8) {
@@ -37,7 +75,7 @@ function formatDate(dateObject, convertTo) {
             date = day + "/" + month + "/" + year;
             break;
     }
-    
+
 
     return date;
 };

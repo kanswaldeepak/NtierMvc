@@ -218,11 +218,11 @@
                         <li class="nav-item">
                             <a class="nav-link" href="@Url.Action("Home","Application")">Home</a>
                         </li>
-                        <li class="nav-item">                            
-                                <a class="nav-link" href="@Url.Action("CRMMaster","CRM", new { Area = "" }, null)">CRM</a>
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("CRMMaster","CRM", new { Area = "" }, null)">CRM</a>
                         </li>
                         <li class="nav-item">
-                                <a class="nav-link" href=@Url.Action("HRDepartmentMaster", "HR", new { Area = "HRDepartment" }, null)>HR & Payroll Management</a>
+                            <a class="nav-link" href=@Url.Action("HRDepartmentMaster", "HR", new { Area = "HRDepartment" }, null)>HR & Payroll Management</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="@Url.Action("ManagementMaster","Security")">Management</a>
@@ -334,6 +334,45 @@
             $('#m_aside_header_topbar_mobile_toggle').click();
         });
     </script>
+    @*<div id="AddNewItemContent" style=" display: none; position: fixed; top: 0; bottom: 0; left: 0; right: 0; z-index:9999; width: 200px; height: 100px; margin: 200px auto; background-color: #f3f3f3;" class="form-control">
+        <input id="txtNewOption" type="text" />
+        <input id="SelectedDdlId" type="text" style="display:none" />
+        <input id="btnAddNewItem" type="button" value="AddNewItem" onclick="AddNewItemInDdl(txtNewOption, SelectedDdlId)" />
+    </div>*@
+
+    <div class="modal fade modalAddNewItemContent" id="AddNewItemContent" tabindex="-1" role="dialog" aria-hidden="true" style=" display: none; position: center; z-index:9999;">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h6 class="modal-title">Add New Item</h6>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group row">
+                                    &nbsp;&nbsp; <span id="spn-Sucess-Failure"></span>
+                                    <label for="txtNewOption" class="col-form-label">Enter New Field :  </label> &nbsp;
+                                    <input id="txtNewOption" type="text" class="form-control" />
+                                    <input id="SelectedDdlId" type="text" style="display:none" />
+                                    @*<input id="btnAddNewItem" type="button" value="AddNewItem" onclick="AddNewItemInDdl(txtNewOption, SelectedDdlId)" />*@
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button id="btnAddNewItem" type="button" class="btn btn-primary" onclick="AddNewItemInDdl(txtNewOption, SelectedDdlId)">Save</button>
+                    <button type="button" data-dismiss="modal" class="btn">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
     <div class="modal fade" id="Sucess-Failure" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">

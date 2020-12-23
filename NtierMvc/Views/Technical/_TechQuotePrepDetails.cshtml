@@ -181,11 +181,12 @@
                                 Casing Size
                             </label>
                             @Html.DropDownListFor(m => m.CasingSize, new SelectList(@ViewBag.CasingSize, "DataStringValueField", "DataTextField", Model.CasingSize), new
-                                {
-                                    @class = "form-control clearField",
-                                    @id = "CasingSize"
+                       {
+                           @class = "form-control clearField",
+                           @id = "CasingSize",
+                           @onchange = "DisplayNewItemInDdl(this)"
 
-                                })
+                       })
                             <span class="HideValidMsg">Please Select Casing Size</span>
                         </div>
                     </div>
@@ -194,12 +195,13 @@
                             <label class="control-label">
                                 Casing Ppf
                             </label>
-                            @Html.DropDownListFor(m => m.CasingPpf, new SelectList(@ViewBag.CasingPpf, "DataStringValueField", "DataTextField", Model.CasingPpf), new
-                                {
-                                    @class = "form-control clearField",
-                                    @id = "CasingPpf"
+                            @Html.DropDownListFor(m => m.CasingPpf, new SelectList(ViewBag.CasingPpf, "DataStringValueField", "DataTextField", Model.CasingPpf), new
+                       {
+                           @class = "form-control clearField",
+                           @id = "CasingPpf",
+                           @onchange = "DisplayNewItemInDdl(this)"
 
-                                })
+                       })
                             <span class="HideValidMsg">Please Select Casing Ppf</span>
                         </div>
                     </div>
