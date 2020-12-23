@@ -1452,29 +1452,57 @@ namespace NtierMvc.DataAccess.Pool
 
         }
 
+        public List<DropDownEntity> SaveNewItemInDdl(AddDdlEntity entity)
+        {
+            string spName = ConfigurationManager.AppSettings["SaveNewItemInDdl"];
+            var parms = new Dictionary<string, object>();
+            parms.Add("@TableName", entity.Nametbl);
+            parms.Add("@Value", entity.Value);
+            parms.Add("@ColumnName", entity.ColumnName);
+            parms.Add("@Property", entity.Property);
+
+            DataSet dtst = _dbAccess.GetDataSet(spName, parms);
+            DataTable dtbl = dtst.Tables[1];
+
+            return DataTableToStringListWithOther(dtbl);
+        }
+
         public List<DropDownEntity> DataTableToStringListWithOther(DataTable table)
         {
             var list = new List<DropDownEntity>(table.Rows.Count);
-            var ddl = new DropDownEntity()
+            if (table.Rows.Count > 1)
             {
-                DataStringValueField = "",
-                DataTextField = "Select"
-            };
-            list.Add(ddl);
-            foreach (DataRow row in table.Rows)
-            {
-                var values = row.ItemArray;
-                ddl = new DropDownEntity()
+                var ddl = new DropDownEntity()
                 {
-                    DataStringValueField = Convert.ToString(values[0]),
-                    DataTextField = values[1].ToString(),
-                    DataCodeField = values.Count() > 2 ? values[2].ToString() : null
+                    DataStringValueField = "",
+                    DataTextField = "Select"
+                };
+                list.Add(ddl);
+                foreach (DataRow row in table.Rows)
+                {
+                    var values = row.ItemArray;
+                    ddl = new DropDownEntity()
+                    {
+                        DataStringValueField = Convert.ToString(values[0]),
+                        DataTextField = values[1].ToString(),
+                        DataCodeField = values.Count() > 2 ? values[2].ToString() : null
 
+                    };
+                    list.Add(ddl);
+                }
+
+                list.Insert(list.Count, new DropDownEntity { DataTextField = "Others", DataStringValueField = list.Count.ToString() });
+            }
+            else
+            {
+                var ddl = new DropDownEntity()
+                {
+                    DataStringValueField = "",
+                    DataTextField = table.Rows[0][0].ToString()
                 };
                 list.Add(ddl);
             }
 
-            list.Insert(list.Count, new DropDownEntity { DataTextField = "Others", DataStringValueField = list.Count.ToString() });
             return list;
         }
 

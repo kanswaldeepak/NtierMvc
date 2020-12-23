@@ -1,12 +1,15 @@
 ﻿
-function DisplayNewItemInDdl(selectedId) {
-    debugger;
+function DisplayNewItemInDdl(selectedId, Name, Property, ColumnName) {    
     var item = $(selectedId).find("option:selected");
     var value = item.val(); //get the selected option value
     var text = item.html(); //get the selected option text
     if (text == "Others") {
         $('#SelectedDdlId').val(selectedId.id);
-        $('#TblName').val(selectedId.id);
+        $('#Nametbl').val(selectedId.id);
+        $('#AddDdlNametbl').val(Name);
+        $('#AddDdlProperty').val(Property);
+        $('#AddDdlColumnName').val(ColumnName);
+
         if (!($('.modal.in').length)) {
             $('.modalAddNewItemContent').css({
                 top: '35%',
@@ -25,12 +28,47 @@ function DisplayNewItemInDdl(selectedId) {
 };
 
 function AddNewItemInDdl(txtNewOption, SelectedDdlId) {
-    var newitem = $("#" + txtNewOption.id).val(); //get the new value
+    
+    var newitem = $("#" + txtNewOption.id).val(); 
     //alert(newitem);
-    var newOption = "<option value='" + newitem + "'>" + newitem + "</option>";
-    $(newOption).insertBefore($("#" + SelectedDdlId.value + " option:last")); //add new option 
+    //var newOption = "<option value='" + newitem + "'>" + newitem + "</option>";
+    //$(newOption).insertBefore($("#" + SelectedDdlId.value + " option:last")); //add new option 
+
+    let DdlId = $('#SelectedDdlId').val(); 
+    let tblName = $("#AddDdlNametbl").val(); 
+    let property = $('#AddDdlProperty').val();
+    let columnName = $('#AddDdlColumnName').val();
+    $.ajax({
+        type: 'POST',
+        url: window.SaveNewItemInDdl,
+        data: JSON.stringify({ type: '', Nametbl: tblName, Value: newitem, Property: property, ColumnName: columnName }),
+        contentType: "application/json; charset=utf-8",
+        success: function (data) {
+            debugger;
+            if (data.length > 0) {
+                if (data[0].DataTextField == 'Record Already Present')
+                    alert(data[0].DataTextField);
+                else {
+                    $("#" + DdlId).empty();
+                    if (data.length > 0) {
+                        $.each(data, function (i, item) {
+                            $("#" + DdlId).append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
+                        })
+                    }
+                }
+            }
+        },
+        error: function (x, e) {
+            alert('Some error is occurred, Please try after some time.');
+            //$('#spn-Sucess-Failure').text('Some error is occurred, Please try after some time.');
+            //$('#spn-Sucess-Failure').addClass("important red");
+            //$('#Sucess-Failure').modal('show');
+        }
+    })
     $("#" + SelectedDdlId.value).val(newitem);
     $("#" + txtNewOption.id).val('');
+    $("#AddDdlNametbl").val('');
+    $("#SelectedDdlId").val('');
     $("#AddNewItemContent").modal('hide');
     return false;
 };

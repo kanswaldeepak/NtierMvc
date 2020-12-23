@@ -130,6 +130,7 @@ namespace NtierMvc.BusinessLogic.Interface
         DataTable GetDataTableForDocument(string ListType, string TableName, string[] DataColumn, string[] DataParam, string[] RequiredColumn);
 
         string SaveBulkEntryDetails(BulkUploadEntity bEntity);
+        List<DropDownEntity> SaveNewItemInDdl(AddDdlEntity bEntity);
 
     }
 }

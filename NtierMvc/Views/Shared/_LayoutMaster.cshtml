@@ -99,6 +99,7 @@
             window.FetchCustomerList = '@Url.Action("FetchCustomerList", "CRM")';
             window.FetchEnquiryList = '@Url.Action("FetchEnquiryList", "Enquiry")';
             window.FetchInboundsList = '@Url.Action("FetchInboundList", "GateEntry")';
+            window.SaveNewItemInDdl = '@Url.Action("SaveNewItemInDdl", "Application", new { Area = ""} )';
         });
 
         $(document).ajaxError(function (xhr, props) {
@@ -358,6 +359,9 @@
                                     <label for="txtNewOption" class="col-form-label">Enter New Field :  </label> &nbsp;
                                     <input id="txtNewOption" type="text" class="form-control" />
                                     <input id="SelectedDdlId" type="text" style="display:none" />
+                                    <input id="AddDdlNametbl" type="text" style="display:none" />
+                                    <input id="AddDdlProperty" type="text" style="display:none" />
+                                    <input id="AddDdlColumnName" type="text" style="display:none" />
                                     @*<input id="btnAddNewItem" type="button" value="AddNewItem" onclick="AddNewItemInDdl(txtNewOption, SelectedDdlId)" />*@
                                 </div>
                             </div>

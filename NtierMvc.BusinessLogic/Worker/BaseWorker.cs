@@ -1569,5 +1569,19 @@ namespace NtierMvc.BusinessLogic.Worker
             return result;
         }
 
+        public List<DropDownEntity> SaveNewItemInDdl(AddDdlEntity entity)
+        {
+            List<DropDownEntity> ddl = new List<DropDownEntity>();
+            try
+            {
+                ddl = objData.SaveNewItemInDdl(entity);
+            }
+            catch (Exception Ex)
+            {
+                NtierMvc.DataAccess.ExceptionLogging.SendExcepToDB(Ex);
+            }
+            return ddl;
+        }
+
     }
 }

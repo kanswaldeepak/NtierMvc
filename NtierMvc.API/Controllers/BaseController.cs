@@ -598,7 +598,13 @@ namespace NtierMvc.API.Controllers
             return Ok(_repository.SaveBulkEntryDetails(iEntity));
         }
 
-
+        [HttpPost]
+        [ResponseType(typeof(string))]
+        [Route("api/Base/SaveNewItemInDdl")]
+        public IHttpActionResult SaveNewItemInDdl(AddDdlEntity dEntity)
+        {
+            return Ok(_repository.SaveNewItemInDdl(dEntity));
+        }
 
 
     }

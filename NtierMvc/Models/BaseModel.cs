@@ -1440,7 +1440,21 @@ namespace NtierMvc.Models
             return result;
         }
 
-
+        public List<DropDownEntity> SaveNewItemInDdl(AddDdlEntity ddlEntity)
+        {
+            var baseAddress = "Base";
+            List<DropDownEntity> lstDropDownEntity = new List<DropDownEntity>();
+            using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
+            {
+                HttpResponseMessage response = client.PostAsJsonAsync(baseAddress + "/SaveNewItemInDdl", ddlEntity).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    var data = response.Content.ReadAsStringAsync().Result;
+                    lstDropDownEntity = JsonConvert.DeserializeObject<List<DropDownEntity>>(data);
+                }
+            }
+            return lstDropDownEntity;
+        }
 
 
 
