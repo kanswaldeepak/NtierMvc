@@ -44,10 +44,12 @@ angular.module('App').controller("HrController", function ($scope, $http, $timeo
                 isValid = true;
             }
             else {
+                alert("Selected file is Invalid. (only file type png, jpeg and gif and 512 kb size allowed)");
                 $scope.FileInvalidMessage = "Selected file is Invalid. (only file type png, jpeg and gif and 512 kb size allowed)";
             }
         }
         else {
+            alert("Image required!");
             $scope.FileInvalidMessage = "Image required!";
         }
         $scope.IsFileValid = isValid;
@@ -62,7 +64,6 @@ angular.module('App').controller("HrController", function ($scope, $http, $timeo
 
     $scope.SaveEmployee = function () {
 
-        ShowLoadder();
         var Status = false;
         Status = GetFormValidationStatus("#formSaveEmployeeDetail");
 
@@ -71,9 +72,17 @@ angular.module('App').controller("HrController", function ($scope, $http, $timeo
         var formData = new FormData(frm[0]);
         formData.append("file", $scope.SelectedFileForUpload);
 
+        var MobileLen = $('#mobile').val();
+
         if (!Status) {
-            alert("Kindly Fill all mandatory fields");
             HideLoadder();
+            alert("Kindly Fill all mandatory fields");
+        }
+        else if ($scope.FileInvalidMessage != '') {
+            HideLoadder();
+        }
+        else if (MobileLen.length < 10) {
+            alert('Mobile Value should be 10 digits long');
         }
         else {
             $http({ url: window.SaveEmployee, method: 'POST', data: formData, headers: { 'Content-Type': undefined } }).success(
@@ -155,7 +164,6 @@ angular.module('App').controller("HrController", function ($scope, $http, $timeo
                 HideLoadder();
                 $('#formSaveEmployeeDetail input[type=radio],input[type=text], select').prop("disabled", true);
                 $('#save_results').css('display', 'none');
-                $('#cancel_results').css('display', 'none');
                 $('#EmpImageUpload').css('display', 'none');
                 $('.bs-tooltip-top').css('display', 'none');
                 SetModalWidth("1200px");
@@ -488,7 +496,7 @@ angular.module('App').controller("HrController", function ($scope, $http, $timeo
             datatype: "JSON",
             url: window.CertificatePopup,
             success: function (html) {
-                SetModalTitle("View Certificate Certificates");
+                SetModalTitle("Upload - View Certificates");
                 SetModalBody(html);
                 HideLoadder();
                 //SetModalWidth("1400px");
@@ -520,45 +528,45 @@ angular.module('App').controller("HrController", function ($scope, $http, $timeo
     }
 
 
-    $scope.LoadCertificateEditPopup = function (_EmpId) {
-        var _actionType = "EDIT";
-        //var ID = e.target.id;
-        $.ajax({
-            type: "POST",
-            data: { actionType: _actionType, EmpId: _EmpId },
-            datatype: "JSON",
-            url: window.CertificatePopup,
-            success: function (res) {
-                var html = $compile(res)($scope);
-                SetModalTitle("Edit Certificate Details")
-                SetModalBody(html);
-                HideLoadder();
-                $('.bs-tooltip-top').css('display', 'none');
-                //SetModalWidth("1200px");
-                ShowModal();
+    //$scope.LoadCertificateEditPopup = function (_EmpId) {
+    //    var _actionType = "EDIT";
+    //    //var ID = e.target.id;
+    //    $.ajax({
+    //        type: "POST",
+    //        data: { actionType: _actionType, EmpId: _EmpId },
+    //        datatype: "JSON",
+    //        url: window.CertificatePopup,
+    //        success: function (res) {
+    //            var html = $compile(res)($scope);
+    //            SetModalTitle("Edit Certificate Details")
+    //            SetModalBody(html);
+    //            HideLoadder();
+    //            $('.bs-tooltip-top').css('display', 'none');
+    //            //SetModalWidth("1200px");
+    //            ShowModal();
 
-                if (!($('.modal.in').length)) {
-                    $('.modal-dialog').css({
-                        top: '5%',
-                        left: '1%'
-                    });
-                }
-                $('#ModalPopup').modal({
-                    backdrop: false,
-                    show: true
-                });
+    //            if (!($('.modal.in').length)) {
+    //                $('.modal-dialog').css({
+    //                    top: '5%',
+    //                    left: '1%'
+    //                });
+    //            }
+    //            $('#ModalPopup').modal({
+    //                backdrop: false,
+    //                show: true
+    //            });
 
-                $('.modal-dialog').draggable({
-                    handle: ".modal-body"
-                });
+    //            $('.modal-dialog').draggable({
+    //                handle: ".modal-body"
+    //            });
 
-            },
-            error: function () {
-                HideLoadder();
-                alert(window.ErrorMsg);
-            }
-        })
-    }
+    //        },
+    //        error: function () {
+    //            HideLoadder();
+    //            alert(window.ErrorMsg);
+    //        }
+    //    })
+    //}
 
 
 });

@@ -43,13 +43,13 @@ namespace NtierMvc.Model
             return result;
         }
 
-        public EnquiryEntityDetails GetEnquiryDetails(int pageIndex, int pageSize, string SearchEnqName = null, string SearchEnqVendorID = null, string SearchProductGroup = null, string SearchMonth = null, string SearchEOQ = null)
+        public EnquiryEntityDetails GetEnquiryDetails(int pageIndex, int pageSize, string SearchEQEnqType, string SearchCustomerName = null, string SearchEnqFor = null, string SearchEQDueDate = null, string SearchEOQ = null)
         {
             var baseAddress = "EnquiryDetails";
             EnquiryEntityDetails enq = new EnquiryEntityDetails();
             using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
             {
-                HttpResponseMessage response = client.GetAsync(baseAddress + "/GetEnquiryDetails?pageIndex=" + pageIndex + "&pageSize=" + pageSize + "&SearchEnqName=" + SearchEnqName + "&SearchEnqVendorID=" + SearchEnqVendorID + "&SearchProductGroup=" + SearchProductGroup + "&SearchMonth=" + SearchMonth + "&SearchEOQ=" + SearchEOQ).Result;
+                HttpResponseMessage response = client.GetAsync(baseAddress + "/GetEnquiryDetails?pageIndex=" + pageIndex + "&pageSize=" + pageSize + "&SearchEQEnqType=" + SearchEQEnqType + "&SearchCustomerName=" + SearchCustomerName + "&SearchEnqFor=" + SearchEnqFor + "&SearchEQDueDate=" + SearchEQDueDate + "&SearchEOQ=" + SearchEOQ).Result;
                 if (response.IsSuccessStatusCode)
                 {
                     var data = response.Content.ReadAsStringAsync().Result;
@@ -142,12 +142,12 @@ namespace NtierMvc.Model
             return LstCity;
         }
 
-        public EnquiryEntity GetVendorDetailForEnquiry(string vendorId)
+        public EnquiryEntity GetVendorDetailForEnquiry(string CustomerId)
         {
             var baseAddress = "EnquiryDetails";
             using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
             {
-                HttpResponseMessage response = client.GetAsync(baseAddress + "/GetVendorDetailForEnquiry?vendorId=" + vendorId).Result;
+                HttpResponseMessage response = client.GetAsync(baseAddress + "/GetVendorDetailForEnquiry?CustomerId=" + CustomerId).Result;
                 if (response.IsSuccessStatusCode)
                 {
                     var data = response.Content.ReadAsStringAsync().Result;
@@ -157,14 +157,14 @@ namespace NtierMvc.Model
             return objEntity;
         }
 
-        public List<DropDownEntity> GetDdlValueForEnquiry(string type, string EOQId = null, string ProductGroup = null, string VendorId = null)
+        public List<DropDownEntity> GetDdlValueForEnquiry(string type, string EnqType = null, string CustomerId = null, string EnqFor = null, string DueDate = null)
         {
             var baseAddress = "EnquiryDetails";
             List<DropDownEntity> newDdl = new List<DropDownEntity>();
 
             using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
             {
-                HttpResponseMessage response = client.GetAsync(baseAddress + "/GetDdlValueForEnquiry?Type=" + type + "&EOQId=" + EOQId + "&ProductGroup=" + ProductGroup + "&VendorId=" + VendorId).Result;
+                HttpResponseMessage response = client.GetAsync(baseAddress + "/GetDdlValueForEnquiry?Type=" + type + "&EnqType=" + EnqType + "&CustomerId=" + CustomerId + "&EnqFor=" + EnqFor + "&DueDate=" + DueDate).Result;
                 if (response.IsSuccessStatusCode)
                 {
                     var data = response.Content.ReadAsStringAsync().Result;

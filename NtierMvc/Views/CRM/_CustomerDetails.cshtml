@@ -199,7 +199,6 @@
                         @Html.TextBoxFor(m => m.mob1, new
                    {
                        @class = "form-control requiredValidation MobileNumber",
-                       @maxlength = "12",
                        @onkeypress = "return AllowNumbers(event)",
                        @placeholder = "Mobile",
                        @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
@@ -212,11 +211,10 @@
                         @Html.TextBoxFor(m => m.mob2, new
                    {
                        @class = "form-control MobileNumber",
-                       @maxlength = "12",
                        @onkeypress = "return AllowNumbers(event)",
                        @placeholder = "Mobile",
                        @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
-                   })<label class="HideValidMsg">Fields is Required *</label>
+                   })
                     </div>
                 </div>
                 <div class="col-md-3">
@@ -265,6 +263,18 @@
                        @placeholder = "DESIGNATION",
                        //@style = "text-transform:uppercase",
                        @id = "Designation",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                   })<label class="HideValidMsg">Fields is Required *</label>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label class="control-label">Date Of Association <span class="required">*</span></label>
+                        @Html.TextBoxFor(m => m.DateOfAssociation, new
+                   {
+                       @class = "form-control requiredValidation",
+                       @placeholder = "DateOfAssociation",
+                       @id = "DateOfAssociation",
                        @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
                    })<label class="HideValidMsg">Fields is Required *</label>
                     </div>

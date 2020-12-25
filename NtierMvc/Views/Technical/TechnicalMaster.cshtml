@@ -10,11 +10,11 @@
 <div ng-controller="MainController">
 
     <div class="tab">
-        <button id="defaultOpen" class="tablinks" onclick="openCity(event, 'EnquiryView')" ng-click="FetchEnquiryList()">Enquiry</button>
-        <button class="tablinks" onclick="openCity(event, 'QuoteRegPartialView')" id="QuoteRegPartialViewLink" ng-click="FetchQuotationList()">Quote Register</button>
+        <button id="defaultOpen" class="tablinks" onclick="openCity(event, 'EnquiryView')" ng-click="DefaultEnquiryList(); FetchEnquiryList();">Enquiry</button>
+        <button class="tablinks" onclick="openCity(event, 'QuoteRegPartialView')" id="QuoteRegPartialViewLink" ng-click="DefaultQuotationList(); FetchQuotationList();">Quote Register</button>
         @*<button id="QuotePrepPartialViewLink" class="tablinks" onclick="openCity(event, 'QuotePrepPartialView')" data-url="@Url.Action("PartialQuotePrep", "Technical")">Quote Preparation</button>*@
         <button id="QuotePrepPartialViewLink" class="tablinks" onclick="openCity(event, 'QuotePrepPartialView')" ng-click="BindQuotePrepPopup()">Quote Preparation</button>
-        <button id="OrdersPartialViewLink" class="tablinks" onclick="openCity(event, 'OrdersPartialView')" ng-click="FetchOrdersList()">Orders</button>
+        <button id="OrdersPartialViewLink" class="tablinks" onclick="openCity(event, 'OrdersPartialView')" ng-click="DefaultOrdersList(); FetchOrdersList();">Orders</button>
         <button id="ClarificationPartialViewLink" class="tablinks" onclick="openCity(event, 'ClarificationPartialView')" ng-click="BindClarificationPopup()">Clarification</button>
     </div>
 

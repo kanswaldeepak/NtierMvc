@@ -962,7 +962,7 @@ namespace NtierMvc.DataAccess.Pool
             return DataTableToStringList(_dbAccess.GetDataTable(spName, parms));
         }
 
-        public List<DropDownEntity> GetMasterTableStringList(string TableName, string DataValueField, string DataTextField, string Property, string columnName, string ListType=null)
+        public List<DropDownEntity> GetMasterTableStringList(string TableName, string DataValueField, string DataTextField, string Property, string columnName, string ListType = null)
         {
             var parms = new Dictionary<string, object>();
             var spName = "";
@@ -983,7 +983,7 @@ namespace NtierMvc.DataAccess.Pool
             return DataTableToStringList(_dbAccess.GetDataTable(spName, parms));
         }
 
-        public List<DropDownEntity> GetDropDownList(string TableName, string ListType, string DataValueField, string DataTextField, string Param, string ColumnName, string orderBy = null, string orderByColumn=null, string Param1 = null, string ColumnName1 = null, string Param2 = null, string ColumnName2 = null, string Param3 = null, string ColumnName3 = null, string Param4 = null, string ColumnName4 = null)
+        public List<DropDownEntity> GetDropDownList(string TableName, string ListType, string DataValueField, string DataTextField, string Param, string ColumnName, bool Others = false, string orderBy = null, string orderByColumn = null, string Param1 = null, string ColumnName1 = null, string Param2 = null, string ColumnName2 = null, string Param3 = null, string ColumnName3 = null, string Param4 = null, string ColumnName4 = null)
         {
             var parms = new Dictionary<string, object>();
             var spName = "";
@@ -1006,7 +1006,10 @@ namespace NtierMvc.DataAccess.Pool
             parms.Add("@orderBy", orderBy);
             parms.Add("@orderByColumn", orderByColumn);
 
-            return DataTableToStringList(_dbAccess.GetDataTable(spName, parms));
+            if (!Others)
+                return DataTableToStringList(_dbAccess.GetDataTable(spName, parms));
+            else
+                return DataTableToStringListWithOther(_dbAccess.GetDataTable(spName, parms));
         }
 
         public List<DropDownEntity> GetMasterTableList(string TableName, string DataValueField, string DataTextField, string property)
@@ -1339,11 +1342,11 @@ namespace NtierMvc.DataAccess.Pool
             var ParamDict = new Dictionary<string, object>();
             ParamDict.Add("@TableName", TableName);
             //Params.Add("@Id", Model.Id);
-            ParamDict.Add("@ColumnName1",ColumnName1);
+            ParamDict.Add("@ColumnName1", ColumnName1);
             ParamDict.Add("@ColumnName2", ColumnName2);
-            ParamDict.Add("@Param1",Param1);
-            ParamDict.Add("@Param2",Param2);
-            
+            ParamDict.Add("@Param1", Param1);
+            ParamDict.Add("@Param2", Param2);
+
 
             var SPName = ConfigurationManager.AppSettings["DeleteFromTable"];
             _dbAccess.ExecuteNonQuery(SPName, ParamDict, "@o_MsgCode", out msgCode);
@@ -1403,7 +1406,7 @@ namespace NtierMvc.DataAccess.Pool
                 parms.Add("@DataColumn5", DataColumn[4]);
                 parms.Add("@DataParam5", DataParam[4]);
             }
-            
+
             parms.Add("@RequiredColumn1", RequiredColumn[0]);
             parms.Add("@RequiredColumn2", RequiredColumn[1]);
             if (RequiredColumn.ElementAtOrDefault(2) != null)
@@ -1447,6 +1450,60 @@ namespace NtierMvc.DataAccess.Pool
 
             return msgCode;
 
+        }
+
+        public List<DropDownEntity> SaveNewItemInDdl(AddDdlEntity entity)
+        {
+            string spName = ConfigurationManager.AppSettings["SaveNewItemInDdl"];
+            var parms = new Dictionary<string, object>();
+            parms.Add("@TableName", entity.Nametbl);
+            parms.Add("@Value", entity.Value);
+            parms.Add("@ColumnName", entity.ColumnName);
+            parms.Add("@Property", entity.Property);
+
+            DataSet dtst = _dbAccess.GetDataSet(spName, parms);
+            DataTable dtbl = dtst.Tables[1];
+
+            return DataTableToStringListWithOther(dtbl);
+        }
+
+        public List<DropDownEntity> DataTableToStringListWithOther(DataTable table)
+        {
+            var list = new List<DropDownEntity>(table.Rows.Count);
+            if (table.Rows.Count > 1)
+            {
+                var ddl = new DropDownEntity()
+                {
+                    DataStringValueField = "",
+                    DataTextField = "Select"
+                };
+                list.Add(ddl);
+                foreach (DataRow row in table.Rows)
+                {
+                    var values = row.ItemArray;
+                    ddl = new DropDownEntity()
+                    {
+                        DataStringValueField = Convert.ToString(values[0]),
+                        DataTextField = values[1].ToString(),
+                        DataCodeField = values.Count() > 2 ? values[2].ToString() : null
+
+                    };
+                    list.Add(ddl);
+                }
+
+                list.Insert(list.Count, new DropDownEntity { DataTextField = "Others", DataStringValueField = list.Count.ToString() });
+            }
+            else
+            {
+                var ddl = new DropDownEntity()
+                {
+                    DataStringValueField = "",
+                    DataTextField = table.Rows[0][0].ToString()
+                };
+                list.Add(ddl);
+            }
+
+            return list;
         }
 
     }

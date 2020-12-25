@@ -53,7 +53,9 @@ namespace NtierMvc.DataAccess.Pool
             Params.Add("@EnqNo", Model.EnqNo);
             Params.Add("@EnqDt", Model.EnqDt);
             Params.Add("@EnqFor", Model.EnqFor);
-            Params.Add("@ProdGrp", Model.ProdGrp);
+            Params.Add("@MainProdGrp", Model.MainProdGrp);
+            Params.Add("@SubProdGrp", Model.SubProdGrp);
+            Params.Add("@ProdName", Model.ProdName);
             Params.Add("@QuoteNo", Model.QuoteNo);
             Params.Add("@GeoCode", Model.GeoCode);
             Params.Add("@QuoteDate", Model.QuoteDate);
@@ -90,8 +92,9 @@ namespace NtierMvc.DataAccess.Pool
             Params.Add("@QuoteNo", Model.QuoteNo);
             Params.Add("@ItemNo", Model.ItemNo);
             Params.Add("@EnqSrNo", Model.EnqSrNo);
-            Params.Add("@VendorName", Model.VendorName);
-            Params.Add("@ProductLine", Model.ProductLine);
+            Params.Add("@VendorName", Model.CustomerName);
+            Params.Add("@MainProdGrp", Model.MainProdGrp);
+            Params.Add("@SubProdGrp", Model.SubProdGrp);
             Params.Add("@ProductName", Model.ProductName);
             Params.Add("@ProductNo", Model.ProductNo);
             Params.Add("@CasingSize", Model.CasingSize);
@@ -221,12 +224,13 @@ namespace NtierMvc.DataAccess.Pool
             return msgCode;
         }
 
-        public DataTable GetDdlValueForQuote(string type, string VendorId = null, string QuoteType = null)
+        public DataTable GetDdlValueForQuote(string type, string VendorId = null, string QuoteType = null, string SubjectId = null)
         {
             var parms = new Dictionary<string, object>();
             parms.Add("@Type", type);
-            parms.Add("@VendorId", VendorId);
+            parms.Add("@CustomerId", VendorId);
             parms.Add("@QuoteType", QuoteType);
+            parms.Add("@SubjectId", SubjectId);
             string spName = ConfigurationManager.AppSettings["GetDdlValueForQuote"];
             return _dbAccess.GetDataTable(spName, parms);
         }

@@ -23,7 +23,7 @@ namespace NtierMvc.DataAccess.Pool
             parms.Add("@pageIndex", pageIndex);
             parms.Add("@pageSize", pageSize);
             parms.Add("@SearchQuoteType", SearchQuoteType);
-            parms.Add("@SearchVendorID", SearchVendorID);
+            parms.Add("@SearchCustomerID", SearchVendorID);
             parms.Add("@SearchProductGroup", SearchProductGroup);
             parms.Add("@SearchDeliveryTerms", SearchDeliveryTerms);
             string spName = ConfigurationManager.AppSettings["GetOrderDetails"];
@@ -79,7 +79,7 @@ namespace NtierMvc.DataAccess.Pool
             Params.Add("@ExWorkValue", Model.ExWorkValue);
             Params.Add("@Inspection", Model.Inspection);
             Params.Add("@EndUser", Model.EndUser);
-            Params.Add("@ProductGroup", Model.ProductGroup);
+            Params.Add("@ProductGroup", Model.MainProdGrp);
             Params.Add("@MultiQuoteNos", Model.MultiQuoteNos);
             //Params.Add("@UploadedFile", Model.UploadedFile);
 
@@ -153,8 +153,8 @@ namespace NtierMvc.DataAccess.Pool
             var Params = new Dictionary<string, object>();
             Params.Add("@Id", Model.Id == 0 ? 0 : Model.Id);
             Params.Add("@UnitNo", Model.UnitNo);
-            Params.Add("@VendorId", Model.VendorId);
-            Params.Add("@VendorName", Model.VendorName);
+            Params.Add("@VendorId", Model.CustomerId);
+            Params.Add("@VendorName", Model.CustomerName);
 
             Params.Add("@QuoteNo", Model.QuoteNo);
             Params.Add("@QuoteType", Model.QuoteType);

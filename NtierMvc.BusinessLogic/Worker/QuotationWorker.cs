@@ -181,6 +181,7 @@ namespace NtierMvc.BusinessLogic.Worker
                                 obj.FileNo = dr1.IsNull("FileNo") ? string.Empty : Convert.ToString(dr1["FileNo"]);
                                 obj.EnqRef = dr1.IsNull("EnqRef") ? string.Empty : Convert.ToString(dr1["EnqRef"]);
                                 obj.EnqDt = dr1.IsNull("EnqDt") ? string.Empty : Convert.ToString(dr1["EnqDt"]);
+                                obj.EnqNo = dr1.IsNull("EnqNo") ? string.Empty : Convert.ToString(dr1["EnqNo"]);
                                 obj.QuoteNo = dr1.IsNull("QuoteNo") ? string.Empty : Convert.ToString(dr1["QuoteNo"]);
                                 obj.QuoteDate = dr1.IsNull("QuoteDate") ? string.Empty : Convert.ToString(dr1["QuoteDate"]);
                                 obj.QuoteValidity = dr1.IsNull("QuoteValidity") ? string.Empty : Convert.ToString(dr1["QuoteValidity"]);
@@ -190,10 +191,12 @@ namespace NtierMvc.BusinessLogic.Worker
                                 obj.Country = dr1.IsNull("Country") ? string.Empty : Convert.ToString(dr1["Country"]);
                                 obj.GeoArea = dr1.IsNull("GeoArea") ? string.Empty : Convert.ToString(dr1["GeoArea"]);
                                 obj.EnqFor = dr1.IsNull("EnqFor") ? string.Empty : Convert.ToString(dr1["EnqFor"]);
-                                obj.ProdGrp = dr1.IsNull("ProdGrp") ? string.Empty : Convert.ToString(dr1["ProdGrp"]);
+                                obj.MainProdGrp = dr1.IsNull("ProdGrp") ? string.Empty : Convert.ToString(dr1["ProdGrp"]);
                                 obj.Status = dr1.IsNull("Status") ? string.Empty : Convert.ToString(dr1["Status"]);
                                 obj.Remarks = dr1.IsNull("Remarks") ? string.Empty : Convert.ToString(dr1["Remarks"]);
                                 obj.Currency = dr1.IsNull("Currency") ? string.Empty : Convert.ToString(dr1["Currency"]);
+                                obj.DeliveryTerms = dr1.IsNull("DeliveryTerms") ? string.Empty : Convert.ToString(dr1["DeliveryTerms"]);
+                                obj.Subject = dr1.IsNull("Subject") ? string.Empty : Convert.ToString(dr1["Subject"]);
 
                                 qED.lstQuoteEntity.Add(obj);
                             }
@@ -258,7 +261,7 @@ namespace NtierMvc.BusinessLogic.Worker
                     Model.BgReq = dt1.Rows[0]["BgReq"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["BgReq"]);
                     Model.Inspection = dt1.Rows[0]["Inspection"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["Inspection"]);
                     Model.Remarks = dt1.Rows[0]["Remarks"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["Remarks"]);
-                    Model.ProdGrp = dt1.Rows[0]["ProdGrp"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["ProdGrp"]);
+                    Model.MainProdGrp = dt1.Rows[0]["ProdGrp"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["ProdGrp"]);
                     Model.GeoArea = dt1.Rows[0]["GeoArea"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["GeoArea"]);
                     Model.GeoCode = dt1.Rows[0]["GeoCode"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["GeoCode"]);
                     Model.Status = dt1.Rows[0]["Status"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["Status"]);
@@ -267,6 +270,10 @@ namespace NtierMvc.BusinessLogic.Worker
                     Model.PortOfDischarge = dt1.Rows[0]["PortOfDischarge"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["PortOfDischarge"]);
                     Model.Currency = dt1.Rows[0]["Currency"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["Currency"]);
                     Model.LeadTime = dt1.Rows[0]["LeadTime"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["LeadTime"]);
+                    Model.LeadTimeDuration = dt1.Rows[0]["LeadTimeDuration"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["LeadTimeDuration"]);
+                    Model.PaymentTerms = dt1.Rows[0]["PaymentTerms"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["PaymentTerms"]);
+                    Model.SalesPerson = dt1.Rows[0]["SalesPerson"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["SalesPerson"]);
+                    Model.Subject = dt1.Rows[0]["Subject"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["Subject"]);
                 }
             }
 
@@ -391,40 +398,40 @@ namespace NtierMvc.BusinessLogic.Worker
             }
         }
 
-        public List<DropDownEntity> GetDdlValueForQuote(string type, string VendorId = null, string QuoteType = null)
+        public List<DropDownEntity> GetDdlValueForQuote(string type, string VendorId = null, string QuoteType = null, string SubjectId = null)
         {
             try
             {
                 List<DropDownEntity> lstDdl = new List<DropDownEntity>();
-                DataTable dt = _repository.GetDdlValueForQuote(type, VendorId, QuoteType);
+                DataTable dt = _repository.GetDdlValueForQuote(type, VendorId, QuoteType, SubjectId);
                 DropDownEntity entity;
 
                 if (dt.Rows.Count > 0)
                 {
-                    if (type == "ProductGroup")
+                    //if (type == "ProductGroup")
                         foreach (DataRow dr in dt.Rows)
                         {
                             entity = new DropDownEntity();
                             if (dt.Columns.Contains("Id"))
                                 entity.DataStringValueField = Convert.ToString(dr["Id"] ?? "0");
 
-                            if (dt.Columns.Contains("Product"))
-                                entity.DataTextField = dr["Product"]?.ToString() ?? "";
+                            if (dt.Columns.Contains("Value"))
+                                entity.DataTextField = dr["Value"]?.ToString() ?? "";
 
                             lstDdl.Add(entity);
                         }
-                    else if (type == "VendorId")
-                        foreach (DataRow dr in dt.Rows)
-                        {
-                            entity = new DropDownEntity();
-                            if (dt.Columns.Contains("Id"))
-                                entity.DataStringValueField = Convert.ToString(dr["Id"] ?? "0");
+                    //else if (type == "CustomerId")
+                    //    foreach (DataRow dr in dt.Rows)
+                    //    {
+                    //        entity = new DropDownEntity();
+                    //        if (dt.Columns.Contains("Id"))
+                    //            entity.DataStringValueField = Convert.ToString(dr["Id"] ?? "0");
 
-                            if (dt.Columns.Contains("VendorId"))
-                                entity.DataTextField = dr["VendorId"]?.ToString() ?? "";
+                    //        if (dt.Columns.Contains("CustomerId"))
+                    //            entity.DataTextField = dr["CustomerId"]?.ToString() ?? "";
 
-                            lstDdl.Add(entity);
-                        }
+                    //        lstDdl.Add(entity);
+                    //    }
                 }
 
                 DropDownEntity entity1 = new DropDownEntity();

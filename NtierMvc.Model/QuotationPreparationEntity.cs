@@ -17,7 +17,8 @@ namespace NtierMvc.Model
         public string QuoteNo { get; set; }
         public string ItemNo { get; set; }
         public string EnqSrNo { get; set; }
-        public string ProductLine { get; set; }
+        public string MainProdGrp { get; set; }
+        public string SubProdGrp { get; set; }
         public string ProductName { get; set; }
         public string ProductNo { get; set; }
         public string CasingSize { get; set; }
@@ -26,7 +27,7 @@ namespace NtierMvc.Model
         public string Connection { get; set; }
         public string Qty { get; set; }
         public string Uom { get; set; }
-        public string VendorName { get; set; }
+        public string CustomerName { get; set; }
         public int OpenHoleSize { get; set; }        
         public int BallSize { get; set; }
         public int UnitPrice { get; set; }
@@ -55,6 +56,8 @@ namespace NtierMvc.Model
         public string ViewDES { get; set; }
         public string ViewProductDetails { get; set; }
         public string TotalPrice { get; set; }
+        public string ODSize { get; set; }
+        public string TotalBows { get; set; }
 
 
     }

@@ -68,10 +68,10 @@
                               @id = "CUCustomerName",
                               @multiple = "true"
                           })
-                <button class="btn btn-link" type="button" id="btnSearchCustomer" ng-click="FetchCustomerList()">
-                    <i class="fa fa-search"></i>
+                <button class="btn btn-sm btn-success" type="button" id="btnSearchCustomer" ng-click="FetchCustomerList()">
+                    Search
                 </button>
-                <button class="btn btn-sm btn-info" type="button" id="btnClearSearchCustomer">Clear</button>
+                <button class="btn btn-sm btn-info" type="button" id="btnClearSearchCustomer" ng-click="DefaultCustomerList();">Clear</button>
             </td>
             @*<td>
                 @Html.DropDownList("CountryId", new SelectList(@ViewBag.ListCountry, "DataStringValueField", "DataTextField", "Select"),
@@ -270,6 +270,11 @@
 
     $(document).ready(function () {
 
+        setTimeout(function () {
+            angular.element(document.getElementById('TblCustomer')).scope().DefaultCustomerList();
+            angular.element(document.getElementById('TblCustomer')).scope().FetchCustomerList();
+        }, 500);
+
         window.GetCustomerListForCusts = '@Url.Action("GetCustomerListForCust","CRM")';
         window.GetDdlValueForCustomer = '@Url.Action("GetDdlValueForCustomer", "CRM")';
 
@@ -429,20 +434,15 @@
     $('#btnClearSearchCustomer').click(
         function ClearFields() {
 
-            //$('#CUCountryId').val('').trigger('chosen:updated');
             $('#CUCountryId').val([]).trigger('chosen:updated');
             $('#CUCustomerId').val([]).trigger('chosen:updated');
             $('#CUCustomerName').val([]).trigger('chosen:updated');
             //$('#POSearchDeliveryDateFrom').val('');
             //$('#POSearchDeliveryDateTo').val('');
             
-            //angular.element(document.getElementById('#MainController')).scope().myfunction('FetchCustomerList');
         }
     );
 
-    window.onload = function () {
-        setTimeout(function () { angular.element(document.getElementById('TblCustomer')).scope().FetchCustomerList(); }, 500);
-    }
 
 </script>
 

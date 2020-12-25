@@ -46,9 +46,9 @@ namespace NtierMvc.API.Controllers.Application
 
         [ResponseType(typeof(int))]
         [Route("api/EnquiryDetails/GetEnquiryDetails")]
-        public IHttpActionResult GetEnquiryDetails(int pageIndex, int pageSize, string SearchEnqName = null, string SearchEnqVendorID = null, string SearchProductGroup = null, string SearchMonth = null, string SearchEOQ = null)
+        public IHttpActionResult GetEnquiryDetails(int pageIndex, int pageSize, string SearchEQEnqType, string SearchCustomerName = null, string SearchEnqFor = null, string SearchEQDueDate = null, string SearchEOQ = null)
         {
-            return Ok(_repository.GetEnquiryDetails(pageIndex, pageSize, SearchEnqName, SearchEnqVendorID, SearchProductGroup, SearchMonth, SearchEOQ));
+            return Ok(_repository.GetEnquiryDetails(pageIndex, pageSize, SearchEQEnqType, SearchCustomerName, SearchEnqFor, SearchEQDueDate, SearchEOQ));
         }
 
         [HttpGet]
@@ -78,16 +78,16 @@ namespace NtierMvc.API.Controllers.Application
 
         [HttpGet]
         [Route("api/EnquiryDetails/GetVendorDetailForEnquiry")]
-        public IHttpActionResult GetVendorDetailForEnquiry(string vendorId)
+        public IHttpActionResult GetVendorDetailForEnquiry(string CustomerId)
         {
-            return Ok(_repository.GetVendorDetailForEnquiry(vendorId));
+            return Ok(_repository.GetVendorDetailForEnquiry(CustomerId));
         }
 
         [HttpGet]
         [Route("api/EnquiryDetails/GetDdlValueForEnquiry")]
-        public IHttpActionResult GetDdlValueForEnquiry(string type, string EOQId = null, string ProductGroup = null, string VendorId = null)
+        public IHttpActionResult GetDdlValueForEnquiry(string type, string EnqType = null, string CustomerId = null, string EnqFor = null, string DueDate = null)
         {
-            return Ok(_repository.GetDdlValueForEnquiry(type, EOQId, ProductGroup, VendorId));
+            return Ok(_repository.GetDdlValueForEnquiry(type, EnqType, CustomerId, EnqFor, DueDate));
         }
 
     }

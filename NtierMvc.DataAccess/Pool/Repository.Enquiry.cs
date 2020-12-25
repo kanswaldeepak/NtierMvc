@@ -17,15 +17,15 @@ namespace NtierMvc.DataAccess.Pool
 
         #region Class Methods
 
-        public DataSet GetEnquiryDetails(int pageIndex, int pageSize, string SearchEnqName = null, string SearchEnqVendorID = null, string SearchProductGroup = null, string SearchMonth = null, string SearchEOQ = null)
+        public DataSet GetEnquiryDetails(int pageIndex, int pageSize, string SearchEQEnqType, string SearchCustomerName = null, string SearchEnqFor = null, string SearchEQDueDate = null, string SearchEOQ = null)
         {
             var parms = new Dictionary<string, object>();
             parms.Add("@pageIndex", pageIndex);
             parms.Add("@pageSize", pageSize);
-            parms.Add("@SearchEnqName", SearchEnqName);
-            parms.Add("@SearchEnqVendorID", SearchEnqVendorID);
-            parms.Add("@SearchProductGroup", SearchProductGroup);
-            parms.Add("@SearchMonth", SearchMonth);
+            parms.Add("@SearchEQEnqType", SearchEQEnqType);
+            parms.Add("@SearchCustomerName", SearchCustomerName);
+            parms.Add("@SearchEnqFor", SearchEnqFor);
+            parms.Add("@SearchEQDueDate", SearchEQDueDate);
             parms.Add("@SearchEOQ", SearchEOQ);
             string spName = ConfigurationManager.AppSettings["GetEnquiryDetails"];
             return _dbAccess.GetDataSet(spName, parms);
@@ -54,8 +54,8 @@ namespace NtierMvc.DataAccess.Pool
             Params.Add("@EnquiryId", Model.EnquiryId == 0 ? 0 : Model.EnquiryId);
             Params.Add("@UserInitial", Model.UserInitial);
             Params.Add("@UnitNo", Model.UnitNo);
-            Params.Add("@QuoteType", Model.QuoteType);
-            Params.Add("@VendorId", Model.VendorId);
+            //Params.Add("@QuoteType", "");
+            Params.Add("@VendorId", Model.CustomerId);
             Params.Add("@City", Model.City);
             Params.Add("@State", Model.StateId);
             Params.Add("@Country", Model.CountryId);
@@ -63,7 +63,9 @@ namespace NtierMvc.DataAccess.Pool
             Params.Add("@EnqDt", Model.EnqDt);
             Params.Add("@EnqType", Model.EnqTypeId);
             Params.Add("@DueDate", Model.DueDate);
-            Params.Add("@ProdGrp", Model.ProdGrp);
+            Params.Add("@MainProdGrp", Model.MainProdGrp);
+            Params.Add("@SubProdGrp", Model.SubProdGrp);
+            Params.Add("@ProdName", Model.ProdName);
             Params.Add("@EnqFor", Model.EnqFor);
             Params.Add("@EOQ", Model.Eoq);
             Params.Add("@LeadTime", Model.LeadTime);
@@ -75,6 +77,7 @@ namespace NtierMvc.DataAccess.Pool
             Params.Add("@EnqMode", Model.EnqMode);
             Params.Add("@EnqThru", Model.EnqThru);
             Params.Add("@EnqBGreq", Model.EnqBGreq);
+            Params.Add("@AgentName", Model.AgentName);
 
             var spName = ConfigurationManager.AppSettings["SaveEnquiryDetails"];
             _dbAccess.ExecuteNonQuery(spName, Params, "@o_MsgCode", out msgCode);
@@ -92,11 +95,11 @@ namespace NtierMvc.DataAccess.Pool
 
         }
 
-        public DataTable GetVendorDetailForEnquiry(string vendorId)
+        public DataTable GetVendorDetailForEnquiry(string CustomerId)
         {
             DataTable dt = new DataTable();
             var parms = new Dictionary<string, object>();
-            parms.Add("@vendorId", vendorId);
+            parms.Add("@CustomerId", CustomerId);
             var spName = ConfigurationManager.AppSettings["GetVendorDetailForEnquiry"];
             dt = _dbAccess.GetDataTable(spName, parms);
             return dt;
@@ -128,13 +131,14 @@ namespace NtierMvc.DataAccess.Pool
             return _dbAccess.GetDataTable(spName, parms);
         }
 
-        public DataTable GetDdlValueForEnquiry(string type, string EOQId, string ProductGroup = null, string VendorId = null)
+        public DataTable GetDdlValueForEnquiry(string type, string EnqType = null, string CustomerId = null, string EnqFor = null, string DueDate = null)
         {
             var parms = new Dictionary<string, object>();
             parms.Add("@Type", type);
-            parms.Add("@EOQId", EOQId);
-            parms.Add("@ProductGroup", ProductGroup);
-            parms.Add("@VendorId", VendorId);
+            parms.Add("@EnqType", EnqType);
+            parms.Add("@CustomerId", CustomerId);
+            parms.Add("@EnqFor", EnqFor);
+            parms.Add("@DueDate", DueDate);
             string spName = ConfigurationManager.AppSettings["GetProductGroups"];
             return _dbAccess.GetDataTable(spName, parms);
         }

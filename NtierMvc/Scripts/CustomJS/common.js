@@ -1,4 +1,80 @@
-﻿var regexExp = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,}/
+﻿
+function DisplayNewItemInDdl(selectedId, Name, Property, ColumnName) {    
+    var item = $(selectedId).find("option:selected");
+    var value = item.val(); //get the selected option value
+    var text = item.html(); //get the selected option text
+    if (text == "Others") {
+        $('#SelectedDdlId').val(selectedId.id);
+        $('#Nametbl').val(selectedId.id);
+        $('#AddDdlNametbl').val(Name);
+        $('#AddDdlProperty').val(Property);
+        $('#AddDdlColumnName').val(ColumnName);
+
+        if (!($('.modal.in').length)) {
+            $('.modalAddNewItemContent').css({
+                top: '35%',
+                left: '30%'
+            });
+        }
+        $('#AddNewItemContent').modal({
+            backdrop: true,
+            show: true
+        });
+
+        $('.modal-dialog').draggable({
+            handle: ".modal-body"
+        });
+    }
+};
+
+function AddNewItemInDdl(txtNewOption, SelectedDdlId) {
+    
+    var newitem = $("#" + txtNewOption.id).val(); 
+    //alert(newitem);
+    //var newOption = "<option value='" + newitem + "'>" + newitem + "</option>";
+    //$(newOption).insertBefore($("#" + SelectedDdlId.value + " option:last")); //add new option 
+
+    let DdlId = $('#SelectedDdlId').val(); 
+    let tblName = $("#AddDdlNametbl").val(); 
+    let property = $('#AddDdlProperty').val();
+    let columnName = $('#AddDdlColumnName').val();
+    $.ajax({
+        type: 'POST',
+        url: window.SaveNewItemInDdl,
+        data: JSON.stringify({ type: '', Nametbl: tblName, Value: newitem, Property: property, ColumnName: columnName }),
+        contentType: "application/json; charset=utf-8",
+        success: function (data) {
+            debugger;
+            if (data.length > 0) {
+                if (data[0].DataTextField == 'Record Already Present')
+                    alert(data[0].DataTextField);
+                else {
+                    $("#" + DdlId).empty();
+                    if (data.length > 0) {
+                        $.each(data, function (i, item) {
+                            $("#" + DdlId).append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
+                        })
+                    }
+                }
+            }
+        },
+        error: function (x, e) {
+            alert('Some error is occurred, Please try after some time.');
+            //$('#spn-Sucess-Failure').text('Some error is occurred, Please try after some time.');
+            //$('#spn-Sucess-Failure').addClass("important red");
+            //$('#Sucess-Failure').modal('show');
+        }
+    })
+    $("#" + SelectedDdlId.value).val(newitem);
+    $("#" + txtNewOption.id).val('');
+    $("#AddDdlNametbl").val('');
+    $("#SelectedDdlId").val('');
+    $("#AddNewItemContent").modal('hide');
+    return false;
+};
+
+
+var regexExp = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,}/
 function AllowNumbers(evt) {
     var keyCode = (evt.which) ? evt.which : event.keyCode;
     if (keyCode < 48 || keyCode >= 58 && keyCode != 8) {
@@ -6,6 +82,41 @@ function AllowNumbers(evt) {
     }
     return true;
 }
+
+function formatDate(dateObject, convertTo) {
+    //var d = new Date(dateObject);
+    var d = new Date(dateObject.split("/").reverse().join("-"));
+
+    var day = d.getDate();
+    var month = d.getMonth() + 1;
+    var year = d.getFullYear();
+    if (day < 10) {
+        day = "0" + day;
+    }
+    if (month < 10) {
+        month = "0" + month;
+    }
+
+    var date = '';
+
+    switch (convertTo) {
+        case 'dd/MM/yyyy':
+            date = day + "/" + month + "/" + year;
+            break;
+        case 'dd-MM-yyyy':
+            date = day + "-" + month + "-" + year;
+            break;
+        case 'yyyy-MM-dd':
+            date = year + "-" + month + "-" + day;
+            break;
+        default:
+            date = day + "/" + month + "/" + year;
+            break;
+    }
+
+
+    return date;
+};
 
 function formatAMPM(date) {
     var hours = date.getHours();
@@ -18,7 +129,7 @@ function formatAMPM(date) {
     return strTime;
 }
 
-// Added by Sachin Ingle
+
 function validateDecimalNumbers(el, evt) {
     var charCode = (evt.which) ? evt.which : event.keyCode;
     var number = el.value.split('.');
@@ -392,11 +503,11 @@ function SetParamModalPanelWidth(ParamPanelId, width) {
     $("#" + ParamPanelId).prop("style", "max-width:" + width);
 }
 
-function SetParamModalPanelTitle(ParamPanelHeadingId,Title) {
+function SetParamModalPanelTitle(ParamPanelHeadingId, Title) {
     $("#" + ParamPanelHeadingId).text(Title);
 }
 
-function SetParamModalPanelBody(ParamPanelBodyId,Data) {
+function SetParamModalPanelBody(ParamPanelBodyId, Data) {
     $("#" + ParamPanelBodyId).html(Data);
 }
 
@@ -817,7 +928,7 @@ function GetFormValidationStatus(formName) {
 function setReadOnly(formName) {
     var Status = true;
     $(formName).find(".applyDisabled").each(function () {
-        $(this).attr("disabled", true);        
+        $(this).attr("disabled", true);
     })
     return Status;
 }

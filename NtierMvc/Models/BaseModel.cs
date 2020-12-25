@@ -1080,7 +1080,7 @@ namespace NtierMvc.Models
             return lstDropDownEntity;
         }
 
-        public List<DropDownEntity> GetMasterTableStringList(string TableName, string DataValueField, string DataTextField, string Property, string ColumnName, string ListType=null)
+        public List<DropDownEntity> GetMasterTableStringList(string TableName, string DataValueField, string DataTextField, string Property, string ColumnName, string ListType = null)
         {
             List<DropDownEntity> lstDropDownEntity = new List<DropDownEntity>();
             var baseAddress = "Base";
@@ -1150,7 +1150,7 @@ namespace NtierMvc.Models
         //    return lstTableRecordsEntity;
         //}
 
-        public List<TableRecordsEntity> GetTableDataList(string ListType, string TableName, string Column1 = null, string Param1 = null, string Column2 = null, string Param2 = null, string Column3 = null, string Param3 = null, string Column4 = null, string Param4 = null, string Column5 = null, string Param5 = null,  string RequiredColumn1 = null, string RequiredColumn2 = null, string RequiredColumn3 = null, string RequiredColumn4 = null, string RequiredColumn5 = null, string RequiredColumn6 = null, string RequiredColumn7 = null, string RequiredColumn8 = null, string RequiredColumn9 = null, string RequiredColumn10 = null)
+        public List<TableRecordsEntity> GetTableDataList(string ListType, string TableName, string Column1 = null, string Param1 = null, string Column2 = null, string Param2 = null, string Column3 = null, string Param3 = null, string Column4 = null, string Param4 = null, string Column5 = null, string Param5 = null, string RequiredColumn1 = null, string RequiredColumn2 = null, string RequiredColumn3 = null, string RequiredColumn4 = null, string RequiredColumn5 = null, string RequiredColumn6 = null, string RequiredColumn7 = null, string RequiredColumn8 = null, string RequiredColumn9 = null, string RequiredColumn10 = null)
         {
             List<TableRecordsEntity> lstTableRecordsEntity = new List<TableRecordsEntity>();
             var baseAddress = "Base";
@@ -1219,7 +1219,7 @@ namespace NtierMvc.Models
         {
             string result = "0";
             var baseAddress = "Base";
-            
+
             using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
             {
                 HttpResponseMessage response = client.GetAsync(baseAddress + "/DeleteFormTable?TableName=" + TableName + "&ColumnName1=" + ColumnName1 + "&Param1=" + Param1 + "&ColumnName2=" + ColumnName2 + "&Param2=" + Param2).Result;
@@ -1237,13 +1237,13 @@ namespace NtierMvc.Models
             return result;
         }
 
-        public List<DropDownEntity> GetDropDownList(string TableName, string ListType, string DataValueField, string DataTextField, string Param, string ColumnName, string orderBy = null, string orderByColumn = null, string Param1 = null, string ColumnName1 = null, string Param2 = null, string ColumnName2 = null, string Param3 = null, string ColumnName3 = null, string Param4 = null, string ColumnName4 = null)
+        public List<DropDownEntity> GetDropDownList(string TableName, string ListType, string DataValueField, string DataTextField, string Param, string ColumnName, bool Others = false, string orderBy = null, string orderByColumn = null, string Param1 = null, string ColumnName1 = null, string Param2 = null, string ColumnName2 = null, string Param3 = null, string ColumnName3 = null, string Param4 = null, string ColumnName4 = null)
         {
             List<DropDownEntity> lstDropDownEntity = new List<DropDownEntity>();
             var baseAddress = "Base";
             using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
             {
-                HttpResponseMessage response = client.GetAsync(baseAddress + "/GetDropDownList?TableName=" + TableName + "&ListType=" + ListType + "&DataValueField=" + DataValueField + "&DataTextField=" + DataTextField + "&Param=" + Param + "&ColumnName=" + ColumnName + "&orderBy=" + orderBy + "&orderByColumn=" + orderByColumn + "&Param1=" + Param1 + "&ColumnName1=" + ColumnName1 + "&Param2=" + Param2 + "&ColumnName2=" + ColumnName2 + "&Param3=" + Param3 + "&ColumnName3=" + ColumnName3 + "&Param4=" + Param4 + "&ColumnName4=" + ColumnName4).Result;
+                HttpResponseMessage response = client.GetAsync(baseAddress + "/GetDropDownList?TableName=" + TableName + "&ListType=" + ListType + "&DataValueField=" + DataValueField + "&DataTextField=" + DataTextField + "&Param=" + Param + "&ColumnName=" + ColumnName + "&Others=" + Others + "&orderBy=" + orderBy + "&orderByColumn=" + orderByColumn + "&Param1=" + Param1 + "&ColumnName1=" + ColumnName1 + "&Param2=" + Param2 + "&ColumnName2=" + ColumnName2 + "&Param3=" + Param3 + "&ColumnName3=" + ColumnName3 + "&Param4=" + Param4 + "&ColumnName4=" + ColumnName4).Result;
                 if (response.IsSuccessStatusCode)
                 {
                     var data = response.Content.ReadAsStringAsync().Result;
@@ -1287,7 +1287,7 @@ namespace NtierMvc.Models
             }
             return lstDropDownEntity;
         }
-        
+
         public DataTable GetDataTableForDocument(string ListType, string TableName, string[] DataColumn, string[] DataParam, string[] RequiredColumn)
         {
             DataTable lstTable = new DataTable();
@@ -1417,8 +1417,11 @@ namespace NtierMvc.Models
             }
 
             if (isNegative) { dollars = "Negative " + dollars; }
-            return dollars + " and Cents " + cents;
 
+            if (!string.IsNullOrEmpty(cents.Trim()))
+                return dollars + " and Cents " + cents;
+            else
+                return dollars;
         }
 
         public string SaveBulkEntryDetails(BulkUploadEntity objBU)
@@ -1437,7 +1440,21 @@ namespace NtierMvc.Models
             return result;
         }
 
-
+        public List<DropDownEntity> SaveNewItemInDdl(AddDdlEntity ddlEntity)
+        {
+            var baseAddress = "Base";
+            List<DropDownEntity> lstDropDownEntity = new List<DropDownEntity>();
+            using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
+            {
+                HttpResponseMessage response = client.PostAsJsonAsync(baseAddress + "/SaveNewItemInDdl", ddlEntity).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    var data = response.Content.ReadAsStringAsync().Result;
+                    lstDropDownEntity = JsonConvert.DeserializeObject<List<DropDownEntity>>(data);
+                }
+            }
+            return lstDropDownEntity;
+        }
 
 
 

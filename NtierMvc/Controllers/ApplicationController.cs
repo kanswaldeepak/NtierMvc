@@ -10,6 +10,7 @@ using NtierMvc.Models;
 using NtierMvc.Infrastructure;
 using NtierMvc.Model;
 using NtierMvc.Model.Application;
+using NtierMvc.Common;
 
 namespace DVETPrivateITI.Web.Controllers
 {
@@ -18,6 +19,7 @@ namespace DVETPrivateITI.Web.Controllers
     public partial class ApplicationController : Controller
     {
         // GET: Application
+        BaseModel model;
 
         public ActionResult Index()
         {
@@ -61,5 +63,21 @@ namespace DVETPrivateITI.Web.Controllers
             //}
 
         }
+
+        [HttpPost]
+        public ActionResult SaveNewItemInDdl(string type, string Nametbl, string Value, string Property = null, string ColumnName = null)
+        {
+            model = new BaseModel();
+            AddDdlEntity ddlEntity = new AddDdlEntity();
+            ddlEntity.type = type;
+            ddlEntity.Nametbl = Nametbl;
+            ddlEntity.Value = Value;
+            ddlEntity.Property = Property;
+            ddlEntity.ColumnName = ColumnName;
+
+            List<DropDownEntity> result = model.SaveNewItemInDdl(ddlEntity);
+            return new JsonResult { Data = result, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+        }
+
     }
 }

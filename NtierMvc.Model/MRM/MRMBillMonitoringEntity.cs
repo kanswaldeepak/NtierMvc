@@ -11,12 +11,12 @@ namespace NtierMvc.Model.MRM
     {
         public int Id { get; set; }
         public int BMno { get; set; }
-        public int VendorId { get; set; }
+        public int CustomerId { get; set; }
         public int GateNo { get; set; }
         public string SupplyType { get; set; }
         public string GateControlNo { get; set; }
         public string VendorNatureId { get; set; }
-        public string VendorName { get; set; }
+        public string CustomerName { get; set; }
         public string City { get; set; }
         public string EndUse { get; set; }
         public string EndUseNo { get; set; }

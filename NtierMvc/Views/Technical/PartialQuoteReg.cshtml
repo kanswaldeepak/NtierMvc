@@ -16,10 +16,10 @@
                 <label>Quote Type</label>
             </td>
             <td>
-                <label>Customer Id</label>
+                <label>Customer</label>
             </td>
             <td>
-                <label>Product Group</label>
+                <label>Supply of</label>
             </td>
             <td>
                 <label>Delivery Terms</label>
@@ -49,12 +49,12 @@
                })
             </td>
             <td>
-                @Html.DropDownList("ProductGroup", new SelectList(@ViewBag.ListProdGrp, "DataStringValueField", "DataTextField", "Select"),
+                @Html.DropDownList("Subject", new SelectList(@ViewBag.ListSubject, "DataStringValueField", "DataTextField", "Select"),
                new
                {
                    @class = "form-control",
-                   ng_model = "SearchQuoteProductGroup",
-                   @id = "QTProductGroup",
+                   ng_model = "SearchSubject",
+                   @id = "QTSubject",
                    @multiple = true
                })
             </td>
@@ -69,18 +69,19 @@
                })
             </td>
             <td>
-                <button class="btn btn-link" type="button" id="btnSearch" ng-click="FetchQuotationList()">
-                    <i class="fa fa-search"></i>
+                <button class="btn btn-sm btn-success" type="button" id="btnSearch" ng-click="FetchQuotationList()">
+                    Search
                 </button>
+                <button class="btn btn-sm btn-info" type="button" id="btnClearSearchQuotereg" ng-click="DefaultQuotationList(); FetchQuotationList();">Clear</button>
             </td>
         </tr>
     </table>
 </div>
 
-<div class="wrapper">
+<div class="mt-3 wrapper">
     <div class="container">
-        <table class="table table-sm">
-            <thead style="font-weight: bold">
+        <table id="tblQuoteReg">
+            <thead class="tblhead">
                 <tr>
                     <td>
                         Action                       
@@ -93,28 +94,55 @@
                     </td>
                     <td>
                         Country
-                    </td>
-                    <td>
+                        <div class="c3">
+                            Country
+                        </div>
+                    </th>
+                    <th>
+                        File No.
+                        <div class="c3">
+                            File No.
+                        </div>
+                    </th>
+                    <th>
                         Quote No.
                     </td>
                     <td>
                         Date
-                    </td>
-                    <td>
+                        <div class="c3">
+                            Date
+                        </div>
+                    </th>
+                    @*<th>
                         Currency
-                    </td>
-                    <td>
+                        <div class="c3">
+                            Currency
+                        </div>
+                    </th>*@
+                    <th>
+                        Enquiry No
+                        <div class="c3">
+                            Enquiry No
+                        </div>
+                    </th>
+                    <th>
                         Enquiry Date
-                    </td>
-                    <td>
-                        Prod Grp
-                    </td>
-                    <td>
-                        Geo Area
-                    </td>
-                    <td>
-                        Status
-                    </td>
+                        <div class="c3">
+                            Enquiry Date
+                        </div>
+                    </th>
+                    <th>
+                        Supply of
+                        <div class="c3">
+                            Supply of
+                        </div>
+                    </th>
+                    <th>
+                        Delivery Terms
+                        <div class="c3">
+                            Delivery Terms
+                        </div>
+                    </th>
                 </tr>
             </thead>
             <tbody>
@@ -126,7 +154,7 @@
                         <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="EDIT" ng-click="LoadQuotationEditPopup(L.Id)">
                             <i class="fa fa-edit"></i>
                         </button>
-                        <button type="button" class="btn btn-outline-danger btn-sm" data-toggle="tooltip" data-placement="bottom" title="DELETE" ng-click="DeleteCustomer(L.Id)">
+                        <button type="button" class="btn btn-outline-danger btn-sm" data-toggle="tooltip" data-placement="bottom" title="DELETE" ng-click="DeleteQuotation(L.Id)">
                             <i class="fa fa-trash"></i>
                         </button>
                     </td>
@@ -140,25 +168,28 @@
                         {{L.Country}}
                     </td>
                     <td>
+                        {{L.FileNo}}
+                    </td>
+                    <td>
                         {{L.QuoteNo}} {{L.RevisedQuoteNo}}
                     </td>
                     <td>
                         {{L.QuoteDate}}
                     </td>
-                    <td>
+                    @*<td>
                         {{L.Currency}}
+                    </td>*@
+                    <td>
+                        {{L.EnqNo}}
                     </td>
                     <td>
                         {{L.EnqDt}}
                     </td>
                     <td>
-                        {{L.ProdGrp}}
+                        {{L.Subject}}
                     </td>
                     <td>
-                        {{L.GeoArea}}
-                    </td>
-                    <td>
-                        {{L.Status}}
+                        {{L.DeliveryTerms}}
                     </td>
                 </tr>
             </tbody>
@@ -202,106 +233,20 @@
     </div>
 </div>
 
-@*<div class="modal" id="addCustomerDetails" tabindex="-1" role="dialog">
-    @using (Ajax.BeginForm(actionName: "SaveCustomerDetails", controllerName: "Customer", ajaxOptions: new AjaxOptions
-    {
-        HttpMethod = "POST"
-    },
-            routeValues: null,
-            htmlAttributes: new { id = "frmCustomerDetails" }))
-    {
-        <div class="modal-dialog" style="width:80%; max-width: 80%;" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Add Customer Details</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div id="div-Staff-details" class="modal-body">
-
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" id="btnSubmit" class="btn btn-primary">Save</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    }
-</div>
-
-
-<div class="modal fade" id="add_details" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-</div>
-
-
-<div class="modal fade" id="registor-Sucess-Failure" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h6 class="modal-title">Notification</h6>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                &nbsp;&nbsp;<span id="spn-registor-Sucess-Failure"></span><span id="spnUserName" style="font-weight:bold"></span>&nbsp;&nbsp;<span id="spnUserNameMore"></span>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" data-dismiss="modal" class="btn btn-primary">OK</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<div class="modal fade" id="Sucess-Failure" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h6 class="modal-title">Notification</h6>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group row">
-                                &nbsp;&nbsp;<span id="spn-Sucess-Failure"></span>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" data-dismiss="modal" class="btn btn-primary">OK</button>
-            </div>
-        </div>
-    </div>
-</div>*@
+<script src="~/Scripts/CustomJS/QuotationDetails.js"></script>
 
 
 <script type="text/javascript">
 
     $(document).ready(function () {
 
-        window.GetDdlValueForQuote = '@Url.Action("GetDdlValueForQuote","Quotation")';
+        window.GetDdlValueForQuote = '@Url.Action("GetDdlValueForQuote","Technical")';
         window.QuotationDetailsPopup = '@Url.Action("QuotationPopup", "Technical")';
         window.RevisedQuotationDetailsPopup = '@Url.Action("RevisedQuotationPopup", "Technical")';
-        window.DeleteQuotationDetail = '@Url.Action("DeleteQuotationDetail", "Quotation")';
+        window.DeleteQuotationDetail = '@Url.Action("DeleteQuotationDetail", "Technical")';
         window.FetchQuoteRegList = '@Url.Action("FetchQuoteRegList", "Technical")';
         window.GetPrepQuoteNo = '@Url.Action("GetPrepQuoteNo", "Technical")';
-        
+
 
         $('#QTQuoteType').chosen({
             width: "210px",
@@ -311,14 +256,14 @@
 
         $('#QTCustomerId').chosen({
             width: "210px",
-            placeholder_text_single: "Select Customer Id",
-            placeholder_text_multiple: "Select Customer Id"
+            placeholder_text_single: "Select Customer",
+            placeholder_text_multiple: "Select Customer"
         });
 
-        $('#QTProductGroup').chosen({
+        $('#QTSubject').chosen({
             width: "210px",
-            placeholder_text_single: "Select Product Group",
-            placeholder_text_multiple: "Select Product Group"
+            placeholder_text_single: "Select Subject",
+            placeholder_text_multiple: "Select Subject"
         });
 
         $('#QTDeliveryTerms').chosen({
@@ -326,6 +271,7 @@
             placeholder_text_single: "Select Delivery Terms",
             placeholder_text_multiple: "Select Delivery Terms"
         });
+
 
         $("#QTQuoteType").chosen().change(
             function GetQuoteType() {
@@ -366,7 +312,8 @@
         $("#QTCustomerId").chosen().change(
             function GetProductGroup() {
                 //var CustomerId = $('#QTCustomerId').val();
-                debugger;
+                var QuoteType = $('#QTQuoteType').val();
+
                 var CustomerId = '';
                 var x = document.getElementById("QTCustomerId");
                 for (var i = 0; i < x.options.length; i++) {
@@ -383,13 +330,62 @@
                     dataType: 'json',
                     type: 'GET',
                     url: window.GetDdlValueForQuote,
-                    data: { CustomerId: CustomerId, type: 'ProductGroup' },
+                    data: { CustomerId: CustomerId, QuoteType: QuoteType, type: 'Subject' },
                     success: function (res) {
                         if (res.length > 0) {
-                            $("#QTProductGroup").empty();
+                            $("#QTSubject").empty();
                             $.each(res, function (i, item) {
-                                $("#QTProductGroup").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
-                                $("#QTProductGroup").trigger("chosen:updated");
+                                $("#QTSubject").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
+                                $("#QTSubject").trigger("chosen:updated");
+                            })
+                        }
+                    },
+                    error: function (result) {
+                        alert(result)
+                    }
+                });
+            }
+        )
+
+        $("#QTSubject").chosen().change(
+            function GetSubject() {
+                //var CustomerId = $('#QTCustomerId').val();
+                var QuoteType = $('#QTQuoteType').val();
+
+                var CustomerId = '';
+                var x = document.getElementById("QTCustomerId");
+                for (var i = 0; i < x.options.length; i++) {
+                    if (x.options[i].selected == true) {
+                        //alert(x.options[i].value);
+                        CustomerId = CustomerId + x.options[i].value + ',';
+                    }
+                }
+
+                CustomerId = CustomerId.substring(0, CustomerId.length - 1);
+
+                var SubjectId = '';
+                var x = document.getElementById("QTSubject");
+                for (var i = 0; i < x.options.length; i++) {
+                    if (x.options[i].selected == true) {
+                        //alert(x.options[i].value);
+                        SubjectId = SubjectId + x.options[i].value + ',';
+                    }
+                }
+
+                SubjectId = SubjectId.substring(0, SubjectId.length - 1);
+
+                return $.ajax({
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json',
+                    type: 'GET',
+                    url: window.GetDdlValueForQuote,
+                    data: { CustomerId: CustomerId, QuoteType: QuoteType, SubjectId: SubjectId, type: 'DeliveryTerms' },
+                    success: function (res) {
+                        if (res.length > 0) {
+                            $("#QTDeliveryTerms").empty();
+                            $.each(res, function (i, item) {
+                                $("#QTDeliveryTerms").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
+                                $("#QTDeliveryTerms").trigger("chosen:updated");
                             })
                         }
                     },
@@ -403,33 +399,34 @@
 
     });
 
+    $('#btnClearSearchQuotereg').click(function () {
+
+        $('#QTQuoteType').val([]).trigger('chosen:updated');
+        $('#QTCustomerId').val([]).trigger('chosen:updated');
+        $('#QTSubject').val([]).trigger('chosen:updated');
+        $('#QTDeliveryTerms').val([]).trigger('chosen:updated');
 
 
-    function GetQuoteNoForQuoteType() {
-        let QuoteType = $('#QuoteType').val();
+    });
 
-        $.ajax({
-            type: 'POST',
-            url: window.GetPrepQuoteNo,
-            data: JSON.stringify({ quotetypeId: QuoteType }),
-            contentType: "application/json; charset=utf-8",
-            success: function (res) {
-                $("#QuoteNo").empty();
-                if (res.length > 0) {
-                    $.each(res, function (i, item) {
-                        $("#QuoteNo").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
-                    })
-                }
-            },
-            error: function (x, e) {
-                $('#spn-Sucess-Failure').text('Some error is occurred, Please try after some time.');
-                $('#spn-Sucess-Failure').addClass("important red");
-                $('#Sucess-Failure').modal('show');
-            }
-        })
-    }
+    //angular.module('App').controller('MainController', function ($scope) {
+
+    //    $('#btnClearSearchQuotereg').click(function (e) {
+    //        $scope.$apply(function () {
+    //            $scope.SearchQuoteType = "";
+    //            $scope.SearchQuoteCustomerID = "";
+    //            $scope.SearchSubject = "";
+    //            $scope.SearchDeliveryTerms = "";
+    //        });
+
+    //        angular.element(document.getElementById('tblQuoteReg')).scope().FetchQuotationList();
+
+    //    });
+    //});
+
+
 
 </script>
 
 
-
+<script src="~/Scripts/CustomJS/QuotationDetails.js"></script>

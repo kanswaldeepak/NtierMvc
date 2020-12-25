@@ -13,8 +13,8 @@ namespace NtierMvc.Model
         public int Id { get; set; }
         public string UserInitial { get; set; }
         public string UnitNo { get; set; }
-        public string VendorId { get; set; }
-        public string VendorName { get; set; }
+        public string CustomerId { get; set; }
+        public string CustomerName { get; set; }
         public string QuoteTypeValue { get; set; }
         public string QuoteQtyType { get; set; }
         public string QuoteType { get; set; }
@@ -43,7 +43,9 @@ namespace NtierMvc.Model
         public string PaymentTerms { get; set; }
         public string Inspection { get; set; }
         public string EndUser { get; set; }
-        public string ProductGroup { get; set; }        
+        public string MainProdGrp { get; set; }        
+        public string SubProdGrp { get; set; }        
+        public string ProdName { get; set; }        
         public string ipAddress { get; set; }        
         public string MultiQuoteNos { get; set; }
         public string UploadedFile { get; set; }
@@ -53,8 +55,8 @@ namespace NtierMvc.Model
     {
         public int Id { get; set; }
         public string UnitNo { get; set; }
-        public string VendorId { get; set; }
-        public string VendorName { get; set; }
+        public string CustomerId { get; set; }
+        public string CustomerName { get; set; }
         public string QuoteNo { get; set; }
 
         public string QuoteType { get; set; }

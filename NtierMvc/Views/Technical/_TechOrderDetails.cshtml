@@ -15,20 +15,20 @@
                             Quote Type <span class="required">*</span>
                         </label>
                         @Html.DropDownListFor(m => m.QuoteType, new SelectList(ViewBag.ListQuoteType, "DataStringValueField", "DataTextField", Model.QuoteType), new
-                            {
-                                @class = "form-control requiredValidation clearField",
-                                @id = "QuoteTypeOrder",
-                                @data_inneraction = "validationCall",
-                                @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
-                                @onchange = "GetQuoteNos(); GetSONos();"
-                            })
+                   {
+                       @class = "form-control requiredValidation clearField",
+                       @id = "QuoteTypeOrder",
+                       @data_inneraction = "validationCall",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                       @onchange = "GetQuoteNos(); GetSONo(); ChangeTransport();"
+                   })
                         <span class="HideValidMsg"> Select Quote Type</span>
                     </div>
                 </div>
                 <div class="col-md-2">
                     <div class="form-group">
                         <label class="control-label ">
-                            Quote Type Nature <span class="required">*</span>
+                            PO Supply Nature <span class="required">*</span>
                         </label>
                         @Html.DropDownListFor(m => m.QuoteQtyType, new SelectList(ViewBag.ListQuoteQtyType, "DataStringValueField", "DataTextField", Model.QuoteQtyType), new
                    {
@@ -60,7 +60,7 @@
                 <div class="col-md-2">
                     <div class="form-group">
                         <label class="control-label">
-                            SO No. <span class="required">*</span>
+                            WA No. <span class="required">*</span>
                         </label>
                         @Html.DropDownListFor(m => m.SoNo, new SelectList(ViewBag.ListSoNo, "DataStringValueField", "DataTextField", Model.SoNo), new
                    {
@@ -90,34 +90,34 @@
                 <div class="col-md-2">
                     <div class="form-group">
                         <label class="control-label">
-                            VendorId <span class="required">*</span>
+                            Customer Id <span class="required">*</span>
                         </label>
-                        @Html.DropDownListFor(m => m.VendorId, new SelectList(@ViewBag.ListVendorId, "DataStringValueField", "DataTextField", Model.VendorId),
+                        @Html.DropDownListFor(m => m.CustomerId, new SelectList(@ViewBag.ListCustomerId, "DataStringValueField", "DataTextField", Model.CustomerId),
                            new
                            {
                                @class = "form-control requiredValidation",
-                               @id = "VendorIdOrder",
+                               @id = "CustomerIdOrder",
                                @data_inneraction = "validationCall",
                                @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
                                @onchange = "GetVendorDetails()",
                                @readonly = "readonly"
                            })
-                        <span class="HideValidMsg"> Select VendorId</span>
+                        <span class="HideValidMsg"> Select Customer Id</span>
                     </div>
                 </div>
                 <div class="col-md-2">
                     <div class="form-group">
                         <label class="control-label">
-                            Vendor Name <span class="required">*</span>
+                            Customer Name <span class="required">*</span>
                         </label>
-                        @Html.TextBoxFor(m => m.VendorName, new
+                        @Html.TextBoxFor(m => m.CustomerName, new
                    {
                        @class = "form-control requiredValidation",
-                       @id = "VendorNameOrder",
+                       @id = "CustomerNameOrder",
                        @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
                        @readonly = "readonly"
                    })
-                        <span class="HideValidMsg"> Select Vendor Name</span>
+                        <span class="HideValidMsg"> Select Customer Name</span>
                     </div>
                 </div>
                 <div class="col-md-2">
@@ -135,22 +135,53 @@
 
                     </div>
                 </div>
-                <div class="col-md-2">
-                    <div class="form-group">
-                        <label class="control-label">
-                            Product Group <span class="required">*</span>
-                        </label>
-                        @Html.DropDownListFor(m => m.ProductGroup, new SelectList(ViewBag.ListProdGrpId, "DataStringValueField", "DataTextField", Model.ProductGroup),
-                           new
-                           {
-                               @class = "form-control requiredValidation",
-                               @id = "ProductGroupOrder",
-                               @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
-                               @readonly = "readonly"
-                           })
-                        <span class="HideValidMsg"> Enter ProductGroup</span>
-                    </div>
+                @*<div class="col-md-2">
+                <div class="form-group">
+                    <label class="control-label">
+                        Main Product Group
+                    </label>
+                    @Html.DropDownListFor(m => m.MainProdGrp, new SelectList(ViewBag.ListMainProdGrp, "DataStringValueField", "DataTextField", Model.MainProdGrp),
+                       new
+                       {
+                           @class = "form-control requiredValidation",
+                           @id = "MainProdGrp",
+                           @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                           @onchange = "GetSubProductGrps()"
+                       })
+                    <span class="HideValidMsg">Please Select Main Product Group</span>
                 </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label class="control-label">
+                        Sub Product Group
+                    </label>
+                    @Html.DropDownListFor(m => m.SubProdGrp, new SelectList(ViewBag.ListSubProdGrp, "DataStringValueField", "DataTextField", Model.SubProdGrp),
+                       new
+                       {
+                           @class = "form-control requiredValidation",
+                           @id = "SubProdGrp",
+                           @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                           @onchange = "GetProdName()"
+                       })
+                    <span class="HideValidMsg">Please Select Sub Product Group</span>
+                </div>
+            </div>
+        <div class="col-md-2">
+            <div class="form-group">
+                <label class="control-label">
+                    Product Name
+                </label>
+                @Html.DropDownListFor(m => m.ProdName, new SelectList(ViewBag.ListProdName, "DataStringValueField", "DataTextField", Model.ProdName),
+                   new
+                   {
+                       @class = "form-control requiredValidation",
+                       @id = "ProdName",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                   })
+                <span class="HideValidMsg">Please Select Product Name</span>
+            </div>
+        </div>*@
                 <div class="col-md-2">
                     <div class="form-group">
                         <label class="control-label">
@@ -310,14 +341,13 @@
                 <div class="col-md-2">
                     <div class="form-group">
                         <label class="control-label">
-                            Consignee Name <span class="required">*</span>
+                            Consignee Name
                         </label>
                         @Html.TextBoxFor(m => m.ConsigneeName, new
                    {
-                       @class = "form-control requiredValidation",
+                       @class = "form-control",
                        @id = "ConsigneeNameOrder",
-                       @placeholder = " Enter ConsigneeName",
-                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                       @placeholder = " Enter ConsigneeName"
                    })
                         <span class="HideValidMsg"> Enter Consignee Name</span>
                     </div>
@@ -325,14 +355,13 @@
                 <div class="col-md-2">
                     <div class="form-group">
                         <label class="control-label">
-                            Consignee Location <span class="required">*</span>
+                            Consignee Location
                         </label>
                         @Html.TextBoxFor(m => m.ConsigneeLocation, new
                    {
-                       @class = "form-control requiredValidation",
+                       @class = "form-control",
                        @id = "ConsigneeLocationOrder",
-                       @placeholder = " Enter ConsigneeLocation",
-                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                       @placeholder = " Enter ConsigneeLocation"
                    })
                         <span class="HideValidMsg"> Enter Consignee Location</span>
                     </div>
@@ -340,13 +369,12 @@
                 <div class="col-md-2">
                     <div class="form-group">
                         <label class="control-label">
-                            Mode Of Shipment <span class="required">*</span>
+                            Mode Of Shipment
                         </label>
-                        @Html.TextBoxFor(m => m.ModeOfShipment, new
+                        @Html.DropDownListFor(m => m.ModeOfShipment, new SelectList(ViewBag.ListModeOfDespatch, "DataStringValueField", "DataTextField", Model.ModeOfShipment), new
                    {
-                       @class = "form-control",
-                       @id = "ModeOfShipmentOrder",
-                       @placeholder = " Enter ModeOfShipment",
+                       @id = "ModeOfShipment",
+                       @class = "form-control requiredValidation",
                        @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
                    })
                         <span class="HideValidMsg"> Enter ModeOfShipment</span>
@@ -385,14 +413,13 @@
                 <div class="col-md-2">
                     <div class="form-group">
                         <label class="control-label">
-                            End-User <span class="required">*</span>
+                            End-User
                         </label>
                         @Html.TextBoxFor(m => m.EndUser, new
                    {
-                       @class = "form-control requiredValidation",
+                       @class = "form-control",
                        @id = "EndUserOrder",
-                       @placeholder = "Enter EndUser",
-                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                       @placeholder = "Enter EndUser"
                    })
                         <span class="HideValidMsg"> Enter End User</span>
                     </div>
@@ -487,15 +514,15 @@
 
 
     function GetVendorDetails() {
-        var VendorId = $("#VendorIdOrder").val();
+        var VendorId = $("#CustomerIdOrder").val();
         $.ajax({
             type: 'POST',
             url: window.VendorDetail,
             data: JSON.stringify({ vendorId: VendorId }),
             contentType: "application/json; charset=utf-8",
             success: function (res) {
-                $("#VendorNameOrder").val(res.quoteEntity.VendorName);
-                $("#POEntityOrder").val(res.quoteEntity.VendorName);
+                $("#CustomerNameOrder").val(res.quoteEntity.CustomerName);
+                $("#POEntityOrder").val(res.quoteEntity.CustomerName);
                 $("#Country").val(res.quoteEntity.Country);
                 $("#CountryId").val(res.quoteEntity.CountryId);
                 $("#GeoArea").val(res.quoteEntity.GeoArea);
@@ -535,7 +562,7 @@
         })
     }
 
-    function GetSONos() {
+    function GetSONo() {
         var QuoteType = $("#QuoteTypeOrder").val();
         $.ajax({
             type: 'POST',
@@ -560,7 +587,7 @@
     function GetQuoteDetails() {
         var QuoteType = $("#QuoteTypeOrder").val();
         var QuoteNo = $("#QuoteNoOrder").val();
-        
+
         //var MultiQuoteNos = $('#MultiQuoteNos').val();
         //count = count + 1;
         //if (count > 1 && $('#MultiQuoteNos').val()!='') {
@@ -572,18 +599,22 @@
 
         //if ($("#QuoteNoOrder option:selected").val() != '')
         //$('#MultiQuoteNos').val(MultiQuoteNos);
-        
+
         $.ajax({
             type: 'POST',
             url: window.GetOrderDetailsForQuote,
             data: JSON.stringify({ quoteType: QuoteType, quoteNoId: QuoteNo }),
             contentType: "application/json; charset=utf-8",
             success: function (data) {
-                $('#VendorIdOrder').val(data.VendorId);
-                $('#VendorNameOrder').val(data.VendorName);
-                $('#FileNo').val(data.FileNo);
+                $('#CustomerIdOrder').val(data.oEntity.CustomerId);
+                $('#POEntityOrder').val(data.oEntity.CustomerName);
+                $('#CustomerNameOrder').val(data.oEntity.CustomerName);
+                $('#FileNo').val(data.oEntity.FileNo);
+                $('#PoLocationOrder').val(data.oEntity.PoLocation);
+                $('#CurrencyOrder').val(data.oEntity.Curr);
+                $('#DeliveryTermsyOrder').val(data.oEntity.DeliveryTerms);
                 //$('#SoNo').val(data.SoNo);
-                $('#ProdGrp').val(data.ProductGroup);
+                $('#ProdGrp').val(data.oEntity.ProductGroup);
             },
             error: function (x, e) {
                 alert('Some error is occurred, Please try after some time.');
@@ -601,7 +632,24 @@
         else {
             $("#SoNoOrder").prop("disabled", false);
         }
-        
+
+    }
+
+    function ChangeTransport() {
+
+        var QuoteType = $('#QuoteTypeOrder option:selected').text();
+
+        if (QuoteType == 'Domestic') {
+            $("#ModeOfShipment").find("option:contains(Road)").show();
+            $("#ModeOfShipment").find("option:contains(Hand)").show();
+            $("#ModeOfShipment").find("option:contains(Sea)").hide();
+        }
+        else {
+            $("#ModeOfShipment").find("option:contains(Road)").hide();
+            $("#ModeOfShipment").find("option:contains(Hand)").hide();
+            $("#ModeOfShipment").find("option:contains(Sea)").show();
+
+        }
     }
 
     $('.NoEndDate').datepicker({

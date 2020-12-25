@@ -15,12 +15,12 @@ namespace NtierMvc.BusinessLogic.Interface
         EnquiryEntity GetUserCustDetails(string unitNo);
         string DeleteEnquiryDetail(int EnquiryId);
 
-        EnquiryEntityDetails GetEnquiryDetails(int pageIndex, int pageSize, string SearchEnqName = null, string SearchEnqVendorID = null, string SearchProductGroup = null, string SearchMonth = null, string SearchEOQ = null);
+        EnquiryEntityDetails GetEnquiryDetails(int pageIndex, int pageSize, string SearchEQEnqType, string SearchCustomerName = null, string SearchEnqFor = null, string SearchEQDueDate = null, string SearchEOQ = null);
 
         EnquiryEntity EnquiryDetailsPopup(EnquiryEntity Model);
         List<DropDownEntity> GetCityName(string VendorName);
-        EnquiryEntity GetVendorDetailForEnquiry(string vendorId);
-        List<DropDownEntity> GetDdlValueForEnquiry(string type, string EOQId=null, string ProductGroup = null, string VendorId = null);
+        EnquiryEntity GetVendorDetailForEnquiry(string CustomerId);
+        List<DropDownEntity> GetDdlValueForEnquiry(string type, string EnqType = null, string CustomerId = null, string EnqFor = null, string DueDate = null);
 
     }
 }

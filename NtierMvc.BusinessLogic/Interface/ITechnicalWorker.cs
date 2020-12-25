@@ -18,7 +18,7 @@ namespace NtierMvc.BusinessLogic.Interface
         QuotationEntity GetVendorQuoteDetails(string vendorId);
         string DeleteQuotationDetail(int QuotationId);
 
-        QuotationEntityDetails GetQuoteRegList(int pageIndex, int pageSize, string SearchQuotRegVendorID = null, string SearchQuotRegVendorName = null, string SearchQuotRegQuoteNo = null, string SearchQuotRegProductGrp = null, string SearchQuotRegEnqFor = null, string SearchQuotRegQuoteType = null);
+        QuotationEntityDetails GetQuoteRegList(int pageIndex, int pageSize, string SearchQuoteType = null, string SearchQuoteCustomerID = null, string SearchSubject = null, string SearchDeliveryTerms = null);
 
         QuotationEntity QuotationDetailsPopup(QuotationEntity Model);
         List<DropDownEntity> GetCityName(string VendorName);
@@ -29,7 +29,7 @@ namespace NtierMvc.BusinessLogic.Interface
         List<DropDownEntity> GetQuoteItemSlNoList(string quotetypeId="", string SoNo = null);
         List<DropDownEntity> GetEnqNoList(string vendorId = null);
         List<DropDownEntity> GetQuoteEnqNoList(QuotationEntity qE);
-        List<ProductEntity> GetPrepProductNames(string productNameId, string productTypeId);
+        List<ProductEntity> GetPrepProductNames(string productNameId, string productTypeId, string type = null);
 
         //Order Methods
         string SaveOrderDetail(OrderEntity orderEntity);

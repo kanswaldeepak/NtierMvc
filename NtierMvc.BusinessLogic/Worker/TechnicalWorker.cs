@@ -114,8 +114,8 @@ namespace NtierMvc.BusinessLogic.Worker
                 if (dtRecord.Rows.Count > 0)
                 {
                     oVendor.UnitNo = Convert.ToString(dtRecord.Rows[0]["Id"]);
-                    oVendor.CustomerId = Convert.ToString(dtRecord.Rows[0]["VENDORID"]);
-                    oVendor.CustomerName = Convert.ToString(dtRecord.Rows[0]["VendorName"]);
+                    oVendor.CustomerId = Convert.ToString(dtRecord.Rows[0]["CustomerId"]);
+                    oVendor.CustomerName = Convert.ToString(dtRecord.Rows[0]["CustomerName"]);
                 }
             }
             catch (Exception Ex)
@@ -160,13 +160,13 @@ namespace NtierMvc.BusinessLogic.Worker
         }
 
 
-        public QuotationEntityDetails GetQuoteRegList(int pageIndex, int pageSize, string SearchQuotRegVendorID = null, string SearchQuotRegVendorName = null, string SearchQuotRegQuoteNo = null, string SearchQuotRegProductGrp = null, string SearchQuotRegEnqFor = null, string SearchQuotRegQuoteType = null)
+        public QuotationEntityDetails GetQuoteRegList(int pageIndex, int pageSize, string SearchQuoteType = null, string SearchQuoteCustomerID = null, string SearchSubject = null, string SearchDeliveryTerms = null)
         {
             try
             {
                 QuotationEntityDetails qED = new QuotationEntityDetails();
                 qED.lstQuoteEntity = new List<QuotationEntity>();
-                DataSet ds = _repository.GetQuoteRegList(pageIndex, pageSize, SearchQuotRegVendorID, SearchQuotRegVendorName, SearchQuotRegQuoteNo, SearchQuotRegProductGrp, SearchQuotRegEnqFor, SearchQuotRegQuoteType);
+                DataSet ds = _repository.GetQuoteRegList(pageIndex, pageSize, SearchQuoteType, SearchQuoteCustomerID, SearchSubject, SearchDeliveryTerms);
                 //DataTable dt = _repository.GetQuotationDetails();
 
                 if (ds.Tables.Count > 0)
@@ -185,8 +185,8 @@ namespace NtierMvc.BusinessLogic.Worker
                                 obj.Id = dr1.IsNull("Id") ? 0 : Convert.ToInt32(dr1["Id"]);
                                 obj.UserInitial = dr1.IsNull("UserInitial") ? string.Empty : Convert.ToString(dr1["UserInitial"]);
                                 obj.UnitNo = dr1.IsNull("UnitNo") ? string.Empty : Convert.ToString(dr1["UnitNo"]);
-                                obj.CustomerId = dr1.IsNull("VendorId") ? string.Empty : Convert.ToString(dr1["VendorId"]);
-                                obj.CustomerName = dr1.IsNull("VendorName") ? string.Empty : Convert.ToString(dr1["VendorName"]);
+                                obj.CustomerId = dr1.IsNull("CustomerId") ? string.Empty : Convert.ToString(dr1["CustomerId"]);
+                                obj.CustomerName = dr1.IsNull("CustomerName") ? string.Empty : Convert.ToString(dr1["CustomerName"]);
                                 obj.QuoteType = dr1.IsNull("QuoteType") ? string.Empty : Convert.ToString(dr1["QuoteType"]);
                                 obj.FileNo = dr1.IsNull("FileNo") ? string.Empty : Convert.ToString(dr1["FileNo"]);
                                 obj.EnqRef = dr1.IsNull("EnqRef") ? string.Empty : Convert.ToString(dr1["EnqRef"]);
@@ -199,10 +199,14 @@ namespace NtierMvc.BusinessLogic.Worker
                                 obj.Remarks = dr1.IsNull("Remarks") ? string.Empty : Convert.ToString(dr1["Remarks"]);
                                 obj.Country = dr1.IsNull("Country") ? string.Empty : Convert.ToString(dr1["Country"]);
                                 obj.EnqFor = dr1.IsNull("EnqFor") ? string.Empty : Convert.ToString(dr1["EnqFor"]);
-                                obj.ProdGrp = dr1.IsNull("ProdGrp") ? string.Empty : Convert.ToString(dr1["ProdGrp"]);
+                                obj.MainProdGrp = dr1.IsNull("ProdGrp") ? string.Empty : Convert.ToString(dr1["ProdGrp"]);
                                 obj.GeoArea = dr1.IsNull("GeoArea") ? string.Empty : Convert.ToString(dr1["GeoArea"]);
                                 obj.Status = dr1.IsNull("Status") ? string.Empty : Convert.ToString(dr1["Status"]);
                                 obj.Currency = dr1.IsNull("Currency") ? string.Empty : Convert.ToString(dr1["Currency"]);
+                                obj.EnqDt = dr1.IsNull("EnqDt") ? string.Empty : Convert.ToString(dr1["EnqDt"]);
+                                obj.EnqNo = dr1.IsNull("EnqNo") ? string.Empty : Convert.ToString(dr1["EnqNo"]);
+                                obj.Subject = dr1.IsNull("Subject") ? string.Empty : Convert.ToString(dr1["Subject"]);
+                                obj.DeliveryTerms = dr1.IsNull("DeliveryTerms") ? string.Empty : Convert.ToString(dr1["DeliveryTerms"]);
 
                                 qED.lstQuoteEntity.Add(obj);
                             }
@@ -247,7 +251,7 @@ namespace NtierMvc.BusinessLogic.Worker
                     Model.FileNo = dt1.Rows[0]["FileNo"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["FileNo"]);
                     Model.EnqRef = dt1.Rows[0]["EnqRef"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["EnqRef"]);
                     Model.EnqDt = dt1.Rows[0]["EnqDt"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["EnqDt"]);
-                    Model.QuoteNo = dt1.Rows[0]["QuoteNo"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["QuoteNo"]);
+                    Model.QuoteNo = dt1.Rows[0]["QuoteNoView"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["QuoteNoView"]);
                     Model.QuoteDate = dt1.Rows[0]["QuoteDate"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["QuoteDate"]);
                     Model.QuoteValidity = dt1.Rows[0]["QuoteValidity"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["QuoteValidity"]);
                     Model.BgReq = dt1.Rows[0]["BgReq"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["BgReq"]);
@@ -608,12 +612,12 @@ namespace NtierMvc.BusinessLogic.Worker
             }
         }
 
-        public List<ProductEntity> GetPrepProductNames(string productId, string casingSize)
+        public List<ProductEntity> GetPrepProductNames(string productId, string casingSize, string type = null)
         {
             try
             {
                 List<ProductEntity> lstProdEnt = new List<ProductEntity>();
-                DataTable dt = _repository.GetPrepProductNames(productId, casingSize);
+                DataTable dt = _repository.GetPrepProductNames(productId, casingSize, type);
                 ProductEntity entity;
                 ProductDetails eDet;
 
@@ -623,20 +627,15 @@ namespace NtierMvc.BusinessLogic.Worker
                     entity = new ProductEntity();
 
                     //Start
-                    if (dt.Columns.Contains("Id"))
-                        entity.Id = Convert.ToInt32(dt.Rows[0]["Id"] ?? 0);
+                    
+                    if (dt.Columns.Contains("CasingSize"))
+                        entity.CasingSize = dt.Rows[0]["CasingSize"]?.ToString() ?? "";
+                    if (dt.Columns.Contains("Connection"))
+                        entity.Connection = dt.Rows[0]["Connection"]?.ToString() ?? "";
+                    if (dt.Columns.Contains("MaterialGrade"))
+                        entity.MaterialGrade = dt.Rows[0]["MaterialGrade"]?.ToString() ?? "";
 
-                    if (dt.Columns.Contains("ProductName"))
-                        entity.ProductName = dt.Rows[0]["ProductName"]?.ToString() ?? "";
 
-                    if (dt.Columns.Contains("ProductCode"))
-                        entity.ProductCode = dt.Rows[0]["ProductCode"]?.ToString() ?? "";
-
-                    if (dt.Columns.Contains("PL"))
-                        entity.PL = dt.Rows[0]["PL"]?.ToString() ?? "";
-
-                    if (dt.Columns.Contains("ProductNo"))
-                        entity.ProductNo = dt.Rows[0]["ProductNo"]?.ToString() ?? "";
                     if (dt.Columns.Contains("Pos1"))
                         entity.Pos1 = dt.Rows[0]["Pos1"]?.ToString() ?? "";
                     if (dt.Columns.Contains("Pos2"))
@@ -647,16 +646,17 @@ namespace NtierMvc.BusinessLogic.Worker
                         entity.Pos4 = dt.Rows[0]["Pos4"]?.ToString() ?? "";
                     if (dt.Columns.Contains("Pos5"))
                         entity.Pos5 = dt.Rows[0]["Pos5"]?.ToString() ?? "";
-                    if (dt.Columns.Contains("Pos6"))
-                        entity.Pos6 = dt.Rows[0]["Pos6"]?.ToString() ?? "";
-                    if (dt.Columns.Contains("Pos7"))
-                        entity.Pos7 = dt.Rows[0]["Pos7"]?.ToString() ?? "";
-                    if (dt.Columns.Contains("Pos8"))
-                        entity.Pos8 = dt.Rows[0]["Pos8"]?.ToString() ?? "";
-                    if (dt.Columns.Contains("Pos9"))
-                        entity.Pos9 = dt.Rows[0]["Pos9"]?.ToString() ?? "";
-                    if (dt.Columns.Contains("Pos10"))
-                        entity.Pos10 = dt.Rows[0]["Pos10"]?.ToString() ?? "";
+                    //if (dt.Columns.Contains("Pos6"))
+                    //    entity.Pos6 = dt.Rows[0]["Pos6"]?.ToString() ?? "";
+                    //if (dt.Columns.Contains("Pos7"))
+                    //    entity.Pos7 = dt.Rows[0]["Pos7"]?.ToString() ?? "";
+                    //if (dt.Columns.Contains("Pos8"))
+                    //    entity.Pos8 = dt.Rows[0]["Pos8"]?.ToString() ?? "";
+                    //if (dt.Columns.Contains("Pos9"))
+                    //    entity.Pos9 = dt.Rows[0]["Pos9"]?.ToString() ?? "";
+                    //if (dt.Columns.Contains("Pos10"))
+                    //    entity.Pos10 = dt.Rows[0]["Pos10"]?.ToString() ?? "";
+
                     if (dt.Columns.Contains("DES"))
                         entity.DES = dt.Rows[0]["DES"]?.ToString() ?? "";
 
@@ -668,35 +668,35 @@ namespace NtierMvc.BusinessLogic.Worker
 
                     //End
 
-                    StringBuilder sb = new StringBuilder();
-                    foreach (DataRow dr in dt.Rows)
-                    {
-                        ProductAccessories entity1 = new ProductAccessories();
+                    //StringBuilder sb = new StringBuilder();
+                    //foreach (DataRow dr in dt.Rows)
+                    //{
+                    //    ProductAccessories entity1 = new ProductAccessories();
 
-                        if (dt.Columns.Contains("ProductNamePA"))
-                            entity1.ProductNamePA = dr["ProductNamePA"]?.ToString() ?? "";
+                    //    if (dt.Columns.Contains("ProductNamePA"))
+                    //        entity1.ProductNamePA = dr["ProductNamePA"]?.ToString() ?? "";
 
-                        //if (dt.Columns.Contains("ProductCodePA"))
-                        //    entity1.ProductCodePA = dr["ProductCodePA"]?.ToString() ?? "";
+                    //    //if (dt.Columns.Contains("ProductCodePA"))
+                    //    //    entity1.ProductCodePA = dr["ProductCodePA"]?.ToString() ?? "";
 
-                        //if (dt.Columns.Contains("MasterProductName"))
-                        //    entity1.MasterProductName = dr["MasterProductName"]?.ToString() ?? "";
+                    //    //if (dt.Columns.Contains("MasterProductName"))
+                    //    //    entity1.MasterProductName = dr["MasterProductName"]?.ToString() ?? "";
 
-                        //if (dt.Columns.Contains("Pos1PA"))
-                        //    entity1.Pos1PA = dr["Pos1PA"]?.ToString() ?? "";
-                        //if (dt.Columns.Contains("Pos2PA"))
-                        //    entity1.Pos2PA = dr["Pos2PA"]?.ToString() ?? "";
-                        //if (dt.Columns.Contains("Pos3PA"))
-                        //    entity1.Pos3PA = dr["Pos3PA"]?.ToString() ?? "";
-                        //if (dt.Columns.Contains("Pos4PA"))
-                        //    entity1.Pos4PA = dr["Pos4PA"]?.ToString() ?? "";
-                        //if (dt.Columns.Contains("Pos5PA"))
-                        //    entity1.Pos5PA = dr["Pos5PA"]?.ToString() ?? "";
+                    //    //if (dt.Columns.Contains("Pos1PA"))
+                    //    //    entity1.Pos1PA = dr["Pos1PA"]?.ToString() ?? "";
+                    //    //if (dt.Columns.Contains("Pos2PA"))
+                    //    //    entity1.Pos2PA = dr["Pos2PA"]?.ToString() ?? "";
+                    //    //if (dt.Columns.Contains("Pos3PA"))
+                    //    //    entity1.Pos3PA = dr["Pos3PA"]?.ToString() ?? "";
+                    //    //if (dt.Columns.Contains("Pos4PA"))
+                    //    //    entity1.Pos4PA = dr["Pos4PA"]?.ToString() ?? "";
+                    //    //if (dt.Columns.Contains("Pos5PA"))
+                    //    //    entity1.Pos5PA = dr["Pos5PA"]?.ToString() ?? "";
 
-                        sb.Append(entity1.ProductNamePA + "\r\n");
-                    }
+                    //    sb.Append(entity1.ProductNamePA + "\r\n");
+                    //}
 
-                    entity.subProductDetails = sb.ToString();
+                    //entity.subProductDetails = sb.ToString();
 
                     lstProdEnt.Add(entity);
                 }
@@ -789,8 +789,8 @@ namespace NtierMvc.BusinessLogic.Worker
                 if (dtRecord.Rows.Count > 0)
                 {
                     oVendor.UnitNo = Convert.ToString(dtRecord.Rows[0]["Id"]);
-                    oVendor.VendorId = Convert.ToString(dtRecord.Rows[0]["VENDORID"]);
-                    oVendor.VendorName = Convert.ToString(dtRecord.Rows[0]["VendorName"]);
+                    oVendor.CustomerId = Convert.ToString(dtRecord.Rows[0]["VENDORID"]);
+                    oVendor.CustomerName = Convert.ToString(dtRecord.Rows[0]["VendorName"]);
                 }
             }
             catch (Exception Ex)
@@ -927,8 +927,8 @@ namespace NtierMvc.BusinessLogic.Worker
                     Model.Id = dt1.Rows[0]["Id"] == DBNull.Value ? 0 : Convert.ToInt32(dt1.Rows[0]["Id"]);
                     Model.UserInitial = dt1.Rows[0]["UserInitial"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["UserInitial"]);
                     Model.UnitNo = dt1.Rows[0]["UnitNo"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["UnitNo"]);
-                    Model.VendorId = dt1.Rows[0]["VendorId"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["VendorId"]);
-                    Model.VendorName = dt1.Rows[0]["VendorName"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["VendorName"]);
+                    Model.CustomerId = dt1.Rows[0]["VendorId"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["VendorId"]);
+                    Model.CustomerName = dt1.Rows[0]["VendorName"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["VendorName"]);
                     Model.QuoteTypeValue = dt1.Rows[0]["QuoteTypeValue"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["QuoteTypeValue"]);
                     Model.QuoteQtyType = dt1.Rows[0]["QuoteQtyType"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["QuoteQtyType"]);
                     Model.QuoteType = dt1.Rows[0]["QuoteType"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["QuoteType"]);
@@ -955,7 +955,7 @@ namespace NtierMvc.BusinessLogic.Worker
                     Model.ExWorkValue = dt1.Rows[0]["ExWorkValue"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["ExWorkValue"]);
                     Model.Inspection = dt1.Rows[0]["Inspection"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["Inspection"]);
                     Model.EndUser = dt1.Rows[0]["EndUser"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["EndUser"]);
-                    Model.ProductGroup = dt1.Rows[0]["ProductGroup"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["ProductGroup"]);
+                    Model.MainProdGrp = dt1.Rows[0]["ProductGroup"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["ProductGroup"]);
                     Model.MultiQuoteNos = dt1.Rows[0]["MultiQuoteNos"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["MultiQuoteNos"]);
                 }
             }
@@ -1069,11 +1069,11 @@ namespace NtierMvc.BusinessLogic.Worker
                         if (dt.Columns.Contains("Id"))
                             orderEntity.Id = Convert.ToInt32(dr["Id"] ?? 0);
 
-                        if (dt.Columns.Contains("VENDORID"))
-                            orderEntity.VendorId = dr["VENDORID"]?.ToString() ?? "";
+                        if (dt.Columns.Contains("CustomerID"))
+                            orderEntity.CustomerId = dr["CustomerID"]?.ToString() ?? "";
 
-                        if (dt.Columns.Contains("VENDORNAME"))
-                            orderEntity.VendorName = dr["VENDORNAME"]?.ToString() ?? "";
+                        if (dt.Columns.Contains("CustomerNAME"))
+                            orderEntity.CustomerName = dr["CustomerNAME"]?.ToString() ?? "";
 
                         if (dt.Columns.Contains("FILENO"))
                             orderEntity.FileNo = dr["FILENO"]?.ToString() ?? "";
@@ -1082,7 +1082,16 @@ namespace NtierMvc.BusinessLogic.Worker
                             orderEntity.SoNo = dr["SoNo"]?.ToString() ?? "";
 
                         if (dt.Columns.Contains("ProdGrp"))
-                            orderEntity.ProductGroup = dr["ProdGrp"]?.ToString() ?? "";
+                            orderEntity.MainProdGrp = dr["ProdGrp"]?.ToString() ?? "";
+
+                        if (dt.Columns.Contains("Country"))
+                            orderEntity.PoLocation = dr["Country"]?.ToString() ?? "";
+
+                        if (dt.Columns.Contains("Currency"))
+                            orderEntity.Curr = dr["Currency"]?.ToString() ?? "";
+
+                        if (dt.Columns.Contains("DeliveryTerms"))
+                            orderEntity.DeliveryTerms = dr["DeliveryTerms"]?.ToString() ?? "";
                     }
                 }
 
@@ -1115,11 +1124,11 @@ namespace NtierMvc.BusinessLogic.Worker
                         if (dt.Columns.Contains("PONO"))
                             itemEntity.PoNo = dr["PONO"]?.ToString() ?? "";
 
-                        if (dt.Columns.Contains("VENDORID"))
-                            itemEntity.VendorId = dr["VENDORID"]?.ToString() ?? "";
+                        if (dt.Columns.Contains("CustomerID"))
+                            itemEntity.CustomerId = dr["CustomerID"]?.ToString() ?? "";
 
-                        if (dt.Columns.Contains("VENDORNAME"))
-                            itemEntity.VendorName = dr["VENDORNAME"]?.ToString() ?? "";
+                        if (dt.Columns.Contains("CustomerNAME"))
+                            itemEntity.CustomerName = dr["CustomerNAME"]?.ToString() ?? "";
 
                         if (dt.Columns.Contains("PODATE"))
                             itemEntity.PoDate = dr["PODATE"]?.ToString() ?? "";
@@ -1249,7 +1258,7 @@ namespace NtierMvc.BusinessLogic.Worker
                             quoteEntity.Id = Convert.ToInt32(dr["Id"] ?? 0);
 
                         if (dt.Columns.Contains("VENDORNAME"))
-                            quoteEntity.VendorName = dr["VENDORNAME"]?.ToString() ?? "";
+                            quoteEntity.CustomerName = dr["VENDORNAME"]?.ToString() ?? "";
 
                         if (dt.Columns.Contains("EnqSrNo"))
                             quoteEntity.EnqSrNo = dr["EnqSrNo"]?.ToString() ?? "";
@@ -1382,23 +1391,23 @@ namespace NtierMvc.BusinessLogic.Worker
                             quoteEntity.Id = Convert.ToInt32(dr["Id"] ?? 0);
 
                         if (dt.Columns.Contains("VendorId"))
-                            quoteEntity.VendorId = dr["VendorId"]?.ToString() ?? "";
+                            quoteEntity.CustomerId = dr["VendorId"]?.ToString() ?? "";
 
                         if (dt.Columns.Contains("VENDORNAME"))
-                            quoteEntity.VendorName = dr["VENDORNAME"]?.ToString() ?? "";
+                            quoteEntity.CustomerName = dr["VENDORNAME"]?.ToString() ?? "";
 
                         if (dt.Columns.Contains("QuoteNo"))
                             quoteEntity.QuoteNo = dr["QuoteNo"]?.ToString() ?? "";
 
 
                         if (dt.Columns.Contains("VendorName"))
-                            quoteEntity.VendorName = dr["VendorName"]?.ToString() ?? "";
+                            quoteEntity.CustomerName = dr["VendorName"]?.ToString() ?? "";
 
                         if (dt.Columns.Contains("FileNo"))
                             quoteEntity.FileNo = dr["FileNo"]?.ToString() ?? "";
 
                         if (dt.Columns.Contains("ProductGroup"))
-                            quoteEntity.ProductGroup = dr["ProductGroup"]?.ToString() ?? "";
+                            quoteEntity.MainProdGrp = dr["ProductGroup"]?.ToString() ?? "";
 
                         if (dt.Columns.Contains("PoEntity"))
                             quoteEntity.PoEntity = dr["PoEntity"]?.ToString() ?? "";

@@ -38,17 +38,15 @@ namespace NtierMvc.DataAccess.Pool
             return dt;
         }
 
-        public DataSet GetQuoteRegList(int pageIndex, int pageSize, string SearchQuotRegVendorID = null, string SearchQuotRegVendorName = null, string SearchQuotRegQuoteNo = null, string SearchQuotRegProductGrp = null, string SearchQuotRegEnqFor = null, string SearchQuotRegQuoteType = null)
+        public DataSet GetQuoteRegList(int pageIndex, int pageSize, string SearchQuoteType = null, string SearchQuoteCustomerID = null, string SearchSubject = null, string SearchDeliveryTerms = null)
         {
             var parms = new Dictionary<string, object>();
             parms.Add("@pageIndex", pageIndex);
             parms.Add("@pageSize", pageSize);
-            parms.Add("@SearchQuotRegVendorID", SearchQuotRegVendorID);
-            parms.Add("@SearchQuotRegVendorName", SearchQuotRegVendorName);
-            parms.Add("@SearchQuotRegQuoteNo", SearchQuotRegQuoteNo);
-            parms.Add("@SearchQuotRegProductGrp", SearchQuotRegProductGrp);
-            parms.Add("@SearchQuotRegEnqFor", SearchQuotRegEnqFor);
-            parms.Add("@SearchQuotRegQuoteType", SearchQuotRegQuoteType);
+            parms.Add("@SearchDeliveryTerms", SearchDeliveryTerms);
+            parms.Add("@SearchSubject", SearchSubject);
+            parms.Add("@SearchQuoteCustomerID", SearchQuoteCustomerID);
+            parms.Add("@SearchQuoteType", SearchQuoteType);
             string spName = ConfigurationManager.AppSettings["GetQuoteReg"];
             return _dbAccess.GetDataSet(spName, parms);
         }
@@ -57,7 +55,7 @@ namespace NtierMvc.DataAccess.Pool
         {
             DataTable dt = new DataTable();
             var parms = new Dictionary<string, object>();
-            parms.Add("@vendorId", vendorId);
+            parms.Add("@CustomerId", vendorId);
             var spName = ConfigurationManager.AppSettings["GetEnqNoList"];
             dt = _dbAccess.GetDataTable(spName, parms);
             return dt;
@@ -109,12 +107,13 @@ namespace NtierMvc.DataAccess.Pool
             return dt;
         }
 
-        public DataTable GetPrepProductNames(string productId, string casingSize)
+        public DataTable GetPrepProductNames(string productId, string casingSize, string type = null)
         {
             DataTable dt = new DataTable();
             var parms = new Dictionary<string, object>();
             parms.Add("@productId", productId);
             parms.Add("@casingSize", casingSize);
+            parms.Add("@type", type);
             var spName = ConfigurationManager.AppSettings["FetchProductDetailsById"];
             dt = _dbAccess.GetDataTable(spName, parms);
             return dt;

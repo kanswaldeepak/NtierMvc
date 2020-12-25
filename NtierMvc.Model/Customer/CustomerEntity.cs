@@ -41,6 +41,7 @@ namespace NtierMvc.Model.Customer
         public string ContactPerson { get; set; }
         public string Designation { get; set; }
         public string CustomerInitial { get; set; }
+        public string DateOfAssociation { get; set; }
         public int TotalCount { get; set; }
 
     }

@@ -61,6 +61,8 @@ namespace NtierMvc.Infrastructure
 
                 if (list.Any(x => x.DeptName == user.DeptName))
                     return true;
+                else if (user.DeptName == "Administrator")
+                    return true;
                 else if (!string.IsNullOrEmpty(area))
                     return user.Permissions.Any(x => x.PermissionRoute == $"{area}-{controller}-{master}-{action}");
                 else

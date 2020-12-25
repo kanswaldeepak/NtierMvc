@@ -6,6 +6,18 @@
 
 <div ng-controller="ModalController">
     <form id="formSaveQuotationPrepDetail">
+
+        @Html.HiddenFor(m => m.ViewPos1)
+        @Html.HiddenFor(m => m.ViewPos2)
+        @Html.HiddenFor(m => m.ViewPos3)
+        @Html.HiddenFor(m => m.ViewPos4)
+        @Html.HiddenFor(m => m.ViewPos5)
+        @Html.HiddenFor(m => m.ViewPos6)
+        @Html.HiddenFor(m => m.ViewPos7)
+        @Html.HiddenFor(m => m.ViewPos8)
+        @Html.HiddenFor(m => m.ViewPos9)
+        @Html.HiddenFor(m => m.ViewPos10)
+
         <div class="row m--padding-10">
             <div class="col-md-6">
                 <div class="row">
@@ -20,9 +32,9 @@
                                     @id = "QuotePrepFormType",
                                     @data_inneraction = "validationCall",
                                     @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
-                                    @onchange = "GetQuoteNos();"
+                                    @onchange = "QPGetQuoteNos();"
                                 })
-                            <span class="HideValidMsg">Please Select QuoteType</span>
+                            <span class="HideValidMsg">Please Select Quote Type</span>
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -45,26 +57,78 @@
                     <div class="col-md-6">
                         <div class="form-group text-left">
                             <label class="control-label">
-                                Product Line
+                                Main Product Line
                             </label>
-                            @Html.DropDownListFor(m => m.ProductLine, new SelectList(@ViewBag.ListProdGrp, "DataStringValueField", "DataTextField", Model.ProductLine), new
-                            {
-                                @class = "form-control requiredValidation clearField",
-                                @id = "ProductLine",
-                                @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
-                                ng_model = "ProductLine",
-                                ng_change = "GetProductLineDetails(ProductLine)"
+                            @Html.DropDownListFor(m => m.MainProdGrp, new SelectList(@ViewBag.ListMainProdGrp, "DataStringValueField", "DataTextField", Model.MainProdGrp), new
+                       {
+                           @class = "form-control requiredValidation clearField",
+                           @id = "MainProdGrp",
+                           @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                           ng_model = "MainProdGrp",
+                           @onchange = "GetSubProductGrps()"
 
-                            })
+                       })
                             <span class="HideValidMsg">Please Select Product Line</span>
                         </div>
                     </div>
                     <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label">
+                                Sub Product Group
+                            </label>
+                            @Html.DropDownListFor(m => m.SubProdGrp, new SelectList(ViewBag.ListSubProdGrp, "DataStringValueField", "DataTextField", Model.SubProdGrp),
+                               new
+                               {
+                                   @class = "form-control requiredValidation",
+                                   @id = "SubProdGrp",
+                                   @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                                   @onchange = "GetProdName()"
+                               })
+                            <span class="HideValidMsg">Please Select Sub Product Group</span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label">
+                                Product Name
+                            </label>
+                            @Html.DropDownListFor(m => m.ProductName, new SelectList(@ViewBag.ProductNameList, "DataStringValueField", "DataTextField", Model.ProductName), new
+                       {
+                           @class = "form-control requiredValidation clearField",
+                           @id = "ProductName",
+                           @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                           @onchange = "GetProductNumberByName()"
+
+                       })
+                            @*<select id="ProductName" name="ProductName" ng-model="ProductName" class="form-control requiredValidation clearField ng-pristine ng-untouched ng-valid ng-empty" onfocusout="return ValidateRequiredFieldsOnFocusOut(this)" ng-change="GetProductNumber(ProductName)">
+                                <option data-ng-repeat="pN in ProductNameList" value="{{pN.DataStringValueField}}">{{pN.DataTextField}}</option>
+                            </select>*@
+                            <span class="HideValidMsg">Please Select Product Name</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label">
+                                Product Number
+                            </label>
+                            @Html.TextBoxFor(m => m.ProductNo, new
+                               {
+                                   @class = "form-control requiredValidation clearField",
+                                   @style = "background-color : #fff",
+                                   @id = "ProductNo",
+                                   @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                                   @readonly = "readonly"
+                               })
+                            <span class="HideValidMsg">Please Select Product Name</span>
+                        </div>
+                    </div>
+                    @*<div class="col-md-6">
                         <div class="form-group text-left">
                             <label class="control-label">
-                                Vendor Name
+                                Customer Name
                             </label>
-                            @Html.TextBoxFor(m => m.VendorName, new
+                            @Html.TextBoxFor(m => m.CustomerName, new
                            {
                                @class = "form-control requiredValidation",
                                @id = "QuotePrepVendorName",
@@ -72,18 +136,9 @@
                                @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
                            })
 
-                            @*@Html.DropDownListFor(m => m.VendorName, new SelectList(ViewBag.ListVendorName, "DataStringValueField", "DataTextField", Model.VendorName), new
-                {
-                    @class = "form-control requiredValidation",
-                    @id = "VendorName",
-                    @name = "VendorName",
-                    @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
-                    ng_model = "ProductType",
-                    ng_change = "GetProductNameForProductType(VendorName)"
-                })*@
-                            <span class="HideValidMsg">Please Select Vendor Name</span>
+                            <span class="HideValidMsg">Please Select Customer Name</span>
                         </div>
-                    </div>
+                    </div>*@
 
                     <div class="col-md-6">
                         <label class="control-label">
@@ -106,7 +161,7 @@
                         </div>
 
                     </div>
-                    <div class="col-md-6">
+                    @*<div class="col-md-6">
                         <div class="form-group">
                             <label class="control-label">
                                 Enquiry Sr No
@@ -116,65 +171,22 @@
                                    @class = "form-control clearField",
                                    @id = "EnqSrNo"
                                })
-
-                            @*@Html.TextBoxFor(m => m.EnqSrNo, new SelectList(ViewBag.ListEnqNo, "DataStringValueField", "DataTextField", Model.EnqSrNo),
-                new
-                {
-                    @class = "form-control requiredValidation clearField",
-                    @id = "EnqNo",
-                    @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
-
-                })*@
                             <span class="HideValidMsg">Please Select EnqSrNo</span>
                         </div>
-                    </div>
+                    </div>*@
 
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label class="control-label">
-                                Product Name
-                            </label>
-                            @Html.DropDownListFor(m => m.ProductName, new SelectList(@ViewBag.ProductNameList, "DataStringValueField", "DataTextField", Model.ProductName), new
-                       {
-                           @class = "form-control requiredValidation clearField",
-                           @id = "ProductName",
-                           @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
-                           @onchange = "GetProductNumberByName()"
-
-                       })
-                            @*<select id="ProductName" name="ProductName" ng-model="ProductName" class="form-control requiredValidation clearField ng-pristine ng-untouched ng-valid ng-empty" onfocusout="return ValidateRequiredFieldsOnFocusOut(this)" ng-change="GetProductNumber(ProductName)">
-                    <option data-ng-repeat="pN in ProductNameList" value="{{pN.DataStringValueField}}">{{pN.DataTextField}}</option>
-                </select>*@
-                            <span class="HideValidMsg">Please Select Product Name</span>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label class="control-label">
-                                Product Number
-                            </label>
-                            @Html.TextBoxFor(m => m.ProductNo, new
-                               {
-                                   @class = "form-control requiredValidation clearField",
-                                   @style = "background-color : #fff",
-                                   @id = "ProductNo",
-                                   @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
-                                   @readonly = "readonly"
-                               })
-                            <span class="HideValidMsg">Please Select Product Name</span>
-                        </div>
-                    </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label class="control-label">
                                 Casing Size
                             </label>
                             @Html.DropDownListFor(m => m.CasingSize, new SelectList(@ViewBag.CasingSize, "DataStringValueField", "DataTextField", Model.CasingSize), new
-                                {
-                                    @class = "form-control clearField",
-                                    @id = "CasingSize"
+                       {
+                           @class = "form-control clearField",
+                           @id = "CasingSize",
+                           @onchange = "DisplayNewItemInDdl(this, 'Master.Taxonomy', 'Ppf', 'DropDownValue')"
 
-                                })
+                       })
                             <span class="HideValidMsg">Please Select Casing Size</span>
                         </div>
                     </div>
@@ -183,12 +195,13 @@
                             <label class="control-label">
                                 Casing Ppf
                             </label>
-                            @Html.DropDownListFor(m => m.CasingPpf, new SelectList(@ViewBag.CasingPpf, "DataStringValueField", "DataTextField", Model.CasingPpf), new
-                                {
-                                    @class = "form-control clearField",
-                                    @id = "CasingPpf"
+                            @Html.DropDownListFor(m => m.CasingPpf, new SelectList(ViewBag.CasingPpf, "DataStringValueField", "DataTextField", Model.CasingPpf), new
+                       {
+                           @class = "form-control clearField",
+                           @id = "CasingPpf",
+                           @onchange = "DisplayNewItemInDdl(this, 'Master.Taxonomy', 'Ppf', 'DropDownValue')"
 
-                                })
+                       })
                             <span class="HideValidMsg">Please Select Casing Ppf</span>
                         </div>
                     </div>
@@ -252,7 +265,7 @@
                             <span class="HideValidMsg">Please Select Material Grade</span>
                         </div>
                     </div>
-                    <div class="col-md-6" hidden>
+                    <div class="col-md-6">
                         <div class="form-group">
                             <label class="control-label">
                                 Open Hole Size
@@ -265,7 +278,7 @@
                             <span class="HideValidMsg">Please Select Hole Size Range Inch</span>
                         </div>
                     </div>
-                    <div class="col-md-6" hidden>
+                    <div class="col-md-6">
                         <div class="form-group">
                             <label class="control-label">
                                 Ball Size
@@ -292,7 +305,7 @@
                             <span class="HideValidMsg">Please Select Currency</span>
                         </div>
                     </div>
-                    <div class="col-md-6" hidden>
+                    <div class="col-md-6">
                         <div class="form-group">
                             <label class="control-label">
                                 Casing Weight
@@ -312,12 +325,37 @@
                             </label>
                             @Html.TextBoxFor(m => m.WallThickness, new
                        {
-                           @class = "form-control requiredValidation clearField",
-                           @id = "WallThickness",
-                           @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
-                           @onkeypress = "return AllowNumbers(event); "
+                           @class = "form-control clearField",
+                           @id = "WallThickness"
                        })
                             <span class="HideValidMsg">Please Enter Wall Thickness</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label">
+                                OD Size
+                            </label>
+                            @Html.TextBoxFor(m => m.ODSize, new
+                       {
+                           @class = "form-control clearField",
+                           @id = "QuotePrepODSize"
+                       })
+                            <span class="HideValidMsg">Please Select OD Size</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label">
+                                Total Bows
+                            </label>
+                            @Html.TextBoxFor(m => m.TotalBows, new
+                       {
+                           @class = "form-control clearField",
+                           @id = "QuotePrepTotalBows",
+                           @onkeypress = "return AllowNumbers(event); "
+                       })
+                            <span class="HideValidMsg">Please Select Total Bows</span>
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -327,11 +365,11 @@
                             </label>
                             @Html.TextBoxFor(m => m.UnitPrice, new
                        {
-                           @class = "form-control requiredValidation clearField",
+                           @class = "form-control clearField",
                            @id = "UnitPrice",
                            @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
-                           @onkeypress = "return AllowNumbers(event); ",
-                           @onblur = "return GetProductDetails();"
+                           @onblur = "return GetProductDetails();",
+                           @onkeypress = "return validateDecimalNumbers(this,event)"
                        })
                             <span class="HideValidMsg">Please Select Unit Price</span>
                         </div>
@@ -350,30 +388,23 @@
                                             <input style="height:40px" type="image" class="img-thumbnail" src="~/Images/excel.png" alt="Generate Quote" onclick="CreateDocument('xlsx') " />
                                         </td>
                                         <td>
-                                            <input style="height:40px" type="image" class="img-thumbnail" src="~/Images/doc.png" alt="Generate Quote" onclick="CreateDocument('docx') " />
+                                            @*<input style="height:40px" type="image" class="img-thumbnail" src="~/Images/doc.png" alt="Generate Quote" onclick="CreateDocument('docx') " />*@
                                         </td>
                                         <td>
-                                            <input style="height:40px" type="image" class="img-thumbnail" src="~/Images/PDF.jpg" alt="Generate Quote" onclick="CreateDocument('pdf') " />
+                                            @*<input style="height:40px" type="image" class="img-thumbnail" src="~/Images/PDF.jpg" alt="Generate Quote" onclick="CreateDocument('pdf') " />*@
 
-                                            @*<input type="radio" id="ddlDownload" name="ddlDownload" value="xlsx"> <img src="~/Images/excel.png" height="40" />
-            </td>
-            <td>
-                <input type="radio" id="ddlDownload" name="ddlDownload" value="docx"> <img src="~/Images/doc.png" height="40" />
-            </td>
-            <td>
-                <input type="radio" id="ddlDownload" name="ddlDownload" value="pdf"> <img src="~/Images/PDF.jpg" height="40" />*@
                                         </td>
                                     </tr>
                                 </table>
-                                
+
                             </div>
 
                             @*<select id="ddlDownload" class="dropdown form-control">
-            <option value="">Select</option>
-            <option value="xlsx">Excel</option>
-            <option value="doc">Doc</option>
-            <option value="pdf">Pdf</option>
-        </select>*@
+                                <option value="">Select</option>
+                                <option value="xlsx">Excel</option>
+                                <option value="doc">Doc</option>
+                                <option value="pdf">Pdf</option>
+                            </select>*@
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -389,7 +420,7 @@
                             <thead>
                                 <tr>
                                     <td>Item No</td>
-                                    <td id="EnqSrNoHeader">Enquiry Ref. No</td>
+                                    @*<td id="EnqSrNoHeader">Enquiry Ref. No</td>*@
                                     <td>Quantity</td>
                                     <td>Description</td>
                                 </tr>
@@ -399,9 +430,9 @@
                                     <td>
                                         <label id="ViewItemNo" name="ViewItemNo" value="" />
                                     </td>
-                                    <td id="EnqSrNoBody">
+                                    @*<td id="EnqSrNoBody">
                                         <label id="ViewEnqSrNo" name="ViewEnqSrNo" value="" />
-                                    </td>
+                                    </td>*@
                                     <td>
                                         <label id="ViewQuantity" name="ViewQuantity" value="" />
                                     </td>
@@ -434,48 +465,48 @@
 
 
                     <!--
-                                        <label class="form-control " type="text" id="ViewProductName" name="ViewProductName" value="" style="width:100px;" />
+                                    <label class="form-control " type="text" id="ViewProductName" name="ViewProductName" value="" style="width:100px;" />
 
 
-                    <label class="form-control " type="text" id="ViewProductCode" name="ViewProductCode" value="" style="width:100px;" />
+                <label class="form-control " type="text" id="ViewProductCode" name="ViewProductCode" value="" style="width:100px;" />
 
 
-                    <label class="form-control " type="text" id="ViewPL" name="ViewPL" value="" style="width:100px;" />
+                <label class="form-control " type="text" id="ViewPL" name="ViewPL" value="" style="width:100px;" />
 
 
-                                        <label id="ViewPos1" name="ViewPos1" value="" />
-                                        <label id="ViewProductNo" name="ViewProductNo" value="" />,
+                                    <label id="ViewPos1" name="ViewPos1" value="" />
+                                    <label id="ViewProductNo" name="ViewProductNo" value="" />,
 
-                                        <label id="ViewPos2" name="ViewPos2" value="" />
-                                        <label id="ViewCasingSize" name="ViewCasingSize" class="ViewCasingSize" value="" />,
+                                    <label id="ViewPos2" name="ViewPos2" value="" />
+                                    <label id="ViewCasingSize" name="ViewCasingSize" class="ViewCasingSize" value="" />,
 
-                                        <label id="ViewPos3" name="ViewPos3" value="" />
-                                        <label id="ViewCasingSize1" name="ViewCasingSize1" class="ViewCasingSize" value="" />,
-                                        <label id="ViewCasingPpf" name="ViewCasingPpf" value="" />,
+                                    <label id="ViewPos3" name="ViewPos3" value="" />
+                                    <label id="ViewCasingSize1" name="ViewCasingSize1" class="ViewCasingSize" value="" />,
+                                    <label id="ViewCasingPpf" name="ViewCasingPpf" value="" />,
 
-                                        <label id="ViewPos4" name="ViewPos4" value="" />
-                                        <label id="ViewMaterialGrade" name="ViewMaterialGrade" value="" />,
+                                    <label id="ViewPos4" name="ViewPos4" value="" />
+                                    <label id="ViewMaterialGrade" name="ViewMaterialGrade" value="" />,
 
-                                        <label id="ViewConnection" name="ViewConnection" value="" />
-                                        <label id="ViewPos5" name="ViewPos5" value="" />
-
-
-                                        <label class="form-control " type="text" id="ViewPos6" name="ViewPos6" value="" style="width:100px;" />
+                                    <label id="ViewConnection" name="ViewConnection" value="" />
+                                    <label id="ViewPos5" name="ViewPos5" value="" />
 
 
-                    <label class="form-control " type="text" id="ViewPos7" name="ViewPos7" value="" style="width:100px;" />
+                                    <label class="form-control " type="text" id="ViewPos6" name="ViewPos6" value="" style="width:100px;" />
 
 
-                    <label class="form-control " type="text" id="ViewPos8" name="ViewPos8" value="" style="width:100px;" />
+                <label class="form-control " type="text" id="ViewPos7" name="ViewPos7" value="" style="width:100px;" />
 
 
-                    <label class="form-control " type="text" id="ViewPos9" name="ViewPos9" value="" style="width:100px;" />
+                <label class="form-control " type="text" id="ViewPos8" name="ViewPos8" value="" style="width:100px;" />
 
 
-                    <label class="form-control " type="text" id="ViewPos10" name="ViewPos10" value="" style="width:100px;" />
+                <label class="form-control " type="text" id="ViewPos9" name="ViewPos9" value="" style="width:100px;" />
 
 
-                    <label class="form-control " type="text" id="ViewDES" name="ViewDES" value="" style="width:100px;" />  -->
+                <label class="form-control " type="text" id="ViewPos10" name="ViewPos10" value="" style="width:100px;" />
+
+
+                <label class="form-control " type="text" id="ViewDES" name="ViewDES" value="" style="width:100px;" />  -->
 
 
                 </div>
@@ -506,381 +537,11 @@
         window.CreateDownloadDocument = '@Url.Action("CreateDownloadDocument", "Technical")';
         window.CheckDuplicateItemNo = '@Url.Action("CheckDuplicateItemNo", "Technical")';
         window.GetProductNameForProductType = '@Url.Action("GetProductNameForProductType", "Technical")';
+        window.GetSubProdGrp = '@Url.Action("GetSubProdGrp", "Technical")';
+        window.GetProdNames = '@Url.Action("GetProdName", "Technical")';
 
         $('#divProductDetails').hide();
     });
-
-function GetProductNumberByName() {
-    var ProductName = $("#ProductName").val();
-    $.ajax({
-        type: 'POST',
-        url: window.GetProductNumber,
-        data: JSON.stringify({ productNameId: ProductName }),
-        contentType: "application/json; charset=utf-8",
-        success: function (res) {
-            $("#ProductNo").val(res);
-        },
-        error: function (x, e) {
-            $('#spn-Sucess-Failure').text('Some error is occurred, Please try after some time.');
-            $('#spn-Sucess-Failure').addClass("important red");
-            $('#Sucess-Failure').modal('show');
-        }
-    })
-}
-
-function GetQuoteNos() {
-    var QuoteType = $("#QuotePrepFormType").val();
-    $.ajax({
-        type: 'POST',
-        url: window.GetPrepQuoteNo,
-        data: JSON.stringify({ quotetypeId: QuoteType }),
-        contentType: "application/json; charset=utf-8",
-        success: function (data) {
-            $("#QuotePrepFormNo").empty();
-            $("#QuotePrepVendorName").empty();
-            if (data.length > 0) {
-                $.each(data, function (i, item) {
-                    $("#QuotePrepFormNo").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
-                    //$("#VendorName").append($('<option></option>').val(item.DataStringValueField).html(item.DataAltValueField));
-                    //$("#QuotePrepVendorName").val(item.DataStringValueField);
-                })
-            }
-        },
-        error: function (x, e) {
-            $('#spn-Sucess-Failure').text('Some error is occurred, Please try after some time.');
-            $('#spn-Sucess-Failure').addClass("important red");
-            $('#Sucess-Failure').modal('show');
-        }
-    })
-}
-
-function GetProductTypes() {
-    var QuoteType = $("#QuotePrepFormType").val();
-    $.ajax({
-        type: 'POST',
-        url: window.GetProductTypes,
-        data: JSON.stringify({ quotetypeId: QuoteType }),
-        contentType: "application/json; charset=utf-8",
-        success: function (data) {
-            $("#QuotePrepVendorName").empty();
-            if (data.length > 0) {
-                $.each(data, function (i, item) {
-                    $("#QuotePrepVendorName").val(item.DataStringValueField);
-                    //$("#VendorName").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
-                })
-            }
-        },
-        error: function (x, e) {
-            $('#spn-Sucess-Failure').text('Some error is occurred, Please try after some time.');
-            $('#spn-Sucess-Failure').addClass("important red");
-            $('#Sucess-Failure').modal('show');
-        }
-    })
-}
-
-function GetProductDetails() {
-    var ProductNameID = $("#ProductName").val();
-    var CasingSize = $("#CasingSize").val();
-    var Status = false;
-    Status = GetFormValidationStatus("#formSaveQuotationPrepDetail");
-    if (!Status) {
-        alert("Kindly Fill all mandatory fields first");
-    }
-    else {
-        $.ajax({
-            type: 'POST',
-            url: window.GetPrepProductNames,
-            data: JSON.stringify({ productId: ProductNameID, casingSize: CasingSize }),
-            contentType: "application/json; charset=utf-8",
-            success: function (data) {
-                if (data.length > 0) {
-                    $('#divProductDetails').show();
-                    $.each(data, function (i, item) {
-                        var finalString = '';
-                        switch (item.DES) {
-                            case 'DES1.2':
-                                finalString = item.Pos1 + ' ' + $('#ProductNo').val() + ', \r\n ' + item.Pos2 + ' '
-                                    + $("#CasingSize option:selected").text() + ', ' + item.Pos3 + ' '
-                                    + $("#CasingSize option:selected").text() + ', ' + $("#CasingPpf option:selected").text() + item.Pos4;
-                                break;
-                            case 'DES1.3':
-                                finalString = item.Pos1 + ' ' + $('#ProductNo').val() + ', \r\n ' + item.Pos2 + ' '
-                                    + $("#CasingSize option:selected").text() + ', ' + item.Pos3 + ' '
-                                    + ', ' + $("#OpenHoleSize option:selected").text() + ', ' + item.Pos4;
-                                break;
-                            case 'DES2.1':
-                                finalString = item.Pos1 + ' ' + $('#ProductNo').val() + ', \r\n ' + item.Pos2 + ' '
-                                    + $("#CasingSize option:selected").text() + ', ' + item.Pos3 + ' '
-                                    + $("#CasingSize option:selected").text() + ', ' + $("#MaterialGrade option:selected").text()
-                                    + $("#CasingPpf option:selected").text() + item.Pos4 + ', '
-                                    + $("#Connection option:selected").text() + item.Pos5;
-                                break;
-                            case 'DES2.2':
-                                finalString = item.Pos1 + ' ' + $('#ProductNo').val() + ', \r\n ' + item.Pos2 + ' '
-                                    + $("#CasingSize option:selected").text() + ', ' + item.Pos3 + ', ' + ' '
-                                    + $("#WallThickness").val() + $("#CasingPpf option:selected").text()
-                                    + item.Pos4 + ', ' + $("#Connection option:selected").text()
-                                    + item.Pos5;
-                                break;
-                            case 'DES2.3':
-                                finalString = item.Pos1 + ' ' + $('#ProductNo').val() + ', \r\n ' + item.Pos2 + ', ' + item.Pos3 + ', '
-                                    + item.Pos4 + item.Pos5;
-                                break;
-                            case 'DES2.4':
-                                finalString = item.Pos1 + ' ' + $('#ProductNo').val() + ', \r\n ' + item.Pos2 + ', ' + item.Pos3 + ', '
-                                    + item.Pos4 + item.Pos5;// + ' ' + item.subProductDetails;
-                                break;
-                            case 'DES2.5':
-                                finalString = item.Pos1 + ' ' + $('#ProductNo').val() + ', \r\n ' + item.Pos2 + ' '
-                                    + $("#CasingSize option:selected").text() + ', ' + item.Pos3 + ' '
-                                    + $("#CasingSize option:selected").text() + ', ' + $("#CasingPpf option:selected").text()+ ' ' + item.Pos4
-                                    + ', ' + $("#Connection option:selected").text() + item.Pos5 + ', ' + $("#BallSize option:selected").text();
-                                break;
-                            case 'DES2.6':
-                                finalString = item.Pos1 + ' ' + $('#ProductNo').val() + ', \r\n ' + item.Pos2 + ' '
-                                    + $("#CasingSize option:selected").text() + ', ' + item.Pos3 + ' '
-                                    + $("#CasingSize option:selected").text() + ' ' + $("#MaterialGrade option:selected").text() + ', ' + $("#CasingPpf option:selected").text() + item.Pos4
-                                    + ', ' + $("#Connection option:selected").text()
-                                    + item.Pos5; // + ' ' + item.subProductDetails;
-                                break;
-                            case 'DES2.7':
-                                finalString = item.Pos1 + ' ' + $('#ProductNo').val() + ', \r\n ' + item.Pos2 + ' '
-                                    + $("#CasingSize option:selected").text() + ', ' + item.Pos3 + ' '
-                                    + ' ' + $("#MaterialGrade option:selected").text() + $("#CasingPpf option:selected").text()
-                                    + ', ' + item.Pos4 + ', ' + $("#Connection option:selected").text()
-                                    + item.Pos5;
-                                break;
-                            case 'DES3.1':
-                                finalString = item.Pos1 + ' ' + $('#ProductNo').val() + ', \r\n ' + item.Pos2 + ' '
-                                    + $("#CasingSize option:selected").text() + ',x ' + item.Pos3 + ' '
-                                    + ', ' + item.Pos4 + $("#CasingSize option:selected").text()
-                                    + item.Pos5 + ', ' + $("#OpenHoleSize option:selected").text() + ', ' + item.Pos6;
-                                break;
-                            case 'DES3.2':
-                                finalString = item.Pos1 + ' ' + $('#ProductNo').val() + ', \r\n ' + item.Pos2 + ' '
-                                    + $("#CasingSize option:selected").text() + ', ' + item.Pos3 + ' '
-                                    + item.Pos4 + $("#CasingSize option:selected").text()
-                                    + item.Pos5 + ' ' + $("#CasingPpf option:selected").text()+ ' ' + item.Pos6;
-                                break;
-                            case 'DES3.3':
-                                finalString = item.Pos1 + ' ' + $('#ProductNo').val() + ', \r\n ' + item.Pos2 + ' '
-                                    + $("#CasingSize option:selected").text() + ', ' + item.Pos3 + ' '
-                                    + item.Pos4 + $("#CasingSize option:selected").text()
-                                    + item.Pos5 + ' ' + item.Pos6;
-                                break;
-                            case 'DES3.4':
-                                finalString = item.Pos1 + ' ' + $('#ProductNo').val() + ', \r\n ' + item.Pos2 + ' '
-                                    + $("#CasingSize option:selected").text() + ', ' + item.Pos3 + ' '
-                                    + ', ' + item.Pos4 + ', '
-                                    + item.Pos5 + $("#CasingSize option:selected").text() + ', ' + item.Pos6;
-                                break;
-                            case 'DES3.5':
-                                finalString = item.Pos1 + ' ' + $('#ProductNo').val() + ', \r\n ' + item.Pos2 + ' '
-                                    + $("#CasingSize option:selected").text() + ', ' + item.Pos3 + ' '
-                                    + $("#CasingSize option:selected").text() + ', ' + item.Pos4 + ', '
-                                    + item.Pos5 + ', ' + item.Pos6;
-                                break;
-                            case 'DES3.6':
-                                finalString = item.Pos1 + ' ' + $('#ProductNo').val() + ', \r\n ' + item.Pos2 + ' '
-                                    + $("#CasingSize option:selected").text() + ', ' + item.Pos3 + ', '
-                                    + $("#CasingSize option:selected").text()
-                                    + ', ' + $("#MaterialGrade option:selected").text() + ', ' + $("#CasingPpf option:selected").text() + ', '
-                                    + item.Pos4 + ', ' + $("#CasingSize option:selected").text() + ', ' + $("#Connection option:selected").text()
-                                    + item.Pos5 + ', ' + item.Pos6;
-                                break;
-                            case 'DES3.7':
-                                finalString = item.Pos1 + ' ' + $('#ProductNo').val() + ', \r\n ' + item.Pos2 + ' '
-                                    + $("#CasingSize option:selected").text() + ', ' + $("#OpenHoleSize option:selected").text() + ', ' + item.Pos3
-                                    + ', ' + item.Pos4 + $("#CasingSize option:selected").text() + item.Pos5 + ', ' + $("#OpenHoleSize option:selected").text() + ' ' + item.Pos6;
-                                break;
-                            case 'DES4.1':
-                                finalString = item.Pos1 + ' ' + $('#ProductNo').val() + ', \r\n ' + item.Pos2 + ' '
-                                    + $("#CasingSize option:selected").text() + ', ' + item.Pos3 + ' '
-                                    + $("#CasingSize option:selected").text() + ', ' + item.Pos4 + $("#CasingPpf option:selected").text()
-                                    + item.Pos5
-                                    + ' ' + $("#MaterialGrade option:selected").text() + ' ' + $("#CasingWT option:selected").text() +' ' + item.Pos6
-                                    + ', ' + $("#Connection option:selected").text()
-                                    + item.Pos7;
-                                break;
-                            default:
-                                finalString = item.Pos1 + ' ' + $('#ProductNo').val() + ', \r\n ' + item.Pos2 + ' '
-                                    + $("#CasingSize option:selected").text() + ', ' + item.Pos3 + ' '
-                                    + $("#CasingSize option:selected").text() + ', ' + item.Pos4
-                                    + $("#CasingPpf option:selected").text()
-                                    + ' ' + $("#MaterialGrade option:selected").text() + ' ' + $("#CasingWT option:selected").text()+ ' ' + item.Pos6
-                                    + ', ' + $("#Connection option:selected").text()
-                                    + item.Pos7;
-                                break;
-                        }
-                        //$('#ViewPos1').text(item.Pos1); $('#ViewProductNo').text($('#ProductNo').val());
-                        //$('#ViewPos2').text(item.Pos2); $('.ViewCasingSize').text($("#CasingSize option:selected").text());
-                        //$('#ViewPos3').text(item.Pos3); $('#ViewCasingPpf').text($("#CasingPpf option:selected").text());
-                        //$('#ViewPos4').text(item.Pos4); $('#ViewMaterialGrade').text($("#MaterialGrade option:selected").text());
-                        //$('#ViewPos5').text(item.Pos5); $('#ViewConnection').text($("#Connection option:selected").text());
-
-                        finalString = finalString + ' ' + item.subProductDetails;
-                        //finalString = item.Pos1 + ' ' + $('#ProductNo').val() + ', \r\n ' + item.Pos2 + ' '
-                        //    + $("#CasingSize option:selected").text() + ', ' + item.Pos3 + ' '
-                        //    + $("#CasingSize option:selected").text() + ', ' + item.Pos4 + $("#CasingPpf option:selected").text()
-                        //    + ' ' + $("#MaterialGrade option:selected").text() + ', ' + $("#Connection option:selected").text()
-                        //    + item.Pos5 + ' ' + item.subProductDetails;
-                        $('#ViewProductDetails').val(finalString);
-                        $('#ViewEnqSrNo').text($("#EnqSrNo").val());
-                        $('#ViewItemNo').text($('#ItemNo').val());
-                        $('#ViewQuantity').text($('#Qty').val());
-
-                        $('#ViewNetWeight').val(item.NetWeight);
-                        $('#ViewGrossWeight').val(item.GrossWeight);
-
-                        if ($("#EnqSrNo").val() == "") {
-                            $("#EnqSrNoHeader").hide();
-                            $("#EnqSrNoBody").hide();
-                        }
-                        else {
-                            $("#EnqSrNoHeader").show();
-                            $("#EnqSrNoBody").show();
-                        }
-
-                        //$('#ViewProductId').val(item.Id);
-                        //$('#ViewProductName').val(item.ProductName);
-                        //$('#ViewProductCode').val(item.ProductCode);
-                        //$('#ViewPL').val(item.PL);
-                        //$('#ViewProductNo').val(item.ProductNo);
-                        //$('#ViewPos1').val(item.Pos1);
-                        //$('#ViewPos2').val(item.Pos2);
-                        //$('#ViewPos3').val(item.Pos3);
-                        //$('#ViewPos4').val(item.Pos4);
-                        //$('#ViewPos5').val(item.Pos5);
-                        //$('#ViewPos6').val(item.Pos6);
-                        //$('#ViewPos7').val(item.Pos7);
-                        //$('#ViewPos8').val(item.Pos8);
-                        //$('#ViewPos9').val(item.Pos9);
-                        //$('#ViewPos10').val(item.Pos10);
-                        //$('#ViewDES').val(item.DES);
-
-                    })
-                }
-
-            },
-            error: function (x, e) {
-                alert('Some error is occurred, Please try after some time.');
-            }
-        })
-    }
-
-}
-
-function CreateDocument(dwnldtype) {
-    var DownloadType = dwnldtype;
-    var QuoteType = $("#QuotePrepFormType").val();
-    var QuoteNumber = $("#QuotePrepFormNo").val();
-    var QuoteTypeText = $("#QuotePrepFormType option:selected").text();
-
-    if (DownloadType == '' || QuoteType == '' || QuoteNumber == '') {
-        alert("Kindly Select DownloadType, QuoteType and QuoteNumber");
-        return;
-    }
-
-    $.ajax({
-        type: 'POST',
-        url: window.CreateDownloadDocument,
-        data: JSON.stringify({ downloadTypeId: DownloadType, quoteTypeId: QuoteType, quoteNumberId: QuoteNumber, quoteTypeText: QuoteTypeText }),
-        contentType: "application/json; charset=utf-8",
-        success: function (data) {
-            //alert("Dowloaded Successfully" + data);
-            if (data.fileName != "") {
-                //use window.location.href for redirect to download action for download the file
-                //window.location.href = '@Url.RouteUrl(new { Controller = "Technical", Action = "Download" })/?fileName=' + data.fileName;
-            }
-            else {
-                alert(data.errorMessage);
-            }
-        },
-        error: function (x, e) {
-            alert('Some error is occurred, Please try after some time.');
-        }
-    })
-}
-
-function ValidateItemNo() {
-    var QuoteType = $("#QuotePrepFormType").val();
-    var QuoteNo = $("#QuotePrepFormNo").val();
-    var ItemNo = $("#ItemNo").val();
-
-    if (ItemNo == '' || ItemNo == undefined) {
-        alert('Please Enter Item No');
-        return;
-    }
-    $.ajax({
-        type: 'POST',
-        url: window.CheckDuplicateItemNo,
-        data: JSON.stringify({ itemNoId: ItemNo, quoteType: QuoteType, quoteNo: QuoteNo }),
-        contentType: "application/json; charset=utf-8",
-        success: function (data) {
-            if (data.RecordCount > 0) {
-                $("#EnqSrNo").val(data.EnqSrNo);
-                $("#ProductName").val(data.ProductName);
-                $("#ProductNo").val(data.ProductNo);
-                $("#CasingSize").val(data.CasingSize);
-                $("#CasingPpf").val(data.CasingPpf);
-                $("#MaterialGrade").val(data.MaterialGrade);
-                $("#Connection").val(data.Connection);
-                $("#Qty").val(data.Qty);
-                $("#Uom").val(data.Uom);
-                $("#UnitPrice").val(data.UnitPrice);
-            }
-            else
-                alert("Item No not Found in Records");
-        },
-        error: function (x, e) {
-            $('#spn-Sucess-Failure').text('Some error is occurred, Please try after some time.');
-            $('#spn-Sucess-Failure').addClass("important red");
-            $('#Sucess-Failure').modal('show');
-        }
-    })
-}
-
-function GetProductNameForProductType(ProductType) {
-    var ProductType = $("#ProductType").val();
-    $.ajax({
-        type: 'POST',
-        url: window.GetProductNameForProductType,
-        data: JSON.stringify({ productTypeId: ProductType }),
-        contentType: "application/json; charset=utf-8",
-        success: function (res) {
-            if (res > 0) {
-                $scope.ProductNameList = res;
-            }
-            else
-                alert("Item No not Found in Records");
-        },
-        error: function (x, e) {
-            $('#spn-Sucess-Failure').text('Some error is occurred, Please try after some time.');
-            $('#spn-Sucess-Failure').addClass("important red");
-            $('#Sucess-Failure').modal('show');
-        }
-    })
-}
-
-function GetVendorDetailsForQuote() {
-    var QuoteType = $("#QuotePrepFormType").val();
-    var QuoteNo = $("#QuotePrepFormNo").val();
-    $.ajax({
-        type: 'POST',
-        url: window.VendorDetailsForQuote,
-        data: JSON.stringify({ quoteNo: QuoteNo, quoteType: QuoteType }),
-        contentType: "application/json; charset=utf-8",
-        success: function (res) {
-            $("#QuotePrepVendorName").val(res.DataValueField1);
-            $("#Currency").val(res.DataValueField2);
-        },
-        error: function (x, e) {
-            alert('Some error is occurred, Please try after some time.');
-        }
-    })
-}
-
-
 
 </script>
 

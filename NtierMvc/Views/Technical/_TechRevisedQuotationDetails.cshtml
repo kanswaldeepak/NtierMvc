@@ -32,10 +32,10 @@
                         new
                         {
                             @class = "form-control requiredValidation",
-                            @id = "QuoteFormType",
+                            @id = "QuoteTypeRevised",
                             @name = "QuoteType",
                             @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
-                            @onchange = "GetQuoteNumbers()"
+                            @onchange = "GetQuoteNumbersForRevised()"
                         })
                         <span class="HideValidMsg">Please Enter QuoteType</span>
                     </div>
@@ -43,34 +43,34 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label class="control-label">
-                            VendorId
+                            CustomerId
                         </label>
-                        @Html.DropDownListFor(m => m.VendorId, new SelectList(@ViewBag.ListVendorId, "DataStringValueField", "DataTextField", Model.VendorId),
+                        @Html.DropDownListFor(m => m.CustomerId, new SelectList(@ViewBag.ListCustomerId, "DataStringValueField", "DataTextField", Model.CustomerId),
                            new
                            {
                                @class = "form-control requiredValidation",
-                               @id = "VendorFormId",
+                               @id = "CustomerIdRevised",
                                @data_inneraction = "validationCall",
                                @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
-                               @onchange = "GetVendorDetails()"
+                               @onchange = "GetCustomerDetails()"
 
                            })
-                        <span class="HideValidMsg">Please Select VendorId</span>
+                        <span class="HideValidMsg">Please Select CustomerId</span>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
                         <label class="control-label">
-                            Vendor Name
+                            Customer Name
                         </label>
-                        @Html.TextBoxFor(m => m.VendorName, new
+                        @Html.TextBoxFor(m => m.CustomerName, new
                    {
                        @class = "form-control requiredValidation",
-                       @id = "VendorFormName",
+                       @id = "CustomerNameRevised",
                        @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
                        @readonly = "readonly"
                    })
-                        <span class="HideValidMsg">Please Select VendorId</span>
+                        <span class="HideValidMsg">Please Select CustomerId</span>
                     </div>
                 </div>
                 <div class="col-md-4">
@@ -82,12 +82,12 @@
                {
                    @class = "form-control requiredValidation",
                    @id= "Country",
-                   @placeholder = "Select Vendor ID",
+                   @placeholder = "Select Customer ID",
                    @readonly = "readonly",
                    @style = "width = '50%'"
                })
                         @Html.TextBoxFor(m => m.CountryId, new { id = "CountryId", @hidden = "hidden" })
-                        <span class="HideValidMsg">Please Select VendorId</span>
+                        <span class="HideValidMsg">Please Select CustomerId</span>
                     </div>
                 </div>
                 <div class="col-md-4">
@@ -102,7 +102,7 @@
                                @id = "RevisedFormQuoteNo",
                                @data_inneraction = "validationCall",
                                @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
-                               @onchange = "GetRevisedQuoteNo()"
+                               @onchange = "GetRevisedQuoteNos()"
 
                            })
                         <span class="HideValidMsg">Please Select Quote Number</span>
@@ -117,7 +117,7 @@
                    {
                        @class = "form-control requiredValidation ApprovalQuoteDate",
                        autocomplete = "off",
-                       @id = "QuoteDate",
+                       @id = "QuoteDateRevised",
                        @placeholder = "dd/MM/yyyy",
                        @style = "disabled :disabled",
                        @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
@@ -136,7 +136,7 @@
                    {
                        @class = "form-control requiredValidation ApprovalDate",
                        autocomplete = "off",
-                       @id = "QuoteValidity",
+                       @id = "QuoteValidityRevised",
                        @placeholder = "dd/MM/yyyy",
                        @style = "disabled :disabled",
                        @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
@@ -185,21 +185,21 @@
 </div>
 <script>
     $(document).ready(function () {
-        window.VendorDetail = '@Url.Action("GetQuoteVendorDetail", "Technical")';
+        window.CustomerDetail = '@Url.Action("GetQuoteVendorDetail", "Technical")';
         window.SaveRevisedQuotation = '@Url.Action("SaveRevisedQuotationDetails", "Technical")';
         window.GetQuoteNumbers = '@Url.Action("GetQuoteNumbers", "Technical")';
         window.GetRevisedQuoteNo = '@Url.Action("GetRevisedQuoteNo", "Technical")';
     });
 
-    function GetVendorDetails() {
-        var VendorId = $("#VendorFormId").val();
+    function GetCustomerDetails() {
+        var CustomerId = $("#CustomerIdRevised").val();
         $.ajax({
             type: 'POST',
-            url: window.VendorDetail,
-            data: JSON.stringify({ vendorId: VendorId }),
+            url: window.CustomerDetail,
+            data: JSON.stringify({ vendorId: CustomerId }),
             contentType: "application/json; charset=utf-8",
             success: function (res) {
-                $("#VendorFormName").val(res.quoteEntity.VendorName);
+                $("#CustomerNameRevised").val(res.quoteEntity.CustomerName);
                 $("#Country").val(res.quoteEntity.Country);
                 $("#CountryId").val(res.quoteEntity.CountryId);
             },
@@ -211,69 +211,70 @@
         })
     }
 
-    function GetQuoteNumbers() {
-        var QuoteType = $("#QuoteFormType").val();
-        var QuoteTypeText = $('#QuoteFormType option:selected').text();
-        $.ajax({
-            type: 'POST',
-            url: window.GetQuoteNumbers,
-            data: JSON.stringify({ quotetypeId: QuoteType }),
-            contentType: "application/json; charset=utf-8",
-            success: function (res) {
-                $("#RevisedFormQuoteNo").empty();
-                if (res.lstQuoteNos.length > 0) {
-                    if (QuoteTypeText == 'Domestic') {
-                        $.each(res.lstQuoteNos, function (i, item) {
-                            $("#RevisedFormQuoteNo").append($('<option></option>').val(item.DataStringValueField).html('DQ-'+item.DataTextField));
-                        })
-                    }
-                    else if (QuoteTypeText == 'Export')
-                        $.each(res.lstQuoteNos, function (i, item) {
-                            $("#RevisedFormQuoteNo").append($('<option></option>').val(item.DataStringValueField).html('EQ-' + item.DataTextField));
-                        })
-                    else if (QuoteTypeText == 'Service')
-                        $.each(res.lstQuoteNos, function (i, item) {
-                            $("#RevisedFormQuoteNo").append($('<option></option>').val(item.DataStringValueField).html('SE-' + item.DataTextField));
-                        })
+    //function GetQuoteNumbers() {
+    //    var QuoteType = $("#QuoteFormType").val();
+    //    var QuoteTypeText = $('#QuoteFormType option:selected').text();
+    //    $.ajax({
+    //        type: 'POST',
+    //        url: window.GetQuoteNumbers,
+    //        data: JSON.stringify({ quotetypeId: QuoteType }),
+    //        contentType: "application/json; charset=utf-8",
+    //        success: function (res) {
+    //            $("#RevisedFormQuoteNo").empty();
+    //            if (res.lstQuoteNos.length > 0) {
+    //                if (QuoteTypeText == 'Domestic') {
+    //                    $.each(res.lstQuoteNos, function (i, item) {
+    //                        $("#RevisedFormQuoteNo").append($('<option></option>').val(item.DataStringValueField).html('DQ-'+item.DataTextField));
+    //                    })
+    //                }
+    //                else if (QuoteTypeText == 'Export')
+    //                    $.each(res.lstQuoteNos, function (i, item) {
+    //                        $("#RevisedFormQuoteNo").append($('<option></option>').val(item.DataStringValueField).html('EQ-' + item.DataTextField));
+    //                    })
+    //                else if (QuoteTypeText == 'Service')
+    //                    $.each(res.lstQuoteNos, function (i, item) {
+    //                        $("#RevisedFormQuoteNo").append($('<option></option>').val(item.DataStringValueField).html('SE-' + item.DataTextField));
+    //                    })
 
-                    if ($('#RevisedFormQuoteNo option:selected').text() != '') {
-                        GetRevisedQuoteNo();
-                    }
+    //                if ($('#RevisedFormQuoteNo option:selected').text() != '') {
+    //                    GetRevisedQuoteNo();
+    //                }
 
-                }    
+    //            }    
 
-                $("#VendorFormId").empty();
-                if (res.lstVendors.length > 0) {
-                    $.each(res.lstVendors, function (i, item) {
-                        $("#VendorFormId").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
-                    })
-                }
-            },
-            error: function (x, e) {
-                $('#spn-Sucess-Failure').text('Some error is occurred, Please try after some time.');
-                $('#spn-Sucess-Failure').addClass("important red");
-                $('#Sucess-Failure').modal('show');
-            }
-        })
-    }
+    //            $("#CustomerFormId").empty();
+    //            if (res.lstVendors.length > 0) {
+    //                $.each(res.lstVendors, function (i, item) {
+    //                    $("#CustomerFormId").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
+    //                })
+    //            }
+    //        },
+    //        error: function (x, e) {
+    //            $('#spn-Sucess-Failure').text('Some error is occurred, Please try after some time.');
+    //            $('#spn-Sucess-Failure').addClass("important red");
+    //            $('#Sucess-Failure').modal('show');
+    //        }
+    //    })
+    //}
 
-    function GetRevisedQuoteNo() {
-        var QuoteTypeId = $("#QuoteFormType").val();
+    function GetRevisedQuoteNos() {
+        var QuoteTypeId = $("#QuoteTypeRevised").val();
         var QuoteNo = $("#RevisedFormQuoteNo").val();
-        debugger;
         $.ajax({
             type: 'POST',
             url: window.GetRevisedQuoteNo,
             data: JSON.stringify({ quoteTypeId: QuoteTypeId, quoteNumberId: QuoteNo }),
             contentType: "application/json; charset=utf-8",
             success: function (res) {
-                $("#RevisedQuoteNo").val(res);
+                $("#RevisedQuoteNo").val(res.DataValueField1);
+                $("#QuoteDateRevised").val(res.DataValueField2);
+                $("#QuoteValidityRevised").val(res.DataValueField4);
             },
             error: function (x, e) {
                 $("#RevisedQuoteNo").val('');
-                $('#spn-Sucess-Failure').text('Some error is occurred, Please try after some time.');
-                $('#spn-Sucess-Failure').addClass("important red");
-                $('#Sucess-Failure').modal('show');
+                //$('#spn-Sucess-Failure').text('Some error is occurred, Please try after some time.');
+                //$('#spn-Sucess-Failure').addClass("important red");
+                //$('#Sucess-Failure').modal('show');
             }
         })
     }

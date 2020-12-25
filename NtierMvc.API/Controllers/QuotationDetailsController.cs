@@ -85,9 +85,9 @@ namespace NtierMvc.API.Controllers.Application
 
         [HttpGet]
         [Route("api/QuotationDetails/GetDdlValueForQuote")]
-        public IHttpActionResult GetDdlValueForQuote(string type, string VendorId = null, string QuoteType = null)
+        public IHttpActionResult GetDdlValueForQuote(string type, string VendorId = null, string QuoteType = null, string SubjectId = null)
         {
-            return Ok(_repository.GetDdlValueForQuote(type, VendorId, QuoteType));
+            return Ok(_repository.GetDdlValueForQuote(type, VendorId, QuoteType, SubjectId));
         }
 
     }
