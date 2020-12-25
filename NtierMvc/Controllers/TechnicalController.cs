@@ -136,11 +136,6 @@ namespace NtierMvc.Controllers
         {
             ViewBag.ListQuoteNo = DdlList(); //objManager.GetQuoteNoList(string.Empty); 
 
-            ViewBag.ListMainProdGrp = model.GetMasterTableStringList("Master.ProductLine", "Id", "MainPLName", "", "", GeneralConstants.ListTypeN);
-            ViewBag.ListSubProdGrp = model.GetMasterTableStringList("SubProductLine", "Id", "SubPLName", "", "", GeneralConstants.ListTypeN);
-            ViewBag.ListProdName = model.GetMasterTableStringList("Master.Product", "Id", "ProductName", "", "", GeneralConstants.ListTypeN);
-            ViewBag.ListVendorName = model.GetMasterTableStringList("QuotationRegister", "CustomerId", "CustomerName", "", "", GeneralConstants.ListTypeD);
-            ViewBag.ListLeadTimeDuration = model.GetTaxonomyDropDownItems("", "Time");
             ViewBag.CasingSize = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "CasingSize", "Property", GeneralConstants.ListTypeN);
             ViewBag.CasingPpf = model.GetDropDownList("Master.Taxonomy", GeneralConstants.ListTypeD, "dropdownId", "dropdownvalue", "Ppf", "Property", true);
             ViewBag.MaterialGrade = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "MatGrade", "Property", GeneralConstants.ListTypeN);
@@ -765,6 +760,7 @@ namespace NtierMvc.Controllers
             model = new BaseModel();
             ViewBag.ListQuoteNo = model.GetMasterTableStringList("QuotationRegister", "Id", "QUOTENO", "", "", GeneralConstants.ListTypeN);
             ViewBag.ListItemNo = DdlList();
+
             ViewBag.ListCustomerId = model.GetMasterTableStringList("Customer", "Id", "CustomerId", "", "", GeneralConstants.ListTypeN);
             ViewBag.ListQuoteType = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "QuoteType", "Property", GeneralConstants.ListTypeN);
             ViewBag.ListQuoteQtyType = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "SingleMultiple", "Property", GeneralConstants.ListTypeN);
@@ -1063,6 +1059,7 @@ namespace NtierMvc.Controllers
             model = new BaseModel();
             string countryId = "0";
             ViewBag.ListState = model.GetStateDetail(countryId); //Given wrong CountryId to not get any value
+
             ViewBag.ListCustomerId = model.GetMasterTableStringList("Customer", "Id", "CustomerId", "", "", GeneralConstants.ListTypeN);
             ViewBag.ListVENDORTYPE = model.GetMasterTableList("Master.Vendor", "Id", "VendorType");
             ViewBag.ListVENDOR_NATURE = model.GetMasterTableList("Master.Vendor", "Id", "VendorNature");
@@ -1534,7 +1531,9 @@ namespace NtierMvc.Controllers
 
             EnquiryEntity eModel = new EnquiryEntity();
             eModel.UnitNo = Session["UserId"].ToString();
-            ViewBag.ListCustomerId = model.GetMasterTableStringList("Customer", "Id", "CustomerId", eModel.UnitNo, "UnitNo", GeneralConstants.ListTypeN);
+
+            ViewBag.ListCustomerId = model.Get
+            TableStringList("Customer", "Id", "CustomerId", eModel.UnitNo, "UnitNo", GeneralConstants.ListTypeN);
 
             EnquiryManager objEnqManager = new EnquiryManager();
 
