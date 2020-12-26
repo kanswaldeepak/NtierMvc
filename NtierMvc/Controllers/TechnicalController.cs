@@ -551,8 +551,8 @@ namespace NtierMvc.Controllers
                 #endregion
                 ////////////////For Image////////////////////
 
-                Microsoft.Office.Interop.Excel.Range c1 = (Microsoft.Office.Interop.Excel.Range)ws.Cells[16, 1];
-                Microsoft.Office.Interop.Excel.Range c2 = (Microsoft.Office.Interop.Excel.Range)ws.Cells[(resultList.Rows.Count - 2) + 16, resultList.Columns.Count];
+                Microsoft.Office.Interop.Excel.Range c1 = (Microsoft.Office.Interop.Excel.Range)ws.Cells[15, 1];
+                Microsoft.Office.Interop.Excel.Range c2 = (Microsoft.Office.Interop.Excel.Range)ws.Cells[(resultList.Rows.Count - 2) + 15, resultList.Columns.Count];
                 //Microsoft.Office.Interop.Excel.Range c2 = (Microsoft.Office.Interop.Excel.Range)ws.Cells[1, 1];
                 Microsoft.Office.Interop.Excel.Range range = ws.get_Range(c1, c2);
                 range.Insert(Microsoft.Office.Interop.Excel.XlInsertShiftDirection.xlShiftDown);
@@ -996,8 +996,8 @@ namespace NtierMvc.Controllers
 
                         newObj.Id = item.Id;
                         newObj.UnitNo = Session["UserId"].ToString();
-                        newObj.VendorId = item.CustomerId;
-                        newObj.VendorName = item.CustomerName;
+                        newObj.CustomerId = item.CustomerId;
+                        newObj.CustomerName = item.CustomerName;
                         newObj.QuoteNo = item.QuoteNo;
                         newObj.QuoteType = item.QuoteType;
                         newObj.SoNo = item.SoNo;

@@ -286,7 +286,8 @@
                        @class = "form-control requiredValidation",
                        @id = "ExWorkValueOrder",
                        @placeholder = "Enter Ex Work Value",
-                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                       @onkeypress = "return AllowNumbers(event)"
                    })
                         <span class="HideValidMsg"> Select Ex Work Value</span>
                     </div>

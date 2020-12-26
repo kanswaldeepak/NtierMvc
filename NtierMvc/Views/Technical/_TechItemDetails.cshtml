@@ -45,12 +45,12 @@
                 <div class="col-md-2">
                     <div class="form-group">
                         <label class="control-label">
-                            Vendor Id
+                            Customer Id
                         </label>
-                        @Html.TextBoxFor(m => m.VendorId, new
+                        @Html.TextBoxFor(m => m.CustomerId, new
                    {
                        @class = "form-control requiredValidation",
-                       @id = "VendorFormId",
+                       @id = "ItemCustomerId",
                        @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
                        @readonly = "readonly"
                    })
@@ -59,12 +59,12 @@
                 <div class="col-md-2">
                     <div class="form-group">
                         <label class="control-label">
-                            Vendor Name
+                            Customer Name
                         </label>
-                        @Html.TextBoxFor(m => m.VendorName, new
+                        @Html.TextBoxFor(m => m.CustomerName, new
                    {
                        @class = "form-control requiredValidation",
-                       @id = "VendorFormName",
+                       @id = "ItemCustomerName",
                        @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
                        @readonly = "readonly"
                    })

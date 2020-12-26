@@ -24,7 +24,7 @@ function saveButton(data) {
 
                 },
                 error: function (x, e) {
-                    alert('Some error is occurred, Please try after some time.');
+                    alert('Some error is occurred, Please try after some time. Please check SoNo Selected is Correct or Not ');
                     //$('#spn-Sucess-Failure').text('Some error is occurred, Please try after some time.');
                     //$('#spn-Sucess-Failure').addClass("important red");
                     //$('#Sucess-Failure').modal('show');
@@ -103,8 +103,8 @@ function GetItemOrderDetailsFromSO() {
         data: JSON.stringify({ SoNo: SoNoItem, quoteTypeId: quoteTypeId }),
         contentType: "application/json; charset=utf-8",
         success: function (data) {
-            $('#VendorFormName').val(data.iEntity.VendorName);
-            $('#VendorFormId').val(data.iEntity.VendorId);
+            $('#ItemCustomerName').val(data.iEntity.CustomerName);
+            $('#ItemCustomerId').val(data.iEntity.CustomerId);
             $('#PONo').val(data.iEntity.PoNo);
             $('#PODate').val(data.iEntity.PoDate);
             $('#PODeliveryDate').val(data.iEntity.PoDeliveryDate);
