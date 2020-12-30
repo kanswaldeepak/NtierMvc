@@ -530,6 +530,7 @@ namespace NtierMvc.Areas.HRDepartment.Controllers
 
         public JsonResult GetEmpExpDetails(string EmpId)
         {
+    
             var masterList = model.GetTableDataList(GeneralConstants.ListTypeD, "EmployeeExperience", "EmpId", EmpId, "", "", "", "", "", "", "", "", "SN", "Employer", "Designation", "PeriodFrom", "PeriodTo");
 
             return new JsonResult { Data = masterList, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
