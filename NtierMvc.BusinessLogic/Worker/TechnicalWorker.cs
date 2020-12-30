@@ -646,8 +646,8 @@ namespace NtierMvc.BusinessLogic.Worker
                         entity.Pos4 = dt.Rows[0]["Pos4"]?.ToString() ?? "";
                     if (dt.Columns.Contains("Pos5"))
                         entity.Pos5 = dt.Rows[0]["Pos5"]?.ToString() ?? "";
-                    //if (dt.Columns.Contains("Pos6"))
-                    //    entity.Pos6 = dt.Rows[0]["Pos6"]?.ToString() ?? "";
+                    if (dt.Columns.Contains("Pos6"))
+                        entity.Pos6 = dt.Rows[0]["Pos6"]?.ToString() ?? "";
                     //if (dt.Columns.Contains("Pos7"))
                     //    entity.Pos7 = dt.Rows[0]["Pos7"]?.ToString() ?? "";
                     //if (dt.Columns.Contains("Pos8"))
@@ -657,8 +657,26 @@ namespace NtierMvc.BusinessLogic.Worker
                     //if (dt.Columns.Contains("Pos10"))
                     //    entity.Pos10 = dt.Rows[0]["Pos10"]?.ToString() ?? "";
 
+
+                    if (dt.Columns.Contains("FieldName1"))
+                        entity.FieldName1 = dt.Rows[0]["FieldName1"]?.ToString() ?? "";
+                    if (dt.Columns.Contains("FieldName2"))
+                        entity.FieldName2 = dt.Rows[0]["FieldName2"]?.ToString() ?? "";
+                    if (dt.Columns.Contains("FieldName3"))
+                        entity.FieldName3 = dt.Rows[0]["FieldName3"]?.ToString() ?? "";
+                    if (dt.Columns.Contains("FieldName4"))
+                        entity.FieldName4 = dt.Rows[0]["FieldName4"]?.ToString() ?? "";
+                    if (dt.Columns.Contains("FieldName5"))
+                        entity.FieldName5 = dt.Rows[0]["FieldName5"]?.ToString() ?? "";
+                    if (dt.Columns.Contains("FieldName6"))
+                        entity.FieldName6 = dt.Rows[0]["FieldName6"]?.ToString() ?? "";
+
+
                     if (dt.Columns.Contains("DES"))
                         entity.DES = dt.Rows[0]["DES"]?.ToString() ?? "";
+
+                    if (dt.Columns.Contains("DESQuery"))
+                        entity.DESQuery = dt.Rows[0]["DESQuery"]?.ToString() ?? "";
 
                     if (dt.Columns.Contains("NET_WEIGHT"))
                         entity.NetWeight = dt.Rows[0]["NET_WEIGHT"]?.ToString() ?? "";
@@ -1471,6 +1489,20 @@ namespace NtierMvc.BusinessLogic.Worker
                 NtierMvc.DataAccess.ExceptionLogging.SendExcepToDB(Ex);
                 throw Ex;
             }
+        }
+
+        public string SaveNewDescDetail(DescEntity entity)
+        {
+            string result = string.Empty;
+            try
+            {
+                result = _repository.SaveNewDescDetail(entity);
+            }
+            catch (Exception Ex)
+            {
+                NtierMvc.DataAccess.ExceptionLogging.SendExcepToDB(Ex);
+            }
+            return result;
         }
 
 

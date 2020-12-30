@@ -44,7 +44,6 @@ function AddNewItemInDdl(txtNewOption, SelectedDdlId) {
         data: JSON.stringify({ type: '', Nametbl: tblName, Value: newitem, Property: property, ColumnName: columnName }),
         contentType: "application/json; charset=utf-8",
         success: function (data) {
-            debugger;
             if (data.length > 0) {
                 if (data[0].DataTextField == 'Record Already Present')
                     alert(data[0].DataTextField);

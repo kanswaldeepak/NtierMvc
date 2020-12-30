@@ -25,9 +25,21 @@ namespace NtierMvc.Model
         public string Pos9 { get; set; }
         public string Pos10 { get; set; }
         public string DES { get; set; }
+        public string DESQuery { get; set; }
         public string NetWeight { get; set; }
         public string GrossWeight { get; set; }
         public string subProductDetails { get; set; }
+
+        public string FieldName1 { get; set; }
+        public string FieldName2 { get; set; }
+        public string FieldName3 { get; set; }
+        public string FieldName4 { get; set; }
+        public string FieldName5 { get; set; }
+        public string FieldName6 { get; set; }
+        public string FieldName7 { get; set; }
+        public string FieldName8 { get; set; }
+        public string FieldName9 { get; set; }
+        public string FieldName10 { get; set; }
     }
 
     public class ProductAccessories

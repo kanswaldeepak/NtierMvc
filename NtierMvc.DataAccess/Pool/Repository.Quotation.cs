@@ -236,6 +236,36 @@ namespace NtierMvc.DataAccess.Pool
             return _dbAccess.GetDataTable(spName, parms);
         }
 
+        public string SaveNewDescDetail(DescEntity Model)
+        {
+            string msgCode = "";
+            var Params = new Dictionary<string, object>();            
+            Params.Add("@MainPL", Model.MainPL);
+            Params.Add("@SubPL", Model.SubPL);
+            Params.Add("@ProductName", Model.ProductName);
+            Params.Add("@ProductNo", Model.ProductNo);
+            Params.Add("@DESQuery", Model.DESQuery);
+
+            Params.Add("@Pos1", Model.Pos1);
+            Params.Add("@Pos2", Model.Pos2);
+            Params.Add("@Pos3", Model.Pos3);
+            Params.Add("@Pos4", Model.Pos4);
+            Params.Add("@Pos5", Model.Pos5);
+            Params.Add("@Pos6", Model.Pos6);
+
+            Params.Add("@FieldName1", Model.FieldName1);
+            Params.Add("@FieldName2", Model.FieldName2);
+            Params.Add("@FieldName3", Model.FieldName3);
+            Params.Add("@FieldName4", Model.FieldName4);
+            Params.Add("@FieldName5", Model.FieldName5);
+            Params.Add("@FieldName6", Model.FieldName6);
+
+
+            var SPName = ConfigurationManager.AppSettings["SaveNewDescDetail"];
+            _dbAccess.ExecuteNonQuery(SPName, Params, "@o_MsgCode", out msgCode);
+
+            return msgCode;
+        }
 
 
         #endregion

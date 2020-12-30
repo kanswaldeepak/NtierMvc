@@ -20,6 +20,11 @@
 
         <div class="row m--padding-10">
             <div class="col-md-6">
+                <input style="font-size:18px" type="button" class="btn btn-success btn-sm" id="QPAddMasterItem" value="Add Master Item" ng-click="BindDescDetails()" />
+            </div>
+        </div>
+        <div class="row m--padding-10">
+            <div class="col-md-6">
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group text-left">
@@ -65,7 +70,7 @@
                            @id = "MainProdGrp",
                            @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
                            ng_model = "MainProdGrp",
-                           @onchange = "GetSubProductGrps()"
+                           @onchange = "GetSubProductGrps('QuotePrep')"
 
                        })
                             <span class="HideValidMsg">Please Select Product Line</span>
@@ -82,7 +87,7 @@
                                    @class = "form-control requiredValidation",
                                    @id = "SubProdGrp",
                                    @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
-                                   @onchange = "GetProdName()"
+                                   @onchange = "GetProdName('QuotePrep')"
                                })
                             <span class="HideValidMsg">Please Select Sub Product Group</span>
                         </div>
@@ -98,12 +103,12 @@
                            @class = "form-control requiredValidation clearField",
                            @id = "ProductName",
                            @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
-                           @onchange = "GetProductNumberByName()"
+                           @onchange = "GetProductNumberByName('QuotePrep');"
 
                        })
                             @*<select id="ProductName" name="ProductName" ng-model="ProductName" class="form-control requiredValidation clearField ng-pristine ng-untouched ng-valid ng-empty" onfocusout="return ValidateRequiredFieldsOnFocusOut(this)" ng-change="GetProductNumber(ProductName)">
-                                <option data-ng-repeat="pN in ProductNameList" value="{{pN.DataStringValueField}}">{{pN.DataTextField}}</option>
-                            </select>*@
+                                    <option data-ng-repeat="pN in ProductNameList" value="{{pN.DataStringValueField}}">{{pN.DataTextField}}</option>
+                                </select>*@
                             <span class="HideValidMsg">Please Select Product Name</span>
                         </div>
                     </div>
@@ -124,21 +129,21 @@
                         </div>
                     </div>
                     @*<div class="col-md-6">
-                        <div class="form-group text-left">
-                            <label class="control-label">
-                                Customer Name
-                            </label>
-                            @Html.TextBoxFor(m => m.CustomerName, new
-                           {
-                               @class = "form-control requiredValidation",
-                               @id = "QuotePrepVendorName",
-                               @readonly = "readonly",
-                               @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
-                           })
+                            <div class="form-group text-left">
+                                <label class="control-label">
+                                    Customer Name
+                                </label>
+                                @Html.TextBoxFor(m => m.CustomerName, new
+                               {
+                                   @class = "form-control requiredValidation",
+                                   @id = "QuotePrepVendorName",
+                                   @readonly = "readonly",
+                                   @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                               })
 
-                            <span class="HideValidMsg">Please Select Customer Name</span>
-                        </div>
-                    </div>*@
+                                <span class="HideValidMsg">Please Select Customer Name</span>
+                            </div>
+                        </div>*@
 
                     <div class="col-md-6">
                         <label class="control-label">
@@ -162,18 +167,18 @@
 
                     </div>
                     @*<div class="col-md-6">
-                        <div class="form-group">
-                            <label class="control-label">
-                                Enquiry Sr No
-                            </label>
-                            @Html.TextBoxFor(m => m.EnqSrNo, new
-                               {
-                                   @class = "form-control clearField",
-                                   @id = "EnqSrNo"
-                               })
-                            <span class="HideValidMsg">Please Select EnqSrNo</span>
-                        </div>
-                    </div>*@
+                            <div class="form-group">
+                                <label class="control-label">
+                                    Enquiry Sr No
+                                </label>
+                                @Html.TextBoxFor(m => m.EnqSrNo, new
+                                   {
+                                       @class = "form-control clearField",
+                                       @id = "EnqSrNo"
+                                   })
+                                <span class="HideValidMsg">Please Select EnqSrNo</span>
+                            </div>
+                        </div>*@
 
                     <div class="col-md-6">
                         <div class="form-group">
@@ -184,13 +189,13 @@
                        {
                            @class = "form-control clearField",
                            @id = "CasingSize",
-                           @onchange = "DisplayNewItemInDdl(this, 'Master.Taxonomy', 'Ppf', 'DropDownValue')"
+                           @onchange = "DisplayNewItemInDdl(this, 'Master.Taxonomy', 'Ppf', 'DropDownValue'); GetDisplayFieldsForQuotePrep();"
 
                        })
                             <span class="HideValidMsg">Please Select Casing Size</span>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div id="divCasingPpf" class="col-md-6" style="display:none">
                         <div class="form-group">
                             <label class="control-label">
                                 Casing Ppf
@@ -207,7 +212,7 @@
                     </div>
 
 
-                    <div class="col-md-6">
+                    <div id="divConnection" class="col-md-6" style="display:none">
                         <div class="form-group">
                             <label class="control-label">
                                 Connection
@@ -251,7 +256,7 @@
                             <span class="HideValidMsg">Please Select Uom</span>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div id="divMaterialGrade" class="col-md-6" style="display:none">
                         <div class="form-group">
                             <label class="control-label">
                                 Material Grade
@@ -265,7 +270,7 @@
                             <span class="HideValidMsg">Please Select Material Grade</span>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div id="divOpenHoleSize" class="col-md-6" style="display:none">
                         <div class="form-group">
                             <label class="control-label">
                                 Open Hole Size
@@ -278,7 +283,7 @@
                             <span class="HideValidMsg">Please Select Hole Size Range Inch</span>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div id="divBallSize" class="col-md-6" style="display:none">
                         <div class="form-group">
                             <label class="control-label">
                                 Ball Size
@@ -292,7 +297,7 @@
                             <span class="HideValidMsg">Please Select Hole Size Range Inch</span>
                         </div>
                     </div>
-                    <div class="col-md-6" hidden>
+                    <div class="col-md-6">
                         <div class="form-group">
                             <label class="control-label">
                                 Currency
@@ -305,12 +310,12 @@
                             <span class="HideValidMsg">Please Select Currency</span>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-6" style="display:none">
                         <div class="form-group">
                             <label class="control-label">
                                 Casing Weight
                             </label>
-                            @Html.DropDownListFor(m => m.CasingWT, new SelectList(ViewBag.ListCasingWT, "DataStringValueField", "DataTextField", Model.CasingWT), new
+                            @Html.DropDownListFor(m => m.CasingWeight, new SelectList(ViewBag.ListCasingWT, "DataStringValueField", "DataTextField", Model.CasingWeight), new
                        {
                            @class = "form-control",
                            @id = "CasingWT"
@@ -318,7 +323,7 @@
                             <span class="HideValidMsg">Please Select Casing Weight</span>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div id="divWallThickness" class="col-md-6" style="display:none">
                         <div class="form-group">
                             <label class="control-label">
                                 Wall Thickness
@@ -331,7 +336,7 @@
                             <span class="HideValidMsg">Please Enter Wall Thickness</span>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div id="divODSize" class="col-md-6">
                         <div class="form-group">
                             <label class="control-label">
                                 OD Size
@@ -344,7 +349,7 @@
                             <span class="HideValidMsg">Please Select OD Size</span>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div id="divTotalBows" class="col-md-6" style="display:none">
                         <div class="form-group">
                             <label class="control-label">
                                 Total Bows
@@ -358,7 +363,7 @@
                             <span class="HideValidMsg">Please Select Total Bows</span>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div id="divUnitPrice" class="col-md-6">
                         <div class="form-group">
                             <label class="control-label">
                                 Unit Price
@@ -400,11 +405,11 @@
                             </div>
 
                             @*<select id="ddlDownload" class="dropdown form-control">
-                                <option value="">Select</option>
-                                <option value="xlsx">Excel</option>
-                                <option value="doc">Doc</option>
-                                <option value="pdf">Pdf</option>
-                            </select>*@
+                                    <option value="">Select</option>
+                                    <option value="xlsx">Excel</option>
+                                    <option value="doc">Doc</option>
+                                    <option value="pdf">Pdf</option>
+                                </select>*@
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -431,8 +436,8 @@
                                         <label id="ViewItemNo" name="ViewItemNo" value="" />
                                     </td>
                                     @*<td id="EnqSrNoBody">
-                                        <label id="ViewEnqSrNo" name="ViewEnqSrNo" value="" />
-                                    </td>*@
+                                            <label id="ViewEnqSrNo" name="ViewEnqSrNo" value="" />
+                                        </td>*@
                                     <td>
                                         <label id="ViewQuantity" name="ViewQuantity" value="" />
                                     </td>
@@ -465,48 +470,48 @@
 
 
                     <!--
-                                    <label class="form-control " type="text" id="ViewProductName" name="ViewProductName" value="" style="width:100px;" />
+                                        <label class="form-control " type="text" id="ViewProductName" name="ViewProductName" value="" style="width:100px;" />
 
 
-                <label class="form-control " type="text" id="ViewProductCode" name="ViewProductCode" value="" style="width:100px;" />
+                    <label class="form-control " type="text" id="ViewProductCode" name="ViewProductCode" value="" style="width:100px;" />
 
 
-                <label class="form-control " type="text" id="ViewPL" name="ViewPL" value="" style="width:100px;" />
+                    <label class="form-control " type="text" id="ViewPL" name="ViewPL" value="" style="width:100px;" />
 
 
-                                    <label id="ViewPos1" name="ViewPos1" value="" />
-                                    <label id="ViewProductNo" name="ViewProductNo" value="" />,
+                                        <label id="ViewPos1" name="ViewPos1" value="" />
+                                        <label id="ViewProductNo" name="ViewProductNo" value="" />,
 
-                                    <label id="ViewPos2" name="ViewPos2" value="" />
-                                    <label id="ViewCasingSize" name="ViewCasingSize" class="ViewCasingSize" value="" />,
+                                        <label id="ViewPos2" name="ViewPos2" value="" />
+                                        <label id="ViewCasingSize" name="ViewCasingSize" class="ViewCasingSize" value="" />,
 
-                                    <label id="ViewPos3" name="ViewPos3" value="" />
-                                    <label id="ViewCasingSize1" name="ViewCasingSize1" class="ViewCasingSize" value="" />,
-                                    <label id="ViewCasingPpf" name="ViewCasingPpf" value="" />,
+                                        <label id="ViewPos3" name="ViewPos3" value="" />
+                                        <label id="ViewCasingSize1" name="ViewCasingSize1" class="ViewCasingSize" value="" />,
+                                        <label id="ViewCasingPpf" name="ViewCasingPpf" value="" />,
 
-                                    <label id="ViewPos4" name="ViewPos4" value="" />
-                                    <label id="ViewMaterialGrade" name="ViewMaterialGrade" value="" />,
+                                        <label id="ViewPos4" name="ViewPos4" value="" />
+                                        <label id="ViewMaterialGrade" name="ViewMaterialGrade" value="" />,
 
-                                    <label id="ViewConnection" name="ViewConnection" value="" />
-                                    <label id="ViewPos5" name="ViewPos5" value="" />
-
-
-                                    <label class="form-control " type="text" id="ViewPos6" name="ViewPos6" value="" style="width:100px;" />
+                                        <label id="ViewConnection" name="ViewConnection" value="" />
+                                        <label id="ViewPos5" name="ViewPos5" value="" />
 
 
-                <label class="form-control " type="text" id="ViewPos7" name="ViewPos7" value="" style="width:100px;" />
+                                        <label class="form-control " type="text" id="ViewPos6" name="ViewPos6" value="" style="width:100px;" />
 
 
-                <label class="form-control " type="text" id="ViewPos8" name="ViewPos8" value="" style="width:100px;" />
+                    <label class="form-control " type="text" id="ViewPos7" name="ViewPos7" value="" style="width:100px;" />
 
 
-                <label class="form-control " type="text" id="ViewPos9" name="ViewPos9" value="" style="width:100px;" />
+                    <label class="form-control " type="text" id="ViewPos8" name="ViewPos8" value="" style="width:100px;" />
 
 
-                <label class="form-control " type="text" id="ViewPos10" name="ViewPos10" value="" style="width:100px;" />
+                    <label class="form-control " type="text" id="ViewPos9" name="ViewPos9" value="" style="width:100px;" />
 
 
-                <label class="form-control " type="text" id="ViewDES" name="ViewDES" value="" style="width:100px;" />  -->
+                    <label class="form-control " type="text" id="ViewPos10" name="ViewPos10" value="" style="width:100px;" />
+
+
+                    <label class="form-control " type="text" id="ViewDES" name="ViewDES" value="" style="width:100px;" />  -->
 
 
                 </div>
@@ -539,6 +544,8 @@
         window.GetProductNameForProductType = '@Url.Action("GetProductNameForProductType", "Technical")';
         window.GetSubProdGrp = '@Url.Action("GetSubProdGrp", "Technical")';
         window.GetProdNames = '@Url.Action("GetProdName", "Technical")';
+        window.BindDescDetail = '@Url.Action("BindDescDetail", "Technical")';
+        window.GetDisplayFieldsForQuoteP = '@Url.Action("GetDisplayFieldsForQuotePrep", "Technical")';
 
         $('#divProductDetails').hide();
     });

@@ -682,5 +682,22 @@ namespace NtierMvc.Model
             return msgCode;
         }
 
+        public string SaveNewDescDetail(DescEntity dObj)
+        {
+            string result = "";
+            var baseAddress = "TechnicalDetails";
+            using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
+            {
+                HttpResponseMessage response = client.PostAsJsonAsync(baseAddress + "/SaveNewDescDetail", dObj).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    var data = response.Content.ReadAsStringAsync().Result;
+                    result = JsonConvert.DeserializeObject<string>(data);
+                }
+            }
+            return result;
+        }
+
+
     }
 }

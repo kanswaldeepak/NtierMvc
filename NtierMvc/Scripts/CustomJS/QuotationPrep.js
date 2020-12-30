@@ -1,6 +1,28 @@
-﻿
-function GetSubProductGrps() {
-    var MainProdGrp = $("#MainProdGrp").val();
+﻿function makeDescQuery(item) {
+    console.log($(item).find('option:selected').text());
+
+    if (item.name == 'FieldName1')
+        $('#finalDescQuery').val($('#finalDescQuery').val() + ' ' + $(item).find('option:selected').text() + '+ProductName');
+    else if (item.name == 'Pos1')
+        $('#finalDescQuery').val($(item).find('option:selected').text());
+    else
+        $('#finalDescQuery').val($('#finalDescQuery').val() + '+' + $(item).find('option:selected').text());
+
+    //let queryString = $('#finalDescQuery').val() + ' ' + $(item).find('option:selected').text();
+
+
+}
+
+function GetSubProductGrps(itemType) {
+    var MainProdGrp = '';
+
+    if (itemType == 'QuotePrep') {
+        MainProdGrp = $("#MainProdGrp").val();
+    }
+    else {
+        MainProdGrp = $("#DescMainPL").val();
+    }
+
     $.ajax({
         type: 'POST',
         url: window.GetSubProdGrp,
@@ -8,12 +30,23 @@ function GetSubProductGrps() {
         contentType: "application/json; charset=utf-8",
         success: function (res) {
 
-            $("#SubProdGrp").empty();
-            if (res.length > 0) {
-                $.each(res, function (i, item) {
-                    $("#SubProdGrp").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
-                })
+            if (itemType == 'QuotePrep') {
+                $("#SubProdGrp").empty();
+                if (res.length > 0) {
+                    $.each(res, function (i, item) {
+                        $("#SubProdGrp").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
+                    })
+                }
             }
+            else {
+                $("#DescSubPL").empty();
+                if (res.length > 0) {
+                    $.each(res, function (i, item) {
+                        $("#DescSubPL").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
+                    })
+                }
+            }
+
 
         },
         error: function (x, e) {
@@ -25,9 +58,18 @@ function GetSubProductGrps() {
     })
 }
 
-function GetProdName() {
-    var MainProdGrp = $("#MainProdGrp").val();
-    var SubProdGrp = $("#SubProdGrp").val();
+function GetProdName(itemType) {
+    var MainProdGrp = '';
+    var SubProdGrp = '';
+
+    if (itemType == 'QuotePrep') {
+        MainProdGrp = $("#MainProdGrp").val();
+        SubProdGrp = $("#SubProdGrp").val();
+    }
+    else {
+        MainProdGrp = $("#DescMainPL").val();
+        SubProdGrp = $("#DescSubPL").val();
+    }
 
     $.ajax({
         type: 'POST',
@@ -36,11 +78,21 @@ function GetProdName() {
         contentType: "application/json; charset=utf-8",
         success: function (res) {
 
-            $("#ProductName").empty();
-            if (res.length > 0) {
-                $.each(res, function (i, item) {
-                    $("#ProductName").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
-                })
+            if (itemType == 'QuotePrep') {
+                $("#ProductName").empty();
+                if (res.length > 0) {
+                    $.each(res, function (i, item) {
+                        $("#ProductName").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
+                    })
+                }
+            }
+            else {
+                $("#DescProductName").empty();
+                if (res.length > 0) {
+                    $.each(res, function (i, item) {
+                        $("#DescProductName").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
+                    })
+                }
             }
 
         },
@@ -117,18 +169,41 @@ function GetProductTypes() {
             }
         },
         error: function (x, e) {
-            $('#spn-Sucess-Failure').text('Some error is occurred, Please try after some time.');
-            $('#spn-Sucess-Failure').addClass("important red");
-            $('#Sucess-Failure').modal('show');
+            alert('Some error is occurred, Please try after some time.');
+            //$('#spn-Sucess-Failure').text('Some error is occurred, Please try after some time.');
+            //$('#spn-Sucess-Failure').addClass("important red");
+            //$('#Sucess-Failure').modal('show');
         }
     })
+}
+
+function GetDisplayFieldsForQuotePrep() {
+    var ProductNameID = $("#ProductName").val();
+    var CasingSize = $("#CasingSize").val();
+    $.ajax({
+        type: 'POST',
+        url: window.GetDisplayFieldsForQuoteP,
+        data: JSON.stringify({ productId: ProductNameID, casingSize: CasingSize, type: 'NewQuotePrep' }),
+        contentType: "application/json; charset=utf-8",
+        success: function (data) {
+            if (data.length > 0) {
+                for (var i = 1; i <= 10; i++) {
+                    if (data[0]['FieldName' + i] != '') {
+                        $('#div' + data[0]['FieldName' + i]).css('display', 'block');
+                    }
+                }
+
+            }
+        }
+    })
+
 }
 
 function GetProductDetails() {
     var ProductNameID = $("#ProductName").val();
     var CasingSize = $("#CasingSize").val();
-    var Status = false;
-    Status = GetFormValidationStatus("#formSaveQuotationPrepDetail");
+    var Status = true;
+    //Status = GetFormValidationStatus("#formSaveQuotationPrepDetail");
     if (!Status) {
         alert("Kindly Fill all mandatory fields first");
     }
@@ -142,121 +217,150 @@ function GetProductDetails() {
                 if (data.length > 0) {
                     $('#divProductDetails').show();
                     $.each(data, function (i, item) {
-                        var finalString = '';
-                        switch (item.DES) {
-                            case 'DES1.1':
-                                finalString = item.Pos1 + ' ' + $("#CasingSize option:selected").text() + ' ' + $("#ProductName option:selected").text()
-                                    + ', \r\n ' + item.Pos2 + ' ' + $("#OpenHoleSize option:selected").text()
-                                    + ', \r\n' + item.Pos3 + ' ' + ' ' + $("#QuotePrepODSize").val()
-                                    + ', \r\n ' + item.Pos4 + $("#QuotePrepTotalBows").val();
-                                break;
-                            case 'DES1.2':
-                                finalString = item.Pos1 + ' ' + $("#CasingSize option:selected").text() + ' ' + $("#ProductName option:selected").text()
-                                    + ', \r\n ' + item.Pos2 + ' ' + $("#OpenHoleSize option:selected").text();
-                                break;
-                            case 'DES1.3':
-                                finalString = item.Pos1 + ' ' + $("#CasingSize option:selected").text() + ' ' + $("#ProductName option:selected").text();
-                                break;
-                            case 'DES2.1':
-                                finalString = item.Pos1 + ' ' + $("#CasingSize option:selected").text() + ' ' + $("#ProductName option:selected").text()
-                                    + ', \r\n ' + item.Pos2 + ' ' + $("#CasingPpf option:selected").text()
-                                    + ' lbs/ft, \r\n' + item.Pos3 + ' ' + ' ' + $("#Connection option:selected").text()
-                                    + ', \r\n ' + item.Pos4 + $("#MaterialGrade option:selected").text();
-                                break;
-                            case 'DES2.2':
-                                finalString = item.Pos1 + ' ' + $("#CasingSize option:selected").text() + ' ' + $("#ProductName option:selected").text()
-                                    + ', \r\n ' + item.Pos2 + ' ' + $("#CasingPpf option:selected").text()
-                                    + ' lbs/ft, \r\n' + item.Pos3 + ' ' + ' ' + $("#WallThickness option:selected").text()
-                                    + ', \r\n ' + item.Pos4 + $("#MaterialGrade option:selected").text();
-                                break;
-                            //case 'DES2.3':
-                            //    finalString = item.Pos1 + ' ' + $('#ProductNo').val() + ', \r\n ' + item.Pos2 + ', ' + item.Pos3 + ', '
-                            //        + item.Pos4 + item.Pos5;
-                            //    break;
-                            //case 'DES2.4':
-                            //    finalString = item.Pos1 + ' ' + $('#ProductNo').val() + ', \r\n ' + item.Pos2 + ', ' + item.Pos3 + ', '
-                            //        + item.Pos4 + item.Pos5;// + ' ' + item.subProductDetails;
-                            //    break;
-                            //case 'DES2.5':
-                            //    finalString = item.Pos1 + ' ' + $('#ProductNo').val() + ', \r\n ' + item.Pos2 + ' '
-                            //        + $("#CasingSize option:selected").text() + ', ' + item.Pos3 + ' '
-                            //        + $("#CasingSize option:selected").text() + ', ' + $("#CasingPpf option:selected").text() + ' ' + item.Pos4
-                            //        + ', ' + $("#Connection option:selected").text() + item.Pos5 + ', ' + $("#BallSize option:selected").text();
-                            //    break;
-                            //case 'DES2.6':
-                            //    finalString = item.Pos1 + ' ' + $('#ProductNo').val() + ', \r\n ' + item.Pos2 + ' '
-                            //        + $("#CasingSize option:selected").text() + ', ' + item.Pos3 + ' '
-                            //        + $("#CasingSize option:selected").text() + ' ' + $("#MaterialGrade option:selected").text() + ', ' + $("#CasingPpf option:selected").text() + item.Pos4
-                            //        + ', ' + $("#Connection option:selected").text()
-                            //        + item.Pos5; // + ' ' + item.subProductDetails;
-                            //    break;
-                            //case 'DES2.7':
-                            //    finalString = item.Pos1 + ' ' + $('#ProductNo').val() + ', \r\n ' + item.Pos2 + ' '
-                            //        + $("#CasingSize option:selected").text() + ', ' + item.Pos3 + ' '
-                            //        + ' ' + $("#MaterialGrade option:selected").text() + $("#CasingPpf option:selected").text()
-                            //        + ', ' + item.Pos4 + ', ' + $("#Connection option:selected").text()
-                            //        + item.Pos5;
-                            //    break;
-                            //case 'DES3.1':
-                            //    finalString = item.Pos1 + ' ' + $('#ProductNo').val() + ', \r\n ' + item.Pos2 + ' '
-                            //        + $("#CasingSize option:selected").text() + ',x ' + item.Pos3 + ' '
-                            //        + ', ' + item.Pos4 + $("#CasingSize option:selected").text()
-                            //        + item.Pos5 + ', ' + $("#OpenHoleSize option:selected").text() + ', ' + item.Pos6;
-                            //    break;
-                            //case 'DES3.2':
-                            //    finalString = item.Pos1 + ' ' + $('#ProductNo').val() + ', \r\n ' + item.Pos2 + ' '
-                            //        + $("#CasingSize option:selected").text() + ', ' + item.Pos3 + ' '
-                            //        + item.Pos4 + $("#CasingSize option:selected").text()
-                            //        + item.Pos5 + ' ' + $("#CasingPpf option:selected").text() + ' ' + item.Pos6;
-                            //    break;
-                            //case 'DES3.3':
-                            //    finalString = item.Pos1 + ' ' + $('#ProductNo').val() + ', \r\n ' + item.Pos2 + ' '
-                            //        + $("#CasingSize option:selected").text() + ', ' + item.Pos3 + ' '
-                            //        + item.Pos4 + $("#CasingSize option:selected").text()
-                            //        + item.Pos5 + ' ' + item.Pos6;
-                            //    break;
-                            //case 'DES3.4':
-                            //    finalString = item.Pos1 + ' ' + $('#ProductNo').val() + ', \r\n ' + item.Pos2 + ' '
-                            //        + $("#CasingSize option:selected").text() + ', ' + item.Pos3 + ' '
-                            //        + ', ' + item.Pos4 + ', '
-                            //        + item.Pos5 + $("#CasingSize option:selected").text() + ', ' + item.Pos6;
-                            //    break;
-                            //case 'DES3.5':
-                            //    finalString = item.Pos1 + ' ' + $('#ProductNo').val() + ', \r\n ' + item.Pos2 + ' '
-                            //        + $("#CasingSize option:selected").text() + ', ' + item.Pos3 + ' '
-                            //        + $("#CasingSize option:selected").text() + ', ' + item.Pos4 + ', '
-                            //        + item.Pos5 + ', ' + item.Pos6;
-                            //    break;
-                            //case 'DES3.6':
-                            //    finalString = item.Pos1 + ' ' + $('#ProductNo').val() + ', \r\n ' + item.Pos2 + ' '
-                            //        + $("#CasingSize option:selected").text() + ', ' + item.Pos3 + ', '
-                            //        + $("#CasingSize option:selected").text()
-                            //        + ', ' + $("#MaterialGrade option:selected").text() + ', ' + $("#CasingPpf option:selected").text() + ', '
-                            //        + item.Pos4 + ', ' + $("#CasingSize option:selected").text() + ', ' + $("#Connection option:selected").text()
-                            //        + item.Pos5 + ', ' + item.Pos6;
-                            //    break;
-                            //case 'DES3.7':
-                            //    finalString = item.Pos1 + ' ' + $('#ProductNo').val() + ', \r\n ' + item.Pos2 + ' '
-                            //        + $("#CasingSize option:selected").text() + ', ' + $("#OpenHoleSize option:selected").text() + ', ' + item.Pos3
-                            //        + ', ' + item.Pos4 + $("#CasingSize option:selected").text() + item.Pos5 + ', ' + $("#OpenHoleSize option:selected").text() + ' ' + item.Pos6;
-                            //    break;
-                            //case 'DES4.1':
-                            //    finalString = item.Pos1 + ' ' + $('#ProductNo').val() + ', \r\n ' + item.Pos2 + ' '
-                            //        + $("#CasingSize option:selected").text() + ', ' + item.Pos3 + ' '
-                            //        + $("#CasingSize option:selected").text() + ', ' + item.Pos4 + $("#CasingPpf option:selected").text()
-                            //        + item.Pos5
-                            //        + ' ' + $("#MaterialGrade option:selected").text() + ' ' + $("#CasingWT option:selected").text() + ' ' + item.Pos6
-                            //        + ', ' + $("#Connection option:selected").text()
-                            //        + item.Pos7;
-                            //    break;
-                            default:
-                                finalString = item.Pos1 + ' ' + $("#CasingSize option:selected").text() + ',' + item.Pos2 + ' \r\n '
-                                    + ', ' + item.Pos3 + ' '
-                                    + $("#CasingPpf option:selected").text() + 'lbs/ft,  \r\n ' + item.Pos4
-                                    + $("#Connection option:selected").text() + ' \r\n ' + item.Pos5
-                                    + $("#MaterialGrade option:selected").text();
-                                break;
-                        }
+                        var finalString = item.DESQuery;
+
+                        if (item.FieldName1 == '')
+                            finalString = finalString.replace(item.FieldName1, '');
+                        else
+                            finalString = finalString.replace(item.FieldName1, $('#' + item.FieldName1 + ' option:selected').text());
+
+                        finalString = finalString.replace('ProductName', $('#ProductName option:selected').text());
+
+                        if (item.FieldName2 == '')
+                            finalString = finalString.replace(item.FieldName2, '');
+                        else
+                            finalString = finalString.replace(item.FieldName2, $('#' + item.FieldName2 + ' option:selected').text());
+
+                        if (item.FieldName3 == '')
+                            finalString = finalString.replace(item.FieldName3, '');
+                        else
+                            finalString = finalString.replace(item.FieldName3, $('#' + item.FieldName3 + ' option:selected').text());
+
+                        if (item.FieldName4 == '')
+                            finalString = finalString.replace(item.FieldName4, '');
+                        else
+                            finalString = finalString.replace(item.FieldName4, $('#' + item.FieldName4 + ' option:selected').text());
+
+                        if (item.FieldName5 == '')
+                            finalString = finalString.replace(item.FieldName5, '');
+                        else
+                            finalString = finalString.replace(item.FieldName5, $('#' + item.FieldName5 + ' option:selected').text());
+
+                        if (item.FieldName6 == '')
+                            finalString = finalString.replace(item.FieldName6, '');
+                        else
+                            finalString = finalString.replace(item.FieldName6, $('#' + item.FieldName6 + ' option:selected').text());
+
+                        //switch (item.DES) {
+                        //    case 'DES1.1':
+                        //        finalString = item.Pos1 + ' ' + $("#CasingSize option:selected").text() + ' ' + $("#ProductName option:selected").text() + ', \r\n ' + item.Pos2 + ' ' + $("#OpenHoleSize option:selected").text()
+                        //            + ', \r\n' + item.Pos3 + ' ' + $("#QuotePrepODSize").val()
+                        //            + ', \r\n ' + item.Pos4 + $("#QuotePrepTotalBows").val();
+                        //        break;
+                        //    case 'DES1.2':
+                        //        finalString = item.Pos1 + ' ' + $("#CasingSize option:selected").text() + ' ' + $("#ProductName option:selected").text() + ', \r\n ' + item.Pos2 + ' ' + $("#OpenHoleSize option:selected").text();
+                        //        break;
+                        //    case 'DES1.3':
+                        //        finalString = item.Pos1 + ' ' + $("#CasingSize option:selected").text() + ' ' + $("#ProductName option:selected").text();
+                        //        break;
+                        //    case 'DES2.1':
+                        //        finalString = item.Pos1 + ' ' + $("#CasingSize option:selected").text() + ' ' + $("#ProductName option:selected").text() + ', \r\n ' + item.Pos2 + ' ' + $("#CasingPpf option:selected").text()
+                        //            + ' lbs/ft, \r\n' + item.Pos3 + ' ' + $("#Connection option:selected").text()
+                        //            + ', \r\n ' + item.Pos4 + $("#MaterialGrade option:selected").text();
+                        //        break;
+                        //    case 'DES2.2':
+                        //        finalString = item.Pos1 + ' ' + $("#CasingSize option:selected").text() + ' ' + $("#ProductName option:selected").text() + ', \r\n ' + item.Pos2 + ' ' + $("#CasingPpf option:selected").text()
+                        //            + ' lbs/ft, \r\n' + item.Pos3 + ' ' + $("#WallThickness option:selected").text()
+                        //            + ', \r\n ' + item.Pos4 + $("#MaterialGrade option:selected").text();
+                        //        break;
+                        //    //case 'DES2.3':
+                        //    //    finalString = item.Pos1 + ' ' + $('#ProductNo').val() + ', \r\n ' + item.Pos2 + ', ' + item.Pos3 + ', '
+                        //    //        + item.Pos4 + item.Pos5;
+                        //    //    break;
+                        //    //case 'DES2.4':
+                        //    //    finalString = item.Pos1 + ' ' + $('#ProductNo').val() + ', \r\n ' + item.Pos2 + ', ' + item.Pos3 + ', '
+                        //    //        + item.Pos4 + item.Pos5;// + ' ' + item.subProductDetails;
+                        //    //    break;
+                        //    //case 'DES2.5':
+                        //    //    finalString = item.Pos1 + ' ' + $('#ProductNo').val() + ', \r\n ' + item.Pos2 + ' '
+                        //    //        + $("#CasingSize option:selected").text() + ', ' + item.Pos3 + ' '
+                        //    //        + $("#CasingSize option:selected").text() + ', ' + $("#CasingPpf option:selected").text() + ' ' + item.Pos4
+                        //    //        + ', ' + $("#Connection option:selected").text() + item.Pos5 + ', ' + $("#BallSize option:selected").text();
+                        //    //    break;
+                        //    //case 'DES2.6':
+                        //    //    finalString = item.Pos1 + ' ' + $('#ProductNo').val() + ', \r\n ' + item.Pos2 + ' '
+                        //    //        + $("#CasingSize option:selected").text() + ', ' + item.Pos3 + ' '
+                        //    //        + $("#CasingSize option:selected").text() + ' ' + $("#MaterialGrade option:selected").text() + ', ' + $("#CasingPpf option:selected").text() + item.Pos4
+                        //    //        + ', ' + $("#Connection option:selected").text()
+                        //    //        + item.Pos5; // + ' ' + item.subProductDetails;
+                        //    //    break;
+                        //    //case 'DES2.7':
+                        //    //    finalString = item.Pos1 + ' ' + $('#ProductNo').val() + ', \r\n ' + item.Pos2 + ' '
+                        //    //        + $("#CasingSize option:selected").text() + ', ' + item.Pos3 + ' '
+                        //    //        + ' ' + $("#MaterialGrade option:selected").text() + $("#CasingPpf option:selected").text()
+                        //    //        + ', ' + item.Pos4 + ', ' + $("#Connection option:selected").text()
+                        //    //        + item.Pos5;
+                        //    //    break;
+                        //    //case 'DES3.1':
+                        //    //    finalString = item.Pos1 + ' ' + $('#ProductNo').val() + ', \r\n ' + item.Pos2 + ' '
+                        //    //        + $("#CasingSize option:selected").text() + ',x ' + item.Pos3 + ' '
+                        //    //        + ', ' + item.Pos4 + $("#CasingSize option:selected").text()
+                        //    //        + item.Pos5 + ', ' + $("#OpenHoleSize option:selected").text() + ', ' + item.Pos6;
+                        //    //    break;
+                        //    //case 'DES3.2':
+                        //    //    finalString = item.Pos1 + ' ' + $('#ProductNo').val() + ', \r\n ' + item.Pos2 + ' '
+                        //    //        + $("#CasingSize option:selected").text() + ', ' + item.Pos3 + ' '
+                        //    //        + item.Pos4 + $("#CasingSize option:selected").text()
+                        //    //        + item.Pos5 + ' ' + $("#CasingPpf option:selected").text() + ' ' + item.Pos6;
+                        //    //    break;
+                        //    //case 'DES3.3':
+                        //    //    finalString = item.Pos1 + ' ' + $('#ProductNo').val() + ', \r\n ' + item.Pos2 + ' '
+                        //    //        + $("#CasingSize option:selected").text() + ', ' + item.Pos3 + ' '
+                        //    //        + item.Pos4 + $("#CasingSize option:selected").text()
+                        //    //        + item.Pos5 + ' ' + item.Pos6;
+                        //    //    break;
+                        //    //case 'DES3.4':
+                        //    //    finalString = item.Pos1 + ' ' + $('#ProductNo').val() + ', \r\n ' + item.Pos2 + ' '
+                        //    //        + $("#CasingSize option:selected").text() + ', ' + item.Pos3 + ' '
+                        //    //        + ', ' + item.Pos4 + ', '
+                        //    //        + item.Pos5 + $("#CasingSize option:selected").text() + ', ' + item.Pos6;
+                        //    //    break;
+                        //    //case 'DES3.5':
+                        //    //    finalString = item.Pos1 + ' ' + $('#ProductNo').val() + ', \r\n ' + item.Pos2 + ' '
+                        //    //        + $("#CasingSize option:selected").text() + ', ' + item.Pos3 + ' '
+                        //    //        + $("#CasingSize option:selected").text() + ', ' + item.Pos4 + ', '
+                        //    //        + item.Pos5 + ', ' + item.Pos6;
+                        //    //    break;
+                        //    //case 'DES3.6':
+                        //    //    finalString = item.Pos1 + ' ' + $('#ProductNo').val() + ', \r\n ' + item.Pos2 + ' '
+                        //    //        + $("#CasingSize option:selected").text() + ', ' + item.Pos3 + ', '
+                        //    //        + $("#CasingSize option:selected").text()
+                        //    //        + ', ' + $("#MaterialGrade option:selected").text() + ', ' + $("#CasingPpf option:selected").text() + ', '
+                        //    //        + item.Pos4 + ', ' + $("#CasingSize option:selected").text() + ', ' + $("#Connection option:selected").text()
+                        //    //        + item.Pos5 + ', ' + item.Pos6;
+                        //    //    break;
+                        //    //case 'DES3.7':
+                        //    //    finalString = item.Pos1 + ' ' + $('#ProductNo').val() + ', \r\n ' + item.Pos2 + ' '
+                        //    //        + $("#CasingSize option:selected").text() + ', ' + $("#OpenHoleSize option:selected").text() + ', ' + item.Pos3
+                        //    //        + ', ' + item.Pos4 + $("#CasingSize option:selected").text() + item.Pos5 + ', ' + $("#OpenHoleSize option:selected").text() + ' ' + item.Pos6;
+                        //    //    break;
+                        //    //case 'DES4.1':
+                        //    //    finalString = item.Pos1 + ' ' + $('#ProductNo').val() + ', \r\n ' + item.Pos2 + ' '
+                        //    //        + $("#CasingSize option:selected").text() + ', ' + item.Pos3 + ' '
+                        //    //        + $("#CasingSize option:selected").text() + ', ' + item.Pos4 + $("#CasingPpf option:selected").text()
+                        //    //        + item.Pos5
+                        //    //        + ' ' + $("#MaterialGrade option:selected").text() + ' ' + $("#CasingWT option:selected").text() + ' ' + item.Pos6
+                        //    //        + ', ' + $("#Connection option:selected").text()
+                        //    //        + item.Pos7;
+                        //    //    break;
+                        //    default:
+                        //        finalString = item.Pos1 + ' ' + $("#CasingSize option:selected").text() + ',' + item.Pos2 + ' \r\n '
+                        //            + ', ' + item.Pos3 + ' '
+                        //            + $("#CasingPpf option:selected").text() + 'lbs/ft,  \r\n ' + item.Pos4
+                        //            + $("#Connection option:selected").text() + ' \r\n ' + item.Pos5
+                        //            + $("#MaterialGrade option:selected").text();
+                        //        break;
+                        //}
                         $('#ViewPos1').val(item.Pos1);
                         $('#ViewPos2').val(item.Pos2);
                         $('#ViewPos3').val(item.Pos3);
@@ -268,7 +372,7 @@ function GetProductDetails() {
                         //$('#ViewMaterialGrade').text($("#MaterialGrade option:selected").text());
                         //$('#ViewConnection').text($("#Connection option:selected").text());
 
-
+                        //finalString = item.DESQuery;
                         //finalString = finalString + ' ' + item.subProductDetails;
                         //finalString = item.Pos1 + ' ' + $('#ProductNo').val() + ', \r\n ' + item.Pos2 + ' '
                         //    + $("#CasingSize option:selected").text() + ', ' + item.Pos3 + ' '

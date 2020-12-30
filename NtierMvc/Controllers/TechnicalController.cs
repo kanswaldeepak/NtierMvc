@@ -1134,7 +1134,7 @@ namespace NtierMvc.Controllers
         public ActionResult GetRevisedQuoteNo(string quoteTypeId, string quoteNumberId)
         {
             SingleColumnEntity objSingle = new SingleColumnEntity();
-            objSingle = model.GetSingleColumnValues("QuotationRegister", "RevisedQuoteNo", "RevisedQuoteNo", "QuoteType", quoteTypeId, "QuoteDate", "","", "QuoteNo", quoteNumberId, "", "QuoteValidity");
+            objSingle = model.GetSingleColumnValues("QuotationRegister", "RevisedQuoteNo", "RevisedQuoteNo", "QuoteType", quoteTypeId, "QuoteDate", "", "", "QuoteNo", quoteNumberId, "", "QuoteValidity");
 
             return new JsonResult { Data = objSingle, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
@@ -1411,7 +1411,7 @@ namespace NtierMvc.Controllers
         public ActionResult GetQuoteItemSlNos(string quoteType, string quoteNo)
         {
             List<DropDownEntity> QuoteItemSlNoList = new List<DropDownEntity>();
-            QuoteItemSlNoList = model.GetDropDownList("QuotePreparationTbl", GeneralConstants.ListTypeD, "Id", "ItemNo", quoteNo, "QuoteNo",false, "", "", quoteType, "QuoteType");
+            QuoteItemSlNoList = model.GetDropDownList("QuotePreparationTbl", GeneralConstants.ListTypeD, "Id", "ItemNo", quoteNo, "QuoteNo", false, "", "", quoteType, "QuoteType");
 
             return new JsonResult { Data = QuoteItemSlNoList, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
@@ -1441,7 +1441,7 @@ namespace NtierMvc.Controllers
         {
             List<DropDownEntity> lstSoNos = new List<DropDownEntity>();
 
-            lstSoNos = model.GetDropDownList("Orders", GeneralConstants.ListTypeD, "SoNo", "SoNo", "QuoteType", quotetypeId,false, "", "", "QuoteNo", quoteNoId);
+            lstSoNos = model.GetDropDownList("Orders", GeneralConstants.ListTypeD, "SoNo", "SoNo", "QuoteType", quotetypeId, false, "", "", "QuoteNo", quoteNoId);
             return new JsonResult { Data = lstSoNos, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
 
         }
@@ -1630,9 +1630,9 @@ namespace NtierMvc.Controllers
             List<DropDownEntity> ddl = new List<DropDownEntity>();
             //ddl = objEnquiryManager.GetDdlValueForEnquiry(type, EOQId, ProductGroup, VendorId);
 
-            switch(type)
+            switch (type)
             {
-                case "Customer" :
+                case "Customer":
                     ddl = objEnquiryManager.GetDdlValueForEnquiry(type, EnqType);
                     break;
                 case "EnqFor":
@@ -1648,7 +1648,7 @@ namespace NtierMvc.Controllers
                     ddl = objEnquiryManager.GetDdlValueForEnquiry(type, EnqType);
                     break;
             }
-            
+
 
             return new JsonResult { Data = ddl, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
@@ -1734,6 +1734,72 @@ namespace NtierMvc.Controllers
             var ProdNameList = model.GetDropDownList("Master.Product", GeneralConstants.ListTypeD, "Id", "ProductName", MainProdGrpId, "PL", false, "", "", SubProdGrpId, "SubPL");
             return new JsonResult { Data = ProdNameList, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
+
+        [HttpGet]
+        public ActionResult BindDescDetail(string actionType)
+        {
+            ViewBag.ListCustomerId = model.GetMasterTableStringList("Customer", "Id", "CustomerId", "", "", GeneralConstants.ListTypeN);
+            ViewBag.ListQuoteType = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "QuoteType", "Property", GeneralConstants.ListTypeN);
+
+            ViewBag.ListMainPL = model.GetDropDownList("Master.ProductLine", GeneralConstants.ListTypeD, "Id", "MainPLName", "", "");
+            ViewBag.ListSubPL = model.GetDropDownList("SubProductLine", GeneralConstants.ListTypeD, "Id", "SubPLName", "", "");
+            ViewBag.ListPosition = model.GetDropDownList("DescPosition", GeneralConstants.ListTypeD, "Id", "PosName", "", "");
+            ViewBag.ListFieldName = model.GetDropDownList("DescFieldName", GeneralConstants.ListTypeD, "Id", "FieldName", "", "");
+
+
+            DescEntity dEN = new DescEntity();
+            if (actionType == "ADD")
+            {
+            }
+
+            return base.PartialView("~/Views/Technical/_TechDescDetails.cshtml", dEN);
+        }
+
+        public JsonResult GetDescLists()
+        {
+            DescDetailLists dDetail = new DescDetailLists();
+            dDetail.DescMailPL = model.GetDropDownList("Master.ProductLine", GeneralConstants.ListTypeD, "Id", "MainPLName", "", "");
+            dDetail.DescSubPL = model.GetDropDownList("SubProductLine", GeneralConstants.ListTypeD, "Id", "SubPLName", "", "");
+            dDetail.DescPosList = model.GetDropDownList("DescPosition", GeneralConstants.ListTypeD, "Id", "PosName", "", "");
+            dDetail.FieldNameList = model.GetDropDownList("DescFieldName", GeneralConstants.ListTypeD, "Id", "FieldName", "", "");
+
+            return new JsonResult { Data = dDetail, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+        }
+
+        [HttpPost]
+        public ActionResult SaveNewDescDetail(DescEntity descE)
+        {
+            string data = string.Empty;
+
+            try
+            {
+                string result = objManager.SaveNewDescDetail(descE);
+
+                if (!string.IsNullOrEmpty(result) && (result == GeneralConstants.Inserted || result == GeneralConstants.Updated))
+                {
+                    data = GeneralConstants.SavedSuccess;
+                }
+                else
+                {
+                    data = GeneralConstants.NotSavedError + ". Reason: " + result;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return Json("Error occurred. Error details: " + ex.Message);
+            }
+
+            return new JsonResult { Data = data, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+        }
+
+        public ActionResult GetDisplayFieldsForQuotePrep(string productId, string casingSize, string type)
+        {
+            List<ProductEntity> lstProducts = new List<ProductEntity>();
+            lstProducts = objManager.GetPrepProductNames(productId, casingSize, type);
+            return new JsonResult { Data = lstProducts, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+        }
+
 
     }
 

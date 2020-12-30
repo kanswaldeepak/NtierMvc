@@ -1,4 +1,8 @@
-angular.module('App').controller("MainController", function ($scope, $http, $timeout, $compile) {
+angular.module('App').controller("MainController", function ($scope, $http, $timeout, $compile, $filter, $window) {
+
+    $('.modal-dialog').draggable({
+        handle: ".modal-body"
+    });
 
     //For Pagination
     $scope.maxsize = 5;
@@ -1184,25 +1188,65 @@ angular.module('App').controller("MainController", function ($scope, $http, $tim
         })
     }
 
-    // $scope.GetPODetailsFromSupplyType = function() {
-    //    let SupplyType = $('#GESupplyTypes').val();
+    $scope.BindDescDetails = function () {
+        var _actionType = "ADD"
+        $.ajax({
+            type: "GET",
+            data: ({ actionType: _actionType }),
+            datatype: "JSON",
+            url: window.BindDescDetail,
+            success: function (html) {
+                html = $compile(html)($scope);
+                SetModalTitle("Add Master Item")
+                SetModalBody(html);
+                SetModalWidth("1200px");
+                ShowModal();
 
-    //    $.ajax({
-    //        type: 'POST',
-    //        url: window.GetPODetailFromSupplyType,
-    //        data: JSON.stringify({ SupplyType: SupplyType }),
-    //        contentType: "application/json; charset=utf-8",
-    //        dataType: "json",
-    //        success: function (data) {
-    //            $('#GEVendorPONO').empty();
-    //            $.each(data, function (i, item) {
-    //                $('#GEVendorPONO').append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
-    //            })
-    //        }, error: function (x, e) {
-    //            alert('Some error is occurred, Please try after some time.');
-    //        }
-    //    })
+                if (!($('.modal.in').length)) {
+                    $('.modal-dialog').css({
+                        top: '5%',
+                        left: '3%'
+                    });
+                }
+
+                $('#ModalPopup').modal({
+                    backdrop: false,
+                    show: true
+                });
+
+                
+                //$http.get('/Technical/GetDescLists').then(function (response) {
+                //    $scope.DescMailPLList = response.data.DescMailPL;
+                //    $scope.DescSubPLList = response.data.DescSubPL;
+                //    $scope.DescPosList = response.data.DescPosList;
+                //    $scope.FieldNameList = response.data.FieldNameList;
+                //});
+
+                //$scope.DescMailPL = "";
+
+                HideLoadder();
+
+            },
+            error: function (r) {
+                HideLoadder();
+                alert(window.ErrorMsg);
+            }
+        })
+        //});
+    }
+
+    $scope.PosNo = "1";
+    $scope.addDescElement = function () {
+        $scope.PosNo = parseInt($scope.PosNo) + 1;
+        $('#Pos' + $scope.PosNo).show();
+    }
+
+    //$scope.finalDesQuery = "";
+    //$scope.makeDescQuery = function () {
+    //    var currentSelected = $filter('filter')($scope.DescMailPLList, { id: $scope.DescMailPL })[0]
+    //    $window.alert("Selected Value: " + currentSelected.DataStringValueField + "\nSelected Text: " + currentSelected.DataTextField);
     //}
+
 
 });
 

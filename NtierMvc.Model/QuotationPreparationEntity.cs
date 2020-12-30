@@ -32,7 +32,7 @@ namespace NtierMvc.Model
         public int BallSize { get; set; }
         public int UnitPrice { get; set; }
         public int Currency { get; set; }
-        public int CasingWT { get; set; }
+        public int CasingWeight { get; set; }
         public int RecordCount { get; set; }
         public string ipAddress { get; set; }
         public string WallThickness { get; set; }

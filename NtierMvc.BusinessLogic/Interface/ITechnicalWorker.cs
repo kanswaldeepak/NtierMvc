@@ -61,5 +61,7 @@ namespace NtierMvc.BusinessLogic.Interface
 
         OrderEntity GetSoNoDetails(string soNo);
 
+        string SaveNewDescDetail(DescEntity cObj);
+
     }
 }
