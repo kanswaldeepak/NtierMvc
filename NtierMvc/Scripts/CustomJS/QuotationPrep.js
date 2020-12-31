@@ -2,14 +2,15 @@
     console.log($(item).find('option:selected').text());
 
     if (item.name == 'FieldName1')
-        $('#finalDescQuery').val($('#finalDescQuery').val() + ' ' + $(item).find('option:selected').text() + '+ProductName');
+        $('#finalDescQuery').val($('#finalDescQuery').val() + ' ' + $(item).find('option:selected').text() + 'Field' + ' ProductName , \r\n ');
     else if (item.name == 'Pos1')
         $('#finalDescQuery').val($(item).find('option:selected').text());
+    else if (item.name.indexOf('FieldName') != -1)
+        $('#finalDescQuery').val($('#finalDescQuery').val() + ' ' + $(item).find('option:selected').text() + 'Field, \r\n');
     else
-        $('#finalDescQuery').val($('#finalDescQuery').val() + '+' + $(item).find('option:selected').text());
+        $('#finalDescQuery').val($('#finalDescQuery').val() + ' ' + $(item).find('option:selected').text());
 
     //let queryString = $('#finalDescQuery').val() + ' ' + $(item).find('option:selected').text();
-
 
 }
 
@@ -220,36 +221,36 @@ function GetProductDetails() {
                         var finalString = item.DESQuery;
 
                         if (item.FieldName1 == '')
-                            finalString = finalString.replace(item.FieldName1, '');
+                            finalString = finalString.replace(item.FieldName1 + 'Field', '');
                         else
-                            finalString = finalString.replace(item.FieldName1, $('#' + item.FieldName1 + ' option:selected').text());
+                            finalString = finalString.replace(item.FieldName1+'Field', $('#' + item.FieldName1 + ' option:selected').text());
 
                         finalString = finalString.replace('ProductName', $('#ProductName option:selected').text());
 
                         if (item.FieldName2 == '')
-                            finalString = finalString.replace(item.FieldName2, '');
+                            finalString = finalString.replace(item.FieldName2 + 'Field', '');
                         else
-                            finalString = finalString.replace(item.FieldName2, $('#' + item.FieldName2 + ' option:selected').text());
+                            finalString = finalString.replace(item.FieldName2 + 'Field', $('#' + item.FieldName2 + ' option:selected').text());
 
                         if (item.FieldName3 == '')
-                            finalString = finalString.replace(item.FieldName3, '');
+                            finalString = finalString.replace(item.FieldName3 + 'Field', '');
                         else
-                            finalString = finalString.replace(item.FieldName3, $('#' + item.FieldName3 + ' option:selected').text());
+                            finalString = finalString.replace(item.FieldName3 + 'Field', $('#' + item.FieldName3 + ' option:selected').text());
 
                         if (item.FieldName4 == '')
-                            finalString = finalString.replace(item.FieldName4, '');
+                            finalString = finalString.replace(item.FieldName4 + 'Field', '');
                         else
-                            finalString = finalString.replace(item.FieldName4, $('#' + item.FieldName4 + ' option:selected').text());
+                            finalString = finalString.replace(item.FieldName4 + 'Field', $('#' + item.FieldName4 + ' option:selected').text());
 
                         if (item.FieldName5 == '')
-                            finalString = finalString.replace(item.FieldName5, '');
+                            finalString = finalString.replace(item.FieldName5 + 'Field', '');
                         else
-                            finalString = finalString.replace(item.FieldName5, $('#' + item.FieldName5 + ' option:selected').text());
+                            finalString = finalString.replace(item.FieldName5 + 'Field', $('#' + item.FieldName5 + ' option:selected').text());
 
                         if (item.FieldName6 == '')
-                            finalString = finalString.replace(item.FieldName6, '');
+                            finalString = finalString.replace(item.FieldName6 + 'Field', '');
                         else
-                            finalString = finalString.replace(item.FieldName6, $('#' + item.FieldName6 + ' option:selected').text());
+                            finalString = finalString.replace(item.FieldName6 + 'Field', $('#' + item.FieldName6 + ' option:selected').text());
 
                         //switch (item.DES) {
                         //    case 'DES1.1':
