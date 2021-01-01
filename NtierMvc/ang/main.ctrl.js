@@ -573,6 +573,7 @@ angular.module('App').controller("MainController", function ($scope, $http, $tim
             success: function (html) {
                 html = $compile(html)($scope);
                 SetModalPanelBody(html);
+                $('.ShowHideFields').hide();
                 HideLoadder();
             },
             error: function (r) {
@@ -1201,6 +1202,7 @@ angular.module('App').controller("MainController", function ($scope, $http, $tim
                 SetModalBody(html);
                 SetModalWidth("1200px");
                 ShowModal();
+                $scope.PosNo = 1;
 
                 if (!($('.modal.in').length)) {
                     $('.modal-dialog').css({
@@ -1235,7 +1237,7 @@ angular.module('App').controller("MainController", function ($scope, $http, $tim
         //});
     }
 
-    $scope.PosNo = "1";
+    $scope.PosNo = 1;
     $scope.addDescElement = function () {
         $scope.PosNo = parseInt($scope.PosNo) + 1;
         $('#Pos' + $scope.PosNo).show();

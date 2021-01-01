@@ -1,5 +1,5 @@
 ﻿function makeDescQuery(item) {
-    console.log($(item).find('option:selected').text());
+    //console.log($(item).find('option:selected').text());
 
     if (item.name == 'FieldName1')
         $('#finalDescQuery').val($('#finalDescQuery').val() + ' ' + $(item).find('option:selected').text() + 'Field' + ' ProductName , \r\n ');
@@ -18,7 +18,7 @@ function GetSubProductGrps(itemType) {
     var MainProdGrp = '';
 
     if (itemType == 'QuotePrep') {
-        MainProdGrp = $("#MainProdGrp").val();
+        MainProdGrp = $("#QuotePrepMainProdGrp").val();
     }
     else {
         MainProdGrp = $("#DescMainPL").val();
@@ -32,10 +32,10 @@ function GetSubProductGrps(itemType) {
         success: function (res) {
 
             if (itemType == 'QuotePrep') {
-                $("#SubProdGrp").empty();
+                $("#QuotePrepSubProdGrp").empty();
                 if (res.length > 0) {
                     $.each(res, function (i, item) {
-                        $("#SubProdGrp").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
+                        $("#QuotePrepSubProdGrp").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
                     })
                 }
             }
@@ -64,8 +64,8 @@ function GetProdName(itemType) {
     var SubProdGrp = '';
 
     if (itemType == 'QuotePrep') {
-        MainProdGrp = $("#MainProdGrp").val();
-        SubProdGrp = $("#SubProdGrp").val();
+        MainProdGrp = $("#QuotePrepMainProdGrp").val();
+        SubProdGrp = $("#QuotePrepSubProdGrp").val();
     }
     else {
         MainProdGrp = $("#DescMainPL").val();
@@ -80,10 +80,10 @@ function GetProdName(itemType) {
         success: function (res) {
 
             if (itemType == 'QuotePrep') {
-                $("#ProductName").empty();
+                $("#QuotePrepProductName").empty();
                 if (res.length > 0) {
                     $.each(res, function (i, item) {
-                        $("#ProductName").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
+                        $("#QuotePrepProductName").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
                     })
                 }
             }
@@ -108,14 +108,14 @@ function GetProdName(itemType) {
 
 
 function GetProductNumberByName() {
-    var ProductName = $("#ProductName").val();
+    var ProductName = $("#QuotePrepProductName").val();
     $.ajax({
         type: 'POST',
         url: window.GetProductNumber,
         data: JSON.stringify({ productNameId: ProductName }),
         contentType: "application/json; charset=utf-8",
         success: function (res) {
-            $("#ProductNo").val(res);
+            $("#QuotePrepProductNo").val(res);
         },
         error: function (x, e) {
             alert('Some error is occurred, Please try after some time.');
@@ -179,8 +179,8 @@ function GetProductTypes() {
 }
 
 function GetDisplayFieldsForQuotePrep() {
-    var ProductNameID = $("#ProductName").val();
-    var CasingSize = $("#CasingSize").val();
+    var ProductNameID = $("#QuotePrepProductName").val();
+    var CasingSize = $("#QuotePrepCasingSize").val();
     $.ajax({
         type: 'POST',
         url: window.GetDisplayFieldsForQuoteP,
@@ -201,8 +201,8 @@ function GetDisplayFieldsForQuotePrep() {
 }
 
 function GetProductDetails() {
-    var ProductNameID = $("#ProductName").val();
-    var CasingSize = $("#CasingSize").val();
+    var ProductNameID = $("#QuotePrepProductName").val();
+    var CasingSize = $("#QuotePrepCasingSize").val();
     var Status = true;
     //Status = GetFormValidationStatus("#formSaveQuotationPrepDetail");
     if (!Status) {
@@ -220,37 +220,54 @@ function GetProductDetails() {
                     $.each(data, function (i, item) {
                         var finalString = item.DESQuery;
 
-                        if (item.FieldName1 == '')
-                            finalString = finalString.replace(item.FieldName1 + 'Field', '');
-                        else
-                            finalString = finalString.replace(item.FieldName1+'Field', $('#' + item.FieldName1 + ' option:selected').text());
+                        finalString = finalString.replace('ProductName', $('#QuotePrepProductName option:selected').text());
 
-                        finalString = finalString.replace('ProductName', $('#ProductName option:selected').text());
+                        for (var i = 1; i <= 6; i++) {
+                            if (item['FieldName' + i] == '')
+                                finalString = finalString.replace(item['FieldName' + i] + 'Field', '');
+                            else if (item['FieldName' + i].indexOf('Ppf') != -1)
+                                finalString = finalString.replace(item['FieldName' + i] + 'Field', $('#QuotePrep' + item['FieldName' + i] + ' option:selected').text() + ' lbs/ft');
+                            else {
+                                if ($('#QuotePrep' + item['FieldName' + i]).is('select'))
+                                    finalString = finalString.replace(item['FieldName' + i] + 'Field', $('#QuotePrep' + item['FieldName' + i] + ' option:selected').text());
+                                else if ($('#QuotePrep' + item['FieldName' + i]).is('input:text'))
+                                    finalString = finalString.replace(item['FieldName' + i] + 'Field', $('#QuotePrep' + item['FieldName' + i]).val());
+                                else
+                                    alert('Other than select or input found');
+                            }
+                        }
 
-                        if (item.FieldName2 == '')
-                            finalString = finalString.replace(item.FieldName2 + 'Field', '');
-                        else
-                            finalString = finalString.replace(item.FieldName2 + 'Field', $('#' + item.FieldName2 + ' option:selected').text());
+                        //if (item.FieldName1 == '')
+                        //    finalString = finalString.replace(item.FieldName1 + 'Field', '');
+                        //else
+                        //    finalString = finalString.replace(item.FieldName1+'Field', $('#' + item.FieldName1 + ' option:selected').text());
 
-                        if (item.FieldName3 == '')
-                            finalString = finalString.replace(item.FieldName3 + 'Field', '');
-                        else
-                            finalString = finalString.replace(item.FieldName3 + 'Field', $('#' + item.FieldName3 + ' option:selected').text());
 
-                        if (item.FieldName4 == '')
-                            finalString = finalString.replace(item.FieldName4 + 'Field', '');
-                        else
-                            finalString = finalString.replace(item.FieldName4 + 'Field', $('#' + item.FieldName4 + ' option:selected').text());
 
-                        if (item.FieldName5 == '')
-                            finalString = finalString.replace(item.FieldName5 + 'Field', '');
-                        else
-                            finalString = finalString.replace(item.FieldName5 + 'Field', $('#' + item.FieldName5 + ' option:selected').text());
+                        //if (item.FieldName2 == '')
+                        //    finalString = finalString.replace(item.FieldName2 + 'Field', '');
+                        //else
+                        //    finalString = finalString.replace(item.FieldName2 + 'Field', $('#' + item.FieldName2 + ' option:selected').text());
 
-                        if (item.FieldName6 == '')
-                            finalString = finalString.replace(item.FieldName6 + 'Field', '');
-                        else
-                            finalString = finalString.replace(item.FieldName6 + 'Field', $('#' + item.FieldName6 + ' option:selected').text());
+                        //if (item.FieldName3 == '')
+                        //    finalString = finalString.replace(item.FieldName3 + 'Field', '');
+                        //else
+                        //    finalString = finalString.replace(item.FieldName3 + 'Field', $('#' + item.FieldName3 + ' option:selected').text());
+
+                        //if (item.FieldName4 == '')
+                        //    finalString = finalString.replace(item.FieldName4 + 'Field', '');
+                        //else
+                        //    finalString = finalString.replace(item.FieldName4 + 'Field', $('#' + item.FieldName4 + ' option:selected').text());
+
+                        //if (item.FieldName5 == '')
+                        //    finalString = finalString.replace(item.FieldName5 + 'Field', '');
+                        //else
+                        //    finalString = finalString.replace(item.FieldName5 + 'Field', $('#' + item.FieldName5 + ' option:selected').text());
+
+                        //if (item.FieldName6 == '')
+                        //    finalString = finalString.replace(item.FieldName6 + 'Field', '');
+                        //else
+                        //    finalString = finalString.replace(item.FieldName6 + 'Field', $('#' + item.FieldName6 + ' option:selected').text());
 
                         //switch (item.DES) {
                         //    case 'DES1.1':
@@ -530,7 +547,7 @@ function GetVendorDetailsForQuote() {
         contentType: "application/json; charset=utf-8",
         success: function (res) {
             $("#QuotePrepVendorName").val(res.DataValueField1);
-            $("#Currency").val(res.DataValueField2);
+            $("#QuotePrepCurrency").val(res.DataValueField2);
         },
         error: function (x, e) {
             alert('Some error is occurred, Please try after some time.');

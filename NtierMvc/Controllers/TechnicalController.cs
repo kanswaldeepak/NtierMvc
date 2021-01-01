@@ -576,8 +576,8 @@ namespace NtierMvc.Controllers
                 xlWorkbook.Worksheets[1].Cells.Replace("#GrossWeight", GrWt.ToString());
                 xlWorkbook.Worksheets[1].Cells.Replace("#CubicMeter", CubMtr.ToString());
 
-                Microsoft.Office.Interop.Excel.Range c3 = (Microsoft.Office.Interop.Excel.Range)ws.Cells[16, 1];
-                Microsoft.Office.Interop.Excel.Range c4 = (Microsoft.Office.Interop.Excel.Range)ws.Cells[(resultList.Rows.Count - 1) + 16, resultList.Columns.Count];
+                Microsoft.Office.Interop.Excel.Range c3 = (Microsoft.Office.Interop.Excel.Range)ws.Cells[15, 1];
+                Microsoft.Office.Interop.Excel.Range c4 = (Microsoft.Office.Interop.Excel.Range)ws.Cells[(resultList.Rows.Count - 1) + 15, resultList.Columns.Count];
                 //Microsoft.Office.Interop.Excel.Range c2 = (Microsoft.Office.Interop.Excel.Range)ws.Cells[1, 1];
                 Microsoft.Office.Interop.Excel.Range range1 = ws.get_Range(c3, c4);
                 ws.get_Range(c3, c4).Cells.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignLeft;
@@ -1742,8 +1742,8 @@ namespace NtierMvc.Controllers
 
             ViewBag.ListMainPL = model.GetDropDownList("Master.ProductLine", GeneralConstants.ListTypeD, "Id", "MainPLName", "", "");
             ViewBag.ListSubPL = model.GetDropDownList("SubProductLine", GeneralConstants.ListTypeD, "Id", "SubPLName", "", "");
-            ViewBag.ListPosition = model.GetDropDownList("DescPosition", GeneralConstants.ListTypeD, "Id", "PosName", "", "");
-            ViewBag.ListFieldName = model.GetDropDownList("DescFieldName", GeneralConstants.ListTypeD, "Id", "FieldName", "", "");
+            ViewBag.ListPosition = model.GetDropDownList("DescPosition", GeneralConstants.ListTypeD, "Id", "PosName", "", "",true);
+            ViewBag.ListFieldName = model.GetDropDownList("DescFieldName", GeneralConstants.ListTypeD, "Id", "FieldName", "", "",true);
 
 
             DescEntity dEN = new DescEntity();

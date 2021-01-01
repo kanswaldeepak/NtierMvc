@@ -67,7 +67,7 @@
                             @Html.DropDownListFor(m => m.MainProdGrp, new SelectList(@ViewBag.ListMainProdGrp, "DataStringValueField", "DataTextField", Model.MainProdGrp), new
                        {
                            @class = "form-control requiredValidation clearField",
-                           @id = "MainProdGrp",
+                           @id = "QuotePrepMainProdGrp",
                            @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
                            ng_model = "MainProdGrp",
                            @onchange = "GetSubProductGrps('QuotePrep')"
@@ -79,17 +79,17 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label class="control-label">
-                                Sub Product Group
+                                Sub Product Line
                             </label>
                             @Html.DropDownListFor(m => m.SubProdGrp, new SelectList(ViewBag.ListSubProdGrp, "DataStringValueField", "DataTextField", Model.SubProdGrp),
                                new
                                {
                                    @class = "form-control requiredValidation",
-                                   @id = "SubProdGrp",
+                                   @id = "QuotePrepSubProdGrp",
                                    @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
                                    @onchange = "GetProdName('QuotePrep')"
                                })
-                            <span class="HideValidMsg">Please Select Sub Product Group</span>
+                        <span class="HideValidMsg">Please Select Sub Product Line</span>
                         </div>
                     </div>
 
@@ -101,7 +101,7 @@
                             @Html.DropDownListFor(m => m.ProductName, new SelectList(@ViewBag.ProductNameList, "DataStringValueField", "DataTextField", Model.ProductName), new
                        {
                            @class = "form-control requiredValidation clearField",
-                           @id = "ProductName",
+                           @id = "QuotePrepProductName",
                            @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
                            @onchange = "GetProductNumberByName('QuotePrep');"
 
@@ -121,7 +121,7 @@
                                {
                                    @class = "form-control requiredValidation clearField",
                                    @style = "background-color : #fff",
-                                   @id = "ProductNo",
+                                   @id = "QuotePrepProductNo",
                                    @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
                                    @readonly = "readonly"
                                })
@@ -156,7 +156,7 @@
                                 @Html.TextBoxFor(m => m.ItemNo, new
                            {
                                @class = "form-control requiredValidation clearField",
-                               @id = "ItemNo",
+                               @id = "QuotePrepItemNo",
                                @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
                            })
                                 <span class="HideValidMsg">Please Select ItemNo</span>
@@ -188,14 +188,14 @@
                             @Html.DropDownListFor(m => m.CasingSize, new SelectList(@ViewBag.CasingSize, "DataStringValueField", "DataTextField", Model.CasingSize), new
                        {
                            @class = "form-control clearField",
-                           @id = "CasingSize",
-                           @onchange = "DisplayNewItemInDdl(this, 'Master.Taxonomy', 'Ppf', 'DropDownValue'); GetDisplayFieldsForQuotePrep();"
+                           @id = "QuotePrepCasingSize",
+                           @onchange = "DisplayNewItemInDdl(this, 'Master.Taxonomy', 'CasingSize', 'DropDownValue'); GetDisplayFieldsForQuotePrep();"
 
                        })
                             <span class="HideValidMsg">Please Select Casing Size</span>
                         </div>
                     </div>
-                    <div id="divCasingPpf" class="col-md-6" style="display:none">
+                    <div id="divCasingPpf" class="col-md-6 ShowHideFields" style="display:none">
                         <div class="form-group">
                             <label class="control-label">
                                 Casing Ppf
@@ -203,7 +203,7 @@
                             @Html.DropDownListFor(m => m.CasingPpf, new SelectList(ViewBag.CasingPpf, "DataStringValueField", "DataTextField", Model.CasingPpf), new
                        {
                            @class = "form-control clearField",
-                           @id = "CasingPpf",
+                           @id = "QuotePrepCasingPpf",
                            @onchange = "DisplayNewItemInDdl(this, 'Master.Taxonomy', 'Ppf', 'DropDownValue')"
 
                        })
@@ -212,17 +212,17 @@
                     </div>
 
 
-                    <div id="divConnection" class="col-md-6" style="display:none">
+                    <div id="divConnection" class="col-md-6 ShowHideFields" style="display:none">
                         <div class="form-group">
                             <label class="control-label">
                                 Connection
                             </label>
                             @Html.DropDownListFor(m => m.Connection, new SelectList(@ViewBag.Connection, "DataStringValueField", "DataTextField", Model.Connection), new
-                                {
-                                    @class = "form-control clearField",
-                                    @id = "Connection"
+                       {
+                           @class = "form-control clearField",
+                           @id = "QuotePrepConnection"
 
-                                })
+                       })
                             <span class="HideValidMsg">Please Select Connection</span>
                         </div>
                     </div>
@@ -234,7 +234,7 @@
                             @Html.TextBoxFor(m => m.Qty, new
                        {
                            @class = "form-control requiredValidation clearField",
-                           @id = "Qty",
+                           @id = "QuotePrepQty",
                            @onkeypress = "return AllowNumbers(event)",
                            @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
                        })
@@ -248,15 +248,15 @@
                                 Uom
                             </label>
                             @Html.DropDownListFor(m => m.Uom, new SelectList(@ViewBag.ListUom, "DataStringValueField", "DataTextField", Model.Uom), new
-                            {
-                                @class = "form-control clearField",
-                                @id = "Uom"
+                       {
+                           @class = "form-control clearField",
+                           @id = "QuotePrepUom"
 
-                            })
+                       })
                             <span class="HideValidMsg">Please Select Uom</span>
                         </div>
                     </div>
-                    <div id="divMaterialGrade" class="col-md-6" style="display:none">
+                    <div id="divMaterialGrade" class="col-md-6 ShowHideFields" style="display:none">
                         <div class="form-group">
                             <label class="control-label">
                                 Material Grade
@@ -264,34 +264,34 @@
                             @Html.DropDownListFor(m => m.MaterialGrade, new SelectList(@ViewBag.MaterialGrade, "DataStringValueField", "DataTextField", Model.MaterialGrade), new
                        {
                            @class = "form-control clearField",
-                           @id = "MaterialGrade"
+                           @id = "QuotePrepMaterialGrade"
 
                        })
                             <span class="HideValidMsg">Please Select Material Grade</span>
                         </div>
                     </div>
-                    <div id="divOpenHoleSize" class="col-md-6" style="display:none">
+                    <div id="divOpenHoleSize" class="col-md-6 ShowHideFields" style="display:none">
                         <div class="form-group">
                             <label class="control-label">
                                 Open Hole Size
                             </label>
                             @Html.DropDownListFor(m => m.OpenHoleSize, new SelectList(ViewBag.ListOpenHoleSize, "DataStringValueField", "DataTextField", Model.OpenHoleSize), new
-                                {
-                                    @class = "form-control clearField",
-                                    @id = "OpenHoleSize"
-                                })
+                       {
+                           @class = "form-control clearField",
+                           @id = "QuotePrepOpenHoleSize"
+                       })
                             <span class="HideValidMsg">Please Select Hole Size Range Inch</span>
                         </div>
                     </div>
-                    <div id="divBallSize" class="col-md-6" style="display:none">
+                    <div id="divBallSize" class="col-md-6 ShowHideFields" style="display:none">
                         <div class="form-group">
                             <label class="control-label">
                                 Ball Size
                             </label>
                             @Html.DropDownListFor(m => m.BallSize, new SelectList(ViewBag.ListBallSize, "DataStringValueField", "DataTextField", Model.BallSize), new
                                 {
-                                    @class = "form-control clearField",
-                                    @id = "BallSize",
+                                    @class = "form-control clearField ",
+                                    @id = "QuotePrepBallSize",
                                     @data_inneraction = "validationCall"
                                 })
                             <span class="HideValidMsg">Please Select Hole Size Range Inch</span>
@@ -303,14 +303,14 @@
                                 Currency
                             </label>
                             @Html.DropDownListFor(m => m.Currency, new SelectList(ViewBag.ListCurrency, "DataStringValueField", "DataTextField", Model.Currency), new
-                                {
-                                    @class = "form-control",
-                                    @id = "Currency"
-                                })
+                       {
+                           @class = "form-control",
+                           @id = "QuotePrepCurrency"
+                       })
                             <span class="HideValidMsg">Please Select Currency</span>
                         </div>
                     </div>
-                    <div class="col-md-6" style="display:none">
+                    <div class="col-md-6 ShowHideFields" style="display:none">
                         <div class="form-group">
                             <label class="control-label">
                                 Casing Weight
@@ -318,12 +318,12 @@
                             @Html.DropDownListFor(m => m.CasingWeight, new SelectList(ViewBag.ListCasingWT, "DataStringValueField", "DataTextField", Model.CasingWeight), new
                        {
                            @class = "form-control",
-                           @id = "CasingWT"
+                           @id = "QuotePrepCasingWT"
                        })
                             <span class="HideValidMsg">Please Select Casing Weight</span>
                         </div>
                     </div>
-                    <div id="divWallThickness" class="col-md-6" style="display:none">
+                    <div id="divWallThickness" class="col-md-6 ShowHideFields" style="display:none">
                         <div class="form-group">
                             <label class="control-label">
                                 Wall Thickness
@@ -331,12 +331,12 @@
                             @Html.TextBoxFor(m => m.WallThickness, new
                        {
                            @class = "form-control clearField",
-                           @id = "WallThickness"
+                           @id = "QuotePrepWallThickness"
                        })
                             <span class="HideValidMsg">Please Enter Wall Thickness</span>
                         </div>
                     </div>
-                    <div id="divODSize" class="col-md-6">
+                    <div id="divODSize" class="col-md-6" style="display:none">
                         <div class="form-group">
                             <label class="control-label">
                                 OD Size
@@ -349,15 +349,15 @@
                             <span class="HideValidMsg">Please Select OD Size</span>
                         </div>
                     </div>
-                    <div id="divTotalBows" class="col-md-6" style="display:none">
+                    <div id="divNoOfBows" class="col-md-6 ShowHideFields" style="display:none">
                         <div class="form-group">
                             <label class="control-label">
-                                Total Bows
+                                No Of Bows
                             </label>
                             @Html.TextBoxFor(m => m.TotalBows, new
                        {
                            @class = "form-control clearField",
-                           @id = "QuotePrepTotalBows",
+                           @id = "QuotePrepNoOfBows",
                            @onkeypress = "return AllowNumbers(event); "
                        })
                             <span class="HideValidMsg">Please Select Total Bows</span>
@@ -371,7 +371,7 @@
                             @Html.TextBoxFor(m => m.UnitPrice, new
                        {
                            @class = "form-control clearField",
-                           @id = "UnitPrice",
+                           @id = "QuotePrepUnitPrice",
                            @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
                            @onblur = "return GetProductDetails();",
                            @onkeypress = "return validateDecimalNumbers(this,event)"

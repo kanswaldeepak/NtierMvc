@@ -93,13 +93,14 @@
                                     </select>*@
 
                                 @Html.DropDownListFor(m => m.Pos1, new SelectList(ViewBag.ListPosition, "DataStringValueField", "DataTextField", Model.Pos1), new
-                                    {
-                                        @class = "form-control requiredValidation clearField descQueryClass",
-                                        @id = "DescPos1",
-                                        @data_inneraction = "validationCall",
-                                        @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
-                                        @onblur = "makeDescQuery(this)"
-                                    })
+                           {
+                               @class = "form-control requiredValidation clearField descQueryClass",
+                               @id = "DescPos1",
+                               @data_inneraction = "validationCall",
+                               @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                               @onblur = "makeDescQuery(this)",
+                               @onchange = "DisplayNewItemInDdl(this, 'DescPosition', '', 'PosName')"
+                           })
                                 <span class="HideValidMsg"> Enter Position 1</span>
                             </div>
                         </div>
@@ -108,19 +109,14 @@
                                 <label class="control-label">
                                     Field Name 1
                                 </label>
-                                @*<select class="form-control requiredValidation clearField">
-                                        <option ng-model="FieldName1" data-ng-repeat="fn1 in FieldNameList" value="{{fn1.DataStringValueField}} ">
-                                            {{fn1.DataTextField}}
-                                        </option>
-                                    </select>*@
-
                                 @Html.DropDownListFor(m => m.FieldName1, new SelectList(ViewBag.ListFieldName, "DataStringValueField", "DataTextField", Model.FieldName1), new
                            {
                                @class = "form-control requiredValidation clearField",
                                @id = "DescFieldName1",
                                @data_inneraction = "validationCall",
                                @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
-                               @onblur = "makeDescQuery(this)"
+                               @onblur = "makeDescQuery(this)",
+                               @onchange = "DisplayNewItemInDdl(this, 'DescPosition', '', 'FieldName')"
                            })
                                 <span class="HideValidMsg"> Enter FieldName 1</span>
                             </div>
@@ -138,7 +134,8 @@
                                @id = "DescPos2",
                                @data_inneraction = "validationCall",
                                @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
-                               @onblur = "makeDescQuery(this)"
+                               @onblur = "makeDescQuery(this)",
+                               @onchange = "DisplayNewItemInDdl(this, 'DescPosition', '', 'PosName')"
                            })
 
                                 @*<select class="form-control requiredValidation clearField">
@@ -165,7 +162,8 @@
                                @id = "DescFieldName2",
                                @data_inneraction = "validationCall",
                                @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
-                               @onblur = "makeDescQuery(this)"
+                               @onblur = "makeDescQuery(this)",
+                               @onchange = "DisplayNewItemInDdl(this, 'DescPosition', '', 'FieldName')"
                            })
                             </div>
                         </div>
@@ -187,7 +185,8 @@
                                @id = "DescPos3",
                                @data_inneraction = "validationCall",
                                @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
-                               @onblur = "makeDescQuery(this)"
+                               @onblur = "makeDescQuery(this)",
+                               @onchange = "DisplayNewItemInDdl(this, 'DescPosition', '', 'PosName')"
                            })
                                 <span class="HideValidMsg"> Enter Position 3</span>
                             </div>
@@ -209,7 +208,8 @@
                                @id = "DescFieldName3",
                                @data_inneraction = "validationCall",
                                @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
-                               @onblur = "makeDescQuery(this)"
+                               @onblur = "makeDescQuery(this)",
+                               @onchange = "DisplayNewItemInDdl(this, 'DescPosition', '', 'FieldName')"
                            })
                             </div>
                         </div>
@@ -226,7 +226,8 @@
                                @id = "DescPos4",
                                @data_inneraction = "validationCall",
                                @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
-                               @onblur = "makeDescQuery(this)"
+                               @onblur = "makeDescQuery(this)",
+                               @onchange = "DisplayNewItemInDdl(this, 'DescPosition', '', 'PosName')"
                            })
                                 <span class="HideValidMsg"> Enter Position 4</span>
                             </div>
@@ -242,7 +243,8 @@
                                @id = "DescFieldName4",
                                @data_inneraction = "validationCall",
                                @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
-                               @onblur = "makeDescQuery(this)"
+                               @onblur = "makeDescQuery(this)",
+                               @onchange = "DisplayNewItemInDdl(this, 'DescPosition', '', 'FieldName')"
                            })
                             </div>
                         </div>
@@ -259,7 +261,8 @@
                                @id = "DescPos5",
                                @data_inneraction = "validationCall",
                                @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
-                               @onblur = "makeDescQuery(this)"
+                               @onblur = "makeDescQuery(this)",
+                               @onchange = "DisplayNewItemInDdl(this, 'DescPosition', '', 'PosName')"
                            })
                                 <span class="HideValidMsg"> Enter Position 5</span>
                             </div>
@@ -275,7 +278,8 @@
                                @id = "DescFieldName5",
                                @data_inneraction = "validationCall",
                                @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
-                               @onblur = "makeDescQuery(this)"
+                               @onblur = "makeDescQuery(this)",
+                               @onchange = "DisplayNewItemInDdl(this, 'DescPosition', '', 'FieldName')"
                            })
                             </div>
                         </div>
@@ -292,7 +296,8 @@
                                @id = "DescPos6",
                                @data_inneraction = "validationCall",
                                @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
-                               @onblur = "makeDescQuery(this)"
+                               @onblur = "makeDescQuery(this)",
+                               @onchange = "DisplayNewItemInDdl(this, 'DescPosition', '', 'PosName')"
                            })
                                 <span class="HideValidMsg"> Enter Position 6</span>
                             </div>
@@ -308,7 +313,8 @@
                                @id = "DescFieldName6",
                                @data_inneraction = "validationCall",
                                @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
-                               @onblur = "makeDescQuery(this)"
+                               @onblur = "makeDescQuery(this)",
+                               @onchange = "DisplayNewItemInDdl(this, 'DescPosition', '', 'FieldName')"
                            })
                             </div>
                         </div>

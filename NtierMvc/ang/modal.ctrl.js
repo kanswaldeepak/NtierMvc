@@ -111,6 +111,8 @@ angular.module('App').controller("ModalController", function ($scope, $http, $ti
                         alert(res);
                         ClearAllFields("#formSaveQuotationPrepDetail");
                         $('#divProductDetails').hide();
+                        $('.ShowHideFields').hide();
+                        
                     }
                     else {
                         alert(res)
@@ -256,6 +258,7 @@ angular.module('App').controller("ModalController", function ($scope, $http, $ti
                 function (res) {
                     if (res == 'Saved Successfully!') {
                         alert(res);
+                        $scope.PosNo = 1;
                     }
                     else {
                         alert(res)
