@@ -2,11 +2,11 @@
     //console.log($(item).find('option:selected').text());
 
     if (item.name == 'FieldName1')
-        $('#finalDescQuery').val($('#finalDescQuery').val() + ' ' + $(item).find('option:selected').text() + 'Field' + ' ProductName , \r\n ');
+        $('#finalDescQuery').val($('#finalDescQuery').val() + ' ' + $(item).find('option:selected').text() + 'Field' + ' ProductName \r\n ');
     else if (item.name == 'Pos1')
         $('#finalDescQuery').val($(item).find('option:selected').text());
     else if (item.name.indexOf('FieldName') != -1)
-        $('#finalDescQuery').val($('#finalDescQuery').val() + ' ' + $(item).find('option:selected').text() + 'Field, \r\n');
+        $('#finalDescQuery').val($('#finalDescQuery').val() + ' ' + $(item).find('option:selected').text() + 'Field \r\n');
     else
         $('#finalDescQuery').val($('#finalDescQuery').val() + ' ' + $(item).find('option:selected').text());
 
@@ -480,7 +480,7 @@ function CreateDocument(dwnldtype) {
 function ValidateItemNo() {
     var QuoteType = $("#QuotePrepFormType").val();
     var QuoteNo = $("#QuotePrepFormNo").val();
-    var ItemNo = $("#ItemNo").val();
+    var ItemNo = $("#QuotePrepItemNo").val();
 
     if (ItemNo == '' || ItemNo == undefined) {
         alert('Please Enter Item No');
@@ -493,16 +493,24 @@ function ValidateItemNo() {
         contentType: "application/json; charset=utf-8",
         success: function (data) {
             if (data.RecordCount > 0) {
-                $("#EnqSrNo").val(data.EnqSrNo);
-                $("#ProductName").val(data.ProductName);
-                $("#ProductNo").val(data.ProductNo);
-                $("#CasingSize").val(data.CasingSize);
-                $("#CasingPpf").val(data.CasingPpf);
-                $("#MaterialGrade").val(data.MaterialGrade);
-                $("#Connection").val(data.Connection);
-                $("#Qty").val(data.Qty);
-                $("#Uom").val(data.Uom);
-                $("#UnitPrice").val(data.UnitPrice);
+
+                if (data.EnqSrNo != '')
+                    $("#QuotePrepEnqSrNo").val(data.EnqSrNo);
+                if (data.CasingSize != '')
+                    $("#QuotePrepCasingSize").val(data.CasingSize);
+                if (data.CasingPpf != '')
+                    $("#QuotePrepCasingPpf").val(data.CasingPpf);
+                if (data.MaterialGrade != '')
+                    $("#QuotePrepMaterialGrade").val(data.MaterialGrade);
+                if (data.Connection != '')
+                    $("#QuotePrepConnection").val(data.Connection);
+                if (data.Qty != '')
+                    $("#QuotePrepQty").val(data.Qty);
+                if (data.Uom != '')
+                    $("#QuotePrepUom").val(data.Uom);
+                if (data.UnitPrice != '')
+                    $("#QuotePrepUnitPrice").val(data.UnitPrice);
+
             }
             else
                 alert("Item No not Found in Records");

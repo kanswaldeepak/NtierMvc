@@ -68,12 +68,18 @@
                         <label class="control-label">
                             Product No.
                         </label>
-                        @Html.TextBoxFor(m => m.ProductNo, new
-                   {
-                       @class = "form-control requiredValidation",
-                       @id = "DescProductNo",
-                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
-                   })
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">MI-</span>
+                            </div>
+                            @Html.TextBoxFor(m => m.ProductNo, new
+                       {
+                           @class = "form-control requiredValidation",
+                           @id = "DescProductNo",
+                           @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                       })
+                        </div>
+                        
                     </div>
                 </div>
             </div>

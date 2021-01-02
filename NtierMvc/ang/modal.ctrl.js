@@ -250,7 +250,13 @@ angular.module('App').controller("ModalController", function ($scope, $http, $ti
         var Status = false;
         Status = GetFormValidationStatus("#formNewSaveDescDetails");
 
-        if (!Status) {
+        var ProductNo = $('#DescProductNo').val();
+        var MainPL = $('#DescMainPL').val();
+
+        if (MainPL != ProductNo.slice(0,1)) {
+            alert("Product No is not valid");
+        }
+        else if (!Status) {
             alert("Kindly Fill all mandatory fields");
         }
         else {
