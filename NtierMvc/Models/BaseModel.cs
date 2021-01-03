@@ -1395,7 +1395,11 @@ namespace NtierMvc.Models
                     {
                         if (isNegative) { dollars = "Negative " + dollars; }
                         //return dollars + " and " + cents + "/100";
-                        return dollars + " and Cents " + cents;
+                        if (!string.IsNullOrEmpty(cents.Trim()))
+                            return dollars + " and Cents " + cents;
+                        else
+                            return dollars;
+                        //return dollars + " and Cents " + cents;
                     }
                 }
 

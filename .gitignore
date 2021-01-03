@@ -260,3 +260,6 @@ paket-files/
 __pycache__/
 *.pyc
 /NtierMvc/Areas/HRDepartment/EmployeeImage
+/NtierMvc/Images/EmployeeImage/4f452f0b-dec5-46f5-a14f-3a9bcf521309
+/NtierMvc/Images/EmployeeImage/cf24fe29-b21f-4bf6-b57b-89be9763b5b5
+/NtierMvc/Images/EmployeeImage/77ac69b1-bd68-4b35-9850-292f422eb7cc.jpg

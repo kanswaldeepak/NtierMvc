@@ -1,5 +1,5 @@
 ﻿
-function DisplayNewItemInDdl(selectedId, Name, Property, ColumnName) {    
+function DisplayNewItemInDdl(selectedId, Name, Property, ColumnName, Value1, ColumnName1) {    
     var item = $(selectedId).find("option:selected");
     var value = item.val(); //get the selected option value
     var text = item.html(); //get the selected option text
@@ -9,6 +9,8 @@ function DisplayNewItemInDdl(selectedId, Name, Property, ColumnName) {
         $('#AddDdlNametbl').val(Name);
         $('#AddDdlProperty').val(Property);
         $('#AddDdlColumnName').val(ColumnName);
+        $('#AddDdlValue1').val(Value1);
+        $('#AddDdlColumnName1').val(ColumnName1);
 
         if (!($('.modal.in').length)) {
             $('.modalAddNewItemContent').css({
@@ -38,10 +40,12 @@ function AddNewItemInDdl(txtNewOption, SelectedDdlId) {
     let tblName = $("#AddDdlNametbl").val(); 
     let property = $('#AddDdlProperty').val();
     let columnName = $('#AddDdlColumnName').val();
+    let value1 = $('#AddDdlValue1').val();
+    let columnName1 = $('#AddDdlColumnName1').val();
     $.ajax({
         type: 'POST',
         url: window.SaveNewItemInDdl,
-        data: JSON.stringify({ type: '', Nametbl: tblName, Value: newitem, Property: property, ColumnName: columnName }),
+        data: JSON.stringify({ type: '', Nametbl: tblName, Value: newitem, Property: property, ColumnName: columnName, Value1: value1, ColumnName1: columnName1 }),
         contentType: "application/json; charset=utf-8",
         success: function (data) {
             if (data.length > 0) {

@@ -141,11 +141,10 @@ namespace NtierMvc.Controllers
             string countryId = "0";
             ViewBag.ListState = model.GetStateDetail(countryId); //Given wrong CountryId to not get any value
 
-            //ViewBag.ListVENDORTYPE = model.GetMasterTableStringList("Master.Vendor", "Id", "VendorType");
-            //ViewBag.ListVENDOR_NATURE = model.GetMasterTableStringList("Master.Vendor", "Id", "VendorNature");
-            ViewBag.ListCustomerType = model.GetMasterTableStringList("Master.Taxonomy", "DropDownId", "DropDownValue", "Domestic/International", "Property", GeneralConstants.ListTypeN);
-            ViewBag.ListFUNCTION_AREA = model.GetMasterTableStringList("Master.FunctionalArea", "Id", "FunctionArea");
-            ViewBag.ListCountry = model.GetMasterTableStringList("Master.Country", "Id", "Country");
+            ViewBag.ListCustomerType = model.GetMasterTableStringList(TableNames.Master_Taxonomy, ColumnNames.DropDownID, ColumnNames.DropDownValue, "Domestic/International", ColumnNames.Property, GeneralConstants.ListTypeN);
+            ViewBag.ListFUNCTION_AREA = model.GetMasterTableStringList(TableNames.Master_FunctionalArea, ColumnNames.id, ColumnNames.FunctionArea);
+            ViewBag.ListCountry = model.GetMasterTableStringList(TableNames.Master_Country, ColumnNames.id, ColumnNames.Country);
+            ViewBag.ListStatus = model.GetDropDownList(TableNames.Master_Taxonomy, GeneralConstants.ListTypeN, ColumnNames.DropDownID, ColumnNames.DropDownValue, "CustomerStatus", ColumnNames.Property, true);
 
             if (!string.IsNullOrEmpty(Session["UserId"].ToString()))
                 cus.UnitNo = Session["UserId"].ToString();

@@ -43,6 +43,7 @@ namespace NtierMvc.Model.Customer
         public string CustomerInitial { get; set; }
         public string DateOfAssociation { get; set; }
         public int TotalCount { get; set; }
+        public string Status { get; set; }
 
     }
 

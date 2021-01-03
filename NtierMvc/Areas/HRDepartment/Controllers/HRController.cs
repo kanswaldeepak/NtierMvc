@@ -174,15 +174,16 @@ namespace NtierMvc.Areas.HRDepartment.Controllers
         public ActionResult HREmpPopup(string actionType, string HREmpId)
         {
             string countryId = "0";
-            ViewBag.ListState = model.GetMasterTableStringList("Master.State", "Id", "State"); //Given wrong CountryId to not get any value
-            ViewBag.ListEmpType = model.GetMasterTableList("Master.EmpType", "Id", "EmpTypeName");
-            ViewBag.ListCountry = model.GetMasterTableStringList("Master.Country", "Id", "Country");
-            ViewBag.ListGender = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "Gender", "Property", GeneralConstants.ListTypeN);
-            ViewBag.GenderTitleList = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "title", "Property", GeneralConstants.ListTypeN);
-            ViewBag.ListBloodGroup = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "BloodGroup", "Property", GeneralConstants.ListTypeN);
-            ViewBag.ListBloodGroupType = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "BloodGroupType", "Property", GeneralConstants.ListTypeN);
-            ViewBag.ListDesignation = model.GetDropDownList("Master.Designation", GeneralConstants.ListTypeD, "Id", "DesignationName", "", "", true);
-            ViewBag.ListDepartment = model.GetMasterTableStringList("Master.Department", "Id", "DeptName", "", "", GeneralConstants.ListTypeD);
+            ViewBag.ListState = model.GetMasterTableStringList(TableNames.Master_State, ColumnNames.id, ColumnNames.state); //Given wrong CountryId to not get any value
+            ViewBag.ListEmpType = model.GetMasterTableList(TableNames.Master_EmpType, ColumnNames.id, ColumnNames.EmpTypeName);
+            ViewBag.ListCountry = model.GetMasterTableStringList(TableNames.Master_Country, ColumnNames.id, ColumnNames.Country);
+            ViewBag.ListGender = model.GetMasterTableStringList(TableNames.Master_Taxonomy, ColumnNames.DropDownID, ColumnNames.DropDownValue, "Gender", ColumnNames.Property, GeneralConstants.ListTypeN);
+            ViewBag.GenderTitleList = model.GetMasterTableStringList(TableNames.Master_Taxonomy, ColumnNames.DropDownID, ColumnNames.DropDownValue, "title", ColumnNames.Property, GeneralConstants.ListTypeN);
+            ViewBag.ListBloodGroup = model.GetMasterTableStringList(TableNames.Master_Taxonomy, ColumnNames.DropDownID, ColumnNames.DropDownValue, "BloodGroup", ColumnNames.Property, GeneralConstants.ListTypeN);
+            ViewBag.ListBloodGroupType = model.GetMasterTableStringList(TableNames.Master_Taxonomy, ColumnNames.DropDownID, ColumnNames.DropDownValue, "BloodGroupType", ColumnNames.Property, GeneralConstants.ListTypeN);
+            ViewBag.ListDesignation = model.GetDropDownList(TableNames.Master_Designation, GeneralConstants.ListTypeD, ColumnNames.id, ColumnNames.DesignationName, "", "", true);
+            ViewBag.ListDepartment = model.GetMasterTableStringList(TableNames.Master_Department, ColumnNames.id, ColumnNames.DeptName, "", "", GeneralConstants.ListTypeD);
+            ViewBag.ListEmployeeStatus = model.GetDropDownList(TableNames.Master_Taxonomy, GeneralConstants.ListTypeN, ColumnNames.DropDownID, ColumnNames.DropDownValue, "EmployeeStatus", ColumnNames.Property, true);
 
             empObj.UnitNo = Session["UserId"].ToString();
 

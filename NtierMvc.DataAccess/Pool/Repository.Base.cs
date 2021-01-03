@@ -1460,6 +1460,8 @@ namespace NtierMvc.DataAccess.Pool
             parms.Add("@Value", entity.Value);
             parms.Add("@ColumnName", entity.ColumnName);
             parms.Add("@Property", entity.Property);
+            parms.Add("@Value1", entity.Value1);
+            parms.Add("@ColumnName1", entity.ColumnName1);
 
             DataSet dtst = _dbAccess.GetDataSet(spName, parms);
             DataTable dtbl = dtst.Tables[1];

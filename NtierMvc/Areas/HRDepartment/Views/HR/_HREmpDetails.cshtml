@@ -196,6 +196,21 @@
                             })<label class="HideValidMsg">DateOfJoining is Required</label>
                     </div>
                 </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label class="control-label">Status</label>
+                        @Html.DropDownListFor(m => m.Status, new SelectList(ViewBag.ListEmployeeStatus, "DataStringValueField", "DataTextField", Model.Status), new
+                   {
+                       id = "Status",
+                       @class = "form-control requiredValidation",
+                       data_id = "Status",
+                       data_select = "Status",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                       @onchange = "DisplayNewItemInDdl(this, 'Master.Taxonomy', 'EmployeeStatus', 'DropDownValue','','')"
+                   })
+                        <label class="HideValidMsg">Status is Required</label>
+                    </div>
+                </div>
             </div>
             <div class="row">
                 <hr style="width:100%" />
@@ -555,7 +570,7 @@
                        @placeholder = "PAN No"
                    })<label class="HideValidMsg">PAN No is Required</label>
                     </div>
-                </div>
+                </div>                
                 <div class="col-md-3">
                     <div class="form-group">
                         <label class="control-label">Bank Account Number</label>

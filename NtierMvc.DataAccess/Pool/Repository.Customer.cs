@@ -46,6 +46,7 @@ namespace NtierMvc.DataAccess.Pool
             parms.Add("@designation", objUser.Designation);
             parms.Add("@Id", objUser.Id);
             parms.Add("@CustomerInitial", objUser.CustomerInitial);
+            parms.Add("@Status", objUser.Status);
             parms.Add("@DateOfAssociation", objUser.DateOfAssociation);
             parms.Add("@ipAddress", objUser.ipAddress);
             spName = ConfigurationManager.AppSettings["SaveCustomerDetails"];

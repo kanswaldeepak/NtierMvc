@@ -218,6 +218,8 @@ namespace NtierMvc.BusinessLogic.Worker
                     Model.Designation = dt1.Rows[0]["Designation"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["Designation"]);
                     Model.CustomerInitial = dt1.Rows[0]["CustomerInitial"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["CustomerInitial"]);
                     Model.DateOfAssociation = dt1.Rows[0]["DateOfAssociation"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["DateOfAssociation"]);
+                    Model.Status = dt1.Rows[0]["CustomerStatus"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["CustomerStatus"]);
+
                 }
             }
 

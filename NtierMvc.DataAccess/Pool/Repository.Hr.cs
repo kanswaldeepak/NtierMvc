@@ -75,6 +75,7 @@ namespace NtierMvc.DataAccess.Pool
             parms.Add("@EmpImage", objEmp.EmpImage);
             parms.Add("@IFSCode", objEmp.IFScode);
             parms.Add("@ipAddress", objEmp.ipAddress);
+            parms.Add("@Status", objEmp.Status);
             spName = ConfigurationManager.AppSettings["SaveEmployeeDetails"];
 
             _dbAccess.ExecuteNonQuery(spName, parms, "@o_MsgCode", out msgCode);

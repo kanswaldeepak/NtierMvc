@@ -15,6 +15,9 @@ namespace NtierMvc.Model
         public string Nametbl { get; set; }
         public string Property { get; set; }
         public string ColumnName { get; set; }
+        public string ColumnName1 { get; set; }
+        public string Value1 { get; set; }
+
     }
 
     public class AddDdlEntityDetails

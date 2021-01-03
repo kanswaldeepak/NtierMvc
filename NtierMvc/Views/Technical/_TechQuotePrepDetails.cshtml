@@ -304,7 +304,7 @@
                             </label>
                             @Html.DropDownListFor(m => m.Currency, new SelectList(ViewBag.ListCurrency, "DataStringValueField", "DataTextField", Model.Currency), new
                        {
-                           @class = "form-control",
+                           @class = "form-control clearField",
                            @id = "QuotePrepCurrency"
                        })
                             <span class="HideValidMsg">Please Select Currency</span>

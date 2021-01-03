@@ -65,7 +65,7 @@ namespace DVETPrivateITI.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult SaveNewItemInDdl(string type, string Nametbl, string Value, string Property = null, string ColumnName = null)
+        public ActionResult SaveNewItemInDdl(string type, string Nametbl, string Value, string Property = null, string ColumnName = null, string Value1=null, string ColumnName1 = null)
         {
             model = new BaseModel();
             AddDdlEntity ddlEntity = new AddDdlEntity();
@@ -74,6 +74,8 @@ namespace DVETPrivateITI.Web.Controllers
             ddlEntity.Value = Value;
             ddlEntity.Property = Property;
             ddlEntity.ColumnName = ColumnName;
+            ddlEntity.Value1 = Value1;
+            ddlEntity.ColumnName1 = ColumnName1;
 
             List<DropDownEntity> result = model.SaveNewItemInDdl(ddlEntity);
             return new JsonResult { Data = result, JsonRequestBehavior = JsonRequestBehavior.AllowGet };

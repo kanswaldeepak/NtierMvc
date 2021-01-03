@@ -71,6 +71,7 @@ namespace NtierMvc.Model.HR
         public string BankBranch { get; set; }
         public string BankLoc { get; set; }
         public string IFScode { get; set; }
+        public string Status { get; set; }
 
 
 

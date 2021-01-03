@@ -270,6 +270,7 @@ namespace NtierMvc.BusinessLogic.Worker
                     Model.BankLoc = dt1.Rows[0]["BANKLOC"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["BANKLOC"]);
                     
                     Model.EmpImage = dt1.Rows[0]["EmpImage"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["EmpImage"]);
+                    Model.Status = dt1.Rows[0]["EmployeeStatus"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["EmployeeStatus"]);
                 }
             }
 

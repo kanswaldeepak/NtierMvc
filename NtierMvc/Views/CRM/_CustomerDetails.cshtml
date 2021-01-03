@@ -10,31 +10,31 @@
             @Html.HiddenFor(m => m.Id)
             <div class="row">
                 @*<div class="col-md-3">
-                            <div class="form-group">
-                                <label class="control-label">VENDOR TYPE<span class="required">*</span></label>
-                                @Html.DropDownListFor(m => m.VendorTypeId, new SelectList(ViewBag.ListVENDORTYPE, "DataStringValueField", "DataTextField", Model.VendorTypeId), new
-                           {
-                               id = "VendorTypeId",
-                               @class = "form-control requiredValidation",
-                               data_id = "VendorTypeId",
-                               data_select = "VendorType",
-                               @onchange = "SetVendorNature()",
-                               @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
-                           })
-                            </div>
-                        </div>
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label class="control-label">Customer Type<span class="required">*</span></label>
-                            @Html.DropDownListFor(m => m.CustomerTypeId, new SelectList(ViewBag.ListCustomerType, "DataStringValueField", "DataTextField"), new
-                       {
-                           id = "CustomerTypeId",
-                           @class = "form-control requiredValidation",
-                           @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
-                           @onchange = "ChangeCountry()"
-                       })
-                        </div>
-                    </div>*@
+                <div class="form-group">
+                    <label class="control-label">VENDOR TYPE<span class="required">*</span></label>
+                    @Html.DropDownListFor(m => m.VendorTypeId, new SelectList(ViewBag.ListVENDORTYPE, "DataStringValueField", "DataTextField", Model.VendorTypeId), new
+               {
+                   id = "VendorTypeId",
+                   @class = "form-control requiredValidation",
+                   data_id = "VendorTypeId",
+                   data_select = "VendorType",
+                   @onchange = "SetVendorNature()",
+                   @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+               })
+                </div>
+            </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <label class="control-label">Customer Type<span class="required">*</span></label>
+                @Html.DropDownListFor(m => m.CustomerTypeId, new SelectList(ViewBag.ListCustomerType, "DataStringValueField", "DataTextField"), new
+           {
+               id = "CustomerTypeId",
+               @class = "form-control requiredValidation",
+               @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+               @onchange = "ChangeCountry()"
+           })
+            </div>
+        </div>*@
                 <div class="col-md-3">
                     <div class="form-group">
                         <label class="control-label">
@@ -51,18 +51,18 @@
                     </div>
                 </div>
                 @*<div class="col-md-3">
-                        <div class="form-group">
-                            <label class="control-label">Functional Area <span class="required">*</span></label>
-                            @Html.DropDownListFor(m => m.FunctionAreaId, new SelectList(ViewBag.ListFUNCTION_AREA, "DataStringValueField", "DataTextField"), new
-                       {
-                           id = "FunctionAreaId",
-                           @class = "form-control requiredValidation",
-                           data_id = "FunctionAreaId",
-                           data_select = "FunctionArea",
-                           @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
-                       })<label class="HideValidMsg">Fields is Required *</label>
-                        </div>
-                    </div>*@
+            <div class="form-group">
+                <label class="control-label">Functional Area <span class="required">*</span></label>
+                @Html.DropDownListFor(m => m.FunctionAreaId, new SelectList(ViewBag.ListFUNCTION_AREA, "DataStringValueField", "DataTextField"), new
+           {
+               id = "FunctionAreaId",
+               @class = "form-control requiredValidation",
+               data_id = "FunctionAreaId",
+               data_select = "FunctionArea",
+               @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+           })<label class="HideValidMsg">Fields is Required *</label>
+            </div>
+        </div>*@
                 <div class="col-md-3">
                     <div class="form-group">
                         <label class="control-label">Customer Name <span class="required">*</span></label>
@@ -148,8 +148,8 @@
                            @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
                        })
                         @*<select id="State" name="State" ng-model="State" class="form-control requiredValidation ng-pristine ng-untouched ng-valid ng-empty" onfocusout="return ValidateRequiredFieldsOnFocusOut(this)">
-                                <option data-ng-repeat="st in ListState" value="{{st.Id}}">{{st.State}}</option>
-                            </select>*@
+                    <option data-ng-repeat="st in ListState" value="{{st.Id}}">{{st.State}}</option>
+                </select>*@
                     </div>
                 </div>
                 <div class="col-md-3">
@@ -277,6 +277,21 @@
                        @id = "DateOfAssociation",
                        @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
                    })<label class="HideValidMsg">Fields is Required *</label>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label class="control-label">Status <span class="required">*</span></label>
+                        @Html.DropDownListFor(m => m.Status, new SelectList(ViewBag.ListStatus, "DataStringValueField", "DataTextField", Model.Status), new
+                   {
+                       id = "Status",
+                       @class = "form-control requiredValidation",
+                       data_id = "Status",
+                       data_select = "Status",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                       @onchange = "DisplayNewItemInDdl(this, 'Master.Taxonomy', 'CustomerStatus', 'DropDownValue','','')"
+                   })
+                        <label class="HideValidMsg">Fields is Required *</label>
                     </div>
                 </div>
             </div>
