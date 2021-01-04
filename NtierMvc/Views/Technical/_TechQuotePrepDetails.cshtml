@@ -89,7 +89,7 @@
                                    @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
                                    @onchange = "GetProdName('QuotePrep')"
                                })
-                        <span class="HideValidMsg">Please Select Sub Product Line</span>
+                            <span class="HideValidMsg">Please Select Sub Product Line</span>
                         </div>
                     </div>
 
@@ -107,8 +107,8 @@
 
                        })
                             @*<select id="ProductName" name="ProductName" ng-model="ProductName" class="form-control requiredValidation clearField ng-pristine ng-untouched ng-valid ng-empty" onfocusout="return ValidateRequiredFieldsOnFocusOut(this)" ng-change="GetProductNumber(ProductName)">
-                                    <option data-ng-repeat="pN in ProductNameList" value="{{pN.DataStringValueField}}">{{pN.DataTextField}}</option>
-                                </select>*@
+                    <option data-ng-repeat="pN in ProductNameList" value="{{pN.DataStringValueField}}">{{pN.DataTextField}}</option>
+                </select>*@
                             <span class="HideValidMsg">Please Select Product Name</span>
                         </div>
                     </div>
@@ -129,21 +129,21 @@
                         </div>
                     </div>
                     @*<div class="col-md-6">
-                            <div class="form-group text-left">
-                                <label class="control-label">
-                                    Customer Name
-                                </label>
-                                @Html.TextBoxFor(m => m.CustomerName, new
-                               {
-                                   @class = "form-control requiredValidation",
-                                   @id = "QuotePrepVendorName",
-                                   @readonly = "readonly",
-                                   @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
-                               })
+            <div class="form-group text-left">
+                <label class="control-label">
+                    Customer Name
+                </label>
+                @Html.TextBoxFor(m => m.CustomerName, new
+               {
+                   @class = "form-control requiredValidation",
+                   @id = "QuotePrepVendorName",
+                   @readonly = "readonly",
+                   @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+               })
 
-                                <span class="HideValidMsg">Please Select Customer Name</span>
-                            </div>
-                        </div>*@
+                <span class="HideValidMsg">Please Select Customer Name</span>
+            </div>
+        </div>*@
 
                     <div class="col-md-6">
                         <label class="control-label">
@@ -167,18 +167,18 @@
 
                     </div>
                     @*<div class="col-md-6">
-                            <div class="form-group">
-                                <label class="control-label">
-                                    Enquiry Sr No
-                                </label>
-                                @Html.TextBoxFor(m => m.EnqSrNo, new
-                                   {
-                                       @class = "form-control clearField",
-                                       @id = "EnqSrNo"
-                                   })
-                                <span class="HideValidMsg">Please Select EnqSrNo</span>
-                            </div>
-                        </div>*@
+            <div class="form-group">
+                <label class="control-label">
+                    Enquiry Sr No
+                </label>
+                @Html.TextBoxFor(m => m.EnqSrNo, new
+                   {
+                       @class = "form-control clearField",
+                       @id = "EnqSrNo"
+                   })
+                <span class="HideValidMsg">Please Select EnqSrNo</span>
+            </div>
+        </div>*@
 
                     <div class="col-md-6">
                         <div class="form-group">
@@ -220,40 +220,11 @@
                             @Html.DropDownListFor(m => m.Connection, new SelectList(@ViewBag.Connection, "DataStringValueField", "DataTextField", Model.Connection), new
                        {
                            @class = "form-control clearField",
-                           @id = "QuotePrepConnection"
+                           @id = "QuotePrepConnection",
+                           @onchange = "DisplayNewItemInDdl(this, 'Master.Taxonomy', 'Connection', 'DropDownValue')"
 
                        })
                             <span class="HideValidMsg">Please Select Connection</span>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label class="control-label">
-                                Quantity
-                            </label>
-                            @Html.TextBoxFor(m => m.Qty, new
-                       {
-                           @class = "form-control requiredValidation clearField",
-                           @id = "QuotePrepQty",
-                           @onkeypress = "return AllowNumbers(event)",
-                           @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
-                       })
-                            <span class="HideValidMsg">Please Select Quantity</span>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label class="control-label">
-                                Uom
-                            </label>
-                            @Html.DropDownListFor(m => m.Uom, new SelectList(@ViewBag.ListUom, "DataStringValueField", "DataTextField", Model.Uom), new
-                       {
-                           @class = "form-control clearField",
-                           @id = "QuotePrepUom"
-
-                       })
-                            <span class="HideValidMsg">Please Select Uom</span>
                         </div>
                     </div>
                     <div id="divMaterialGrade" class="col-md-6 ShowHideFields" style="display:none">
@@ -295,19 +266,6 @@
                                     @data_inneraction = "validationCall"
                                 })
                             <span class="HideValidMsg">Please Select Hole Size Range Inch</span>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label class="control-label">
-                                Currency
-                            </label>
-                            @Html.DropDownListFor(m => m.Currency, new SelectList(ViewBag.ListCurrency, "DataStringValueField", "DataTextField", Model.Currency), new
-                       {
-                           @class = "form-control clearField",
-                           @id = "QuotePrepCurrency"
-                       })
-                            <span class="HideValidMsg">Please Select Currency</span>
                         </div>
                     </div>
                     <div class="col-md-6 ShowHideFields" style="display:none">
@@ -361,6 +319,49 @@
                            @onkeypress = "return AllowNumbers(event); "
                        })
                             <span class="HideValidMsg">Please Select Total Bows</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label">
+                                Quantity
+                            </label>
+                            @Html.TextBoxFor(m => m.Qty, new
+                       {
+                           @class = "form-control requiredValidation clearField",
+                           @id = "QuotePrepQty",
+                           @onkeypress = "return AllowNumbers(event)",
+                           @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                       })
+                            <span class="HideValidMsg">Please Select Quantity</span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label">
+                                Uom
+                            </label>
+                            @Html.DropDownListFor(m => m.Uom, new SelectList(@ViewBag.ListUom, "DataStringValueField", "DataTextField", Model.Uom), new
+                       {
+                           @class = "form-control clearField",
+                           @id = "QuotePrepUom"
+
+                       })
+                            <span class="HideValidMsg">Please Select Uom</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label">
+                                Currency
+                            </label>
+                            @Html.DropDownListFor(m => m.Currency, new SelectList(ViewBag.ListCurrency, "DataStringValueField", "DataTextField", Model.Currency), new
+                       {
+                           @class = "form-control clearField",
+                           @id = "QuotePrepCurrency"
+                       })
+                            <span class="HideValidMsg">Please Select Currency</span>
                         </div>
                     </div>
                     <div id="divUnitPrice" class="col-md-6">
@@ -449,7 +450,7 @@
                         </table>
                     </div>
 
-                    <div class="row">
+                    <div class="row" style="display:none">
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="control-label">

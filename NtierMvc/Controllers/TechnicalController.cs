@@ -136,12 +136,12 @@ namespace NtierMvc.Controllers
         {
             ViewBag.ListQuoteNo = DdlList(); //objManager.GetQuoteNoList(string.Empty); 
 
-            ViewBag.CasingSize = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "CasingSize", "Property", GeneralConstants.ListTypeN);
-            ViewBag.CasingPpf = model.GetDropDownList("Master.Taxonomy", GeneralConstants.ListTypeD, "dropdownId", "dropdownvalue", "Ppf", "Property", true);
-            ViewBag.MaterialGrade = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "MatGrade", "Property", GeneralConstants.ListTypeN);
-            ViewBag.Connection = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "Connection", "Property", GeneralConstants.ListTypeN);
+            ViewBag.CasingSize = model.GetMasterTableStringList(TableNames.Master_Taxonomy, ColumnNames.DropDownID, ColumnNames.DropDownValue, "CasingSize", ColumnNames.Property, GeneralConstants.ListTypeN);
+            ViewBag.CasingPpf = model.GetMasterTableStringList(TableNames.Master_Taxonomy, ColumnNames.DropDownID, ColumnNames.DropDownValue, "PPF", ColumnNames.Property, GeneralConstants.ListTypeN);
+            ViewBag.MaterialGrade = model.GetMasterTableStringList(TableNames.Master_Taxonomy, ColumnNames.DropDownID, ColumnNames.DropDownValue, "MatGrade", ColumnNames.Property, GeneralConstants.ListTypeN);
+            ViewBag.Connection = model.GetDropDownList(TableNames.Master_Taxonomy, GeneralConstants.ListTypeN, ColumnNames.DropDownID, ColumnNames.DropDownValue, "Connection", ColumnNames.Property, true);
             ViewBag.ProductNameList = model.GetMasterTableStringList("Master.Product", "Id", "ProductName", "", "", GeneralConstants.ListTypeN);
-            ViewBag.ListUom = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "Uom", "Property", GeneralConstants.ListTypeN);
+            ViewBag.ListUom = model.GetMasterTableStringList(TableNames.Master_Taxonomy, ColumnNames.DropDownID, ColumnNames.DropDownValue, "QuoteUom", ColumnNames.Property, GeneralConstants.ListTypeN);
             ViewBag.ListQuoteType = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "QuoteType", "Property", GeneralConstants.ListTypeD);
             ViewBag.ListEnqNo = model.GetMasterTableStringList("EnquiryRegister", "EnquiryId", "EnqRef", "", "", GeneralConstants.ListTypeN);
             ViewBag.ListOpenHoleSize = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "OpenHoleSize", "Property", GeneralConstants.ListTypeN);

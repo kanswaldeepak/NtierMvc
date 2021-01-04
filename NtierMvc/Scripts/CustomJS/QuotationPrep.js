@@ -2,13 +2,13 @@
     //console.log($(item).find('option:selected').text());
 
     if (item.name == 'FieldName1')
-        $('#finalDescQuery').val($('#finalDescQuery').val() + ' ' + $(item).find('option:selected').text() + 'Field' + ' ProductName \r\n ');
+        $('#finalDescQuery').val($('#finalDescQuery').val() + ' ' + $(item).find('option:selected').text() + 'Field' + ' ProductName \n');
     else if (item.name == 'Pos1')
-        $('#finalDescQuery').val($(item).find('option:selected').text());
+        $('#finalDescQuery').val($(item).find('option:selected').text() +' : ');
     else if (item.name.indexOf('FieldName') != -1)
-        $('#finalDescQuery').val($('#finalDescQuery').val() + ' ' + $(item).find('option:selected').text() + 'Field \r\n');
+        $('#finalDescQuery').val($('#finalDescQuery').val() + ' ' + $(item).find('option:selected').text() + 'Field \n');
     else
-        $('#finalDescQuery').val($('#finalDescQuery').val() + ' ' + $(item).find('option:selected').text());
+        $('#finalDescQuery').val($('#finalDescQuery').val() + ' ' + $(item).find('option:selected').text() + ' : ');
 
     //let queryString = $('#finalDescQuery').val() + ' ' + $(item).find('option:selected').text();
 
