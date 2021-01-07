@@ -72,6 +72,7 @@ namespace NtierMvc.DataAccess.Pool
             Params.Add("@ModeOfDespatch", Model.ModeOfDespatch);
             Params.Add("@PortOfDischarge", Model.PortOfDischarge);
             Params.Add("@LeadTime", Model.LeadTime);
+            Params.Add("@LeadTimeDuration", Model.LeadTimeDuration);
             Params.Add("@DeliveryTime", Model.DeliveryTime);
             Params.Add("@PaymentTerms", Model.PaymentTerms);
             Params.Add("@SalesPerson", Model.SalesPerson);

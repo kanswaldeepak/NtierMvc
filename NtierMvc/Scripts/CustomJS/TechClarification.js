@@ -128,7 +128,7 @@ function GetSoNoDetialsForClarification() {
     })
 }
 
-function GetClarificationMails() {
+function GetClarificationMail() {
     var QuoteNo = $("#QuoteClarificationFormNo").val();
     var QuoteType = $("#QuoteClarificationFormType").val();
 
@@ -163,7 +163,7 @@ function GetClarificationMails() {
     })
 }
 
-function DeleteClarificationMails() {
+function DeleteClarificationMail() {
 
     var categories = new Array();
 
@@ -329,7 +329,7 @@ function CallOrderFileUpload() {
 }
 
 
-function GetOrderClarifications() {
+function GetOrderClarification() {
     let SoNo = $("#SoNoClarification").val();
 
     if ((SoNo == undefined || SoNo == '')) {
@@ -363,7 +363,7 @@ function GetOrderClarifications() {
     })
 }
 
-function DeleteOrderClarifications() {
+function DeleteOrderClarification() {
 
     var categories = new Array();
 

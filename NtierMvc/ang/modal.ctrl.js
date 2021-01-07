@@ -6,12 +6,19 @@ angular.module('App').controller("ModalController", function ($scope, $http, $ti
         var frm = $("#formSaveCustomerDetail");
         var formData = new FormData(frm[0]);
 
+        var Tel1 = $('tel1').length;
+        var Tel2 = $('tel2').length;
+
         var Status = false;
         Status = GetFormValidationStatus("#formSaveCustomerDetail");
 
         if (!Status) {
             alert("Kindly Fill all mandatory fields");
         }
+        else if (Tel1 > 0 && Tel1 < 10)
+            alert("Telephone 1 should be more than 10 and less than 25");
+        else if (Tel2 > 0 && Tel2 < 10)
+            alert("Telephone 2 should be more than 10 and less than 25");
         else {
             $http({ url: window.SaveCustomer, method: 'POST', data: formData, headers: { 'Content-Type': undefined } }).success(
                 function (res) {

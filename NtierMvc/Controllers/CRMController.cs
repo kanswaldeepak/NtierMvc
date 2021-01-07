@@ -195,8 +195,9 @@ namespace NtierMvc.Controllers
 
         public ActionResult GetStateDetail(string countryId)
         {
-            List<GeographyEntity> StateList = new List<GeographyEntity>();
-            StateList = model.GetStateDetail(countryId);
+            List<DropDownEntity> StateList = new List<DropDownEntity>();
+            //StateList = model.GetStateDetail(countryId);
+            StateList = model.GetDropDownList(TableNames.Master_State, GeneralConstants.ListTypeD, ColumnNames.id, ColumnNames.state, countryId, ColumnNames.CountryId,false);
             return new JsonResult { Data = StateList, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 

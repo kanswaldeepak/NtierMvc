@@ -136,9 +136,9 @@ namespace NtierMvc.Controllers
         {
             ViewBag.ListQuoteNo = DdlList(); //objManager.GetQuoteNoList(string.Empty); 
 
-            ViewBag.CasingSize = model.GetMasterTableStringList(TableNames.Master_Taxonomy, ColumnNames.DropDownID, ColumnNames.DropDownValue, "CasingSize", ColumnNames.Property, GeneralConstants.ListTypeN);
-            ViewBag.CasingPpf = model.GetMasterTableStringList(TableNames.Master_Taxonomy, ColumnNames.DropDownID, ColumnNames.DropDownValue, "PPF", ColumnNames.Property, GeneralConstants.ListTypeN);
-            ViewBag.MaterialGrade = model.GetMasterTableStringList(TableNames.Master_Taxonomy, ColumnNames.DropDownID, ColumnNames.DropDownValue, "MatGrade", ColumnNames.Property, GeneralConstants.ListTypeN);
+            ViewBag.CasingSize = model.GetDropDownList(TableNames.Master_Taxonomy, GeneralConstants.ListTypeN, ColumnNames.DropDownID, ColumnNames.DropDownValue, "CasingSize", ColumnNames.Property, true);
+            ViewBag.CasingPpf = model.GetDropDownList(TableNames.Master_Taxonomy, GeneralConstants.ListTypeN, ColumnNames.DropDownID, ColumnNames.DropDownValue, "PPF", ColumnNames.Property, true);
+            ViewBag.MaterialGrade = model.GetDropDownList(TableNames.Master_Taxonomy, GeneralConstants.ListTypeN, ColumnNames.DropDownID, ColumnNames.DropDownValue, "MatGrade", ColumnNames.Property, true);
             ViewBag.Connection = model.GetDropDownList(TableNames.Master_Taxonomy, GeneralConstants.ListTypeN, ColumnNames.DropDownID, ColumnNames.DropDownValue, "Connection", ColumnNames.Property, true);
             ViewBag.ProductNameList = model.GetMasterTableStringList("Master.Product", "Id", "ProductName", "", "", GeneralConstants.ListTypeN);
             ViewBag.ListUom = model.GetMasterTableStringList(TableNames.Master_Taxonomy, ColumnNames.DropDownID, ColumnNames.DropDownValue, "QuoteUom", ColumnNames.Property, GeneralConstants.ListTypeN);
@@ -477,7 +477,6 @@ namespace NtierMvc.Controllers
         {
             try
             {
-
                 Microsoft.Office.Interop.Excel.Application excelApp = new Microsoft.Office.Interop.Excel.Application();
                 // open the template in Edit mode
                 string path = System.Web.HttpContext.Current.Server.MapPath(ConfigurationManager.AppSettings["QuotePrepExcel"]);
@@ -1439,7 +1438,7 @@ namespace NtierMvc.Controllers
         {
             List<DropDownEntity> lstSoNos = new List<DropDownEntity>();
 
-            lstSoNos = model.GetDropDownList("Orders", GeneralConstants.ListTypeD, "SoNo", "SoNo", "QuoteType", quotetypeId, false, "", "", "QuoteNo", quoteNoId);
+            lstSoNos = model.GetDropDownList("Orders", GeneralConstants.ListTypeD, "SoNo", "SoNo", quotetypeId, "QuoteType", false, "", "", quoteNoId, "QuoteNo");
             return new JsonResult { Data = lstSoNos, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
 
         }

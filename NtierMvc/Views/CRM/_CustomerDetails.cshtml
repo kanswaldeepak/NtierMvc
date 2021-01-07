@@ -123,7 +123,7 @@
                         <div class="input-group">
                             @Html.DropDownListFor(m => m.CountryId, new SelectList(ViewBag.ListCountry, "DataStringValueField", "DataTextField", Model.Country), new
                        {
-                           id = "Country",
+                           id = "CustCountry",
                            @class = "form-control requiredValidation",
                            data_id = "Country",
                            data_select = "Country",
@@ -173,8 +173,8 @@
                                 @Html.TextBoxFor(m => m.tel1, new
                            {
                                @class = "form-control MobileNumber",
-                               @maxlength = "12",
-                               @onkeypress = "return AllowNumbers(event)",
+                               @minlength = "10",
+                               @maxlength = "25",
                                @placeholder = "Telephone"
                            })<label class="HideValidMsg">Fields is Required *</label>
                             </div>
@@ -187,8 +187,8 @@
                         @Html.TextBoxFor(m => m.tel2, new
                    {
                        @class = "form-control MobileNumber",
-                       @maxlength = "12",
-                       @onkeypress = "return AllowNumbers(event)",
+                       @minlength = "10",
+                       @maxlength = "25",
                        @placeholder = "Telephone"
                    })<label class="HideValidMsg">Fields is Required *</label>
                     </div>
@@ -316,17 +316,18 @@
     });
 
     function GetStates() {
-        var Country = $("#Country").val();
+        var Country = $("#CustCountry").val();
         $.ajax({
             type: 'POST',
             url: window.StateDetail,
             data: JSON.stringify({ countryId: Country }),
             contentType: "application/json; charset=utf-8",
             success: function (data) {
+                debugger;
                 if (data.length > 0) {
                     $("#State").empty();
                     $.each(data, function (i, item) {
-                        $("#State").append($('<option></option>').val(item.Id).html(item.State));
+                        $("#State").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
                     })
                 }
             },
