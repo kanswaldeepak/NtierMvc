@@ -285,6 +285,8 @@ function CreateDocument(dwnldtype) {
         return;
     }
 
+    ShowLoadder();
+
     $.ajax({
         type: 'POST',
         url: window.CreateDownloadDocument,
@@ -292,16 +294,19 @@ function CreateDocument(dwnldtype) {
         contentType: "application/json; charset=utf-8",
         success: function (data) {
             //alert("Dowloaded Successfully" + data);
-            if (data.fileName != "") {
+            if (data != "") {
                 //use window.location.href for redirect to download action for download the file
-                //window.location.href = '@Url.RouteUrl(new { Controller = "Technical", Action = "Download" })/?fileName=' + data.fileName;
+                window.location.href = '/Technical/Download/?fileName=' + data;
+                HideLoadder();
             }
             else {
                 alert(data.errorMessage);
+                HideLoadder();
             }
         },
         error: function (x, e) {
             alert('Some error is occurred, Please try after some time.');
+            HideLoadder();
         }
     })
 }

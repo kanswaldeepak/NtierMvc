@@ -8,7 +8,7 @@
     <form id="formSaveCertificateDetail">
         <div class="col-md-12">
             @Html.HiddenFor(m => m.Id)
-            @Html.HiddenFor(m => m.EmpId)
+            @Html.HiddenFor(m => m.EmpId, new { @id = "CerEmpId" })
 
             <div class="row">
                 <div class="col-md-6">
@@ -37,19 +37,19 @@
                                 <input type="file" id="fileTech" multiple />
 
                                 @*@Html.TextBoxFor(m => m.TechQual, new
-                        {
-                            @class = "form-control",
-                            @id = "TechQual",
-                            @data_inneraction = "validationCall",
-                            @placeholder = "Technical Qualification",
-                            @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
-                        })*@
+                            {
+                                @class = "form-control",
+                                @id = "TechQual",
+                                @data_inneraction = "validationCall",
+                                @placeholder = "Technical Qualification",
+                                @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                            })*@
                             </th>
                         </tr>
 
                     </table>
                 </div>
-                
+
 
             </div>
             <div class="row">

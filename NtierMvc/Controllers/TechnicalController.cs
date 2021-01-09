@@ -377,7 +377,7 @@ namespace NtierMvc.Controllers
             else if (downloadTypeId == "docs")
                 fileName = GenerateDoc(downloadTypeId, quoteTypeId, quoteNumberId, quoteNoForFileName, fullPath, fileName);
 
-            Download(fileName);
+            //Download(fileName);
             //return Json(new { fileName = fileName, errorMessage = "Error While Generating Excel. Contact Support." });
             return new JsonResult { Data = fileName, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
 
@@ -607,37 +607,37 @@ namespace NtierMvc.Controllers
             return fileName;
         }
 
-        private void Download(string fileName)
+        public ActionResult Download(string fileName)
         {
             //Do not delete commented text
-            //string fullPath = Path.Combine(Server.MapPath(ConfigurationManager.AppSettings["TempFolder"]), fileName);
-
-            //if (System.IO.File.Exists(fullPath))
-            //{
-            //    ////Get the temp folder and file path in server
-            //    byte[] fileByteArray = System.IO.File.ReadAllBytes(fullPath);
-            //    System.IO.File.Delete(fullPath);
-            //    return File(fileByteArray, "application/vnd.ms-excel", fileName);
-
-            //}
-
-            //else
-            //    return Json(new { data = "", errorMessage = "Error While Generating Excel. Contact Support." }, JsonRequestBehavior.AllowGet);
-
-            //string fullPath = Path.Combine(Server.MapPath(ConfigurationManager.AppSettings["TempFolder"]), fileName);
-
             string fullPath = Path.Combine(Server.MapPath(ConfigurationManager.AppSettings["TempFolder"]), fileName);
-            var excelApp = new Microsoft.Office.Interop.Excel.Application();
-            excelApp.Visible = true;
 
             if (System.IO.File.Exists(fullPath))
             {
                 ////Get the temp folder and file path in server
-                Microsoft.Office.Interop.Excel.Workbooks books = excelApp.Workbooks;
-                Microsoft.Office.Interop.Excel.Workbook sheet = books.Open(fullPath, 0, true, 5, "", "", false, Microsoft.Office.Interop.Excel.XlPlatform.xlWindows, "\t", true, false, 0, true, 1, Microsoft.Office.Interop.Excel.XlCorruptLoad.xlNormalLoad);
+                byte[] fileByteArray = System.IO.File.ReadAllBytes(fullPath);
                 System.IO.File.Delete(fullPath);
-                //return Json(new { data = "", errorMessage = "" }, JsonRequestBehavior.AllowGet);
+                return File(fileByteArray, "application/vnd.ms-excel", fileName);
+
             }
+
+            else
+                return Json(new { data = "", errorMessage = "Error While Generating Excel. Contact Support." }, JsonRequestBehavior.AllowGet);
+
+            //string fullPath = Path.Combine(Server.MapPath(ConfigurationManager.AppSettings["TempFolder"]), fileName);
+
+            //string fullPath = Path.Combine(Server.MapPath(ConfigurationManager.AppSettings["TempFolder"]), fileName);
+            //var excelApp = new Microsoft.Office.Interop.Excel.Application();
+            //excelApp.Visible = true;
+
+            //if (System.IO.File.Exists(fullPath))
+            //{
+            //    ////Get the temp folder and file path in server
+            //    Microsoft.Office.Interop.Excel.Workbooks books = excelApp.Workbooks;
+            //    Microsoft.Office.Interop.Excel.Workbook sheet = books.Open(fullPath, 0, true, 5, "", "", false, Microsoft.Office.Interop.Excel.XlPlatform.xlWindows, "\t", true, false, 0, true, 1, Microsoft.Office.Interop.Excel.XlCorruptLoad.xlNormalLoad);
+            //    System.IO.File.Delete(fullPath);
+            //    //return Json(new { data = "", errorMessage = "" }, JsonRequestBehavior.AllowGet);
+            //}
             //else
             //    return Json(new { data = "", errorMessage = "Error While Generating Excel. Contact Support." }, JsonRequestBehavior.AllowGet);
 
