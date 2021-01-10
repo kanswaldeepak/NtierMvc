@@ -93,6 +93,7 @@ namespace NtierMvc.Model
 
     public static class ColumnNames
     {
+        public const string Notes = "Notes";
         public const string rsid = "rsid";
         public const string rscolid = "rscolid";
         public const string hbcolid = "hbcolid";

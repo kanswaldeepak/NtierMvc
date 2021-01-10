@@ -698,6 +698,22 @@ namespace NtierMvc.Model
             return result;
         }
 
+        public string SaveOrderNote(OrderEntity oEn)
+        {
+            string result = "0";
+            var baseAddress = "TechnicalDetails";
+            using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
+            {
+                HttpResponseMessage response = client.PostAsJsonAsync(baseAddress + "/SaveOrderNote", oEn).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    var data = response.Content.ReadAsStringAsync().Result;
+                    result = JsonConvert.DeserializeObject<string>(data);
+                }
+            }
+            return result;
+        }
+
 
     }
 }

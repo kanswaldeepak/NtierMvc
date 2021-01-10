@@ -1505,6 +1505,19 @@ namespace NtierMvc.BusinessLogic.Worker
             return result;
         }
 
+        public string SaveOrderNote(OrderEntity entity)
+        {
+            string result = string.Empty;
+            try
+            {
+                result = _repository.SaveOrderNote(entity);
+            }
+            catch (Exception Ex)
+            {
+                NtierMvc.DataAccess.ExceptionLogging.SendExcepToDB(Ex);
+            }
+            return result;
+        }
 
     }
 }

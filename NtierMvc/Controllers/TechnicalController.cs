@@ -135,6 +135,7 @@ namespace NtierMvc.Controllers
         public ActionResult PartialQuotePrep()
         {
             ViewBag.ListQuoteNo = DdlList(); //objManager.GetQuoteNoList(string.Empty); 
+            ViewBag.YesNo = model.GetTaxonomyDropDownItems("", "YesNo");
 
             ViewBag.CasingSize = model.GetDropDownList(TableNames.Master_Taxonomy, GeneralConstants.ListTypeN, ColumnNames.DropDownID, ColumnNames.DropDownValue, "CasingSize", ColumnNames.Property, true);
             ViewBag.CasingPpf = model.GetDropDownList(TableNames.Master_Taxonomy, GeneralConstants.ListTypeN, ColumnNames.DropDownID, ColumnNames.DropDownValue, "PPF", ColumnNames.Property, true);
@@ -499,7 +500,8 @@ namespace NtierMvc.Controllers
                 xlWorkbook.Worksheets[1].Cells.Replace("#SalesPerson", resultData.Rows[0]["SalesPerson"]);
 
                 xlWorkbook.Worksheets[1].Cells.Replace("#CustomerName", "M/s." + resultData.Rows[0]["CustomerNAME"]);
-                xlWorkbook.Worksheets[1].Cells.Replace("#CustomerAddress", resultData.Rows[0]["CustomerAddress"]);
+                xlWorkbook.Worksheets[1].Cells.Replace("#CustomerAddress1", resultData.Rows[0]["CustomerAddress1"]);
+                xlWorkbook.Worksheets[1].Cells.Replace("#CustomerAddress2", resultData.Rows[0]["CustomerAddress2"]);
                 xlWorkbook.Worksheets[1].Cells.Replace("#CustomerEmail", resultData.Rows[0]["CustomerEmail"]);
                 xlWorkbook.Worksheets[1].Cells.Replace("#Subject", resultData.Rows[0]["Subject"]);
 
@@ -1290,7 +1292,7 @@ namespace NtierMvc.Controllers
         public JsonResult GetClarificationMails(string quoteNo, string quoteType)
         {
             List<TableRecordsEntity> NewStr = new List<TableRecordsEntity>();
-            NewStr = model.GetTableDataList(GeneralConstants.ListTypeD, "QuoteClarification", "QuoteNo", quoteNo, "QuoteType", quoteType, "", "", "", "", "", "", "Id", "MailId");
+            NewStr = model.GetTableDataList(GeneralConstants.ListTypeD, TableNames.QuoteClarification, ColumnNames.QuoteNo, quoteNo, ColumnNames.QuoteType, quoteType, "", "", "", "", "", "", ColumnNames.id, ColumnNames.MailId);
             return Json(NewStr);
         }
 
@@ -1304,7 +1306,7 @@ namespace NtierMvc.Controllers
         public ActionResult GetClarificationNotes(string quoteNo, string quoteType)
         {
             SingleColumnEntity objSingle = new SingleColumnEntity();
-            objSingle = model.GetSingleColumnValues("Notes", "NoteMsg", "NoteMsg", "QuoteType", quoteType, "", "", "QuoteNo", quoteNo);
+            objSingle = model.GetSingleColumnValues(TableNames.Notes, ColumnNames.NoteMsg, ColumnNames.NoteMsg, ColumnNames.QuoteType, quoteType, "", "", ColumnNames.QuoteNo, quoteNo);
 
             return new JsonResult { Data = objSingle.DataValueField1, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
@@ -1798,6 +1800,44 @@ namespace NtierMvc.Controllers
             return new JsonResult { Data = lstProducts, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 
+        public ActionResult GetOrderNote(string soNo)
+        {
+            SingleColumnEntity objSingle = new SingleColumnEntity();
+            objSingle = model.GetSingleColumnValues(TableNames.OrderClarification, ColumnNames.Notes, "", ColumnNames.SoNo, soNo);
+
+            return new JsonResult { Data = objSingle.DataValueField1, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+        }
+
+
+        [HttpPost]
+        public ActionResult SaveOrderNote(string soNo, string notes)
+        {
+            string result = "";
+            OrderEntity oEntity = new OrderEntity();
+            try
+            {
+                oEntity.SoNo = soNo;
+                oEntity.Notes = notes;
+                result = objManager.SaveOrderNote(oEntity);
+            }
+            catch(Exception ex)
+            {
+                result = ex.Message;
+            }
+
+            string data = string.Empty;
+            if (!string.IsNullOrEmpty(result) && (result == GeneralConstants.Inserted || result == GeneralConstants.Updated))
+            {
+                //Payment Gateway
+                data = GeneralConstants.SavedSuccess;
+            }
+            else
+            {
+                data = GeneralConstants.NotSavedError;
+            }
+
+            return new JsonResult { Data = data, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+        }
 
     }
 

@@ -199,7 +199,6 @@
                         @Html.TextBoxFor(m => m.mob1, new
                    {
                        @class = "form-control requiredValidation MobileNumber",
-                       @onkeypress = "return AllowNumbers(event)",
                        @placeholder = "Mobile",
                        @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
                    })<label class="HideValidMsg">Fields is Required *</label>
@@ -211,7 +210,6 @@
                         @Html.TextBoxFor(m => m.mob2, new
                    {
                        @class = "form-control MobileNumber",
-                       @onkeypress = "return AllowNumbers(event)",
                        @placeholder = "Mobile",
                        @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
                    })

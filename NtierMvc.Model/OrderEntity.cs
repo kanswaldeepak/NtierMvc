@@ -49,6 +49,7 @@ namespace NtierMvc.Model
         public string ipAddress { get; set; }        
         public string MultiQuoteNos { get; set; }
         public string UploadedFile { get; set; }
+        public string Notes { get; set; }
     }
 
     public class ItemEntity

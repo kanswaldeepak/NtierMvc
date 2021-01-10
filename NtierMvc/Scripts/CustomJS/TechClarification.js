@@ -395,3 +395,59 @@ function DeleteOrderClarification() {
     })
 
 }
+
+function GetOrderNotes() {
+    var SoNo = $("#SoNoClarification").val();
+
+    if ((SoNo == undefined || SoNo == '')) {
+        alert('Please Select So No.');
+        return;
+    }
+
+    $.ajax({
+        type: 'POST',
+        url: window.GetOrderNote,
+        data: JSON.stringify({ soNo: SoNo }),
+        contentType: "application/json; charset=utf-8",
+        success: function (data) {
+            if (data.length > 0) {
+                $("#txtOrderNotes").val(data);
+            }
+            else {
+                alert("Notes Not Found for Order");
+            }
+        },
+        error: function (x, e) {
+            alert('Some error is occurred. Kindly contact Support.');
+            //$('#spn-Sucess-Failure').text('Some error is occurred, Please try after some time.');
+            //$('#spn-Sucess-Failure').addClass("important red");
+            //$('#Sucess-Failure').modal('show');
+        }
+    })
+}
+
+function SaveOrderNotes() {
+    var SoNo = $("#SoNoClarification").val();
+    var Notes = $("#txtOrderNotes").val();
+
+    if ((SoNo == undefined || SoNo == '')) {
+        alert('Please Select So No.');
+        return;
+    }
+
+    $.ajax({
+        type: 'POST',
+        url: window.SaveOrderNote,
+        data: JSON.stringify({ soNo: SoNo, notes: Notes }),
+        contentType: "application/json; charset=utf-8",
+        success: function (data) {
+            alert(data);
+        },
+        error: function (x, e) {
+            alert('Some error is occurred. Kindly contact Support.');
+            //$('#spn-Sucess-Failure').text('Some error is occurred, Please try after some time.');
+            //$('#spn-Sucess-Failure').addClass("important red");
+            //$('#Sucess-Failure').modal('show');
+        }
+    })
+}

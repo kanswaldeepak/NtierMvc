@@ -93,10 +93,10 @@
                                     Position 1
                                 </label>
                                 @*<select class="form-control requiredValidation clearField">
-                                        <option ng-model="DescPos1" data-ng-repeat="dp1 in DescPosList" value="{{dp1.DataStringValueField}} ">
-                                            {{dp1.DataTextField}}
-                                        </option>
-                                    </select>*@
+                        <option ng-model="DescPos1" data-ng-repeat="dp1 in DescPosList" value="{{dp1.DataStringValueField}} ">
+                            {{dp1.DataTextField}}
+                        </option>
+                    </select>*@
 
                                 @Html.DropDownListFor(m => m.Pos1, new SelectList(ViewBag.ListPosition, "DataStringValueField", "DataTextField", Model.Pos1), new
                            {
@@ -122,7 +122,7 @@
                                @data_inneraction = "validationCall",
                                @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
                                @onblur = "makeDescQuery(this)",
-                               @onchange = "DisplayNewItemInDdl(this, 'DescPosition', '', 'FieldName')"
+                               @onchange = "DisplayNewItemInDdl(this, 'DescFieldName', '', 'FieldName')"
                            })
                                 <span class="HideValidMsg"> Enter FieldName 1</span>
                             </div>
@@ -145,10 +145,10 @@
                            })
 
                                 @*<select class="form-control requiredValidation clearField">
-                                        <option ng-model="DescPos2" data-ng-repeat="dp2 in DescPosList" value="{{dp2.DataStringValueField}} ">
-                                            {{dp2.DataTextField}}
-                                        </option>
-                                    </select>*@
+                        <option ng-model="DescPos2" data-ng-repeat="dp2 in DescPosList" value="{{dp2.DataStringValueField}} ">
+                            {{dp2.DataTextField}}
+                        </option>
+                    </select>*@
                                 <span class="HideValidMsg"> Enter Position 2</span>
                             </div>
                         </div>
@@ -158,10 +158,10 @@
                                     Field Name 2
                                 </label>
                                 @*<select class="form-control requiredValidation clearField">
-                                        <option ng-model="FieldName2" data-ng-repeat="fn2 in FieldNameList" value="{{fn2.DataStringValueField}} ">
-                                            {{fn2.DataTextField}}
-                                        </option>
-                                    </select>*@
+                        <option ng-model="FieldName2" data-ng-repeat="fn2 in FieldNameList" value="{{fn2.DataStringValueField}} ">
+                            {{fn2.DataTextField}}
+                        </option>
+                    </select>*@
                                 @Html.DropDownListFor(m => m.FieldName2, new SelectList(ViewBag.ListFieldName, "DataStringValueField", "DataTextField", "Select"), new
                            {
                                @class = "form-control clearField",
@@ -169,7 +169,7 @@
                                @data_inneraction = "validationCall",
                                @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
                                @onblur = "makeDescQuery(this)",
-                               @onchange = "DisplayNewItemInDdl(this, 'DescPosition', '', 'FieldName')"
+                               @onchange = "DisplayNewItemInDdl(this, 'DescFieldName', '', 'FieldName')"
                            })
                             </div>
                         </div>
@@ -181,10 +181,10 @@
                                     Position 3
                                 </label>
                                 @*<select class="form-control requiredValidation clearField">
-                                        <option ng-model="DescPos3" data-ng-repeat="dp3 in DescPosList" value="{{dp3.DataStringValueField}} ">
-                                            {{dp3.DataTextField}}
-                                        </option>
-                                    </select>*@
+                        <option ng-model="DescPos3" data-ng-repeat="dp3 in DescPosList" value="{{dp3.DataStringValueField}} ">
+                            {{dp3.DataTextField}}
+                        </option>
+                    </select>*@
                                 @Html.DropDownListFor(m => m.Pos3, new SelectList(ViewBag.ListPosition, "DataStringValueField", "DataTextField", Model.Pos3), new
                            {
                                @class = "form-control clearField",
@@ -203,10 +203,10 @@
                                     Field Name 3
                                 </label>
                                 @*<select class="form-control requiredValidation clearField">
-                                        <option ng-model="FieldName2" data-ng-repeat="fn2 in FieldNameList" value="{{fn2.DataStringValueField}} ">
-                                            {{fn2.DataTextField}}
-                                        </option>
-                                    </select>*@
+                        <option ng-model="FieldName2" data-ng-repeat="fn2 in FieldNameList" value="{{fn2.DataStringValueField}} ">
+                            {{fn2.DataTextField}}
+                        </option>
+                    </select>*@
 
                                 @Html.DropDownListFor(m => m.FieldName3, new SelectList(ViewBag.ListFieldName, "DataStringValueField", "DataTextField", "Select"), new
                            {
@@ -215,7 +215,7 @@
                                @data_inneraction = "validationCall",
                                @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
                                @onblur = "makeDescQuery(this)",
-                               @onchange = "DisplayNewItemInDdl(this, 'DescPosition', '', 'FieldName')"
+                               @onchange = "DisplayNewItemInDdl(this, 'DescFieldName', '', 'FieldName')"
                            })
                             </div>
                         </div>
@@ -250,7 +250,7 @@
                                @data_inneraction = "validationCall",
                                @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
                                @onblur = "makeDescQuery(this)",
-                               @onchange = "DisplayNewItemInDdl(this, 'DescPosition', '', 'FieldName')"
+                               @onchange = "DisplayNewItemInDdl(this, 'DescFieldName', '', 'FieldName')"
                            })
                             </div>
                         </div>
@@ -285,7 +285,7 @@
                                @data_inneraction = "validationCall",
                                @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
                                @onblur = "makeDescQuery(this)",
-                               @onchange = "DisplayNewItemInDdl(this, 'DescPosition', '', 'FieldName')"
+                               @onchange = "DisplayNewItemInDdl(this, 'DescFieldName', '', 'FieldName')"
                            })
                             </div>
                         </div>
@@ -320,11 +320,154 @@
                                @data_inneraction = "validationCall",
                                @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
                                @onblur = "makeDescQuery(this)",
-                               @onchange = "DisplayNewItemInDdl(this, 'DescPosition', '', 'FieldName')"
+                               @onchange = "DisplayNewItemInDdl(this, 'DescFieldName', '', 'FieldName')"
+                           })
+                            </div>
+                        </div>
+
+                    </div>
+                    @*New Fields Added*@
+                    <div id="Pos7" class="row" style="display:none">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label">
+                                    Position 7
+                                </label>
+                                @Html.DropDownListFor(m => m.Pos7, new SelectList(ViewBag.ListPosition, "DataStringValueField", "DataTextField", Model.Pos7), new
+                           {
+                               @class = "form-control clearField",
+                               @id = "DescPos7",
+                               @data_inneraction = "validationCall",
+                               @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                               @onblur = "makeDescQuery(this)",
+                               @onchange = "DisplayNewItemInDdl(this, 'DescPosition', '', 'PosName')"
+                           })
+                                <span class="HideValidMsg"> Enter Position 7</span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label">
+                                    Field Name 7
+                                </label>
+                                @Html.DropDownListFor(m => m.FieldName7, new SelectList(ViewBag.ListFieldName, "DataStringValueField", "DataTextField", "Select"), new
+                           {
+                               @class = "form-control clearField",
+                               @id = "DescFieldName7",
+                               @data_inneraction = "validationCall",
+                               @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                               @onblur = "makeDescQuery(this)",
+                               @onchange = "DisplayNewItemInDdl(this, 'DescFieldName', '', 'FieldName')"
                            })
                             </div>
                         </div>
                     </div>
+                    <div id="Pos8" class="row" style="display:none">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label">
+                                    Position 8
+                                </label>
+                                @Html.DropDownListFor(m => m.Pos8, new SelectList(ViewBag.ListPosition, "DataStringValueField", "DataTextField", Model.Pos8), new
+                           {
+                               @class = "form-control clearField",
+                               @id = "DescPos8",
+                               @data_inneraction = "validationCall",
+                               @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                               @onblur = "makeDescQuery(this)",
+                               @onchange = "DisplayNewItemInDdl(this, 'DescPosition', '', 'PosName')"
+                           })
+                                <span class="HideValidMsg"> Enter Position 8</span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label">
+                                    Field Name 8
+                                </label>
+                                @Html.DropDownListFor(m => m.FieldName8, new SelectList(ViewBag.ListFieldName, "DataStringValueField", "DataTextField", "Select"), new
+                           {
+                               @class = "form-control clearField",
+                               @id = "DescFieldName8",
+                               @data_inneraction = "validationCall",
+                               @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                               @onblur = "makeDescQuery(this)",
+                               @onchange = "DisplayNewItemInDdl(this, 'DescFieldName', '', 'FieldName')"
+                           })
+                            </div>
+                        </div>
+                    </div>
+                    <div id="Pos9" class="row" style="display:none">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label">
+                                    Position 9
+                                </label>
+                                @Html.DropDownListFor(m => m.Pos9, new SelectList(ViewBag.ListPosition, "DataStringValueField", "DataTextField", Model.Pos9), new
+                           {
+                               @class = "form-control clearField",
+                               @id = "DescPos9",
+                               @data_inneraction = "validationCall",
+                               @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                               @onblur = "makeDescQuery(this)",
+                               @onchange = "DisplayNewItemInDdl(this, 'DescPosition', '', 'PosName')"
+                           })
+                                <span class="HideValidMsg"> Enter Position 9</span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label">
+                                    Field Name 9
+                                </label>
+                                @Html.DropDownListFor(m => m.FieldName9, new SelectList(ViewBag.ListFieldName, "DataStringValueField", "DataTextField", "Select"), new
+                           {
+                               @class = "form-control clearField",
+                               @id = "DescFieldName9",
+                               @data_inneraction = "validationCall",
+                               @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                               @onblur = "makeDescQuery(this)",
+                               @onchange = "DisplayNewItemInDdl(this, 'DescFieldName', '', 'FieldName')"
+                           })
+                            </div>
+                        </div>
+                    </div>
+                    <div id="Pos10" class="row" style="display:none">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label">
+                                    Position 10
+                                </label>
+                                @Html.DropDownListFor(m => m.Pos10, new SelectList(ViewBag.ListPosition, "DataStringValueField", "DataTextField", Model.Pos10), new
+                           {
+                               @class = "form-control clearField",
+                               @id = "DescPos10",
+                               @data_inneraction = "validationCall",
+                               @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                               @onblur = "makeDescQuery(this)",
+                               @onchange = "DisplayNewItemInDdl(this, 'DescPosition', '', 'PosName')"
+                           })
+                                <span class="HideValidMsg"> Enter Position 10</span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label">
+                                    Field Name 10
+                                </label>
+                                @Html.DropDownListFor(m => m.FieldName10, new SelectList(ViewBag.ListFieldName, "DataStringValueField", "DataTextField", "Select"), new
+                           {
+                               @class = "form-control clearField",
+                               @id = "DescFieldName10",
+                               @data_inneraction = "validationCall",
+                               @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                               @onblur = "makeDescQuery(this)",
+                               @onchange = "DisplayNewItemInDdl(this, 'DescFieldName', '', 'FieldName')"
+                           })
+                            </div>
+                        </div>
+                    </div>
+                    @*New Fields Added*@
 
 
                 </div>
@@ -341,7 +484,6 @@
 
             <div class="row">
                 <div class="col-md-12 pt-4 text-center">
-                    @*<button style="font-size:18px" type="button" class="btn btn-success btn-sm" ng-click="SaveItemDetails()">Save</button>*@
                     <button id="saveDescDetails" style="font-size:18px" type="button" class="btn btn-success btn-sm" ng-click="SaveNewDescDetails()">Save</button>
                     <button style="font-size:18px" type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
                 </div>

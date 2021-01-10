@@ -151,7 +151,7 @@
                             <input class="form-control" type="file" id="OrderFileUpload" data-file_types="pdf" multiple />
                             <input class="btn btn-info" type="button" id="btnUploadOrderClarification" value="Upload" onclick="CallOrderFileUpload()" />
                             <div class="col-md-12">
-                                Allowed files:                                
+                                Allowed files:
                                 <div id="alertOrder"></div>
                             </div>
                         </div>
@@ -166,10 +166,22 @@
                 </div>
             </div>
         </div>
+        <div class="row">
+            <div class="col-md-6">
+                <input class="btn btn-info" type="button" id="btnOrderNotes" value="Notes" onclick="GetOrderNotes()" />
+                <input class="btn btn-success" type="button" id="btnSaveOrderNotes" value="Save" onclick="SaveOrderNotes()" />
+                <div class="col-md-12 mt-2">
+                    <textarea class="form-control col-md-12" type="text" id="txtOrderNotes" rows="5" cols="30"></textarea>
+                </div>
+            </div>
+            <div class="col-md-6">
+
+            </div>
+        </div>
     </form>
 </div>
 
-<input type="button" class="btn" onclick="OpenMails()" value="Outlook" />
+@*<input type="button" class="btn" onclick="OpenMails()" value="Outlook" />*@
 
 <script type="text/javascript">
 
@@ -184,6 +196,8 @@
         window.DeleteClarificationMails = '@Url.Action("DeleteClarificationMails", "Technical")';
         window.ClarificationOrderFileUpload = '@Url.Action("ClarificationOrderFileUpload", "Technical")';
         window.DeleteOrderClarifications = '@Url.Action("DeleteOrderClarifications", "Technical")';
+        window.GetOrderNote = '@Url.Action("GetOrderNote", "Technical")';
+        window.SaveOrderNote = '@Url.Action("SaveOrderNote", "Technical")';
 
         $('#divProductDetails').hide();
 

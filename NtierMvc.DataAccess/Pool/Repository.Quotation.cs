@@ -128,6 +128,7 @@ namespace NtierMvc.DataAccess.Pool
             Params.Add("@ViewPos10", Model.ViewPos10);
             Params.Add("@ViewDES", Model.ViewDES);
             Params.Add("@ViewProductDetails", Model.ViewProductDetails);
+            Params.Add("@PDCDrillable", Model.PDCDrillable);
 
             var SPName = ConfigurationManager.AppSettings["SaveQuotePreparation"];
             _dbAccess.ExecuteNonQuery(SPName, Params, "@o_MsgCode", out msgCode);
@@ -253,6 +254,11 @@ namespace NtierMvc.DataAccess.Pool
             Params.Add("@Pos5", Model.Pos5);
             Params.Add("@Pos6", Model.Pos6);
 
+            Params.Add("@Pos7", Model.Pos7);
+            Params.Add("@Pos8", Model.Pos8);
+            Params.Add("@Pos9", Model.Pos9);
+            Params.Add("@Pos10", Model.Pos10);
+
             Params.Add("@FieldName1", Model.FieldName1);
             Params.Add("@FieldName2", Model.FieldName2);
             Params.Add("@FieldName3", Model.FieldName3);
@@ -260,8 +266,26 @@ namespace NtierMvc.DataAccess.Pool
             Params.Add("@FieldName5", Model.FieldName5);
             Params.Add("@FieldName6", Model.FieldName6);
 
+            Params.Add("@FieldName7", Model.FieldName7);
+            Params.Add("@FieldName8", Model.FieldName8);
+            Params.Add("@FieldName9", Model.FieldName9);
+            Params.Add("@FieldName10", Model.FieldName10);
+
 
             var SPName = ConfigurationManager.AppSettings["SaveNewDescDetail"];
+            _dbAccess.ExecuteNonQuery(SPName, Params, "@o_MsgCode", out msgCode);
+
+            return msgCode;
+        }
+
+        public string SaveOrderNote(OrderEntity Model)
+        {
+            string msgCode = "";
+            var Params = new Dictionary<string, object>();
+            Params.Add("@SoNo", Model.SoNo);
+            Params.Add("@Notes", Model.Notes);
+            
+            var SPName = ConfigurationManager.AppSettings["SaveOrderNotes"];
             _dbAccess.ExecuteNonQuery(SPName, Params, "@o_MsgCode", out msgCode);
 
             return msgCode;

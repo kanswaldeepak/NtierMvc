@@ -355,6 +355,20 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label class="control-label">
+                                PDC Drillable
+                            </label>
+                            @Html.DropDownListFor(m => m.PDCDrillable, new SelectList(@ViewBag.YesNo, "DataValueField", "DataTextField", Model.PDCDrillable), new
+                       {
+                           @class = "form-control clearField",
+                           @id = "QuotePrepPDCDrillable"
+
+                       })
+                            <span class="HideValidMsg">Please Select Uom</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6" style="display:none">
+                        <div class="form-group">
+                            <label class="control-label">
                                 Currency
                             </label>
                             @Html.DropDownListFor(m => m.Currency, new SelectList(ViewBag.ListCurrency, "DataStringValueField", "DataTextField", Model.Currency), new

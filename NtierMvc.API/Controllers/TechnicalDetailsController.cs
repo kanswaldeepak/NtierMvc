@@ -324,6 +324,13 @@ namespace NtierMvc.API.Controllers.Application
             return Ok(_repository.SaveNewDescDetail(viewModel));
         }
 
+        [HttpPost]
+        [ResponseType(typeof(string))]
+        [Route("api/TechnicalDetails/SaveOrderNote")]
+        public IHttpActionResult SaveOrderNote(OrderEntity viewModel)
+        {
+            return Ok(_repository.SaveOrderNote(viewModel));
+        }
 
     }
 }

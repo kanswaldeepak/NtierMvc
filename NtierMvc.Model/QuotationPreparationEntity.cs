@@ -58,6 +58,7 @@ namespace NtierMvc.Model
         public string TotalPrice { get; set; }
         public string ODSize { get; set; }
         public string TotalBows { get; set; }
+        public string PDCDrillable { get; set; }
 
 
     }
