@@ -1336,7 +1336,7 @@ namespace NtierMvc.DataAccess.Pool
         //    return DataTableToTableList(_dbAccess.GetDataTable(spName, parms));
         //}
 
-        public string DeleteFormTable(string TableName, string ColumnName1, string Param1, string ColumnName2 = null, string Param2 = null)
+        public string DeleteFormTable(string TableName, string ColumnName1, string Param1, string ColumnName2 = null, string Param2 = null, string ColumnName3 = null, string Param3 = null)
         {
             string msgCode = "";
             var ParamDict = new Dictionary<string, object>();
@@ -1344,8 +1344,10 @@ namespace NtierMvc.DataAccess.Pool
             //Params.Add("@Id", Model.Id);
             ParamDict.Add("@ColumnName1", ColumnName1);
             ParamDict.Add("@ColumnName2", ColumnName2);
+            ParamDict.Add("@ColumnName3", ColumnName3);
             ParamDict.Add("@Param1", Param1);
             ParamDict.Add("@Param2", Param2);
+            ParamDict.Add("@Param3", Param3);
 
 
             var SPName = ConfigurationManager.AppSettings["DeleteFromTable"];

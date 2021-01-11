@@ -1249,6 +1249,31 @@ angular.module('App').controller("MainController", function ($scope, $http, $tim
     //    $window.alert("Selected Value: " + currentSelected.DataStringValueField + "\nSelected Text: " + currentSelected.DataTextField);
     //}
 
+    $scope.DeleteQuotePrepItem = function () {
+        if (!confirm("Are you sure to delete?")) {
+            return;
+        }
+        //show_loader();
+        let QuoteType = $("#QuotePrepFormType").val();
+        let QuoteNumber = $("#QuotePrepFormNo").val();
+        let ItemNo = $("#QuotePrepItemNo").val();
+
+        if (ItemNo == '' || QuoteType == '' || QuoteNumber == '') {
+            alert("Kindly Select ItemNo, QuoteType and QuoteNumber");
+            return;
+        }
+
+        $http({ url: window.DeleteQuotationPrepDetail, method: 'POST', data: { ItemNo: ItemNo, QuoteType: QuoteType, QuoteNumber: QuoteNumber  } }).success(
+            function (res) {
+                if (res == 'Deleted Successfully!') {
+                    alert(res);
+                } else {
+                    alert(res, 'E');
+                }
+            }
+        ).error(function (res) { showHttpErr(res); });
+    }
+
 
 });
 

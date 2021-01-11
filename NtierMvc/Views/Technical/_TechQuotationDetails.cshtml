@@ -351,6 +351,20 @@
                     </div>
                 </div>
                 <div class="col-md-4">
+                    <div class="form-group text-left">
+                        <label class="control-label">
+                            Supply Terms
+                        </label>
+                        @Html.DropDownListFor(m => m.SupplyTerms, new SelectList(@ViewBag.ListSupplyTerms, "DataStringValueField", "DataTextField", Model.SupplyTerms), new
+                   {
+                       @class = "form-control requiredValidation",
+                       @id = "QuoteSupplyTerms",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                   })
+                        <span class="HideValidMsg">Please Select Product Line</span>
+                    </div>
+                </div>
+                <div class="col-md-4">
                     <div class="form-group">
                         <label class="control-label">
                             Lead Time

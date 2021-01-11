@@ -48,17 +48,55 @@
                                 Quote Number
                             </label>
                             @Html.DropDownListFor(m => m.QuoteNo, new SelectList(ViewBag.ListQuoteNo, "DataStringValueField", "DataTextField", "Select"), new
-                                {
-                                    @class = "form-control requiredValidation",
-                                    @id = "QuotePrepFormNo",
-                                    @data_inneraction = "validationCall",
-                                    @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
-                                    @onchange = "GetVendorDetailsForQuote()"
-                                })
+                       {
+                           @class = "form-control requiredValidation",
+                           @id = "QuotePrepFormNo",
+                           @data_inneraction = "validationCall",
+                           @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                           @onchange = "GetVendorDetailsForQuote(); CheckSupplyTermsAndLeadTime();"
+                       })
                             <span class="HideValidMsg">Please Select QuoteType</span>
                         </div>
                     </div>
-
+                    <div class="col-md-6">
+                        <div class="form-group text-left">
+                            <label class="control-label">
+                                Supply Terms
+                            </label>
+                            @Html.DropDownListFor(m => m.SupplyTerms, new SelectList(@ViewBag.ListSupplyTerms, "DataStringValueField", "DataTextField", Model.SupplyTerms), new
+                       {
+                           @class = "form-control requiredValidation",
+                           @id = "QuotePrepSupplyTerms",
+                           @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                       })
+                            <span class="HideValidMsg">Please Select Product Line</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label">
+                                Lead Time
+                            </label>
+                            <div class="row">
+                                <div class="col-md-5">
+                                    @Html.TextBoxFor(m => m.LeadTime, new
+                               {
+                                   @class = "form-control",
+                                   @id = "QuotePrepLeadTime",
+                                   @placeholder = "Lead Time"
+                               })
+                                </div>
+                                <div class="col-md-5">
+                                    @Html.DropDownListFor(m => m.LeadTimeDuration, new SelectList(@ViewBag.ListLeadTimeDuration, "DataValueField", "DataTextField", Model.LeadTimeDuration),
+                            new
+                            {
+                                @class = "form-control",
+                                @id = "QuotePrepLeadTimeDuration"
+                            })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="col-md-6">
                         <div class="form-group text-left">
                             <label class="control-label">
@@ -325,6 +363,20 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label class="control-label">
+                                PDC Drillable
+                            </label>
+                            @Html.DropDownListFor(m => m.PDCFeatures, new SelectList(@ViewBag.YesNo, "DataValueField", "DataTextField", Model.PDCFeatures), new
+                       {
+                           @class = "form-control clearField",
+                           @id = "QuotePrepPDCFeatures"
+
+                       })
+                            <span class="HideValidMsg">Please Select Uom</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label">
                                 Quantity
                             </label>
                             @Html.TextBoxFor(m => m.Qty, new
@@ -347,20 +399,6 @@
                        {
                            @class = "form-control clearField",
                            @id = "QuotePrepUom"
-
-                       })
-                            <span class="HideValidMsg">Please Select Uom</span>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label class="control-label">
-                                PDC Drillable
-                            </label>
-                            @Html.DropDownListFor(m => m.PDCDrillable, new SelectList(@ViewBag.YesNo, "DataValueField", "DataTextField", Model.PDCDrillable), new
-                       {
-                           @class = "form-control clearField",
-                           @id = "QuotePrepPDCDrillable"
 
                        })
                             <span class="HideValidMsg">Please Select Uom</span>
@@ -538,6 +576,7 @@
             <div class="col-md-12 pt-4 text-center">
                 <input style="font-size:18px" type="button" class="btn btn-success btn-sm" id="saveQuotePreparation" value="Save" ng-click="SaveQuotePreparation()" />
                 <input style="font-size:18px" type="button" class="btn btn-default btn-sm" id="viewProducts" value="Display Description" onclick="GetProductDetails()" />
+                <input style="font-size:18px" type="button" class="btn btn-danger btn-sm" id="deleteQuotePreparation" value="Delete Item" ng-click="DeleteQuotePrepItem()" />
             </div>
         </div>
     </form>
@@ -562,6 +601,8 @@
         window.GetProdNames = '@Url.Action("GetProdName", "Technical")';
         window.BindDescDetail = '@Url.Action("BindDescDetail", "Technical")';
         window.GetDisplayFieldsForQuoteP = '@Url.Action("GetDisplayFieldsForQuotePrep", "Technical")';
+        window.LeadDetailsForQuote = '@Url.Action("LeadDetailsForQuote", "Technical")';
+        window.DeleteQuotationPrepDetail = '@Url.Action("DeleteQuotationPrepDetail", "Technical")';
 
         $('#divProductDetails').hide();
     });

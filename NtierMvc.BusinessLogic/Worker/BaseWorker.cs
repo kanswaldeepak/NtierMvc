@@ -1472,12 +1472,12 @@ namespace NtierMvc.BusinessLogic.Worker
         //    return dataList;
         //}
 
-        public string DeleteFormTable(string TableName, string ColumnName1, string Param1, string ColumnName2 = null, string Param2 = null)
+        public string DeleteFormTable(string TableName, string ColumnName1, string Param1, string ColumnName2 = null, string Param2 = null, string ColumnName3 = null, string Param3 = null)
         {
             string result = string.Empty;
             try
             {
-                result = objData.DeleteFormTable(TableName, ColumnName1, Param1, ColumnName2, Param2);
+                result = objData.DeleteFormTable(TableName, ColumnName1, Param1, ColumnName2, Param2, ColumnName3, Param3);
             }
             catch (Exception Ex)
             {

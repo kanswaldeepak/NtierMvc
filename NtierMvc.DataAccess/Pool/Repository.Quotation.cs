@@ -77,6 +77,7 @@ namespace NtierMvc.DataAccess.Pool
             Params.Add("@PaymentTerms", Model.PaymentTerms);
             Params.Add("@SalesPerson", Model.SalesPerson);
             Params.Add("@Subject", Model.Subject);
+            Params.Add("@SupplyTerms", Model.SupplyTerms);
 
             var SPName = ConfigurationManager.AppSettings["SaveQuotationDetails"];
             _dbAccess.ExecuteNonQuery(SPName, Params, "@o_MsgCode", out msgCode);
@@ -128,7 +129,7 @@ namespace NtierMvc.DataAccess.Pool
             Params.Add("@ViewPos10", Model.ViewPos10);
             Params.Add("@ViewDES", Model.ViewDES);
             Params.Add("@ViewProductDetails", Model.ViewProductDetails);
-            Params.Add("@PDCDrillable", Model.PDCDrillable);
+            Params.Add("@PDCDrillable", Model.PDCFeatures);
 
             var SPName = ConfigurationManager.AppSettings["SaveQuotePreparation"];
             _dbAccess.ExecuteNonQuery(SPName, Params, "@o_MsgCode", out msgCode);

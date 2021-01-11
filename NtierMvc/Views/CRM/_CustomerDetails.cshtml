@@ -200,6 +200,7 @@
                    {
                        @class = "form-control requiredValidation MobileNumber",
                        @placeholder = "Mobile",
+                       @maxlength = "15",
                        @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
                    })<label class="HideValidMsg">Fields is Required *</label>
                     </div>
@@ -210,7 +211,8 @@
                         @Html.TextBoxFor(m => m.mob2, new
                    {
                        @class = "form-control MobileNumber",
-                       @placeholder = "Mobile",
+                       @placeholder = "Mobile",,
+                       @maxlength = "15",
                        @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
                    })
                     </div>

@@ -283,7 +283,6 @@ angular.module('App').controller("ModalController", function ($scope, $http, $ti
 
     }
 
-    
 });
 
 //EOF

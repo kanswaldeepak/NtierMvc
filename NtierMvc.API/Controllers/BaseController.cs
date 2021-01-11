@@ -564,9 +564,9 @@ namespace NtierMvc.API.Controllers
         [HttpGet]
         [ResponseType(typeof(string))]
         [Route("api/Base/DeleteFormTable")]
-        public IHttpActionResult DeleteFormTable(string TableName, string ColumnName1, string Param1, string ColumnName2 = null, string Param2 = null)
+        public IHttpActionResult DeleteFormTable(string TableName, string ColumnName1, string Param1, string ColumnName2 = null, string Param2 = null, string ColumnName3 = null, string Param3 = null)
         {
-            return Ok(_repository.DeleteFormTable(TableName, ColumnName1, Param1, ColumnName2, Param2));
+            return Ok(_repository.DeleteFormTable(TableName, ColumnName1, Param1, ColumnName2, Param2, ColumnName3, Param3));
         }
 
         [HttpGet]

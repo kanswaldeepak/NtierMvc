@@ -4,7 +4,7 @@
     if (item.name == 'FieldName1')
         $('#finalDescQuery').val($('#finalDescQuery').val() + ' ' + $(item).find('option:selected').text() + 'Field' + ' ProductName \n');
     else if (item.name == 'Pos1')
-        $('#finalDescQuery').val($(item).find('option:selected').text() +' : ');
+        $('#finalDescQuery').val($(item).find('option:selected').text() + ' : ');
     else if (item.name.indexOf('FieldName') != -1)
         $('#finalDescQuery').val($('#finalDescQuery').val() + ' ' + $(item).find('option:selected').text() + 'Field \n');
     else
@@ -279,6 +279,7 @@ function CreateDocument(dwnldtype) {
     var QuoteType = $("#QuotePrepFormType").val();
     var QuoteNumber = $("#QuotePrepFormNo").val();
     var QuoteTypeText = $("#QuotePrepFormType option:selected").text();
+    var QuoteNoForFileName = $("#QuotePrepFormNo option:selected").text();
 
     if (DownloadType == '' || QuoteType == '' || QuoteNumber == '') {
         alert("Kindly Select DownloadType, QuoteType and QuoteNumber");
@@ -290,7 +291,7 @@ function CreateDocument(dwnldtype) {
     $.ajax({
         type: 'POST',
         url: window.CreateDownloadDocument,
-        data: JSON.stringify({ downloadTypeId: DownloadType, quoteTypeId: QuoteType, quoteNumberId: QuoteNumber, quoteTypeText: QuoteTypeText }),
+        data: JSON.stringify({ downloadTypeId: DownloadType, quoteTypeId: QuoteType, quoteNumberId: QuoteNumber, quoteTypeText: QuoteTypeText, quoteNoForFileName: QuoteNoForFileName }),
         contentType: "application/json; charset=utf-8",
         success: function (data) {
             //alert("Dowloaded Successfully" + data);
@@ -400,3 +401,31 @@ function GetVendorDetailsForQuote() {
     })
 }
 
+function CheckSupplyTermsAndLeadTime() {
+    //let st = $('#QuotePrepSupplyTerms option:selected').text();
+
+    var QuoteType = $("#QuotePrepFormType").val();
+    var QuoteNo = $("#QuotePrepFormNo").val();
+
+    $.ajax({
+        type: 'POST',
+        url: window.LeadDetailsForQuote,
+        data: JSON.stringify({ quoteNo: QuoteNo, quoteType: QuoteType }),
+        contentType: "application/json; charset=utf-8",
+        success: function (res) {
+            $('#QuotePrepSupplyTerms').val(res[0].RequiredColumn3);
+            let mySupp = $('#QuotePrepSupplyTerms option:selected').text();
+            if (mySupp == 'Single') {
+                $('#QuotePrepLeadTime').val(res[0].RequiredColumn1);
+                $('#QuotePrepLeadTimeDuration').val(res[0].RequiredColumn2);
+            }
+            else {
+                $('#QuotePrepLeadTime').val('');
+                $('#QuotePrepLeadTimeDuration option:selected').val('-1');
+            }
+        },
+        error: function (x, e) {
+            alert('Some error is occurred, Please try after some time.');
+        }
+    })
+}

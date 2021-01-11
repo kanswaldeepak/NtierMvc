@@ -152,7 +152,8 @@ namespace NtierMvc.Controllers
             ViewBag.ListMainProdGrp = model.GetMasterTableStringList("Master.ProductLine", "Id", "MainPLName", "", "", GeneralConstants.ListTypeN);
             ViewBag.ListSubProdGrp = model.GetMasterTableStringList("SubProductLine", "Id", "SubPLName", "", "", GeneralConstants.ListTypeN);
             ViewBag.ListProdName = model.GetMasterTableStringList("Master.Product", "Id", "ProductName", "", "", GeneralConstants.ListTypeN);
-
+            ViewBag.ListSupplyTerms = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "SupplyTerms", "Property", GeneralConstants.ListTypeN);
+            ViewBag.ListLeadTimeDuration = model.GetTaxonomyDropDownItems("", "Time");
 
             return PartialView("~/Views/Technical/_TechQuotePrepDetails.cshtml", qPEntity);
         }
@@ -242,6 +243,7 @@ namespace NtierMvc.Controllers
             ViewBag.ListInspection = model.GetDropDownList("Master.Taxonomy", GeneralConstants.ListTypeD, "dropdownId", "dropdownvalue", "Inspection", "Property");
             ViewBag.ListLeadTimeDuration = model.GetTaxonomyDropDownItems("", "Time");
             ViewBag.ListModeOfDespatch = model.GetDropDownList("Master.Taxonomy", GeneralConstants.ListTypeD, "dropdownId", "dropdownvalue", "Transport", "Property");
+            ViewBag.ListSupplyTerms = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "SupplyTerms", "Property", GeneralConstants.ListTypeN);
 
             quotE.UnitNo = Session["UserId"].ToString();
 
@@ -350,9 +352,9 @@ namespace NtierMvc.Controllers
         }
 
         [HttpPost]
-        public ActionResult CreateDownloadDocument(string downloadTypeId, string quoteTypeId, string quoteNumberId, string quoteTypeText)
+        public ActionResult CreateDownloadDocument(string downloadTypeId, string quoteTypeId, string quoteNumberId, string quoteTypeText, string quoteNoForFileName)
         {
-            string quoteNoForFileName = "";
+            //string quoteNoForFileName = "QTMOT"++"0";
             //switch (quoteTypeText)
             //{
             //    case "Domestic":
@@ -369,7 +371,7 @@ namespace NtierMvc.Controllers
             //        break;
             //}
 
-            quoteNoForFileName = quoteNoForFileName + "-" + quoteNumberId + ".xlsx";
+            quoteNoForFileName = quoteNoForFileName + ".xlsx";
             string fullPath = Path.Combine(Server.MapPath(ConfigurationManager.AppSettings["TempFolder"].ToString()), quoteNoForFileName);
             string fileName = "", FileQuoteNo = "";
 
@@ -483,7 +485,7 @@ namespace NtierMvc.Controllers
                 string path = System.Web.HttpContext.Current.Server.MapPath(ConfigurationManager.AppSettings["QuotePrepExcel"]);
                 //string path = System.IO.Path.GetFullPath(ConfigurationManager.AppSettings["QuotePrepExcel"]);
                 Microsoft.Office.Interop.Excel.Workbook xlWorkbook = excelApp.Workbooks.Open(Filename: @path, Editable: true);
-                Microsoft.Office.Interop.Excel.Worksheet ws = (Microsoft.Office.Interop.Excel.Worksheet)xlWorkbook.Sheets["MOT F SM 08 Rev.00"];
+                Microsoft.Office.Interop.Excel.Worksheet ws = (Microsoft.Office.Interop.Excel.Worksheet)xlWorkbook.Sheets["Sheet1"];
 
 
                 System.Data.DataTable resultData = objManager.GetDataForDocument(downloadTypeId, quoteTypeId, quoteNumberId);
@@ -1306,8 +1308,9 @@ namespace NtierMvc.Controllers
         public ActionResult GetClarificationNotes(string quoteNo, string quoteType)
         {
             SingleColumnEntity objSingle = new SingleColumnEntity();
-            objSingle = model.GetSingleColumnValues(TableNames.Notes, ColumnNames.NoteMsg, ColumnNames.NoteMsg, ColumnNames.QuoteType, quoteType, "", "", ColumnNames.QuoteNo, quoteNo);
+            objSingle = model.GetSingleColumnValues(TableNames.Notes, ColumnNames.NoteMsg, ColumnNames.NoteMsg, ColumnNames.QuoteType, quoteType, "", ColumnNames.QuoteNo, quoteNo);
 
+            objSingle.DataValueField1 = objSingle.DataValueField1 == null ? "" : objSingle.DataValueField1;
             return new JsonResult { Data = objSingle.DataValueField1, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 
@@ -1743,8 +1746,8 @@ namespace NtierMvc.Controllers
 
             ViewBag.ListMainPL = model.GetDropDownList("Master.ProductLine", GeneralConstants.ListTypeD, "Id", "MainPLName", "", "");
             ViewBag.ListSubPL = model.GetDropDownList("SubProductLine", GeneralConstants.ListTypeD, "Id", "SubPLName", "", "");
-            ViewBag.ListPosition = model.GetDropDownList("DescPosition", GeneralConstants.ListTypeD, "Id", "PosName", "", "",true);
-            ViewBag.ListFieldName = model.GetDropDownList("DescFieldName", GeneralConstants.ListTypeD, "Id", "FieldName", "", "",true);
+            ViewBag.ListPosition = model.GetDropDownList("DescPosition", GeneralConstants.ListTypeD, "Id", "PosName", "", "", true);
+            ViewBag.ListFieldName = model.GetDropDownList("DescFieldName", GeneralConstants.ListTypeD, "Id", "FieldName", "", "", true);
 
 
             DescEntity dEN = new DescEntity();
@@ -1805,6 +1808,7 @@ namespace NtierMvc.Controllers
             SingleColumnEntity objSingle = new SingleColumnEntity();
             objSingle = model.GetSingleColumnValues(TableNames.OrderClarification, ColumnNames.Notes, "", ColumnNames.SoNo, soNo);
 
+            objSingle.DataValueField1 = objSingle.DataValueField1 == null ? "" : objSingle.DataValueField1;
             return new JsonResult { Data = objSingle.DataValueField1, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 
@@ -1820,7 +1824,7 @@ namespace NtierMvc.Controllers
                 oEntity.Notes = notes;
                 result = objManager.SaveOrderNote(oEntity);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 result = ex.Message;
             }
@@ -1837,6 +1841,28 @@ namespace NtierMvc.Controllers
             }
 
             return new JsonResult { Data = data, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+        }
+
+        public ActionResult LeadDetailsForQuote(string quoteNo, string quoteType)
+        {
+            List<TableRecordsEntity> ddE = new List<TableRecordsEntity>();
+            ddE = model.GetTableDataList(GeneralConstants.ListTypeD, TableNames.QuotationRegister, ColumnNames.QuoteNo, quoteNo, ColumnNames.QuoteType, quoteType, "", "", "", "", "", "", ColumnNames.LeadTime, ColumnNames.LeadTimeDuration, ColumnNames.SupplyTerms);
+
+            return new JsonResult { Data = ddE, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+        }
+
+        public ActionResult DeleteQuotationPrepDetail(string ItemNo, string QuoteType, string QuoteNumber)
+        {
+            string msgCode = model.DeleteFormTable(TableNames.QuotePreparationTbl, ColumnNames.ItemNo, ItemNo, ColumnNames.QuoteType, QuoteType, ColumnNames.QuoteNo, QuoteNumber);
+            if (msgCode == GeneralConstants.DeleteSuccess)
+            {
+                return new JsonResult { Data = msgCode, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+            }
+            else
+            {
+                return new JsonResult { Data = GeneralConstants.NotDeletedError, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+            }
+
         }
 
     }

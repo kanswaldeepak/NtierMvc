@@ -15,7 +15,7 @@ function Upload() {
         var filetype = $('#QuoteFileUpload').attr('data-file_types'); // take allowed files from input
         var allowedfiles = filetype.replace(/\|/g, ', '); // string allowed file
         var tolovercase = gettypeup.toLowerCase();
-        var filesize = 2; //2MB
+        var filesize = 25; //25MB
         var onlist = $('#QuoteFileUpload').attr('data-file_types').indexOf(tolovercase) > -1;
         var checkinputfile = $('#QuoteFileUpload').attr('type');
         numb = numb.toFixed(2);
@@ -196,7 +196,7 @@ function DeleteClarificationMail() {
 
 }
 
-function GetClarificationNotes() {
+function GetClarificationNote() {
     var QuoteNo = $("#QuoteClarificationFormNo").val();
     var QuoteType = $("#QuoteClarificationFormType").val();
 
@@ -270,7 +270,7 @@ function CallOrderFileUpload() {
         var filetype = $('#OrderFileUpload').attr('data-file_types'); // take allowed files from input
         var allowedfiles = filetype.replace(/\|/g, ', '); // string allowed file
         var tolovercase = gettypeup.toLowerCase();
-        var filesize = 2; //2MB
+        var filesize = 25; //25MB
         var onlist = $('#OrderFileUpload').attr('data-file_types').indexOf(tolovercase) > -1;
         var checkinputfile = $('#OrderFileUpload').attr('type');
         numb = numb.toFixed(2);

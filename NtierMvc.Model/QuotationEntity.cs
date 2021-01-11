@@ -46,6 +46,7 @@ namespace NtierMvc.Model
         public string PaymentTerms { get; set; }
         public string SalesPerson { get; set; }
         public string Subject { get; set; }
+        public string SupplyTerms { get; set; }
 
     }
 
