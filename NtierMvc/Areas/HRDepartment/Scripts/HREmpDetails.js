@@ -237,7 +237,7 @@ function saveExperienceDetail(data) {
 
 function SaveCertificates() {
     var fileTech = $("#fileTech").get(0).files;
-    var empId = $("#EmpId").val();
+    var empId = $("#CerEmpId").val();
     //var fileEduc = $("#fileEduc").get(0).files;
     //var filePostGrad = $("#filePostGrad").get(0).files;
 

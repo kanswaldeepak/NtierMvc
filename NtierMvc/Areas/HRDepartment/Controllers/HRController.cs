@@ -469,7 +469,7 @@ namespace NtierMvc.Areas.HRDepartment.Controllers
                 }
 
                 if (!System.IO.Directory.Exists(path))
-                    System.IO.Directory.CreateDirectory(Server.MapPath(path));
+                    System.IO.Directory.CreateDirectory(path);
 
                 file.SaveAs(path + fname);
                 CertificateName = fname.ToString();

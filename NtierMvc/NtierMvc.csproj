@@ -1192,6 +1192,7 @@
     <Content Include="Areas\Admin\Views\Admin\PartialAssignAdmin.cshtml" />
     <Content Include="Areas\HRDepartment\Views\HR\_HRCertificates.cshtml" />
     <Content Include="MasterFiles\JS\ui-bootstrap-tpls.min.js" />
+    <Content Include="App_Data\Documents\Excel\QuotePreparation.xlsx" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\CustomJS\common.js" />

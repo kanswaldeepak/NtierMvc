@@ -372,7 +372,7 @@ namespace NtierMvc.Controllers
             //}
 
             quoteNoForFileName = quoteNoForFileName + ".xlsx";
-            string fullPath = Path.Combine(Server.MapPath(ConfigurationManager.AppSettings["TempFolder"].ToString()), quoteNoForFileName);
+            string fullPath = Path.Combine(ConfigurationManager.AppSettings["TempFolder"].ToString(), quoteNoForFileName);
             string fileName = "", FileQuoteNo = "";
 
             if (downloadTypeId == "xlsx")

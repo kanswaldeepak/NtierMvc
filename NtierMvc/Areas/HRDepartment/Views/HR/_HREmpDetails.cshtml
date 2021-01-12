@@ -34,19 +34,34 @@
                         <label class="HideValidMsg">Employee Type is Required</label>
                     </div>
                 </div>
-                @*<div class="col-md-3" hidden>
-                <div class="form-group">
-                    <label class="control-label">Unit<span class="required">*</span></label>
-                    @Html.TextBoxFor(m => m.Unit,
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label class="control-label">Designation<span class="required">*</span></label>
+                        @Html.DropDownListFor(m => m.Designation, new SelectList(@ViewBag.ListDesignation, "DataStringValueField", "DataTextField", Model.Designation),
                         new
                         {
                             @class = "form-control requiredValidation",
-                            @id = "Unit",
+                            @id = "EDDesignation",
                             @data_inneraction = "validationCall",
-                            @placeholder = "Enter Unit"
-                        })<label class="HideValidMsg">Unit is Required</label>
+                            @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                            @onchange = "DisplayNewItemInDdl(this, 'Master.Designation', '', 'DesignationName')"
+                        })
+                        <label class="HideValidMsg">Designation is Required</label>
+                    </div>
                 </div>
-            </div>*@
+                @*<div class="col-md-3" hidden>
+            <div class="form-group">
+                <label class="control-label">Unit<span class="required">*</span></label>
+                @Html.TextBoxFor(m => m.Unit,
+                    new
+                    {
+                        @class = "form-control requiredValidation",
+                        @id = "Unit",
+                        @data_inneraction = "validationCall",
+                        @placeholder = "Enter Unit"
+                    })<label class="HideValidMsg">Unit is Required</label>
+            </div>
+        </div>*@
                 <div class="col-md-3">
                     <div class="form-group">
                         <label class="control-label">Department<span class="required">*</span></label>
@@ -61,18 +76,18 @@
                     </div>
                 </div>
                 @*<div class="col-md-3">
-                <div class="form-group">
-                    <label class="control-label">ID Card<span class="required">*</span></label>
-                    @Html.TextBoxFor(m => m.IdCard,
-                        new
-                        {
-                            @class = "form-control requiredValidation",
-                            @id = "IdCard",
-                            @data_inneraction = "validationCall",
-                            @placeholder = "ID Card"
-                        })<label class="HideValidMsg">ID Card is Required</label>
-                </div>
-            </div>*@
+            <div class="form-group">
+                <label class="control-label">ID Card<span class="required">*</span></label>
+                @Html.TextBoxFor(m => m.IdCard,
+                    new
+                    {
+                        @class = "form-control requiredValidation",
+                        @id = "IdCard",
+                        @data_inneraction = "validationCall",
+                        @placeholder = "ID Card"
+                    })<label class="HideValidMsg">ID Card is Required</label>
+            </div>
+        </div>*@
                 <div class="col-md-3">
                     <div class="form-group">
                         <label class="control-label">Employee Initial<span class="required">*</span></label>
@@ -164,21 +179,6 @@
                             @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
                         })
                         <label class="HideValidMsg">Blood Group Type is Required</label>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="form-group">
-                        <label class="control-label">Designation<span class="required">*</span></label>
-                        @Html.DropDownListFor(m => m.Designation, new SelectList(@ViewBag.ListDesignation, "DataStringValueField", "DataTextField", Model.Designation),
-                        new
-                        {
-                            @class = "form-control requiredValidation",
-                            @id = "EDDesignation",
-                            @data_inneraction = "validationCall",
-                            @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
-                            @onchange = "DisplayNewItemInDdl(this, 'Master.Designation', '', 'DesignationName')"
-                        })
-                        <label class="HideValidMsg">Designation is Required</label>
                     </div>
                 </div>
                 <div class="col-md-3">

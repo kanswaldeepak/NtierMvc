@@ -33,7 +33,7 @@ namespace NtierMvc.Areas.Admin.Controllers
         public ActionResult AdminMaster()
         {
             ViewBag.ListDeptName = model.GetMasterTableStringList("Master.Department", "Id", "DeptName", "", "", GeneralConstants.ListTypeD);
-            ViewBag.ListEmployee = "";
+            ViewBag.ListEmployee = model.GetMasterTableStringList("Master.Employee", "Id", "EmpName", "", "", GeneralConstants.ListTypeD);
             ViewBag.ListMainMenu = model.GetMasterTableStringList("MenuTable", "Id", "UrlName", "", "", GeneralConstants.ListTypeD);
             ViewBag.ListSubMenu = model.GetMasterTableStringList("SubMenuTable", "Id", "Name", "", "", GeneralConstants.ListTypeD);
             ViewBag.ListReadWrite = model.GetDropDownList("Master.Taxonomy",GeneralConstants.ListTypeD,"DropDownId", "DropDownValue", "ReadWrite", "Property");
