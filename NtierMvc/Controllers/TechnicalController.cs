@@ -372,8 +372,14 @@ namespace NtierMvc.Controllers
             //}
 
             quoteNoForFileName = quoteNoForFileName + ".xlsx";
-            string fullPath = Path.Combine(ConfigurationManager.AppSettings["TempFolder"].ToString(), quoteNoForFileName);
-            string fileName = "", FileQuoteNo = "";
+            string path = System.Web.HttpContext.Current.Server.MapPath(ConfigurationManager.AppSettings["TempFolder"]);
+            string fullPath = Path.Combine(Server.MapPath(ConfigurationManager.AppSettings["TempFolder"].ToString()), quoteNoForFileName);
+
+
+            if (!System.IO.Directory.Exists(path))
+                System.IO.Directory.CreateDirectory(path);
+
+            string fileName = "";
 
             if (downloadTypeId == "xlsx")
                 fileName = GenerateExcel(downloadTypeId, quoteTypeId, quoteNumberId, quoteNoForFileName, fullPath, fileName);

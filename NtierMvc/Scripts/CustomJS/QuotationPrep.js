@@ -297,7 +297,7 @@ function CreateDocument(dwnldtype) {
             //alert("Dowloaded Successfully" + data);
             if (data != "") {
                 //use window.location.href for redirect to download action for download the file
-                window.location.href = '/Technical/Download/?fileName=' + data;
+                window.location.href = window.DownloadDoc + '?fileName=' + data;
                 HideLoadder();
             }
             else {
