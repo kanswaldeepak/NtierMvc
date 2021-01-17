@@ -1,0 +1,431 @@
+﻿@using NtierMvc.Model
+@using NtierMvc.Infrastructure
+
+@model NtierMvc.Model.Vendor.VendorEntityDetails
+@{
+    ViewBag.Title = "Vendor";
+}
+
+<div class="row mt-3">
+    <table>
+        <tr>
+            <td>
+                @if (LocalUtility.CheckForWrite("", "CRM", "CRMMaster", "Vendor") == GeneralConstants.Write)
+                {
+                    <button id="btnAdd" type="button" class="btn btn-outline-primary btn-sm" style="float: left;" ng-click="BindVendorPopup()"><i class="fa fa-plus"></i> <b>Add New Vendor</b></button>
+                }
+            </td>
+
+            <td>
+                <label>Country</label>
+            </td>
+            <td>
+                <label>Vendor Type</label>
+            </td>
+
+            <td>
+                <label>Supplier Type</label>
+            </td>
+            <td>
+                <label>Vendor Name</label>
+            </td>
+
+        </tr>
+        <tr>
+            <td></td>
+
+            <td>
+                @Html.DropDownList("Country", new SelectList(@ViewBag.ListCountry, "DataStringValueField", "DataTextField", "Select"),
+                           new
+                           {
+                               @class = "form-control",
+                               ng_model = "SearchCountry",
+                               @id = "CUCountryId",
+                               @multiple = "true"
+                           })
+            </td>
+
+            <td>
+                @Html.DropDownList("VendorId", new SelectList(@ViewBag.ListVendorType, "DataStringValueField", "DataTextField", "Select"),
+                           new
+                           {
+                               @class = "form-control",
+                               ng_model = "SearchVendorID",
+                               @id = "CUVendorId",
+                               @multiple = "true",
+                                @onchange = "GetSupplierType1()"
+                           })
+            </td>
+            <td>
+              
+                @Html.DropDownList("SupplierType", new SelectList(@ViewBag.ListSupplierType, "DataStringValueField", "DataTextField", "Select"),
+                          new
+                          {
+                              @class = "form-control",
+                              ng_model = "SearchSupplierType",
+                              @id = "VdSupplierType",
+                              @multiple = "true"
+                          })
+            </td>
+            <td>
+                @Html.DropDownList("VendorName", new SelectList(@ViewBag.ListVendorName, "DataStringValueField", "DataTextField", "Select"),
+                          new
+                          {
+                              @class = "form-control",
+                              ng_model = "SearchVendorName",
+                              @id = "CUVendorName",
+                              @multiple = "true"
+                          })
+                <button class="btn btn-sm btn-success" type="button" id="btnSearchVendor" ng-click="FetchVendorList()">
+                    Search
+                </button>
+                <button class="btn btn-sm btn-info" type="button" id="btnClearSearchVendor" ng-click="DefaultVendorList();">Clear</button>
+            </td>
+         
+            <td>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<div class="wrapper">
+    <div class="container">
+        <table id="TblVendor" class="table table-sm">
+            <thead style="font-weight: bold">
+                <tr>
+                    <td>
+                        Action
+                    </td>
+                    <td>
+                        Vendor Id
+                    </td>
+                    <td>
+                        Vendor Name
+                    </td>
+                    <td>
+                        Vendor Type
+                    </td>
+                    <td>
+                        Supplier Type
+                    </td>
+                    <td>
+                        Country
+                    </td>
+                    <td>
+                        Contact Person
+                    </td>
+                    <td>
+                        Designation
+                    </td>
+                    <td>
+                        Mobile
+                    </td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="L in AvailableVendorList">
+                    <td>
+                        <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="VIEW" ng-click="LoadVendorViewPopup(L.VendorId)">
+                            <i class="fa fa-eye"></i>
+                        </button>
+                        @if (LocalUtility.CheckForWrite("", "MRM", "MRMMaster", "Vendor") == GeneralConstants.Write)
+                        {
+                            <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="EDIT" ng-click="LoadVendorEditPopup(L.VendorId)">
+                                <i class="fa fa-edit"></i>
+                            </button>
+                            <button type="button" class="btn btn-outline-danger btn-sm" data-toggle="tooltip" data-placement="bottom" title="DELETE" ng-click="DeleteVendor(L.VendorId)">
+                                <i class="fa fa-trash"></i>
+                            </button>
+                        }
+                    </td>
+                    <td>
+                        {{L.VendorId}}
+                    </td>
+                    <td>
+                        {{L.VendorName}}
+                    </td>
+                    <td>
+                        {{L.VendorNature}}
+                    </td>
+                    <td>
+                        {{L.SupplierName}}
+                    </td>
+                    <td>
+                        {{L.Country}}
+                    </td>
+                    <td>
+                        {{L.ContactPerson}}
+                    </td>
+                    <td>
+                        {{L.Designation}}
+                    </td>
+                    @*<td>
+        {{L.State}}
+        </td>
+        <td>
+            {{L.email1}}
+        </td>*@
+                    <td>
+                        {{L.mob1}}
+                    </td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td>
+                        <div class="c1">
+                            <div class="row p-0">
+                                <div class="col-md-2 p-0">
+                                    <span class="form-group pull-left page-size form-inline">
+                                        <b>Records per page : &nbsp;&nbsp;</b>
+                                        <select id="ddlCustPageSize" class="form-control control-color"
+                                                ng-model="custPageSize"
+                                                ng-change="CustChangePageSize()">
+                                            <option value="100000">All</option>
+                                            <option value="5">5</option>
+                                            <option value="10">10</option>
+                                            <option value="25">25</option>
+                                            <option value="50">50</option>
+                                            <option value="100">100</option>
+                                        </select>
+                                    </span>
+                                </div>
+                                <div class="col-md-8 pull-right p-0">
+                                    <div class="row p-0">
+                                        <div class="col-md-10 p-0">
+                                            <pagination total-items="custTotalCount" ng-change="CustPageChanged()" items-per-page="custPageSize" direction-links="true" ng-model="custPageIndex" max-size="maxsize" class="pagination pull-right" boundary-links="true" rotate="false" num-pages="custNumPages"></pagination>
+                                        </div>
+                                        <div class="col-md-2 p-0">
+                                            <a class="btn btn-primary p-2 pull-right">Page: {{custPageIndex}} / {{custNumPages}}</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>
+
+
+<div class="modal fade" id="add_details" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+</div>
+
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        //setTimeout(function () {
+        //    angular.element(document.getElementById('TblVendor')).scope().DefaultVendorList();
+        //    angular.element(document.getElementById('TblVendor')).scope().FetchVendorList();
+        //}, 500);
+
+        window.GetVendorListForCusts = '@Url.Action("GetVendorListForCust","MRM")';
+        window.GetDdlValueForVendor = '@Url.Action("GetDdlValueForVendor", "MRM")';
+        window.LoadPatialView =  '@Url.Action("MRMMaster","MRM",  new { Area = "MRM" }, null)';
+
+        $('#CUVendorId').chosen({
+            width: "150px",
+            placeholder_text_single: "Select VendorId",
+            placeholder_text_multiple: "Select VendorIds"
+        });
+
+        $('#CUVendorName').chosen({
+            width: "210px",
+            placeholder_text_single: "Select VendorName"
+        });
+
+        $('#CUCountryId').chosen({
+            width: "180px",
+            placeholder_text_single: "Select Country",
+            placeholder_text_multiple: "Select Countries"
+        });
+
+        $('#VdSupplierType').chosen({
+            width: "200px",
+            placeholder_text_single: "Select"
+        });
+
+        //$("#CUCountryId").chosen().change(
+        //    function GetVendorId() {
+
+        //        var CountryId = '';
+        //        var x = document.getElementById("CUCountryId");
+        //        for (var i = 0; i < x.options.length; i++) {
+        //            if (x.options[i].selected == true) {
+        //                //alert(x.options[i].value);
+        //                CountryId = CountryId + x.options[i].value + ',';
+        //            }
+        //        }
+
+        //        CountryId = CountryId.substring(0, CountryId.length - 1);
+
+        //        return $.ajax({
+        //            contentType: 'application/json; charset=utf-8',
+        //            dataType: 'json',
+        //            type: 'GET',
+        //            url: window.GetDdlValueForVendor,
+        //            data: { type: 'CountryId', CountryId: CountryId, VendorId: '' },
+        //            success: function (res) {
+        //                if (res.length > 0) {
+        //                    $("#CUVendorId").empty();
+        //                    $.each(res, function (i, item) {
+        //                        $("#CUVendorId").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
+        //                        $("#CUVendorId").trigger("chosen:updated");
+        //                    })
+        //                }
+        //            },
+        //            error: function (res) {
+        //                alert(res);
+        //            }
+        //        });
+        //    }
+        //)
+
+
+        //$("#CUVendorId").chosen().change(
+        //    function GetFunctionalArea() {
+        //        //var VendorNameId = $('#CUVendorId').val();
+        //        var VendorId = '';
+        //        var x = document.getElementById("CUVendorId");
+        //        for (var i = 0; i < x.options.length; i++) {
+        //            if (x.options[i].selected == true) {
+        //                //alert(x.options[i].value);
+        //                VendorId = VendorId + x.options[i].value + ',';
+        //            }
+        //        }
+
+        //        VendorId = VendorId.substring(0, VendorId.length - 1);
+
+        //        return $.ajax({
+        //            contentType: 'application/json; charset=utf-8',
+        //            dataType: 'json',
+        //            type: 'GET',
+        //            url: window.GetDdlValueForVendor,
+        //            data: { type: 'VendorName', CountryId: '', VendorId: VendorId },
+        //            success: function (res) {
+        //                if (res.length > 0) {
+        //                    $("#CUVendorName").empty();
+        //                    $.each(res, function (i, item) {
+        //                        $("#CUVendorName").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
+        //                        $("#CUVendorName").trigger("chosen:updated");
+        //                    })
+        //                }
+        //            },
+        //            error: function (res) {
+
+        //            }
+        //        });
+        //    }
+        //)
+
+
+    });
+
+    //COMPARING MOBILE NUMBER AND ALTERNATIVE MOBILE NUMBER
+    var alterMobileNumber = $('#altrmobileNumber');
+    alterMobileNumber.on('blur', function () {
+        $('#sameMobileNumber').hide();
+        if ($('#mobileNumber').val() == '') {
+        }
+        else {
+            if (alterMobileNumber.val() == $('#mobileNumber').val()) {
+                $('#sameMobileNumber').show();
+                alterMobileNumber.val('');
+            }
+        }
+    });
+
+    $(document).on("blur", ".check_mobileNumber", function () {
+        validateMobileNumberforFirst($(this));
+    })
+
+    function validateMobileNumberforFirst(e) {
+        var mobileNumber = $(e).val();
+        var one1 = String(mobileNumber).charAt(0);
+        var one_as_number1 = Number(one1);
+        if (one1 != "") {
+            if (one_as_number1 < 6) {
+                //$("#spn-Sucess-Failure").text('Mobile Number should start with 7 or 8 or 9')
+                //$("#Sucess-Failure").modal('show');
+                alertNotification('Please Enter valid Mobile Number');
+                $(e).val('');
+            }
+        }
+    }
+
+    //function GetVendorListForCust() {
+    //    let VendorNature = $('#VendorNatureId').val();
+
+    //    $.ajax({
+    //        type: 'GET',
+    //        url: window.GetVendorListForCusts,
+    //        dataType: 'JSON',
+    //        data: { VendorNatureId: VendorNature },
+    //        contentType: 'application/json; charset=utf-8',
+    //        success: function (res) {
+    //            if (res.length > 0) {
+    //                $("#VendorId").empty();
+    //                $.each(res, function (i, item) {
+    //                    $("#VendorId").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
+    //                })
+    //            }
+    //        },
+    //        error: function (res) {
+    //            alertNotification('Some Error Occurred. Please try later.');
+    //        }
+    //    })
+    //}
+    function GetSupplierType1() {
+        debugger;
+        var VendorId = $("#CUVendorId").val();
+         VendorId = VendorId.toString()
+        $.ajax({
+            type: 'POST',
+            url: window.GetSupplierTypes,
+            data: JSON.stringify({ VendorId: VendorId }),
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                if (data.length > 0) {
+                    debugger;
+                    $("#VdSupplierType").empty();
+                    $.each(data, function (i, item) {
+                        $("#VdSupplierType").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
+                        $("#VdSupplierType").trigger("chosen:updated");
+
+        //                    $.each(res, function (i, item) {
+        //                        $("#CUVendorId").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
+        //                        $("#CUVendorId").trigger("chosen:updated");
+                    })
+                }
+            },
+            error: function (x, e) {
+                $('#alertmsg').text('Some error is occurred, Please try after some time.');
+                $('#alertmsg').addClass("important red");
+                $('#hostelModal').modal('show');
+            }
+        });
+    }
+
+    $('#btnClearSearchVendor').click(
+        function ClearFields() {
+
+            $('#CUCountryId').val([]).trigger('chosen:updated');
+            $('#CUVendorId').val([]).trigger('chosen:updated');
+            $('#CUVendorName').val([]).trigger('chosen:updated');
+            $('#VdSupplierType').val([]).trigger('chosen:updated');
+
+            //$('#POSearchDeliveryDateFrom').val('');
+            //$('#POSearchDeliveryDateTo').val('');
+
+        }
+    );
+
+
+</script>
+
+
