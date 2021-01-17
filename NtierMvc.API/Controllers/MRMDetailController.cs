@@ -6,6 +6,7 @@ using NtierMvc.BusinessLogic.Worker;
 using NtierMvc.Common;
 using NtierMvc.Model;
 using NtierMvc.Model.MRM;
+using NtierMvc.Model.Vendor;
 
 namespace NtierMvc.API.Controllers.Application
 {
@@ -38,7 +39,41 @@ namespace NtierMvc.API.Controllers.Application
             return Ok(_repository.SavePRDetailsList(iEntity));
         }
 
-        [Route("api/MRMDetail/GetPRDetailsList")]
+        [HttpPost]
+        [ResponseType(typeof(VendorEntity))]
+        [Route("api/MRMDetail/VendorDetailsPopup")]
+        public IHttpActionResult VendorDetailsPopup(VendorEntity Model)
+        {
+            return Ok(_repository.VendorDetailsPopup(Model));
+        }
+        [HttpPost]
+        [ResponseType(typeof(string))]
+        [Route("api/MRMDetail/SaveVendorDetails")]
+
+        public IHttpActionResult SaveVendorDetails(VendorEntity viewModel)
+        {
+            return Ok(_repository.SaveVendorDetails(viewModel));
+        }
+
+
+        //public IHttpActionResult GetvendorDetails(string SearchVendorType, int pageIndex, int pageSize, string SearchVendorName = null, string SearchVendorCountry = null)
+        //{
+        //    return Ok(_repository.GetVendorDetails(SearchVendorType,pageIndex, pageSize, SearchVendorName, SearchVendorCountry));
+        //}
+        [HttpPost]
+        [Route("api/MRMDetail/GetVendorDetails")]
+        public IHttpActionResult GetvendorDetails(SearchModel model)
+        {
+            return Ok(_repository.GetVendorDetails(model));
+        }
+        [HttpPost]
+        [ResponseType(typeof(string))]
+        [Route("api/MRMDetail/DeleteDocument")]
+        public IHttpActionResult DeleteDocument(DocumentModel Documents)
+        {
+            return Ok(_repository.DeleteDocument(Documents));
+        }
+            [Route("api/MRMDetail/GetPRDetailsList")]
         public IHttpActionResult GetPRDetailsList(int pageIndex, int pageSize, string DeptName, string SearchVendorTypeId = null, string SearchSupplierId = null, string SearchRMCategory = null, string SearchDeliveryDateFrom = null, string SearchDeliveryDateTo = null)
         {
             return Ok(_repository.GetPRDetailsList(pageIndex, pageSize, DeptName, SearchVendorTypeId, SearchSupplierId, SearchRMCategory, SearchDeliveryDateFrom, SearchDeliveryDateTo));

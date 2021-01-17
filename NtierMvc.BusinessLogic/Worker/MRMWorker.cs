@@ -6,6 +6,7 @@ using NtierMvc.Model.MRM;
 using NtierMvc.Model;
 using System.Collections.Generic;
 using NtierMvc.Common;
+using NtierMvc.Model.Vendor;
 
 namespace NtierMvc.BusinessLogic.Worker
 {
@@ -115,7 +116,198 @@ namespace NtierMvc.BusinessLogic.Worker
             }
             return result;
         }
+        public string DeleteDocument(DocumentModel Documents)
+        {
+            string result = string.Empty;
+            try
+            {
+                result = _repository.DeleteDocument(Documents);
+            }
+            catch (Exception Ex)
+            {
+                NtierMvc.DataAccess.ExceptionLogging.SendExcepToDB(Ex);
+            }
+            return result;
+        }
+       
+        public VendorEntityDetails GetVendorDetails(SearchModel model)
+        {
+            //string SearchVendorType,int pageIndex, int pageSize, string SearchVendorName = null, string SearchVendorCountry = null
+            try
+            {
+                VendorEntityDetails cED = new VendorEntityDetails();
+                cED.LstVendEnt= new List<VendorEntity>();
+                //     DataSet ds = _repository.GetVendorDetails(SearchVendorType,pageIndex, pageSize, SearchVendorName, SearchVendorCountry);
+                     DataSet ds = _repository.GetVendorDetails(model);
 
+                if (ds.Tables.Count > 0)
+                {
+                    DataTable dt1 = ds.Tables[0];
+                    DataTable dt2 = ds.Tables[1];
+
+                    if (dt1 != null && dt1.Rows.Count > 0)
+                    {
+                        if (dt1.Rows.Count > 0)
+                        {
+                            foreach (DataRow dr1 in dt1.Rows)
+                            {
+                                VendorEntity obj = new VendorEntity();
+
+                                //obj.Id = dr1.IsNull("Id") ? 0 : Convert.ToInt32(dr1["Id"]);
+                                obj.UserInitial = dr1.IsNull("UserInitial") ? string.Empty : Convert.ToString(dr1["UserInitial"]);
+                                obj.UnitNo = dr1.IsNull("UnitNo") ? string.Empty : Convert.ToString(dr1["UnitNo"]);
+                                obj.VendorId = dr1.IsNull("VendorId") ? string.Empty : Convert.ToString(dr1["VendorId"]);
+                                //obj.VendorTypeId = dr1.IsNull("VendorTypeId") ? string.Empty : Convert.ToString(dr1["VendorTypeId"]);
+                                obj.VendorType = dr1.IsNull("VendorTypeId") ? string.Empty : Convert.ToString(dr1["VendorTypeId"]);
+                                //obj.VendorNatureId = dr1.IsNull("VendorNatureId") ? string.Empty : Convert.ToString(dr1["VendorNatureId"]);
+                                //obj.VendorNature = dr1.IsNull("VendorNature") ? string.Empty : Convert.ToString(dr1["VendorNature"]);
+                                //obj.FunctionAreaId = dr1.IsNull("FunctionAreaId") ? string.Empty : Convert.ToString(dr1["FunctionAreaId"]);
+                                //obj.FunctionArea = dr1.IsNull("FunctionArea") ? string.Empty : Convert.ToString(dr1["FunctionArea"]);
+                                obj.VendorName = dr1.IsNull("VendorName") ? string.Empty : Convert.ToString(dr1["VendorName"]);
+                                obj.City = dr1.IsNull("City") ? string.Empty : Convert.ToString(dr1["City"]);
+                                obj.State = dr1.IsNull("STATE") ? string.Empty : Convert.ToString(dr1["STATE"]);
+
+                                obj.Address1 = dr1.IsNull("Address1") ? string.Empty : Convert.ToString(dr1["Address1"]);
+                                obj.Address2 = dr1.IsNull("Address2") ? string.Empty : Convert.ToString(dr1["Address2"]);
+                                obj.Address3 = dr1.IsNull("Address3") ? string.Empty : Convert.ToString(dr1["Address3"]);
+                                obj.ZipCode = dr1.IsNull("Address3") ? string.Empty : Convert.ToString(dr1["ZipCode"]);
+                                obj.Country = dr1.IsNull("ZipCode") ? string.Empty : Convert.ToString(dr1["Country"]);
+                                obj.ContactPerson = dr1.IsNull("ContactPerson") ? string.Empty : Convert.ToString(dr1["ContactPerson"]);
+                                obj.Designation = dr1.IsNull("Designation") ? string.Empty : Convert.ToString(dr1["Designation"]);
+                                obj.tel1 = dr1.IsNull("tel1") ? string.Empty : Convert.ToString(dr1["tel1"]);
+                                obj.tel2 = dr1.IsNull("tel2") ? string.Empty : Convert.ToString(dr1["tel2"]);
+                                obj.Country = dr1.IsNull("Country") ? string.Empty : Convert.ToString(dr1["Country"]);
+                                obj.CountryId = dr1.IsNull("Id") ? string.Empty : Convert.ToString(dr1["Id"]);
+
+                                obj.fax = dr1.IsNull("fax") ? string.Empty : Convert.ToString(dr1["fax"]);
+                             
+                                obj.mob1 = dr1.IsNull("MOB1") ? string.Empty : Convert.ToString(dr1["MOB1"]);
+                                obj.mob2 = dr1.IsNull("MOB2") ? string.Empty : Convert.ToString(dr1["MOB2"]);
+                                obj.email1 = dr1.IsNull("EMAIL1") ? string.Empty : Convert.ToString(dr1["EMAIL1"]);
+                                obj.email1 = dr1.IsNull("EMAIL2") ? string.Empty : Convert.ToString(dr1["EMAIL2"]);
+                                obj.Status = dr1.IsNull("Status") ? string.Empty : Convert.ToString(dr1["Status"]);
+                                obj.Status = dr1.IsNull("VendorStatus") ? string.Empty : Convert.ToString(dr1["VendorStatus"]);
+                                obj.Documents = dr1.IsNull("Documents") ? string.Empty : Convert.ToString(dr1["Documents"]);
+                                obj.BankName = dr1.IsNull("BankName") ? string.Empty : Convert.ToString(dr1["BankName"]);
+                                obj.BankBranch = dr1.IsNull("BankBranch") ? string.Empty : Convert.ToString(dr1["BankBranch"]);
+                                obj.BankAddress1 = dr1.IsNull("BankAddress1") ? string.Empty : Convert.ToString(dr1["BankAddress1"]);
+                                obj.BankAddress2 = dr1.IsNull("BankAddress2") ? string.Empty : Convert.ToString(dr1["BankAddress2"]);
+                                obj.BankCountry = dr1.IsNull("BankCountry") ? string.Empty : Convert.ToString(dr1["BankCountry"]);
+                                obj.BankState = dr1.IsNull("BankState") ? string.Empty : Convert.ToString(dr1["BankState"]);
+                                obj.BankCity= dr1.IsNull("BankCity") ? string.Empty : Convert.ToString(dr1["BankCity"]);
+                                obj.BankRTGSCode = dr1.IsNull("BankRTGSCode") ? string.Empty : Convert.ToString(dr1["BankRTGSCode"]);
+                                obj.BankZipCode = dr1.IsNull("BankZipCode") ? string.Empty : Convert.ToString(dr1["BankZipCode"]);
+                                obj.SupplierType = dr1.IsNull("SupplierType") ? string.Empty : Convert.ToString(dr1["SupplierType"]);
+                                obj.VendorNature = dr1.IsNull("VendorName1")? string.Empty : Convert.ToString(dr1["VendorName1"]);
+
+                                obj.SupplierName = dr1.IsNull("SupplierName") ? string.Empty : Convert.ToString(dr1["SupplierName"]);
+                                cED.LstVendEnt.Add(obj);
+                               
+
+                            }
+                        }
+
+                        if (dt2.Rows.Count > 0)
+                        {
+                            foreach (DataRow dr2 in dt2.Rows)
+                            {
+                                cED.totalcount = dr2.IsNull("totalCount") ? 0 : Convert.ToInt32(dr2["totalCount"]);
+                            }
+                        }
+                    }
+                }
+                return cED;
+            }
+            catch (Exception Ex)
+            {
+                NtierMvc.DataAccess.ExceptionLogging.SendExcepToDB(Ex);
+                throw Ex;
+            }
+        }
+        public VendorEntity VendorDetailsPopup(VendorEntity Model)
+        {
+            try
+            {
+                DataSet ds = _repository.VendorDetailsPopup(Model);
+                //Model = ExtractCustomerDetailsEntity(ds, Model);
+
+                if (ds.Tables[0] != null && ds.Tables[0].Rows.Count > 0)
+                {
+                    DataTable dt1 = ds.Tables[0];
+                    //Model.VendorId = dt1.Rows[0]["VendorId"] == DBNull.Value ? "0" : Convert.ToString(dt1.Rows[0]["VendorId"]);
+                    Model.UserInitial = dt1.Rows[0]["UserInitial"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["UserInitial"]);
+                    Model.UnitNo = dt1.Rows[0]["UnitNo"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["UnitNo"]);
+                    Model.VendorId = dt1.Rows[0]["VendorID"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["VendorID"]);
+                   // Model.VendorTypeId = dt1.Rows[0]["VendorTypeId"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["VendorTypeID"]);
+                    Model.VendorType = dt1.Rows[0]["VendorTypeID"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["VendorTypeID"]);
+                    //Model.VendorNatureId = dt1.Rows[0]["VendorNatureId"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["VendorNatureId"]);
+                    //Model.VendorNature = dt1.Rows[0]["VendorNature"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["VendorNature"]);
+                    //Model.FunctionAreaId = dt1.Rows[0]["FunctionAreaId"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["FunctionAreaId"]);
+                    //Model.FunctionArea = dt1.Rows[0]["FunctionArea"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["FunctionArea"]);
+                    Model.VendorName = dt1.Rows[0]["VendorName"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["VendorName"]);
+                    Model.Address1 = dt1.Rows[0]["Address1"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["Address1"]);
+                    Model.Address2 = dt1.Rows[0]["Address2"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["Address2"]);
+                    Model.Address3 = dt1.Rows[0]["Address3"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["Address3"]);
+                    Model.City = dt1.Rows[0]["City"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["City"]);
+                    Model.State = dt1.Rows[0]["State"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["State"]);
+                    Model.Country = dt1.Rows[0]["Country"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["Country"]);
+                   Model.CountryId = dt1.Rows[0]["Id"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["Id"]);
+                   
+                    Model.ZipCode = dt1.Rows[0]["ZipCode"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["ZipCode"]);
+                    Model.tel1 = dt1.Rows[0]["tel1"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["tel1"]);
+                    Model.tel2 = dt1.Rows[0]["tel2"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["tel2"]);
+                    Model.mob1 = dt1.Rows[0]["mob1"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["mob1"]);
+                    Model.mob2 = dt1.Rows[0]["mob2"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["mob2"]);
+                    Model.fax = dt1.Rows[0]["fax"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["fax"]);
+                    Model.email1 = dt1.Rows[0]["email1"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["email1"]);
+                    Model.email2 = dt1.Rows[0]["email2"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["email2"]);
+                    Model.ContactPerson = dt1.Rows[0]["ContactPerson"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["ContactPerson"]);
+                    Model.Designation = dt1.Rows[0]["Designation"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["Designation"]);
+                    Model.VendorInitial = dt1.Rows[0]["VendorInitial"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["VendorInitial"]);
+                 
+                    
+                    Model.DateOfAssociation = dt1.Rows[0]["DateOfAssociation"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["DateOfAssociation"]);
+                    Model.Status = dt1.Rows[0]["Status"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["Status"]);
+                    Model.Documents = dt1.Rows[0]["Documents"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["Documents"]);
+                    Model.SupplierType = dt1.Rows[0]["SupplierType"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["SupplierType"]);
+                    Model.BankName = dt1.Rows[0]["BankName"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["BankName"]);
+                    Model.BankBranch = dt1.Rows[0]["BankBranch"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["BankBranch"]);
+                    Model.BankAddress1 = dt1.Rows[0]["BankAddress1"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["BankAddress1"]);
+                    Model.BankAddress2 = dt1.Rows[0]["BankAddress2"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["BankAddress2"]);
+                    Model.BankCountry = dt1.Rows[0]["BankCountry"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["BankCountry"]);
+                    Model.BankState = dt1.Rows[0]["BankState"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["BankState"]);
+                    Model.BankCity = dt1.Rows[0]["BankCity"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["BankCity"]);
+                    Model.BankZipCode = dt1.Rows[0]["BankZipCode"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["BankZipCode"]);
+                    Model.BankIFSCCode = dt1.Rows[0]["BankIFSCCode"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["BankIFSCCode"]);
+                    Model.BankRTGSCode = dt1.Rows[0]["BankRTGSCode"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["BankRTGSCode"]);
+                    Model.IGSTCode = dt1.Rows[0]["IGSTCode"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["IGSTCode"]);
+                    Model.PanNo = dt1.Rows[0]["PanNo"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["PanNo"]);
+                    
+           
+                    
+                }
+            }
+
+            catch (Exception ex)
+            {
+                NtierMvc.DataAccess.ExceptionLogging.SendExcepToDB(ex);
+            }
+            return Model;
+        }
+
+        public string SaveVendorDetails(VendorEntity entity)
+        {
+            string result = "";
+            try
+            {
+                result = _repository.SaveVendorDetails(entity);
+            }
+            catch (Exception Ex)
+            {
+                NtierMvc.DataAccess.ExceptionLogging.SendExcepToDB(Ex);
+            }
+            return result;
+        }
         public string SavePODetailsList(BulkUploadEntity entity)
         {
             string result = string.Empty;

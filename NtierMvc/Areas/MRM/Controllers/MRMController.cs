@@ -8,6 +8,7 @@ using NtierMvc.Model.Application;
 using NtierMvc.Model.DesignEng;
 using NtierMvc.Model.MRM;
 using NtierMvc.Model.Stores;
+using NtierMvc.Model.Vendor;
 using NtierMvc.Models;
 using System;
 using System.Collections.Generic;
@@ -25,6 +26,7 @@ namespace NtierMvc.Areas.MRM.Controllers
     public class MRMController : Controller
     {
         private MRMManager objManager;
+       
         BaseModel model;
 
         public MRMController()
@@ -43,6 +45,11 @@ namespace NtierMvc.Areas.MRM.Controllers
             ViewBag.ListVendorId = model.GetMasterTableStringList("DesignPRP", "Id", "VendorID", "", "", GeneralConstants.ListTypeD);
             ViewBag.ListVendorName = model.GetMasterTableStringList("DesignPRP", "Id", "VendorID", "", "", GeneralConstants.ListTypeD);
             ViewBag.ListProductGroup = model.GetMasterTableStringList("Master.Product", "Id", "ProductName", "", "", GeneralConstants.ListTypeD);
+           //For vendor
+
+            ViewBag.ListCustomerName = model.GetMasterTableStringList("Customer", "CustomerName", "CustomerName", "", "", GeneralConstants.ListTypeN);
+            ViewBag.ListCustomerId = model.GetMasterTableStringList("Customer", "Id", "CustomerId", "", "", GeneralConstants.ListTypeN);
+            ViewBag.ListCountry = model.GetMasterTableStringList("Master.Country", "Id", "Country", "", "", GeneralConstants.ListTypeN);
 
             //Bill Monitoring
             ViewBag.ListType = model.GetMasterTableStringList("Master.Taxonomy", "DropDownId", "DropDownValue", "QuoteType", "Property", GeneralConstants.ListTypeD);
@@ -54,12 +61,17 @@ namespace NtierMvc.Areas.MRM.Controllers
             ViewBag.ListApprovalStatus = model.GetMasterTableStringList("ApproveStatus", "Id", "Status", "", "", GeneralConstants.ListTypeN);
 
             //For 
-            ViewBag.ListVendorType = model.GetMasterTableStringList("Master.Vendor", "Id", "VendorType", "", "", GeneralConstants.ListTypeD);
+            ViewBag.ListVendorType = model.GetMasterTableStringList("Master.VendorType", "VendorId", "VendorName");
             ViewBag.ListSupplierId = model.GetMasterTableStringList("Clientele_Master", "Id", "VendorID", "", "", GeneralConstants.ListTypeD);
             ViewBag.ListSupplierName = model.GetMasterTableStringList("Clientele_Master", "Id", "VendorName", "", "", GeneralConstants.ListTypeD);
             ViewBag.ListTotalAmount = model.GetMasterTableStringList("BillMonitoring", "TotalAmount", "TotalAmount", "", "", GeneralConstants.ListTypeD);
             ViewBag.ListRMCategory = model.GetMasterTableStringList("Master.Taxonomy", "DropDownID", "ObjectName", "PRCat", "Property", GeneralConstants.ListTypeD);
             List<DropDownEntity> newlst = model.GetMasterTableStringList("BillMonitoring", "ApprovedDate", "ApprovedDate", "", "", GeneralConstants.ListTypeD);
+            ViewBag.ListVendorName = model.GetMasterTableStringList("Vendor", "VendorName", "VendorName", "", "", GeneralConstants.ListTypeN);
+            ViewBag.ListVendor = model.GetMasterTableStringList("Vendor", "VendorId", "VendorId", "", "", GeneralConstants.ListTypeN);
+            ViewBag.ListCountry = model.GetMasterTableStringList("Master.Country", "Id", "Country", "", "", GeneralConstants.ListTypeN);
+          
+            ViewBag.ListSupplierType = model.GetMasterTableStringList("Master.SupplierType", "Id", "SupplierName");
 
             CultureInfo provider = CultureInfo.InvariantCulture;
             DateTime dateTime;
@@ -80,6 +92,7 @@ namespace NtierMvc.Areas.MRM.Controllers
 
             return View();
         }
+
 
         [HttpGet]
         public ActionResult PRPlanning()
@@ -102,6 +115,237 @@ namespace NtierMvc.Areas.MRM.Controllers
             prEntity = objManager.GetPRDetailsList(Convert.ToInt32(pageIndex), Convert.ToInt32(pageSize), UserDetails.DeptName, SearchVendorTypeId, SearchSupplierId, SearchRMCategory, SearchDeliveryDateFrom, SearchDeliveryDateTo);
             return new JsonResult { Data = prEntity, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
+
+
+        public ActionResult GetStateDetail(string countryId)
+        {
+            List<GeographyEntity> StateList = new List<GeographyEntity>();
+            StateList = model.GetStateDetail(countryId);
+            return new JsonResult { Data = StateList, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+        }
+
+        public JsonResult FetchVendorList(string SearchVendorType, string pageIndex, string pageSize, string SearchVendorName, string SearchVendorCountry, string SupplierType)
+        {
+            SearchVendorType = SearchVendorType == "-1" ? string.Empty : SearchVendorType;
+            SearchVendorName = SearchVendorName == "-1" ? string.Empty : SearchVendorName;
+            SearchVendorCountry = SearchVendorCountry == "-1" ? string.Empty : SearchVendorCountry;
+            SupplierType = SupplierType == "-1" ? string.Empty : SupplierType;
+
+            VendorEntityDetails  custDetail = objManager.GetVendorDetails(SearchVendorType,Convert.ToInt32(pageIndex), Convert.ToInt32(pageSize), SearchVendorName, SearchVendorCountry, SupplierType);
+            return new JsonResult { Data = custDetail, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+            //return custDetail.LstCusEnt;
+        }
+
+        public JsonResult GetEmpCertificates(string VendorId)
+        {
+             List<TableRecordsEntity> mdd = new List<TableRecordsEntity>();
+            Dictionary<string, string> tt = new Dictionary<string, string>();
+          
+            var m = model.GetMasterTableStringList("Vendor", "Documents", "VendorId", VendorId, "VendorId");
+            if(m.Count>0)
+            {
+                var md = m[1].DataStringValueField.Split(',');
+                for (int i = 1; i <= md.Length; i++)
+                {
+                    tt.Add("RequiredColumn"+i, md[i-1]);
+                }
+            }
+            return Json(tt);
+        }
+        [HttpPost]
+        public ActionResult DeleteDocument(string VendorId,string Documents)
+        {
+            string result = "";
+            DocumentModel Documents1 = new DocumentModel();
+            Documents1.VendorId = VendorId;
+            Documents1.Documents = Documents;
+
+            try
+            {
+
+                if (!string.IsNullOrEmpty(Documents))
+                {
+                    string path = System.Web.HttpContext.Current.Server.MapPath(ConfigurationManager.AppSettings["VendorDouments"]);
+
+                    if (System.IO.File.Exists(path + Documents))
+                        System.IO.File.Delete(path + Documents);
+
+                    result = objManager.DeleteDocument(Documents1);
+                }
+
+
+            }
+            catch (Exception Ex)
+            {
+                result = GeneralConstants.NotDeletedError + " " + Ex.Message;
+            }
+
+
+            return new JsonResult { Data = result, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+        }
+        [HttpPost]
+        public ActionResult SaveVendorDetails(VendorEntity vdr)
+        {
+          ViewBag.ListFUNCTION_AREA = model.GetMasterTableList("Master.FunctionalArea", "Id", "FunctionArea");
+
+            //For Image Upload
+            string Message, fileName, actualFileName;
+            Message = fileName = actualFileName = string.Empty;
+            bool flag = false;
+            if (Request.Files != null)
+            {
+                for (int i = 0; i < Request.Files.Count; i++)
+                {
+                    var file = Request.Files[i];
+                    actualFileName = file.FileName;
+                    fileName = Guid.NewGuid() + Path.GetExtension(file.FileName);
+                    int size = file.ContentLength;
+
+                    try
+                    {
+                        //System.IO.Directory.CreateDirectory(Server.MapPath(ConfigurationManager.AppSettings["VendorDouments"]));
+                        //file.SaveAs(Path.Combine(Server.MapPath(ConfigurationManager.AppSettings["VendorDouments"]), fileName));
+                        vdr.Documents +=   fileName + ',';
+                        flag = true;
+                    }
+                    catch (Exception)
+                    {
+                        Message = " File upload failed! Please try again";
+                    }
+
+                }
+            }
+            //Image Upload End
+            vdr.UserInitial = Session["UserName"].ToString();
+            vdr.ipAddress = ERPContext.UserContext.IpAddress;
+            vdr.UnitNo = Session["UserId"].ToString();
+            if (vdr.Documents != "" && vdr.Documents != null)
+                vdr.Documents= vdr.Documents.Substring(0, vdr.Documents.Length - 1);
+            string result = objManager.SaveVendorDetails(vdr);
+
+            //TempData["VendorName"] = vdr.CustomerName; if (string.IsNullOrEmpty(result) && (result != GeneralConstants.Inserted))
+          
+            //TempData["UserName"] = vdr.UserInitial;
+            string data = string.Empty;
+            if (!string.IsNullOrEmpty(result) && (result == GeneralConstants.Inserted || result == GeneralConstants.Updated))
+            {
+                data = GeneralConstants.SavedSuccess;
+                if (Request.Files != null)
+                {
+                    for (int i = 0; i < Request.Files.Count; i++)
+                    {
+                        var file = Request.Files[i];
+                        actualFileName = file.FileName;
+                        fileName = Guid.NewGuid() + Path.GetExtension(file.FileName);
+                        int size = file.ContentLength;
+
+                        try
+                        {
+                            //System.IO.Directory.CreateDirectory(Server.MapPath(ConfigurationManager.AppSettings["VendorDouments"]));
+                            //file.SaveAs(Path.Combine(Server.MapPath(ConfigurationManager.AppSettings["VendorDouments"]), fileName));
+                            vdr.Documents += fileName + ',';
+                            flag = true;
+                        }
+                        catch (Exception)
+                        {
+                            Message = " File upload failed! Please try again";
+                        }
+
+                    }
+                }
+            }
+            else
+            {
+
+                
+                data = GeneralConstants.NotSavedError + result;
+            }
+
+            return new JsonResult { Data = data, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+        }
+        public ActionResult DeleteVendorDetails(string VendorId)
+        {
+            if (ModelState.IsValid)
+            {
+                //string msgCode = objManager.DeleteVendorDetail(id);
+                string msgCode = model.DeleteFormTable("Vendor", "VendorId", VendorId);
+
+                if (msgCode == GeneralConstants.DeleteSuccess)
+                {
+                    //return RedirectToAction("Vendor");
+                    return new JsonResult { Data = GeneralConstants.DeleteSuccess, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                }
+                else
+                {
+                    return new JsonResult { Data = GeneralConstants.NotDeletedError, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                    //Response.StatusCode = 444;
+                    //Response.StatusDescription = "Not Saved";
+                    //return null;
+                }
+            }
+            else
+            {
+                Response.StatusCode = 444;
+                Response.Status = "Not Saved";
+                return null;
+            }
+
+        }
+
+        [HttpPost]
+        public ActionResult VendorPopup(string actionType, string VendorId = null)
+        {
+            VendorEntity cus=new VendorEntity();
+            string countryId = "0";
+            ViewBag.StatusList = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "Status", "Property", GeneralConstants.ListTypeN);
+
+            ViewBag.ListState = model.GetStateDetail(countryId); //Given wrong CountryId to not get any value
+
+            ViewBag.ListCountry = model.GetMasterTableStringList("Master.Country", "Id", "Country");
+
+            ViewBag.ListVendorType = model.GetMasterTableStringList("Master.VendorType", "VendorId", "VendorName");
+            ViewBag.ListSupplierType = "";
+            string UnitNo = string.Empty;
+            if (!string.IsNullOrEmpty(Session["UserId"].ToString()))
+            {
+                 UnitNo = Session["UserId"].ToString();
+                cus.UnitNo = Session["UserId"].ToString();
+            }
+
+            if (actionType == "VIEW" || actionType == "EDIT")
+            {
+                if (!string.IsNullOrEmpty(VendorId))
+                   cus.VendorId = VendorId;
+                cus = objManager.VendorDetailsPopup(cus);
+                ViewBag.ListSupplierType = model.GetMasterTableStringList("Master.SupplierType", "Id","SupplierName");
+                //ViewBag.ListCountry = model.GetMasterTableStringList("Master.Country","Id", "Country",cus.CountryId,"Id");
+
+
+            }
+            if (actionType == "ADD")
+            {
+                cus = objManager.GetUserDetails(UnitNo);
+                //eModel = objManager.AddCustomerDetailsPopup(eModel);
+            }
+
+            return base.PartialView("~/Areas/MRM/Views/MRM/VendorDetails.cshtml", cus);
+        }
+        [HttpPost]
+        public ActionResult GetSupplierType(string VendorId)
+        {
+            try
+            {
+                List <DropDownEntity> ddl = model.GetDropDownList("Master.SupplierType", GeneralConstants.ListTypeD, "Id", "SupplierName", VendorId, "VendorId");
+
+                return new JsonResult { Data = ddl, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+            }
+            catch (Exception ex)
+            {
+                return new JsonResult { Data = ex, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                throw;
+            }
+        }
+
 
         [HttpPost]
         public ActionResult BindVendorBillPopup(string actionType, string Id)
@@ -1153,6 +1397,15 @@ namespace NtierMvc.Areas.MRM.Controllers
             //return custDetail.LstCusEnt;
         }
 
+        //public JsonResult FetchVendorList(string pageIndex, string pageSize, string SearchCustomerName, string SearchCustomerID)
+        //{
+        //    SearchCustomerName = SearchCustomerName == "-1" ? string.Empty : SearchCustomerName;
+        //    SearchCustomerID = SearchCustomerID == "-1" ? string.Empty : SearchCustomerID;
+        //    VendorEntityDetails venDetail = new VendorEntityDetails(); ;
+        //    venDetail = objManager.GetVendorDetails(Convert.ToInt32(pageIndex), Convert.ToInt32(pageSize), SearchCustomerName, SearchCustomerID);
+        //    return new JsonResult { Data = venDetail, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+        //    //return custDetail.LstCusEnt;
+        //}
         public JsonResult GetSupplierName(string SupplierId)
         {
             try
@@ -1183,8 +1436,19 @@ namespace NtierMvc.Areas.MRM.Controllers
 
         }
 
+        [HttpGet]
+        public ActionResult PartialVendor()
+        {
+            return PartialView();
+        }
 
 
+        //[HttpGet]
+        //public ActionResult PartialVendor()
+        //{
+        //    PRDetailEntity prObj = new PRDetailEntity();
+        //    return PartialView(prObj);
+        //}
 
 
     }

@@ -8,9 +8,12 @@
 <link href="~/Content/Site.css" rel="stylesheet" />
 <script src="~/Scripts/tabs.js"></script>
 
+
+
 <div ng-controller="MRMController">
     <div class="tab">
-        <button class="tablinks" onclick="openCity(event, 'PR')" id="defaultOpen" ng-click="FetchPRDetailsList()"> Purchase Requisition </button>
+        <button class="tablinks" onclick="openCity(event, 'Vendor')" id="defaultOpen" ng-click="FetchVendorList()"> Vendor </button>
+        <button class="tablinks" onclick="openCity(event, 'PR')" ng-click="FetchPRDetailsList()"> Purchase Requisition </button>
         <button class="tablinks" onclick="openCity(event, 'VendorsPO')" ng-click="FetchVendorsPOList()">Vendors PO</button>
         <button class="tablinks" onclick="openCity(event, 'BOM')" ng-click="FetchBOMList()">BOM</button>
         <button class="tablinks" onclick="openCity(event, 'ApprovedVendors')" ng-click="FetchApprovedVendorsList()">Approved Vendors</button>
@@ -18,6 +21,12 @@
     </div>
 
     <!-- Tab content -->
+
+    <div id="Vendor" class="tabcontent">
+        @Html.Partial("PartialVendor")
+    </div>
+
+
     <div id="PR" class="tabcontent">
         @Html.Partial("PRPlanning")
     </div>
@@ -42,9 +51,28 @@
         window.PanningTab = '@Url.Action("PRPlanning", "MRM")';
         window.PurchaseTab = '@Url.Action("PartialPurchase", "MRM")';
         window.BOMTab = '@Url.Action("PartialBOM", "MRM")';
+        window.OtherDetailsPopup = '@Url.Action("VendorPopup", "MRM")';
+        window.FetchVendorList = '@Url.Action("FetchVendorList", "MRM")';
+        @*window.GetSupplierType = '@Url.Action("GetSupplierType", "MRM")';*@
+        window.GetSupplierTypes = '@Url.Action("GetSupplierType", "MRM")';
+
+        window.StateDetail = '@Url.Action("GetStateDetail", "MRM")';
+
+        window.DeleteVendorDetail = '@Url.Action("DeleteVendorDetails", "MRM")';
+        window.GetCertificateDetailss = '@Url.Action("GetEmpCertificates", "MRM")';
+        window.DeleteDocuments='@Url.Action("DeleteDocument", "MRM")';
+
+
+
+
     });
 
     window.onload = function () {
-        angular.element(document.getElementById('TblPRPlanningList')).scope().FetchPRDetailsList();
+        setTimeout(function () {
+            angular.element(document.getElementById('TblVendor')).scope().DefaultVendorList();
+            angular.element(document.getElementById('TblVendor')).scope().FetchVendorList();
+
+        }, 500);
     }
 </script>
+

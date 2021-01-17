@@ -68,6 +68,10 @@
       <HintPath>..\packages\Microsoft.Azure.KeyVault.Core.1.0.0\lib\net40\Microsoft.Azure.KeyVault.Core.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Office.Interop.Excel.15.0.4420.1017\lib\net20\Microsoft.Office.Interop.Excel.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
     <Reference Include="Microsoft.Office.Interop.Outlook, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Office.Interop.Outlook.15.0.4797.1003\lib\net20\Microsoft.Office.Interop.Outlook.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
@@ -77,6 +81,9 @@
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.12.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="office, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="Syncfusion.Compression.Base, Version=17.3451.0.19, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
@@ -270,6 +277,7 @@
     <Content Include="Areas\MRM\Scripts\MRMBillMonitoring.js" />
     <Content Include="Areas\MRM\Scripts\PODetailPopUp.js" />
     <Content Include="Areas\MRM\Scripts\PRDetailPopUp.js" />
+    <Content Include="Areas\MRM\Scripts\VendorDetailPopup.js" />
     <Content Include="Areas\Stores\Scripts\GoodsReciept.js" />
     <Content Include="assets\app\js\dashboard.js" />
     <Content Include="assets\app\js\layout-builder.js" />
@@ -1192,7 +1200,8 @@
     <Content Include="Areas\Admin\Views\Admin\PartialAssignAdmin.cshtml" />
     <Content Include="Areas\HRDepartment\Views\HR\_HRCertificates.cshtml" />
     <Content Include="MasterFiles\JS\ui-bootstrap-tpls.min.js" />
-    <Content Include="App_Data\Documents\Excel\QuotePreparation.xlsx" />
+    <Content Include="Areas\MRM\Views\MRM\VendorDetails.cshtml" />
+    <Content Include="Areas\MRM\Views\MRM\PartialVendor.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\CustomJS\common.js" />
@@ -1289,7 +1298,6 @@
     <Content Include="Views\GateEntry\_InboundPopUp.cshtml" />
     <Content Include="Views\Technical\EnquiryView.cshtml" />
     <Content Include="Views\Technical\PartialQuoteRegView.cshtml" />
-    <Content Include="Views\Technical\_TechDescDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\Reports\Excel\PRReports\" />
@@ -1307,6 +1315,8 @@
     <Folder Include="Documents\MailUploads\" />
     <Folder Include="Documents\OrderUpload\" />
     <Folder Include="temp\Template\" />
+    <Folder Include="Vendor\VendorDocs\" />
+    <Folder Include="Views\Test\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

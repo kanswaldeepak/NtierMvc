@@ -3,6 +3,7 @@ using NtierMvc.Common;
 using NtierMvc.Infrastructure;
 using NtierMvc.Model;
 using NtierMvc.Model.MRM;
+using NtierMvc.Model.Vendor;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -12,6 +13,7 @@ namespace NtierMvc.Areas.MRM.Models
 {
     public class MRMManager
     {
+        VendorEntity oCusDetail;
         public PRDetailEntity GetSavedPRDetailsPopup(PRDetailEntity Model)
         {
             var baseAddress = "MRMDetail";
@@ -74,6 +76,22 @@ namespace NtierMvc.Areas.MRM.Models
             }
             return tableList;
         }
+        public string SaveVendorDetails(VendorEntity viewModel)
+        {
+            string result = "0";
+            var baseAddress = "MRMDetail";
+            using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
+            {
+                HttpResponseMessage response = client.PostAsJsonAsync(baseAddress + "/SaveVendorDetails", viewModel).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    var data = response.Content.ReadAsStringAsync().Result;
+                    result = JsonConvert.DeserializeObject<string>(data);
+                }
+            }
+            return result;
+        }
+
 
         public PRDetailEntity GetPRDetailsPopup(PRDetailEntity Model)
         {
@@ -369,7 +387,7 @@ namespace NtierMvc.Areas.MRM.Models
             MRMBillMonitoringEntityDetails prDetails = new MRMBillMonitoringEntityDetails();
             using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
             {
-                HttpResponseMessage response = client.GetAsync(baseAddress + "/FetchMRMBillMonitoringList?pageIndex=" + pageIndex + "&pageSize=" + pageSize + "&MRMSearchVendorTypeId=" + MRMSearchVendorTypeId + "&MRMSearchSupplierId=" + MRMSearchSupplierId + "&MRMSearchSupplierName=" + MRMSearchSupplierName + "&MRMSearchApprovedDate=" + MRMSearchApprovedDate + "&MRMSearchTotalAmount=" + MRMSearchTotalAmount).Result;
+                HttpResponseMessage response = client.GetAsync(baseAddress + "/++?pageIndex=" + pageIndex + "&pageSize=" + pageSize + "&MRMSearchVendorTypeId=" + MRMSearchVendorTypeId + "&MRMSearchSupplierId=" + MRMSearchSupplierId + "&MRMSearchSupplierName=" + MRMSearchSupplierName + "&MRMSearchApprovedDate=" + MRMSearchApprovedDate + "&MRMSearchTotalAmount=" + MRMSearchTotalAmount).Result;
                 if (response.IsSuccessStatusCode)
                 {
                     var data = response.Content.ReadAsStringAsync().Result;
@@ -377,6 +395,84 @@ namespace NtierMvc.Areas.MRM.Models
                 }
             }
             return prDetails;
+        }
+        public string DeleteDocument(DocumentModel viewModel)
+          {
+
+            string result = "0";
+            var baseAddress = "MRMDetail";
+            using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
+            {
+                HttpResponseMessage response = client.PostAsJsonAsync(baseAddress + "/DeleteDocument", viewModel).Result;
+
+                //HttpResponseMessage response = client.GetAsync(baseAddress + "/DeleteDocument?VendorId=" + VendorId + "&Documents=" + Documents).Result;
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var data = response.Content.ReadAsStringAsync().Result;
+                    result = JsonConvert.DeserializeObject<string>(data);
+                }
+            }
+            return result;
+
+        }
+        
+        
+        public VendorEntityDetails GetVendorDetails(string SearchVendorType, int pageIndex, int pageSize, string SearchVendorName = null, string SearchVendorCountry = null, string SupplierType= null)
+        {
+            var baseAddress = "MRMDetail";
+            VendorEntityDetails cusEnt = new VendorEntityDetails();
+            SearchModel model = new SearchModel();
+            model.SearchVendorType = SearchVendorType;
+            model.pageSize = pageSize;
+            model.pageIndex = pageIndex;
+            model.SearchVendorName = SearchVendorName;
+            model.SearchVendorCountry = SearchVendorCountry;
+            model.SearchVendorCountry = SupplierType;
+
+            using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
+            {
+                HttpResponseMessage response = client.PostAsJsonAsync(baseAddress + "/GetVendorDetails", model).Result;
+
+
+                //HttpResponseMessage response = client.GetAsync(baseAddress + "/GetVendorDetails? SearchVendorType="+ SearchVendorType + " & pageIndex=" + pageIndex + "&pageSize=" + pageSize + "&SearchVendorName=" + SearchVendorName + "&SearchVendorCountry=" + SearchVendorCountry).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    var data = response.Content.ReadAsStringAsync().Result;
+                    cusEnt = JsonConvert.DeserializeObject<VendorEntityDetails>(data);
+                }
+            }
+            return cusEnt;
+        }
+
+        public VendorEntity GetUserDetails(string unitNo)
+        {
+            oCusDetail = new VendorEntity();
+            var baseAddress = "CustomerDetails";
+            using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
+            {
+                HttpResponseMessage response = client.GetAsync(baseAddress + "/GetUserDetails?unitNo=" + unitNo).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    var data = response.Content.ReadAsStringAsync().Result;
+                    oCusDetail = JsonConvert.DeserializeObject<VendorEntity>(data);
+                }
+            }
+            return oCusDetail;
+        }
+        public VendorEntity VendorDetailsPopup(VendorEntity Model)
+        {
+            var baseAddress = "MRMDetail";
+            using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
+            {
+                HttpResponseMessage response = client.PostAsJsonAsync(baseAddress + "/VendorDetailsPopup", Model).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    var data = response.Content.ReadAsStringAsync().Result;
+                    Model = JsonConvert.DeserializeObject<VendorEntity>(data);
+                }
+            }
+            return Model;
         }
 
 

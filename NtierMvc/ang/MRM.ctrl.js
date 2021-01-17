@@ -1,4 +1,4 @@
-angular.module('App').controller("MRMController", function ($scope, $http, $timeout, $compile) {
+angular.module('App').controller("MRMController", function ($scope, $http, $timeout, $compile, $window) {
     $scope.VendorId = "";
     //For Pagination
     $scope.maxsize = 5;
@@ -37,6 +37,67 @@ angular.module('App').controller("MRMController", function ($scope, $http, $time
         $scope.PRPageIndex = 1;
         $scope.FetchPRDetailsList();
     }
+    $scope.BindVendorPopup = function () {
+        var _actionType = "ADD"
+        $.ajax({
+            type: "POST",
+            data: { actionType: _actionType },
+            datatype: "JSON",
+            url: window.OtherDetailsPopup,
+            success: function (html) {
+                html = $compile(html)($scope);
+                SetModalTitle("Add New Vendor")
+                SetModalBody(html);
+                HideLoadder();
+                SetModalWidth("1400px");
+                SetModalWidth("1400px");
+                ShowModal();
+
+                if (!($('.modal.in').length)) {
+                    $('.modal-dialog').css({
+                        top: '5%',
+                        left: '1%'
+                    });
+                }
+                $('#ModalPopup').modal({
+                    backdrop: false,
+                    show: true
+                });
+
+                $('.modal-dialog').draggable({
+                    handle: ".modal-body"
+                });
+
+            },
+            error: function (r) {
+                HideLoadder();
+                alert(window.ErrorMsg);
+            }
+        })
+        //});
+    }
+    
+
+    $scope.DefaultVendorList = function () {
+        $scope.SearchCountry = "";
+        $scope.SearchVendorName = "";
+        $scope.SearchVendorID = "";
+        $scope.SearchSupplierType = "";
+        $scope.FetchVendorList();
+    }
+
+    $scope.FetchVendorList = function () {
+        debugger;
+        $http.get(window.FetchVendorList + "?SearchVendorType=" + $scope.SearchVendorID + "&pageindex=" + $scope.PRPageIndex + "&pagesize=" + $scope.PRPageSize + "&SearchVendorName=" + $scope.SearchVendorName + "&SearchVendorCountry=" + $scope.SearchCountry + "&SupplierType=" + $scope.SearchSupplierType).success(function (response) {
+            $scope.AvailableVendorList = response.LstVendEnt;
+            $scope.custTotalCount = response.totalcount;
+        }, function (error) {
+            alert('failed');
+        });
+    }
+
+
+
 
     $scope.BindPRDetailsPopup = function () {
         var _actionType = "ADD"
@@ -76,6 +137,13 @@ angular.module('App').controller("MRMController", function ($scope, $http, $time
         })
         //});
     }
+  
+    $window.LoadVendorList = function () {
+        setTimeout(function () {
+            angular.element(document.getElementById('TblVendor')).scope().FetchVendorList();
+
+        }, 500);
+    };
 
     $scope.LoadPRDetailsEditPopup = function (_PRSetno) {
         var _actionType = "EDIT";
@@ -169,6 +237,7 @@ angular.module('App').controller("MRMController", function ($scope, $http, $time
             }
         })
     }
+   
 
     $scope.LoadPRDetailsViewPopup = function (_PRSetno) {
         var _actionType = "VIEW"
@@ -335,7 +404,163 @@ angular.module('App').controller("MRMController", function ($scope, $http, $time
         })
         //});
     }
+    $scope.DeleteVendor = function (id) {
+        if (!confirm("Are you sure to delete?")) {
+            return;
+        }
+        //show_loader();
+        $http({ url: window.DeleteVendorDetail, method: 'POST', data: { VendorId: id } }).success(
+            function (res) {
+                if (res == 'Deleted Successfully!') {
+                    $scope.FetchVendorList();
+                } else {
+                    alert(res, 'E');
+                }
+            }
+        ).error(function (res) { showHttpErr(res); });
+    }
+    $scope.LoadVendorViewPopup = function (_VendorDetailsId) {
+        var _actionType = "VIEW"
+        //var ID = e.target.id;
+        $.ajax({
+            type: "POST",
+            data: { actionType: _actionType, VendorId: _VendorDetailsId },
+            datatype: "JSON",
+            url: window.OtherDetailsPopup,
+            success: function (html) {
+                SetModalTitle("View Vendor Details")
+                //GetCertificateDetailss(VendorId);
+                SetModalBody(html);
+                HideLoadder();
+                $scope.GetCertificateDetails(_VendorDetailsId,"View");
+                SetModalWidth("1400px");
+                $('#formSaveVendorDetail input[type=radio],input[type=text], select').prop("disabled", true);
+                $('#saveCust').css('display', 'none');
+                $('.bs-tooltip-top').css('display', 'none');
+                setTimeout(function () {
+                    $("#vdrdiv").css('display', 'none');
+                    ShowModal();
 
+                }, 5000);
+                
+                
+
+                if (!($('.modal.in').length)) {
+                    $('.modal-dialog').css({
+                        top: '5%',
+                        left: '1%'
+                    });
+                }
+                $('#ModalPopup').modal({
+                    backdrop: false,
+                    show: true
+                });
+
+                $('.modal-dialog').draggable({
+                    handle: ".modal-body"
+                });
+            },
+            error: function () {
+                HideLoadder();
+                alert(window.ErrorMsg);
+            }
+        })
+    }
+
+ 
+    $scope.GetCertificateDetails = function(_VendorDetailsId,Type) {
+
+        $.ajax({
+            type: 'POST',
+            url: window.GetCertificateDetailss,
+            data: JSON.stringify({ VendorId: _VendorDetailsId }),
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                if (data!="") {
+                    $("#CertificateList").empty();
+                    $.each(data, function (i, item) {
+                        if (item.RequiredColumn1 != "")
+                            
+                            if (Type == "Edit")
+                               
+                                $("#CertificateList").append("<li><a target='_blank' href='/Vendor/VendorDocs/" + item + "'><label>" + item + "</label></a><button type='button' class='btn btn -outline-danger btn-sm' onclick= 'javascript: DeleteCertificate(`" + item + "`,`" + _VendorDetailsId +"`)' data-toggle='tooltip' data-placement='bottom' title='DELETE' ><i class='fa fa-trash'></i></button></li>");
+                            else
+                        $("#CertificateList").append("<li><a target='_blank' href='/Vendor/VendorDocs/" + item + "'><label>" + item);
+
+                    })
+                }
+            },
+            error: function (x, e) {
+                alert('Some error is occurred, Please try after some time.');
+                //$('#spn-Sucess-Failure').text('Some error is occurred, Please try after some time.');
+                //$('#spn-Sucess-Failure').addClass("important red");
+                //$('#Sucess-Failure').modal('show');
+            }
+        })
+
+    }
+
+
+
+
+    $scope.LoadVendorEditPopup = function (_VendorDetailsId) {
+        var _actionType = "EDIT";
+        $scope.SubmitCustomer = 'Save';
+        //var ID = e.target.id;
+        $.ajax({
+            type: "POST",
+            data: { actionType: _actionType, VendorId: _VendorDetailsId },
+            datatype: "JSON",
+            url: window.OtherDetailsPopup,
+            success: function (res) {
+                var html = $compile(res)($scope);
+                SetModalTitle("Edit Vendor Details")
+                SetModalBody(html);
+                HideLoadder();
+                $scope.GetCertificateDetails(_VendorDetailsId,"Edit");
+                SetModalWidth("1400px");
+                $('.bs-tooltip-top').css('display', 'none');
+                setTimeout(function () {
+
+                    ShowModal();
+
+                }, 5000);
+
+                if (!($('.modal.in').length)) {
+                    $('.modal-dialog').css({
+                        top: '15%',
+                        left: '1%'
+                    });
+                }
+                $('#ModalPopup').modal({
+                    backdrop: false,
+                    show: true
+                });
+
+                $('.modal-dialog').draggable({
+                    handle: ".modal-body"
+                });
+            },
+            error: function () {
+                HideLoadder();
+                alert(window.ErrorMsg);
+            }
+        })
+    }
+
+    
+    //$scope.DeleteCertificate = function DeleteCertificate(id) {
+        //if (id != '' || id != undefined) {
+            //let sports = [];
+            //let total = sports.push(id)
+            //var lis = document.querySelectorAll('#CertificateList li');
+            //for (var i = 0; li = lis[i]; i++) {
+                //if (li.val == DocumentName)
+                    //li.parentNode.removeChild(li);
+            //}
+
+        //}
+    //}
     $scope.LoadVendorPOViewPopup = function (_POSetno) {
         var _actionType = "VIEW"
         var POSetNo = _POSetno;
@@ -536,7 +761,7 @@ angular.module('App').controller("MRMController", function ($scope, $http, $time
             success: function (html) {
                 SetModalTitle("Edit Purchase Order")
                 SetModalBody(html);
-                HideLoadder();
+                HideLoadder();+
                 SetModalWidth("1500px");
                 ShowModal();
 

@@ -11,6 +11,7 @@ using NtierMvc.Model;
 using NtierMvc.DataAccess.Common;
 using System.Data.Common;
 using NtierMvc.Model.MRM;
+using NtierMvc.Model.Vendor;
 
 namespace NtierMvc.DataAccess.Pool
 {
@@ -39,6 +40,107 @@ namespace NtierMvc.DataAccess.Pool
             var Params = new Dictionary<string, object>();
             Params.Add("@PRSetno", PRSetno);
             return _dbAccess.GetDataSet(SPName, Params);
+        }
+        public DataSet VendorDetailsPopup(VendorEntity model)
+        {
+            var SPName = ConfigurationManager.AppSettings["GetVendorDetails"];
+            var Params = new Dictionary<string, object>();
+            Params.Add("@VendorId", model.VendorId);
+            Params.Add("@pageIndex", "");
+            Params.Add("@pageSize", "");
+            Params.Add("@SearchVendorName", "");
+            Params.Add("@SearchVendorID","");
+            Params.Add("@SupplierType ", "");
+
+            return _dbAccess.GetDataSet(SPName, Params);
+        }
+        public string SaveVendorDetails(VendorEntity objUser)
+        {
+            var parms = new Dictionary<string, object>();
+            var spName = string.Empty;
+            string msgCode = "";
+
+            parms.Add("@userinitial", objUser.UserInitial);
+            parms.Add("@unitno", objUser.UnitNo);
+            //parms.Add("@VendorTypeId", objUser.VendorTypeId);
+            //parms.Add("@vendornatureid", objUser.VendorNatureId);
+            parms.Add("@VendorTypeId", objUser.VendorType);
+            parms.Add("@VendorName", objUser.VendorName);
+            parms.Add("@address1", objUser.Address1);
+            parms.Add("@address2", objUser.Address2);
+            parms.Add("@address3", objUser.Address3);
+            parms.Add("@city", objUser.City);
+            parms.Add("@state", objUser.State);
+            parms.Add("@country", objUser.CountryId);
+            parms.Add("@zipcode", objUser.ZipCode);
+            parms.Add("@tel1", objUser.tel1);
+            parms.Add("@tel2", objUser.tel2);
+            parms.Add("@mob1", objUser.mob1);
+            parms.Add("@mob2", objUser.mob2);
+            parms.Add("@fax", objUser.fax);
+            parms.Add("@email1", objUser.email1);
+            parms.Add("@email2", objUser.email2);
+            parms.Add("@contactperson", objUser.ContactPerson);
+            parms.Add("@designation", objUser.Designation);
+            parms.Add("@Id", objUser.VendorId);
+            parms.Add("@VendorInitial", objUser.VendorInitial);
+            parms.Add("@DateOfAssociation", objUser.DateOfAssociation);
+            parms.Add("@ipAddress", objUser.ipAddress);
+            parms.Add("@Status", objUser.Status);
+            parms.Add("@Documents", objUser.Documents);
+            parms.Add("@SupplierType", objUser.SupplierType);
+            parms.Add("@BankName", objUser.BankName);
+            parms.Add("@BankBranch", objUser.BankBranch);
+            parms.Add("@BankAddress1", objUser.BankAddress1);
+            parms.Add("@BankAddress2", objUser.BankAddress2);
+            parms.Add("@BankCountry", objUser.BankCountry);
+            parms.Add("@BankState", objUser.BankState);
+            parms.Add("@BankCity", objUser.BankCity);
+            parms.Add("@BankZipCode", objUser.BankZipCode);
+            parms.Add("@BankIFSCCode", objUser.BankIFSCCode);
+            parms.Add("@BankRTGSCode", objUser.BankRTGSCode);
+            parms.Add("@IGSTCode", objUser.IGSTCode);
+            parms.Add("@PanNo", objUser.PanNo);
+            spName = ConfigurationManager.AppSettings["SaveVendorDetails"];
+
+            _dbAccess.ExecuteNonQuery(spName, parms, "@o_MsgCode", out msgCode);
+            return msgCode;
+        }
+
+        public DataSet GetVendorDetails(SearchModel model)
+        {
+           // string SearchVendorType,int pageIndex, int pageSize, string SearchVendorName = null, string SearchVendorCountry = null
+            var parms = new Dictionary<string, object>();
+
+            parms.Add("@VendorId", model.SearchVendorType);
+            parms.Add("@pageIndex", model.pageIndex);
+            parms.Add("@pageSize", model.pageSize);
+            parms.Add("@SearchVendorName", model.SearchVendorName);
+            parms.Add("@SearchVendorID", model.SearchVendorCountry);
+            parms.Add("@SupplierType", model.SupplierType);
+            string spName = ConfigurationManager.AppSettings["GetVendorDetails"];
+            return _dbAccess.GetDataSet(spName, parms);
+        }
+
+
+        public string DeleteDocument(DocumentModel Documents)
+        {
+            string msgCode = "";
+            // entity.DestinationTable = "PurchaseRequest";
+
+            if (!string.IsNullOrEmpty(Documents.VendorId) && !string.IsNullOrEmpty(Documents.Documents))
+            {
+                string spName = ConfigurationManager.AppSettings["DeleteDocuments"];
+                var parms = new Dictionary<string, object>();
+                parms.Add("@VendorId", Documents.VendorId);
+                parms.Add("@Documents", Documents.Documents);
+                int count = _dbAccess.ExecuteNonQuery(spName, parms);
+                if (count > 0)
+                    msgCode = "Deleted";
+                else
+                    msgCode = "error";
+            }
+            return msgCode;
         }
 
         public string SavePRDetailsList(BulkUploadEntity entity)
@@ -218,7 +320,7 @@ namespace NtierMvc.DataAccess.Pool
             var spName = ConfigurationManager.AppSettings["GetPRNoLists"];
             var Params = new Dictionary<string, object>();
             Params.Add("@DeptName", DeptName);
-            return DataTableToStringList(_dbAccess.GetDataTable(spName, Params));            
+            return DataTableToStringList(_dbAccess.GetDataTable(spName, Params));
         }
 
         public List<DropDownEntity> GetRMCategories(string SupplierId)

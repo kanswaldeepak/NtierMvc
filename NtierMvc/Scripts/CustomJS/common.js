@@ -1253,6 +1253,15 @@ $(document).ready(function () {
                     }
                 }
             }
+            else if ($(element).hasClass("MobileNumber15")) {
+                if (element != null && element != undefined) {
+                    if ($(element).val().trim().length <10) {
+                        $(element).next(".commonerror").remove();
+                        $(element).after("<label class= 'commonerror' > Mobile Number Should have 10 Digits. </label>");
+                        $(element).val('');
+                    }
+                }
+            }
         }
     });
 });
