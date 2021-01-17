@@ -51,12 +51,12 @@ namespace NtierMvc.API.Controllers.Application
             return Ok(_repository.DeleteQuotationDetail(param[0]));
         }
 
-        [ResponseType(typeof(int))]
-        [Route("api/QuotationDetails/GetQuotationDetails")]
-        public IHttpActionResult GetQuotationDetails(int pageIndex, int pageSize, string SearchQuoteType = null, string SearchQuoteVendorID = null, string SearchQuoteProductGroup = null, string SearchDeliveryTerms = null)
-        {
-            return Ok(_repository.GetQuotationDetails(pageIndex, pageSize, SearchQuoteType, SearchQuoteVendorID, SearchQuoteProductGroup, SearchDeliveryTerms));
-        }
+        //[ResponseType(typeof(int))]
+        //[Route("api/QuotationDetails/GetQuotationDetails")]
+        //public IHttpActionResult GetQuotationDetails(int pageIndex, int pageSize, string SearchQuoteType = null, string SearchQuoteVendorID = null, string SearchQuoteProductGroup = null, string SearchDeliveryTerms = null)
+        //{
+        //    return Ok(_repository.GetQuotationDetails(pageIndex, pageSize, SearchQuoteType, SearchQuoteVendorID, SearchQuoteProductGroup, SearchDeliveryTerms));
+        //}
 
         [HttpGet]
         [Route("api/QuotationDetails/GetCityName")]

@@ -1687,7 +1687,7 @@ namespace NtierMvc.Controllers
             SearchDeliveryTerms = SearchDeliveryTerms == "-1" ? string.Empty : SearchDeliveryTerms;
 
             QuotationEntityDetails quote = new QuotationEntityDetails();
-            quote = objQuoteManager.GetQuotationDetails(Convert.ToInt32(pageIndex), Convert.ToInt32(pageSize), SearchQuoteType, SearchQuoteCustomerID, SearchSubject, SearchDeliveryTerms);
+            quote = objQuoteManager.GetQuoteRegList(Convert.ToInt32(pageIndex), Convert.ToInt32(pageSize), SearchQuoteType, SearchQuoteCustomerID, SearchSubject, SearchDeliveryTerms);
             return new JsonResult { Data = quote, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
             //return QuotDetail.LstCusEnt;
         }

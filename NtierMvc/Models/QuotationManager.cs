@@ -64,7 +64,7 @@ namespace NtierMvc.Model
         //    return result;
         //}
         
-        public QuotationEntityDetails GetQuotationDetails(int pageIndex, int pageSize, string SearchQuoteType = null, string SearchQuoteCustomerID = null, string SearchSubject = null, string SearchDeliveryTerms = null)
+        public QuotationEntityDetails GetQuoteRegList(int pageIndex, int pageSize, string SearchQuoteType = null, string SearchQuoteCustomerID = null, string SearchSubject = null, string SearchDeliveryTerms = null)
         {
             var baseAddress = "TechnicalDetails";
             QuotationEntityDetails quote = new QuotationEntityDetails();

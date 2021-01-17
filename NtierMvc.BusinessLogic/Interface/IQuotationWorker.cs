@@ -16,7 +16,7 @@ namespace NtierMvc.BusinessLogic.Interface
         QuotationEntity GetVendorQuoteDetails(string vendorId);
         string DeleteQuotationDetail(int QuotationId);
 
-        QuotationEntityDetails GetQuotationDetails(int pageIndex, int pageSize, string SearchQuoteType = null, string SearchQuoteVendorID = null, string SearchQuoteProductGroup = null, string SearchDeliveryTerms = null);
+        //QuotationEntityDetails GetQuotationDetails(int pageIndex, int pageSize, string SearchQuoteType = null, string SearchQuoteVendorID = null, string SearchQuoteProductGroup = null, string SearchDeliveryTerms = null);
 
         QuotationEntity QuotationDetailsPopup(QuotationEntity Model);
         List<DropDownEntity> GetCityName(string VendorName);

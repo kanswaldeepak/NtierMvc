@@ -150,76 +150,76 @@ namespace NtierMvc.BusinessLogic.Worker
         }
 
 
-        public QuotationEntityDetails GetQuotationDetails(int pageIndex, int pageSize, string SearchQuoteType = null, string SearchQuoteVendorID = null, string SearchQuoteProductGroup = null, string SearchDeliveryTerms = null)
-        {
-            try
-            {
-                QuotationEntityDetails qED = new QuotationEntityDetails();
-                qED.lstQuoteEntity = new List<QuotationEntity>();
-                DataSet ds = _repository.GetQuotationDetails(pageIndex, pageSize, SearchQuoteType, SearchQuoteVendorID, SearchQuoteProductGroup, SearchDeliveryTerms);
-                //DataTable dt = _repository.GetQuotationDetails();
+        //public QuotationEntityDetails GetQuotationDetails(int pageIndex, int pageSize, string SearchQuoteType = null, string SearchQuoteVendorID = null, string SearchQuoteProductGroup = null, string SearchDeliveryTerms = null)
+        //{
+        //    try
+        //    {
+        //        QuotationEntityDetails qED = new QuotationEntityDetails();
+        //        qED.lstQuoteEntity = new List<QuotationEntity>();
+        //        DataSet ds = _repository.GetQuotationDetails(pageIndex, pageSize, SearchQuoteType, SearchQuoteVendorID, SearchQuoteProductGroup, SearchDeliveryTerms);
+        //        //DataTable dt = _repository.GetQuotationDetails();
 
-                if (ds.Tables.Count > 0)
-                {
-                    DataTable dt1 = ds.Tables[0];
-                    DataTable dt2 = ds.Tables[1];
+        //        if (ds.Tables.Count > 0)
+        //        {
+        //            DataTable dt1 = ds.Tables[0];
+        //            DataTable dt2 = ds.Tables[1];
 
-                    if (dt1 != null && dt1.Rows.Count > 0)
-                    {
-                        if (dt1.Rows.Count > 0)
-                        {
-                            foreach (DataRow dr1 in dt1.Rows)
-                            {
-                                QuotationEntity obj = new QuotationEntity();
+        //            if (dt1 != null && dt1.Rows.Count > 0)
+        //            {
+        //                if (dt1.Rows.Count > 0)
+        //                {
+        //                    foreach (DataRow dr1 in dt1.Rows)
+        //                    {
+        //                        QuotationEntity obj = new QuotationEntity();
 
-                                obj.Id = dr1.IsNull("Id") ? 0 : Convert.ToInt32(dr1["Id"]);
-                                obj.UserInitial = dr1.IsNull("UserInitial") ? string.Empty : Convert.ToString(dr1["UserInitial"]);
-                                obj.UnitNo = dr1.IsNull("UnitNo") ? string.Empty : Convert.ToString(dr1["UnitNo"]);
-                                obj.CustomerId = dr1.IsNull("CustomerId") ? string.Empty : Convert.ToString(dr1["CustomerId"]);
-                                obj.CustomerName = dr1.IsNull("CustomerName") ? string.Empty : Convert.ToString(dr1["CustomerName"]);
-                                obj.QuoteType = dr1.IsNull("QuoteType") ? string.Empty : Convert.ToString(dr1["QuoteType"]);
-                                obj.FileNo = dr1.IsNull("FileNo") ? string.Empty : Convert.ToString(dr1["FileNo"]);
-                                obj.EnqRef = dr1.IsNull("EnqRef") ? string.Empty : Convert.ToString(dr1["EnqRef"]);
-                                obj.EnqDt = dr1.IsNull("EnqDt") ? string.Empty : Convert.ToString(dr1["EnqDt"]);
-                                obj.EnqNo = dr1.IsNull("EnqNo") ? string.Empty : Convert.ToString(dr1["EnqNo"]);
-                                obj.QuoteNo = dr1.IsNull("QuoteNo") ? string.Empty : Convert.ToString(dr1["QuoteNo"]);
-                                obj.QuoteDate = dr1.IsNull("QuoteDate") ? string.Empty : Convert.ToString(dr1["QuoteDate"]);
-                                obj.QuoteValidity = dr1.IsNull("QuoteValidity") ? string.Empty : Convert.ToString(dr1["QuoteValidity"]);
-                                //obj.BgReq = dr1.IsNull("BgReq") ? string.Empty : Convert.ToString(dr1["BgReq"]);
-                                obj.Inspection = dr1.IsNull("Inspection") ? string.Empty : Convert.ToString(dr1["Inspection"]);
-                                obj.Remarks = dr1.IsNull("Remarks") ? string.Empty : Convert.ToString(dr1["Remarks"]);
-                                obj.Country = dr1.IsNull("Country") ? string.Empty : Convert.ToString(dr1["Country"]);
-                                obj.GeoArea = dr1.IsNull("GeoArea") ? string.Empty : Convert.ToString(dr1["GeoArea"]);
-                                obj.EnqFor = dr1.IsNull("EnqFor") ? string.Empty : Convert.ToString(dr1["EnqFor"]);
-                                obj.MainProdGrp = dr1.IsNull("ProdGrp") ? string.Empty : Convert.ToString(dr1["ProdGrp"]);
-                                obj.Status = dr1.IsNull("Status") ? string.Empty : Convert.ToString(dr1["Status"]);
-                                obj.Remarks = dr1.IsNull("Remarks") ? string.Empty : Convert.ToString(dr1["Remarks"]);
-                                obj.Currency = dr1.IsNull("Currency") ? string.Empty : Convert.ToString(dr1["Currency"]);
-                                obj.DeliveryTerms = dr1.IsNull("DeliveryTerms") ? string.Empty : Convert.ToString(dr1["DeliveryTerms"]);
-                                obj.Subject = dr1.IsNull("Subject") ? string.Empty : Convert.ToString(dr1["Subject"]);
+        //                        obj.Id = dr1.IsNull("Id") ? 0 : Convert.ToInt32(dr1["Id"]);
+        //                        obj.UserInitial = dr1.IsNull("UserInitial") ? string.Empty : Convert.ToString(dr1["UserInitial"]);
+        //                        obj.UnitNo = dr1.IsNull("UnitNo") ? string.Empty : Convert.ToString(dr1["UnitNo"]);
+        //                        obj.CustomerId = dr1.IsNull("CustomerId") ? string.Empty : Convert.ToString(dr1["CustomerId"]);
+        //                        obj.CustomerName = dr1.IsNull("CustomerName") ? string.Empty : Convert.ToString(dr1["CustomerName"]);
+        //                        obj.QuoteType = dr1.IsNull("QuoteType") ? string.Empty : Convert.ToString(dr1["QuoteType"]);
+        //                        obj.FileNo = dr1.IsNull("FileNo") ? string.Empty : Convert.ToString(dr1["FileNo"]);
+        //                        obj.EnqRef = dr1.IsNull("EnqRef") ? string.Empty : Convert.ToString(dr1["EnqRef"]);
+        //                        obj.EnqDt = dr1.IsNull("EnqDt") ? string.Empty : Convert.ToString(dr1["EnqDt"]);
+        //                        obj.EnqNo = dr1.IsNull("EnqNo") ? string.Empty : Convert.ToString(dr1["EnqNo"]);
+        //                        obj.QuoteNo = dr1.IsNull("QuoteNo") ? string.Empty : Convert.ToString(dr1["QuoteNo"]);
+        //                        obj.QuoteDate = dr1.IsNull("QuoteDate") ? string.Empty : Convert.ToString(dr1["QuoteDate"]);
+        //                        obj.QuoteValidity = dr1.IsNull("QuoteValidity") ? string.Empty : Convert.ToString(dr1["QuoteValidity"]);
+        //                        //obj.BgReq = dr1.IsNull("BgReq") ? string.Empty : Convert.ToString(dr1["BgReq"]);
+        //                        obj.Inspection = dr1.IsNull("Inspection") ? string.Empty : Convert.ToString(dr1["Inspection"]);
+        //                        obj.Remarks = dr1.IsNull("Remarks") ? string.Empty : Convert.ToString(dr1["Remarks"]);
+        //                        obj.Country = dr1.IsNull("Country") ? string.Empty : Convert.ToString(dr1["Country"]);
+        //                        obj.GeoArea = dr1.IsNull("GeoArea") ? string.Empty : Convert.ToString(dr1["GeoArea"]);
+        //                        obj.EnqFor = dr1.IsNull("EnqFor") ? string.Empty : Convert.ToString(dr1["EnqFor"]);
+        //                        obj.MainProdGrp = dr1.IsNull("ProdGrp") ? string.Empty : Convert.ToString(dr1["ProdGrp"]);
+        //                        obj.Status = dr1.IsNull("Status") ? string.Empty : Convert.ToString(dr1["Status"]);
+        //                        obj.Remarks = dr1.IsNull("Remarks") ? string.Empty : Convert.ToString(dr1["Remarks"]);
+        //                        obj.Currency = dr1.IsNull("Currency") ? string.Empty : Convert.ToString(dr1["Currency"]);
+        //                        obj.DeliveryTerms = dr1.IsNull("DeliveryTerms") ? string.Empty : Convert.ToString(dr1["DeliveryTerms"]);
+        //                        obj.Subject = dr1.IsNull("Subject") ? string.Empty : Convert.ToString(dr1["Subject"]);
 
-                                qED.lstQuoteEntity.Add(obj);
-                            }
-                        }
+        //                        qED.lstQuoteEntity.Add(obj);
+        //                    }
+        //                }
 
-                        if (dt2.Rows.Count > 0)
-                        {
-                            foreach (DataRow dr2 in dt2.Rows)
-                            {
-                                qED.totalcount = dr2.IsNull("totalCount") ? 0 : Convert.ToInt32(dr2["totalCount"]);
-                            }
-                        }
-                    }
-                }
+        //                if (dt2.Rows.Count > 0)
+        //                {
+        //                    foreach (DataRow dr2 in dt2.Rows)
+        //                    {
+        //                        qED.totalcount = dr2.IsNull("totalCount") ? 0 : Convert.ToInt32(dr2["totalCount"]);
+        //                    }
+        //                }
+        //            }
+        //        }
 
-                return qED;
-            }
-            catch (Exception Ex)
-            {
-                NtierMvc.DataAccess.ExceptionLogging.SendExcepToDB(Ex);
-                throw Ex;
-            }
-        }
+        //        return qED;
+        //    }
+        //    catch (Exception Ex)
+        //    {
+        //        NtierMvc.DataAccess.ExceptionLogging.SendExcepToDB(Ex);
+        //        throw Ex;
+        //    }
+        //}
 
 
         public QuotationEntity QuotationDetailsPopup(QuotationEntity Model)
