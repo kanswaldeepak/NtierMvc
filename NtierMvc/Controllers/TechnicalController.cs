@@ -107,7 +107,7 @@ namespace NtierMvc.Controllers
 
             //Quotation
             //ViewBag.ListDeliveryTerms = model.GetMasterTableStringList("Master.Taxonomy", "DropDownId", "DropDownValue", "DeliveryTerms", "ObjectName", GeneralConstants.ListTypeN);
-            ViewBag.ListDeliveryTerms = "";
+            ViewBag.ListDeliveryTerms = model.GetDropDownList(TableNames.Master_Taxonomy, GeneralConstants.ListTypeD, ColumnNames.DropDownID, ColumnNames.DropDownValue, "DeliveryTerms", ColumnNames.ObjectName);
             ViewBag.ListSubject = "";
 
 
@@ -145,7 +145,7 @@ namespace NtierMvc.Controllers
             ViewBag.ListUom = model.GetMasterTableStringList(TableNames.Master_Taxonomy, ColumnNames.DropDownID, ColumnNames.DropDownValue, "QuoteUom", ColumnNames.Property, GeneralConstants.ListTypeN);
             ViewBag.ListQuoteType = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "QuoteType", "Property", GeneralConstants.ListTypeD);
             ViewBag.ListEnqNo = model.GetMasterTableStringList("EnquiryRegister", "EnquiryId", "EnqRef", "", "", GeneralConstants.ListTypeN);
-            ViewBag.ListOpenHoleSize = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "OpenHoleSize", "Property", GeneralConstants.ListTypeN);
+            ViewBag.ListOpenHoleSize = model.GetDropDownList(TableNames.Master_Taxonomy, GeneralConstants.ListTypeN, ColumnNames.DropDownID, ColumnNames.DropDownValue, "OpenHoleSize", ColumnNames.Property, true); 
             ViewBag.ListCurrency = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "Currency", "Property", GeneralConstants.ListTypeN);
             ViewBag.ListBallSize = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "BallSize", "Property", GeneralConstants.ListTypeN);
             ViewBag.ListCasingWT = model.GetMasterTableStringList("CasingWeight", "Id", "CasingWT", "", "", GeneralConstants.ListTypeN);
@@ -249,17 +249,18 @@ namespace NtierMvc.Controllers
 
             if (actionType == "VIEW" || actionType == "EDIT")
             {
-                List<DropDownEntity> DT = new List<DropDownEntity>();
-                DT = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "ExportQuote", "Property", GeneralConstants.ListTypeN);
-                List<DropDownEntity> DT1 = new List<DropDownEntity>();
-                DT1 = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "DomesticQuote", "Property", GeneralConstants.ListTypeN);
+                //List<DropDownEntity> DT = new List<DropDownEntity>();
+                //DT = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "ExportQuote", "Property", GeneralConstants.ListTypeN);
+                //List<DropDownEntity> DT1 = new List<DropDownEntity>();
+                //DT1 = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "DomesticQuote", "Property", GeneralConstants.ListTypeN);
 
-                foreach (var item in DT1)
-                {
-                    if (!item.DataTextField.Equals("All"))
-                        DT.Add(item);
-                }
-                ViewBag.ListDeliveryTerms = DT;
+                //foreach (var item in DT1)
+                //{
+                //    if (!item.DataTextField.Equals("All"))
+                //        DT.Add(item);
+                //}
+
+                ViewBag.ListDeliveryTerms = model.GetDropDownList(TableNames.Master_Taxonomy, GeneralConstants.ListTypeD, ColumnNames.DropDownID, ColumnNames.DropDownValue, "DeliveryTerms", ColumnNames.ObjectName);
 
                 if (!string.IsNullOrEmpty(QuotationId))
                     quotE.Id = Convert.ToInt32(QuotationId);
@@ -277,7 +278,7 @@ namespace NtierMvc.Controllers
                 objSelect.DataTextField = "Select";
                 SelectList.Add(objSelect);
 
-                ViewBag.ListDeliveryTerms = ViewBag.ListEnqNo = SelectList;
+                ViewBag.ListEnqNo = SelectList;
 
                 quotE = objManager.GetUserDetails(quotE.UnitNo);
             }
@@ -780,7 +781,7 @@ namespace NtierMvc.Controllers
             ViewBag.ListMainProdGrp = model.GetMasterTableStringList("Master.ProductLine", "Id", "MainPLName", "", "", GeneralConstants.ListTypeN);
             ViewBag.ListSubProdGrp = model.GetMasterTableStringList("SubProductLine", "Id", "SubPLName", "", "", GeneralConstants.ListTypeN);
             ViewBag.ListProdName = model.GetMasterTableStringList("Master.Product", "Id", "ProductName", "", "", GeneralConstants.ListTypeN);
-            ViewBag.ListSoNo = model.GetMasterTableStringList("Orders", "SoNo", "SoNo", "", "", GeneralConstants.ListTypeD);
+            ViewBag.ListSoNo = model.GetMasterTableStringList("Orders", "SoNo", "SoNoView", "", "", GeneralConstants.ListTypeD);
             ViewBag.ListSoNo.RemoveAt(0);
             ViewBag.ListModeOfDespatch = model.GetDropDownList("Master.Taxonomy", GeneralConstants.ListTypeD, "dropdownId", "dropdownvalue", "Transport", "Property");
 
@@ -794,17 +795,17 @@ namespace NtierMvc.Controllers
 
             if (actionType == "VIEW" || actionType == "EDIT")
             {
-                List<DropDownEntity> DT = new List<DropDownEntity>();
-                DT = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "ExportorderE", "Property", GeneralConstants.ListTypeN);
-                List<DropDownEntity> DT1 = new List<DropDownEntity>();
-                DT1 = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "DomesticorderE", "Property", GeneralConstants.ListTypeN);
+                //List<DropDownEntity> DT = new List<DropDownEntity>();
+                //DT = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "ExportorderE", "Property", GeneralConstants.ListTypeN);
+                //List<DropDownEntity> DT1 = new List<DropDownEntity>();
+                //DT1 = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "DomesticorderE", "Property", GeneralConstants.ListTypeN);
 
-                foreach (var item in DT1)
-                {
-                    if (!item.DataTextField.Equals("All"))
-                        DT.Add(item);
-                }
-                ViewBag.ListDeliveryTerms = DT;
+                //foreach (var item in DT1)
+                //{
+                //    if (!item.DataTextField.Equals("All"))
+                //        DT.Add(item);
+                //}
+                ViewBag.ListDeliveryTerms = model.GetDropDownList(TableNames.Master_Taxonomy, GeneralConstants.ListTypeD, ColumnNames.DropDownID, ColumnNames.DropDownValue, "DeliveryTerms", ColumnNames.ObjectName);
 
                 if (!string.IsNullOrEmpty(Id))
                     orderE.Id = Convert.ToInt32(Id);
@@ -914,17 +915,17 @@ namespace NtierMvc.Controllers
 
             if (actionType == "VIEW" || actionType == "EDIT")
             {
-                List<DropDownEntity> DT = new List<DropDownEntity>();
-                DT = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "ExportorderE", "Property", GeneralConstants.ListTypeN);
-                List<DropDownEntity> DT1 = new List<DropDownEntity>();
-                DT1 = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "DomesticorderE", "Property", GeneralConstants.ListTypeN);
+                //List<DropDownEntity> DT = new List<DropDownEntity>();
+                //DT = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "ExportorderE", "Property", GeneralConstants.ListTypeN);
+                //List<DropDownEntity> DT1 = new List<DropDownEntity>();
+                //DT1 = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "DomesticorderE", "Property", GeneralConstants.ListTypeN);
 
-                foreach (var item in DT1)
-                {
-                    if (!item.DataTextField.Equals("All"))
-                        DT.Add(item);
-                }
-                ViewBag.ListDeliveryTerms = DT;
+                //foreach (var item in DT1)
+                //{
+                //    if (!item.DataTextField.Equals("All"))
+                //        DT.Add(item);
+                //}
+                ViewBag.ListDeliveryTerms = model.GetDropDownList(TableNames.Master_Taxonomy, GeneralConstants.ListTypeD, ColumnNames.DropDownID, ColumnNames.DropDownValue, "DeliveryTerms", ColumnNames.ObjectName);
 
                 if (!string.IsNullOrEmpty(Id))
                     itemE.Id = Convert.ToInt32(Id);

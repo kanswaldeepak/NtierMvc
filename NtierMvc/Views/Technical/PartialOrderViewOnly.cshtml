@@ -6,23 +6,30 @@
     ViewBag.Title = "Order";
 }
 
+
 <div class="row mt-3">
     <table class="table-borderless">
         <tr>
             <td>
+                <button id="btnAddOrder" type="button" class="btn btn-outline-primary btn-sm" style="float: left;" ng-click="BindOrderPopup()"><i class="fa fa-plus"></i><b> Add Master Order</b></button>
+            </td>
+            <td>
                 <label>Quote Type</label>
             </td>
-            @*<td>
-                <label>Vendor Id</label>
-            </td>*@
             <td>
-                <label>Product Group</label>
+                <label>Customer Id</label>
             </td>
+            @*<td>
+                    <label>Product Group</label>
+                </td>*@
             <td>
                 <label>Delivery Terms</label>
             </td>
         </tr>
         <tr>
+            <td>
+                <button id="btnAddItem" type="button" class="btn btn-outline-primary btn-sm" style="float: left;" ng-click="BindItemPopup()"><i class="fa fa-plus"></i><b> Add Item Wise Order</b></button>
+            </td>
             <td>
                 @Html.DropDownList("QuoteType", new SelectList(@ViewBag.ListQuoteType, "DataStringValueField", "DataTextField", "Select"),
                     new
@@ -32,26 +39,26 @@
                         @id = "ORQuoteType"
                     })
             </td>
-            @*<td>
-                @Html.DropDownList("VendorId", new SelectList(@ViewBag.ListVendorId, "DataStringValueField", "DataTextField", "Select"),
-               new
-               {
-                   @class = "form-control",
-                   ng_model = "SearchOrderVendorID",
-                   @id = "ORVendorId",
-                   @multiple = true
-               })
-            </td>*@
             <td>
-                @Html.DropDownList("ProductGroup", new SelectList(@ViewBag.ListProdGrp, "DataStringValueField", "DataTextField", "Select"),
+                @Html.DropDownList("CustomerId", new SelectList(@ViewBag.ListCustomerId, "DataStringValueField", "DataTextField", "Select"),
                new
                {
                    @class = "form-control",
-                   ng_model = "SearchOrderProductGroup",
-                   @id = "ORProductGroup",
+                   ng_model = "SearchOrderCustomerId",
+                   @id = "ORCustomerId",
                    @multiple = true
                })
             </td>
+            @*<td>
+                    @Html.DropDownList("ProductGroup", new SelectList(@ViewBag.ListProdName, "DataStringValueField", "DataTextField", "Select"),
+                   new
+                   {
+                       @class = "form-control",
+                       ng_model = "SearchOrderProductGroup",
+                       @id = "ORProductGroup",
+                       @multiple = true
+                   })
+                </td>*@
             <td>
                 @Html.DropDownList("DeliveryTerms", new SelectList(@ViewBag.ListDeliveryTerms, "DataStringValueField", "DataTextField", "Select"),
                new
@@ -63,14 +70,14 @@
                })
             </td>
             <td>
-                <button class="btn btn-link" type="button" id="btnSearch" ng-click="FetchOrdersList()">
-                    <i class="fa fa-search"></i>
+                <button class="btn btn-sm btn-success" type="button" id="btnSearch" ng-click="FetchOrdersList()">
+                    Search
                 </button>
+                <button class="btn btn-sm btn-info" type="button" id="btnClearSearchQuotereg" ng-click="DefaultOrdersList(); FetchOrdersList();">Clear</button>
             </td>
         </tr>
     </table>
 </div>
-
 
 <div class="wrapper">
     <div class="container">
@@ -84,9 +91,9 @@
                         </div>
                     </th>
                     <th>
-                        SO No
+                        WA No
                         <div class="c2">
-                            SO No
+                            WA No
                         </div>
                     </th>
                     <th>
@@ -120,6 +127,12 @@
                         </div>
                     </th>
                     <th>
+                        ExWorkValue
+                        <div class="c3">
+                            ExWorkValue
+                        </div>
+                    </th>
+                    <th>
                         PO Delivery Date
                         <div class="c3">
                             PO Delivery Date
@@ -145,9 +158,15 @@
                         <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="VIEW" ng-click="LoadOrderViewPopup(L.Id)">
                             <i class="fa fa-eye"></i>
                         </button>
+                        <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="EDIT" ng-click="LoadOrderEditPopup(L.Id)">
+                            <i class="fa fa-edit"></i>
+                        </button>
+                        @*<button type="button" class="btn btn-outline-danger btn-sm" data-toggle="tooltip" data-placement="bottom" title="DELETE" ng-click="DeleteOrder(L.Id)">
+                                <i class="fa fa-trash"></i>
+                            </button>*@
                     </td>
                     <td>
-                        {{L.SoNo}}
+                        {{L.SoNoView}}
                     </td>
                     <td>
                         {{L.PoEntity}}
@@ -163,6 +182,9 @@
                     </td>
                     <td>
                         {{L.Curr}}
+                    </td>
+                    <td>
+                        {{L.ExWorkValue}}
                     </td>
                     <td>
                         {{L.PoDeliveryDate}}
@@ -214,6 +236,37 @@
         </table>
     </div>
 </div>
+
+<div class="modal" id="addOrderDetails" tabindex="-1" role="dialog">
+    @*@using (Ajax.BeginForm(actionName: "SaveOrderDetails", controllerName: "Technical", ajaxOptions: new AjaxOptions
+        {
+            HttpMethod = "POST"
+            // OnSuccess = "BuildingSpaceDetails.UploadFiles"
+        },
+                routeValues: null,
+                htmlAttributes: new { id = "frmOrderDetails" }))
+        {*@
+    <div class="modal-dialog" style="width:80%; max-width: 80%;" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                @*@Html.HiddenFor(m => m.TrnBuildingHdrId)*@
+                <h5 class="modal-title">Add Order Details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div id="div-Staff-details" class="modal-body">
+
+            </div>
+            <div class="modal-footer">
+                <button type="submit" id="btnSubmit" class="btn btn-primary">Save</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+    @*}*@
+</div>
+
 
 <div class="modal fade" id="add_details" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 </div>
@@ -275,14 +328,12 @@
 </div>
 <script type="text/javascript">
 
-
     $(document).ready(function () {
 
-        window.GetDdlValueForQuote = '@Url.Action("GetDdlValueForQuote","Technical")';
         window.OrderDetailsPopup = '@Url.Action("OrderPopup", "Technical")';
+        window.DeleteOrderDetail = '@Url.Action("DeleteOrderDetail", "Technical")';
         window.ItemDetailsPopup = '@Url.Action("ItemPopup", "Technical")';
-        window.CallApi = '@Url.Action("CallApi", "Technical")';
-
+        window.GetPrepQuoteNo = '@Url.Action("GetPrepQuoteNo", "Technical")';
 
         $('#ORQuoteType').chosen({
             width: "210px",
@@ -290,17 +341,17 @@
             placeholder_text_multiple: "Select QuoteType"
         });
 
-        $('#ORVendorId').chosen({
+        $('#ORCustomerId').chosen({
             width: "210px",
             placeholder_text_single: "Select Vendor Id",
             placeholder_text_multiple: "Select Vendor Id"
         });
 
-        $('#ORProductGroup').chosen({
-            width: "210px",
-            placeholder_text_single: "Select Product Group",
-            placeholder_text_multiple: "Select Product Group"
-        });
+        //$('#ORProductGroup').chosen({
+        //    width: "210px",
+        //    placeholder_text_single: "Select Product Group",
+        //    placeholder_text_multiple: "Select Product Group"
+        //});
 
         $('#ORDeliveryTerms').chosen({
             width: "210px",
@@ -327,13 +378,13 @@
                     dataType: 'json',
                     type: 'GET',
                     url: window.GetDdlValueForQuote,
-                    data: { QuoteType: QuoteType, type: 'VendorId' },
+                    data: { QuoteType: QuoteType, type: 'CustomerId' },
                     success: function (res) {
                         if (res.length > 0) {
-                            $("#ORVendorId").empty();
+                            $("#ORCustomerId").empty();
                             $.each(res, function (i, item) {
-                                $("#ORVendorId").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
-                                $("#ORVendorId").trigger("chosen:updated");
+                                $("#ORCustomerId").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
+                                $("#ORCustomerId").trigger("chosen:updated");
                             })
                         }
                     },
@@ -344,68 +395,68 @@
             }
         )
 
-        $("#ORVendorId").chosen().change(
-            function GetProductGroup() {
-                //var VendorId = $('#QTVendorId').val();
-                debugger;
-                var VendorId = '';
-                var x = document.getElementById("ORVendorId");
-                for (var i = 0; i < x.options.length; i++) {
-                    if (x.options[i].selected == true) {
-                        //alert(x.options[i].value);
-                        VendorId = VendorId + x.options[i].value + ',';
-                    }
-                }
+        //$("#ORCustomerId").chosen().change(
+        //    function GetProductGroup() {
+        //        //var VendorId = $('#QTVendorId').val();
+        //        debugger;
+        //        var CustomerId = '';
+        //        var x = document.getElementById("ORCustomerId");
+        //        for (var i = 0; i < x.options.length; i++) {
+        //            if (x.options[i].selected == true) {
+        //                //alert(x.options[i].value);
+        //                CustomerId = CustomerId + x.options[i].value + ',';
+        //            }
+        //        }
 
-                VendorId = VendorId.substring(0, VendorId.length - 1);
+        //        CustomerId = CustomerId.substring(0, CustomerId.length - 1);
 
-                return $.ajax({
-                    contentType: 'application/json; charset=utf-8',
-                    dataType: 'json',
-                    type: 'GET',
-                    url: window.GetDdlValueForQuote,
-                    data: { VendorId: VendorId, type: 'ProductGroup' },
-                    success: function (res) {
-                        if (res.length > 0) {
-                            $("#ORProductGroup").empty();
-                            $.each(res, function (i, item) {
-                                $("#ORProductGroup").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
-                                $("#ORProductGroup").trigger("chosen:updated");
-                            })
-                        }
-                    },
-                    error: function (result) {
-                        alert(result)
-                    }
-                });
-            }
-        )
-
+        //        return $.ajax({
+        //            contentType: 'application/json; charset=utf-8',
+        //            dataType: 'json',
+        //            type: 'GET',
+        //            url: window.GetDdlValueForQuote,
+        //            data: { CustomerId: CustomerId, type: 'ProductGroup' },
+        //            success: function (res) {
+        //                if (res.length > 0) {
+        //                    $("#ORProductGroup").empty();
+        //                    $.each(res, function (i, item) {
+        //                        $("#ORProductGroup").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
+        //                        $("#ORProductGroup").trigger("chosen:updated");
+        //                    })
+        //                }
+        //            },
+        //            error: function (result) {
+        //                alert(result)
+        //            }
+        //        });
+        //    }
+        //)
 
     });
 
-    function CallApi() {
-        var QuoteType = $("#QuoteOrderFormType").val();
-        var QuoteNo = $("#QuoteOrderFormNo").val();
+    function GetQuoteNoListForPartialOrders() {
 
-        var MultiQuoteNos = $('#MultiQuoteNos').val() + $("#QuoteOrderFormNo option:selected").text() + '/';
-        if ($("#QuoteOrderFormNo option:selected").val() != '')
-            $('#MultiQuoteNos').val(MultiQuoteNos);
+        let QuoteType = $('#SearchOrderQuoteType').val();
 
         $.ajax({
             type: 'POST',
-            url: window.CallApi,
-            data: JSON.stringify({ }),
+            url: window.GetPrepQuoteNo,
+            data: JSON.stringify({ quotetypeId: QuoteType }),
             contentType: "application/json; charset=utf-8",
-            success: function (data) {
-                alert(data);
-            },
-            error: function (x, e) {
-                alert('Error Comes');
+            success: function (res) {
+                if (res.length > 0) {
+                    $("#SearchOrderQuoteNo").empty();
+                    $.each(res, function (i, item){
+                        $("#SearchOrderQuoteNo").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
+                    })
+                }
             }
         })
     }
+
 </script>
 
 
 
+
+<script src="~/Scripts/CustomJS/TechItemDetails.js"></script>

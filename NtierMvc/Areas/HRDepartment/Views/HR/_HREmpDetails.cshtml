@@ -261,11 +261,11 @@
                 </div>
                 <div class="col-md-3">
                     <div class="form-group">
-                        <label class="control-label">Email ID <span class="required">*</span></label>
+                        <label class="control-label">Email ID
                         @Html.TextBoxFor(m => m.email, new
                    {
                        @id = "EMAIL",
-                       @class = "form-control requiredValidation EmailID",
+                       @class = "form-control EmailID",
                        @placeholder = "Email ID",
                        @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
                    })<label class="HideValidMsg">EMail is Required</label>
@@ -574,7 +574,6 @@
                             @id = "PresCountry",
                             @data_inneraction = "validationCall",
                             @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
-                            ng_model = "PresCountry",
                             @onchange = "GetState()"
                         })
                             <span class="HideValidMsg">Please Enter Valid Country</span>
@@ -671,7 +670,6 @@
                             @id = "PerCountry",
                             @data_inneraction = "validationCall",
                             @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
-                            ng_model = "PerCountry",
                             @onchange = "GetState()"
                         })
                             <span class="HideValidMsg">Please Enter Valid Country</span>

@@ -54,24 +54,25 @@ namespace NtierMvc.Infrastructure
 
         public static bool CheckUrlForPermission(string area, string controller, string master, string action)
         {
-            var user = (UserEntity)HttpContext.Current.Session["UserModel"];
-            if (user != null)
-            {
-                var list = HttpContext.Current.Session["AdminAssigns"] as List<RoleAssignEntity>;
+            return true;
+            //var user = (UserEntity)HttpContext.Current.Session["UserModel"];
+            //if (user != null)
+            //{
+            //    var list = HttpContext.Current.Session["AdminAssigns"] as List<RoleAssignEntity>;
 
-                if (list.Any(x => x.DeptName == user.DeptName))
-                    return true;
-                else if (user.DeptName == "Administrator")
-                    return true;
-                else if (!string.IsNullOrEmpty(area))
-                    return user.Permissions.Any(x => x.PermissionRoute == $"{area}-{controller}-{master}-{action}");
-                else
-                    return user.Permissions.Any(x => x.PermissionRoute == $"{controller}-{master}-{action}");
-            }
-            else
-            {
-                return false;
-            }
+            //    if (list.Any(x => x.DeptName == user.DeptName))
+            //        return true;
+            //    else if (user.DeptName == "Administrator")
+            //        return true;
+            //    else if (!string.IsNullOrEmpty(area))
+            //        return user.Permissions.Any(x => x.PermissionRoute == $"{area}-{controller}-{master}-{action}");
+            //    else
+            //        return user.Permissions.Any(x => x.PermissionRoute == $"{controller}-{master}-{action}");
+            //}
+            //else
+            //{
+            //    return false;
+            //}
         }
 
         public static string CheckForWrite(string area, string controller, string master, string action)
@@ -79,26 +80,27 @@ namespace NtierMvc.Infrastructure
             var user = (UserEntity)HttpContext.Current.Session["UserModel"];
             if (user != null)
             {
-                if (user.DeptName == "Administration")
-                    return "Write";
-                else if (!string.IsNullOrEmpty(area) && user.Permissions.Any(x => x.PermissionRoute == $"{area}-{controller}-{master}-{action}"))
-                {
-                    var res = (from a in user.Permissions
-                               where a.PermissionRoute == $"{area}-{controller}-{master}-{action}"
-                               select a.PermissionRouteWrite).FirstOrDefault();
+                return "Write";
+                //if (user.DeptName == "Administration")
+                //    return "Write";
+                //else if (!string.IsNullOrEmpty(area) && user.Permissions.Any(x => x.PermissionRoute == $"{area}-{controller}-{master}-{action}"))
+                //{
+                //    var res = (from a in user.Permissions
+                //               where a.PermissionRoute == $"{area}-{controller}-{master}-{action}"
+                //               select a.PermissionRouteWrite).FirstOrDefault();
 
-                    return res.ToString();
-                }
-                else if (user.Permissions.Any(x => x.PermissionRoute == $"{controller}-{master}-{action}"))
-                {
-                    var res = (from a in user.Permissions
-                               where a.PermissionRoute == $"{controller}-{master}-{action}"
-                               select a.PermissionRouteWrite).FirstOrDefault();
+                //    return res.ToString();
+                //}
+                //else if (user.Permissions.Any(x => x.PermissionRoute == $"{controller}-{master}-{action}"))
+                //{
+                //    var res = (from a in user.Permissions
+                //               where a.PermissionRoute == $"{controller}-{master}-{action}"
+                //               select a.PermissionRouteWrite).FirstOrDefault();
 
-                    return res.ToString();
-                }
-                else
-                    return "Read";
+                //    return res.ToString();
+                //}
+                //else
+                //    return "Read";
             }
             else
             {

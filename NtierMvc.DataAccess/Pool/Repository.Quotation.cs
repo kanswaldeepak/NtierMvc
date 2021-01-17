@@ -17,18 +17,18 @@ namespace NtierMvc.DataAccess.Pool
 
         #region Class Methods
 
-        public DataSet GetQuotationDetails(int pageIndex, int pageSize, string SearchQuoteType = null, string SearchQuoteVendorID = null, string SearchQuoteProductGroup = null, string SearchDeliveryTerms = null)
-        {
-            var parms = new Dictionary<string, object>();
-            parms.Add("@pageIndex", pageIndex);
-            parms.Add("@pageSize", pageSize);
-            parms.Add("@SearchQuoteType", SearchQuoteType);
-            parms.Add("@SearchQuoteVendorID", SearchQuoteVendorID);
-            parms.Add("@SearchQuoteProductGroup", SearchQuoteProductGroup);
-            parms.Add("@SearchDeliveryTerms", SearchDeliveryTerms);
-            string spName = ConfigurationManager.AppSettings["GetQuotationDetails"];
-            return _dbAccess.GetDataSet(spName, parms);
-        }
+        //public DataSet GetQuotationDetails(int pageIndex, int pageSize, string SearchQuoteType = null, string SearchQuoteVendorID = null, string SearchQuoteProductGroup = null, string SearchDeliveryTerms = null)
+        //{
+        //    var parms = new Dictionary<string, object>();
+        //    parms.Add("@pageIndex", pageIndex);
+        //    parms.Add("@pageSize", pageSize);
+        //    parms.Add("@SearchQuoteType", SearchQuoteType);
+        //    parms.Add("@SearchQuoteVendorID", SearchQuoteVendorID);
+        //    parms.Add("@SearchQuoteProductGroup", SearchQuoteProductGroup);
+        //    parms.Add("@SearchDeliveryTerms", SearchDeliveryTerms);
+        //    string spName = ConfigurationManager.AppSettings["GetQuotationDetails"];
+        //    return _dbAccess.GetDataSet(spName, parms);
+        //}
 
         public DataSet QuotationDetailsPopup(QuotationEntity Model)
         {

@@ -288,7 +288,8 @@
                             @Html.DropDownListFor(m => m.OpenHoleSize, new SelectList(ViewBag.ListOpenHoleSize, "DataStringValueField", "DataTextField", Model.OpenHoleSize), new
                        {
                            @class = "form-control clearField",
-                           @id = "QuotePrepOpenHoleSize"
+                           @id = "QuotePrepOpenHoleSize",
+                           @onchange = "DisplayNewItemInDdl(this, 'Master.Taxonomy', 'OpenHoleSize', 'DropDownValue')"
                        })
                             <span class="HideValidMsg">Please Select Hole Size Range Inch</span>
                         </div>
@@ -360,7 +361,7 @@
                             <span class="HideValidMsg">Please Select Total Bows</span>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div id="divPDCFeatures" class="col-md-6 ShowHideFields" style="display:none">
                         <div class="form-group">
                             <label class="control-label">
                                 PDC Drillable

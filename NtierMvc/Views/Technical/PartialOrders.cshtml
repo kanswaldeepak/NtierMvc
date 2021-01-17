@@ -19,9 +19,9 @@
             <td>
                 <label>Customer Id</label>
             </td>
-            <td>
+            @*<td>
                 <label>Product Group</label>
-            </td>
+            </td>*@
             <td>
                 <label>Delivery Terms</label>
             </td>
@@ -49,7 +49,7 @@
                    @multiple = true
                })
             </td>
-            <td>
+            @*<td>
                 @Html.DropDownList("ProductGroup", new SelectList(@ViewBag.ListProdName, "DataStringValueField", "DataTextField", "Select"),
                new
                {
@@ -58,7 +58,7 @@
                    @id = "ORProductGroup",
                    @multiple = true
                })
-            </td>
+            </td>*@
             <td>
                 @Html.DropDownList("DeliveryTerms", new SelectList(@ViewBag.ListDeliveryTerms, "DataStringValueField", "DataTextField", "Select"),
                new
@@ -70,9 +70,10 @@
                })
             </td>
             <td>
-                <button class="btn btn-link" type="button" id="btnSearch" ng-click="FetchOrdersList()">
-                    <i class="fa fa-search"></i>
+                <button class="btn btn-sm btn-success" type="button" id="btnSearch" ng-click="FetchOrdersList()">
+                    Search
                 </button>
+                <button class="btn btn-sm btn-info" type="button" id="btnClearSearchQuotereg" ng-click="DefaultOrdersList(); FetchOrdersList();">Clear</button>
             </td>
         </tr>
     </table>
@@ -165,7 +166,7 @@
                             </button>*@
                     </td>
                     <td>
-                        {{L.SoNo}}
+                        {{L.SoNoView}}
                     </td>
                     <td>
                         {{L.PoEntity}}
@@ -346,11 +347,11 @@
             placeholder_text_multiple: "Select Vendor Id"
         });
 
-        $('#ORProductGroup').chosen({
-            width: "210px",
-            placeholder_text_single: "Select Product Group",
-            placeholder_text_multiple: "Select Product Group"
-        });
+        //$('#ORProductGroup').chosen({
+        //    width: "210px",
+        //    placeholder_text_single: "Select Product Group",
+        //    placeholder_text_multiple: "Select Product Group"
+        //});
 
         $('#ORDeliveryTerms').chosen({
             width: "210px",
@@ -394,42 +395,42 @@
             }
         )
 
-        $("#ORCustomerId").chosen().change(
-            function GetProductGroup() {
-                //var VendorId = $('#QTVendorId').val();
-                debugger;
-                var CustomerId = '';
-                var x = document.getElementById("ORCustomerId");
-                for (var i = 0; i < x.options.length; i++) {
-                    if (x.options[i].selected == true) {
-                        //alert(x.options[i].value);
-                        CustomerId = CustomerId + x.options[i].value + ',';
-                    }
-                }
+        //$("#ORCustomerId").chosen().change(
+        //    function GetProductGroup() {
+        //        //var VendorId = $('#QTVendorId').val();
+        //        debugger;
+        //        var CustomerId = '';
+        //        var x = document.getElementById("ORCustomerId");
+        //        for (var i = 0; i < x.options.length; i++) {
+        //            if (x.options[i].selected == true) {
+        //                //alert(x.options[i].value);
+        //                CustomerId = CustomerId + x.options[i].value + ',';
+        //            }
+        //        }
 
-                CustomerId = CustomerId.substring(0, CustomerId.length - 1);
+        //        CustomerId = CustomerId.substring(0, CustomerId.length - 1);
 
-                return $.ajax({
-                    contentType: 'application/json; charset=utf-8',
-                    dataType: 'json',
-                    type: 'GET',
-                    url: window.GetDdlValueForQuote,
-                    data: { CustomerId: CustomerId, type: 'ProductGroup' },
-                    success: function (res) {
-                        if (res.length > 0) {
-                            $("#ORProductGroup").empty();
-                            $.each(res, function (i, item) {
-                                $("#ORProductGroup").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
-                                $("#ORProductGroup").trigger("chosen:updated");
-                            })
-                        }
-                    },
-                    error: function (result) {
-                        alert(result)
-                    }
-                });
-            }
-        )
+        //        return $.ajax({
+        //            contentType: 'application/json; charset=utf-8',
+        //            dataType: 'json',
+        //            type: 'GET',
+        //            url: window.GetDdlValueForQuote,
+        //            data: { CustomerId: CustomerId, type: 'ProductGroup' },
+        //            success: function (res) {
+        //                if (res.length > 0) {
+        //                    $("#ORProductGroup").empty();
+        //                    $.each(res, function (i, item) {
+        //                        $("#ORProductGroup").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
+        //                        $("#ORProductGroup").trigger("chosen:updated");
+        //                    })
+        //                }
+        //            },
+        //            error: function (result) {
+        //                alert(result)
+        //            }
+        //        });
+        //    }
+        //)
 
     });
 

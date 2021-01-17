@@ -108,7 +108,7 @@
         </div>
         <div class="row">
             <div class="col-md-6">
-                <input class="btn btn-info" type="button" id="btnNotes" value="Show Order Notes" onclick="GetClarificationNote()" />
+                <input class="btn btn-info" type="button" id="btnNotes" value="Show Quote Notes" onclick="GetClarificationNote()" />
                 <input class="btn btn-success" type="button" id="btnSaveNotes" value="Save" onclick="SaveNotes()" />
                 <div class="col-md-12 mt-2">
                     <textarea class="form-control col-md-12" type="text" id="txtClarificationNotes" rows="5" cols="30"></textarea>
@@ -133,7 +133,7 @@
                 <div class="col-md-6">
                     <div class="form-group text-left">
                         <label class="control-label ">
-                            So No
+                            WA No
                         </label>
                         @Html.DropDownListFor(m => m.SoNo, new SelectList(ViewBag.ListSoNo, "DataStringValueField", "DataTextField", "Select"), new
                             {
@@ -168,7 +168,7 @@
         </div>
         <div class="row">
             <div class="col-md-6">
-                <input class="btn btn-info" type="button" id="btnOrderNotes" value="Show Quote Notes" onclick="GetOrderNotes()" />
+                <input class="btn btn-info" type="button" id="btnOrderNotes" value="Show Order Notes" onclick="GetOrderNotes()" />
                 <input class="btn btn-success" type="button" id="btnSaveOrderNotes" value="Save" onclick="SaveOrderNotes()" />
                 <div class="col-md-12 mt-2">
                     <textarea class="form-control col-md-12" type="text" id="txtOrderNotes" rows="5" cols="30"></textarea>

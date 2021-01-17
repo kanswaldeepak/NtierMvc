@@ -209,15 +209,11 @@ namespace NtierMvc.Areas.HRDepartment.Controllers
                 string msgCode = objManager.DeleteEmployeeDetail(id);
                 if (msgCode == "Deleted")
                 {
-                    //return RedirectToAction("HRDepartment");
                     return new JsonResult { Data = GeneralConstants.DeleteSuccess, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
                 }
                 else
                 {
                     return new JsonResult { Data = GeneralConstants.NotDeletedError, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
-                    //Response.StatusCode = 444;
-                    //Response.StatusDescription = "Not Saved";
-                    //return null;
                 }
             }
             else

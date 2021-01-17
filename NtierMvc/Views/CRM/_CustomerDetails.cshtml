@@ -198,7 +198,7 @@
                         <label class="control-label">MOBILE 1 <span class="required">*</span></label>
                         @Html.TextBoxFor(m => m.mob1, new
                    {
-                       @class = "form-control requiredValidation MobileNumber",
+                       @class = "form-control requiredValidation",
                        @placeholder = "Mobile",
                        @maxlength = "15",
                        @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
@@ -210,7 +210,7 @@
                         <label class="control-label">MOBILE 2</label>
                         @Html.TextBoxFor(m => m.mob2, new
                    {
-                       @class = "form-control MobileNumber",
+                       @class = "form-control",
                        @placeholder = "Mobile",
                        @maxlength = "15",
                        @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"

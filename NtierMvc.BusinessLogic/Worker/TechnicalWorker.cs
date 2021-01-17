@@ -884,6 +884,7 @@ namespace NtierMvc.BusinessLogic.Worker
                                 //obj.QuoteNo = dr1.IsNull("QuoteNo") ? string.Empty : Convert.ToString(dr1["QuoteNo"]);
                                 //obj.QuoteDate = dr1.IsNull("QuoteDate") ? string.Empty : Convert.ToString(dr1["QuoteDate"]);
                                 obj.SoNo = dr1.IsNull("SoNo") ? string.Empty : Convert.ToString(dr1["SoNo"]);
+                                obj.SoNoView = dr1.IsNull("SoNoView") ? string.Empty : Convert.ToString(dr1["SoNoView"]);
                                 obj.PoEntity = dr1.IsNull("PoEntity") ? string.Empty : Convert.ToString(dr1["PoEntity"]);
                                 obj.PoLocation = dr1.IsNull("PoLocation") ? string.Empty : Convert.ToString(dr1["PoLocation"]);
                                 obj.PoDor = dr1.IsNull("PoDor") ? string.Empty : Convert.ToString(dr1["PoDor"]);
@@ -945,8 +946,8 @@ namespace NtierMvc.BusinessLogic.Worker
                     Model.Id = dt1.Rows[0]["Id"] == DBNull.Value ? 0 : Convert.ToInt32(dt1.Rows[0]["Id"]);
                     Model.UserInitial = dt1.Rows[0]["UserInitial"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["UserInitial"]);
                     Model.UnitNo = dt1.Rows[0]["UnitNo"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["UnitNo"]);
-                    Model.CustomerId = dt1.Rows[0]["VendorId"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["VendorId"]);
-                    Model.CustomerName = dt1.Rows[0]["VendorName"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["VendorName"]);
+                    Model.CustomerId = dt1.Rows[0]["CustomerId"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["CustomerId"]);
+                    Model.CustomerName = dt1.Rows[0]["CustomerName"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["CustomerName"]);
                     Model.QuoteTypeValue = dt1.Rows[0]["QuoteTypeValue"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["QuoteTypeValue"]);
                     Model.QuoteQtyType = dt1.Rows[0]["QuoteQtyType"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["QuoteQtyType"]);
                     Model.QuoteType = dt1.Rows[0]["QuoteType"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["QuoteType"]);
@@ -954,6 +955,7 @@ namespace NtierMvc.BusinessLogic.Worker
                     Model.QuoteNo = dt1.Rows[0]["QuoteNo"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["QuoteNo"]);
                     Model.QuoteDate = dt1.Rows[0]["QuoteDate"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["QuoteDate"]);
                     Model.SoNo = dt1.Rows[0]["SoNo"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["SoNo"]);
+                    Model.SoNoView = dt1.Rows[0]["SoNoView"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["SoNoView"]);
                     Model.PoEntity = dt1.Rows[0]["PoEntity"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["PoEntity"]);
                     Model.PoLocation = dt1.Rows[0]["PoLocation"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["PoLocation"]);
                     Model.PoDor = dt1.Rows[0]["PoDor"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["PoDor"]);

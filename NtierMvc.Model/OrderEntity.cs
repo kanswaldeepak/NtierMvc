@@ -22,6 +22,7 @@ namespace NtierMvc.Model
         public string QuoteNo { get; set; }
         public string QuoteDate { get; set; }
         public string SoNo { get; set; }
+        public string SoNoView { get; set; }
         public string PoEntity { get; set; }
         public string PoDate { get; set; }
         public string PoDeliveryDate { get; set; }
