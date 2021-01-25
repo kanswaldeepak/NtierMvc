@@ -18,7 +18,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Web.Mvc;
-using Excel = Microsoft.Office.Interop.Excel;
+//using Excel = Microsoft.Office.Interop.Excel;
 
 namespace NtierMvc.Areas.MRM.Controllers
 {
@@ -779,14 +779,14 @@ namespace NtierMvc.Areas.MRM.Controllers
         private void Download(string fileName)
         {
             string fullPath = Path.Combine(Server.MapPath(ConfigurationManager.AppSettings["TempFolder"]), fileName);
-            var excelApp = new Excel.Application();
+            var excelApp = new Microsoft.Office.Interop.Excel.Application();
             excelApp.Visible = true;
 
             if (System.IO.File.Exists(fullPath))
             {
                 ////Get the temp folder and file path in server
-                Excel.Workbooks books = excelApp.Workbooks;
-                Excel.Workbook sheet = books.Open(fullPath, 0, true, 5, "", "", false, Microsoft.Office.Interop.Excel.XlPlatform.xlWindows, "\t", true, false, 0, true, 1, Microsoft.Office.Interop.Excel.XlCorruptLoad.xlNormalLoad);
+                Microsoft.Office.Interop.Excel.Workbooks books = excelApp.Workbooks;
+                Microsoft.Office.Interop.Excel.Workbook sheet = books.Open(fullPath, 0, true, 5, "", "", false, Microsoft.Office.Interop.Excel.XlPlatform.xlWindows, "\t", true, false, 0, true, 1, Microsoft.Office.Interop.Excel.XlCorruptLoad.xlNormalLoad);
                 System.IO.File.Delete(fullPath);
                 //return Json(new { data = "", errorMessage = "" }, JsonRequestBehavior.AllowGet);
             }

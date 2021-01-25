@@ -292,6 +292,18 @@ namespace NtierMvc.DataAccess.Pool
             return msgCode;
         }
 
+        public DataTable LoadDescDetail(int skip, int pageSize, string sortColumn, string sortColumnDir, string search)
+        {
+            var parms = new Dictionary<string, object>();
+            parms.Add("@skip", skip);
+            parms.Add("@PageSize", pageSize);
+            parms.Add("@sortColumn", sortColumn);
+            parms.Add("@sortColumnDir", sortColumnDir);
+            parms.Add("@search", search);
+            string spName = ConfigurationManager.AppSettings["LoadDescDetail"];
+            return _dbAccess.GetDataTable(spName, parms);
+        }
+
 
         #endregion
     }

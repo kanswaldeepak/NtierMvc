@@ -208,7 +208,7 @@ namespace NtierMvc.Model
             }
             return ListEnquiryNo;
         }
-        public string GetQuoteNo(string quotetypeId=null)
+        public string GetQuoteNo(string quotetypeId = null)
         {
             var baseAddress = "TechnicalDetails";
             string Number = "0";
@@ -230,7 +230,7 @@ namespace NtierMvc.Model
             List<DropDownEntity> QuoteNoList = new List<DropDownEntity>();
             using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
             {
-                HttpResponseMessage response = client.GetAsync(baseAddress + "/GetQuoteNoList?quotetypeId=" + quotetypeId + "&SoNo="+ SoNoId).Result;
+                HttpResponseMessage response = client.GetAsync(baseAddress + "/GetQuoteNoList?quotetypeId=" + quotetypeId + "&SoNo=" + SoNoId).Result;
                 if (response.IsSuccessStatusCode)
                 {
                     var data = response.Content.ReadAsStringAsync().Result;
@@ -274,7 +274,7 @@ namespace NtierMvc.Model
             return enqNoList;
         }
 
-        public List<ProductEntity> GetPrepProductNames(string productId, string casingSize, string type=null)
+        public List<ProductEntity> GetPrepProductNames(string productId, string casingSize, string type = null)
         {
             var baseAddress = "TechnicalDetails";
             List<ProductEntity> QuoteNoList = new List<ProductEntity>();
@@ -353,7 +353,7 @@ namespace NtierMvc.Model
             }
             return objEntity;
         }
-        
+
 
         public OrderEntity OrderDetailsPopup(OrderEntity Model)
         {
@@ -562,7 +562,7 @@ namespace NtierMvc.Model
             QuotationPreparationEntity itemEntity = new QuotationPreparationEntity();
             using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
             {
-                HttpResponseMessage response = client.GetAsync(baseAddress + "/GetQuotePrepDetails?itemNoId=" + itemNoId+ "&quoteType="+ quoteType+ "&quoteNo="+ quoteNo).Result;
+                HttpResponseMessage response = client.GetAsync(baseAddress + "/GetQuotePrepDetails?itemNoId=" + itemNoId + "&quoteType=" + quoteType + "&quoteNo=" + quoteNo).Result;
                 if (response.IsSuccessStatusCode)
                 {
                     var data = response.Content.ReadAsStringAsync().Result;
@@ -713,6 +713,26 @@ namespace NtierMvc.Model
             }
             return result;
         }
+
+        public List<DescEntity> LoadDescDetail(int skip, int pageSize, string sortColumn, string sortColumnDir, string search)
+        {
+            List<DescEntity> objList = new List<DescEntity>();
+            var baseAddress = "TechnicalDetails";
+            using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
+            {
+                HttpResponseMessage response = client.GetAsync(baseAddress + "/LoadDescDetail?skip=" + skip + "&pageSize=" + pageSize + "&sortColumn=" + sortColumn + "&sortColumnDir=" + sortColumnDir + "&search=" + search).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    var data = response.Content.ReadAsStringAsync().Result;
+                    objList = JsonConvert.DeserializeObject<List<DescEntity>>(data);
+                }
+            }
+
+            return objList;
+        }
+
+
+
 
 
     }

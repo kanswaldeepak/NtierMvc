@@ -74,8 +74,7 @@ namespace NtierMvc.Areas.Admin.Controllers
                 //ex.Message;
             }
 
-            return new JsonResult { Data = objList, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
-            //return Json(new { draw = draw, recordsFiltered = totalRecords, recordsTotal = totalRecords, Data = objList }, JsonRequestBehavior.AllowGet);
+            return Json(new { draw = draw, recordsFiltered = totalRecords, recordsTotal = totalRecords, data = objList }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
@@ -177,16 +176,16 @@ namespace NtierMvc.Areas.Admin.Controllers
 
 
                 objList = objManager.GetAdminAssigns(skip, pageSize, sortColumn, sortColumnDir, search);
-                totalRecords = objList[0].totalcount;
                 var v = (from a in objList select a);
                 objList = v.ToList();
+                totalRecords = Convert.ToInt32(objList[0].totalcount);
             }
             catch (Exception ex)
             {
                 //ex.Message;
             }
 
-            return new JsonResult { Data = objList, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+            return Json(new { draw = draw, recordsFiltered = totalRecords, recordsTotal = totalRecords, data = objList }, JsonRequestBehavior.AllowGet);
         }
 
     }

@@ -1521,5 +1521,41 @@ namespace NtierMvc.BusinessLogic.Worker
             return result;
         }
 
+        public List<DescEntity> LoadDescDetail(int skip, int pageSize, string sortColumn, string sortColumnDir, string search)
+        {
+            try
+            {
+                List<DescEntity> lstDrpDwn = new List<DescEntity>();
+                DataTable dt = _repository.LoadDescDetail(skip, pageSize, sortColumn, sortColumnDir, search);
+                DescEntity Model;
+
+                if (dt.Rows.Count > 0)
+                {
+                    foreach (DataRow dr in dt.Rows)
+                    {
+                        Model = new DescEntity();
+                        Model.SNo = dr["SNo"] == DBNull.Value ? 0 : Convert.ToInt32(dr["SNo"]);
+                        Model.Id = dr["Id"] == DBNull.Value ? 0 : Convert.ToInt32(dr["Id"]);
+                        Model.MainPL = dr["MainPL"] == DBNull.Value ? string.Empty : Convert.ToString(dr["MainPL"]);
+                        Model.SubPL = dr["SubPL"] == DBNull.Value ? string.Empty : Convert.ToString(dr["SubPL"]);
+                        Model.ProductName = dr["ProductName"] == DBNull.Value ? string.Empty : Convert.ToString(dr["ProductName"]);
+                        Model.ProductNo = dr["ProductNo"] == DBNull.Value ? string.Empty : Convert.ToString(dr["ProductNo"]);
+                        Model.DESQuery = dr["DESQuery"] == DBNull.Value ? string.Empty : Convert.ToString(dr["DESQuery"]);
+                        Model.TotalRecords = dr["TotalRecords"] == DBNull.Value ? 0 : Convert.ToInt32(dr["TotalRecords"]);
+
+
+                        lstDrpDwn.Add(Model);
+                    }
+                }
+
+                return lstDrpDwn;
+            }
+            catch (Exception Ex)
+            {
+                NtierMvc.DataAccess.ExceptionLogging.SendExcepToDB(Ex);
+                throw Ex;
+            }
+        }
+
     }
 }

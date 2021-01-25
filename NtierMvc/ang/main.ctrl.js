@@ -1216,7 +1216,7 @@ angular.module('App').controller("MainController", function ($scope, $http, $tim
                     show: true
                 });
 
-                
+                LoadDescDetails();
                 //$http.get('/Technical/GetDescLists').then(function (response) {
                 //    $scope.DescMailPLList = response.data.DescMailPL;
                 //    $scope.DescSubPLList = response.data.DescSubPL;

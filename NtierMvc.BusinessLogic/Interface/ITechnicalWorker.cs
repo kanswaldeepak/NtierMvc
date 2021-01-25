@@ -64,5 +64,7 @@ namespace NtierMvc.BusinessLogic.Interface
         string SaveNewDescDetail(DescEntity cObj);
         string SaveOrderNote(OrderEntity cEntity);
 
+        List<DescEntity> LoadDescDetail(int skip, int pageSize, string sortColumn, string sortColumnDir, string search);
+
     }
 }

@@ -6,6 +6,8 @@ namespace NtierMvc.Model
 {
     public class DescEntity
     {
+        public int SNo { get; set; }
+        public int TotalRecords { get; set; }
         public int Id { get; set; }
         public string MainPL { get; set; }
         public string SubPL { get; set; }

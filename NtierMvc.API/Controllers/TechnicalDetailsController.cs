@@ -332,5 +332,12 @@ namespace NtierMvc.API.Controllers.Application
             return Ok(_repository.SaveOrderNote(viewModel));
         }
 
+        [HttpGet]
+        [Route("api/TechnicalDetails/LoadDescDetail")]
+        public IHttpActionResult LoadDescDetail(int skip, int pageSize, string sortColumn, string sortColumnDir, string search)
+        {
+            return Ok(_repository.LoadDescDetail(skip, pageSize, sortColumn, sortColumnDir, search));
+        }
+
     }
 }

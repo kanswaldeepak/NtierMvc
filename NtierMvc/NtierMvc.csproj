@@ -1298,6 +1298,7 @@
     <Content Include="Views\GateEntry\_InboundPopUp.cshtml" />
     <Content Include="Views\Technical\EnquiryView.cshtml" />
     <Content Include="Views\Technical\PartialQuoteRegView.cshtml" />
+    <Content Include="Views\Technical\_TechDescDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\Reports\Excel\PRReports\" />

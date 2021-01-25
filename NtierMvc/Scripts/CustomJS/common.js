@@ -1,5 +1,38 @@
 ﻿
-function DisplayNewItemInDdl(selectedId, Name, Property, ColumnName, Value1, ColumnName1) {    
+function DeleteUsingIdFromTable (TableName, ColumnName, Id) {
+    if (!confirm("Are you sure to delete?")) {
+        return;
+    }
+    //show_loader();
+
+    if (TableName == '' || ColumnName == '' || Id == '') {
+        alert("Not Proper Data Selected. Please contact support!!");
+        return;
+    }
+
+    $.ajax({
+        type: 'POST',
+        url: '/Account/DeleteUsingIdFromTable',
+        data: JSON.stringify({ tableName: TableName, columnName: ColumnName, id: Id }),
+        contentType: "application/json; charset=utf-8",
+        success: function (data) {
+            if (data == 'Deleted Successfully!') {
+                alert(res);
+            } else {
+                alert(res, 'E');
+            }
+        },
+        error: function (x, e) {
+            alert('Some error is occurred, Please try after some time.');
+            //$('#spn-Sucess-Failure').text('Some error is occurred, Please try after some time.');
+            //$('#spn-Sucess-Failure').addClass("important red");
+            //$('#Sucess-Failure').modal('show');
+        }
+    })
+
+}
+
+function DisplayNewItemInDdl(selectedId, Name, Property, ColumnName, Value1, ColumnName1) {
     var item = $(selectedId).find("option:selected");
     var value = item.val(); //get the selected option value
     var text = item.html(); //get the selected option text
@@ -30,14 +63,14 @@ function DisplayNewItemInDdl(selectedId, Name, Property, ColumnName, Value1, Col
 };
 
 function AddNewItemInDdl(txtNewOption, SelectedDdlId) {
-    
-    var newitem = $("#" + txtNewOption.id).val(); 
+
+    var newitem = $("#" + txtNewOption.id).val();
     //alert(newitem);
     //var newOption = "<option value='" + newitem + "'>" + newitem + "</option>";
     //$(newOption).insertBefore($("#" + SelectedDdlId.value + " option:last")); //add new option 
 
-    let DdlId = $('#SelectedDdlId').val(); 
-    let tblName = $("#AddDdlNametbl").val(); 
+    let DdlId = $('#SelectedDdlId').val();
+    let tblName = $("#AddDdlNametbl").val();
     let property = $('#AddDdlProperty').val();
     let columnName = $('#AddDdlColumnName').val();
     let value1 = $('#AddDdlValue1').val();
@@ -1255,7 +1288,7 @@ $(document).ready(function () {
             }
             else if ($(element).hasClass("MobileNumber15")) {
                 if (element != null && element != undefined) {
-                    if ($(element).val().trim().length <10) {
+                    if ($(element).val().trim().length < 10) {
                         $(element).next(".commonerror").remove();
                         $(element).after("<label class= 'commonerror' > Mobile Number Should have 10 Digits. </label>");
                         $(element).val('');
