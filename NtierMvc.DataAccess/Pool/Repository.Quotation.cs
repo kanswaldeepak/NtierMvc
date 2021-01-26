@@ -58,7 +58,7 @@ namespace NtierMvc.DataAccess.Pool
             Params.Add("@ProdName", Model.ProdName);
             Params.Add("@QuoteNo", Model.QuoteNo);
             Params.Add("@GeoCode", Model.GeoCode);
-            Params.Add("@QuoteDate", Model.QuoteDate);
+            Params.Add("@QuoteSentOn", Model.QuoteSentOn);
             Params.Add("@QuoteValidity", Model.QuoteValidity);
             Params.Add("@BgReq", Model.BgReq);
             Params.Add("@Inspection", Model.Inspection);

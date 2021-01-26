@@ -113,13 +113,13 @@ namespace NtierMvc.BusinessLogic.Worker
         }
 
 
-        public CustomerEntityDetails GetCustomerDetails(int pageIndex, int pageSize, string SearchCustomerName = null, string SearchCustomerID = null)
+        public CustomerEntityDetails GetCustomerDetails(int pageIndex, int pageSize, string SearchCustomerName = null, string SearchCustomerID = null, string SearchCustomerIsActive = null)
         {
             try
             {
                 CustomerEntityDetails cED = new CustomerEntityDetails();
                 cED.LstCusEnt = new List<CustomerEntity>();
-                DataSet ds = _repository.GetCustomerDetails(pageIndex, pageSize, SearchCustomerName, SearchCustomerID);
+                DataSet ds = _repository.GetCustomerDetails(pageIndex, pageSize, SearchCustomerName, SearchCustomerID, SearchCustomerIsActive);
 
                 if (ds.Tables.Count > 0)
                 {

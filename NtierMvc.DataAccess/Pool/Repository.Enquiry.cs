@@ -78,6 +78,7 @@ namespace NtierMvc.DataAccess.Pool
             Params.Add("@EnqThru", Model.EnqThru);
             Params.Add("@EnqBGreq", Model.EnqBGreq);
             Params.Add("@AgentName", Model.AgentName);
+            Params.Add("@EnqReceiptDate", Model.EnqReceiptDate);
 
             var spName = ConfigurationManager.AppSettings["SaveEnquiryDetails"];
             _dbAccess.ExecuteNonQuery(spName, Params, "@o_MsgCode", out msgCode);

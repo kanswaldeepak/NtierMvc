@@ -80,14 +80,13 @@ function GetEnquiryDetails() {
         data: JSON.stringify({ enquiryId: EnqNo }),
         contentType: "application/json; charset=utf-8",
         success: function (res) {
-            $('#QuoteEnqDt').val(res.DataValueField1.split(' ')[0]);
-            $('#QuoteEnqFor').val(res.DataValueField2);
+            if (res.DataValueField1.length > 0) {
+                $('#QuoteEnqDt').val(res.DataValueField1.split(' ')[0]);
+                $('#QuoteEnqFor').val(res.DataValueField2);
+            }
         },
         error: function (x, e) {
-            alert('Some error is occurred, Please try after some time.' + e);
-            //$('#spn-Sucess-Failure').text('Some error is occurred, Please try after some time.');
-            //$('#spn-Sucess-Failure').addClass("important red");
-            //$('#Sucess-Failure').modal('show');
+            alert('Some error is occurred, Please contact support.' + e);
         }
     })
 }

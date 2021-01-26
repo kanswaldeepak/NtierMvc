@@ -16,6 +16,9 @@
                 }
             </td>
             <td>
+                <label>Status</label>
+            </td>
+            <td>
                 <label>Country</label>
             </td>
             <td>
@@ -31,14 +34,23 @@
         <tr>
             <td></td>
             @*<td>
-            @Html.DropDownList("VendorType", new SelectList(@ViewBag.ListVendorType, "DataStringValueField", "DataTextField", "Select"),
-                       new
-                       {
-                           @class = "form-control",
-                           ng_model = "SearchCustVendorType",
-                           @id = "CUVendorType"
-                       })
-        </td>*@
+                    @Html.DropDownList("VendorType", new SelectList(@ViewBag.ListVendorType, "DataStringValueField", "DataTextField", "Select"),
+                               new
+                               {
+                                   @class = "form-control",
+                                   ng_model = "SearchCustVendorType",
+                                   @id = "CUVendorType"
+                               })
+                </td>*@
+            <td>
+                @Html.DropDownList("CustStatus", new SelectList(@ViewBag.ListCustStatus, "DataStringValueField", "DataTextField", "Select"),
+                           new
+                           {
+                               @class = "form-control",
+                               ng_model = "SearchCustomerIsActive",
+                               @id = "CUCustStatus"
+                           })
+            </td>
             <td>
                 @Html.DropDownList("Country", new SelectList(@ViewBag.ListCountry, "DataStringValueField", "DataTextField", "Select"),
                            new
@@ -74,24 +86,24 @@
                 <button class="btn btn-sm btn-info" type="button" id="btnClearSearchCustomer" ng-click="DefaultCustomerList();">Clear</button>
             </td>
             @*<td>
-                @Html.DropDownList("CountryId", new SelectList(@ViewBag.ListCountry, "DataStringValueField", "DataTextField", "Select"),
-                           new
-                           {
-                               @class = "form-control",
-                               ng_model = "SearchCustCountry",
-                               @id = "CUCountry"
-                           })
-            </td>
-            <td>
-            @Html.DropDownList("QuoteType", new SelectList(@ViewBag.ListQuoteType, "DataStringValueField", "DataTextField", "Select"),
-                       new
-                       {
-                           @class = "form-control",
-                           ng_model = "SearchQuoteType",
-                           @id = "CUQuoteType",
-                           @multiple = "true"
-                       })
-        </td>*@
+                        @Html.DropDownList("CountryId", new SelectList(@ViewBag.ListCountry, "DataStringValueField", "DataTextField", "Select"),
+                                   new
+                                   {
+                                       @class = "form-control",
+                                       ng_model = "SearchCustCountry",
+                                       @id = "CUCountry"
+                                   })
+                    </td>
+                    <td>
+                    @Html.DropDownList("QuoteType", new SelectList(@ViewBag.ListQuoteType, "DataStringValueField", "DataTextField", "Select"),
+                               new
+                               {
+                                   @class = "form-control",
+                                   ng_model = "SearchQuoteType",
+                                   @id = "CUQuoteType",
+                                   @multiple = "true"
+                               })
+                </td>*@
             <td>
             </td>
         </tr>
@@ -158,11 +170,11 @@
                         {{L.Designation}}
                     </td>
                     @*<td>
-        {{L.State}}
-        </td>
-        <td>
-            {{L.email1}}
-        </td>*@
+                        {{L.State}}
+                        </td>
+                        <td>
+                            {{L.email1}}
+                        </td>*@
                     <td>
                         {{L.mob1}}
                     </td>
@@ -213,59 +225,59 @@
 </div>
 
 @*<div class="modal fade" id="registor-Sucess-Failure" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h6 class="modal-title">Notification</h6>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                &nbsp;&nbsp;<span id="spn-registor-Sucess-Failure"></span><span id="spnUserName" style="font-weight:bold"></span>&nbsp;&nbsp;<span id="spnUserNameMore"></span>
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h6 class="modal-title">Notification</h6>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    &nbsp;&nbsp;<span id="spn-registor-Sucess-Failure"></span><span id="spnUserName" style="font-weight:bold"></span>&nbsp;&nbsp;<span id="spnUserNameMore"></span>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" data-dismiss="modal" class="btn btn-primary">OK</button>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" data-dismiss="modal" class="btn btn-primary">OK</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
 
-<div class="modal fade" id="Sucess-Failure" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h6 class="modal-title">Notification</h6>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group row">
-                                &nbsp;&nbsp;<span id="spn-Sucess-Failure"></span>
+    <div class="modal fade" id="Sucess-Failure" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h6 class="modal-title">Notification</h6>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group row">
+                                    &nbsp;&nbsp;<span id="spn-Sucess-Failure"></span>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" data-dismiss="modal" class="btn btn-primary">OK</button>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" data-dismiss="modal" class="btn btn-primary">OK</button>
+                </div>
             </div>
         </div>
-    </div>
-</div>*@
+    </div>*@
 <script type="text/javascript">
 
     $(document).ready(function () {
@@ -439,7 +451,7 @@
             $('#CUCustomerName').val([]).trigger('chosen:updated');
             //$('#POSearchDeliveryDateFrom').val('');
             //$('#POSearchDeliveryDateTo').val('');
-            
+
         }
     );
 

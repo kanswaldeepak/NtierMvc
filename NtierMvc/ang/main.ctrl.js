@@ -15,10 +15,11 @@ angular.module('App').controller("MainController", function ($scope, $http, $tim
         $scope.SearchCountry = "";
         $scope.SearchCustomerName = "";
         $scope.SearchCustomerID = "";
+        $scope.SearchCustomerIsActive = "";
     }
 
     $scope.FetchCustomerList = function () {
-        $http.get(window.FetchCustomerList + "?pageindex=" + $scope.custPageIndex + "&pagesize=" + $scope.custPageSize + "&SearchCustomerName=" + $scope.SearchCustomerName + "&SearchCustomerID=" + $scope.SearchCustomerID).success(function (response) {
+        $http.get(window.FetchCustomerList + "?pageindex=" + $scope.custPageIndex + "&pagesize=" + $scope.custPageSize + "&SearchCustomerName=" + $scope.SearchCustomerName + "&SearchCustomerID=" + $scope.SearchCustomerID + "&SearchCustomerIsActive=" + $scope.SearchCustomerIsActive).success(function (response) {
             $scope.AvailableCustomerList = response.LstCusEnt;
             $scope.custTotalCount = response.totalcount;
         }, function (error) {

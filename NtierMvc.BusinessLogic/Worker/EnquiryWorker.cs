@@ -225,6 +225,7 @@ namespace NtierMvc.BusinessLogic.Worker
                     Model.EnqThru = dt1.Rows[0]["EnqThru"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["EnqThru"]);
                     Model.EnqBGreq = dt1.Rows[0]["EnqBGreq"] == DBNull.Value ? 0 : Convert.ToInt32(dt1.Rows[0]["EnqBGreq"]);
                     Model.AgentName = dt1.Rows[0]["AgentName"] == DBNull.Value ? "" : Convert.ToString(dt1.Rows[0]["AgentName"]);
+                    Model.EnqReceiptDate = dt1.Rows[0]["EnqReceiptDate"] == DBNull.Value ? "" : Convert.ToString(dt1.Rows[0]["EnqReceiptDate"]);
                 }
             }
 

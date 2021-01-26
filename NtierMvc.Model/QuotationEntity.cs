@@ -25,6 +25,7 @@ namespace NtierMvc.Model
         public string GeoArea { get; set; }
         public string GeoCode { get; set; }
         public string QuoteDate { get; set; }
+        public string QuoteSentOn { get; set; }
         public string QuoteValidity { get; set; }
         public string BgReq { get; set; }
         public string Inspection { get; set; }

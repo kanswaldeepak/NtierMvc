@@ -40,7 +40,8 @@ namespace NtierMvc.Controllers
         {
             //Customer
             ViewBag.ListCustomerName = model.GetMasterTableStringList("Customer", "CustomerName", "CustomerName", "", "", GeneralConstants.ListTypeN);
-            ViewBag.ListCustomerId = model.GetMasterTableStringList("Customer", "Id", "CustomerId", "", "", GeneralConstants.ListTypeN);            
+            ViewBag.ListCustomerId = model.GetMasterTableStringList("Customer", "Id", "CustomerId", "", "", GeneralConstants.ListTypeN);
+            ViewBag.ListCustStatus = model.GetDropDownList(TableNames.Master_Taxonomy, GeneralConstants.ListTypeN, ColumnNames.DropDownID, ColumnNames.DropDownValue, "CustomerStatus", ColumnNames.Property,false,"asc",ColumnNames.DropDownValue);
             ViewBag.ListCountry = model.GetMasterTableStringList("Master.Country", "Id", "Country", "", "", GeneralConstants.ListTypeN);
 
             //Enquiry
@@ -99,12 +100,13 @@ namespace NtierMvc.Controllers
             return View(custDetail);
         }
 
-        public JsonResult FetchCustomerList(string pageIndex, string pageSize, string SearchCustomerName, string SearchCustomerID)
+        public JsonResult FetchCustomerList(string pageIndex, string pageSize, string SearchCustomerName, string SearchCustomerID, string SearchCustomerIsActive)
         {
             SearchCustomerName = SearchCustomerName == "-1" ? string.Empty : SearchCustomerName;
             SearchCustomerID = SearchCustomerID == "-1" ? string.Empty : SearchCustomerID;
+            SearchCustomerIsActive = SearchCustomerIsActive == "-1" ? string.Empty : SearchCustomerIsActive;
 
-            custDetail = objManager.GetCustomerDetails(Convert.ToInt32(pageIndex), Convert.ToInt32(pageSize), SearchCustomerName, SearchCustomerID);
+            custDetail = objManager.GetCustomerDetails(Convert.ToInt32(pageIndex), Convert.ToInt32(pageSize), SearchCustomerName, SearchCustomerID, SearchCustomerIsActive);
             return new JsonResult { Data = custDetail, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
             //return custDetail.LstCusEnt;
         }
