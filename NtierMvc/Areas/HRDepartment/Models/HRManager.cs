@@ -124,13 +124,13 @@ namespace NtierMvc.Areas.HRDepartment.Models
             return Model;
         }
 
-        public EmployeeEntityDetails GetEmployeeDetails(int pageIndex, int pageSize, string SearchEmployeeNameId, string SearchDesignation, string SearchDepartment)
+        public EmployeeEntityDetails GetEmployeeDetails(int pageIndex, int pageSize, string SearchEmployeeNameId, string SearchDesignation, string SearchDepartment, string SearchEmpStatus = null)
         {
             var baseAddress = "HRDetails";
             EmployeeEntityDetails cusEnt = new EmployeeEntityDetails();
             using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
             {
-                HttpResponseMessage response = client.GetAsync(baseAddress + "/GetEmployeeDetails?pageIndex=" + pageIndex + "&pageSize=" + pageSize + "&SearchEmployeeNameId=" + SearchEmployeeNameId + "&SearchDesignation=" + SearchDesignation + "&SearchDepartment=" + SearchDepartment).Result;
+                HttpResponseMessage response = client.GetAsync(baseAddress + "/GetEmployeeDetails?pageIndex=" + pageIndex + "&pageSize=" + pageSize + "&SearchEmployeeNameId=" + SearchEmployeeNameId + "&SearchDesignation=" + SearchDesignation + "&SearchDepartment=" + SearchDepartment + "&SearchEmpStatus=" + SearchEmpStatus).Result;
                 if (response.IsSuccessStatusCode)
                 {
                     var data = response.Content.ReadAsStringAsync().Result;

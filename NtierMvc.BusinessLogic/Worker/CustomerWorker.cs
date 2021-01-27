@@ -153,6 +153,7 @@ namespace NtierMvc.BusinessLogic.Worker
                                 obj.Country = dr1.IsNull("Country") ? string.Empty : Convert.ToString(dr1["Country"]);
                                 obj.mob1 = dr1.IsNull("MOB1") ? string.Empty : Convert.ToString(dr1["MOB1"]);
                                 obj.email1 = dr1.IsNull("EMAIL1") ? string.Empty : Convert.ToString(dr1["EMAIL1"]);
+                                obj.Status = dr1.IsNull("CustomerStatus") ? string.Empty : Convert.ToString(dr1["CustomerStatus"]);
 
                                 cED.LstCusEnt.Add(obj);
                             }

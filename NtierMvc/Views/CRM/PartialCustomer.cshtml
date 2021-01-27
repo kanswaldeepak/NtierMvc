@@ -136,6 +136,9 @@
                     <td>
                         Mobile
                     </td>
+                    <td>
+                        Status
+                    </td>
                 </tr>
             </thead>
             <tbody>
@@ -170,13 +173,16 @@
                         {{L.Designation}}
                     </td>
                     @*<td>
-                        {{L.State}}
-                        </td>
-                        <td>
-                            {{L.email1}}
-                        </td>*@
+        {{L.State}}
+        </td>
+        <td>
+            {{L.email1}}
+        </td>*@
                     <td>
                         {{L.mob1}}
+                    </td>
+                    <td>
+                        {{L.Status}}
                     </td>
                 </tr>
             </tbody>
@@ -289,6 +295,12 @@
 
         window.GetCustomerListForCusts = '@Url.Action("GetCustomerListForCust","CRM")';
         window.GetDdlValueForCustomer = '@Url.Action("GetDdlValueForCustomer", "CRM")';
+
+        $('#CUCustStatus').chosen({
+            width: "150px",
+            placeholder_text_single: "Select Status",
+            placeholder_text_multiple: "Select Status"
+        });
 
         $('#CUCustomerId').chosen({
             width: "150px",

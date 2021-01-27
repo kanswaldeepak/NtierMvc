@@ -146,7 +146,8 @@ namespace NtierMvc.Controllers
             ViewBag.ListCustomerType = model.GetMasterTableStringList(TableNames.Master_Taxonomy, ColumnNames.DropDownID, ColumnNames.DropDownValue, "Domestic/International", ColumnNames.Property, GeneralConstants.ListTypeN);
             ViewBag.ListFUNCTION_AREA = model.GetMasterTableStringList(TableNames.Master_FunctionalArea, ColumnNames.id, ColumnNames.FunctionArea);
             ViewBag.ListCountry = model.GetMasterTableStringList(TableNames.Master_Country, ColumnNames.id, ColumnNames.Country);
-            ViewBag.ListStatus = model.GetDropDownList(TableNames.Master_Taxonomy, GeneralConstants.ListTypeN, ColumnNames.DropDownID, ColumnNames.DropDownValue, "CustomerStatus", ColumnNames.Property, true);
+            ViewBag.ListStatus = model.GetDropDownList(TableNames.Master_Taxonomy, GeneralConstants.ListTypeN, ColumnNames.DropDownID, ColumnNames.DropDownValue, "CustomerStatus", ColumnNames.Property, false, "asc", ColumnNames.DropDownValue);
+            
 
             if (!string.IsNullOrEmpty(Session["UserId"].ToString()))
                 cus.UnitNo = Session["UserId"].ToString();

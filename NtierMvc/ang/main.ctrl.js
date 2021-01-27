@@ -724,7 +724,7 @@ angular.module('App').controller("MainController", function ($scope, $http, $tim
 
 
     $scope.FetchOrdersList = function () {
-        $http.get(window.FetchOrdersList + "?pageindex=" + $scope.orderPageIndex + "&pagesize=" + $scope.orderPageSize + "&SearchQuoteType=" + $scope.SearchOrderQuoteType + "&SearchVendorID=" + $scope.SearchOrderVendorID + "&SearchProductGroup=" + $scope.SearchOrderProductGroup + "&SearchDeliveryTerms=" + $scope.SearchOrderDeliveryTerms).success(function (response) {
+        $http.get(window.FetchOrdersList + "?pageindex=" + $scope.orderPageIndex + "&pagesize=" + $scope.orderPageSize + "&SearchQuoteType=" + $scope.SearchOrderQuoteType + "&SearchVendorID=" + $scope.SearchOrderVendorID + "&SearchProductGroup=" + $scope.SearchOrderProductGroup + "&SearchDeliveryTerms=" + $scope.SearchOrderDeliveryTerms + "&SearchPODeliveryDate=" + $scope.SearchPODeliveryDate).success(function (response) {
             $scope.AvailableOrdersList = response.lstOrderEntity;
             $scope.orderTotalCount = response.totalcount;
         }, function (error) {

@@ -110,6 +110,8 @@ namespace NtierMvc.Controllers
             ViewBag.ListDeliveryTerms = model.GetDropDownList(TableNames.Master_Taxonomy, GeneralConstants.ListTypeD, ColumnNames.DropDownID, ColumnNames.DropDownValue, "DeliveryTerms", ColumnNames.ObjectName);
             ViewBag.ListSubject = "";
 
+            //Order
+            ViewBag.ListPODeliveryDate = model.GetDropDownList(TableNames.Orders, GeneralConstants.ListTypeD, ColumnNames.id, ColumnNames.PoDeliveryDate, "", "");
 
             return View();
         }
@@ -743,15 +745,16 @@ namespace NtierMvc.Controllers
             return new JsonResult { Data = lstProducts, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 
-        public JsonResult FetchOrdersList(string pageIndex, string pageSize, string SearchQuoteType = null, string SearchVendorID = null, string SearchProductGroup = null, string SearchDeliveryTerms = null)
+        public JsonResult FetchOrdersList(string pageIndex, string pageSize, string SearchQuoteType = null, string SearchVendorID = null, string SearchProductGroup = null, string SearchDeliveryTerms = null, string SearchPODeliveryDate = null)
         {
             OrderEntityDetails orderEntity = new OrderEntityDetails();
             SearchQuoteType = SearchQuoteType == "undefined" ? string.Empty : SearchQuoteType;
             SearchVendorID = SearchVendorID == "undefined" ? string.Empty : SearchVendorID;
             SearchProductGroup = SearchProductGroup == "undefined" ? string.Empty : SearchProductGroup;
             SearchDeliveryTerms = SearchDeliveryTerms == "undefined" ? string.Empty : SearchDeliveryTerms;
+            SearchPODeliveryDate = SearchPODeliveryDate == "undefined" ? string.Empty : SearchPODeliveryDate;
 
-            orderEntity = objManager.GetOrderDetails(Convert.ToInt32(pageIndex), Convert.ToInt32(pageSize), SearchQuoteType, SearchVendorID, SearchProductGroup, SearchDeliveryTerms);
+            orderEntity = objManager.GetOrderDetails(Convert.ToInt32(pageIndex), Convert.ToInt32(pageSize), SearchQuoteType, SearchVendorID, SearchProductGroup, SearchDeliveryTerms, SearchPODeliveryDate);
             return new JsonResult { Data = orderEntity, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 

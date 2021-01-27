@@ -306,13 +306,13 @@ namespace NtierMvc.Model
             return result;
         }
 
-        public OrderEntityDetails GetOrderDetails(int pageIndex, int pageSize, string SearchQuoteType = null, string SearchVendorID = null, string SearchProductGroup = null, string SearchDeliveryTerms = null)
+        public OrderEntityDetails GetOrderDetails(int pageIndex, int pageSize, string SearchQuoteType = null, string SearchVendorID = null, string SearchProductGroup = null, string SearchDeliveryTerms = null, string SearchPODeliveryDate = null)
         {
             var baseAddress = "TechnicalDetails";
             OrderEntityDetails Order = new OrderEntityDetails();
             using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
             {
-                HttpResponseMessage response = client.GetAsync(baseAddress + "/GetOrderDetails?pageIndex=" + pageIndex + "&pageSize=" + pageSize + "&SearchQuoteType=" + SearchQuoteType + "&SearchVendorID=" + SearchVendorID + "&SearchProductGroup=" + SearchProductGroup + "&SearchDeliveryTerms=" + SearchDeliveryTerms).Result;
+                HttpResponseMessage response = client.GetAsync(baseAddress + "/GetOrderDetails?pageIndex=" + pageIndex + "&pageSize=" + pageSize + "&SearchQuoteType=" + SearchQuoteType + "&SearchVendorID=" + SearchVendorID + "&SearchProductGroup=" + SearchProductGroup + "&SearchDeliveryTerms=" + SearchDeliveryTerms + "&SearchPODeliveryDate=" + SearchPODeliveryDate).Result;
                 if (response.IsSuccessStatusCode)
                 {
                     var data = response.Content.ReadAsStringAsync().Result;

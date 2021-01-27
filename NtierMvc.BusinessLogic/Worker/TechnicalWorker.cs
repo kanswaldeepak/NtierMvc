@@ -852,13 +852,13 @@ namespace NtierMvc.BusinessLogic.Worker
         }
 
 
-        public OrderEntityDetails GetOrderDetails(int pageIndex, int pageSize, string SearchQuoteType = null, string SearchVendorID = null, string SearchProductGroup = null, string SearchDeliveryTerms = null)
+        public OrderEntityDetails GetOrderDetails(int pageIndex, int pageSize, string SearchQuoteType = null, string SearchVendorID = null, string SearchProductGroup = null, string SearchDeliveryTerms = null, string SearchPODeliveryDate = null)
         {
             try
             {
                 OrderEntityDetails qED = new OrderEntityDetails();
                 qED.lstOrderEntity = new List<OrderEntity>();
-                DataSet ds = _repository.GetOrderDetails(pageIndex, pageSize, SearchQuoteType, SearchVendorID, SearchProductGroup, SearchDeliveryTerms);
+                DataSet ds = _repository.GetOrderDetails(pageIndex, pageSize, SearchQuoteType, SearchVendorID, SearchProductGroup, SearchDeliveryTerms, SearchPODeliveryDate);
                 //DataTable dt = _repository.GetOrderDetails();
 
                 if (ds.Tables.Count > 0)
@@ -903,6 +903,7 @@ namespace NtierMvc.BusinessLogic.Worker
                                 //obj.LotWiseDate = dr1.IsNull("LotWiseDate") ? string.Empty : Convert.ToString(dr1["LotWiseDate"]);
                                 obj.ConsigneeName = dr1.IsNull("ConsigneeName") ? string.Empty : Convert.ToString(dr1["ConsigneeName"]);
                                 obj.ConsigneeLocation = dr1.IsNull("ConsigneeLocation") ? string.Empty : Convert.ToString(dr1["ConsigneeLocation"]);
+                                obj.CustomerId = dr1.IsNull("CustomerId") ? string.Empty : Convert.ToString(dr1["CustomerId"]);
                                 //obj.InspectionAgency = dr1.IsNull("InspectionAgency") ? string.Empty : Convert.ToString(dr1["InspectionAgency"]);
                                 //obj.ModeOfShipment = dr1.IsNull("ModeOfShipment") ? string.Empty : Convert.ToString(dr1["ModeOfShipment"]);
                                 //obj.PaymentTerms = dr1.IsNull("PaymentTerms") ? string.Empty : Convert.ToString(dr1["PaymentTerms"]);

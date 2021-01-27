@@ -40,9 +40,9 @@ namespace NtierMvc.API.Controllers.Application
         }
 
         [Route("api/HrDetails/GetEmployeeDetails")]
-        public IHttpActionResult GetEmployeeDetails(int pageIndex, int pageSize, string SearchEmployeeNameId = null, string SearchDesignation = null, string SearchDepartment = null)
+        public IHttpActionResult GetEmployeeDetails(int pageIndex, int pageSize, string SearchEmployeeNameId = null, string SearchDesignation = null, string SearchDepartment = null, string SearchEmpStatus = null)
         {
-            return Ok(_repository.GetEmployeeDetails(pageIndex, pageSize, SearchEmployeeNameId, SearchDesignation, SearchDepartment));
+            return Ok(_repository.GetEmployeeDetails(pageIndex, pageSize, SearchEmployeeNameId, SearchDesignation, SearchDepartment, SearchEmpStatus));
         }
 
         [HttpPost]
