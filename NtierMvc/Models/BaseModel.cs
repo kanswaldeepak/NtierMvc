@@ -1460,10 +1460,49 @@ namespace NtierMvc.Models
             return lstDropDownEntity;
         }
 
+        public string SaveTableData(string TableName, string Column1, string Value1, string Column2 = null, string Value2 = null, string Column3 = null, string Value3 = null, string Column4 = null, string Value4 = null, string Column5 = null, string Value5 = null, string Column6 = null, string Value6 = null, string Column7 = null, string Value7 = null, string Column8 = null, string Value8 = null, string Column9 = null, string Value9 = null, string Column10 = null, string Value10 = null)
+        {
+            string result = "0";
+            var baseAddress = "Base";
+            
+            InsertTableData iData = new InsertTableData();
+            iData.TableName = TableName;
+            iData.Column1 = Column1;
+            iData.Column2 = Column2;
+            iData.Column3 = Column3;
+            iData.Column4 = Column4;
+            iData.Column5 = Column5;
+            iData.Column6 = Column6;
+            iData.Column7 = Column7;
+            iData.Column8 = Column8;
+            iData.Column9 = Column9;
+            iData.Column10 = Column10;
+
+            iData.Value1 = Value1;
+            iData.Value2 = Value2;
+            iData.Value3 = Value3;
+            iData.Value4 = Value4;
+            iData.Value5 = Value5;
+            iData.Value6 = Value6;
+            iData.Value7 = Value7;
+            iData.Value8 = Value8;
+            iData.Value9 = Value9;
+            iData.Value10 = Value10;
+
+            using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
+            {
+                HttpResponseMessage response = client.PostAsJsonAsync(baseAddress + "/SaveTableData", iData).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    var data = response.Content.ReadAsStringAsync().Result;
+                    result = JsonConvert.DeserializeObject<string>(data);
+                }
+            }
+            return result;
+        }
 
 
-
-
+       
 
     }
 }

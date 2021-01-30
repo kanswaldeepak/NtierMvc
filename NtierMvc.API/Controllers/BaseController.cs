@@ -606,6 +606,14 @@ namespace NtierMvc.API.Controllers
             return Ok(_repository.SaveNewItemInDdl(dEntity));
         }
 
+        [HttpPost]
+        [ResponseType(typeof(string))]
+        [Route("api/Base/SaveTableData")]
+        public IHttpActionResult SaveTableData(InsertTableData iData)
+        {
+            return Ok(_repository.SaveTableData(iData));
+        }
+
 
     }
 }

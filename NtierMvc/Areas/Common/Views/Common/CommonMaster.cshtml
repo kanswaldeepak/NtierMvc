@@ -1,6 +1,6 @@
 ﻿@using NtierMvc.Infrastructure
 @{
-    ViewBag.Title = "Admin Master";
+    ViewBag.Title = "Common Master";
     Layout = "~/Views/Shared/_LayoutMaster.cshtml";
 }
 
@@ -8,20 +8,20 @@
 <link href="~/Content/Site.css" rel="stylesheet" />
 <script src="~/Scripts/tabs.js"></script>
 
-<div ng-controller="AdminController">
+<div ng-controller="CommonController">
     <div class="tab">
-        <button class="tablinks" onclick="openCity(event, 'AdminDashBoard')" id="defaultOpen">Assign Roles</button>
-        <button class="talinks" onclick="openCity(event, 'AssignAdminRoles')">Assign Admins</button>
+        <button class="tablinks" onclick="openCity(event, 'CommonDashBoard')" id="defaultOpen">Save Country</button>
+        @*<button class="talinks" onclick="openCity(event, 'AssignAdminRoles')">Assign Admins</button>*@
     </div>
 
     <!-- Tab content -->
-    <div id="AdminDashBoard" class="tabcontent">
-        @Html.Partial("PartialAdminDashBoard")
+    <div id="CommonDashBoard" class="tabcontent">
+        @Html.Partial("PartialCommonDashBoard")
     </div>
 
-    <div id="AssignAdminRoles" class="tabcontent">
+    @*<div id="AssignAdminRoles" class="tabcontent">
         @Html.Partial("PartialAssignAdmin")
-    </div>
+    </div>*@
 
 </div>
 
@@ -32,5 +32,3 @@
         @*window.LeaveManagementTab = '@Url.Action("PartialLeaveManagement", "Hr")';*@
     });
 </script>
-
-<script src="~/Areas/Admin/Scripts/Admin.js"></script>

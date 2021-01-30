@@ -1510,5 +1510,39 @@ namespace NtierMvc.DataAccess.Pool
             return list;
         }
 
+        public string SaveTableData(InsertTableData entity)
+        {
+            string spName = ConfigurationManager.AppSettings["SaveTableData"];
+            string msgCode = "";
+
+            var parms = new Dictionary<string, object>();
+            parms.Add("@tbl", entity.TableName);
+            
+            parms.Add("@column1", entity.Column1);
+            parms.Add("@value1", entity.Value1);
+
+            parms.Add("@column2", entity.Column2);
+            parms.Add("@value2", entity.Value2);
+            parms.Add("@column3", entity.Column3);
+            parms.Add("@value3", entity.Value3);
+            parms.Add("@column4", entity.Column4);
+            parms.Add("@value4", entity.Value4);
+            parms.Add("@column5", entity.Column5);
+            parms.Add("@value5", entity.Value5);
+            parms.Add("@column6", entity.Column6);
+            parms.Add("@value6", entity.Value6);
+            parms.Add("@column7", entity.Column7);
+            parms.Add("@value7", entity.Value7);
+            parms.Add("@column8", entity.Column8);
+            parms.Add("@value8", entity.Value8);
+            parms.Add("@column9", entity.Column9);
+            parms.Add("@value9", entity.Value9);
+            parms.Add("@column10", entity.Column10);
+            parms.Add("@value10", entity.Value10);
+
+            _dbAccess.ExecuteNonQuery(spName, parms, "@o_MsgCode", out msgCode);
+            return msgCode;
+        }
+
     }
 }

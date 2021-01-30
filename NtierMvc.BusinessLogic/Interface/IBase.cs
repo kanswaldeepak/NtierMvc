@@ -131,6 +131,7 @@ namespace NtierMvc.BusinessLogic.Interface
 
         string SaveBulkEntryDetails(BulkUploadEntity bEntity);
         List<DropDownEntity> SaveNewItemInDdl(AddDdlEntity bEntity);
+        string SaveTableData(InsertTableData iData);
 
     }
 }
