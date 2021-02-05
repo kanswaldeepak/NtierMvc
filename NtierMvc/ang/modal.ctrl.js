@@ -283,6 +283,34 @@ angular.module('App').controller("ModalController", function ($scope, $http, $ti
 
     }
 
+
+    $scope.SaveRevisedOrderDetail = function () {
+        var frm = $("#formSaveRevisedOrderDetails");
+        var formData = new FormData(frm[0]);
+
+        var Status = false;
+        Status = GetFormValidationStatus("#formSaveRevisedOrderDetails");
+
+        if (!Status) {
+            alert("Kindly Fill all mandatory fields");
+        }
+        else {
+            $http({ url: window.SaveRevisedOrderDetails, method: 'POST', data: formData, headers: { 'Content-Type': undefined } }).success(
+                function (res) {
+                    if (res == 'Saved Successfully!') {
+                        alert(res);
+                    }
+                    else {
+                        alert(res)
+                    }
+                }
+            ).error(function (res) { showHttpErr(res); });
+
+        }
+
+    }
+    
+
 });
 
 //EOF

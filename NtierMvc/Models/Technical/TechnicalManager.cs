@@ -731,7 +731,21 @@ namespace NtierMvc.Model
             return objList;
         }
 
-
+        public string SaveRevisedOrderDetails(OrderEntity viewModel)
+        {
+            string result = "0";
+            var baseAddress = "TechnicalDetails";
+            using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
+            {
+                HttpResponseMessage response = client.PostAsJsonAsync(baseAddress + "/SaveRevisedOrderDetails", viewModel).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    var data = response.Content.ReadAsStringAsync().Result;
+                    result = JsonConvert.DeserializeObject<string>(data);
+                }
+            }
+            return result;
+        }
 
 
 

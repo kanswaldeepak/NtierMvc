@@ -515,6 +515,7 @@ namespace NtierMvc.Model
         public const string QuoteNo = "QuoteNo";
         public const string MailId = "MailId";
         public const string SoNo = "SoNo";
+        public const string SoNoView = "SoNoView";
         public const string OrderDocName = "OrderDocName";
         public const string context_settings_id = "context_settings_id";
         public const string set_options = "set_options";

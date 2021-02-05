@@ -866,6 +866,46 @@ angular.module('App').controller("MainController", function ($scope, $http, $tim
         ).error(function (res) { showHttpErr(res); });
     }
 
+    $scope.BindRevisedOrderPopup = function () {
+
+        var _actionType = "ADD"
+        $.ajax({
+            type: "POST",
+            data: { actionType: _actionType },
+            datatype: "JSON",
+            url: window.RevisedOrderDetailsPopup,
+            success: function (html) {
+                html = $compile(html)($scope);
+                SetModalTitle("Add New Revised Order")
+                SetModalBody(html);
+                HideLoadder();
+                ShowModal();
+
+
+                if (!($('.modal.in').length)) {
+                    $('.modal-dialog').css({
+                        top: '5%',
+                        left: '5%'
+                    });
+                }
+                $('#ModalPopup').modal({
+                    backdrop: false,
+                    show: true
+                });
+
+                $('.modal-dialog').draggable({
+                    handle: ".modal-body"
+                });
+
+            },
+            error: function (r) {
+                HideLoadder();
+                alert(window.ErrorMsg);
+            }
+        })
+        //});
+    }
+
     //For Item
     $scope.BindItemPopup = function () {
         var _actionType = "ADD"

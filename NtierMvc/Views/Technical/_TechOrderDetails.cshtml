@@ -425,6 +425,38 @@
                         <span class="HideValidMsg"> Enter End User</span>
                     </div>
                 </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label">
+                            Revised PO No <span class="required">*</span>
+                        </label>
+                        @Html.TextBoxFor(m => m.RevisedPoNo, new
+                   {
+                       @class = "form-control requiredValidation",
+                       @id = "RORevisedPoNoOrder",
+                       @placeholder = " Enter PO No",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                   })
+                        <span class="HideValidMsg"> Enter PO No</span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label">
+                            Revised PO Date <span class="required">*</span>
+                        </label>
+                        @Html.TextBoxFor(m => m.RevisedPoDate, new
+                   {
+                       @class = "form-control requiredValidation CurrentEndDate",
+                       autocomplete = "off",
+                       @id = "RORevisedPoDateOrder",
+                       @placeholder = "dd/MM/yyyy",
+                       @style = "disabled :disabled",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                   })
+                        <span class="HideValidMsg"> Select PO Date</span>
+                    </div>
+                </div>
                 <div class="col-md-2" hidden>
                     <div class="form-group">
                         <label class="control-label">

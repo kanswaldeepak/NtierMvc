@@ -89,6 +89,16 @@
                 <button class="btn btn-sm btn-info" type="button" id="btnClearSearchQuotereg" ng-click="DefaultOrdersList(); FetchOrdersList();">Clear</button>
             </td>
         </tr>
+        <tr>
+            <td>
+                <button id="btnRevisedOrder" type="button" class="btn btn-outline-info btn-sm" style="float: left;" ng-click="BindRevisedOrderPopup()"><i class="fa fa-plus"></i><b> Add New Revised Order</b></button>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
     </table>
 </div>
 
@@ -358,6 +368,7 @@
         window.DeleteOrderDetail = '@Url.Action("DeleteOrderDetail", "Technical")';
         window.ItemDetailsPopup = '@Url.Action("ItemPopup", "Technical")';
         window.GetPrepQuoteNo = '@Url.Action("GetPrepQuoteNo", "Technical")';
+        window.RevisedOrderDetailsPopup = '@Url.Action("RevisedOrderDetailsPopup", "Technical")';
 
         $('#ORPODeliveryDate').chosen({
             width: "210px",
@@ -485,8 +496,6 @@
     }
 
 </script>
-
-
 
 
 <script src="~/Scripts/CustomJS/TechItemDetails.js"></script>

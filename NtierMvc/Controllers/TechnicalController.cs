@@ -772,21 +772,21 @@ namespace NtierMvc.Controllers
         public ActionResult OrderPopup(string actionType, string Id)
         {
             model = new BaseModel();
-            ViewBag.ListQuoteNo = model.GetMasterTableStringList("QuotationRegister", "Id", "QUOTENO", "", "", GeneralConstants.ListTypeN);
+            ViewBag.ListQuoteNo = model.GetMasterTableStringList(TableNames.QuotationRegister, ColumnNames.id, ColumnNames.QuoteNo, "", "", GeneralConstants.ListTypeN);
             ViewBag.ListItemNo = DdlList();
 
-            ViewBag.ListCustomerId = model.GetMasterTableStringList("Customer", "Id", "CustomerId", "", "", GeneralConstants.ListTypeN);
-            ViewBag.ListQuoteType = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "QuoteType", "Property", GeneralConstants.ListTypeN);
-            ViewBag.ListQuoteQtyType = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "SingleMultiple", "Property", GeneralConstants.ListTypeN);
-            ViewBag.ListCurr = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "Currency", "Property", GeneralConstants.ListTypeN);
-            ViewBag.ListOrderType = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "QuoteType", "Property", GeneralConstants.ListTypeN);
-            ViewBag.ListSupplyTerms = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "SupplyTerms", "Property", GeneralConstants.ListTypeN);
-            ViewBag.ListMainProdGrp = model.GetMasterTableStringList("Master.ProductLine", "Id", "MainPLName", "", "", GeneralConstants.ListTypeN);
-            ViewBag.ListSubProdGrp = model.GetMasterTableStringList("SubProductLine", "Id", "SubPLName", "", "", GeneralConstants.ListTypeN);
-            ViewBag.ListProdName = model.GetMasterTableStringList("Master.Product", "Id", "ProductName", "", "", GeneralConstants.ListTypeN);
-            ViewBag.ListSoNo = model.GetMasterTableStringList("Orders", "SoNo", "SoNoView", "", "", GeneralConstants.ListTypeD);
+            ViewBag.ListCustomerId = model.GetMasterTableStringList(TableNames.Customer, ColumnNames.id, ColumnNames.CustomerID, "", "", GeneralConstants.ListTypeN);
+            ViewBag.ListQuoteType = model.GetMasterTableStringList(TableNames.Master_Taxonomy, ColumnNames.DropDownID, ColumnNames.DropDownValue, "QuoteType", ColumnNames.Property, GeneralConstants.ListTypeN);
+            ViewBag.ListQuoteQtyType = model.GetMasterTableStringList(TableNames.Master_Taxonomy, ColumnNames.DropDownID, ColumnNames.DropDownValue, "SingleMultiple", ColumnNames.Property, GeneralConstants.ListTypeN);
+            ViewBag.ListCurr = model.GetMasterTableStringList(TableNames.Master_Taxonomy, ColumnNames.DropDownID, ColumnNames.DropDownValue, "Currency", ColumnNames.Property, GeneralConstants.ListTypeN);
+            ViewBag.ListOrderType = model.GetMasterTableStringList(TableNames.Master_Taxonomy, ColumnNames.DropDownID, ColumnNames.DropDownValue, "QuoteType", ColumnNames.Property, GeneralConstants.ListTypeN);
+            ViewBag.ListSupplyTerms = model.GetMasterTableStringList(TableNames.Master_Taxonomy, ColumnNames.DropDownID, ColumnNames.DropDownValue, "SupplyTerms", ColumnNames.Property, GeneralConstants.ListTypeN);
+            ViewBag.ListMainProdGrp = model.GetMasterTableStringList(TableNames.Master_ProductLine, ColumnNames.id, ColumnNames.MainPLName, "", "", GeneralConstants.ListTypeN);
+            ViewBag.ListSubProdGrp = model.GetMasterTableStringList(TableNames.SubProductLine, ColumnNames.id, ColumnNames.SubPLName, "", "", GeneralConstants.ListTypeN);
+            ViewBag.ListProdName = model.GetMasterTableStringList(TableNames.Master_Product, ColumnNames.id, ColumnNames.ProductName, "", "", GeneralConstants.ListTypeN);
+            ViewBag.ListSoNo = model.GetMasterTableStringList(TableNames.Orders, ColumnNames.SoNo, ColumnNames.SoNoView, "", "", GeneralConstants.ListTypeD);
             ViewBag.ListSoNo.RemoveAt(0);
-            ViewBag.ListModeOfDespatch = model.GetDropDownList("Master.Taxonomy", GeneralConstants.ListTypeD, "dropdownId", "dropdownvalue", "Transport", "Property");
+            ViewBag.ListModeOfDespatch = model.GetDropDownList(TableNames.Master_Taxonomy, GeneralConstants.ListTypeD, ColumnNames.DropDownID, ColumnNames.DropDownValue, "Transport", ColumnNames.Property);
 
             DropDownEntity obj = new DropDownEntity();
             obj.DataStringValueField = "";
@@ -1493,6 +1493,44 @@ namespace NtierMvc.Controllers
             //return new JsonResult { Data = msgCode, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 
+        public ActionResult RevisedOrderDetailsPopup(string actionType, string OrderId)
+        {
+            ViewBag.ListQuoteNo = model.GetMasterTableStringList(TableNames.QuotationRegister, ColumnNames.id, ColumnNames.QuoteNo, "", "", GeneralConstants.ListTypeN);
+            ViewBag.ListItemNo = DdlList();
+
+            ViewBag.ListCustomerId = model.GetMasterTableStringList(TableNames.Customer, ColumnNames.id, ColumnNames.CustomerID, "", "", GeneralConstants.ListTypeN);
+            ViewBag.ListQuoteType = model.GetMasterTableStringList(TableNames.Master_Taxonomy, ColumnNames.DropDownID, ColumnNames.DropDownValue, "QuoteType", ColumnNames.Property, GeneralConstants.ListTypeN);
+            ViewBag.ListQuoteQtyType = model.GetMasterTableStringList(TableNames.Master_Taxonomy, ColumnNames.DropDownID, ColumnNames.DropDownValue, "SingleMultiple", ColumnNames.Property, GeneralConstants.ListTypeN);
+            ViewBag.ListCurr = model.GetMasterTableStringList(TableNames.Master_Taxonomy, ColumnNames.DropDownID, ColumnNames.DropDownValue, "Currency", ColumnNames.Property, GeneralConstants.ListTypeN);
+            ViewBag.ListOrderType = model.GetMasterTableStringList(TableNames.Master_Taxonomy, ColumnNames.DropDownID, ColumnNames.DropDownValue, "QuoteType", ColumnNames.Property, GeneralConstants.ListTypeN);
+            ViewBag.ListSupplyTerms = model.GetMasterTableStringList(TableNames.Master_Taxonomy, ColumnNames.DropDownID, ColumnNames.DropDownValue, "SupplyTerms", ColumnNames.Property, GeneralConstants.ListTypeN);
+            ViewBag.ListMainProdGrp = model.GetMasterTableStringList(TableNames.Master_ProductLine, ColumnNames.id, ColumnNames.MainPLName, "", "", GeneralConstants.ListTypeN);
+            ViewBag.ListSubProdGrp = model.GetMasterTableStringList(TableNames.SubProductLine, ColumnNames.id, ColumnNames.SubPLName, "", "", GeneralConstants.ListTypeN);
+            ViewBag.ListProdName = model.GetMasterTableStringList(TableNames.Master_Product, ColumnNames.id, ColumnNames.ProductName, "", "", GeneralConstants.ListTypeN);
+            ViewBag.ListSoNo = model.GetMasterTableStringList(TableNames.Orders, ColumnNames.SoNo, ColumnNames.SoNoView, "", "", GeneralConstants.ListTypeD);
+            ViewBag.ListSoNo.RemoveAt(0);
+            ViewBag.ListModeOfDespatch = model.GetDropDownList(TableNames.Master_Taxonomy, GeneralConstants.ListTypeD, ColumnNames.DropDownID, ColumnNames.DropDownValue, "Transport", ColumnNames.Property);
+
+            model = new BaseModel();
+
+            quotE.UnitNo = Session["UserId"].ToString();
+            quotE.UserInitial = Session["UserName"].ToString();
+
+            if (actionType == "ADD")
+            {
+                List<DropDownEntity> SelectList = new List<DropDownEntity>();
+                DropDownEntity objSelect = new DropDownEntity();
+                objSelect.DataStringValueField = "";
+                objSelect.DataTextField = "Select";
+                SelectList.Add(objSelect);
+
+                ViewBag.ListQuoteNo = SelectList;
+
+            }
+
+            return base.PartialView("~/Views/Technical/_TechRevisedOrderDetails.cshtml", quotE);
+        }
+
 
         #region Enquiry
         public JsonResult FetchEnquiryList(string pageIndex, string pageSize, string SearchEQEnqType, string SearchCustomerName = null, string SearchEnqFor = null, string SearchEQDueDate = null, string SearchEOQ = null)
@@ -1906,6 +1944,30 @@ namespace NtierMvc.Controllers
             return Json(new { draw = draw, recordsFiltered = totalRecords, recordsTotal = totalRecords, data = objList }, JsonRequestBehavior.AllowGet);
         }
 
+        [HttpPost]
+        public ActionResult SaveRevisedOrderDetails(OrderEntity cusE)
+        {
+            model = new BaseModel();
+            
+            cusE.UserInitial = Session["UserName"].ToString();
+            cusE.ipAddress = ERPContext.UserContext.IpAddress;
+            cusE.UnitNo = Session["UserId"].ToString();
+
+            string result = objManager.SaveRevisedOrderDetails(cusE);
+
+            string data = string.Empty;
+            if (!string.IsNullOrEmpty(result) && (result == GeneralConstants.Inserted || result == GeneralConstants.Updated))
+            {
+                //Payment Gateway
+                data = GeneralConstants.SavedSuccess;
+            }
+            else
+            {
+                data = GeneralConstants.NotSavedError;
+            }
+
+            return new JsonResult { Data = data, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+        }
 
 
     }

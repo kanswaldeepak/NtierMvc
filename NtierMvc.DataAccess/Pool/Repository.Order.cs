@@ -82,6 +82,8 @@ namespace NtierMvc.DataAccess.Pool
             Params.Add("@EndUser", Model.EndUser);
             Params.Add("@ProductGroup", Model.MainProdGrp);
             Params.Add("@MultiQuoteNos", Model.MultiQuoteNos);
+            Params.Add("@RevisedPoNo", Model.RevisedPoNo);
+            Params.Add("@RevisedPoDate", Model.RevisedPoDate);
             //Params.Add("@UploadedFile", Model.UploadedFile);
 
 

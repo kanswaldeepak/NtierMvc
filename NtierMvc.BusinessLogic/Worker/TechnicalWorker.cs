@@ -1558,5 +1558,19 @@ namespace NtierMvc.BusinessLogic.Worker
             }
         }
 
+        public string SaveRevisedOrderDetails(OrderEntity entity)
+        {
+            string result = string.Empty;
+            try
+            {
+                result = _repository.SaveRevisedOrderDetails(entity);
+            }
+            catch (Exception Ex)
+            {
+                NtierMvc.DataAccess.ExceptionLogging.SendExcepToDB(Ex);
+            }
+            return result;
+        }
+
     }
 }

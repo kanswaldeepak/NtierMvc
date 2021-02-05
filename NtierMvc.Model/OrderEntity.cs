@@ -51,6 +51,10 @@ namespace NtierMvc.Model
         public string MultiQuoteNos { get; set; }
         public string UploadedFile { get; set; }
         public string Notes { get; set; }
+        public string QuoteValidity { get; set; }
+        public string RevisedOrderNo { get; set; }
+        public string RevisedPoNo { get; set; }
+        public string RevisedPoDate { get; set; }
     }
 
     public class ItemEntity
