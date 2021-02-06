@@ -6,7 +6,7 @@
 
 <div ng-controller="ModalController">
     <form id="formSaveEnquiryDetail">
-        @*@Html.HiddenFor(m => m.EnquiryId)*@
+        @Html.HiddenFor(m => m.EnquiryId)
         <div class="row">
             <div class="col-md-4" hidden>
                 <div class="form-group">
@@ -182,6 +182,22 @@
                     <span class="HideValidMsg">Please Select Due Date</span>
                 </div>
             </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label class="control-label">
+                        Enquiry Receipt Date
+                    </label>
+                    @Html.TextBoxFor(m => m.EnqReceiptDate, new
+               {
+                   @class = "form-control requiredValidation ApprovalDate",
+                   @id = "DueDate",
+                   @placeholder = "dd/MM/yyyy",
+                   @style = "disabled :disabled",
+                   @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+               })
+                <span class="HideValidMsg">Please Select Enquiry Receipt Date</span>
+                </div>
+            </div>
             @*<div class="col-md-4">
             <div class="form-group">
                 <label class="control-label">
@@ -255,7 +271,7 @@
                         @class = "form-control requiredValidation",
                         @id = "Eoq",
                         @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
-                        @onchange= "ShowHideReasonForRegret()"
+                        @onchange = "ShowHideReasonForRegret()"
                     })
                     <span class="HideValidMsg">
                         Please Select Expression of Quote(EOQ)

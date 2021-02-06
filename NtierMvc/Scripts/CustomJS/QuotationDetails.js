@@ -80,14 +80,13 @@ function GetEnquiryDetails() {
         data: JSON.stringify({ enquiryId: EnqNo }),
         contentType: "application/json; charset=utf-8",
         success: function (res) {
-            $('#QuoteEnqDt').val(res.DataValueField1.split(' ')[0]);
-            $('#QuoteEnqFor').val(res.DataValueField2);
+            if (res.DataValueField1.length > 0) {
+                $('#QuoteEnqDt').val(res.DataValueField1.split(' ')[0]);
+                $('#QuoteEnqFor').val(res.DataValueField2);
+            }
         },
         error: function (x, e) {
-            alert('Some error is occurred, Please try after some time.' + e);
-            //$('#spn-Sucess-Failure').text('Some error is occurred, Please try after some time.');
-            //$('#spn-Sucess-Failure').addClass("important red");
-            //$('#Sucess-Failure').modal('show');
+            alert('Some error is occurred, Please contact support.' + e);
         }
     })
 }
@@ -193,3 +192,72 @@ function ChangeTransport() {
         $('#divPortOfDischarge').show();
     }
 }
+
+
+function LoadDescDetails() {
+
+    $("#tblDescDetails").DataTable().destroy();
+    var req = {
+        "processing": true,
+        "language": {
+            processing: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span> '
+        },
+        "serverSide": true,
+        "paging": true,
+        "lengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
+        "pageLength": 5,
+        "searching": true,
+        "filter": true,
+        "language": {
+            "paginate": {
+                "next": '&#8594;',
+                "previous": '&#8592;'
+            }
+        },
+        "ajax": {
+            "url": "/Technical/LoadDescDetail",
+            "type": "POST",
+            "datatype": "json",
+            "data": {}
+        },
+        'order': [[1, "asc"]],
+        columns: [
+            { title: "SN", "data": "SNo", "name": "SNo", "autoWidth": true, "visible": true },
+            { title: "Product Line", "data": "MainPL", "name": "MainPL", "autoWidth": true, "visible": true },
+            { title: "Sub Product Line", "data": "SubPL", "name": "SubPL", "autoWidth": true, "visible": true },
+            { title: "Product Name", "data": "ProductName", "name": "ProductName", "autoWidth": true },
+            { title: "Product No", "data": "ProductNo", "name": "ProductNo", "autoWidth": true },
+            { title: "Description", "data": "DESQuery", "name": "DESQuery", "autoWidth": true },
+            {
+                title: "Action", "data": "", orderable: false, width: "auto",
+                "render": function (data, type, full, meta) {
+                    var columnVal = "";
+                    columnVal = '<div><button type = "button" onclick=DeleteUsingId("' + full.Id + '") class="btn btn-primary btn-smdf"> Delete </button></div>';
+                    return columnVal;
+                }
+            }
+        ],
+        "fnCreatedRow": function (nRow, aData, iDataIndex) {
+        },
+        "drawCallback": function (settings) {
+        },
+        "footerCallback": function (row, data, start, end, display) {
+
+        }
+    }
+
+    $("#tblDescDetails").DataTable(req);
+    $("#tblDescDetails tbody").show();
+
+}
+
+
+function DeleteUsingId(Id) {
+
+    DeleteUsingIdFromTable("Master.Product", "Id", Id);
+    LoadDescDetails();
+
+}
+
+
+

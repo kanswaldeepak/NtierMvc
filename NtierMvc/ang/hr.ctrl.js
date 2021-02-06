@@ -2,17 +2,20 @@ angular.module('App').controller("HrController", function ($scope, $http, $timeo
     $scope.VendorId = "";
     //For Pagination
     $scope.maxsize = 5;
-
-    //Employee Starts
-    $scope.EmpTotalCount = 0;
+    $scope.FetchEmployeeList = $scope.EmpTotalCount = 0;
     $scope.EmpPageIndex = 1;
     $scope.EmpPageSize = "50";
-    $scope.SearchEmployeeNameId = "";
-    $scope.SearchDesignation = "";
-    $scope.SearchDepartment = "";
+
+    //Employee Starts
+    $scope.DefaultEmployeeList = function () {    
+        $scope.SearchEmployeeNameId = "";
+        $scope.SearchDesignation = "";
+        $scope.SearchDepartment = "";
+        $scope.SearchEmpStatus = "";
+    }
 
     $scope.FetchEmployeeList = function () {
-        $http.get(window.FetchEmployeeList + "?pageindex=" + $scope.EmpPageIndex + "&pagesize=" + $scope.EmpPageSize + "&SearchEmployeeNameId=" + $scope.SearchEmployeeNameId + "&SearchDesignation=" + $scope.SearchDesignation + "&SearchDepartment=" + $scope.SearchDepartment).success(function (response) {
+        $http.get(window.FetchEmployeeList + "?pageindex=" + $scope.EmpPageIndex + "&pagesize=" + $scope.EmpPageSize + "&SearchEmployeeNameId=" + $scope.SearchEmployeeNameId + "&SearchDesignation=" + $scope.SearchDesignation + "&SearchDepartment=" + $scope.SearchDepartment + "&SearchEmpStatus=" + $scope.SearchEmpStatus).success(function (response) {
             $scope.AvailableEmployeeList = response.ListEmployeeEnt;
             $scope.EmpTotalCount = response.totalcount;
         }, function (error) {

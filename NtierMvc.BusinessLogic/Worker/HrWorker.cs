@@ -141,13 +141,13 @@ namespace NtierMvc.BusinessLogic.Worker
         }
 
 
-        public EmployeeEntityDetails GetEmployeeDetails(int pageIndex, int pageSize, string SearchEmployeeNameId = null, string SearchDesignation = null, string SearchDepartment = null)
+        public EmployeeEntityDetails GetEmployeeDetails(int pageIndex, int pageSize, string SearchEmployeeNameId = null, string SearchDesignation = null, string SearchDepartment = null, string SearchEmpStatus = null)
         {
             try
             {
                 EmployeeEntityDetails eED = new EmployeeEntityDetails();
                 eED.ListEmployeeEnt = new List<EmployeeEntity>();
-                DataSet ds = _repository.GetEmployeeDetails(pageIndex, pageSize, SearchEmployeeNameId, SearchDesignation, SearchDepartment);
+                DataSet ds = _repository.GetEmployeeDetails(pageIndex, pageSize, SearchEmployeeNameId, SearchDesignation, SearchDepartment, SearchEmpStatus);
 
                 if (ds.Tables.Count > 0)
                 {
@@ -176,6 +176,7 @@ namespace NtierMvc.BusinessLogic.Worker
                                 obj.PresState = dr1.IsNull("PresState") ? string.Empty : Convert.ToString(dr1["PresState"]);
                                 obj.EmergContPerson = dr1.IsNull("EmergContPerson") ? string.Empty : Convert.ToString(dr1["EmergContPerson"]);
                                 obj.EmergContNo = dr1.IsNull("EmergContNo") ? string.Empty : Convert.ToString(dr1["EmergContNo"]);
+                                obj.Status = dt1.Rows[0]["EmployeeStatus"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["EmployeeStatus"]);
                                 //obj.EmpImage = dr1.IsNull("EmpImage") ? string.Empty : Convert.ToString(dr1["EmpImage"]);
 
                                 eED.ListEmployeeEnt.Add(obj);

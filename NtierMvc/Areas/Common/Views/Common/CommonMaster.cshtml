@@ -1,0 +1,34 @@
+﻿@using NtierMvc.Infrastructure
+@{
+    ViewBag.Title = "Common Master";
+    Layout = "~/Views/Shared/_LayoutMaster.cshtml";
+}
+
+<link href="~/assets/css/tableStyle.css" rel="stylesheet" />
+<link href="~/Content/Site.css" rel="stylesheet" />
+<script src="~/Scripts/tabs.js"></script>
+
+<div ng-controller="CommonController">
+    <div class="tab">
+        <button class="tablinks" onclick="openCity(event, 'CommonDashBoard')" id="defaultOpen">Save Country</button>
+        @*<button class="talinks" onclick="openCity(event, 'AssignAdminRoles')">Assign Admins</button>*@
+    </div>
+
+    <!-- Tab content -->
+    <div id="CommonDashBoard" class="tabcontent">
+        @Html.Partial("PartialCommonDashBoard")
+    </div>
+
+    @*<div id="AssignAdminRoles" class="tabcontent">
+        @Html.Partial("PartialAssignAdmin")
+    </div>*@
+
+</div>
+
+<script>
+    document.getElementById("defaultOpen").click();
+
+    $(document).ready(function () {
+        @*window.LeaveManagementTab = '@Url.Action("PartialLeaveManagement", "Hr")';*@
+    });
+</script>

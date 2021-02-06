@@ -37,6 +37,12 @@ function getRoleAssignedURL() {
         "pageLength": 5,
         "searching": true,
         "filter": true,
+        "language": {
+            "paginate": {
+                "next": '&#8594;',
+                "previous": '&#8592;'
+            }
+        },
         "ajax": {
             "url": window.GetRoleURLDetails,
             "type": "POST",
@@ -46,7 +52,6 @@ function getRoleAssignedURL() {
         },
         'order': [[1, "asc"]],
         columns: [
-            { title: "ID", "data": "ID", "name": "ID", "autoWidth": false, "visible": false },
             { title: "SNo", "data": "SNo", "name": "SNo", "autoWidth": false, "visible": true },
             { title: "Emp Id", "data": "EmpId", "name": "EmpId", "autoWidth": false, "visible": false },
             { title: "Emp Code", "data": "EmpCode", "name": "EmpCode", "autoWidth": false, "visible": true },

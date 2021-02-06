@@ -1583,5 +1583,19 @@ namespace NtierMvc.BusinessLogic.Worker
             return ddl;
         }
 
+        public string SaveTableData(InsertTableData iData)
+        {
+            string result = "";
+            try
+            {
+                result = objData.SaveTableData(iData);
+            }
+            catch (Exception Ex)
+            {
+                NtierMvc.DataAccess.ExceptionLogging.SendExcepToDB(Ex);
+            }
+            return result;
+        }
+
     }
 }

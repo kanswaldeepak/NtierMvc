@@ -129,7 +129,7 @@ namespace NtierMvc.DataAccess.Pool
             return dt;
         }
 
-        public DataSet GetEmployeeDetails(int pageIndex, int pageSize, string SearchEmployeeNameId = null, string SearchDesignation = null, string SearchDepartment = null)
+        public DataSet GetEmployeeDetails(int pageIndex, int pageSize, string SearchEmployeeNameId = null, string SearchDesignation = null, string SearchDepartment = null, string SearchEmpStatus = null)
         {
             var parms = new Dictionary<string, object>();
             parms.Add("@pageIndex", pageIndex);
@@ -137,6 +137,7 @@ namespace NtierMvc.DataAccess.Pool
             parms.Add("@SearchEmployeeNameId", SearchEmployeeNameId);
             parms.Add("@SearchDesignation", SearchDesignation);
             parms.Add("@SearchDepartment", SearchDepartment);
+            parms.Add("@SearchEmpStatus", SearchEmpStatus);
             string spName = ConfigurationManager.AppSettings["GetEmployeeDetails"];
             return _dbAccess.GetDataSet(spName, parms);
         }

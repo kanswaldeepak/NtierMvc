@@ -7,80 +7,77 @@
 }
 
 <div class="row mt-3">
-    <div class="col-md-2">
-        @if (LocalUtility.CheckForWrite("HRDepartment", "HR", "HRDepartmentMaster", "HrEmpMaster") == GeneralConstants.Write)
-        {
-            <button id="btnAdd" type="button" class="btn btn-outline-primary btn-sm" style="float: left;" ng-click="BindHREmpPopup()"><i class="fa fa-plus"></i> <b>Add New Employee</b></button>
-        }
-    </div>
-    <div class="col-md-8">
-        <div class="row">
-            <div class="col-md-2">
+    <table class="table-borderless">
+        <tr>
+            <td>
+                @if (LocalUtility.CheckForWrite("HRDepartment", "HR", "HRDepartmentMaster", "HrEmpMaster") == GeneralConstants.Write)
+                {
+                    <button id="btnAdd" type="button" class="btn btn-outline-primary btn-sm" style="float: left;" ng-click="BindHREmpPopup()"><i class="fa fa-plus"></i> <b>Add New Employee</b></button>
+                }
+            </td>
+            <td>
                 <label>Department</label>
-            </div>
-            <div class="col-md-2">
+            </td>
+            <td>
                 <label>Designation</label>
-            </div>
-            <div class="col-md-2">
+            </td>
+            <td>
                 <label>Employee Name</label>
-            </div>
+            </td>
+            <td>
+                <label>Status</label>
+            </td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>
 
-
-            @*<div class="col-md-2">
-                    <label></label>
-                </div>
-                <div class="col-md-2">
-                    <label></label>
-                </div>*@
-
-        </div>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-md-2">
-    </div>
-    <div class="col-md-8">
-        <div class="row">
-            <div class="col-md-2">
-                <div class="input-group">
-                    @Html.DropDownList("Department", new SelectList(@ViewBag.ListDepartment, "DataStringValueField", "DataTextField", "Select"),
+            </td>
+            <td>
+                @Html.DropDownList("Department", new SelectList(@ViewBag.ListDepartment, "DataStringValueField", "DataTextField", "Select"),
                            new
                            {
                                @class = "form-control",
-                               ng_model = "SearchDepartment"
+                               ng_model = "SearchDepartment",
+                               @id = "EMDepartment"
                            })
-                </div>
-            </div>
-
-            <div class="col-md-2">
-                <div class="input-group">
-                    @Html.DropDownList("Designation", new SelectList(@ViewBag.ListDesignation, "DataStringValueField", "DataTextField", "Select"),
+            </td>
+            <td>
+                @Html.DropDownList("Designation", new SelectList(@ViewBag.ListDesignation, "DataStringValueField", "DataTextField", "Select"),
                            new
                            {
                                @class = "form-control",
-                               ng_model = "SearchDesignation"
+                               ng_model = "SearchDesignation",
+                               @id = "EMDesignation"
                            })
-                </div>
-            </div>
-
-            <div class="col-md-2">
-                <div class="input-group">
-                    @Html.DropDownList("EmployeeName", new SelectList(@ViewBag.ListEmployeeName, "DataStringValueField", "DataTextField", "Select"),
+            </td>
+            <td>
+                @Html.DropDownList("EmployeeName", new SelectList(@ViewBag.ListEmployeeName, "DataStringValueField", "DataTextField", "Select"),
                            new
                            {
                                @class = "form-control",
-                               ng_model = "SearchEmployeeNameId"
+                               ng_model = "SearchEmployeeNameId",
+                               @id = "EMEmployeeName"
                            })
-                </div>
-            </div>
-            <div class="input-group-btn col-md-2">
-                <button class="btn btn-link" type="button" id="btnSearch" ng-click="FetchEmployeeList()">
-                    <i class="fa fa-search"></i>
+            </td>
+            <td>
+                @Html.DropDownList("EmployeeStatus", new SelectList(@ViewBag.ListEmployeeStatus, "DataStringValueField", "DataTextField", "Select"),
+                          new
+                          {
+                              @class = "form-control",
+                              ng_model = "SearchEmpStatus",
+                              @id = "EMEmployeeStatus"
+                          })
+            </td>
+            <td>
+                <button class="btn btn-sm btn-success" type="button" id="btnSearch" ng-click="FetchEmployeeList()">
+                    Search
                 </button>
-            </div>
-        </div>
-    </div>
+                <button class="btn btn-sm btn-info" type="button" id="btnClearSearchEmpMaster" ng-click="DefaultEmployeeList(); FetchEmployeeList();">Clear</button>
+
+            </td>
+        </tr>
+    </table>
 </div>
 
 <div class="wrapper">
@@ -125,23 +122,23 @@
                         </div>
                     </th>
                     @*<th>
-                                        DateOfBirth
-                                        <div class="c3">
-                                            DateOfBirth
-                                        </div>
-                                    </th>
-                                    <th>
-                            Unit
-                            <div class="c3">
-                                Unit
-                            </div>
-                        </th>
-                                    <th>
-                                        DateOfJoining
-                                        <div class="c3">
-                                            DateOfJoining
-                                        </div>
-                                    </th>*@
+                        DateOfBirth
+                        <div class="c3">
+                            DateOfBirth
+                        </div>
+                    </th>
+                    <th>
+            Unit
+            <div class="c3">
+                Unit
+            </div>
+        </th>
+                    <th>
+                        DateOfJoining
+                        <div class="c3">
+                            DateOfJoining
+                        </div>
+                    </th>*@
                     <th>
                         Designation
                         <div class="c3">
@@ -149,17 +146,17 @@
                         </div>
                     </th>
                     @*<th>
-                            Mobile
-                            <div class="c3">
-                                Mobile
-                            </div>
-                        </th>
-                        <th>
-                            Email
-                            <div class="c3">
-                                Email
-                            </div>
-                        </th>*@
+            Mobile
+            <div class="c3">
+                Mobile
+            </div>
+        </th>
+        <th>
+            Email
+            <div class="c3">
+                Email
+            </div>
+        </th>*@
                     <th>
                         State
                         <div class="c3">
@@ -176,6 +173,12 @@
                         Contact No
                         <div class="c3">
                             Contact No
+                        </div>
+                    </th>
+                    <th>
+                        Status
+                        <div class="c3">
+                            Status
                         </div>
                     </th>
                 </tr>
@@ -242,6 +245,9 @@
                     </td>
                     <td>
                         {{L.EmergContNo}}
+                    </td>
+                    <td>
+                        {{L.Status}}
                     </td>
                 </tr>
             </tbody>
@@ -326,6 +332,30 @@
 
     });
 
+    $('#EMDepartment').chosen({
+        width: "210px",
+        placeholder_text_single: "Select Department",
+        placeholder_text_multiple: "Select Department"
+    });
+
+    $('#EMDesignation').chosen({
+        width: "210px",
+        placeholder_text_single: "Select Designation",
+        placeholder_text_multiple: "Select Designation"
+    });
+
+    $('#EMEmployeeName').chosen({
+        width: "210px",
+        placeholder_text_single: "Select Employee Name",
+        placeholder_text_multiple: "Select Employee Name"
+    });
+
+    $('#EMEmployeeStatus').chosen({
+        width: "210px",
+        placeholder_text_single: "Select Employee Status",
+        placeholder_text_multiple: "Select Employee Status"
+    });
+
     //COMPARING MOBILE NUMBER AND ALTERNATIVE MOBILE NUMBER
     var alterMobileNumber = $('#altrmobileNumber');
     alterMobileNumber.on('blur', function () {
@@ -358,8 +388,24 @@
         }
     }
 
+    $('#btnClearSearchEmpMaster').click(
+        function ClearFields() {
+
+            $('#EMDepartment').val([]).trigger('chosen:updated');
+            $('#EMDesignation').val([]).trigger('chosen:updated');
+            $('#EMEmployeeName').val([]).trigger('chosen:updated');
+            $('#EMEmployeeStatus').val([]).trigger('chosen:updated');
+            //$('#POSearchDeliveryDateFrom').val('');
+            //$('#POSearchDeliveryDateTo').val('');
+
+        }
+    );
+
     window.onload = function () {
-        setTimeout(function () { angular.element(document.getElementById('TblEmployeeList')).scope().FetchEmployeeList(), 500}) ;
+        setTimeout(function () {
+            angular.element(document.getElementById('TblEmployeeList')).scope().DefaultEmployeeList();
+            angular.element(document.getElementById('TblEmployeeList')).scope().FetchEmployeeList();
+        }, 500);
     }
 
 </script>

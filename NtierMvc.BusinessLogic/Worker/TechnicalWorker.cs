@@ -852,13 +852,13 @@ namespace NtierMvc.BusinessLogic.Worker
         }
 
 
-        public OrderEntityDetails GetOrderDetails(int pageIndex, int pageSize, string SearchQuoteType = null, string SearchVendorID = null, string SearchProductGroup = null, string SearchDeliveryTerms = null)
+        public OrderEntityDetails GetOrderDetails(int pageIndex, int pageSize, string SearchQuoteType = null, string SearchVendorID = null, string SearchProductGroup = null, string SearchDeliveryTerms = null, string SearchPODeliveryDate = null)
         {
             try
             {
                 OrderEntityDetails qED = new OrderEntityDetails();
                 qED.lstOrderEntity = new List<OrderEntity>();
-                DataSet ds = _repository.GetOrderDetails(pageIndex, pageSize, SearchQuoteType, SearchVendorID, SearchProductGroup, SearchDeliveryTerms);
+                DataSet ds = _repository.GetOrderDetails(pageIndex, pageSize, SearchQuoteType, SearchVendorID, SearchProductGroup, SearchDeliveryTerms, SearchPODeliveryDate);
                 //DataTable dt = _repository.GetOrderDetails();
 
                 if (ds.Tables.Count > 0)
@@ -903,6 +903,7 @@ namespace NtierMvc.BusinessLogic.Worker
                                 //obj.LotWiseDate = dr1.IsNull("LotWiseDate") ? string.Empty : Convert.ToString(dr1["LotWiseDate"]);
                                 obj.ConsigneeName = dr1.IsNull("ConsigneeName") ? string.Empty : Convert.ToString(dr1["ConsigneeName"]);
                                 obj.ConsigneeLocation = dr1.IsNull("ConsigneeLocation") ? string.Empty : Convert.ToString(dr1["ConsigneeLocation"]);
+                                obj.CustomerId = dr1.IsNull("CustomerId") ? string.Empty : Convert.ToString(dr1["CustomerId"]);
                                 //obj.InspectionAgency = dr1.IsNull("InspectionAgency") ? string.Empty : Convert.ToString(dr1["InspectionAgency"]);
                                 //obj.ModeOfShipment = dr1.IsNull("ModeOfShipment") ? string.Empty : Convert.ToString(dr1["ModeOfShipment"]);
                                 //obj.PaymentTerms = dr1.IsNull("PaymentTerms") ? string.Empty : Convert.ToString(dr1["PaymentTerms"]);
@@ -1513,6 +1514,56 @@ namespace NtierMvc.BusinessLogic.Worker
             try
             {
                 result = _repository.SaveOrderNote(entity);
+            }
+            catch (Exception Ex)
+            {
+                NtierMvc.DataAccess.ExceptionLogging.SendExcepToDB(Ex);
+            }
+            return result;
+        }
+
+        public List<DescEntity> LoadDescDetail(int skip, int pageSize, string sortColumn, string sortColumnDir, string search)
+        {
+            try
+            {
+                List<DescEntity> lstDrpDwn = new List<DescEntity>();
+                DataTable dt = _repository.LoadDescDetail(skip, pageSize, sortColumn, sortColumnDir, search);
+                DescEntity Model;
+
+                if (dt.Rows.Count > 0)
+                {
+                    foreach (DataRow dr in dt.Rows)
+                    {
+                        Model = new DescEntity();
+                        Model.SNo = dr["SNo"] == DBNull.Value ? 0 : Convert.ToInt32(dr["SNo"]);
+                        Model.Id = dr["Id"] == DBNull.Value ? 0 : Convert.ToInt32(dr["Id"]);
+                        Model.MainPL = dr["MainPL"] == DBNull.Value ? string.Empty : Convert.ToString(dr["MainPL"]);
+                        Model.SubPL = dr["SubPL"] == DBNull.Value ? string.Empty : Convert.ToString(dr["SubPL"]);
+                        Model.ProductName = dr["ProductName"] == DBNull.Value ? string.Empty : Convert.ToString(dr["ProductName"]);
+                        Model.ProductNo = dr["ProductNo"] == DBNull.Value ? string.Empty : Convert.ToString(dr["ProductNo"]);
+                        Model.DESQuery = dr["DESQuery"] == DBNull.Value ? string.Empty : Convert.ToString(dr["DESQuery"]);
+                        Model.TotalRecords = dr["TotalRecords"] == DBNull.Value ? 0 : Convert.ToInt32(dr["TotalRecords"]);
+
+
+                        lstDrpDwn.Add(Model);
+                    }
+                }
+
+                return lstDrpDwn;
+            }
+            catch (Exception Ex)
+            {
+                NtierMvc.DataAccess.ExceptionLogging.SendExcepToDB(Ex);
+                throw Ex;
+            }
+        }
+
+        public string SaveRevisedOrderDetails(OrderEntity entity)
+        {
+            string result = string.Empty;
+            try
+            {
+                result = _repository.SaveRevisedOrderDetails(entity);
             }
             catch (Exception Ex)
             {

@@ -332,5 +332,21 @@ namespace NtierMvc.API.Controllers.Application
             return Ok(_repository.SaveOrderNote(viewModel));
         }
 
+        [HttpGet]
+        [Route("api/TechnicalDetails/LoadDescDetail")]
+        public IHttpActionResult LoadDescDetail(int skip, int pageSize, string sortColumn, string sortColumnDir, string search)
+        {
+            return Ok(_repository.LoadDescDetail(skip, pageSize, sortColumn, sortColumnDir, search));
+        }
+
+        [HttpPost]
+        [ResponseType(typeof(string))]
+        [Route("api/TechnicalDetails/SaveRevisedOrderDetails")]
+        public IHttpActionResult SaveRevisedOrderDetails(OrderEntity oEntity)
+        {
+            return Ok(_repository.SaveRevisedOrderDetails(oEntity));
+        }
+        
+
     }
 }

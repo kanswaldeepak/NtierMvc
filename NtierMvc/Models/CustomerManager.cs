@@ -95,13 +95,13 @@ namespace NtierMvc.Model
             return Model;
         }
 
-        public CustomerEntityDetails GetCustomerDetails(int pageIndex, int pageSize, string SearchCustomerName = null, string SearchCustomerID = null)
+        public CustomerEntityDetails GetCustomerDetails(int pageIndex, int pageSize, string SearchCustomerName = null, string SearchCustomerID = null, string SearchCustomerIsActive = null)
         {
             var baseAddress = "CustomerDetails";
             CustomerEntityDetails cusEnt = new CustomerEntityDetails();
             using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
             {
-                HttpResponseMessage response = client.GetAsync(baseAddress + "/GetCustomerDetails?pageIndex="+ pageIndex + "&pageSize=" + pageSize+ "&SearchCustomerName=" + SearchCustomerName + "&SearchCustomerID=" + SearchCustomerID).Result;
+                HttpResponseMessage response = client.GetAsync(baseAddress + "/GetCustomerDetails?pageIndex="+ pageIndex + "&pageSize=" + pageSize+ "&SearchCustomerName=" + SearchCustomerName + "&SearchCustomerID=" + SearchCustomerID + "&SearchCustomerIsActive=" + SearchCustomerIsActive).Result;
                 if (response.IsSuccessStatusCode)
                 {
                     var data = response.Content.ReadAsStringAsync().Result;

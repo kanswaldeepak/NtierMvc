@@ -19,7 +19,7 @@ namespace NtierMvc.BusinessLogic.Interface
         EmployeeEntity GetUserEmployeeDetails(string unitNo);
         string DeleteEmployeeDetail(int EmpId);
 
-        EmployeeEntityDetails GetEmployeeDetails(int pageIndex, int pageSize, string SearchEmployeeNameId = null, string SearchDesignation = null, string SearchDepartment = null);
+        EmployeeEntityDetails GetEmployeeDetails(int pageIndex, int pageSize, string SearchEmployeeNameId = null, string SearchDesignation = null, string SearchDepartment = null, string SearchEmpStatus = null);
 
         EmployeeEntity EmployeeDetailsPopup(EmployeeEntity Model);
         PayrollEntity GetEmpPayrollData(int EmpId, int Yr = 0, int mnth = 0);

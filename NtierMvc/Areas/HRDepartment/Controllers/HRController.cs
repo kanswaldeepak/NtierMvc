@@ -69,7 +69,7 @@ namespace NtierMvc.Areas.HRDepartment.Controllers
             ViewBag.ListEmployeeName = model.GetMasterTableStringList("Master.Employee", "Id", "EmpName", "", "", GeneralConstants.ListTypeD);
             ViewBag.ListDesignation = model.GetMasterTableStringList("Master.Designation", "Id", "DesignationName", "", "", GeneralConstants.ListTypeD);
             ViewBag.ListDepartment = model.GetMasterTableStringList("Master.Department", "Id", "DeptName", "", "", GeneralConstants.ListTypeD);
-
+            ViewBag.ListEmployeeStatus = model.GetDropDownList(TableNames.Master_Taxonomy, GeneralConstants.ListTypeN, ColumnNames.DropDownID, ColumnNames.DropDownValue, "EmployeeStatus", ColumnNames.Property);
             return View();
         }
 
@@ -89,13 +89,14 @@ namespace NtierMvc.Areas.HRDepartment.Controllers
         }
 
         //Employee Start
-        public JsonResult FetchEmployeeList(string pageIndex, string pageSize, string SearchEmployeeNameId = null, string SearchDesignation = null, string SearchDepartment = null)
+        public JsonResult FetchEmployeeList(string pageIndex, string pageSize, string SearchEmployeeNameId = null, string SearchDesignation = null, string SearchDepartment = null, string SearchEmpStatus = null)
         {
             SearchEmployeeNameId = SearchEmployeeNameId == null ? string.Empty : SearchEmployeeNameId;
             SearchDesignation = SearchDesignation == null ? string.Empty : SearchDesignation;
             SearchDepartment = SearchDepartment == null ? string.Empty : SearchDepartment;
+            SearchEmpStatus = SearchEmpStatus == null ? string.Empty : SearchEmpStatus;
 
-            eEnDetail = objManager.GetEmployeeDetails(Convert.ToInt32(pageIndex), Convert.ToInt32(pageSize), SearchEmployeeNameId, SearchDesignation, SearchDepartment);
+            eEnDetail = objManager.GetEmployeeDetails(Convert.ToInt32(pageIndex), Convert.ToInt32(pageSize), SearchEmployeeNameId, SearchDesignation, SearchDepartment, SearchEmpStatus);
             return new JsonResult { Data = eEnDetail, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
             //return custDetail.LstCusEnt;
         }

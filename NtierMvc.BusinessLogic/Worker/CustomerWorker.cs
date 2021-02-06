@@ -113,13 +113,13 @@ namespace NtierMvc.BusinessLogic.Worker
         }
 
 
-        public CustomerEntityDetails GetCustomerDetails(int pageIndex, int pageSize, string SearchCustomerName = null, string SearchCustomerID = null)
+        public CustomerEntityDetails GetCustomerDetails(int pageIndex, int pageSize, string SearchCustomerName = null, string SearchCustomerID = null, string SearchCustomerIsActive = null)
         {
             try
             {
                 CustomerEntityDetails cED = new CustomerEntityDetails();
                 cED.LstCusEnt = new List<CustomerEntity>();
-                DataSet ds = _repository.GetCustomerDetails(pageIndex, pageSize, SearchCustomerName, SearchCustomerID);
+                DataSet ds = _repository.GetCustomerDetails(pageIndex, pageSize, SearchCustomerName, SearchCustomerID, SearchCustomerIsActive);
 
                 if (ds.Tables.Count > 0)
                 {
@@ -152,6 +152,7 @@ namespace NtierMvc.BusinessLogic.Worker
                                 obj.Country = dr1.IsNull("Country") ? string.Empty : Convert.ToString(dr1["Country"]);
                                 obj.mob1 = dr1.IsNull("MOB1") ? string.Empty : Convert.ToString(dr1["MOB1"]);
                                 obj.email1 = dr1.IsNull("EMAIL1") ? string.Empty : Convert.ToString(dr1["EMAIL1"]);
+                                obj.Status = dr1.IsNull("CustomerStatus") ? string.Empty : Convert.ToString(dr1["CustomerStatus"]);
 
                                 cED.LstCusEnt.Add(obj);
                             }

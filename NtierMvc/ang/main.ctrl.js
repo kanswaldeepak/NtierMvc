@@ -15,10 +15,11 @@ angular.module('App').controller("MainController", function ($scope, $http, $tim
         $scope.SearchCountry = "";
         $scope.SearchCustomerName = "";
         $scope.SearchCustomerID = "";
+        $scope.SearchCustomerIsActive = "";
     }
 
     $scope.FetchCustomerList = function () {
-        $http.get(window.FetchCustomerList + "?pageindex=" + $scope.custPageIndex + "&pagesize=" + $scope.custPageSize + "&SearchCustomerName=" + $scope.SearchCustomerName + "&SearchCustomerID=" + $scope.SearchCustomerID).success(function (response) {
+        $http.get(window.FetchCustomerList + "?pageindex=" + $scope.custPageIndex + "&pagesize=" + $scope.custPageSize + "&SearchCustomerName=" + $scope.SearchCustomerName + "&SearchCustomerID=" + $scope.SearchCustomerID + "&SearchCustomerIsActive=" + $scope.SearchCustomerIsActive).success(function (response) {
             $scope.AvailableCustomerList = response.LstCusEnt;
             $scope.custTotalCount = response.totalcount;
         }, function (error) {
@@ -779,7 +780,7 @@ angular.module('App').controller("MainController", function ($scope, $http, $tim
 
 
     $scope.FetchOrdersList = function () {
-        $http.get(window.FetchOrdersList + "?pageindex=" + $scope.orderPageIndex + "&pagesize=" + $scope.orderPageSize + "&SearchQuoteType=" + $scope.SearchOrderQuoteType + "&SearchVendorID=" + $scope.SearchOrderVendorID + "&SearchProductGroup=" + $scope.SearchOrderProductGroup + "&SearchDeliveryTerms=" + $scope.SearchOrderDeliveryTerms).success(function (response) {
+        $http.get(window.FetchOrdersList + "?pageindex=" + $scope.orderPageIndex + "&pagesize=" + $scope.orderPageSize + "&SearchQuoteType=" + $scope.SearchOrderQuoteType + "&SearchVendorID=" + $scope.SearchOrderVendorID + "&SearchProductGroup=" + $scope.SearchOrderProductGroup + "&SearchDeliveryTerms=" + $scope.SearchOrderDeliveryTerms + "&SearchPODeliveryDate=" + $scope.SearchPODeliveryDate).success(function (response) {
             $scope.AvailableOrdersList = response.lstOrderEntity;
             $scope.orderTotalCount = response.totalcount;
         }, function (error) {
@@ -919,6 +920,46 @@ angular.module('App').controller("MainController", function ($scope, $http, $tim
                 }
             }
         ).error(function (res) { showHttpErr(res); });
+    }
+
+    $scope.BindRevisedOrderPopup = function () {
+
+        var _actionType = "ADD"
+        $.ajax({
+            type: "POST",
+            data: { actionType: _actionType },
+            datatype: "JSON",
+            url: window.RevisedOrderDetailsPopup,
+            success: function (html) {
+                html = $compile(html)($scope);
+                SetModalTitle("Add New Revised Order")
+                SetModalBody(html);
+                HideLoadder();
+                ShowModal();
+
+
+                if (!($('.modal.in').length)) {
+                    $('.modal-dialog').css({
+                        top: '5%',
+                        left: '5%'
+                    });
+                }
+                $('#ModalPopup').modal({
+                    backdrop: false,
+                    show: true
+                });
+
+                $('.modal-dialog').draggable({
+                    handle: ".modal-body"
+                });
+
+            },
+            error: function (r) {
+                HideLoadder();
+                alert(window.ErrorMsg);
+            }
+        })
+        //});
     }
 
     //For Item
@@ -1295,7 +1336,7 @@ angular.module('App').controller("MainController", function ($scope, $http, $tim
                     show: true
                 });
 
-                
+                LoadDescDetails();
                 //$http.get('/Technical/GetDescLists').then(function (response) {
                 //    $scope.DescMailPLList = response.data.DescMailPL;
                 //    $scope.DescSubPLList = response.data.DescSubPL;

@@ -43,6 +43,7 @@ namespace NtierMvc.Model
         public string CountryId { get; set; }
         public string EnqTypeId { get; set; }
         public string AgentName { get; set; }
+        public string EnqReceiptDate { get; set; }
 
     }
 

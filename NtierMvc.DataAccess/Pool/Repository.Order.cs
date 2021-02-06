@@ -17,7 +17,7 @@ namespace NtierMvc.DataAccess.Pool
 
         #region Class Methods
 
-        public DataSet GetOrderDetails(int pageIndex, int pageSize, string SearchQuoteType = null, string SearchVendorID = null, string SearchProductGroup = null, string SearchDeliveryTerms = null)
+        public DataSet GetOrderDetails(int pageIndex, int pageSize, string SearchQuoteType = null, string SearchVendorID = null, string SearchProductGroup = null, string SearchDeliveryTerms = null, string SearchPODeliveryDate = null)
         {
             var parms = new Dictionary<string, object>();
             parms.Add("@pageIndex", pageIndex);
@@ -26,6 +26,7 @@ namespace NtierMvc.DataAccess.Pool
             parms.Add("@SearchCustomerID", SearchVendorID);
             parms.Add("@SearchProductGroup", SearchProductGroup);
             parms.Add("@SearchDeliveryTerms", SearchDeliveryTerms);
+            parms.Add("@SearchPODeliveryDate", SearchPODeliveryDate);
             string spName = ConfigurationManager.AppSettings["GetOrderDetails"];
             return _dbAccess.GetDataSet(spName, parms);
         }
@@ -81,6 +82,8 @@ namespace NtierMvc.DataAccess.Pool
             Params.Add("@EndUser", Model.EndUser);
             Params.Add("@ProductGroup", Model.MainProdGrp);
             Params.Add("@MultiQuoteNos", Model.MultiQuoteNos);
+            Params.Add("@RevisedPoNo", Model.RevisedPoNo);
+            Params.Add("@RevisedPoDate", Model.RevisedPoDate);
             //Params.Add("@UploadedFile", Model.UploadedFile);
 
 

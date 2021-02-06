@@ -58,7 +58,7 @@ namespace NtierMvc.DataAccess.Pool
             Params.Add("@ProdName", Model.ProdName);
             Params.Add("@QuoteNo", Model.QuoteNo);
             Params.Add("@GeoCode", Model.GeoCode);
-            Params.Add("@QuoteDate", Model.QuoteDate);
+            Params.Add("@QuoteSentOn", Model.QuoteSentOn);
             Params.Add("@QuoteValidity", Model.QuoteValidity);
             Params.Add("@BgReq", Model.BgReq);
             Params.Add("@Inspection", Model.Inspection);
@@ -78,6 +78,7 @@ namespace NtierMvc.DataAccess.Pool
             Params.Add("@SalesPerson", Model.SalesPerson);
             Params.Add("@Subject", Model.Subject);
             Params.Add("@SupplyTerms", Model.SupplyTerms);
+            Params.Add("@RevisedQuoteNo", Model.RevisedQuoteNo);
 
             var SPName = ConfigurationManager.AppSettings["SaveQuotationDetails"];
             _dbAccess.ExecuteNonQuery(SPName, Params, "@o_MsgCode", out msgCode);
@@ -241,7 +242,7 @@ namespace NtierMvc.DataAccess.Pool
         public string SaveNewDescDetail(DescEntity Model)
         {
             string msgCode = "";
-            var Params = new Dictionary<string, object>();            
+            var Params = new Dictionary<string, object>();
             Params.Add("@MainPL", Model.MainPL);
             Params.Add("@SubPL", Model.SubPL);
             Params.Add("@ProductName", Model.ProductName);
@@ -285,8 +286,52 @@ namespace NtierMvc.DataAccess.Pool
             var Params = new Dictionary<string, object>();
             Params.Add("@SoNo", Model.SoNo);
             Params.Add("@Notes", Model.Notes);
-            
+
             var SPName = ConfigurationManager.AppSettings["SaveOrderNotes"];
+            _dbAccess.ExecuteNonQuery(SPName, Params, "@o_MsgCode", out msgCode);
+
+            return msgCode;
+        }
+
+        public DataTable LoadDescDetail(int skip, int pageSize, string sortColumn, string sortColumnDir, string search)
+        {
+            var parms = new Dictionary<string, object>();
+            parms.Add("@skip", skip);
+            parms.Add("@PageSize", pageSize);
+            parms.Add("@sortColumn", sortColumn);
+            parms.Add("@sortColumnDir", sortColumnDir);
+            parms.Add("@search", search);
+            string spName = ConfigurationManager.AppSettings["LoadDescDetail"];
+            return _dbAccess.GetDataTable(spName, parms);
+        }
+
+        public string SaveRevisedOrderDetails(OrderEntity Model)
+        {
+            string msgCode = "";
+            var Params = new Dictionary<string, object>();
+            Params.Add("@OrderId", Model.Id == 0 ? 0 : Model.Id);
+            Params.Add("@UserInitial", Model.UserInitial);
+            //Params.Add("@UnitNo", Model.UnitNo);
+            Params.Add("@QuoteType", Model.QuoteType);
+            Params.Add("@QuoteQtyType", Model.QuoteQtyType);
+            Params.Add("@QuoteNo", Model.QuoteNo);
+            Params.Add("@QuoteDate", Model.QuoteDate);
+            Params.Add("@CustomerId", Model.CustomerId);
+            Params.Add("@CustomerName", Model.CustomerName);
+            Params.Add("@RevisedPoNo", Model.RevisedPoNo);
+            Params.Add("@RevisedPoDate", Model.RevisedPoDate);
+            Params.Add("@PoDor", Model.PoDor);
+            Params.Add("@Curr", Model.Curr);
+            Params.Add("@ExWorkValue", Model.ExWorkValue);
+            Params.Add("@PoDeliveryDate", Model.PoDeliveryDate);
+            Params.Add("@DeliveryTerms", Model.DeliveryTerms);
+            Params.Add("@ConsigneeName", Model.ConsigneeName);
+            Params.Add("@ConsigneeLocation", Model.ConsigneeLocation);
+            Params.Add("@ModeOfShipment", Model.ModeOfShipment);
+            Params.Add("@PaymentTerms", Model.PaymentTerms);
+            Params.Add("@Inspection", Model.Inspection);
+
+            var SPName = ConfigurationManager.AppSettings["SaveRevisedOrderDetails"];
             _dbAccess.ExecuteNonQuery(SPName, Params, "@o_MsgCode", out msgCode);
 
             return msgCode;
