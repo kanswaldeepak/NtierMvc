@@ -58,5 +58,27 @@ namespace NtierMvc.Model.Customer
             LstCusEnt = new List<CustomerEntity>();
         }
     }
+    public class CustomerReport
+    {
+        public String Id { get; set; }
+        public string CustomerName { get; set; }
+        public string CustomerId { get; set; }
+
+        public string CustomerType { get; set; }
+     
+       
+        public string Address1 { get; set; }
+        public string ContactPerson { get; set; }
+
+        public string mob1 { get; set; }
+       
+        public string email1 { get; set; }
+
+      
+        public string DateOfAssociation { get; set; }
+        public string Status { get; set; }
+        public string Remarks { get; set; }
+
+    }
 
 }

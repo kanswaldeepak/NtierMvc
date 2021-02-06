@@ -759,6 +759,10 @@ namespace NtierMvc.Controllers
         {
             return PartialView(techDetail);
         }
+        public ActionResult PartialReportView()
+        {
+            return PartialView();
+        }
 
         public ActionResult PartialOrderViewOnly()
         {
