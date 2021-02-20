@@ -1315,6 +1315,26 @@ angular.module('App').controller("MainController", function ($scope, $http, $tim
         ).error(function (res) { showHttpErr(res); });
     }
 
+    $scope.BindContractReviewPopup = function () {
+
+        $.ajax({
+            type: "GET",
+            data: {  },
+            datatype: "JSON",
+            url: window.ContractReview,
+            success: function (html) {
+                html = $compile(html)($scope);
+                SetParamModalPanelBody('ContractReviewPanelBody', html);
+                HideLoadder();
+            },
+            error: function (r) {
+                HideLoadder();
+                alert(window.ErrorMsg);
+            }
+        })
+        //});
+    }
+
 
 });
 

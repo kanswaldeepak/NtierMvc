@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -8,6 +10,9 @@ namespace NtierMvc.Model
 {
     public static class TableNames
     {
+        public const string ContractReview = "ContractReview";
+        public const string Listing1 = "Listing1";
+        public const string Listing2 = "Listing2";
         public const string Status = "Status";
         public const string SuppyControlSystem = "SuppyControlSystem";
         public const string QuoteClarification = "QuoteClarification";
@@ -93,6 +98,11 @@ namespace NtierMvc.Model
 
     public static class ColumnNames
     {
+        public const string CustomerId = "CustomerId";
+        public const string Listing1 = "Listing1";
+        public const string Listing2 = "Listing2";
+        public const string Listing3 = "Listing3";
+        public const string ListName = "ListName";
         public const string Notes = "Notes";
         public const string rsid = "rsid";
         public const string rscolid = "rscolid";
@@ -1262,4 +1272,39 @@ namespace NtierMvc.Model
         public const string VerifiedbyAdmin = "Verified by Administrator and open for filling Infrastructure details";
         public const string RejectedbyAdmin = "Rejected by Administrator for correction";
     }
+
+    public static class CommonMethods
+    {
+
+        public static DataTable ToDataTable<T>(List<T> items)
+        {
+            DataTable dataTable = new DataTable(typeof(T).Name);
+
+            //Get all the properties
+            PropertyInfo[] Props = typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance);
+            foreach (PropertyInfo prop in Props)
+            {
+                //Defining type of data column gives proper data table 
+                var type = (prop.PropertyType.IsGenericType && prop.PropertyType.GetGenericTypeDefinition() == typeof(Nullable<>) ? Nullable.GetUnderlyingType(prop.PropertyType) : prop.PropertyType);
+                //Setting column names as Property names
+                dataTable.Columns.Add(prop.Name, type);
+            }
+            foreach (T item in items)
+            {
+                var values = new object[Props.Length];
+                for (int i = 0; i < Props.Length; i++)
+                {
+                    //inserting property values to datatable rows
+                    values[i] = Props[i].GetValue(item, null);
+                }
+                dataTable.Rows.Add(values);
+            }
+            //put a breakpoint here and check datatable
+            return dataTable;
+        }
+
+
+
+    }
+
 }

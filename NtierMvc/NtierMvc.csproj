@@ -1218,6 +1218,7 @@
     <Content Include="Scripts\CustomJS\CustomerDetails.js" />
     <Content Include="Scripts\CustomJS\Inbound.js" />
     <Content Include="Scripts\CustomJS\MyCustomJS.js" />
+    <Content Include="Scripts\CustomJS\ContractReview.js" />
     <Content Include="Scripts\CustomJS\QuotationPrep.js" />
     <Content Include="Scripts\CustomJS\QuotationDetails.js" />
     <Content Include="Scripts\CustomJS\EnquiryDetails.js" />
@@ -1309,6 +1310,8 @@
     <Content Include="Views\Technical\PartialQuoteRegView.cshtml" />
     <Content Include="Views\Technical\_TechDescDetails.cshtml" />
     <Content Include="Views\Technical\_TechRevisedOrderDetails.cshtml" />
+    <Content Include="Views\Technical\PartialContractReview.cshtml" />
+    <Content Include="Views\Technical\_TechContractReview.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\Reports\Excel\PRReports\" />

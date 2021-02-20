@@ -747,7 +747,38 @@ namespace NtierMvc.Model
             return result;
         }
 
+        public List<DropDownEntity> GetItemNosForEnqs(string EnqNo)
+        {
+            List<DropDownEntity> objList = new List<DropDownEntity>();
+            var baseAddress = "TechnicalDetails";
+            using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
+            {
+                HttpResponseMessage response = client.GetAsync(baseAddress + "/GetItemNosForEnqs?EnqNo=" + EnqNo).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    var data = response.Content.ReadAsStringAsync().Result;
+                    objList = JsonConvert.DeserializeObject<List<DropDownEntity>>(data);
+                }
+            }
 
+            return objList;
+        }
+
+        public DataTable GetDataForContractReview(string EnqNo, string ItemNo, string type)
+        {
+            DataTable lstQuotePrep = new DataTable();
+            var baseAddress = "TechnicalDetails";
+            using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
+            {
+                HttpResponseMessage response = client.GetAsync(baseAddress + "/GetDataForContractReview?EnqNo=" + EnqNo + "&ItemNo=" + ItemNo + "&type=" + type).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    var data = response.Content.ReadAsStringAsync().Result;
+                    lstQuotePrep = JsonConvert.DeserializeObject<DataTable>(data);
+                }
+            }
+            return lstQuotePrep;
+        }
 
     }
 }

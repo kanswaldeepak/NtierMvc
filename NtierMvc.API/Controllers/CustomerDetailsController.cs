@@ -1,18 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Web.Http;
-using System.Web.Http.Description;
-using System.Threading.Tasks;
-using System.Threading;
-using Newtonsoft.Json;
-using System.Collections;
-using NtierMvc.BusinessLogic.Interface;
-using NtierMvc.Model.Account;
+﻿using NtierMvc.BusinessLogic.Interface;
 using NtierMvc.BusinessLogic.Worker;
 using NtierMvc.Model.Customer;
+using System.Web.Http;
+using System.Web.Http.Description;
 
 namespace NtierMvc.API.Controllers.Application
 {

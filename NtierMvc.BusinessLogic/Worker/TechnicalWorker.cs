@@ -1572,5 +1572,40 @@ namespace NtierMvc.BusinessLogic.Worker
             return result;
         }
 
+        public List<DropDownEntity> GetItemNosForEnqs(string EnqNo)
+        {
+            try
+            {
+                List<DropDownEntity> lstDrpDwn = new List<DropDownEntity>();
+                DataTable dt = _repository.GetItemNosForEnqs(EnqNo);
+                DropDownEntity Model;
+
+                if (dt.Rows.Count > 0)
+                {
+                    BindDefault(lstDrpDwn);
+                    foreach (DataRow dr in dt.Rows)
+                    {
+                        Model = new DropDownEntity();                        
+                        Model.DataStringValueField = dr["Id"] == DBNull.Value ? string.Empty : Convert.ToString(dr["Id"]);
+                        Model.DataTextField = dr["ItemNo"] == DBNull.Value ? string.Empty : Convert.ToString(dr["ItemNo"]);
+
+                        lstDrpDwn.Add(Model);
+                    }
+                }
+
+                return lstDrpDwn;
+            }
+            catch (Exception Ex)
+            {
+                NtierMvc.DataAccess.ExceptionLogging.SendExcepToDB(Ex);
+                throw Ex;
+            }
+        }
+
+        public DataTable GetDataForContractReview(string EnqNo, string ItemNo, string type)
+        {
+            DataTable dt = _repository.GetDataForContractReview(EnqNo, ItemNo, type);
+            return dt;
+        }
     }
 }

@@ -121,7 +121,7 @@ namespace NtierMvc.API.Controllers.Application
 
         [HttpGet]
         [Route("api/TechnicalDetails/GetQuoteNoList")]
-        public IHttpActionResult GetQuoteNoList(string quotetypeId = "", string SoNo=null)
+        public IHttpActionResult GetQuoteNoList(string quotetypeId = "", string SoNo = null)
         {
             return Ok(_repository.GetQuoteNoList(quotetypeId, SoNo));
         }
@@ -142,7 +142,7 @@ namespace NtierMvc.API.Controllers.Application
 
         [HttpGet]
         [Route("api/TechnicalDetails/GetPrepProductNames")]
-        public IHttpActionResult GetPrepProductNames(string productId,  string casingSize, string type=null)
+        public IHttpActionResult GetPrepProductNames(string productId, string casingSize, string type = null)
         {
             return Ok(_repository.GetPrepProductNames(productId, casingSize, type));
         }
@@ -346,7 +346,21 @@ namespace NtierMvc.API.Controllers.Application
         {
             return Ok(_repository.SaveRevisedOrderDetails(oEntity));
         }
-        
+
+
+        [HttpGet]
+        [Route("api/TechnicalDetails/GetItemNosForEnqs")]
+        public IHttpActionResult GetItemNosForEnqs(string EnqNo)
+        {
+            return Ok(_repository.GetItemNosForEnqs(EnqNo));
+        }
+
+        [HttpGet]
+        [Route("api/TechnicalDetails/GetDataForContractReview")]
+        public IHttpActionResult GetDataForContractReview(string EnqNo, string ItemNo, string type)
+        {
+            return Ok(_repository.GetDataForContractReview(EnqNo, ItemNo, type));
+        }
 
     }
 }

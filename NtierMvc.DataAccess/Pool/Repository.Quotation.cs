@@ -337,6 +337,13 @@ namespace NtierMvc.DataAccess.Pool
             return msgCode;
         }
 
+        public DataTable GetItemNosForEnqs(string EnqNo)
+        {
+            var parms = new Dictionary<string, object>();
+            parms.Add("@EnqNo", EnqNo);
+            string spName = ConfigurationManager.AppSettings["GetItemNosForEnqs"];
+            return _dbAccess.GetDataTable(spName, parms);
+        }
 
         #endregion
     }

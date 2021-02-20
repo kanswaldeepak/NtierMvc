@@ -216,6 +216,18 @@ namespace NtierMvc.DataAccess.Pool
 
             return msgCode;
         }
+
+        public DataTable GetDataForContractReview(string EnqNo, string ItemNo, string type)
+        {
+            var parms = new Dictionary<string, object>();
+            var spName = ConfigurationManager.AppSettings["GetDataForContractReview"];
+            parms.Add("@EnqNo", EnqNo);
+            parms.Add("@ItemNo", ItemNo);
+            parms.Add("@type", type);
+            var dt = _dbAccess.GetDataTable(spName, parms);
+            return dt;
+        }
+
         #endregion
     }
 }
