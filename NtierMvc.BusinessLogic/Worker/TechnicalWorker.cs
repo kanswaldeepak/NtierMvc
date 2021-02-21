@@ -12,6 +12,7 @@ using NtierMvc.BusinessLogic.Interface;
 using NtierMvc.Common;
 using NtierMvc.Model;
 using System.Web;
+using Newtonsoft.Json;
 
 namespace NtierMvc.BusinessLogic.Worker
 {
@@ -880,8 +881,8 @@ namespace NtierMvc.BusinessLogic.Worker
                                 //obj.VendorId = dr1.IsNull("VendorId") ? string.Empty : Convert.ToString(dr1["VendorId"]);
                                 //obj.VendorName = dr1.IsNull("VendorName") ? string.Empty : Convert.ToString(dr1["VendorName"]);
                                 //obj.QuoteType = dr1.IsNull("QuoteType") ? string.Empty : Convert.ToString(dr1["QuoteType"]);
-                                //obj.FileNo = dr1.IsNull("FileNo") ? string.Empty : Convert.ToString(dr1["FileNo"]);
-                                //obj.QuoteNo = dr1.IsNull("QuoteNo") ? string.Empty : Convert.ToString(dr1["QuoteNo"]);
+                                obj.FileNo = dr1.IsNull("FILENO") ? string.Empty : Convert.ToString(dr1["FILENO"]);
+                                obj.QuoteNo = dr1.IsNull("QuoteNo") ? string.Empty : Convert.ToString(dr1["QUOTENO"]);
                                 //obj.QuoteDate = dr1.IsNull("QuoteDate") ? string.Empty : Convert.ToString(dr1["QuoteDate"]);
                                 obj.SoNo = dr1.IsNull("SoNo") ? string.Empty : Convert.ToString(dr1["SoNo"]);
                                 obj.SoNoView = dr1.IsNull("SoNoView") ? string.Empty : Convert.ToString(dr1["SoNoView"]);
@@ -907,8 +908,9 @@ namespace NtierMvc.BusinessLogic.Worker
                                 //obj.InspectionAgency = dr1.IsNull("InspectionAgency") ? string.Empty : Convert.ToString(dr1["InspectionAgency"]);
                                 //obj.ModeOfShipment = dr1.IsNull("ModeOfShipment") ? string.Empty : Convert.ToString(dr1["ModeOfShipment"]);
                                 //obj.PaymentTerms = dr1.IsNull("PaymentTerms") ? string.Empty : Convert.ToString(dr1["PaymentTerms"]);
-                                //obj.PoRequirements = dr1.IsNull("PoRequirements") ? string.Empty : Convert.ToString(dr1["PoRequirements"]);
-
+                                obj.IsActive = dr1.IsNull("IsActive") ? string.Empty : Convert.ToString(dr1["IsActive"]);
+                                obj.Remarks = dr1.IsNull("REMARKS") ? string.Empty : Convert.ToString(dr1["REMARKS"]);
+                                obj.WADate = dr1.IsNull("WADate") ? string.Empty : Convert.ToString(dr1["WADate"]);
                                 qED.lstOrderEntity.Add(obj);
                             }
                         }
@@ -1556,6 +1558,23 @@ namespace NtierMvc.BusinessLogic.Worker
                 NtierMvc.DataAccess.ExceptionLogging.SendExcepToDB(Ex);
                 throw Ex;
             }
+        }
+        
+        public string GetWorkAuthReport(string SoNo, string FromDate, string ToDate,string ReportType)
+        {
+
+            DataSet result = new DataSet();
+            string jdon = "";
+            try
+            {
+                result =  _repository.GetWorkAuthReport(SoNo, FromDate, ToDate,ReportType);
+                jdon = JsonConvert.SerializeObject(result, Formatting.Indented);
+            }
+            catch (Exception Ex)
+            {
+                NtierMvc.DataAccess.ExceptionLogging.SendExcepToDB(Ex);
+            }
+            return jdon;
         }
 
         public string SaveRevisedOrderDetails(OrderEntity entity)

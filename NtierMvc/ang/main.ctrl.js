@@ -178,7 +178,7 @@ angular.module('App').controller("MainController", function ($scope, $http, $tim
         $.ajax({
             type: "Post",
             url: window.GenerateReport,
-            data: JSON.stringify({ ReportType: Type, pageindex: $scope.custPageIndex, pagesize: $scope.custPageSize, SearchCustomerName: $scope.SearchCustomerName ,SearchCustomerID : $scope.SearchCustomerID }),
+            data: JSON.stringify({ ReportType: Type, pageindex: $scope.custPageIndex, pagesize: $scope.custPageSize, SearchCustomerName: $scope.SearchCustomerName, SearchCustomerID: $scope.SearchCustomerID, SearchCustomerIsActive:$scope.SearchCustomerIsActive}),
             contentType: "application/json; charset=utf-8",
             success: function (data) {
                 //alert("Dowloaded Successfully" + data);
@@ -787,6 +787,33 @@ angular.module('App').controller("MainController", function ($scope, $http, $tim
             alert('failed');
         });
     }
+    $scope.GeneratePOReport = function (Type) {
+        //var DownloadType = dwnldtype;
+        ShowLoadder();
+
+        $.ajax({
+            type: "Post",
+            url: window.GeneratePOReport,
+            data: JSON.stringify({ ReportType: Type, pageindex: $scope.orderPageIndex, pagesize: $scope.orderPageSize, SearchOrderQuoteType: $scope.SearchOrderQuoteType, SearchVendorID: $scope.SearchOrderVendorID, SearchProductGroup: $scope.SearchOrderProductGroup, SearchDeliveryTerms: $scope.SearchOrderDeliveryTerms, SearchPODeliveryDate: $scope.SearchPODeliveryDate }),
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                //alert("Dowloaded Successfully" + data);
+                if (data != "") {
+                    //use window.location.href for redirect to download action for download the file
+                    window.location.href = window.DownloadDoc + '?fileName=' + data;
+                    HideLoadder();
+                }
+                else {
+                    alert(data.errorMessage);
+                    HideLoadder();
+                }
+            },
+            error: function (x, e) {
+                alert('Some error is occurred, Please try after some time.');
+                HideLoadder();
+            }
+        })
+    }
 
     $scope.BindOrderPopup = function () {
         var _actionType = "ADD"
@@ -802,7 +829,6 @@ angular.module('App').controller("MainController", function ($scope, $http, $tim
                 HideLoadder();
                 SetModalWidth("1200px");
                 ShowModal();
-
                 if (!($('.modal.in').length)) {
                     $('.modal-dialog').css({
                         top: '15%',

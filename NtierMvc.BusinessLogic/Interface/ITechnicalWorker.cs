@@ -66,5 +66,6 @@ namespace NtierMvc.BusinessLogic.Interface
 
         List<DescEntity> LoadDescDetail(int skip, int pageSize, string sortColumn, string sortColumnDir, string search);
         string SaveRevisedOrderDetails(OrderEntity cEntity);
+        string GetWorkAuthReport(string SoNo, string FromDate, string ToDate, string ReportType);
     }
 }

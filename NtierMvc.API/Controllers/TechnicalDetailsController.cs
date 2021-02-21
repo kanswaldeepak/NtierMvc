@@ -346,7 +346,12 @@ namespace NtierMvc.API.Controllers.Application
         {
             return Ok(_repository.SaveRevisedOrderDetails(oEntity));
         }
-        
+
+        [HttpGet]
+        public IHttpActionResult GetWorkAuthReport(string SoNo, string FromDate = null, string ToDate = null, string ReportType=null)
+        {
+            return Ok(_repository.GetWorkAuthReport(SoNo, FromDate, ToDate, ReportType));
+        }
 
     }
 }
