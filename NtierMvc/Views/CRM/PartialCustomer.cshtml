@@ -84,6 +84,9 @@
                     Search
                 </button>
                 <button class="btn btn-sm btn-info" type="button" id="btnClearSearchCustomer" ng-click="DefaultCustomerList();">Clear</button>
+                <button class="btn btn-sm btn-info" type="button" id="btnDownloadReport" ng-click="GenerateReport('CUSTOMER');">Customer Master<i class="fa fa-download" style="font-size:16px" aria-hidden="true"></i></button>
+
+              
             </td>
             @*<td>
                         @Html.DropDownList("CountryId", new SelectList(@ViewBag.ListCountry, "DataStringValueField", "DataTextField", "Select"),
@@ -295,6 +298,8 @@
 
         window.GetCustomerListForCusts = '@Url.Action("GetCustomerListForCust","CRM")';
         window.GetDdlValueForCustomer = '@Url.Action("GetDdlValueForCustomer", "CRM")';
+        window.GenerateReport = '@Url.Action("CreateReport", "CRM")';
+         window.DownloadDoc = '@Url.Action("Download", "CRM")';
 
         $('#CUCustStatus').chosen({
             width: "150px",

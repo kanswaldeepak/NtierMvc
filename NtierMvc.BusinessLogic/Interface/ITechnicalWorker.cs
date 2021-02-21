@@ -66,6 +66,7 @@ namespace NtierMvc.BusinessLogic.Interface
 
         List<DescEntity> LoadDescDetail(int skip, int pageSize, string sortColumn, string sortColumnDir, string search);
         string SaveRevisedOrderDetails(OrderEntity cEntity);
+        string GetWorkAuthReport(string SoNo, string FromDate, string ToDate, string ReportType);
         List<DropDownEntity> GetItemNosForEnqs(string EnqNo);
         DataTable GetDataForContractReview(string EnqNo, string ItemNo, string type);
         string SaveContractReviewData(ContractReview entity);

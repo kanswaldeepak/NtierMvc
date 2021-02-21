@@ -8,6 +8,11 @@ using System.Web;
 using System.Web.Mvc;
 using NtierMvc.Model.Customer;
 using NtierMvc.Infrastructure;
+using System.Configuration;
+using System.IO;
+using System.Data;
+using OfficeOpenXml.FormulaParsing.Excel.Functions.Text;
+using System.Reflection;
 
 namespace NtierMvc.Controllers
 {
@@ -99,6 +104,11 @@ namespace NtierMvc.Controllers
 
             return View(custDetail);
         }
+        public ActionResult PartialReportView()
+        {
+            return PartialView();
+        }
+
 
         public JsonResult FetchCustomerList(string pageIndex, string pageSize, string SearchCustomerName, string SearchCustomerID, string SearchCustomerIsActive)
         {
@@ -215,6 +225,7 @@ namespace NtierMvc.Controllers
             List<DropDownEntity> ddl = new List<DropDownEntity>();
 
             if (type == "CountryId")
+
                 ddl = objManager.GetDdlValueForCustomer(type, CountryId);
             //ddl = model.GetDropDownList("Customer", GeneralConstants.ListTypeD, "Id", "CustomerID", CountryId, "Country");
             else if (type == "CustomerName")
@@ -222,6 +233,167 @@ namespace NtierMvc.Controllers
 
             return new JsonResult { Data = ddl, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
+       
+
+        public static DataTable ToDataTable<T>(List<T> items)
+        {
+            DataTable dataTable = new DataTable(typeof(T).Name);
+            //Get all the properties by using reflection   
+            PropertyInfo[] Props = typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance);
+            foreach (PropertyInfo prop in Props)
+            {
+                //Setting column names as Property names  
+                dataTable.Columns.Add(prop.Name);
+            }
+            foreach (T item in items)
+            {
+                var values = new object[Props.Length];
+                for (int i = 0; i < Props.Length; i++)
+                {
+
+                    values[i] = Props[i].GetValue(item, null);
+                }
+                dataTable.Rows.Add(values);
+            }
+
+            return dataTable;
+        }
+        [HttpPost]
+        public ActionResult CreateReport(string ReportType, string pageIndex, string pageSize,string SearchCustomerName, string SearchCustomerID,string SearchCustomerIsActive)
+        {
+           
+                 SearchCustomerName = SearchCustomerName == "-1" ? string.Empty : SearchCustomerName;
+            SearchCustomerID = SearchCustomerID == "-1" ? string.Empty : SearchCustomerID;
+
+            //custDetail = objManager.GetCustomerDetails(Convert.ToInt32(pageIndex), Convert.ToInt32(pageSize), SearchCustomerName, SearchCustomerID);
+            //return new JsonResult { Data = custDetail, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+
+
+            string fileName = ReportType;
+            string path = System.Web.HttpContext.Current.Server.MapPath(ConfigurationManager.AppSettings["TempFolder"]);
+            string fullPath = Path.Combine(Server.MapPath(ConfigurationManager.AppSettings["TempFolder"].ToString()), fileName);
+
+
+            if (!System.IO.Directory.Exists(path))
+                System.IO.Directory.CreateDirectory(path);
+            //switch (ReportType)
+            //{
+            //    case "CUSTOMER":
+                    fileName = GenerateReport(fullPath, fileName, pageIndex, pageSize, SearchCustomerName, SearchCustomerID, SearchCustomerIsActive);
+                //    break;
+                //default:
+                //    break;
+           // }
+
+            return new JsonResult { Data = fileName, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+
+        }
+        private string GenerateReport(string fullPath,  string DocumentName, string pageIndex, string pageSize, string SearchCustomerName, string SearchCustomerID,string SearchCustomerIsActive)
+        {
+
+            string fileName = "";
+                ReportManager Report = new ReportManager();
+            switch (DocumentName)
+            {
+                case "CUSTOMER":
+                    fileName = Report.PrepCustomerReport(fullPath, DocumentName, pageIndex, pageSize, SearchCustomerName, SearchCustomerID, SearchCustomerIsActive);
+                    break;
+                //case "CUSTOMERFEEDBACK":
+                //    fileName = Report.PrepCustomerFeedBackReport(fullPath, DocumentName);
+                //    break;
+                default:
+                    break;
+            }
+            return fileName;
+        }
+        [HttpPost]
+        public ActionResult CreateWAAuthReport( string SoNo, string FromDate, string ToDate, string ReportType)
+        {
+            //custDetail = objManager.GetCustomerDetails(Convert.ToInt32(pageIndex), Convert.ToInt32(pageSize), SearchCustomerName, SearchCustomerID);
+            //return new JsonResult { Data = custDetail, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+
+
+            string fileName = ReportType;
+            string path = System.Web.HttpContext.Current.Server.MapPath(ConfigurationManager.AppSettings["TempFolder"]);
+            string fullPath = Path.Combine(Server.MapPath(ConfigurationManager.AppSettings["TempFolder"].ToString()), fileName);
+
+
+            if (!System.IO.Directory.Exists(path))
+                System.IO.Directory.CreateDirectory(path);
+            //switch (ReportType)
+            //{
+            //    case "CUSTOMER":
+            fileName = GenerateRAUtheport(fullPath, SoNo, FromDate, ToDate, ReportType);
+            //    break;
+            //default:
+            //    break;
+            // }
+
+            return new JsonResult { Data = fileName, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+
+        }
+        private string GenerateRAUtheport(string fullPath, string SoNo, string FromDate, string ToDate, string ReportType)
+        {
+
+            string fileName = "";
+            ReportManager Report = new ReportManager();
+            switch (ReportType)
+            {
+                case "WAuthReport":
+                    fileName = Report.PrepCustomerReport(fullPath, SoNo, FromDate, ToDate, ReportType);
+                    break;
+                case "CUSTOMERFEEDBACK":
+                    fileName = Report.PrepCustomerFeedBackReport(fullPath, SoNo, FromDate, ToDate, ReportType);
+                    break;
+                case "ProductPerformance":
+                    fileName = Report.PrepProductPerformanceReport(fullPath, SoNo, FromDate, ToDate, ReportType);
+                    break;
+                case "EnquiryReport":
+                    fileName = Report.PrepEnqandQuotoReport(fullPath, SoNo, FromDate, ToDate, ReportType);
+                    break;
+                default:
+                    break;
+            }
+            return fileName;
+        }
+
+        public ActionResult Download(string fileName)
+        {
+            //Do not delete commented text
+            string fullPath = Path.Combine(Server.MapPath(ConfigurationManager.AppSettings["TempFolder"]), fileName);
+
+            if (System.IO.File.Exists(fullPath))
+            {
+                ////Get the temp folder and file path in server
+                byte[] fileByteArray = System.IO.File.ReadAllBytes(fullPath);
+                System.IO.File.Delete(fullPath);
+                return File(fileByteArray, "application/vnd.ms-excel", fileName);
+
+            }
+
+            else
+                return Json(new { data = "", errorMessage = "Error While Generating Excel. Contact Support." }, JsonRequestBehavior.AllowGet);
+
+            //string fullPath = Path.Combine(Server.MapPath(ConfigurationManager.AppSettings["TempFolder"]), fileName);
+
+            //string fullPath = Path.Combine(Server.MapPath(ConfigurationManager.AppSettings["TempFolder"]), fileName);
+            //var excelApp = new Microsoft.Office.Interop.Excel.Application();
+            //excelApp.Visible = true;
+
+            //if (System.IO.File.Exists(fullPath))
+            //{
+            //    ////Get the temp folder and file path in server
+            //    Microsoft.Office.Interop.Excel.Workbooks books = excelApp.Workbooks;
+            //    Microsoft.Office.Interop.Excel.Workbook sheet = books.Open(fullPath, 0, true, 5, "", "", false, Microsoft.Office.Interop.Excel.XlPlatform.xlWindows, "\t", true, false, 0, true, 1, Microsoft.Office.Interop.Excel.XlCorruptLoad.xlNormalLoad);
+            //    System.IO.File.Delete(fullPath);
+            //    //return Json(new { data = "", errorMessage = "" }, JsonRequestBehavior.AllowGet);
+            //}
+            //else
+            //    return Json(new { data = "", errorMessage = "Error While Generating Excel. Contact Support." }, JsonRequestBehavior.AllowGet);
+
+        }
+
+
 
 
 

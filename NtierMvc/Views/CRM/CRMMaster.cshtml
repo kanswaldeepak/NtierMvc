@@ -26,6 +26,9 @@
         {
             <button id="OrdersViewLink" class="tablinks" onclick="openCity(event, 'OrdersPartialView')" ng-click="DefaultOrdersList(); FetchOrdersList();">Order</button>
         }
+        
+            <button id="ReportPartialViewLink" class="tablinks" onclick="openCity(event, 'ReportPartialView')" > Other API Reports</button>
+        
     </div>
 
     <div id="CustomerPartialView" class="tabcontent">
@@ -43,6 +46,9 @@
 
     <div id="OrdersPartialView" class="tabcontent">
         @Html.Partial("../Technical/PartialOrderViewOnly")
+    </div>
+    <div id="ReportPartialView" class="tabcontent">
+        @Html.Partial("PartialReportView")
     </div>
 </div>
 

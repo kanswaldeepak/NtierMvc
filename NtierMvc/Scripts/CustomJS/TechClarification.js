@@ -129,6 +129,7 @@ function GetSoNoDetialsForClarification() {
 }
 
 function GetClarificationMail() {
+
     var QuoteNo = $("#QuoteClarificationFormNo").val();
     var QuoteType = $("#QuoteClarificationFormType").val();
 

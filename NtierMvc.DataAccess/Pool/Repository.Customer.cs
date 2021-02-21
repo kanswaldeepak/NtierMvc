@@ -72,6 +72,7 @@ namespace NtierMvc.DataAccess.Pool
             parms.Add("@pageSize", pageSize);
             parms.Add("@SearchCustomerName", SearchCustomerName);
             parms.Add("@SearchCustomerID", SearchCustomerID);
+            parms.Add("@CustomerId", SearchCustomerID);
             parms.Add("@SearchCustomerIsActive", SearchCustomerIsActive);
             string spName = ConfigurationManager.AppSettings["GetCustomerDetails"];
             return _dbAccess.GetDataSet(spName, parms);

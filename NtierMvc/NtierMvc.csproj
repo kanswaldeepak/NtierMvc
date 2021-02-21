@@ -239,6 +239,7 @@
     <Compile Include="Models\Infrastructure\HostUtility.cs" />
     <Compile Include="Models\OnActionModel.cs" />
     <Compile Include="Models\GateEntryManager.cs" />
+    <Compile Include="Models\ReportManager.cs" />
     <Compile Include="Models\Technical\TechnicalManager.cs" />
     <Compile Include="Models\Technical\TechnicalVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -265,6 +266,7 @@
     <Content Include="ang\config.js" />
     <Content Include="ang\Admin.ctrl.js" />
     <Content Include="ang\Common.ctrl.js" />
+    <Content Include="ang\Report.ctrl.js" />
     <Content Include="ang\Stores.ctrl.js" />
     <Content Include="ang\Design.ctrl.js" />
     <Content Include="ang\hr.ctrl.js" />
@@ -1206,11 +1208,22 @@
     <Content Include="MasterFiles\JS\ui-bootstrap-tpls.min.js" />
     <Content Include="Areas\MRM\Views\MRM\VendorDetails.cshtml" />
     <Content Include="Areas\MRM\Views\MRM\PartialVendor.cshtml" />
+    <Content Include="App_Data\Documents\Excel\Cust_Details.xls" />
+    <Content Include="App_Data\Documents\Excel\Cust_Detail.Xlsx" />
+    <Content Include="App_Data\Documents\Excel\Report.xlsx" />
+    <Content Include="App_Data\Documents\Excel\Report2.xlsx" />
+    <Content Include="App_Data\Documents\Excel\POWorkAuth.xlsx" />
+    <Content Include="App_Data\Documents\Excel\ProductPerformance.xlsx" />
+    <Content Include="App_Data\Documents\Excel\QuotePreparation.xlsx" />
+    <Content Include="App_Data\Documents\Excel\WorkAuthReport.xls" />
+    <Content Include="App_Data\Documents\Excel\EnquiryandQutoeRegister.xlsx" />
+    <Content Include="App_Data\Documents\Excel\CustomerFeedback.xlsx" />
     <Content Include="Areas\Common\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Common\Views\Common\CommonMaster.cshtml" />
     <Content Include="Areas\Common\Views\Common\PartialCommonDashboard.cshtml" />
     <Content Include="Areas\Common\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Common\Views\web.config" />
+    <Content Include="App_Data\Documents\Excel\CustFeedback.xlsx" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\CustomJS\common.js" />
@@ -1310,10 +1323,10 @@
     <Content Include="Views\Technical\PartialQuoteRegView.cshtml" />
     <Content Include="Views\Technical\_TechDescDetails.cshtml" />
     <Content Include="Views\Technical\_TechRevisedOrderDetails.cshtml" />
-    <Content Include="Views\Technical\PartialContractReview.cshtml" />
-    <Content Include="Views\Technical\_TechContractReview.cshtml" />
+    <Content Include="Views\CRM\PartialReportView.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="App_Data\Documents\temp\" />
     <Folder Include="App_Data\Reports\Excel\PRReports\" />
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\Admin\Scripts\" />

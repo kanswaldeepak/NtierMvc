@@ -304,7 +304,33 @@ namespace NtierMvc.DataAccess.Pool
             string spName = ConfigurationManager.AppSettings["LoadDescDetail"];
             return _dbAccess.GetDataTable(spName, parms);
         }
-
+        
+            public DataSet GetWorkAuthReport(string SoNo,string FromDate,string ToDate,string ReportType)
+        {
+            string SPName = "";
+            var Params = new Dictionary<string, object>();
+            Params.Add("@SoNo", SoNo);
+            Params.Add("@FromDate", FromDate);
+            Params.Add("@ToDate", ToDate);
+            switch(ReportType)
+            {
+                case "WAuthReport":
+                    SPName = "ERP_WAReport";
+                    break;
+                case "ProductPerformance":
+                    SPName = "ERP_ProductReport";
+                    break;
+                case "EnquiryReport":
+                    SPName = "ERP_EQAndQRReport";
+                    break;
+                case "CUSTOMERFEEDBACK":
+                    SPName = "ERP_CustomerFeedback";
+                    break;
+                  
+            }
+                
+            return _dbAccess.GetDataSet(SPName, Params);
+        }
         public string SaveRevisedOrderDetails(OrderEntity Model)
         {
             string msgCode = "";

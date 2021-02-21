@@ -78,7 +78,7 @@ namespace NtierMvc.Controllers
             ViewBag.ListProdName = model.GetMasterTableStringList("Master.Product", "Id", "ProductName", "", "", GeneralConstants.ListTypeN);
             //ViewBag.ListEnqFor = model.GetMasterTableStringList("QuotationRegister", "EnqFor", "EnqFor", "", "", GeneralConstants.ListTypeD);
             ViewBag.ListQuoteType = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "QuoteType", "Property", GeneralConstants.ListTypeN);
-
+           
 
             //Enquiry
             ViewBag.ListEnqType = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "QuoteType", "Property", GeneralConstants.ListTypeN);
@@ -353,6 +353,8 @@ namespace NtierMvc.Controllers
             //return new JsonResult { Data = pEntity, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
 
         }
+        
+
 
         [HttpPost]
         public ActionResult CreateDownloadDocument(string downloadTypeId, string quoteTypeId, string quoteNumberId, string quoteTypeText, string quoteNoForFileName)
@@ -699,6 +701,19 @@ namespace NtierMvc.Controllers
             lstQuoteNo = objManager.GetQuoteNoList(quotetypeId);
             return new JsonResult { Data = lstQuoteNo, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
+        [HttpGet]
+        public ActionResult GetSoNoList(string quotetypeId)
+        {
+            
+            List<DropDownEntity> SoNoList = new List<DropDownEntity>();
+
+            SoNoList = model.GetMasterTableStringList(TableNames.Orders, ColumnNames.id, ColumnNames.SoNo, "", "", GeneralConstants.ListTypeD);
+            if(SoNoList.Count>0)
+                SoNoList.RemoveAt(0);
+            return new JsonResult { Data = SoNoList, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+        }
+
+
 
         public ActionResult GetOrderQuoteNo(string quotetypeId)
         {
@@ -712,9 +727,10 @@ namespace NtierMvc.Controllers
             //lstQuoteNo.Insert(0, objSelect);
             var result = new { lstQuoteNo, lstSoNo };
             return new JsonResult { Data = result, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+
         }
 
-        public ActionResult GetProductTypes(string quotetypeId)
+        public ActionResult GetProductTypes()
         {
             //List<TableRecordsEntity> lstQuoteNo = new List<TableRecordsEntity>();
             //TableRecordsEntity objTbl = new TableRecordsEntity();
@@ -744,7 +760,23 @@ namespace NtierMvc.Controllers
             lstProducts = objManager.GetPrepProductNames(productId, casingSize, type);
             return new JsonResult { Data = lstProducts, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
+        [HttpPost]
+        public ActionResult CreatePOReport( string ReportType,string pageIndex, string pageSize, string SearchQuoteType = null, string SearchVendorID = null, string SearchProductGroup = null, string SearchDeliveryTerms = null, string SearchPODeliveryDate = null)
+        {
+            string path = System.Web.HttpContext.Current.Server.MapPath(ConfigurationManager.AppSettings["TempFolder"]);
+            string fullPath = Path.Combine(Server.MapPath(ConfigurationManager.AppSettings["TempFolder"].ToString()), ReportType);
 
+
+            if (!System.IO.Directory.Exists(path))
+                System.IO.Directory.CreateDirectory(path);
+
+            string fileName = "";
+
+            ReportManager mgr = new ReportManager();
+            fileName =   mgr.PrepProductAuhtReport(fullPath, ReportType, pageIndex, pageSize, SearchQuoteType, SearchVendorID, SearchProductGroup, SearchDeliveryTerms, SearchPODeliveryDate);
+            return new JsonResult { Data = fileName, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+
+        }
         public JsonResult FetchOrdersList(string pageIndex, string pageSize, string SearchQuoteType = null, string SearchVendorID = null, string SearchProductGroup = null, string SearchDeliveryTerms = null, string SearchPODeliveryDate = null)
         {
             OrderEntityDetails orderEntity = new OrderEntityDetails();
@@ -761,6 +793,10 @@ namespace NtierMvc.Controllers
         public ActionResult PartialOrders()
         {
             return PartialView(techDetail);
+        }
+        public ActionResult PartialReportView()
+        {
+            return PartialView();
         }
 
         public ActionResult PartialOrderViewOnly()
@@ -788,7 +824,9 @@ namespace NtierMvc.Controllers
             ViewBag.ListSoNo.RemoveAt(0);
             ViewBag.ListModeOfDespatch = model.GetDropDownList(TableNames.Master_Taxonomy, GeneralConstants.ListTypeD, ColumnNames.DropDownID, ColumnNames.DropDownValue, "Transport", ColumnNames.Property);
 
+            
             DropDownEntity obj = new DropDownEntity();
+            
             obj.DataStringValueField = "";
             obj.DataTextField = "New";
             ViewBag.ListSoNo.Insert(0, obj);

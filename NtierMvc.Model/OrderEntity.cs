@@ -44,10 +44,10 @@ namespace NtierMvc.Model
         public string PaymentTerms { get; set; }
         public string Inspection { get; set; }
         public string EndUser { get; set; }
-        public string MainProdGrp { get; set; }        
-        public string SubProdGrp { get; set; }        
-        public string ProdName { get; set; }        
-        public string ipAddress { get; set; }        
+        public string MainProdGrp { get; set; }
+        public string SubProdGrp { get; set; }
+        public string ProdName { get; set; }
+        public string ipAddress { get; set; }
         public string MultiQuoteNos { get; set; }
         public string UploadedFile { get; set; }
         public string Notes { get; set; }
@@ -55,6 +55,10 @@ namespace NtierMvc.Model
         public string RevisedOrderNo { get; set; }
         public string RevisedPoNo { get; set; }
         public string RevisedPoDate { get; set; }
+        public string IsActive { get; set; }
+        public string Remarks { get; set; }
+        public string WADate { get; set; }
+
     }
 
     public class ItemEntity
@@ -127,5 +131,65 @@ namespace NtierMvc.Model
             lstDdEntity = new List<DropDownEntity>();
         }
     }
-    
+    public class POReportDetails
+    {
+
+        public string Id { get; set; }
+
+        public string PoEntity { get; set; }
+        public string PoNo { get; set; }
+
+        //public string PoDate { get; set; }
+       // public string SoNo { get; set; }
+        public string SoNoView { get; set; }
+        public string WADate { get; set; }
+        public string FileNo { get; set; }
+        //public string QuoteNo { get; set; }
+        public string Type { get; set; }
+        public string PoLocation { get; set; }
+       public string WorkReference { get; set; }
+       public string WAuthRecDate { get; set; }
+        public string IsActive { get; set; }
+        public string Remarks { get; set; }
+       
+    }
+
+    public class WAReport
+    {
+        public AuthWorkDetails WorkAuthDetails { get; set; }
+        public List<Authitem> authitems { get; set; }
+    }
+    public class AuthWorkDetails
+    {      
+        public string Id { get; set; }
+
+        public string PoEntity { get; set; }
+        public string PoNo { get; set; }
+       public string PoDate { get; set; }
+        public string SoNo { get; set; }
+        public string SoNoView { get; set; }
+        public string MODEOFSHIPMENT { get; set; }
+        public string WADate { get; set; }
+        public string FileNo { get; set; }
+        public string PODOR { get; set; }
+        public string CONSIGNEENAME { get; set; }
+        public string QuoteNoView { get; set; }
+        public string QUOTENO { get; set; }
+        public string PoLocation { get; set; }
+        public string PoDeliveryDate { get; set; }
+        public string WAuthRecDate { get; set; }
+        public string IsActive { get; set; }
+        public string Remarks { get; set; }
+
+    }
+    public class Authitem
+    {
+        public string Id { get; set; }
+        public string ProductCode { get; set; }
+        public string ProductName { get; set; }
+        public string ProductNo { get; set; }
+        public string Remarks { get; set; }
+        public string Qty { get; set; }
+
+    }
 }
