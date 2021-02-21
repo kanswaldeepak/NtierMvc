@@ -478,7 +478,7 @@ namespace NtierMvc.BusinessLogic.Worker
             }
         }
 
-        public string GetQuoteNo(string quotetypeId=null)
+        public string GetQuoteNo(string quotetypeId = null)
         {
             string quoteCode = "";
             try
@@ -627,7 +627,7 @@ namespace NtierMvc.BusinessLogic.Worker
                     entity = new ProductEntity();
 
                     //Start
-                    
+
                     if (dt.Columns.Contains("CasingSize"))
                         entity.CasingSize = dt.Rows[0]["CasingSize"]?.ToString() ?? "";
                     if (dt.Columns.Contains("Connection"))
@@ -1585,7 +1585,7 @@ namespace NtierMvc.BusinessLogic.Worker
                     BindDefault(lstDrpDwn);
                     foreach (DataRow dr in dt.Rows)
                     {
-                        Model = new DropDownEntity();                        
+                        Model = new DropDownEntity();
                         Model.DataStringValueField = dr["Id"] == DBNull.Value ? string.Empty : Convert.ToString(dr["Id"]);
                         Model.DataTextField = dr["ItemNo"] == DBNull.Value ? string.Empty : Convert.ToString(dr["ItemNo"]);
 
@@ -1606,6 +1606,21 @@ namespace NtierMvc.BusinessLogic.Worker
         {
             DataTable dt = _repository.GetDataForContractReview(EnqNo, ItemNo, type);
             return dt;
+        }
+
+        public string SaveContractReviewData(ContractReview entity)
+        {
+            string result = string.Empty;
+            try
+            {
+                result = _repository.SaveContractReviewData(entity);
+            }
+            catch (Exception Ex)
+            {
+                NtierMvc.DataAccess.ExceptionLogging.SendExcepToDB(Ex);
+            }
+            return result;
+
         }
     }
 }

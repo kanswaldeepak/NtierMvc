@@ -362,5 +362,13 @@ namespace NtierMvc.API.Controllers.Application
             return Ok(_repository.GetDataForContractReview(EnqNo, ItemNo, type));
         }
 
+        [HttpPost]
+        [ResponseType(typeof(string))]
+        [Route("api/TechnicalDetails/SaveContractReviewData")]
+        public IHttpActionResult SaveContractReviewData(ContractReview viewModel)
+        {
+            return Ok(_repository.SaveContractReviewData(viewModel));
+        }
+
     }
 }

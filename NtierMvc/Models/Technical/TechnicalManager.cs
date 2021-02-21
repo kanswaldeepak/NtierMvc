@@ -780,5 +780,24 @@ namespace NtierMvc.Model
             return lstQuotePrep;
         }
 
+        public string SaveContractReviewData(ContractReview viewModel)
+        {
+            string result = "0";
+            var baseAddress = "TechnicalDetails";
+            using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
+            {
+                HttpResponseMessage response = client.PostAsJsonAsync(baseAddress + "/SaveContractReviewData", viewModel).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    var data = response.Content.ReadAsStringAsync().Result;
+                    result = JsonConvert.DeserializeObject<string>(data);
+                }
+            }
+            return result;
+        }
+        
+
+
+
     }
 }

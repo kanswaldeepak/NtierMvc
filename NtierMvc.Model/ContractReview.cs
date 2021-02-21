@@ -19,6 +19,7 @@ namespace NtierMvc.Model
         public string Country { get; set; }
         public string ENQNo { get; set; }
         public string ItemNo { get; set; }
+        public string FileName { get; set; }
 
     }
 

@@ -68,6 +68,6 @@ namespace NtierMvc.BusinessLogic.Interface
         string SaveRevisedOrderDetails(OrderEntity cEntity);
         List<DropDownEntity> GetItemNosForEnqs(string EnqNo);
         DataTable GetDataForContractReview(string EnqNo, string ItemNo, string type);
-
+        string SaveContractReviewData(ContractReview entity);
     }
 }

@@ -10,7 +10,7 @@ namespace NtierMvc.Model
 {
     public static class TableNames
     {
-        public const string ContractReview = "ContractReview";
+        public const string ContractReviewDetails = "ContractReviewDetails";
         public const string Listing1 = "Listing1";
         public const string Listing2 = "Listing2";
         public const string Status = "Status";
@@ -1156,6 +1156,7 @@ namespace NtierMvc.Model
         public static string CommonDataErrorValue = "Contact Support with problem 'Common Data Load Error'";
         public static string NotSavedError = "Cannot Save! Contact Support!!";
         public static string NotDeletedError = "Cannot Delete Record! Contact Support!!";
+        public static string NotDeletedSomeField = "Cannot Delete Some Records! Contact Support!!";
         public static string NoTableNameFound = "Cannot Find Table To Save! Contact Support!!";
         public static string NullTableNameProvided = "Select Table To Save or Contact Support!!";
         public static string NoFileSelected = "No Record Selected! Please Select a Record and Proceed!!";
@@ -1303,7 +1304,31 @@ namespace NtierMvc.Model
             return dataTable;
         }
 
+        public static List<T> DataTableToList<T>(this DataTable table) where T : new()
+        {
+            List<T> list = new List<T>();
+            var typeProperties = typeof(T).GetProperties().Select(propertyInfo => new
+            {
+                PropertyInfo = propertyInfo,
+                Type = Nullable.GetUnderlyingType(propertyInfo.PropertyType) ?? propertyInfo.PropertyType
+            }).ToList();
 
+            foreach (var row in table.Rows.Cast<DataRow>())
+            {
+                T obj = new T();
+                foreach (var typeProperty in typeProperties)
+                {
+                    object value = row[typeProperty.PropertyInfo.Name];
+                    object safeValue = value == null || DBNull.Value.Equals(value)
+                        ? null
+                        : Convert.ChangeType(value, typeProperty.Type);
+
+                    typeProperty.PropertyInfo.SetValue(obj, safeValue, null);
+                }
+                list.Add(obj);
+            }
+            return list;
+        }
 
     }
 

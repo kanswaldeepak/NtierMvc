@@ -1,12 +1,184 @@
 ﻿
+function GetContractReview() {
+
+    $.ajax({
+        type: 'POST',
+        url: window.GetContractReviews,
+        data: JSON.stringify({ }),
+        contentType: "application/json; charset=utf-8",
+        success: function (data) {
+            $("#ContractReviewList").empty();e
+            if (data.length > 0) {
+                $.each(data, function (i, item) {
+                    if (item.RequiredColumn1 != "")
+                        $("#ContractReviewList").append("<li><input type='checkbox' value='" + item.RequiredColumn3 + "'> <a target='_blank' href='/Documents/ContractReviewUploads/" + item.RequiredColumn3 + "'><img height='25px' src='/Images/excel.png' /><label>" + item.RequiredColumn2 + "</label></a></li>");
+                })
+            }
+            else {
+                alert("No Records Found");
+            }
+        },
+        error: function (x, e) {
+            alert('Some error is occurred, Please try after some time.');
+        }
+    })
+
+}
+
+function DeleteContReviews() {
+
+    var categories = new Array();
+
+    $('input[type=checkbox]').each(function () {
+        this.checked ? categories.push($(this).val()) : null;
+    });
+
+    $.ajax({
+        type: 'POST',
+        url: window.DeleteContractReviews,
+        data: JSON.stringify({ EnqNoExcels: categories }),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (data) {
+            alert(data);
+            GetContractReview();
+        },
+        error: function (x, e) {
+            alert('Some error is occurred, Please try after some time.');
+            //$('#spn-Sucess-Failure').text('Some error is occurred, Please try after some time.');
+            //$('#spn-Sucess-Failure').addClass("important red");
+            //$('#Sucess-Failure').modal('show');
+        }
+    })
+
+}
+
+function CRUpload() {
+
+    if (window.FormData !== undefined) {
+
+        var fileUpload = $("#CRFileUpload").get(0);
+        var files = fileUpload.files;
+
+        //Validate File Type
+        var numb = $('#CRFileUpload')[0].files[0].size / 1024 / 1024; //count file size
+        var resultid = $('#CRFileUpload').val().split(".");
+        var gettypeup = resultid[resultid.length - 1]; // take file type uploaded file
+        var filetype = $('#CRFileUpload').attr('data-file_types'); // take allowed files from input
+        var allowedfiles = filetype.replace(/\|/g, ', '); // string allowed file
+        var tolovercase = gettypeup.toLowerCase();
+        var filesize = 25; //25MB
+        var onlist = $('#CRFileUpload').attr('data-file_types').indexOf(tolovercase) > -1;
+        var checkinputfile = $('#CRFileUpload').attr('type');
+        numb = numb.toFixed(2);
+
+        if (onlist && numb <= filesize) {
+            $('#alert').html('The file is ready to upload').removeAttr('class').addClass('xd2'); //file OK
+
+            // Create FormData object
+            var fileData = new FormData();
+
+            // Looping over all files and add it to FormData object
+            for (var i = 0; i < files.length; i++) {
+                fileData.append(files[i].name, files[i]);
+            }
+
+            // Adding one more key to FormData object
+            //fileData.append('quoteType', QuoteType);
+            //fileData.append('quoteNo', QuoteNo);
+
+
+            $.ajax({
+                url: window.CRFilesUpload,
+                type: "POST",
+                contentType: false, // Not to set any content header
+                processData: false, // Not to process data
+                data: fileData,
+                success: function (result) {
+                    alert(result);
+                },
+                error: function (err) {
+                    alert(err.statusText);
+                }
+            });
+        }
+        else {
+            if (numb >= filesize && onlist) {
+                $('#CRFileUpload').val(''); //remove uploaded file
+                $('#alert').html('Added file is too big \(' + numb + ' MB\) - max file size ' + filesize + ' MB').removeAttr('class').addClass('xd'); //alert that file is too big, but type file is ok
+            } else if (numb < filesize && !onlist) {
+                $('#CRFileUpload').val(''); //remove uploaded file
+                $('#alert').html('An not allowed file format has been added \(' + gettypeup + ') - allowed formats: ' + allowedfiles).removeAttr('class').addClass('xd'); //wrong type file
+            } else if (!onlist) {
+                $('#CRFileUpload').val(''); //remove uploaded file
+                $('#alert').html('An not allowed file format has been added \(' + gettypeup + ') - allowed formats: ' + allowedfiles).removeAttr('class').addClass('xd'); //wrong type file
+            }
+        }
+
+    } else {
+        alert("FormData is not supported.");
+    }
+}
+
+function GetContractReviewDetails() {
+
+    $.ajax({
+        type: 'POST',
+        url: window.GetClarificationMails,
+        data: JSON.stringify({ quoteNo: QuoteNo, quoteType: QuoteType }),
+        contentType: "application/json; charset=utf-8",
+        success: function (data) {
+            if (data.length > 0) {
+                $("#MailList").empty();
+                $.each(data, function (i, item) {
+                    if (item.RequiredColumn1 != "")
+                        $("#MailList").append("<li><input type='checkbox' value='" + item.RequiredColumn1 + "'> <a target='_blank' href='/Documents/MailUploads/" + item.RequiredColumn2 + "'><img height='25px' src='/Images/pdfIcon.png' /><label>" + item.RequiredColumn2 + "</label></a></li>");
+                })
+            }
+            else {
+                alert("No Records Found");
+            }
+        },
+        error: function (x, e) {
+            alert('Some error is occurred, Please try after some time.');
+        }
+    })
+}
+
+function DeleteContractReview() {
+
+    var categories = new Array();
+
+    $('input[type=checkbox]').each(function () {
+        this.checked ? categories.push($(this).val()) : null;
+    });
+
+    $.ajax({
+        type: 'POST',
+        url: window.DeleteClarificationMails,
+        data: JSON.stringify({ Id: categories }),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (data) {
+            alert(data);
+            GetClarificationMails();
+        },
+        error: function (x, e) {
+            alert('Some error is occurred, Please try after some time.');
+        }
+    })
+
+}
+
 function getContractReviewDetails() {
-    
-    var Customer = $("#CRCustomer").val();
-    var ENQNo = $("#CRENQNo").val();
-    var ItemNo = $("#CRItemNo").val();
+
+    let Customer = $("#CRCustomer").val();
+    let ENQNo = $("#CRENQNo").val();
+    let ItemNo = $("#CRItemNo").val();
+    let FileName = $("#CRENQNo option:selected").text();
 
     let itemNo = '';
-    var y = document.getElementById("CRItemNo");
+    let y = document.getElementById("CRItemNo");
     for (var i = 0; i < y.options.length; i++) {
         if (y.options[i].selected == true) {
             //alert(x.options[i].value);
@@ -21,11 +193,11 @@ function getContractReviewDetails() {
     $.ajax({
         type: 'POST',
         url: window.GetExcelForContractReview,
-        data: JSON.stringify({ customerId: Customer, enqNo: ENQNo, itemNo: itemNo }),
+        data: JSON.stringify({ customerId: Customer, enqNo: ENQNo, itemNo: itemNo, fileName: FileName }),
         contentType: "application/json; charset=utf-8",
         success: function (data) {
             if (data != "") {
-                window.location.href = window.DownloadDoc + '?fileName=' + data.fileName+'&path='+data.path;
+                window.location.href = window.DownloadDoc + '?fileName=' + data.fileName + '&path=' + data.path;
                 HideLoadder();
             }
             else {

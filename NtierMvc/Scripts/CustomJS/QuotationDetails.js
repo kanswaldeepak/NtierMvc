@@ -143,9 +143,9 @@ function GetQuoteNumbers() {
 
             var currentDate = new Date();
             if (currentDate.getMonth() >= 3)
-                $('#QuoteTypeNo').val('QTMOT' + (currentDate.getFullYear()).toString().substr(currentDate.getFullYear().toString().length - 2) + (currentDate.getFullYear() + 1).toString().substr((currentDate.getFullYear() + 1).toString().length - 2) + '0' + res.QuoteNo);
+                $('#QuoteTypeNo').val('QTMOT' + (currentDate.getFullYear()).toString().substr(currentDate.getFullYear().toString().length - 2) + (currentDate.getFullYear() + 1).toString().substr((currentDate.getFullYear() + 1).toString().length - 2) + res.QuoteNo);
             else
-                $('#QuoteTypeNo').val('QTMOT' + (currentDate.getFullYear() - 1).toString().substr((currentDate.getFullYear() + 1).toString().length - 2) + currentDate.getFullYear().toString().substr(currentDate.getFullYear().toString().length - 2) + '0' + res.QuoteNo);
+                $('#QuoteTypeNo').val('QTMOT' + (currentDate.getFullYear() - 1).toString().substr((currentDate.getFullYear() + 1).toString().length - 2) + currentDate.getFullYear().toString().substr(currentDate.getFullYear().toString().length - 2) + res.QuoteNo);
 
 
             //$('#QuoteTypeNo').val('QTMOT-' + res.QuoteNo);

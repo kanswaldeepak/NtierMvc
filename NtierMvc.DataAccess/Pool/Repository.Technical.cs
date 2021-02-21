@@ -228,6 +228,21 @@ namespace NtierMvc.DataAccess.Pool
             return dt;
         }
 
+
+        public string SaveContractReviewData(ContractReview Model)
+        {
+            string msgCode = "";
+            var Params = new Dictionary<string, object>();
+            Params.Add("@ENQNo", Model.ENQNo);
+            Params.Add("@FileName", Model.FileName);
+
+            var SPName = ConfigurationManager.AppSettings["SaveContractReviewData"];
+            _dbAccess.ExecuteNonQuery(SPName, Params, "@o_MsgCode", out msgCode);
+
+            return msgCode;
+        }
+
+
         #endregion
     }
 }

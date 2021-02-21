@@ -2023,16 +2023,16 @@ namespace NtierMvc.Controllers
 
 
         [HttpPost]
-        public ActionResult GetExcelForContractReview(string customerId, string enqNo, string itemNo)
+        public ActionResult GetExcelForContractReview(string customerId, string enqNo, string itemNo, string fileName)
         {
-            string fileName = "MOT F SM 02 ENQUIRY CONTRACT REVIEW SHEET REV. 03.xlsx";
+             fileName = fileName + ".xlsx";
 
             string path = Path.Combine(Server.MapPath(ConfigurationManager.AppSettings["TempFolder"].ToString()), "");
             if (!System.IO.Directory.Exists(path))
                 System.IO.Directory.CreateDirectory(path);
             string fullPath = Path.Combine(Server.MapPath(ConfigurationManager.AppSettings["TempFolder"].ToString()), fileName);
             fileName = GenerateCRExcel(fullPath, fileName, enqNo, itemNo);
-            var data = new { fileName  = fileName , path = fullPath};
+            var data = new { fileName = fileName, path = fullPath };
             return new JsonResult { Data = data, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 
@@ -2066,22 +2066,47 @@ namespace NtierMvc.Controllers
                 xlWorkbook.Worksheets[1].Cells.Replace("#PORevNoDt", resultData.Rows[0]["PORevNoDt"]);
                 xlWorkbook.Worksheets[1].Cells.Replace("#FileNo", resultData.Rows[0]["FileNo"]);
 
+
+                string EnqFor = "", MaterialGrade = "", CasingSize = "", ThreadType = "", BottomEnd = "", TopEnd = "", CasingPpf = "", Qty = "", DeliveryLeadTime = "",
+                    DeliveryTerms = "", QuoteValidity = "", PaymentTerms = "", BgReq = "", ModeOfDespatch = "", RawMatSpec = "";
+
+                int i = 1;
+                foreach (DataRow row in resultList.Rows)
+                {
+                    EnqFor = EnqFor + (row.IsNull("EnqFor") ? string.Empty : (i.ToString() + ". " + row["EnqFor"].ToString() + "\n"));
+                    MaterialGrade = MaterialGrade + (row.IsNull("MaterialGrade") ? string.Empty : (i.ToString() + ". " + row["MaterialGrade"].ToString() + "\n"));
+                    CasingSize = CasingSize + (row.IsNull("CasingSize") ? string.Empty : (i.ToString() + ". " + row["CasingSize"].ToString() + "\n"));
+                    ThreadType = ThreadType + (row.IsNull("ThreadType") ? string.Empty : (i.ToString() + ". " + row["ThreadType"].ToString() + "\n"));
+                    BottomEnd = BottomEnd + (row.IsNull("BottomEnd") ? string.Empty : (i.ToString() + ". " + row["BottomEnd"].ToString() + "\n"));
+                    TopEnd = TopEnd + (row.IsNull("TopEnd") ? string.Empty : (i.ToString() + ". " + row["TopEnd"].ToString() + "\n"));
+                    CasingPpf = CasingPpf + (row.IsNull("CasingPpf") ? string.Empty : (i.ToString() + ". " + row["CasingPpf"].ToString() + "\n"));
+                    Qty = Qty + (row.IsNull("Qty") ? string.Empty : (i.ToString() + ". " + row["Qty"].ToString() + "\n"));
+                    DeliveryTerms = DeliveryTerms + (row.IsNull("DeliveryTerms") ? string.Empty : (i.ToString() + ". " + row["DeliveryTerms"].ToString() + "\n"));
+                    DeliveryLeadTime = DeliveryLeadTime + (row.IsNull("DeliveryLeadTime") ? string.Empty : (i.ToString() + ". " + row["DeliveryLeadTime"].ToString() + "\n"));
+                    QuoteValidity = QuoteValidity + (row.IsNull("QuoteValidity") ? string.Empty : (i.ToString() + ". " + row["QuoteValidity"].ToString() + "\n"));
+                    PaymentTerms = PaymentTerms + (row.IsNull("PaymentTerms") ? string.Empty : (i.ToString() + ". " + row["PaymentTerms"].ToString() + "\n"));
+                    BgReq = BgReq + (row.IsNull("BgReq") ? string.Empty : (i.ToString() + ". " + row["BgReq"].ToString() + "\n"));
+                    ModeOfDespatch = ModeOfDespatch + (row.IsNull("ModeOfDespatch") ? string.Empty : (i.ToString() + ". " + row["ModeOfDespatch"].ToString() + "\n"));
+                    RawMatSpec = RawMatSpec + (row.IsNull("RawMatSpec") ? string.Empty : (i.ToString() + ". " + row["RawMatSpec"].ToString() + "\n"));
+                    i++;
+                }
+
                 //For List
-                xlWorkbook.Worksheets[1].Cells.Replace("#EnqFor", resultList.Rows[0]["EnqFor"]);
-                xlWorkbook.Worksheets[1].Cells.Replace("#MaterialGrade", resultList.Rows[0]["MaterialGrade"]);
-                xlWorkbook.Worksheets[1].Cells.Replace("#CasingSize", resultList.Rows[0]["CasingSize"]);
-                xlWorkbook.Worksheets[1].Cells.Replace("#ThreadType", resultList.Rows[0]["ThreadType"]);
-                xlWorkbook.Worksheets[1].Cells.Replace("#BottomEnd", resultList.Rows[0]["BottomEnd"]);
-                xlWorkbook.Worksheets[1].Cells.Replace("#TopEnd", resultList.Rows[0]["TopEnd"]);
-                xlWorkbook.Worksheets[1].Cells.Replace("#CasingPpf", resultList.Rows[0]["CasingPpf"]);
-                xlWorkbook.Worksheets[1].Cells.Replace("#Qty", resultList.Rows[0]["Qty"]);
-                xlWorkbook.Worksheets[1].Cells.Replace("#DeliveryTerms", resultList.Rows[0]["DeliveryTerms"]);
-                xlWorkbook.Worksheets[1].Cells.Replace("#DeliveryLeadTime", resultList.Rows[0]["DeliveryLeadTime"]);
-                xlWorkbook.Worksheets[1].Cells.Replace("#QUOTEVALIDITY", resultList.Rows[0]["QUOTEVALIDITY"]);
-                xlWorkbook.Worksheets[1].Cells.Replace("#PaymentTerms", resultList.Rows[0]["PaymentTerms"]);
-                xlWorkbook.Worksheets[1].Cells.Replace("#BgReq", resultList.Rows[0]["BgReq"]);
-                xlWorkbook.Worksheets[1].Cells.Replace("#ModeOfDespatch", resultList.Rows[0]["ModeOfDespatch"]);
-                xlWorkbook.Worksheets[1].Cells.Replace("#RawMatSpec", resultList.Rows[0]["RawMatSpec"]);
+                xlWorkbook.Worksheets[1].Cells.Replace("#EnqFor", EnqFor);
+                xlWorkbook.Worksheets[1].Cells.Replace("#MaterialGrade", MaterialGrade);
+                xlWorkbook.Worksheets[1].Cells.Replace("#CasingSize", CasingSize);
+                xlWorkbook.Worksheets[1].Cells.Replace("#ThreadType", ThreadType);
+                xlWorkbook.Worksheets[1].Cells.Replace("#BottomEnd", BottomEnd);
+                xlWorkbook.Worksheets[1].Cells.Replace("#TopEnd", TopEnd);
+                xlWorkbook.Worksheets[1].Cells.Replace("#CasingPpf", CasingPpf);
+                xlWorkbook.Worksheets[1].Cells.Replace("#Qty", Qty);
+                xlWorkbook.Worksheets[1].Cells.Replace("#DeliveryTerms", DeliveryTerms);
+                xlWorkbook.Worksheets[1].Cells.Replace("#DeliveryLeadTime", DeliveryLeadTime);
+                xlWorkbook.Worksheets[1].Cells.Replace("#QuoteValidity", QuoteValidity);
+                xlWorkbook.Worksheets[1].Cells.Replace("#PaymentTerms", PaymentTerms);
+                xlWorkbook.Worksheets[1].Cells.Replace("#BgReq", BgReq);
+                xlWorkbook.Worksheets[1].Cells.Replace("#ModeOfDespatch", ModeOfDespatch);
+                xlWorkbook.Worksheets[1].Cells.Replace("#RawMatSpec", RawMatSpec);
 
                 xlWorkbook.SaveAs(fullPath);
                 xlWorkbook.Close();
@@ -2096,11 +2121,111 @@ namespace NtierMvc.Controllers
             return fileName;
         }
 
+        [HttpPost]
+        public ActionResult CRFilesUpload()
+        {
+            // Checking no of files injected in Request object  
+            if (Request.Files.Count > 0)
+            {
+                try
+                {
+                    StringBuilder strB = new StringBuilder();
+                    //  Get all files from Request object  
+                    HttpFileCollectionBase files = Request.Files;
+                    for (int i = 0; i < files.Count; i++)
+                    {
+                        HttpPostedFileBase file = files[i];
+                        string fname;
+                        string Name = "";
+                        // Checking for Internet Explorer  
+                        if (Request.Browser.Browser.ToUpper() == "IE" || Request.Browser.Browser.ToUpper() == "INTERNETEXPLORER")
+                        {
+                            string[] testfiles = file.FileName.Split(new char[] { '\\' });
+                            fname = testfiles[testfiles.Length - 1];
+                        }
+                        else
+                        {
+                            string extension = System.IO.Path.GetExtension(file.FileName);
+                            Name = file.FileName.Substring(0, file.FileName.Length - extension.Length);
+
+                            fname = Guid.NewGuid() + extension;
+                        }
+
+                        //strB = strB.Append(fname + ",");
+                        file.SaveAs(Path.Combine(Server.MapPath("~/Documents/ContractReviewUploads/"), fname));
+
+                        string result = string.Empty;
+                        ContractReview conRev = new ContractReview();
+                        conRev.ENQNo = Name;
+                        conRev.FileName = fname;
+                        //cObj.MailId = cObj.MailId.Remove(cObj.MailId.Length - 1, 1);
+                        result = objManager.SaveContractReviewData(conRev);
+
+                        if (!string.IsNullOrEmpty(result) && (result == GeneralConstants.Inserted))
+                        {
+                            return Json("File Uploaded Successfully!");
+                        }
+                        else
+                        {
+                            if (System.IO.File.Exists(fname))
+                                System.IO.File.Delete(fname);
+
+                            return Json("Cannot Save Data!");
+                        }
+                    }
+                    return Json("Cannot Save Data!");
+                }
+                catch (Exception ex)
+                {
+                    return Json("Error occurred. Error details: " + ex.Message);
+                }
+            }
+            else
+            {
+                return Json("No files selected.");
+            }
+        }
 
 
+        public JsonResult GetContractReviews()
+        {
+            List<TableRecordsEntity> NewStr = new List<TableRecordsEntity>();
+            NewStr = model.GetTableDataList(GeneralConstants.ListTypeD, TableNames.ContractReviewDetails, "", "", "", "", "", "", "", "", "", "", ColumnNames.id, ColumnNames.EnqNo, ColumnNames.filename);
+            return Json(NewStr);
+        }
+
+        public ActionResult DeleteContractReviews(List<string> EnqNoExcels)
+        {
+            string msgCode = "";
+            try
+            {
+                if (EnqNoExcels != null)
+                {
+                    foreach (string i in EnqNoExcels)
+                    {
+                        if (System.IO.File.Exists(Path.Combine(Server.MapPath("~/Documents/ContractReviewUploads/"), i)))
+                            System.IO.File.Delete(Path.Combine(Server.MapPath("~/Documents/ContractReviewUploads/"), i));
+
+                        msgCode = model.DeleteFormTable(TableNames.ContractReviewDetails, ColumnNames.filename, i);
+
+                        if (msgCode != GeneralConstants.DeleteSuccess)
+                        {
+                            msgCode = GeneralConstants.NotDeletedSomeField;
+                            break;
+                        }
+                    }
+                }
+                else
+                    msgCode = GeneralConstants.NotDeletedSomeField + " .No Records Selected";
+            }
+            catch(Exception ex)
+            {
+                msgCode = GeneralConstants.NotDeletedSomeField + " .Error " +ex.Message;
+            }
 
 
-
+            return new JsonResult { Data = msgCode, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+        }
 
 
     }
