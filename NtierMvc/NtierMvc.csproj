@@ -1324,6 +1324,9 @@
     <Content Include="Views\Technical\_TechDescDetails.cshtml" />
     <Content Include="Views\Technical\_TechRevisedOrderDetails.cshtml" />
     <Content Include="Views\CRM\PartialReportView.cshtml" />
+    <Content Include="Views\Technical\PartialContractReview.cshtml" />
+    <Content Include="Views\Technical\_TechContractReview.cshtml" />
+    <Content Include="Views\CRM\_CRMPartialReport.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\Documents\temp\" />

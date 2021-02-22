@@ -2007,13 +2007,8 @@ namespace NtierMvc.Controllers
         }
 
         public ActionResult PartialContractReview()
-        {
-            ViewBag.ListCustomer = model.GetDropDownList(TableNames.Customer, GeneralConstants.ListTypeN, ColumnNames.id, ColumnNames.CustomerName, "", "");
-            ViewBag.ListCountry = model.GetDropDownList(TableNames.Master_Country, GeneralConstants.ListTypeN, ColumnNames.id, ColumnNames.Country, "", "");
-            ViewBag.ListENQNo = model.GetDropDownList(TableNames.EnquiryRegister, GeneralConstants.ListTypeN, ColumnNames.EnquiryId, ColumnNames.ENQREF, "", "");
-            ViewBag.ListItemNo = model.GetDropDownList(TableNames.Items, GeneralConstants.ListTypeN, ColumnNames.id, ColumnNames.PoSLNo, "", "");
-            ContractReview CR = new ContractReview();
-            return PartialView("~/Views/Technical/_TechContractReview.cshtml", CR);
+        {   
+            return PartialView("~/Views/Technical/_TechContractReview.cshtml");
         }
 
         //[HttpPost]

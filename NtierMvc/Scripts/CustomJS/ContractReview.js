@@ -7,15 +7,16 @@ function GetContractReview() {
         data: JSON.stringify({ }),
         contentType: "application/json; charset=utf-8",
         success: function (data) {
-            $("#ContractReviewList").empty();e
+            $("#ContractReviewList").empty();
             if (data.length > 0) {
+                $('#noCRRecord').text('');
                 $.each(data, function (i, item) {
                     if (item.RequiredColumn1 != "")
                         $("#ContractReviewList").append("<li><input type='checkbox' value='" + item.RequiredColumn3 + "'> <a target='_blank' href='/Documents/ContractReviewUploads/" + item.RequiredColumn3 + "'><img height='25px' src='/Images/excel.png' /><label>" + item.RequiredColumn2 + "</label></a></li>");
                 })
             }
             else {
-                alert("No Records Found");
+                $('#noCRRecord').text('No Records Found For Contract Review');
             }
         },
         error: function (x, e) {
@@ -96,9 +97,11 @@ function CRUpload() {
                 data: fileData,
                 success: function (result) {
                     alert(result);
+                    GetContractReview();
                 },
                 error: function (err) {
                     alert(err.statusText);
+                    GetContractReview();
                 }
             });
         }
@@ -175,7 +178,7 @@ function getContractReviewDetails() {
     let Customer = $("#CRCustomer").val();
     let ENQNo = $("#CRENQNo").val();
     let ItemNo = $("#CRItemNo").val();
-    let FileName = $("#CRENQNo option:selected").text();
+    let FileName = $("#CRENQNo").val(); //$("#CRENQNo option:selected").text();
 
     let itemNo = '';
     let y = document.getElementById("CRItemNo");

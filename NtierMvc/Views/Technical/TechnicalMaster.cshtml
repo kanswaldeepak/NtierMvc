@@ -18,7 +18,7 @@
         <button id="ClarificationPartialViewLink" class="tablinks" onclick="openCity(event, 'ClarificationPartialView')" ng-click="BindClarificationPopup()">Clarification</button>
         <button id="ReportPartialViewLink" class="tablinks" onclick="openCity(event, 'ReportPartialView')" ng-click="OpenReport()">Documents</button>
 
-        <button id="ContractReviewPartialViewLink" class="tablinks" onclick="openCity(event, 'ContractReviewPartialView')" ng-click="BindContractReviewPopup()">Contract Review</button>
+        @*<button id="ContractReviewPartialViewLink" class="tablinks" onclick="openCity(event, 'ContractReviewPartialView')" ng-click="BindContractReviewPopup()">Contract Review</button>*@
     </div>
 
     <div id="EnquiryView" class="tabcontent">
@@ -39,9 +39,9 @@
     <div id="ClarificationPartialView" class="tabcontent">
         @Html.Partial("PartialClarification")
     </div>
-    <div id="ContractReviewPartialView" class="tabcontent">
+    @*<div id="ContractReviewPartialView" class="tabcontent">
         @Html.Partial("PartialContractReview")
-    </div>
+    </div>*@
 </div>
 
 <script>

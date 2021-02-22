@@ -1090,29 +1090,6 @@ angular.module('App').controller("MainController", function ($scope, $http, $tim
         //});
     }
 
-    //$scope.OpenReport = function () {
-
-    //    var _actionType = "ADD";
-    //    $.ajax({
-    //        type: "GET",
-    //        data: { actionType: _actionType },
-    //        datatype: "JSON",
-    //        url: window.Report,
-    //        success: function (html) {
-    //            html = $compile(html)($scope);
-                
-    //            SetParamModalPanelBody('DocumentPanelBody', html);
-              
-    //            HideLoadder();
-    //        },
-    //        error: function (r) {
-    //            HideLoadder();
-    //            alert(window.ErrorMsg);
-    //        }
-    //    })
-    //    //});
-    //}
-
 
     $scope.BindInboundPopUp = function () {
         var _actionType = "ADD"
@@ -1420,16 +1397,16 @@ angular.module('App').controller("MainController", function ($scope, $http, $tim
         ).error(function (res) { showHttpErr(res); });
     }
 
-    $scope.BindContractReviewPopup = function () {
+    $scope.BindReportPopup = function () {
 
         $.ajax({
             type: "GET",
             data: {  },
             datatype: "JSON",
-            url: window.ContractReview,
+            url: window.ReportsPopUp,
             success: function (html) {
                 html = $compile(html)($scope);
-                SetParamModalPanelBody('ContractReviewPanelBody', html);
+                SetParamModalPanelBody('ReportsPanelBody', html);
                 HideLoadder();
             },
             error: function (r) {
