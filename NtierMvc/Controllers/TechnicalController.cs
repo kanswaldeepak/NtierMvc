@@ -78,7 +78,7 @@ namespace NtierMvc.Controllers
             ViewBag.ListProdName = model.GetMasterTableStringList("Master.Product", "Id", "ProductName", "", "", GeneralConstants.ListTypeN);
             //ViewBag.ListEnqFor = model.GetMasterTableStringList("QuotationRegister", "EnqFor", "EnqFor", "", "", GeneralConstants.ListTypeD);
             ViewBag.ListQuoteType = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "QuoteType", "Property", GeneralConstants.ListTypeN);
-           
+
 
             //Enquiry
             ViewBag.ListEnqType = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "QuoteType", "Property", GeneralConstants.ListTypeN);
@@ -353,7 +353,7 @@ namespace NtierMvc.Controllers
             //return new JsonResult { Data = pEntity, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
 
         }
-        
+
 
 
         [HttpPost]
@@ -704,11 +704,11 @@ namespace NtierMvc.Controllers
         [HttpGet]
         public ActionResult GetSoNoList(string quotetypeId)
         {
-            
+
             List<DropDownEntity> SoNoList = new List<DropDownEntity>();
 
-            SoNoList = model.GetMasterTableStringList(TableNames.Orders, ColumnNames.id, ColumnNames.SoNo, "", "", GeneralConstants.ListTypeD);
-            if(SoNoList.Count>0)
+            SoNoList = model.GetMasterTableStringList(TableNames.Orders, ColumnNames.id, ColumnNames.SoNoView, "", "", GeneralConstants.ListTypeD);
+            if (SoNoList.Count > 0)
                 SoNoList.RemoveAt(0);
             return new JsonResult { Data = SoNoList, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
@@ -761,7 +761,7 @@ namespace NtierMvc.Controllers
             return new JsonResult { Data = lstProducts, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
         [HttpPost]
-        public ActionResult CreatePOReport( string ReportType,string pageIndex, string pageSize, string SearchQuoteType = null, string SearchVendorID = null, string SearchProductGroup = null, string SearchDeliveryTerms = null, string SearchPODeliveryDate = null)
+        public ActionResult CreatePOReport(string ReportType, string pageIndex, string pageSize, string SearchQuoteType = null, string SearchVendorID = null, string SearchProductGroup = null, string SearchDeliveryTerms = null, string SearchPODeliveryDate = null)
         {
             string path = System.Web.HttpContext.Current.Server.MapPath(ConfigurationManager.AppSettings["TempFolder"]);
             string fullPath = Path.Combine(Server.MapPath(ConfigurationManager.AppSettings["TempFolder"].ToString()), ReportType);
@@ -773,7 +773,7 @@ namespace NtierMvc.Controllers
             string fileName = "";
 
             ReportManager mgr = new ReportManager();
-            fileName =   mgr.PrepProductAuhtReport(fullPath, ReportType, pageIndex, pageSize, SearchQuoteType, SearchVendorID, SearchProductGroup, SearchDeliveryTerms, SearchPODeliveryDate);
+            fileName = mgr.PrepProductAuhtReport(fullPath, ReportType, pageIndex, pageSize, SearchQuoteType, SearchVendorID, SearchProductGroup, SearchDeliveryTerms, SearchPODeliveryDate);
             return new JsonResult { Data = fileName, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
 
         }
@@ -824,9 +824,9 @@ namespace NtierMvc.Controllers
             ViewBag.ListSoNo.RemoveAt(0);
             ViewBag.ListModeOfDespatch = model.GetDropDownList(TableNames.Master_Taxonomy, GeneralConstants.ListTypeD, ColumnNames.DropDownID, ColumnNames.DropDownValue, "Transport", ColumnNames.Property);
 
-            
+
             DropDownEntity obj = new DropDownEntity();
-            
+
             obj.DataStringValueField = "";
             obj.DataTextField = "New";
             ViewBag.ListSoNo.Insert(0, obj);
@@ -2007,7 +2007,7 @@ namespace NtierMvc.Controllers
         }
 
         public ActionResult PartialContractReview()
-        {   
+        {
             return PartialView("~/Views/Technical/_TechContractReview.cshtml");
         }
 
@@ -2058,7 +2058,7 @@ namespace NtierMvc.Controllers
         [HttpPost]
         public ActionResult GetExcelForContractReview(string customerId, string enqNo, string itemNo, string fileName)
         {
-             fileName = fileName + ".xlsx";
+            fileName = fileName + ".xlsx";
 
             string path = Path.Combine(Server.MapPath(ConfigurationManager.AppSettings["TempFolder"].ToString()), "");
             if (!System.IO.Directory.Exists(path))
@@ -2106,7 +2106,17 @@ namespace NtierMvc.Controllers
                 int i = 1;
                 foreach (DataRow row in resultList.Rows)
                 {
-                    EnqFor = EnqFor + (row.IsNull("EnqFor") ? string.Empty : (i.ToString() + ". " + row["EnqFor"].ToString() + "\n"));
+                    if (i == 1)
+                    {
+                        EnqFor = EnqFor + (row.IsNull("EnqFor") ? string.Empty : (i.ToString() + ". " + row["EnqFor"].ToString() + "\n"));
+                        DeliveryTerms = DeliveryTerms + (row.IsNull("DeliveryTerms") ? string.Empty : (i.ToString() + ". " + row["DeliveryTerms"].ToString() + "\n"));
+                        DeliveryLeadTime = DeliveryLeadTime + (row.IsNull("DeliveryLeadTime") ? string.Empty : (i.ToString() + ". " + row["DeliveryLeadTime"].ToString() + "\n"));
+                        QuoteValidity = QuoteValidity + (row.IsNull("QuoteValidity") ? string.Empty : (i.ToString() + ". " + row["QuoteValidity"].ToString() + "\n"));
+                        PaymentTerms = PaymentTerms + (row.IsNull("PaymentTerms") ? string.Empty : (i.ToString() + ". " + row["PaymentTerms"].ToString() + "\n"));
+                        ModeOfDespatch = ModeOfDespatch + (row.IsNull("ModeOfDespatch") ? string.Empty : (i.ToString() + ". " + row["ModeOfDespatch"].ToString() + "\n"));
+
+                    }
+
                     MaterialGrade = MaterialGrade + (row.IsNull("MaterialGrade") ? string.Empty : (i.ToString() + ". " + row["MaterialGrade"].ToString() + "\n"));
                     CasingSize = CasingSize + (row.IsNull("CasingSize") ? string.Empty : (i.ToString() + ". " + row["CasingSize"].ToString() + "\n"));
                     ThreadType = ThreadType + (row.IsNull("ThreadType") ? string.Empty : (i.ToString() + ". " + row["ThreadType"].ToString() + "\n"));
@@ -2114,12 +2124,7 @@ namespace NtierMvc.Controllers
                     TopEnd = TopEnd + (row.IsNull("TopEnd") ? string.Empty : (i.ToString() + ". " + row["TopEnd"].ToString() + "\n"));
                     CasingPpf = CasingPpf + (row.IsNull("CasingPpf") ? string.Empty : (i.ToString() + ". " + row["CasingPpf"].ToString() + "\n"));
                     Qty = Qty + (row.IsNull("Qty") ? string.Empty : (i.ToString() + ". " + row["Qty"].ToString() + "\n"));
-                    DeliveryTerms = DeliveryTerms + (row.IsNull("DeliveryTerms") ? string.Empty : (i.ToString() + ". " + row["DeliveryTerms"].ToString() + "\n"));
-                    DeliveryLeadTime = DeliveryLeadTime + (row.IsNull("DeliveryLeadTime") ? string.Empty : (i.ToString() + ". " + row["DeliveryLeadTime"].ToString() + "\n"));
-                    QuoteValidity = QuoteValidity + (row.IsNull("QuoteValidity") ? string.Empty : (i.ToString() + ". " + row["QuoteValidity"].ToString() + "\n"));
-                    PaymentTerms = PaymentTerms + (row.IsNull("PaymentTerms") ? string.Empty : (i.ToString() + ". " + row["PaymentTerms"].ToString() + "\n"));
                     BgReq = BgReq + (row.IsNull("BgReq") ? string.Empty : (i.ToString() + ". " + row["BgReq"].ToString() + "\n"));
-                    ModeOfDespatch = ModeOfDespatch + (row.IsNull("ModeOfDespatch") ? string.Empty : (i.ToString() + ". " + row["ModeOfDespatch"].ToString() + "\n"));
                     RawMatSpec = RawMatSpec + (row.IsNull("RawMatSpec") ? string.Empty : (i.ToString() + ". " + row["RawMatSpec"].ToString() + "\n"));
                     i++;
                 }
@@ -2251,9 +2256,9 @@ namespace NtierMvc.Controllers
                 else
                     msgCode = GeneralConstants.NotDeletedSomeField + " .No Records Selected";
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                msgCode = GeneralConstants.NotDeletedSomeField + " .Error " +ex.Message;
+                msgCode = GeneralConstants.NotDeletedSomeField + " .Error " + ex.Message;
             }
 
 

@@ -58,6 +58,7 @@ namespace NtierMvc.Model
         public string IsActive { get; set; }
         public string Remarks { get; set; }
         public string WADate { get; set; }
+        public string Subject { get; set; }
 
     }
 

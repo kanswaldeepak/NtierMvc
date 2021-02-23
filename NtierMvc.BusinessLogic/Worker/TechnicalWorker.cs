@@ -911,6 +911,7 @@ namespace NtierMvc.BusinessLogic.Worker
                                 obj.IsActive = dr1.IsNull("IsActive") ? string.Empty : Convert.ToString(dr1["IsActive"]);
                                 obj.Remarks = dr1.IsNull("REMARKS") ? string.Empty : Convert.ToString(dr1["REMARKS"]);
                                 obj.WADate = dr1.IsNull("WADate") ? string.Empty : Convert.ToString(dr1["WADate"]);
+                                obj.Subject = dr1.IsNull("Subject") ? string.Empty : Convert.ToString(dr1["Subject"]);
                                 qED.lstOrderEntity.Add(obj);
                             }
                         }
