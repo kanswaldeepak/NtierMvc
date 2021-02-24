@@ -1597,5 +1597,21 @@ namespace NtierMvc.BusinessLogic.Worker
             return result;
         }
 
+        public List<DropDownEntity> GetDateDropDownList(string TableName, string ListType, string DataValueField, string DataTextField, string Param, string ColumnName, bool Others = false, string orderBy = null, string orderByColumn = null, string Param1 = null, string ColumnName1 = null, string Param2 = null, string ColumnName2 = null, string Param3 = null, string ColumnName3 = null, string Param4 = null, string ColumnName4 = null)
+        {
+            List<DropDownEntity> objList = new List<DropDownEntity>();
+            try
+            {
+                objList = objData.GetDateDropDownList(TableName, ListType, DataValueField, DataTextField, Param, ColumnName, Others, orderBy, orderByColumn, Param1, ColumnName1, Param2, ColumnName2, Param3, ColumnName3, Param4, ColumnName4);
+                return objList;
+            }
+            catch (Exception Ex)
+            {
+                NtierMvc.DataAccess.ExceptionLogging.SendExcepToDB(Ex);
+            }
+            return objList;
+        }
+
+
     }
 }

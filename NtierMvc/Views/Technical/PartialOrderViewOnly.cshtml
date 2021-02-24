@@ -20,11 +20,15 @@
                 <label>Customer Id</label>
             </td>
             @*<td>
-                    <label>Product Group</label>
-                </td>*@
+            <label>Product Group</label>
+        </td>*@
             <td>
                 <label>Delivery Terms</label>
             </td>
+            <td>
+                <label>PO Delivery Date</label>
+            </td>
+            <td></td>
         </tr>
         <tr>
             <td>
@@ -50,15 +54,15 @@
                })
             </td>
             @*<td>
-                    @Html.DropDownList("ProductGroup", new SelectList(@ViewBag.ListProdName, "DataStringValueField", "DataTextField", "Select"),
-                   new
-                   {
-                       @class = "form-control",
-                       ng_model = "SearchOrderProductGroup",
-                       @id = "ORProductGroup",
-                       @multiple = true
-                   })
-                </td>*@
+            @Html.DropDownList("ProductGroup", new SelectList(@ViewBag.ListProdName, "DataStringValueField", "DataTextField", "Select"),
+           new
+           {
+               @class = "form-control",
+               ng_model = "SearchOrderProductGroup",
+               @id = "ORProductGroup",
+               @multiple = true
+           })
+        </td>*@
             <td>
                 @Html.DropDownList("DeliveryTerms", new SelectList(@ViewBag.ListDeliveryTerms, "DataStringValueField", "DataTextField", "Select"),
                new
@@ -70,12 +74,21 @@
                })
             </td>
             <td>
+                @Html.DropDownList("PODeliveryDate", new SelectList(@ViewBag.ListPODeliveryDate, "DataTextField", "DataTextField", "Select"),
+               new
+               {
+                   @class = "form-control",
+                   ng_model = "SearchPODeliveryDate",
+                   @id = "ORPODeliveryDate",
+                   @multiple = true
+               })
+            </td>
+            <td>
                 <button class="btn btn-sm btn-success" type="button" id="btnSearch" ng-click="FetchOrdersList()">
                     Search
                 </button>
                 <button class="btn btn-sm btn-info" type="button" id="btnClearSearchQuotereg" ng-click="DefaultOrdersList(); FetchOrdersList();">Clear</button>
                 <button class="btn btn-sm btn-info" type="button" id="btnDownloadReport" ng-click="GeneratePOReport('PO_WORK_AUHTORIZATION');">Master Order<i class="fa fa-download" style="font-size:16px" aria-hidden="true"></i></button>
-
             </td>
         </tr>
     </table>
@@ -233,7 +246,7 @@
     </div>
 </div>
 
-<div class="modal" id="addOrderDetails" tabindex="-1" role="dialog">
+<!--<div class="modal" id="addOrderDetails" tabindex="-1" role="dialog">-->
     @*@using (Ajax.BeginForm(actionName: "SaveOrderDetails", controllerName: "Technical", ajaxOptions: new AjaxOptions
         {
             HttpMethod = "POST"
@@ -242,11 +255,11 @@
                 routeValues: null,
                 htmlAttributes: new { id = "frmOrderDetails" }))
         {*@
-    <div class="modal-dialog" style="width:80%; max-width: 80%;" role="document">
+    <!--<div class="modal-dialog" style="width:80%; max-width: 80%;" role="document">
         <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header">-->
                 @*@Html.HiddenFor(m => m.TrnBuildingHdrId)*@
-                <h5 class="modal-title">Add Order Details</h5>
+                <!--<h5 class="modal-title">Add Order Details</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -259,9 +272,9 @@
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             </div>
         </div>
-    </div>
+    </div>-->
     @*}*@
-</div>
+<!--</div>
 
 
 <div class="modal fade" id="add_details" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -321,7 +334,7 @@
             </div>
         </div>
     </div>
-</div>
+</div>-->
 <script type="text/javascript">
 
     $(document).ready(function () {
@@ -331,6 +344,13 @@
         window.ItemDetailsPopup = '@Url.Action("ItemPopup", "Technical")';
         window.GetPrepQuoteNo = '@Url.Action("GetPrepQuoteNo", "Technical")';
         window.GeneratePOReport = '@Url.Action("CreatePOReport", "Technical")';
+
+        $('#ORPODeliveryDate').chosen({
+            width: "210px",
+            placeholder_text_single: "Select PODeliveryDate",
+            placeholder_text_multiple: "Select PODeliveryDates"
+        });
+
 
         $('#ORQuoteType').chosen({
             width: "210px",

@@ -1012,6 +1012,35 @@ namespace NtierMvc.DataAccess.Pool
                 return DataTableToStringListWithOther(_dbAccess.GetDataTable(spName, parms));
         }
 
+        public List<DropDownEntity> GetDateDropDownList(string TableName, string ListType, string DataValueField, string DataTextField, string Param, string ColumnName, bool Others = false, string orderBy = null, string orderByColumn = null, string Param1 = null, string ColumnName1 = null, string Param2 = null, string ColumnName2 = null, string Param3 = null, string ColumnName3 = null, string Param4 = null, string ColumnName4 = null)
+        {
+            var parms = new Dictionary<string, object>();
+            var spName = "";
+            spName = ConfigurationManager.AppSettings["GetDateDropDownList"];
+
+            parms.Add("@TableName", TableName);
+            parms.Add("@DataValueField", DataValueField);
+            parms.Add("@DataTextField", DataTextField);
+            parms.Add("@Param", Param);
+            parms.Add("@ColumnName", ColumnName);
+            parms.Add("@Param1", Param1);
+            parms.Add("@ColumnName1", ColumnName1);
+            parms.Add("@Param2", Param2);
+            parms.Add("@ColumnName2", ColumnName2);
+            parms.Add("@Param3", Param3);
+            parms.Add("@ColumnName3", ColumnName3);
+            parms.Add("@Param4", Param4);
+            parms.Add("@ColumnName4", ColumnName4);
+            parms.Add("@ListType", ListType);
+            parms.Add("@orderBy", orderBy);
+            parms.Add("@orderByColumn", orderByColumn);
+
+            if (!Others)
+                return DataTableToStringList(_dbAccess.GetDataTable(spName, parms));
+            else
+                return DataTableToStringListWithOther(_dbAccess.GetDataTable(spName, parms));
+        }
+
         public List<DropDownEntity> GetMasterTableList(string TableName, string DataValueField, string DataTextField, string property)
         {
             var parms = new Dictionary<string, object>();

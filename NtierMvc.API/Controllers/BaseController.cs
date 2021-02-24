@@ -614,6 +614,12 @@ namespace NtierMvc.API.Controllers
             return Ok(_repository.SaveTableData(iData));
         }
 
+        [Route("api/Base/GetDateDropDownList")]
+        [ResponseType(typeof(IEnumerable<DropDownEntity>))]
+        public IHttpActionResult GetDateDropDownList(string TableName, string ListType, string DataValueField, string DataTextField, string Param, string ColumnName, bool Others = false, string orderBy = null, string orderByColumn = null, string Param1 = null, string ColumnName1 = null, string Param2 = null, string ColumnName2 = null, string Param3 = null, string ColumnName3 = null, string Param4 = null, string ColumnName4 = null)
+        {
+            return Ok(_repository.GetDateDropDownList(TableName, ListType, DataValueField, DataTextField, Param, ColumnName, Others, orderBy, orderByColumn, Param1, ColumnName1, Param2, ColumnName2, Param3, ColumnName3, Param4, ColumnName4));
+        }
 
     }
 }

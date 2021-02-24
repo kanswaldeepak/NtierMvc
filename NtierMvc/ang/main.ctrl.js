@@ -786,7 +786,7 @@ angular.module('App').controller("MainController", function ($scope, $http, $tim
         if (x.length > 0) {
             for (var i = 0; i < x.options.length; i++) {
                 if (x.options[i].selected == true) {
-                    PODeliveryDate = PODeliveryDate + convertDateFormat(x.options[i].value,'dd-MM-yyyy HH:mm:ss', 'MM-dd-yyyy') + ',';
+                    PODeliveryDate = PODeliveryDate + convertDateFormat(x.options[i].value,'dd-MM-yyyy', 'MM-dd-yyyy') + ',';
                 }
             }
         }

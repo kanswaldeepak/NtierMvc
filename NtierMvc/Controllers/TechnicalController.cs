@@ -111,7 +111,7 @@ namespace NtierMvc.Controllers
             ViewBag.ListSubject = "";
 
             //Order
-            ViewBag.ListPODeliveryDate = model.GetDropDownList(TableNames.Orders, GeneralConstants.ListTypeD, ColumnNames.id, ColumnNames.PoDeliveryDate, "", "");
+            ViewBag.ListPODeliveryDate = model.GetDateDropDownList(TableNames.Orders, GeneralConstants.ListTypeD, ColumnNames.id, ColumnNames.PoDeliveryDate, "", "");
 
             return View();
         }

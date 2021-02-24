@@ -142,6 +142,12 @@ function convertDateFormat(dateObject, convertFrom, convertTo) {
             dte = new Date(parseInt(d[2], 10),
                 parseInt(d[1], 10) - 1,
                 parseInt(d[0], 10));
+        case 'dd-MM-yyyy':
+            d = dateObject.split("-");
+            dte = new Date(parseInt(d[2], 10),
+                parseInt(d[1], 10) - 1,
+                parseInt(d[0], 10));
+            break;
         default:
             dte = new Date(dateObject.split("/").reverse().join("-"));
             break;

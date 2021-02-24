@@ -133,5 +133,8 @@ namespace NtierMvc.BusinessLogic.Interface
         List<DropDownEntity> SaveNewItemInDdl(AddDdlEntity bEntity);
         string SaveTableData(InsertTableData iData);
 
+        List<DropDownEntity> GetDateDropDownList(string TableName, string ListType, string DataValueField, string DataTextField, string Param, string ColumnName, bool Others = false, string orderBy = null, string orderByColumn = null, string Param1 = null, string ColumnName1 = null, string Param2 = null, string ColumnName2 = null, string Param3 = null, string ColumnName3 = null, string Param4 = null, string ColumnName4 = null);
+
+
     }
 }
