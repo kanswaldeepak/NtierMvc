@@ -17,13 +17,13 @@ namespace NtierMvc.DataAccess.Pool
 
         #region Class Methods
 
-        public DataSet GetOrderDetails(int pageIndex, int pageSize, string SearchQuoteType = null, string SearchVendorID = null, string SearchProductGroup = null, string SearchDeliveryTerms = null, string SearchPODeliveryDate = null)
+        public DataSet GetOrderDetails(int pageIndex, int pageSize, string SearchQuoteType = null, string SearchCustomerID = null, string SearchProductGroup = null, string SearchDeliveryTerms = null, string SearchPODeliveryDate = null)
         {
             var parms = new Dictionary<string, object>();
             parms.Add("@pageIndex", pageIndex);
             parms.Add("@pageSize", pageSize);
             parms.Add("@SearchQuoteType", SearchQuoteType);
-            parms.Add("@SearchCustomerID", SearchVendorID);
+            parms.Add("@SearchCustomerID", SearchCustomerID);
             parms.Add("@SearchProductGroup", SearchProductGroup);
             parms.Add("@SearchDeliveryTerms", SearchDeliveryTerms);
             parms.Add("@SearchPODeliveryDate", SearchPODeliveryDate);

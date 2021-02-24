@@ -65,12 +65,12 @@ namespace NtierMvc.DataAccess.Pool
             return dt;
         }
 
-        public DataSet GetCustomerDetails(int pageIndex, int pageSize, string SearchCustomerName = null, string SearchCustomerID = null, string  SearchCustomerIsActive = null)
+        public DataSet GetCustomerDetails(int pageIndex, int pageSize, string SearchCountry = null, string SearchCustomerID = null, string  SearchCustomerIsActive = null)
         {
             var parms = new Dictionary<string, object>();
             parms.Add("@pageIndex", pageIndex);
             parms.Add("@pageSize", pageSize);
-            parms.Add("@SearchCustomerName", SearchCustomerName);
+            parms.Add("@SearchCountry", SearchCountry);
             parms.Add("@SearchCustomerID", SearchCustomerID);
             parms.Add("@CustomerId", SearchCustomerID);
             parms.Add("@SearchCustomerIsActive", SearchCustomerIsActive);

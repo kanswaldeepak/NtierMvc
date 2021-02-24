@@ -19,7 +19,6 @@ angular.module('App').controller("ReportController", function ($scope, $http, $t
     $scope.GenerateReport = function (Type) {
         //var DownloadType = dwnldtype;
         ShowLoadder();
-        debugger
         $.ajax({
             type: "Post",
             url: window.GenerateReport,
@@ -133,7 +132,6 @@ angular.module('App').controller("ReportController", function ($scope, $http, $t
         $http.get(window.TecnicalMaster).success(function (response) {
             $scope.SonoList = "";
             if (response.length > 0) {
-                debugger
                 $scope.SonoList = response;
 
             }

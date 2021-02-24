@@ -35,9 +35,9 @@ namespace NtierMvc.API.Controllers.Application
         }
 
         [Route("api/CustomerDetails/GetCustomerDetails")]
-        public IHttpActionResult GetCustomerDetails(int pageIndex, int pageSize, string SearchCustomerName = null, string SearchCustomerID = null, string SearchCustomerIsActive = null)
+        public IHttpActionResult GetCustomerDetails(int pageIndex, int pageSize, string SearchCountry = null, string SearchCustomerID = null, string SearchCustomerIsActive = null)
         {
-            return Ok(_repository.GetCustomerDetails(pageIndex, pageSize, SearchCustomerName, SearchCustomerID, SearchCustomerIsActive));
+            return Ok(_repository.GetCustomerDetails(pageIndex, pageSize, SearchCountry, SearchCustomerID, SearchCustomerIsActive));
         }
 
         [HttpPost]

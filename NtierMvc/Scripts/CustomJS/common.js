@@ -1,5 +1,5 @@
 ﻿
-function DeleteUsingIdFromTable (TableName, ColumnName, Id) {
+function DeleteUsingIdFromTable(TableName, ColumnName, Id) {
     if (!confirm("Are you sure to delete?")) {
         return;
     }
@@ -119,6 +119,68 @@ function AllowNumbers(evt) {
     return true;
 }
 
+function convertDateFormat(dateObject, convertFrom, convertTo) {
+
+    var d = "";
+    var dte = "";
+
+    switch (convertFrom) {
+        case 'dd-MM-yyyy HH:mm:ss':
+            d = dateObject.split(" ")[0].split("-");
+            dte = new Date(parseInt(d[2], 10),
+                parseInt(d[1], 10) - 1,
+                parseInt(d[0], 10));
+            break;
+        case 'MM-dd-yyyy HH:mm:ss':
+            d = dateObject.split(" ")[0].split("-");
+            dte = new Date(parseInt(d[1], 10) - 1,
+                parseInt(d[2], 10),
+                parseInt(d[0], 10));
+            break;
+        case 'dd/MM/yyyy HH:mm:ss':
+            d = dateObject.split(" ")[0].split("/");
+            dte = new Date(parseInt(d[2], 10),
+                parseInt(d[1], 10) - 1,
+                parseInt(d[0], 10));
+        default:
+            dte = new Date(dateObject.split("/").reverse().join("-"));
+            break;
+    }
+
+    var day = dte.getDate();
+    var month = dte.getMonth() + 1;
+    var year = dte.getFullYear();
+    if (day < 10) {
+        day = "0" + day;
+    }
+    if (month < 10) {
+        month = "0" + month;
+    }
+
+    var date = '';
+
+    switch (convertTo) {
+        case 'dd/MM/yyyy':
+            date = day + "/" + month + "/" + year;
+            break;
+        case 'dd-MM-yyyy':
+            date = day + "-" + month + "-" + year;
+            break;
+        case 'yyyy-MM-dd':
+            date = year + "-" + month + "-" + day;
+            break;
+        case 'MM-dd-yyyy':
+            date = month + "-" + day + "-" + year;
+            break;
+        default:
+            date = day + "/" + month + "/" + year;
+            break;
+    }
+
+
+    return date;
+}
+
 function formatDate(dateObject, convertTo) {
     //var d = new Date(dateObject);
     var d = new Date(dateObject.split("/").reverse().join("-"));
@@ -144,6 +206,9 @@ function formatDate(dateObject, convertTo) {
             break;
         case 'yyyy-MM-dd':
             date = year + "-" + month + "-" + day;
+            break;
+        case 'MM-dd-yyyy':
+            date = month + "-" + day + "-" + year;
             break;
         default:
             date = day + "/" + month + "/" + year;

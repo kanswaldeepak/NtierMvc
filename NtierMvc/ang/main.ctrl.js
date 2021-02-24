@@ -19,7 +19,7 @@ angular.module('App').controller("MainController", function ($scope, $http, $tim
     }
 
     $scope.FetchCustomerList = function () {
-        $http.get(window.FetchCustomerList + "?pageindex=" + $scope.custPageIndex + "&pagesize=" + $scope.custPageSize + "&SearchCustomerName=" + $scope.SearchCustomerName + "&SearchCustomerID=" + $scope.SearchCustomerID + "&SearchCustomerIsActive=" + $scope.SearchCustomerIsActive).success(function (response) {
+        $http.get(window.FetchCustomerList + "?pageindex=" + $scope.custPageIndex + "&pagesize=" + $scope.custPageSize + "&SearchCountry=" + $scope.SearchCountry + "&SearchCustomerID=" + $scope.SearchCustomerID + "&SearchCustomerIsActive=" + $scope.SearchCustomerIsActive).success(function (response) {
             $scope.AvailableCustomerList = response.LstCusEnt;
             $scope.custTotalCount = response.totalcount;
         }, function (error) {
@@ -771,16 +771,29 @@ angular.module('App').controller("MainController", function ($scope, $http, $tim
 
     //Order Starts
     $scope.DefaultOrdersList = function () {
-        $scope.SearchOrderVendorID = "";
-        $scope.SearchOrderVendorName = "";
+        $scope.SearchOrderQuoteType = "";
+        $scope.SearchOrderCustomerId = "";
         $scope.SearchOrderProductGroup = "";
         $scope.SearchOrderDeliveryTerms = "";
-        $scope.SearchOrderQuoteType = "";
+        $scope.SearchPODeliveryDate = "";
     }
 
-
     $scope.FetchOrdersList = function () {
-        $http.get(window.FetchOrdersList + "?pageindex=" + $scope.orderPageIndex + "&pagesize=" + $scope.orderPageSize + "&SearchQuoteType=" + $scope.SearchOrderQuoteType + "&SearchVendorID=" + $scope.SearchOrderVendorID + "&SearchProductGroup=" + $scope.SearchOrderProductGroup + "&SearchDeliveryTerms=" + $scope.SearchOrderDeliveryTerms + "&SearchPODeliveryDate=" + $scope.SearchPODeliveryDate).success(function (response) {
+
+        var PODeliveryDate = '';
+        var x = document.getElementById("ORPODeliveryDate");
+
+        if (x.length > 0) {
+            for (var i = 0; i < x.options.length; i++) {
+                if (x.options[i].selected == true) {
+                    PODeliveryDate = PODeliveryDate + convertDateFormat(x.options[i].value,'dd-MM-yyyy HH:mm:ss', 'MM-dd-yyyy') + ',';
+                }
+            }
+        }
+
+        PODeliveryDate = PODeliveryDate.substring(0, PODeliveryDate.length - 1);
+
+        $http.get(window.FetchOrdersList + "?pageindex=" + $scope.orderPageIndex + "&pagesize=" + $scope.orderPageSize + "&SearchQuoteType=" + $scope.SearchOrderQuoteType + "&SearchCustomerID=" + $scope.SearchOrderCustomerId + "&SearchProductGroup=" + $scope.SearchOrderProductGroup + "&SearchDeliveryTerms=" + $scope.SearchOrderDeliveryTerms + "&SearchPODeliveryDate=" + PODeliveryDate).success(function (response) {
             $scope.AvailableOrdersList = response.lstOrderEntity;
             $scope.orderTotalCount = response.totalcount;
         }, function (error) {

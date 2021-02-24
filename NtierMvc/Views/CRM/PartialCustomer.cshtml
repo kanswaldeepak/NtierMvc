@@ -58,6 +58,7 @@
                                @class = "form-control",
                                ng_model = "SearchCountry",
                                @id = "CUCountryId",
+                               autocomplete = "off",
                                @multiple = "true"
                            })
             </td>
@@ -68,6 +69,7 @@
                                @class = "form-control",
                                ng_model = "SearchCustomerID",
                                @id = "CUCustomerId",
+                               autocomplete = "off",
                                @multiple = "true"
                            })
             </td>
@@ -78,6 +80,7 @@
                               @class = "form-control",
                               ng_model = "SearchCustomerName",
                               @id = "CUCustomerName",
+                              autocomplete = "off",
                               @multiple = "true"
                           })
                 <button class="btn btn-sm btn-success" type="button" id="btnSearchCustomer" ng-click="FetchCustomerList()">

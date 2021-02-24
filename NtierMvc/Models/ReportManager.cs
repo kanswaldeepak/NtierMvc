@@ -472,7 +472,7 @@ namespace NtierMvc.Models
         }
 
 
-        public string PrepCustomerReport(string fullPath, string fileName, string pageIndex, string pageSize, string SearchCustomerName, string SearchCustomerID, string SearchCustomerIsActive)
+        public string PrepCustomerReport(string fullPath, string fileName, string pageIndex, string pageSize, string SearchCountry, string SearchCustomerID, string SearchCustomerIsActive)
         {
             string DocumentName = fileName;
             try
@@ -480,7 +480,7 @@ namespace NtierMvc.Models
 
                 CustomerManager objManager = new CustomerManager();
 
-                var CustDetails = objManager.GetCustomerDetails(Convert.ToInt32(pageIndex), Convert.ToInt32(pageSize), SearchCustomerName, SearchCustomerID, SearchCustomerIsActive);
+                var CustDetails = objManager.GetCustomerDetails(Convert.ToInt32(pageIndex), Convert.ToInt32(pageSize), SearchCountry, SearchCustomerID, SearchCustomerIsActive);
                 //return new JsonResult { Data = custDetail, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
 
                 Microsoft.Office.Interop.Excel.Application excelApp = new Microsoft.Office.Interop.Excel.Application();

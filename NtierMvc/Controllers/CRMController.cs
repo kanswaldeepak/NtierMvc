@@ -116,13 +116,13 @@ namespace NtierMvc.Controllers
             //return PartialView();
         }
 
-        public JsonResult FetchCustomerList(string pageIndex, string pageSize, string SearchCustomerName, string SearchCustomerID, string SearchCustomerIsActive)
+        public JsonResult FetchCustomerList(string pageIndex, string pageSize, string SearchCountry, string SearchCustomerID, string SearchCustomerIsActive)
         {
-            SearchCustomerName = SearchCustomerName == "-1" ? string.Empty : SearchCustomerName;
+            SearchCountry = SearchCountry == "-1" ? string.Empty : SearchCountry;
             SearchCustomerID = SearchCustomerID == "-1" ? string.Empty : SearchCustomerID;
             SearchCustomerIsActive = SearchCustomerIsActive == "-1" ? string.Empty : SearchCustomerIsActive;
 
-            custDetail = objManager.GetCustomerDetails(Convert.ToInt32(pageIndex), Convert.ToInt32(pageSize), SearchCustomerName, SearchCustomerID, SearchCustomerIsActive);
+            custDetail = objManager.GetCustomerDetails(Convert.ToInt32(pageIndex), Convert.ToInt32(pageSize), SearchCountry, SearchCustomerID, SearchCustomerIsActive);
             return new JsonResult { Data = custDetail, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
             //return custDetail.LstCusEnt;
         }
@@ -241,10 +241,10 @@ namespace NtierMvc.Controllers
         }
        
         [HttpPost]
-        public ActionResult CreateReport(string ReportType, string pageIndex, string pageSize,string SearchCustomerName, string SearchCustomerID,string SearchCustomerIsActive)
+        public ActionResult CreateReport(string ReportType, string pageIndex, string pageSize,string SearchCountry, string SearchCustomerID,string SearchCustomerIsActive)
         {
-           
-                 SearchCustomerName = SearchCustomerName == "-1" ? string.Empty : SearchCustomerName;
+
+            SearchCountry = SearchCountry == "-1" ? string.Empty : SearchCountry;
             SearchCustomerID = SearchCustomerID == "-1" ? string.Empty : SearchCustomerID;
 
             //custDetail = objManager.GetCustomerDetails(Convert.ToInt32(pageIndex), Convert.ToInt32(pageSize), SearchCustomerName, SearchCustomerID);
@@ -261,7 +261,7 @@ namespace NtierMvc.Controllers
             //switch (ReportType)
             //{
             //    case "CUSTOMER":
-                    fileName = GenerateReport(fullPath, fileName, pageIndex, pageSize, SearchCustomerName, SearchCustomerID, SearchCustomerIsActive);
+                    fileName = GenerateReport(fullPath, fileName, pageIndex, pageSize, SearchCountry, SearchCustomerID, SearchCustomerIsActive);
                 //    break;
                 //default:
                 //    break;
@@ -270,7 +270,7 @@ namespace NtierMvc.Controllers
             return new JsonResult { Data = fileName, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
 
         }
-        private string GenerateReport(string fullPath,  string DocumentName, string pageIndex, string pageSize, string SearchCustomerName, string SearchCustomerID,string SearchCustomerIsActive)
+        private string GenerateReport(string fullPath,  string DocumentName, string pageIndex, string pageSize, string SearchCountry, string SearchCustomerID,string SearchCustomerIsActive)
         {
 
             string fileName = "";
@@ -278,7 +278,7 @@ namespace NtierMvc.Controllers
             switch (DocumentName)
             {
                 case "CUSTOMER":
-                    fileName = Report.PrepCustomerReport(fullPath, DocumentName, pageIndex, pageSize, SearchCustomerName, SearchCustomerID, SearchCustomerIsActive);
+                    fileName = Report.PrepCustomerReport(fullPath, DocumentName, pageIndex, pageSize, SearchCountry, SearchCustomerID, SearchCustomerIsActive);
                     break;
                 //case "CUSTOMERFEEDBACK":
                 //    fileName = Report.PrepCustomerFeedBackReport(fullPath, DocumentName);

@@ -707,7 +707,7 @@ namespace NtierMvc.Controllers
 
             List<DropDownEntity> SoNoList = new List<DropDownEntity>();
 
-            SoNoList = model.GetMasterTableStringList(TableNames.Orders, ColumnNames.id, ColumnNames.SoNoView, "", "", GeneralConstants.ListTypeD);
+            SoNoList = model.GetMasterTableStringList(TableNames.Orders, ColumnNames.SoNo, ColumnNames.SoNoView, "", "", GeneralConstants.ListTypeD);
             if (SoNoList.Count > 0)
                 SoNoList.RemoveAt(0);
             return new JsonResult { Data = SoNoList, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
@@ -777,16 +777,16 @@ namespace NtierMvc.Controllers
             return new JsonResult { Data = fileName, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
 
         }
-        public JsonResult FetchOrdersList(string pageIndex, string pageSize, string SearchQuoteType = null, string SearchVendorID = null, string SearchProductGroup = null, string SearchDeliveryTerms = null, string SearchPODeliveryDate = null)
+        public JsonResult FetchOrdersList(string pageIndex, string pageSize, string SearchQuoteType = null, string SearchCustomerID = null, string SearchProductGroup = null, string SearchDeliveryTerms = null, string SearchPODeliveryDate = null)
         {
             OrderEntityDetails orderEntity = new OrderEntityDetails();
             SearchQuoteType = SearchQuoteType == "undefined" ? string.Empty : SearchQuoteType;
-            SearchVendorID = SearchVendorID == "undefined" ? string.Empty : SearchVendorID;
+            SearchCustomerID = SearchCustomerID == "undefined" ? string.Empty : SearchCustomerID;
             SearchProductGroup = SearchProductGroup == "undefined" ? string.Empty : SearchProductGroup;
             SearchDeliveryTerms = SearchDeliveryTerms == "undefined" ? string.Empty : SearchDeliveryTerms;
             SearchPODeliveryDate = SearchPODeliveryDate == "undefined" ? string.Empty : SearchPODeliveryDate;
 
-            orderEntity = objManager.GetOrderDetails(Convert.ToInt32(pageIndex), Convert.ToInt32(pageSize), SearchQuoteType, SearchVendorID, SearchProductGroup, SearchDeliveryTerms, SearchPODeliveryDate);
+            orderEntity = objManager.GetOrderDetails(Convert.ToInt32(pageIndex), Convert.ToInt32(pageSize), SearchQuoteType, SearchCustomerID, SearchProductGroup, SearchDeliveryTerms, SearchPODeliveryDate);
             return new JsonResult { Data = orderEntity, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 
