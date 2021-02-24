@@ -86,7 +86,7 @@
                 <button class="btn btn-sm btn-success" type="button" id="btnSearch" ng-click="FetchOrdersList()">
                     Search
                 </button>
-                <button class="btn btn-sm btn-info" type="button" id="btnClearSearchQuotereg" ng-click="DefaultOrdersList(); FetchOrdersList();">Clear</button>
+                <button class="btn btn-sm btn-info" type="button" id="btnClearSearchOrders" ng-click="DefaultOrdersList(); FetchOrdersList();">Clear</button>
             </td>
         </tr>
         <tr>
@@ -494,6 +494,17 @@
             }
         })
     }
+
+    $('#btnClearSearchOrders').click(
+        function ClearFields() {
+
+            $('#ORQuoteType').val([]).trigger('chosen:updated');
+            $('#ORCustomerId').val([]).trigger('chosen:updated');
+            $('#ORDeliveryTerms').val([]).trigger('chosen:updated');
+            $('#ORPODeliveryDate').val([]).trigger('chosen:updated');
+        }
+    );
+
 
 </script>
 

@@ -175,13 +175,7 @@ angular.module('App').controller("MainController", function ($scope, $http, $tim
         //var DownloadType = dwnldtype;
         ShowLoadder();
 
-        $.ajax({
-            type: "Post",
-            url: window.GenerateReport,
-            data: JSON.stringify({ ReportType: Type, pageindex: $scope.custPageIndex, pagesize: $scope.custPageSize, SearchCustomerName: $scope.SearchCustomerName, SearchCustomerID: $scope.SearchCustomerID, SearchCustomerIsActive:$scope.SearchCustomerIsActive}),
-            contentType: "application/json; charset=utf-8",
-            success: function (data) {
-                //alert("Dowloaded Successfully" + data);
+        $http.get(window.GenerateReport + "?ReportType=" + Type + "&pageindex=" + $scope.custPageIndex + "&pagesize=" + $scope.custPageSize + "&SearchCountry=" + $scope.SearchCountry + "&SearchCustomerID=" + $scope.SearchCustomerID + "&SearchCustomerIsActive=" + $scope.SearchCustomerIsActive).success(function (data) {
                 if (data != "") {
                     //use window.location.href for redirect to download action for download the file
                     window.location.href = window.DownloadDoc + '?fileName=' + data;
@@ -191,12 +185,32 @@ angular.module('App').controller("MainController", function ($scope, $http, $tim
                     alert(data.errorMessage);
                     HideLoadder();
                 }
-            },
-            error: function (x, e) {
-                alert('Some error is occurred, Please try after some time.');
-                HideLoadder();
-            }
-        })
+            }, function (error) {
+                alert('failed');
+            });
+
+        //$.ajax({
+        //    type: "Post",
+        //    url: window.GenerateReport,
+        //    data: JSON.stringify({ ReportType: Type, pageindex: $scope.custPageIndex, pagesize: $scope.custPageSize, SearchCountry: $scope.SearchCountry, SearchCustomerID: $scope.SearchCustomerID, SearchCustomerIsActive:$scope.SearchCustomerIsActive}),
+        //    contentType: "application/json; charset=utf-8",
+        //    success: function (data) {
+        //        //alert("Dowloaded Successfully" + data);
+        //        if (data != "") {
+        //            //use window.location.href for redirect to download action for download the file
+        //            window.location.href = window.DownloadDoc + '?fileName=' + data;
+        //            HideLoadder();
+        //        }
+        //        else {
+        //            alert(data.errorMessage);
+        //            HideLoadder();
+        //        }
+        //    },
+        //    error: function (x, e) {
+        //        alert('Some error is occurred, Please try after some time.');
+        //        HideLoadder();
+        //    }
+        //})
     }
     $scope.GenerateCustReport = function (Type) {
         //var DownloadType = dwnldtype;
@@ -804,28 +818,69 @@ angular.module('App').controller("MainController", function ($scope, $http, $tim
         //var DownloadType = dwnldtype;
         ShowLoadder();
 
-        $.ajax({
-            type: "Post",
-            url: window.GeneratePOReport,
-            data: JSON.stringify({ ReportType: Type, pageindex: $scope.orderPageIndex, pagesize: $scope.orderPageSize, SearchOrderQuoteType: $scope.SearchOrderQuoteType, SearchVendorID: $scope.SearchOrderVendorID, SearchProductGroup: $scope.SearchOrderProductGroup, SearchDeliveryTerms: $scope.SearchOrderDeliveryTerms, SearchPODeliveryDate: $scope.SearchPODeliveryDate }),
-            contentType: "application/json; charset=utf-8",
-            success: function (data) {
-                //alert("Dowloaded Successfully" + data);
-                if (data != "") {
-                    //use window.location.href for redirect to download action for download the file
-                    window.location.href = window.DownloadDoc + '?fileName=' + data;
-                    HideLoadder();
+        var PODeliveryDate = '';
+        var x = document.getElementById("ORPODeliveryDate");
+
+        if (x.length > 0) {
+            for (var i = 0; i < x.options.length; i++) {
+                if (x.options[i].selected == true) {
+                    PODeliveryDate = PODeliveryDate + convertDateFormat(x.options[i].value, 'dd-MM-yyyy', 'MM-dd-yyyy') + ',';
                 }
-                else {
-                    alert(data.errorMessage);
-                    HideLoadder();
-                }
-            },
-            error: function (x, e) {
-                alert('Some error is occurred, Please try after some time.');
+            }
+        }
+
+        PODeliveryDate = PODeliveryDate.substring(0, PODeliveryDate.length - 1);
+
+        $http.get(window.GeneratePOReport + "?ReportType=" + Type+"&pageindex=" + $scope.orderPageIndex + "&pagesize=" + $scope.orderPageSize + "&SearchQuoteType=" + $scope.SearchOrderQuoteType + "&SearchCustomerID=" + $scope.SearchOrderCustomerId + "&SearchProductGroup=" + $scope.SearchOrderProductGroup + "&SearchDeliveryTerms=" + $scope.SearchOrderDeliveryTerms + "&SearchPODeliveryDate=" + PODeliveryDate).success(function (data) {
+            if (data != "") {
+                //use window.location.href for redirect to download action for download the file
+                window.location.href = window.DownloadDoc + '?fileName=' + data;
                 HideLoadder();
             }
-        })
+            else {
+                alert(data.errorMessage);
+                HideLoadder();
+            }
+        }, function (error) {
+            alert('failed');
+        });
+
+        //$http.get(window.GeneratePOReport + "?ReportType=" + Type + "&pageindex=" + $scope.custPageIndex + "&pagesize=" + $scope.custPageSize + "&SearchCountry=" + $scope.SearchCountry + "&SearchCustomerID=" + $scope.SearchCustomerID + "&SearchCustomerIsActive=" + $scope.SearchCustomerIsActive).success(function (data) {
+        //    if (data != "") {
+        //        //use window.location.href for redirect to download action for download the file
+        //        window.location.href = window.DownloadDoc + '?fileName=' + data;
+        //        HideLoadder();
+        //    }
+        //    else {
+        //        alert(data.errorMessage);
+        //        HideLoadder();
+        //    }
+        //}, function (error) {
+        //    alert('failed');
+        //});
+
+        //$.ajax({
+        //    type: "Post",
+        //    url: window.GeneratePOReport,
+        //    data: JSON.stringify({ ReportType: Type, pageindex: $scope.orderPageIndex, pagesize: $scope.orderPageSize, SearchOrderQuoteType: $scope.SearchOrderQuoteType, SearchVendorID: $scope.SearchOrderVendorID, SearchProductGroup: $scope.SearchOrderProductGroup, SearchDeliveryTerms: $scope.SearchOrderDeliveryTerms, SearchPODeliveryDate: $scope.SearchPODeliveryDate }),
+        //    contentType: "application/json; charset=utf-8",
+        //    success: function (data) {
+        //        //alert("Dowloaded Successfully" + data);
+        //        if (data != "") {
+        //            //use window.location.href for redirect to download action for download the file
+        //            window.location.href = window.DownloadDoc + '?fileName=' + data;
+        //            HideLoadder();
+        //        }
+        //        else {
+        //            alert(data.errorMessage);
+        //            HideLoadder();
+        //        }
+        //    },
+        //    error: function (x, e) {
+        //        alert('Some error is occurred, Please try after some time.');
+        //        HideLoadder();
+        //    }
+        //})
     }
 
     $scope.BindOrderPopup = function () {

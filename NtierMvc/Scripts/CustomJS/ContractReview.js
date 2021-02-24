@@ -123,30 +123,6 @@ function CRUpload() {
     }
 }
 
-function GetContractReviewDetails() {
-
-    $.ajax({
-        type: 'POST',
-        url: window.GetClarificationMails,
-        data: JSON.stringify({ quoteNo: QuoteNo, quoteType: QuoteType }),
-        contentType: "application/json; charset=utf-8",
-        success: function (data) {
-            if (data.length > 0) {
-                $("#MailList").empty();
-                $.each(data, function (i, item) {
-                    if (item.RequiredColumn1 != "")
-                        $("#MailList").append("<li><input type='checkbox' value='" + item.RequiredColumn1 + "'> <a target='_blank' href='/Documents/MailUploads/" + item.RequiredColumn2 + "'><img height='25px' src='/Images/pdfIcon.png' /><label>" + item.RequiredColumn2 + "</label></a></li>");
-                })
-            }
-            else {
-                alert("No Records Found");
-            }
-        },
-        error: function (x, e) {
-            alert('Some error is occurred, Please try after some time.');
-        }
-    })
-}
 
 function DeleteContractReview() {
 
@@ -180,23 +156,23 @@ function getContractReviewDetails() {
     let ItemNo = $("#CRItemNo").val();
     let FileName = $("#CRENQNo").val(); //$("#CRENQNo option:selected").text();
 
-    let itemNo = '';
-    let y = document.getElementById("CRItemNo");
-    for (var i = 0; i < y.options.length; i++) {
-        if (y.options[i].selected == true) {
-            //alert(x.options[i].value);
-            itemNo = itemNo + y.options[i].value + ',';
-        }
-    }
+    //let itemNo = '';
+    //let y = document.getElementById("CRItemNo");
+    //for (var i = 0; i < y.options.length; i++) {
+    //    if (y.options[i].selected == true) {
+    //        //alert(x.options[i].value);
+    //        itemNo = itemNo + y.options[i].value + ',';
+    //    }
+    //}
 
-    itemNo = itemNo.substring(0, itemNo.length - 1);
+    //itemNo = itemNo.substring(0, itemNo.length - 1);
 
     ShowLoadder();
 
     $.ajax({
         type: 'POST',
         url: window.GetExcelForContractReview,
-        data: JSON.stringify({ customerId: Customer, enqNo: ENQNo, itemNo: itemNo, fileName: FileName }),
+        data: JSON.stringify({ customerId: Customer, enqNo: ENQNo, fileName: FileName }),
         contentType: "application/json; charset=utf-8",
         success: function (data) {
             if (data != "") {

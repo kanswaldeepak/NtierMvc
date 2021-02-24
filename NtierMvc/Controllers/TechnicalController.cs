@@ -760,7 +760,8 @@ namespace NtierMvc.Controllers
             lstProducts = objManager.GetPrepProductNames(productId, casingSize, type);
             return new JsonResult { Data = lstProducts, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
-        [HttpPost]
+
+        [HttpGet]
         public ActionResult CreatePOReport(string ReportType, string pageIndex, string pageSize, string SearchQuoteType = null, string SearchVendorID = null, string SearchProductGroup = null, string SearchDeliveryTerms = null, string SearchPODeliveryDate = null)
         {
             string path = System.Web.HttpContext.Current.Server.MapPath(ConfigurationManager.AppSettings["TempFolder"]);
@@ -2069,7 +2070,7 @@ namespace NtierMvc.Controllers
             return new JsonResult { Data = data, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 
-        private string GenerateCRExcel(string fullPath, string fileName, string EnqNo, string ItemNo)
+        private string GenerateCRExcel(string fullPath, string fileName, string EnqNo, string ItemNo = null)
         {
             try
             {
@@ -2108,12 +2109,12 @@ namespace NtierMvc.Controllers
                 {
                     if (i == 1)
                     {
-                        EnqFor = EnqFor + (row.IsNull("EnqFor") ? string.Empty : (i.ToString() + ". " + row["EnqFor"].ToString() + "\n"));
-                        DeliveryTerms = DeliveryTerms + (row.IsNull("DeliveryTerms") ? string.Empty : (i.ToString() + ". " + row["DeliveryTerms"].ToString() + "\n"));
-                        DeliveryLeadTime = DeliveryLeadTime + (row.IsNull("DeliveryLeadTime") ? string.Empty : (i.ToString() + ". " + row["DeliveryLeadTime"].ToString() + "\n"));
-                        QuoteValidity = QuoteValidity + (row.IsNull("QuoteValidity") ? string.Empty : (i.ToString() + ". " + row["QuoteValidity"].ToString() + "\n"));
-                        PaymentTerms = PaymentTerms + (row.IsNull("PaymentTerms") ? string.Empty : (i.ToString() + ". " + row["PaymentTerms"].ToString() + "\n"));
-                        ModeOfDespatch = ModeOfDespatch + (row.IsNull("ModeOfDespatch") ? string.Empty : (i.ToString() + ". " + row["ModeOfDespatch"].ToString() + "\n"));
+                        EnqFor = EnqFor + (row.IsNull("EnqFor") ? string.Empty : (row["EnqFor"].ToString() + "\n"));
+                        DeliveryTerms = DeliveryTerms + (row.IsNull("DeliveryTerms") ? string.Empty : (row["DeliveryTerms"].ToString() + "\n"));
+                        DeliveryLeadTime = DeliveryLeadTime + (row.IsNull("DeliveryLeadTime") ? string.Empty : (row["DeliveryLeadTime"].ToString() + "\n"));
+                        QuoteValidity = QuoteValidity + (row.IsNull("QuoteValidity") ? string.Empty : (row["QuoteValidity"].ToString() + "\n"));
+                        PaymentTerms = PaymentTerms + (row.IsNull("PaymentTerms") ? string.Empty : (row["PaymentTerms"].ToString() + "\n"));
+                        ModeOfDespatch = ModeOfDespatch + (row.IsNull("ModeOfDespatch") ? string.Empty : (row["ModeOfDespatch"].ToString() + "\n"));
 
                     }
 

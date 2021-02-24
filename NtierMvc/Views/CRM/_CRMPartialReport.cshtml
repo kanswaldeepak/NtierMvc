@@ -125,7 +125,7 @@
                                 ENQ No
                             </div>
                             <div class="col-md-3">
-                                Item No
+                                @*Item No*@
                             </div>
                         </div>
                         <div class="row">
@@ -158,22 +158,23 @@
                            })
                                 <span class="HideValidMsg">Select ENQ No</span>
                             </div>
-                            <div class="col-md-3">
-                                @Html.DropDownListFor(m => m.ItemNo, new SelectList(ViewBag.ListItemNo, "DataStringValueField", "DataTextField", Model.ItemNo), new
-                           {
-                               @class = "form-control requiredValidation clearField",
-                               @id = "CRItemNo",
-                               @data_inneraction = "validationCall",
-                               @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
-                               @multiple = "true"
-                           })
-                                <span class="HideValidMsg">Select Item No</span>
-                            </div>
+                            @*<div class="col-md-3">
+             @Html.DropDownListFor(m => m.ItemNo, new SelectList(ViewBag.ListItemNo, "DataStringValueField", "DataTextField", Model.ItemNo), new
+        {
+            @class = "form-control requiredValidation clearField",
+            @id = "CRItemNo",
+            @data_inneraction = "validationCall",
+            @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+            @multiple = "true"
+        })
+             <span class="HideValidMsg">Select Item No</span>
+         </div>*@
+                            <button type="button" id="btnContractReview" class="btn btn-sm btn-primary" onclick="getContractReviewDetails()">Get Report</button>
                         </div>
                     </div>
                     <div class="col-md-12">
                         <div class="col-md-3">
-                            <button type="button" id="btnContractReview" class="btn btn-sm btn-primary" onclick="getContractReviewDetails()">Get Report</button>
+                            
                         </div>
                     </div>
                 </div>
@@ -243,11 +244,11 @@
         placeholder_text_single: "Select Enq No"
     });
 
-    $('#CRItemNo').chosen({
-        width: "100%",
-        placeholder_text_single: "Select Item No",
-        placeholder_text_multiple: "Select Item No"
-    });
+    //$('#CRItemNo').chosen({
+    //    width: "100%",
+    //    placeholder_text_single: "Select Item No",
+    //    placeholder_text_multiple: "Select Item No"
+    //});
 
     $('#CRCustomer').chosen().change(
         function GetCountryAndEnqNo(element) {

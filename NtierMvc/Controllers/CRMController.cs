@@ -241,7 +241,7 @@ namespace NtierMvc.Controllers
             return new JsonResult { Data = ddl, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
        
-        [HttpPost]
+        [HttpGet]
         public ActionResult CreateReport(string ReportType, string pageIndex, string pageSize,string SearchCountry, string SearchCustomerID,string SearchCustomerIsActive)
         {
 
