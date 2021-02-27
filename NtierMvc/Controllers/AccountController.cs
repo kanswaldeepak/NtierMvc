@@ -569,7 +569,7 @@ namespace NtierMvc.Controllers
         public ActionResult DeleteUsingIdFromTable(string tableName, string columnName, string id)
         {
             BaseModel model = new BaseModel();
-            string msgCode = model.DeleteFormTable(tableName, columnName, id);
+            string msgCode = model.DeleteFromTable(tableName, columnName, id);
             if (msgCode == GeneralConstants.DeleteSuccess)
             {
                 return new JsonResult { Data = msgCode, JsonRequestBehavior = JsonRequestBehavior.AllowGet };

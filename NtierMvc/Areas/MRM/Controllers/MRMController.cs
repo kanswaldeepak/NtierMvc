@@ -268,7 +268,7 @@ namespace NtierMvc.Areas.MRM.Controllers
             if (ModelState.IsValid)
             {
                 //string msgCode = objManager.DeleteVendorDetail(id);
-                string msgCode = model.DeleteFormTable("Vendor", "VendorId", VendorId);
+                string msgCode = model.DeleteFromTable("Vendor", "VendorId", VendorId);
 
                 if (msgCode == GeneralConstants.DeleteSuccess)
                 {
@@ -1173,7 +1173,7 @@ namespace NtierMvc.Areas.MRM.Controllers
         {
             if (ModelState.IsValid)
             {
-                string msgCode = model.DeleteFormTable("RMPO", "POSetNo", id);
+                string msgCode = model.DeleteFromTable("RMPO", "POSetNo", id);
                 if (msgCode != "")
                 {
                     //return RedirectToAction("Technical");

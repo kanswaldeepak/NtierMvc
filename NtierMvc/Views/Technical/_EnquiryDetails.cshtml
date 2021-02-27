@@ -338,7 +338,7 @@
                     <label class="control-label">
                         Api Monogram Requirement
                     </label>
-                    @Html.DropDownListFor(m => m.ApiMonogramRequirement, new SelectList(@ViewBag.YesNo, "DataValueField", "DataTextField", Model.ApiMonogramRequirement),
+                    @Html.DropDownListFor(m => m.ApiMonogramRequirement, new SelectList(@ViewBag.API, "DataValueField", "DataTextField", Model.ApiMonogramRequirement),
                    new
                    {
                        @class = "form-control requiredValidation",

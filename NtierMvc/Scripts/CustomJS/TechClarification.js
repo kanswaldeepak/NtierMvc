@@ -77,7 +77,7 @@ function Upload() {
     }
 }
 
-function GetQuoteNos() {
+function GetQuoteNosForClarification() {
     var QuoteType = $("#QuoteClarificationFormType").val();
     $.ajax({
         type: 'POST',

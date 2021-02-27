@@ -295,14 +295,18 @@ function CreateDocument(dwnldtype) {
         contentType: "application/json; charset=utf-8",
         success: function (data) {
             //alert("Dowloaded Successfully" + data);
-            if (data != "") {
+            if (data == 'No Records Found For Selected Quote') {
+                HideLoadder();
+                alert(data);
+            }   
+            else if (data != "") {
                 //use window.location.href for redirect to download action for download the file
                 window.location.href = window.DownloadDoc + '?fileName=' + data;
                 HideLoadder();
             }
             else {
-                alert(data.errorMessage);
                 HideLoadder();
+                alert(data.errorMessage);
             }
         },
         error: function (x, e) {

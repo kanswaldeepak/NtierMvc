@@ -12,7 +12,7 @@
                         <label class="control-label">
                             Country Name
                         </label>
-                        @Html.TextBox("CountryName","", new
+                        @Html.TextBox("CountryName", "", new
                    {
                        @class = "form-control mr-2 requiredValidation",
                        @id = "CommCountryName",
@@ -41,13 +41,27 @@
                        @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
                    })
                     </div>
+                    <div class="form-group">
+                        <label class="control-label">
+                            Country List
+                        </label>
+                        @Html.DropDownList("CountryId", new SelectList(ViewBag.ListCountry, "DataValueField", "DataTextField", "Select"),
+                       new
+                       {
+                           @class = "form-control requiredValidation",
+                           @id = "CommCountryList",
+                           ng_model = "CommCountryId",
+                           @data_inneraction = "validationCall",
+                           @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                       })
+                    </div>
                 </div>
             </div>
 
             <div class="row">
                 <div class="col-md-12 pt-4 text-center">
                     <button id="SaveCountryDetails" ng-click="SaveCountryDetails()" style="font-size:18px" type="button" class="btn btn-success btn-sm save_results">Save</button>
-                    <button style="font-size:18px" type="button" class="btn btn-secondary btn-sm cancel_results" data-dismiss="modal">Close</button>
+                    <button id="SaveStateDetails" ng-click="DeleteTableData(CommCountryId,'Country')" style="font-size:18px" type="button" class="btn btn-danger btn-sm save_results">Delete</button>
                 </div>
             </div>
 
@@ -62,6 +76,7 @@
 
     $(document).ready(function () {
         window.SaveCountryDetail = '@Url.Action("SaveCountryDetails", "Common")';
+        window.DeleteTableDatas = '@Url.Action("DeleteTableDatas", "Common")';
 
     });
 

@@ -1,4 +1,28 @@
 ﻿
+function GetStatesForCountry(CountryId, StateId) {
+
+    debugger;
+    $.ajax({
+        type: 'POST',
+        url: window.GetStateForCountry,
+        data: JSON.stringify({ countryId: CountryId }),
+        contentType: "application/json; charset=utf-8",
+        success: function (data) {
+            if (data.length > 0) {
+                $("#" + StateId).empty();
+                if (data.length > 0) {
+                    $.each(data, function (i, item) {
+                        $("#" + StateId).append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
+                    })
+                }
+            }
+        },
+        error: function (x, e) {
+            alert('Some error is occurred, Please try after some time.');
+        }
+    })
+}
+
 function DeleteUsingIdFromTable(TableName, ColumnName, Id) {
     if (!confirm("Are you sure to delete?")) {
         return;
@@ -1369,4 +1393,3 @@ $(document).ready(function () {
         }
     });
 });
-

@@ -407,7 +407,7 @@ namespace NtierMvc.Areas.DesignEng.Controllers
             string ColumnName1 = "SoNo";
             string Param1 = id.ToString();
 
-            string msgCode = model.DeleteFormTable(TableName, ColumnName1, Param1);
+            string msgCode = model.DeleteFromTable(TableName, ColumnName1, Param1);
 
             if (msgCode == GeneralConstants.DeleteSuccess)
                 return new JsonResult { Data = GeneralConstants.DeleteSuccess, JsonRequestBehavior = JsonRequestBehavior.AllowGet };

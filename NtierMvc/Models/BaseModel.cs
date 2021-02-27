@@ -1215,14 +1215,14 @@ namespace NtierMvc.Models
         //    return tblRecordList;
         //}
 
-        public string DeleteFormTable(string TableName, string ColumnName1, string Param1, string ColumnName2 = null, string Param2 = null, string ColumnName3 = null, string Param3 = null)
+        public string DeleteFromTable(string TableName, string ColumnName1, string Param1, string ColumnName2 = null, string Param2 = null, string ColumnName3 = null, string Param3 = null)
         {
             string result = "0";
             var baseAddress = "Base";
 
             using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
             {
-                HttpResponseMessage response = client.GetAsync(baseAddress + "/DeleteFormTable?TableName=" + TableName + "&ColumnName1=" + ColumnName1 + "&Param1=" + Param1 + "&ColumnName2=" + ColumnName2 + "&Param2=" + Param2 + "&ColumnName3=" + ColumnName3 + "&Param3=" + Param3).Result;
+                HttpResponseMessage response = client.GetAsync(baseAddress + "/DeleteFromTable?TableName=" + TableName + "&ColumnName1=" + ColumnName1 + "&Param1=" + Param1 + "&ColumnName2=" + ColumnName2 + "&Param2=" + Param2 + "&ColumnName3=" + ColumnName3 + "&Param3=" + Param3).Result;
                 if (response.IsSuccessStatusCode)
                 {
                     var data = response.Content.ReadAsStringAsync().Result;

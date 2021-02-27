@@ -10,8 +10,8 @@
 
 <div ng-controller="CommonController">
     <div class="tab">
-        <button class="tablinks" onclick="openCity(event, 'CommonDashBoard')" id="defaultOpen">Save Country</button>
-        @*<button class="talinks" onclick="openCity(event, 'AssignAdminRoles')">Assign Admins</button>*@
+        <button class="tablinks" onclick="openCity(event, 'CommonDashBoard')" id="defaultOpen">Country List</button>
+        <button class="talinks" onclick="openCity(event, 'AddState')">State List</button>
     </div>
 
     <!-- Tab content -->
@@ -19,9 +19,9 @@
         @Html.Partial("PartialCommonDashBoard")
     </div>
 
-    @*<div id="AssignAdminRoles" class="tabcontent">
-        @Html.Partial("PartialAssignAdmin")
-    </div>*@
+    <div id="AddState" class="tabcontent">
+        @Html.Partial("PartialAddState")
+    </div>
 
 </div>
 

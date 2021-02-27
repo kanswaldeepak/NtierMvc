@@ -189,7 +189,7 @@ namespace NtierMvc.Controllers
             if (ModelState.IsValid)
             {
                 //string msgCode = objManager.DeleteCustomerDetail(id);
-                string msgCode = model.DeleteFormTable("Customer", "Id", id.ToString());
+                string msgCode = model.DeleteFromTable("Customer", "Id", id.ToString());
 
                 if (msgCode == GeneralConstants.DeleteSuccess)
                 {

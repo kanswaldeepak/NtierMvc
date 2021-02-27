@@ -512,7 +512,7 @@ namespace NtierMvc.Areas.HRDepartment.Controllers
                     if (System.IO.File.Exists(path + scE.DataValueField1))
                         System.IO.File.Delete(path + scE.DataValueField1);
 
-                    result = model.DeleteFormTable("EmpCertificate", "Id", CertId);
+                    result = model.DeleteFromTable("EmpCertificate", "Id", CertId);
                 }
 
 

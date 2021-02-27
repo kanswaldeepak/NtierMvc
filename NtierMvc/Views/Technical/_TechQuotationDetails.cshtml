@@ -264,11 +264,11 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label class="control-label">
-                            Quote Sent on <span class="required">*</span>
+                            Quote Sent on 
                         </label>
                         @Html.TextBoxFor(m => m.QuoteSentOn, new
                    {
-                       @class = "form-control requiredValidation ApprovalQuoteDate",
+                       @class = "form-control ApprovalQuoteDate",
                        autocomplete = "off",
                        @id = "QuoteSentOn",
                        @placeholder = "dd/MM/yyyy",
@@ -357,11 +357,11 @@
                         </label>
                         @Html.DropDownListFor(m => m.SupplyTerms, new SelectList(@ViewBag.ListSupplyTerms, "DataStringValueField", "DataTextField", Model.SupplyTerms), new
                    {
-                       @class = "form-control requiredValidation",
+                       @class = "form-control",
                        @id = "QuoteSupplyTerms",
                        @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
                    })
-                        <span class="HideValidMsg">Please Select Product Line</span>
+                        <span class="HideValidMsg">Please Select Supply Terms</span>
                     </div>
                 </div>
                 <div class="col-md-4">

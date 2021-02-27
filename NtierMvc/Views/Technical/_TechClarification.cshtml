@@ -54,13 +54,13 @@
                                 Quote Type
                             </label>
                             @Html.DropDownListFor(m => m.QuoteType, new SelectList(ViewBag.ListQuoteType, "DataStringValueField", "DataTextField", "QuoteType"), new
-                                {
-                                    @class = "form-control requiredValidation clearField",
-                                    @id = "QuoteClarificationFormType",
-                                    @data_inneraction = "validationCall",
-                                    @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
-                                    @onchange = "GetQuoteNos()"
-                                })
+                       {
+                           @class = "form-control requiredValidation clearField",
+                           @id = "QuoteClarificationFormType",
+                           @data_inneraction = "validationCall",
+                           @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                           @onchange = "GetQuoteNosForClarification()"
+                       })
                             <span class="HideValidMsg">Please Select QuoteType</span>
                         </div>
                     </div>

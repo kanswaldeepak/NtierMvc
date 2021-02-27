@@ -148,13 +148,8 @@ namespace NtierMvc.Models
                 if (ds1.Tables.Count > 0 && ds1.Tables != null)
                 {
                     dt1 = ds1.Tables[0];
-                    //Dt2 = ds1.Tables[1];
-
 
                 }
-                //      var name = CompanyDetails.Where(i => i.RequiredColumn1 == "CompanyName").Select(i => i.RequiredColumn2);
-
-
                 Microsoft.Office.Interop.Excel.Range c1 = (Microsoft.Office.Interop.Excel.Range)ws.Cells[6, 1];
                 Microsoft.Office.Interop.Excel.Range c2 = (Microsoft.Office.Interop.Excel.Range)ws.Cells[(dt1.Rows.Count - 1) + 6, dt1.Columns.Count];
                 //Microsoft.Office.Interop.Excel.Range c2 = (Microsoft.Office.Interop.Excel.Range)ws.Cells[1, 1];

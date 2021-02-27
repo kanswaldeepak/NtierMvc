@@ -11,6 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
+using NtierMvc.ExcelProperty;
 
 namespace NtierMvc.Controllers
 {
@@ -474,6 +475,9 @@ namespace NtierMvc.Controllers
                 range1.EntireRow.Font.Bold = true;
                 range1.Value = arr;
 
+                ExcelInteropProperties exProp = new ExcelInteropProperties();
+                exProp.AllBorders(range1.Borders);
+
                 xlWorkbook.SaveAs(fullPath);
                 xlWorkbook.Close();
                 excelApp.Quit();
@@ -492,15 +496,20 @@ namespace NtierMvc.Controllers
             try
             {
                 Microsoft.Office.Interop.Excel.Application excelApp = new Microsoft.Office.Interop.Excel.Application();
-                // open the template in Edit mode
                 string path = System.Web.HttpContext.Current.Server.MapPath(ConfigurationManager.AppSettings["QuotePrepExcel"]);
-                //string path = System.IO.Path.GetFullPath(ConfigurationManager.AppSettings["QuotePrepExcel"]);
                 Microsoft.Office.Interop.Excel.Workbook xlWorkbook = excelApp.Workbooks.Open(Filename: @path, Editable: true);
                 Microsoft.Office.Interop.Excel.Worksheet ws = (Microsoft.Office.Interop.Excel.Worksheet)xlWorkbook.Sheets["Sheet1"];
 
 
                 System.Data.DataTable resultData = objManager.GetDataForDocument(downloadTypeId, quoteTypeId, quoteNumberId);
                 System.Data.DataTable resultList = objManager.GetListForDocument(downloadTypeId, quoteTypeId, quoteNumberId);
+
+                if (resultData.Rows.Count <= 0 || resultList.Rows.Count <= 0)
+                {
+                    fileName = "No Records Found For Selected Quote";
+                    return fileName;
+                }
+
 
                 //Getting Single Fields
                 xlWorkbook.Worksheets[1].Cells.Replace("#QuoteNoAndRev", resultData.Rows[0]["QuoteNoView"]);
@@ -1613,6 +1622,7 @@ namespace NtierMvc.Controllers
             ViewBag.ListEOQ = model.GetTaxonomyDropDownItems("", "Expression of Quote(EOQ)");
             ViewBag.ListLeadTimeDuration = model.GetTaxonomyDropDownItems("", "Time");
             ViewBag.YesNo = model.GetTaxonomyDropDownItems("", "YesNo");
+            ViewBag.API = model.GetTaxonomyDropDownItems("", "APINonAPI");
             ViewBag.ListEnqThru = model.GetTaxonomyDropDownItems("", "Enquiry Through");
             ViewBag.ListEnqType = model.GetTaxonomyDropDownItems("", "Domestic/International");
             ViewBag.ListCountry = model.GetMasterTableList("Master.Country", "Id", "Country");
@@ -1671,7 +1681,7 @@ namespace NtierMvc.Controllers
         {
             if (ModelState.IsValid)
             {
-                string msgCode = model.DeleteFormTable("EnquiryRegister", "EnquiryId", id.ToString());
+                string msgCode = model.DeleteFromTable("EnquiryRegister", "EnquiryId", id.ToString());
                 if (msgCode == GeneralConstants.DeleteSuccess)
                 {
                     return new JsonResult { Data = msgCode, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
@@ -1777,7 +1787,7 @@ namespace NtierMvc.Controllers
         {
             if (ModelState.IsValid)
             {
-                string msgCode = model.DeleteFormTable("QuotationRegister", "Id", id.ToString()); //objQuoteManager.DeleteQuotationDetail(id);
+                string msgCode = model.DeleteFromTable("QuotationRegister", "Id", id.ToString()); //objQuoteManager.DeleteQuotationDetail(id);
                 if (msgCode == GeneralConstants.DeleteSuccess)
                 {
                     return new JsonResult { Data = msgCode, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
@@ -1821,7 +1831,7 @@ namespace NtierMvc.Controllers
         [HttpPost]
         public ActionResult GetProdName(string MainProdGrpId, string SubProdGrpId)
         {
-            var ProdNameList = model.GetDropDownList(TableNames.Master_ProductLine, GeneralConstants.ListTypeD, ColumnNames.id, ColumnNames.ProductName, MainProdGrpId, ColumnNames.PL, false, "", "", SubProdGrpId, ColumnNames.SubPL);
+            var ProdNameList = model.GetDropDownList(TableNames.Master_Product, GeneralConstants.ListTypeD, ColumnNames.id, ColumnNames.ProductName, MainProdGrpId, ColumnNames.PL, false, "", "", SubProdGrpId, ColumnNames.SubPL);
             return new JsonResult { Data = ProdNameList, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 
@@ -1940,7 +1950,7 @@ namespace NtierMvc.Controllers
 
         public ActionResult DeleteQuotationPrepDetail(string ItemNo, string QuoteType, string QuoteNumber)
         {
-            string msgCode = model.DeleteFormTable(TableNames.QuotePreparationTbl, ColumnNames.ItemNo, ItemNo, ColumnNames.QuoteType, QuoteType, ColumnNames.QuoteNo, QuoteNumber);
+            string msgCode = model.DeleteFromTable(TableNames.QuotePreparationTbl, ColumnNames.ItemNo, ItemNo, ColumnNames.QuoteType, QuoteType, ColumnNames.QuoteNo, QuoteNumber);
             if (msgCode == GeneralConstants.DeleteSuccess)
             {
                 return new JsonResult { Data = msgCode, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
@@ -2245,7 +2255,7 @@ namespace NtierMvc.Controllers
                         if (System.IO.File.Exists(Path.Combine(Server.MapPath("~/Documents/ContractReviewUploads/"), i)))
                             System.IO.File.Delete(Path.Combine(Server.MapPath("~/Documents/ContractReviewUploads/"), i));
 
-                        msgCode = model.DeleteFormTable(TableNames.ContractReviewDetails, ColumnNames.filename, i);
+                        msgCode = model.DeleteFromTable(TableNames.ContractReviewDetails, ColumnNames.filename, i);
 
                         if (msgCode != GeneralConstants.DeleteSuccess)
                         {

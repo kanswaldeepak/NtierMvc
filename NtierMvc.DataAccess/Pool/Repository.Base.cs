@@ -1365,7 +1365,7 @@ namespace NtierMvc.DataAccess.Pool
         //    return DataTableToTableList(_dbAccess.GetDataTable(spName, parms));
         //}
 
-        public string DeleteFormTable(string TableName, string ColumnName1, string Param1, string ColumnName2 = null, string Param2 = null, string ColumnName3 = null, string Param3 = null)
+        public string DeleteFromTable(string TableName, string ColumnName1, string Param1, string ColumnName2 = null, string Param2 = null, string ColumnName3 = null, string Param3 = null)
         {
             string msgCode = "";
             var ParamDict = new Dictionary<string, object>();

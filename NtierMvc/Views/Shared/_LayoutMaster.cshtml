@@ -100,6 +100,7 @@
             window.FetchEnquiryList = '@Url.Action("FetchEnquiryList", "Enquiry")';
             window.FetchInboundsList = '@Url.Action("FetchInboundList", "GateEntry")';
             window.SaveNewItemInDdl = '@Url.Action("SaveNewItemInDdl", "Application", new { Area = ""} )';
+            window.GetStateForCountry = '@Url.Action("GetStateForCountry", "Common", new { Area = "Common"} )';
         });
 
         $(document).ajaxError(function (xhr, props) {

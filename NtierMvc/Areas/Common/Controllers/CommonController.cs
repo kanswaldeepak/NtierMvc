@@ -14,7 +14,7 @@ namespace NtierMvc.Areas.Common.Controllers
         public CommonController()
         {
             model = new BaseModel();
-//            objManager = new CommonManager();
+            //            objManager = new CommonManager();
         }
 
         public ActionResult Index()
@@ -25,12 +25,8 @@ namespace NtierMvc.Areas.Common.Controllers
         [HttpGet]
         public ActionResult CommonMaster()
         {
-            //ViewBag.ListDeptName = model.GetMasterTableStringList("Master.Department", "Id", "DeptName", "", "", GeneralConstants.ListTypeD);
-            //ViewBag.ListEmployee = model.GetMasterTableStringList("Master.Employee", "Id", "EmpName", "", "", GeneralConstants.ListTypeD);
-            //ViewBag.ListMainMenu = model.GetMasterTableStringList("MenuTable", "Id", "UrlName", "", "", GeneralConstants.ListTypeD);
-            //ViewBag.ListSubMenu = model.GetMasterTableStringList("SubMenuTable", "Id", "Name", "", "", GeneralConstants.ListTypeD);
-            //ViewBag.ListReadWrite = model.GetDropDownList("Master.Taxonomy",GeneralConstants.ListTypeD,"DropDownId", "DropDownValue", "ReadWrite", "Property");
-
+            ViewBag.ListCountry = model.GetMasterTableList(TableNames.Master_Country, ColumnNames.id, ColumnNames.Country);
+            ViewBag.ListState = model.GetMasterTableList(TableNames.Master_State, ColumnNames.id, ColumnNames.state);
             return View();
         }
 
@@ -88,6 +84,64 @@ namespace NtierMvc.Areas.Common.Controllers
             return new JsonResult { Data = data, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 
- 
+
+        public ActionResult PartialAddState()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult SaveStateDetails(string CountryId, string StateName)
+        {
+            string result = model.SaveTableData(TableNames.Master_State, ColumnNames.CountryId, CountryId, ColumnNames.state, StateName);
+
+            string data = string.Empty;
+            if (!string.IsNullOrEmpty(result) && (result == GeneralConstants.Inserted || result == GeneralConstants.Updated))
+            {
+                data = GeneralConstants.SavedSuccess;
+            }
+            else
+            {
+                data = GeneralConstants.NotSavedError + ". Reason: " + result;
+            }
+
+            return new JsonResult { Data = data, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+        }
+
+        public ActionResult DeleteTableDatas(int id, string type)
+        {
+            if (ModelState.IsValid)
+            {
+                string msgCode = string.Empty;
+                if (type == "Country")
+                    msgCode = model.DeleteFromTable(TableNames.Master_State, ColumnNames.id, id.ToString());
+                else
+                    msgCode = model.DeleteFromTable(TableNames.Master_State, ColumnNames.id, id.ToString());
+
+                if (msgCode == GeneralConstants.DeleteSuccess)
+                {
+                    return new JsonResult { Data = msgCode, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                }
+                else
+                {
+                    return new JsonResult { Data = GeneralConstants.NotDeletedError, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                }
+
+            }
+            else
+            {
+                Response.StatusCode = 444;
+                Response.Status = "Not Saved";
+                return null;
+            }
+        }
+
+        public ActionResult GetStateForCountry(string countryId)
+        {
+            var StateList = model.GetDropDownList(TableNames.Master_State, GeneralConstants.ListTypeD, ColumnNames.id, ColumnNames.state, countryId, ColumnNames.CountryId);
+            return new JsonResult { Data = StateList, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+        }
+
+
     }
 }
