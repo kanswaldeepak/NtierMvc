@@ -8,7 +8,7 @@ angular.module('App').controller("MainController", function ($scope, $http, $tim
     $scope.maxsize = 5;
     $scope.custTotalCount = 0;
     $scope.custPageIndex = 1;
-    $scope.custPageSize = "50";
+    $scope.custPageSize = "1000";
 
     //Customer Starts
     $scope.DefaultCustomerList = function () {
@@ -243,7 +243,7 @@ angular.module('App').controller("MainController", function ($scope, $http, $tim
 
     $scope.enqTotalCount = 0;
     $scope.enqPageIndex = 1;
-    $scope.enqPageSize = "50";
+    $scope.enqPageSize = "1000";
 
     //Enquiry Starts
     $scope.DefaultEnquiryList = function () {
@@ -425,7 +425,7 @@ angular.module('App').controller("MainController", function ($scope, $http, $tim
 
     $scope.quotTotalCount = 0;
     $scope.quotPageIndex = 1;
-    $scope.quotPageSize = "50";
+    $scope.quotPageSize = "1000";
 
     //Quotation Starts
     $scope.DefaultQuotationList = function () {
@@ -604,7 +604,7 @@ angular.module('App').controller("MainController", function ($scope, $http, $tim
     //Quotation Registration Starts
     $scope.quotRegTotalCount = 0;
     $scope.quotRegPageIndex = 1;
-    $scope.quotRegPageSize = "50";
+    $scope.quotRegPageSize = "1000";
     $scope.SearchQuotRegVendorID = "";
     $scope.SearchQuotRegVendorName = "";
     $scope.SearchQuotRegQuoteNo = "";
@@ -781,7 +781,7 @@ angular.module('App').controller("MainController", function ($scope, $http, $tim
 
     $scope.orderTotalCount = 0;
     $scope.orderPageIndex = 1;
-    $scope.orderPageSize = "50";
+    $scope.orderPageSize = "1000";
 
     //Order Starts
     $scope.DefaultOrdersList = function () {
@@ -1201,7 +1201,7 @@ angular.module('App').controller("MainController", function ($scope, $http, $tim
     //Gate Entry List Starts
     $scope.INBTotalCount = 0;
     $scope.INBPageIndex = 1;
-    $scope.INBPageSize = "50";
+    $scope.INBPageSize = "1000";
     $scope.SearchType = "";
     $scope.SearchVendorNature = "";
     $scope.SearchVendorName = "";

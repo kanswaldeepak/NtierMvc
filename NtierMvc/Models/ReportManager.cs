@@ -156,16 +156,9 @@ namespace NtierMvc.Models
                 Microsoft.Office.Interop.Excel.Range range = ws.get_Range(c1, c2);
                 range.Insert(Microsoft.Office.Interop.Excel.XlInsertShiftDirection.xlShiftDown);
 
-
-
-                //Getting Single Fields
-
-                //DateTime date1   =Convert.ToDateTime(FromDate);
-                //DateTime date2 = Convert.ToDateTime(ToDate);
-                //int year1 = date1.Year;
-                //int year2 = date2.Year;
-                xlWorkbook.Worksheets[1].Cells.Replace("#FinYear", "2021-2022");
-
+                FinancialYear fy = new FinancialYear(DateTime.Now);
+                xlWorkbook.Worksheets[1].Cells.Replace("#FinYear", fy.ToString());
+                
                 xlWorkbook.Worksheets[1].Cells.Replace("#TotalEnquiryRecv", dt1.Rows.Count);
                 xlWorkbook.Worksheets[1].Cells.Replace("#TotalQuoteSent", dt1.Rows.Count);
                 xlWorkbook.Worksheets[1].Cells.Replace("#TotalConversionRate", "100%");

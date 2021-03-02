@@ -223,7 +223,7 @@ namespace NtierMvc.Model
         public const string svcbrkrguid = "svcbrkrguid";
         public const string scope = "scope";
         public const string cmptlevel = "cmptlevel";
-        public const string Class="class";
+        public const string Class = "class";
         public const string grantee = "grantee";
         public const string grantor = "grantor";
         public const string state = "state";
@@ -424,7 +424,7 @@ namespace NtierMvc.Model
         public const string nmscope = "nmscope";
         public const string kind = "kind";
         public const string deriv = "deriv";
-        public const string Enum ="enum";
+        public const string Enum = "enum";
         public const string defval = "defval";
         public const string compid = "compid";
         public const string ord = "ord";
@@ -1304,8 +1304,40 @@ namespace NtierMvc.Model
             return dataTable;
         }
 
-        
+
 
     }
+
+    public class FinancialYear
+    {
+        int yearNumber;
+        string currFinanceYear;
+        private static readonly int firstMonthInYear = 4;
+
+        public static FinancialYear Current
+        {
+            get { return new FinancialYear(DateTime.Today); }
+        }
+
+        public FinancialYear(DateTime forDate)
+        {
+            if (forDate.Month >= firstMonthInYear)
+            {
+                yearNumber = forDate.Year + 1;
+                currFinanceYear = forDate.Year.ToString() + "-" + yearNumber.ToString();
+            }
+            else
+            {
+                yearNumber = forDate.Year;
+                currFinanceYear = (forDate.Year - 1).ToString() + "-" + yearNumber.ToString() ;
+            }
+        }
+
+        public override string ToString()
+        {
+            return currFinanceYear;
+        }
+    }
+
 
 }
