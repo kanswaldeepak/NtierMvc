@@ -68,14 +68,17 @@ angular.module('App').controller("ReportController", function ($scope, $http, $t
                         contentType: "application/json; charset=utf-8",
                         success: function (data) {
                             //alert("Dowloaded Successfully" + data);
-                            if (data != "") {
-                                //use window.location.href for redirect to download action for download the file
+                            if (data == 'No Records Found For Selected Item') {
+                                HideLoadder();
+                                alert(data);
+                            }
+                            else if (data != "") {
                                 window.location.href = window.DownloadDoc + '?fileName=' + data;
                                 HideLoadder();
                             }
                             else {
-                                alert(data.errorMessage);
                                 HideLoadder();
+                                alert(data.errorMessage);
                             }
                         },
                         error: function (x, e) {
@@ -102,14 +105,17 @@ angular.module('App').controller("ReportController", function ($scope, $http, $t
                     contentType: "application/json; charset=utf-8",
                     success: function (data) {
                         //alert("Dowloaded Successfully" + data);
-                        if (data != "") {
-                            //use window.location.href for redirect to download action for download the file
+                        if (data == 'No Records Found For Selected Item') {
+                            HideLoadder();
+                            alert(data);
+                        }
+                        else if (data != "") {
                             window.location.href = window.DownloadDoc + '?fileName=' + data;
                             HideLoadder();
                         }
                         else {
-                            alert(data.errorMessage);
                             HideLoadder();
+                            alert(data.errorMessage);
                         }
                     },
                     error: function (x, e) {
@@ -153,13 +159,17 @@ angular.module('App').controller("ReportController", function ($scope, $http, $t
                 data: JSON.stringify({ SoNo: "", FromDate: $scope.ConsolidateDateFrom, ToDate: $scope.ConsolidateDateTo, ReportType: $scope.ConReportType }),
                 contentType: "application/json; charset=utf-8",
                 success: function (data) {
-                    if (data != "") {
+                    if (data == 'No Records Found For Selected Item') {
+                        HideLoadder();
+                        alert(data);
+                    }
+                    else if (data != "") {
                         window.location.href = window.DownloadDoc + '?fileName=' + data;
                         HideLoadder();
                     }
                     else {
-                        alert(data.errorMessage);
                         HideLoadder();
+                        alert(data.errorMessage);
                     }
                 },
                 error: function (x, e) {

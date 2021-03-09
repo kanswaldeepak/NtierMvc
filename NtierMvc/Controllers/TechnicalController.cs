@@ -2093,7 +2093,6 @@ namespace NtierMvc.Controllers
                 Microsoft.Office.Interop.Excel.Workbook xlWorkbook = excelApp.Workbooks.Open(Filename: @path, Editable: true);
                 Microsoft.Office.Interop.Excel.Worksheet ws = (Microsoft.Office.Interop.Excel.Worksheet)xlWorkbook.Sheets["Contract Review Sheet"];
 
-
                 System.Data.DataTable resultData = objManager.GetDataForContractReview(EnqNo, ItemNo, "Data");
                 System.Data.DataTable resultList = objManager.GetDataForContractReview(EnqNo, ItemNo, "List");
 

@@ -175,14 +175,28 @@ function getContractReviewDetails() {
         data: JSON.stringify({ customerId: Customer, enqNo: ENQNo, fileName: FileName }),
         contentType: "application/json; charset=utf-8",
         success: function (data) {
-            if (data != "") {
-                window.location.href = window.DownloadDoc + '?fileName=' + data.fileName + '&path=' + data.path;
+            if (data == 'No Records Found For Selected Item') {
+                HideLoadder();
+                alert(data);
+            }
+            else if (data != "") {
+                //use window.location.href for redirect to download action for download the file
+                window.location.href = window.DownloadDoc + '?fileName=' + data;
                 HideLoadder();
             }
             else {
-                alert(data.errorMessage);
                 HideLoadder();
+                alert(data.errorMessage);
             }
+
+            //if (data != "") {
+            //    window.location.href = window.DownloadDoc + '?fileName=' + data.fileName + '&path=' + data.path;
+            //    HideLoadder();
+            //}
+            //else {
+            //    alert(data.errorMessage);
+            //    HideLoadder();
+            //}
         },
         error: function (x, e) {
             alert('Some error is occurred, Please try after some time.');
