@@ -2097,6 +2097,12 @@ namespace NtierMvc.Controllers
                 System.Data.DataTable resultData = objManager.GetDataForContractReview(EnqNo, ItemNo, "Data");
                 System.Data.DataTable resultList = objManager.GetDataForContractReview(EnqNo, ItemNo, "List");
 
+                if (resultData.Rows.Count <= 0 || resultList.Rows.Count <= 0)
+                {
+                    fileName = "No Records Found For Selected Item";
+                    return fileName;
+                }
+
                 //For Data
                 xlWorkbook.Worksheets[1].Cells.Replace("#CustomerName", resultData.Rows[0]["CustomerName"]);
                 xlWorkbook.Worksheets[1].Cells.Replace("#ContactPerson", resultData.Rows[0]["ContactPerson"]);

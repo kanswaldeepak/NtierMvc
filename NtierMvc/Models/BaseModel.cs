@@ -1518,7 +1518,5 @@ namespace NtierMvc.Models
 
         }
 
-
-
     }
 }

@@ -45,9 +45,9 @@
                         <label class="control-label"> Fin Year<span class="required">*</span></label>
                         <label for="from">From</label>
                         @*<input type="text" id="from" name="from" ng-model="date">*@
-                        @Html.TextBox("from", "", new { @class = "form-control CalenderAllDate", ng_model = "date", autocomplete="off" })
+                        @Html.TextBox("from", "", new { @class = "form-control CalenderAllDate", ng_model = "date", autocomplete = "off" })
                         <label for="to">to</label>
-                        @Html.TextBox("to", "", new { @class = "form-control CalenderAllDate", ng_model= "date1", autocomplete = "off" })
+                        @Html.TextBox("to", "", new { @class = "form-control CalenderAllDate", ng_model = "date1", autocomplete = "off" })
                         @*<input type="text" id="to" name="to" ng-model="date1">*@
                         @*<input type="text" id="datepicker1" class="form-control control-color" name="daterange" ng-model="date" />*@
                         <div>
@@ -57,7 +57,7 @@
 
                     </div>
                     <div class="col-md-2">
-                        <button class="btn btn-success btn-sm" style="font-size:18px" ng-click="GenerateWAuthReport();">Download</button>
+                        <button class="btn btn-success btn-sm" style="font-size:18px" ng-click="CreateWAAuthReport();">Download</button>
                     </div>
                 </div>
             </div>
@@ -121,22 +121,22 @@
                                 <span class="HideValidMsg">Select ENQ No</span>
                             </div>
                             @*<div class="col-md-3">
-             @Html.DropDownListFor(m => m.ItemNo, new SelectList(ViewBag.ListItemNo, "DataStringValueField", "DataTextField", Model.ItemNo), new
-        {
-            @class = "form-control requiredValidation clearField",
-            @id = "CRItemNo",
-            @data_inneraction = "validationCall",
-            @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
-            @multiple = "true"
-        })
-             <span class="HideValidMsg">Select Item No</span>
-         </div>*@
+                                     @Html.DropDownListFor(m => m.ItemNo, new SelectList(ViewBag.ListItemNo, "DataStringValueField", "DataTextField", Model.ItemNo), new
+                                {
+                                    @class = "form-control requiredValidation clearField",
+                                    @id = "CRItemNo",
+                                    @data_inneraction = "validationCall",
+                                    @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                                    @multiple = "true"
+                                })
+                                     <span class="HideValidMsg">Select Item No</span>
+                                 </div>*@
                             <button type="button" id="btnContractReview" class="btn btn-sm btn-primary" onclick="getContractReviewDetails()">Get Report</button>
                         </div>
                     </div>
                     <div class="col-md-12">
                         <div class="col-md-3">
-                            
+
                         </div>
                     </div>
                 </div>
@@ -168,6 +168,44 @@
 
         </div>
     </div>
+
+
+    <div class="row">
+        <hr style="width:100%" />
+        <h4 class="control-label" style="margin-left:10px; font-size: 20px">Consolidated Reports</h4>
+        <hr style="width:100%" />
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-3">
+                    <label class="control-label"> Report Name<span class="required">*</span></label>
+                    <div>
+                        <select id="DdlConsolidatedReportType" class="form-control control-color" ng-model="ConReportType">
+                            <option value=''>Select Report Type</option>
+                            <option value="ConEnquiryReport">Consolidated Enquiry Report</option>
+                            <option value="ConQuotationReport">Consolidated Quotation Report</option>
+                            <option value="ConMasterOrderReport">Consolidated Master Order Report</option>
+                            <option value="ConOrderItemwiseReport">Consolidated Order Itemwise Report</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <label class="control-label"> Fin Year<span class="required">*</span></label>
+                    <label for="from">From</label>
+                    @Html.TextBox("from", "", new { @class = "form-control CalenderAllDate", ng_model = "ConsolidateDateFrom", autocomplete = "off" })
+                    <label for="to">to</label>
+                    @Html.TextBox("to", "", new { @class = "form-control CalenderAllDate", ng_model = "ConsolidateDateTo", autocomplete = "off" })
+                </div>
+                <div class="col-md-2">
+                    <button class="btn btn-success btn-sm" style="font-size:18px" ng-click="CreateConsolidateReport();">Download</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
 <script type="text/javascript">
 
@@ -176,7 +214,7 @@
         window.GenerateReport = '@Url.Action("CreateReport", "CRM")';
         window.DownloadDoc = '@Url.Action("Download", "CRM")';
         window.TecnicalMaster = '@Url.Action("GetSoNoList", "Technical")';
-        window.GenerateWAAuthReport = '@Url.Action("CreateWAAuthReport", "CRM")';
+        window.CreateWAAuthReport = '@Url.Action("CreateWAAuthReport", "CRM")';
 
         window.GetOrderNote = '@Url.Action("GetOrderNote", "Technical")';
         window.SaveContractReviewDetails = '@Url.Action("SaveContractReviewDetails", "Technical")';
@@ -184,16 +222,12 @@
         window.GetCountry = '@Url.Action("GetCountry", "Technical")';
         window.GetItemNosForEnqs = '@Url.Action("GetItemNosForEnqs", "Technical")';
         window.GetExcelForContractReview = '@Url.Action("GetExcelForContractReview", "Technical")';
-        window.DownloadDoc = '@Url.Action("Download", "Technical")';
         window.CRFilesUpload = '@Url.Action("CRFilesUpload", "Technical")';
         window.GetContractReviews = '@Url.Action("GetContractReviews", "Technical")';
         window.DeleteContractReviews = '@Url.Action("DeleteContractReviews", "Technical")';
 
         GetContractReview();
-
-
     });
-
 
 
     $('#CRCustomer').chosen({

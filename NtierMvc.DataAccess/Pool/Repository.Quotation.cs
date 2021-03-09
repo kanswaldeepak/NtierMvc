@@ -315,18 +315,29 @@ namespace NtierMvc.DataAccess.Pool
             switch(ReportType)
             {
                 case "WAuthReport":
-                    SPName = "ERP_WAReport";
+                    SPName = ConfigurationManager.AppSettings["WAReport"]; ;
                     break;
                 case "ProductPerformance":
-                    SPName = "ERP_ProductReport";
+                    SPName = ConfigurationManager.AppSettings["ProductReport"]; ;
                     break;
                 case "EnquiryReport":
-                    SPName = "ERP_EQAndQRReport";
+                    SPName = ConfigurationManager.AppSettings["EQAndQRReport"]; ;
                     break;
                 case "CUSTOMERFEEDBACK":
-                    SPName = "ERP_CustomerFeedback";
+                    SPName = ConfigurationManager.AppSettings["CustomerFeedback"]; ;
                     break;
-                  
+                case "ConEnquiryReport":
+                    SPName = ConfigurationManager.AppSettings["ConsolidatedEnquiryReport"]; ;
+                    break;
+                case "ConQuotationReport":
+                    SPName = ConfigurationManager.AppSettings["ConsolidatedQuotationReport"]; ;
+                    break;
+                case "ConMasterOrderReport":
+                    SPName = ConfigurationManager.AppSettings["ConsolidatedOrderReport"]; ;
+                    break;
+                case "ConOrderItemwiseReport":
+                    SPName = ConfigurationManager.AppSettings["ConsolidatedOrderItemwiseReport"]; ;
+                    break;
             }
                 
             return _dbAccess.GetDataSet(SPName, Params);

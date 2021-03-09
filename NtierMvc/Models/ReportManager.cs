@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using NtierMvc.Common;
 using NtierMvc.Infrastructure;
 using NtierMvc.Model;
 using NtierMvc.Model.Customer;
@@ -16,7 +17,6 @@ namespace NtierMvc.Models
     public class ReportManager
     {
         BaseModel model = new BaseModel();
-
 
         public string GetWorkAuthReport(string SoNo, string FromDate, string ToDate, string ReportType)
         {
@@ -158,13 +158,10 @@ namespace NtierMvc.Models
 
                 FinancialYear fy = new FinancialYear(DateTime.Now);
                 xlWorkbook.Worksheets[1].Cells.Replace("#FinYear", fy.ToString());
-                
+
                 xlWorkbook.Worksheets[1].Cells.Replace("#TotalEnquiryRecv", dt1.Rows.Count);
                 xlWorkbook.Worksheets[1].Cells.Replace("#TotalQuoteSent", dt1.Rows.Count);
                 xlWorkbook.Worksheets[1].Cells.Replace("#TotalConversionRate", "100%");
-
-
-
 
 
                 object[,] arr = new object[dt1.Rows.Count, dt1.Columns.Count];
@@ -202,7 +199,7 @@ namespace NtierMvc.Models
                 xlWorkbook.Close();
                 excelApp.Quit();
 
-                DocumentName = DocumentName + ".Xlsx";
+                DocumentName = DocumentName + ".xlsx";
             }
             catch (Exception ex)
             {
@@ -216,12 +213,8 @@ namespace NtierMvc.Models
             string DocumentName = ReportType;
             try
             {
-
-
                 Microsoft.Office.Interop.Excel.Application excelApp = new Microsoft.Office.Interop.Excel.Application();
-                // open the template in Edit mode
                 string path = System.Web.HttpContext.Current.Server.MapPath(ConfigurationManager.AppSettings["WorkAuthExcel"]);
-                //string path = System.IO.Path.GetFullPath(ConfigurationManager.AppSettings["QuotePrepExcel"]);
                 Microsoft.Office.Interop.Excel.Workbook xlWorkbook = excelApp.Workbooks.Open(Filename: @path, Editable: true);
                 Microsoft.Office.Interop.Excel.Worksheet ws = (Microsoft.Office.Interop.Excel.Worksheet)xlWorkbook.Sheets["Report"];
                 CustomerReport CustReportDetails = new CustomerReport();
@@ -235,15 +228,7 @@ namespace NtierMvc.Models
                 {
                     dt1 = ds1.Tables[0];
                     Dt2 = ds1.Tables[1];
-
-
                 }
-                //      var name = CompanyDetails.Where(i => i.RequiredColumn1 == "CompanyName").Select(i => i.RequiredColumn2);
-
-
-                //var CompanyDetails = model.GetTableDataList(GeneralConstants.ListTypeD, TableNames.EnquiryRegister, ColumnNames.APIMONOGRAMREQUIREMENT, "1", "", "", "", "", "", "", "", "", "Property", "Details", "", "", "", "", "", "", "", "");
-
-
 
                 //Getting Single Fields
                 xlWorkbook.Worksheets[1].Cells.Replace("#FileNo", dt1.Rows[0]["FileNo"]);
@@ -253,15 +238,12 @@ namespace NtierMvc.Models
                 xlWorkbook.Worksheets[1].Cells.Replace("#PoNo", dt1.Rows[0]["PoNo"]);
                 xlWorkbook.Worksheets[1].Cells.Replace("#PoDate", dt1.Rows[0]["PoDate"]);
                 xlWorkbook.Worksheets[1].Cells.Replace("#CustomerName", dt1.Rows[0]["PoEntity"]);
-
                 xlWorkbook.Worksheets[1].Cells.Replace("#PORD", dt1.Rows[0]["PODOR"]);
-
                 xlWorkbook.Worksheets[1].Cells.Replace("#QuationNuber", dt1.Rows[0]["QuoteNoView"]);
                 xlWorkbook.Worksheets[1].Cells.Replace("#ContactPerson", dt1.Rows[0]["CONSIGNEENAME"]);
                 xlWorkbook.Worksheets[1].Cells.Replace("#ConsignmentLocation", dt1.Rows[0]["MODEOFSHIPMENT"]);
                 xlWorkbook.Worksheets[1].Cells.Replace("#Inspection", dt1.Rows[0]["Inspection"]);
                 xlWorkbook.Worksheets[1].Cells.Replace("#APINONAPI", dt1.Rows[0]["APIMONOGRAMREQUIREMENT"]);
-
                 xlWorkbook.Worksheets[1].Cells.Replace("#PODeliverDate2", dt1.Rows[0]["PoDeliveryDate"]);
 
 
@@ -585,28 +567,32 @@ namespace NtierMvc.Models
             }
             return DocumentName;
         }
-        //public static DataTable ToDataTable<T>(List<T> items)
-        //{
-        //    DataTable dataTable = new DataTable(typeof(T).Name);
-        //    //Get all the properties by using reflection   
-        //    PropertyInfo[] Props = typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance);
-        //    foreach (PropertyInfo prop in Props)
-        //    {
-        //        //Setting column names as Property names  
-        //        dataTable.Columns.Add(prop.Name);
-        //    }
-        //    foreach (T item in items)
-        //    {
-        //        var values = new object[Props.Length];
-        //        for (int i = 0; i < Props.Length; i++)
-        //        {
 
-        //            values[i] = Props[i].GetValue(item, null);
-        //        }
-        //        dataTable.Rows.Add(values);
-        //    }
+        public string PrepConsolidatedReport(string fullPath, string FromDate, string ToDate, string ReportType)
+        {
+            string DocumentName = ReportType + ".xlsx";
+            fullPath = fullPath + ".xlsx";
 
-        //    return dataTable;
-        //}
+            try
+            {
+                string ds = GetWorkAuthReport("", FromDate, ToDate, ReportType);
+                DataSet ds1 = JsonConvert.DeserializeObject<DataSet>(ds);
+                DataTable dt1 = new DataTable();
+                if (ds1.Tables.Count > 0 && ds1.Tables != null)
+                    dt1 = ds1.Tables[0];
+
+                if (dt1.Rows.Count > 0)
+                    CreateExcelFile.CreateExcelDocument(dt1, fullPath, includeAutoFilter: true);
+                else
+                    DocumentName = "";
+
+            }
+            catch (Exception ex)
+            {
+                DocumentName = ex.Message;
+            }
+            return DocumentName;
+        }
+
     }
 }

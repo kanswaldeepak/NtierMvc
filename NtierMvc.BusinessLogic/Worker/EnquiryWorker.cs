@@ -78,8 +78,6 @@ namespace NtierMvc.BusinessLogic.Worker
             return result;
         }
 
-
-
         public EnquiryEntity DT2Cust(DataTable dtRecord)
         {
             EnquiryEntity oCust = new EnquiryEntity();

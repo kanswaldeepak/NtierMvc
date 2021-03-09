@@ -4,7 +4,7 @@ angular.module('App').controller("ReportController", function ($scope, $http, $t
         handle: ".modal-body"
     });
     $scope.date = '';
-    $scope.date1='';
+    $scope.date1 = '';
     $scope.SoNo = '';
 
     $scope.HideFileds = function () {
@@ -50,7 +50,7 @@ angular.module('App').controller("ReportController", function ($scope, $http, $t
         $scope.ISTure = true;
 
 
-    $scope.GenerateWAuthReport = function () {
+    $scope.CreateWAAuthReport = function () {
         //var DownloadType = dwnldtype;
         var fromdate = '';
         var Todate = '';
@@ -60,9 +60,10 @@ angular.module('App').controller("ReportController", function ($scope, $http, $t
                 if ((new Date($scope.date1).getFullYear() - new Date($scope.date).getFullYear()) == 1) {
                     fromdate = $scope.date;
                     Todate = $scope.date1;
+                    ShowLoadder();
                     $.ajax({
                         type: "Post",
-                        url: window.GenerateWAAuthReport,
+                        url: window.CreateWAAuthReport,
                         data: JSON.stringify({ SoNo: $scope.SoNo, FromDate: fromdate, ToDate: Todate, ReportType: $scope.ReportType }),
                         contentType: "application/json; charset=utf-8",
                         success: function (data) {
@@ -87,8 +88,8 @@ angular.module('App').controller("ReportController", function ($scope, $http, $t
                     alert("Select Financial Year")
                 HideLoadder();
             }
-            
-                else
+
+            else
                 alert("Select Financial Year")
             HideLoadder();
         }
@@ -120,11 +121,11 @@ angular.module('App').controller("ReportController", function ($scope, $http, $t
             else {
                 alert("Select AW No")
             }
-         
+
         }
-       
-        
-        
+
+
+
     }
     $scope.GetSONoDetails = function () {
 
@@ -139,48 +140,40 @@ angular.module('App').controller("ReportController", function ($scope, $http, $t
             alert('failed');
         });
     }
-    //function GetSONoDetails() {
-    //    var SoNo = $("#SoNoOrder").val();
-    //    if (SoNo == undefined || SoNo == '') {
-    //        alert('Please Select So No');
-    //        return;
-    //    }
 
-    //    $.ajax({
-    //        type: 'Get',
-    //        url: window.TecnicalMaster,
-    //        data: {},
-    //        contentType: "application/json; charset=utf-8",
-    //        success: function (data) {
+    $scope.CreateConsolidateReport = function () {
+        var fromdate = '';
+        var Todate = '';
+        ShowLoadder();
 
-    //            //$('#QuoteNoOrder').val(data.QuoteNo);
-    //            //$('#VendorIdOrder').val(data.VendorId);
-    //            //$('#VendorNameOrder').val(data.VendorName);
-    //            //$('#FileNo').val(data.FileNo);
-    //            //$('#ProdGrp').val(data.ProductGroup);
-    //            //$('#POEntity').val(data.PoEntity);
-    //            //$('#POLocation').val(data.PoLocation);
-    //            //$('#PONo').val(data.PoNo);
-    //            //$('#PODate').val(data.PoDate);
-    //            //$('#PODor').val(data.PoDor);
-    //            //$('#Curr').val(data.Curr);
-    //            //$('#ExWorkValue').val(data.ExWorkValue);
-    //            //$('#PODeliveryDate').val(data.PoDeliveryDate);
-    //            //$('#DeliveryTerms').val(data.DeliveryTerms);
-    //            //$('#SupplyTerms').val(data.SupplyTerms);
-    //            //$('#ConsigneeName').val(data.ConsigneeName);
-    //            //$('#ConsigneeLocation').val(data.ConsigneeLocation);
-    //            //$('#ModeOfShipment').val(data.ModeOfShipment);
-    //            //$('#PaymentTerms').val(data.PaymentTerms);
-    //            //$('#Inspection').val(data.Inspection);
-    //            //$('#EndUser').val(data.EndUser);
+        if ($scope.ConReportType != null || $scope.ConReportType != '') {
+            $.ajax({
+                type: "Post",
+                url: window.CreateWAAuthReport,
+                data: JSON.stringify({ SoNo: "", FromDate: $scope.ConsolidateDateFrom, ToDate: $scope.ConsolidateDateTo, ReportType: $scope.ConReportType }),
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    if (data != "") {
+                        window.location.href = window.DownloadDoc + '?fileName=' + data;
+                        HideLoadder();
+                    }
+                    else {
+                        alert(data.errorMessage);
+                        HideLoadder();
+                    }
+                },
+                error: function (x, e) {
+                    alert('Some error is occurred, Please try after some time.');
+                    HideLoadder();
+                }
+            })
+        }
+        else {
+            alert("Select Report Type")
+        }
 
-    //        },
-    //        error: function (x, e) {
-    //            alert('Some error is occurred, Please try after some time.');
-    //        }
-    //    })
-    //}
+
+    }
 
 });
 

@@ -71,7 +71,8 @@
                             @class = "form-control requiredValidation",
                             @id = "Dept",
                             @data_inneraction = "validationCall",
-                            @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                            @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                            @onchange = "DisplayNewItemInDdl(this, 'Master.Department', '', 'DeptName')"
                         })<label class="HideValidMsg">Department is Required</label>
                     </div>
                 </div>

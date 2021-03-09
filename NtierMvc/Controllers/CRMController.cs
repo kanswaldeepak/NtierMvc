@@ -46,7 +46,7 @@ namespace NtierMvc.Controllers
             //Customer
             ViewBag.ListCustomerName = model.GetMasterTableStringList("Customer", "CustomerName", "CustomerName", "", "", GeneralConstants.ListTypeN);
             ViewBag.ListCustomerId = model.GetMasterTableStringList("Customer", "Id", "CustomerId", "", "", GeneralConstants.ListTypeN);
-            ViewBag.ListCustStatus = model.GetDropDownList(TableNames.Master_Taxonomy, GeneralConstants.ListTypeN, ColumnNames.DropDownID, ColumnNames.DropDownValue, "CustomerStatus", ColumnNames.Property,false,"asc",ColumnNames.DropDownValue);
+            ViewBag.ListCustStatus = model.GetDropDownList(TableNames.Master_Taxonomy, GeneralConstants.ListTypeN, ColumnNames.DropDownID, ColumnNames.DropDownValue, "CustomerStatus", ColumnNames.Property, false, "asc", ColumnNames.DropDownValue);
             ViewBag.ListCountry = model.GetMasterTableStringList("Master.Country", "Id", "Country", "", "", GeneralConstants.ListTypeN);
 
             //Enquiry
@@ -164,7 +164,7 @@ namespace NtierMvc.Controllers
             ViewBag.ListFUNCTION_AREA = model.GetMasterTableStringList(TableNames.Master_FunctionalArea, ColumnNames.id, ColumnNames.FunctionArea);
             ViewBag.ListCountry = model.GetMasterTableStringList(TableNames.Master_Country, ColumnNames.id, ColumnNames.Country);
             ViewBag.ListStatus = model.GetDropDownList(TableNames.Master_Taxonomy, GeneralConstants.ListTypeN, ColumnNames.DropDownID, ColumnNames.DropDownValue, "CustomerStatus", ColumnNames.Property, false, "asc", ColumnNames.DropDownValue);
-            
+
 
             if (!string.IsNullOrEmpty(Session["UserId"].ToString()))
                 cus.UnitNo = Session["UserId"].ToString();
@@ -217,7 +217,7 @@ namespace NtierMvc.Controllers
         {
             List<DropDownEntity> StateList = new List<DropDownEntity>();
             //StateList = model.GetStateDetail(countryId);
-            StateList = model.GetDropDownList(TableNames.Master_State, GeneralConstants.ListTypeD, ColumnNames.id, ColumnNames.state, countryId, ColumnNames.CountryId,false);
+            StateList = model.GetDropDownList(TableNames.Master_State, GeneralConstants.ListTypeD, ColumnNames.id, ColumnNames.state, countryId, ColumnNames.CountryId, false);
             return new JsonResult { Data = StateList, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 
@@ -232,25 +232,18 @@ namespace NtierMvc.Controllers
             List<DropDownEntity> ddl = new List<DropDownEntity>();
 
             if (type == "CountryId")
-
                 ddl = objManager.GetDdlValueForCustomer(type, CountryId);
-            //ddl = model.GetDropDownList("Customer", GeneralConstants.ListTypeD, "Id", "CustomerID", CountryId, "Country");
             else if (type == "CustomerName")
                 ddl = objManager.GetDdlValueForCustomer(type, "", CustomerId);
 
             return new JsonResult { Data = ddl, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
-       
-        [HttpGet]
-        public ActionResult CreateReport(string ReportType, string pageIndex, string pageSize,string SearchCountry, string SearchCustomerID,string SearchCustomerIsActive)
-        {
 
+        [HttpGet]
+        public ActionResult CreateReport(string ReportType, string pageIndex, string pageSize, string SearchCountry, string SearchCustomerID, string SearchCustomerIsActive)
+        {
             SearchCountry = SearchCountry == "-1" ? string.Empty : SearchCountry;
             SearchCustomerID = SearchCustomerID == "-1" ? string.Empty : SearchCustomerID;
-
-            //custDetail = objManager.GetCustomerDetails(Convert.ToInt32(pageIndex), Convert.ToInt32(pageSize), SearchCustomerName, SearchCustomerID);
-            //return new JsonResult { Data = custDetail, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
-
 
             string fileName = ReportType;
             string path = System.Web.HttpContext.Current.Server.MapPath(ConfigurationManager.AppSettings["TempFolder"]);
@@ -259,23 +252,16 @@ namespace NtierMvc.Controllers
 
             if (!System.IO.Directory.Exists(path))
                 System.IO.Directory.CreateDirectory(path);
-            //switch (ReportType)
-            //{
-            //    case "CUSTOMER":
-                    fileName = GenerateReport(fullPath, fileName, pageIndex, pageSize, SearchCountry, SearchCustomerID, SearchCustomerIsActive);
-                //    break;
-                //default:
-                //    break;
-           // }
 
+            fileName = GenerateReport(fullPath, fileName, pageIndex, pageSize, SearchCountry, SearchCustomerID, SearchCustomerIsActive);
             return new JsonResult { Data = fileName, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
 
         }
-        private string GenerateReport(string fullPath,  string DocumentName, string pageIndex, string pageSize, string SearchCountry, string SearchCustomerID,string SearchCustomerIsActive)
+        private string GenerateReport(string fullPath, string DocumentName, string pageIndex, string pageSize, string SearchCountry, string SearchCustomerID, string SearchCustomerIsActive)
         {
 
             string fileName = "";
-                ReportManager Report = new ReportManager();
+            ReportManager Report = new ReportManager();
             switch (DocumentName)
             {
                 case "CUSTOMER":
@@ -289,33 +275,23 @@ namespace NtierMvc.Controllers
             }
             return fileName;
         }
+
         [HttpPost]
-        public ActionResult CreateWAAuthReport( string SoNo, string FromDate, string ToDate, string ReportType)
+        public ActionResult CreateWAAuthReport(string SoNo, string FromDate, string ToDate, string ReportType)
         {
-            //custDetail = objManager.GetCustomerDetails(Convert.ToInt32(pageIndex), Convert.ToInt32(pageSize), SearchCustomerName, SearchCustomerID);
-            //return new JsonResult { Data = custDetail, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
-
-
             string fileName = ReportType;
             string path = System.Web.HttpContext.Current.Server.MapPath(ConfigurationManager.AppSettings["TempFolder"]);
             string fullPath = Path.Combine(Server.MapPath(ConfigurationManager.AppSettings["TempFolder"].ToString()), fileName);
 
-
             if (!System.IO.Directory.Exists(path))
                 System.IO.Directory.CreateDirectory(path);
-            //switch (ReportType)
-            //{
-            //    case "CUSTOMER":
-            fileName = GenerateRAUtheport(fullPath, SoNo, FromDate, ToDate, ReportType);
-            //    break;
-            //default:
-            //    break;
-            // }
+
+            fileName = GenerateCRMReports(fullPath, SoNo, FromDate, ToDate, ReportType);
 
             return new JsonResult { Data = fileName, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
 
         }
-        private string GenerateRAUtheport(string fullPath, string SoNo, string FromDate, string ToDate, string ReportType)
+        private string GenerateCRMReports(string fullPath, string SoNo, string FromDate, string ToDate, string ReportType)
         {
 
             string fileName = "";
@@ -333,6 +309,18 @@ namespace NtierMvc.Controllers
                     break;
                 case "EnquiryReport":
                     fileName = Report.PrepEnqandQuotoReport(fullPath, SoNo, FromDate, ToDate, ReportType);
+                    break;
+                case "ConEnquiryReport":
+                    fileName = Report.PrepConsolidatedReport(fullPath, FromDate, ToDate, ReportType);
+                    break;
+                case "ConQuotationReport":
+                    fileName = Report.PrepConsolidatedReport(fullPath, FromDate, ToDate, ReportType);
+                    break;
+                case "ConMasterOrderReport":
+                    fileName = Report.PrepConsolidatedReport(fullPath, FromDate, ToDate, ReportType);
+                    break;
+                case "ConOrderItemwiseReport":
+                    fileName = Report.PrepConsolidatedReport(fullPath, FromDate, ToDate, ReportType);
                     break;
                 default:
                     break;
