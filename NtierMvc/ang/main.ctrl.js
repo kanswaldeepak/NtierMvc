@@ -1428,6 +1428,45 @@ angular.module('App').controller("MainController", function ($scope, $http, $tim
         //});
     }
 
+    $scope.BindPLDetail = function () {
+        var _actionType = "ADD"
+        $.ajax({
+            type: "GET",
+            data: ({ actionType: _actionType }),
+            datatype: "JSON",
+            url: window.BindPLDetails,
+            success: function (html) {
+                html = $compile(html)($scope);
+                SetModalTitle("Add PL")
+                SetModalBody(html);
+                SetModalWidth("1200px");
+                ShowModal();
+                $scope.PosNo = 1;
+
+                if (!($('.modal.in').length)) {
+                    $('.modal-dialog').css({
+                        top: '5%',
+                        left: '3%'
+                    });
+                }
+
+                $('#ModalPopup').modal({
+                    backdrop: false,
+                    show: true
+                });
+
+                LoadDescDetails();
+
+                HideLoadder();
+
+            },
+            error: function (r) {
+                HideLoadder();
+                alert(window.ErrorMsg);
+            }
+        })
+    }
+
     $scope.PosNo = 1;
     $scope.addDescElement = function () {
         $scope.PosNo = parseInt($scope.PosNo) + 1;

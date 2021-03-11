@@ -3,6 +3,7 @@
 
 @*<script src="~/ang/PdfFile/pdfmake.js"></script>
     <script src="~/ang/PdfFile/vfs_fonts.js"></script>*@
+<script src="~/Scripts/jquery.Datatable.js"></script>
 
 <div ng-controller="ModalController">
     <form id="formSaveQuotationPrepDetail">
@@ -20,6 +21,7 @@
 
         <div class="row m--padding-10">
             <div class="col-md-6">
+                <input style="font-size:18px" type="button" class="btn btn-success btn-sm" id="QPAddPL" value="Add PL" ng-click="BindPLDetail()" />
                 <input style="font-size:18px" type="button" class="btn btn-success btn-sm" id="QPAddMasterItem" value="Add Master Item" ng-click="BindDescDetails()" />
             </div>
         </div>
@@ -145,8 +147,8 @@
 
                        })
                             @*<select id="ProductName" name="ProductName" ng-model="ProductName" class="form-control requiredValidation clearField ng-pristine ng-untouched ng-valid ng-empty" onfocusout="return ValidateRequiredFieldsOnFocusOut(this)" ng-change="GetProductNumber(ProductName)">
-                    <option data-ng-repeat="pN in ProductNameList" value="{{pN.DataStringValueField}}">{{pN.DataTextField}}</option>
-                </select>*@
+                                    <option data-ng-repeat="pN in ProductNameList" value="{{pN.DataStringValueField}}">{{pN.DataTextField}}</option>
+                                </select>*@
                             <span class="HideValidMsg">Please Select Product Name</span>
                         </div>
                     </div>
@@ -167,21 +169,21 @@
                         </div>
                     </div>
                     @*<div class="col-md-6">
-            <div class="form-group text-left">
-                <label class="control-label">
-                    Customer Name
-                </label>
-                @Html.TextBoxFor(m => m.CustomerName, new
-               {
-                   @class = "form-control requiredValidation",
-                   @id = "QuotePrepVendorName",
-                   @readonly = "readonly",
-                   @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
-               })
+                            <div class="form-group text-left">
+                                <label class="control-label">
+                                    Customer Name
+                                </label>
+                                @Html.TextBoxFor(m => m.CustomerName, new
+                               {
+                                   @class = "form-control requiredValidation",
+                                   @id = "QuotePrepVendorName",
+                                   @readonly = "readonly",
+                                   @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                               })
 
-                <span class="HideValidMsg">Please Select Customer Name</span>
-            </div>
-        </div>*@
+                                <span class="HideValidMsg">Please Select Customer Name</span>
+                            </div>
+                        </div>*@
 
                     <div class="col-md-6">
                         <label class="control-label">
@@ -205,18 +207,18 @@
 
                     </div>
                     @*<div class="col-md-6">
-            <div class="form-group">
-                <label class="control-label">
-                    Enquiry Sr No
-                </label>
-                @Html.TextBoxFor(m => m.EnqSrNo, new
-                   {
-                       @class = "form-control clearField",
-                       @id = "EnqSrNo"
-                   })
-                <span class="HideValidMsg">Please Select EnqSrNo</span>
-            </div>
-        </div>*@
+                            <div class="form-group">
+                                <label class="control-label">
+                                    Enquiry Sr No
+                                </label>
+                                @Html.TextBoxFor(m => m.EnqSrNo, new
+                                   {
+                                       @class = "form-control clearField",
+                                       @id = "EnqSrNo"
+                                   })
+                                <span class="HideValidMsg">Please Select EnqSrNo</span>
+                            </div>
+                        </div>*@
 
                     <div class="col-md-6">
                         <div class="form-group">
@@ -605,6 +607,7 @@
         window.LeadDetailsForQuote = '@Url.Action("LeadDetailsForQuote", "Technical")';
         window.DeleteQuotationPrepDetail = '@Url.Action("DeleteQuotationPrepDetail", "Technical")';
         window.DownloadDoc = '@Url.Action("Download", "Technical")';
+        window.BindPLDetails = '@Url.Action("BindPLDetails", "Technical")';
 
         $('#divProductDetails').hide();
     });

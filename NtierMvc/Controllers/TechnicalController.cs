@@ -1848,11 +1848,17 @@ namespace NtierMvc.Controllers
 
 
             DescEntity dEN = new DescEntity();
-            if (actionType == "ADD")
-            {
-            }
-
             return base.PartialView("~/Views/Technical/_TechDescDetails.cshtml", dEN);
+        }
+
+        [HttpGet]
+        public ActionResult BindPLDetails(string actionType)
+        {
+            ViewBag.ListMainPL = model.GetDropDownList(TableNames.Master_ProductLine, GeneralConstants.ListTypeD, ColumnNames.id, ColumnNames.MainPLName, "", "");
+            ViewBag.SubPLList = model.GetDropDownList(TableNames.SubProductLine, GeneralConstants.ListTypeD, ColumnNames.id, ColumnNames.SubPLName, "", "");
+
+            PLEntity pl = new PLEntity();
+            return base.PartialView("~/Views/Technical/_TechPLDetails.cshtml", pl);
         }
 
         public JsonResult GetDescLists()
@@ -2280,6 +2286,33 @@ namespace NtierMvc.Controllers
 
             return new JsonResult { Data = msgCode, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
+
+
+        [HttpPost]
+        public ActionResult SavePLDetails(string type, string mainPLName = null, string mainPLNo = null, string mainPLDdl = null, string subPLtext = null)
+        {
+
+            string result = string.Empty;
+
+            if (type == "MainPL")
+                result = model.SaveTableData(TableNames.Master_ProductLine, ColumnNames.MainPL, mainPLNo, ColumnNames.MainPLName, mainPLName);
+            else
+                result = model.SaveTableData(TableNames.SubProductLine, ColumnNames.MainPLId, mainPLDdl, ColumnNames.SubPLName, subPLtext);
+
+            string data = string.Empty;
+            if (!string.IsNullOrEmpty(result) && (result == GeneralConstants.Inserted || result == GeneralConstants.Updated))
+            {
+                data = GeneralConstants.SavedSuccess;
+            }
+            else
+            {
+                data = GeneralConstants.NotSavedError + ". Reason: " + result;
+            }
+
+            return new JsonResult { Data = data, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+        }
+
+
 
 
     }

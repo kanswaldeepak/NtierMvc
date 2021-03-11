@@ -336,6 +336,27 @@ angular.module('App').controller("ModalController", function ($scope, $http, $ti
 
     }
 
+    $scope.SavePLDetail = function (Type) {
+
+        if ($scope.PLDMainPLText == '') {
+            alert("Kindly Fill Main PL");
+        }
+        else {
+            $http({ url: window.SavePLDetails, method: 'POST', data: JSON.stringify({ type: Type, mainPLName: $scope.PLDMainPLNameText, mainPLNo: $scope.PLDMainPLNoText, mainPLDdl: $scope.PLDMainPLDdl, subPLtext: $scope.PLDSubPLText }), headers: { 'Content-Type': "application/json; charset=utf-8" } }).success(
+                function (res) {
+                    if (res == 'Saved Successfully!') {
+                        alert(res);
+                    }
+                    else {
+                        alert(res)
+                    }
+                }
+            ).error(function (res) { showHttpErr(res); });
+
+        }
+
+    }
+
 });
 
 //EOF

@@ -1323,6 +1323,7 @@
     <Content Include="Views\Technical\PartialContractReview.cshtml" />
     <Content Include="Views\Technical\_TechContractReview.cshtml" />
     <Content Include="Views\CRM\_CRMPartialReport.cshtml" />
+    <Content Include="Views\Technical\_TechPLDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\Documents\temp\" />
