@@ -556,22 +556,22 @@ namespace NtierMvc.Model
             return VendorList;
         }
 
-        public QuotationPreparationEntity GetQuotePrepDetails(int itemNoId, int quoteType, int quoteNo)
-        {
-            var baseAddress = "TechnicalDetails";
-            QuotationPreparationEntity itemEntity = new QuotationPreparationEntity();
-            using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
-            {
-                HttpResponseMessage response = client.GetAsync(baseAddress + "/GetQuotePrepDetails?itemNoId=" + itemNoId + "&quoteType=" + quoteType + "&quoteNo=" + quoteNo).Result;
-                if (response.IsSuccessStatusCode)
-                {
-                    var data = response.Content.ReadAsStringAsync().Result;
-                    itemEntity = JsonConvert.DeserializeObject<QuotationPreparationEntity>(data);
-                }
-            }
+        //public QuotationPreparationEntity GetQuotePrepDetails(int itemNoId, int quoteType, int quoteNo)
+        //{
+        //    var baseAddress = "TechnicalDetails";
+        //    QuotationPreparationEntity itemEntity = new QuotationPreparationEntity();
+        //    using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
+        //    {
+        //        HttpResponseMessage response = client.GetAsync(baseAddress + "/GetQuotePrepDetails?itemNoId=" + itemNoId + "&quoteType=" + quoteType + "&quoteNo=" + quoteNo).Result;
+        //        if (response.IsSuccessStatusCode)
+        //        {
+        //            var data = response.Content.ReadAsStringAsync().Result;
+        //            itemEntity = JsonConvert.DeserializeObject<QuotationPreparationEntity>(data);
+        //        }
+        //    }
 
-            return itemEntity;
-        }
+        //    return itemEntity;
+        //}
 
         public string SaveClarificationData(ClarificationEntity cObj)
         {
@@ -829,6 +829,24 @@ namespace NtierMvc.Model
             }
 
             return objList;
+        }
+
+
+        public QuotationPreparationEntity GetQuotePrepDetails(int itemNoId, int quoteType, int quoteNo, int QuotePrepId)
+        {
+            var baseAddress = "TechnicalDetails";
+            QuotationPreparationEntity newDdl = new QuotationPreparationEntity();
+
+            using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
+            {
+                HttpResponseMessage response = client.GetAsync(baseAddress + "/GetQuotePrepDetails?itemNoId=" + itemNoId + "&quoteType=" + quoteType + "&quoteNo=" + quoteNo + "&QuotePrepId=" + QuotePrepId).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    var data = response.Content.ReadAsStringAsync().Result;
+                    newDdl = JsonConvert.DeserializeObject<QuotationPreparationEntity>(data);
+                }
+            }
+            return newDdl;
         }
 
 

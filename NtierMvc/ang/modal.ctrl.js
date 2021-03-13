@@ -119,7 +119,7 @@ angular.module('App').controller("ModalController", function ($scope, $http, $ti
                         ClearAllFields("#formSaveQuotationPrepDetail");
                         $('#divProductDetails').hide();
                         $('.ShowHideFields').hide();
-                        
+                        LoadQuotePrepListDetail();
                     }
                     else {
                         alert(res)

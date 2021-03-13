@@ -137,7 +137,7 @@ namespace NtierMvc.Controllers
         [HttpGet]
         public ActionResult PartialQuotePrep()
         {
-            ViewBag.ListQuoteNo = DdlList(); //objManager.GetQuoteNoList(string.Empty); 
+            ViewBag.ListQuoteNo = model.GetDropDownList(TableNames.QuotationRegister, GeneralConstants.ListTypeN, ColumnNames.QuoteNo, ColumnNames.QuoteNoView, "", "");
             ViewBag.YesNo = model.GetTaxonomyDropDownItems("", "YesNo");
 
             ViewBag.CasingSize = model.GetDropDownList(TableNames.Master_Taxonomy, GeneralConstants.ListTypeN, ColumnNames.DropDownID, ColumnNames.DropDownValue, "CasingSize", ColumnNames.Property, true);
@@ -1105,7 +1105,7 @@ namespace NtierMvc.Controllers
         public ActionResult CheckDuplicateItemNo(int itemNoId, int quoteType, int quoteNo)
         {
             QuotationPreparationEntity qPEntity = new QuotationPreparationEntity();
-            qPEntity = objManager.GetQuotePrepDetails(itemNoId, quoteType, quoteNo);
+            qPEntity = objManager.GetQuotePrepDetails(itemNoId, quoteType, quoteNo,0);
             return new JsonResult { Data = qPEntity, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
             //List<DropDownEntity> ddl = new List<DropDownEntity>();
             //ddl = model.GetMasterTableList("QuotePreparationTbl", "Id", "ItemNo", itemNoId, "ItemNo");
@@ -2385,6 +2385,14 @@ namespace NtierMvc.Controllers
         }
 
 
+        [HttpPost]
+        public ActionResult EditQuotePrep(string Id)
+        {
+            QuotationPreparationEntity en = new QuotationPreparationEntity();
+            en = objManager.GetQuotePrepDetails(0,0,0,Convert.ToInt32(Id));
+
+            return new JsonResult { Data = en, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+        }
 
 
 

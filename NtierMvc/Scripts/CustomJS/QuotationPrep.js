@@ -738,6 +738,38 @@ function ClearQuotePrepSearch() {
     $('#SearchItemNoQuotePrep').val('');
 }
 
-function EditQuotePrep() {
+function EditQuotePrep(QuoteId) {
+
+    let id = QuoteId;
+    debugger;
+
+    $.ajax({
+        type: 'POST',
+        url: window.EditQuotePreps,
+        data: JSON.stringify({ Id: QuoteId }),
+        contentType: "application/json; charset=utf-8",
+        success: function (data) {
+            if (data.QuoteType != null) {
+                debugger;
+                $('#QuotePrepFormType').val(data.QuoteType);
+                $('#QuotePrepFormNo').val(data.QuoteNo);
+                $('#QuotePrepSupplyTerms').val(data.SupplyTerms);
+                $('#QuotePrepLeadTime').val(data.LeadTime);
+                $('#QuotePrepLeadTimeDuration').val(data.LeadTimeDuration);
+                $('#QuotePrepMainProdGrp').val(data.MainProdGrp);
+                $('#QuotePrepSubProdGrp').val(data.SubProdGrp);
+                $('#QuotePrepProductName').val(data.ProductName);
+                $('#QuotePrepProductNo').val(data.ProductNo);
+                $('#QuotePrepItemNo').val(data.ItemNo);
+
+                ValidateItemNo();
+            }
+            else
+                alert("Item No not Found in Records");
+        },
+        error: function (x, e) {
+            alert('Some error is occurred, Please try after some time.');
+        }
+    })
 
 }

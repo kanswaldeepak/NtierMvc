@@ -114,12 +114,13 @@ namespace NtierMvc.DataAccess.Pool
             return _dbAccess.GetDataTable(spName, parms);
         }
 
-        public DataTable GetQuotePrepDetails(int itemNoId, int quoteType, int quoteNo)
+        public DataTable GetQuotePrepDetails(int itemNoId, int quoteType, int quoteNo, int QuotePrepId)
         {
             var parms = new Dictionary<string, object>();
             parms.Add("@itemNo", itemNoId);
             parms.Add("@quoteType", quoteType);
             parms.Add("@quoteNo", quoteNo);
+            parms.Add("@quotePrepId", QuotePrepId);
             string spName = ConfigurationManager.AppSettings["GetQuotePrepDetails"];
             return _dbAccess.GetDataTable(spName, parms);
         }

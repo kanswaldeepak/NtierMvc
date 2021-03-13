@@ -1182,14 +1182,13 @@ namespace NtierMvc.Models
             return lstTableRecordsEntity;
         }
 
-        public SingleColumnEntity GetSingleColumnValues(string TableName, string DataValueField1, string DataTextField1, string ColumnName1, string Param1, string DataValueField2 = null, string ColumnName2 = null, string Param2 = null, string DataValueField3 = null, string ColumnName3 = null, string Param3 = null, string DataValueField4 = null, string ColumnName4 = null, string Param4 = null, string DataValueField5 = null, string DataValueField6 = null, string DataValueField7 = null, string DataValueField8 = null)
+        public SingleColumnEntity GetSingleColumnValues(string TableName, string DataValueField1, string DataTextField1, string ColumnName1, string Param1, string DataValueField2 = null, string ColumnName2 = null, string Param2 = null, string DataValueField3 = null, string ColumnName3 = null, string Param3 = null, string DataValueField4 = null, string ColumnName4 = null, string Param4 = null, string DataValueField5 = null, string DataValueField6 = null, string DataValueField7 = null, string DataValueField8 = null, string DataValueField9 = null, string DataValueField10 = null)
         {
             SingleColumnEntity ObjSingleEntity = new SingleColumnEntity();
             var baseAddress = "Base";
             using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
             {
-                HttpResponseMessage response = client.GetAsync(baseAddress + "/GetSingleColumnValues?TableName=" + TableName + "&DataValueField1=" + DataValueField1 + "&DataTextField1=" + DataTextField1 + "&Param1=" + Param1 + "&ColumnName1=" + ColumnName1 + "&DataValueField2=" + DataValueField2 + "&Param2=" + Param2 + "&ColumnName2=" + ColumnName2 + "&DataValueField3=" + DataValueField3 + "&Param3=" + Param3 + "&ColumnName3=" + ColumnName3 + "&DataValueField4=" + DataValueField4 + "&Param4=" + Param4 + "&ColumnName4=" + ColumnName4 + "&DataValueField5=" + DataValueField5 + "&DataValueField6=" + DataValueField6 + "&DataValueField7=" + DataValueField7 + "&DataValueField8="
-                    + DataValueField8).Result;
+                HttpResponseMessage response = client.GetAsync(baseAddress + "/GetSingleColumnValues?TableName=" + TableName + "&DataValueField1=" + DataValueField1 + "&DataTextField1=" + DataTextField1 + "&Param1=" + Param1 + "&ColumnName1=" + ColumnName1 + "&DataValueField2=" + DataValueField2 + "&Param2=" + Param2 + "&ColumnName2=" + ColumnName2 + "&DataValueField3=" + DataValueField3 + "&Param3=" + Param3 + "&ColumnName3=" + ColumnName3 + "&DataValueField4=" + DataValueField4 + "&Param4=" + Param4 + "&ColumnName4=" + ColumnName4 + "&DataValueField5=" + DataValueField5 + "&DataValueField6=" + DataValueField6 + "&DataValueField7=" + DataValueField7 + "&DataValueField8=" + DataValueField8 + "&DataValueField9=" + DataValueField9 + "&DataValueField10=" + DataValueField10).Result;
                 if (response.IsSuccessStatusCode)
                 {
                     var data = response.Content.ReadAsStringAsync().Result;

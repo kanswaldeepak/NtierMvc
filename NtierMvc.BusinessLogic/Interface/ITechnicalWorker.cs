@@ -51,7 +51,7 @@ namespace NtierMvc.BusinessLogic.Interface
 
         string SaveRevisedQuotationDetails(QuotationEntity entity);
         List<DropDownEntity> GetVendorDetails(string quotetypeId);
-        QuotationPreparationEntity GetQuotePrepDetails(int itemNoId, int quoteType, int quoteNo);
+        QuotationPreparationEntity GetQuotePrepDetails(int itemNoId, int quoteType, int quoteNo, int QuotePrepId);
         string SaveClarificationData(ClarificationEntity cObj);
         string SaveOrderClarificationData(ClarificationEntity cEntity);
         string SaveQuoteNotes(ClarificationEntity cObj);

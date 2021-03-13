@@ -1433,13 +1433,13 @@ namespace NtierMvc.BusinessLogic.Worker
             return dataList;
         }
 
-        public SingleColumnEntity GetSingleColumnValues(string TableName, string DataValueField1, string ColumnName1, string Param1, string DataValueField2 = null, string ColumnName2 = null, string Param2 = null, string DataValueField3 = null, string ColumnName3 = null, string Param3 = null, string DataValueField4 = null, string ColumnName4 = null, string Param4 = null, string DataValueField5 = null, string DataValueField6 = null, string DataValueField7 = null, string DataValueField8 = null)
+        public SingleColumnEntity GetSingleColumnValues(string TableName, string DataValueField1, string ColumnName1, string Param1, string DataValueField2 = null, string ColumnName2 = null, string Param2 = null, string DataValueField3 = null, string ColumnName3 = null, string Param3 = null, string DataValueField4 = null, string ColumnName4 = null, string Param4 = null, string DataValueField5 = null, string DataValueField6 = null, string DataValueField7 = null, string DataValueField8 = null, string DataValueField9 = null, string DataValueField10 = null)
         {
             List<SingleColumnEntity> dataList = new List<SingleColumnEntity>();
             SingleColumnEntity objSingle = new SingleColumnEntity();
             try
             {
-                dataList = objData.GetSingleColumnValues(TableName, DataValueField1, ColumnName1, Param1, DataValueField2, ColumnName2, Param2, DataValueField3, ColumnName3, Param3, DataValueField4, ColumnName4, Param4, DataValueField5, DataValueField6, DataValueField7, DataValueField8);
+                dataList = objData.GetSingleColumnValues(TableName, DataValueField1, ColumnName1, Param1, DataValueField2, ColumnName2, Param2, DataValueField3, ColumnName3, Param3, DataValueField4, ColumnName4, Param4, DataValueField5, DataValueField6, DataValueField7, DataValueField8, DataValueField9, DataValueField10);
 
                 if (dataList.Count > 0)
                     objSingle = dataList[0];

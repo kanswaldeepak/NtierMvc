@@ -1148,7 +1148,7 @@ namespace NtierMvc.DataAccess.Pool
             return dt;
         }
 
-        public List<SingleColumnEntity> GetSingleColumnValues(string TableName, string DataValueField1, string ColumnName1, string Param1, string DataValueField2 = null, string ColumnName2 = null, string Param2 = null, string DataValueField3 = null, string ColumnName3 = null, string Param3 = null, string DataValueField4 = null, string ColumnName4 = null, string Param4 = null, string DataValueField5 = null, string DataValueField6 = null, string DataValueField7 = null, string DataValueField8 = null)
+        public List<SingleColumnEntity> GetSingleColumnValues(string TableName, string DataValueField1, string ColumnName1, string Param1, string DataValueField2 = null, string ColumnName2 = null, string Param2 = null, string DataValueField3 = null, string ColumnName3 = null, string Param3 = null, string DataValueField4 = null, string ColumnName4 = null, string Param4 = null, string DataValueField5 = null, string DataValueField6 = null, string DataValueField7 = null, string DataValueField8 = null, string DataValueField9 = null, string DataValueField10 = null)
         {
             var parms = new Dictionary<string, object>();
             var spName = ConfigurationManager.AppSettings["GetSingleColumnList"];
@@ -1179,6 +1179,8 @@ namespace NtierMvc.DataAccess.Pool
             parms.Add("@DataValueField6", DataValueField6);
             parms.Add("@DataValueField7", DataValueField7);
             parms.Add("@DataValueField8", DataValueField8);
+            parms.Add("@DataValueField9", DataValueField9);
+            parms.Add("@DataValueField10", DataValueField10);
 
             return DataTableToSingleColumnList(_dbAccess.GetDataTable(spName, parms));
         }
