@@ -41,9 +41,9 @@ function DeleteUsingIdFromTable(TableName, ColumnName, Id) {
         contentType: "application/json; charset=utf-8",
         success: function (data) {
             if (data == 'Deleted Successfully!') {
-                alert(res);
+                alert(data);
             } else {
-                alert(res, 'E');
+                alert(data, 'E');
             }
         },
         error: function (x, e) {

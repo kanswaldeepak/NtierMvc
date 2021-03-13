@@ -795,7 +795,41 @@ namespace NtierMvc.Model
             }
             return result;
         }
-        
+
+        public List<PLEntity> LoadMasterPLlist(int skip, int pageSize, string sortColumn, string sortColumnDir, string search)
+        {
+            List<PLEntity> objList = new List<PLEntity>();
+            var baseAddress = "TechnicalDetails";
+            using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
+            {
+                HttpResponseMessage response = client.GetAsync(baseAddress + "/LoadMasterPLlist?skip=" + skip + "&pageSize=" + pageSize + "&sortColumn=" + sortColumn + "&sortColumnDir=" + sortColumnDir + "&search=" + search).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    var data = response.Content.ReadAsStringAsync().Result;
+                    objList = JsonConvert.DeserializeObject<List<PLEntity>>(data);
+                }
+            }
+
+            return objList;
+        }
+
+
+        public List<QuotationPreparationEntity> LoadQuotePrepListDetails(int skip, int pageSize, string sortColumn, string sortColumnDir, string search, string quoteType = null, string quoteNo = null, string itemNo = null)
+        {
+            List<QuotationPreparationEntity> objList = new List<QuotationPreparationEntity>();
+            var baseAddress = "TechnicalDetails";
+            using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
+            {
+                HttpResponseMessage response = client.GetAsync(baseAddress + "/LoadQuotePrepListDetails?skip=" + skip + "&pageSize=" + pageSize + "&sortColumn=" + sortColumn + "&sortColumnDir=" + sortColumnDir + "&search=" + search + "&quoteType=" + quoteType + "&quoteNo=" + quoteNo + "&itemNo=" + itemNo).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    var data = response.Content.ReadAsStringAsync().Result;
+                    objList = JsonConvert.DeserializeObject<List<QuotationPreparationEntity>>(data);
+                }
+            }
+
+            return objList;
+        }
 
 
 

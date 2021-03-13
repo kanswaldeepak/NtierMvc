@@ -1642,5 +1642,100 @@ namespace NtierMvc.BusinessLogic.Worker
             return result;
 
         }
+
+        public List<PLEntity> LoadMasterPLlist(int skip, int pageSize, string sortColumn, string sortColumnDir, string search)
+        {
+            try
+            {
+                List<PLEntity> lstDrpDwn = new List<PLEntity>();
+                DataTable dt = _repository.LoadMasterPLlist(skip, pageSize, sortColumn, sortColumnDir, search);
+                PLEntity Model;
+
+                if (dt.Rows.Count > 0)
+                {
+                    foreach (DataRow dr in dt.Rows)
+                    {
+                        Model = new PLEntity();
+                        Model.SNo = dr["SNo"] == DBNull.Value ? 0 : Convert.ToInt32(dr["SNo"]);
+                        Model.Id = dr["Id"] == DBNull.Value ? 0 : Convert.ToInt32(dr["Id"]);
+                        Model.MainPL = dr["MainPL"] == DBNull.Value ? string.Empty : Convert.ToString(dr["MainPL"]);
+                        Model.MainPLName = dr["MainPLName"] == DBNull.Value ? string.Empty : Convert.ToString(dr["MainPLName"]);
+                        Model.SubPL = dr["SubPL"] == DBNull.Value ? string.Empty : Convert.ToString(dr["SubPL"]);
+                        Model.TotalRecords = dr["TotalRecords"] == DBNull.Value ? 0 : Convert.ToInt32(dr["TotalRecords"]);
+
+                        lstDrpDwn.Add(Model);
+                    }
+                }
+
+                return lstDrpDwn;
+            }
+            catch (Exception Ex)
+            {
+                NtierMvc.DataAccess.ExceptionLogging.SendExcepToDB(Ex);
+                throw Ex;
+            }
+        }
+
+
+        public List<QuotationPreparationEntity> LoadQuotePrepListDetails(int skip, int pageSize, string sortColumn, string sortColumnDir, string search, string quoteType = null, string quoteNo = null, string itemNo = null)
+        {
+            try
+            {
+                List<QuotationPreparationEntity> lstDrpDwn = new List<QuotationPreparationEntity>();
+                DataTable dt = _repository.LoadQuotePrepListDetails(skip, pageSize, sortColumn, sortColumnDir, search, quoteType, quoteNo, itemNo);
+                QuotationPreparationEntity Model;
+
+                if (dt.Rows.Count > 0)
+                {
+                    foreach (DataRow dr in dt.Rows)
+                    {
+                        Model = new QuotationPreparationEntity();
+                        Model.SNo = dr["SNo"] == DBNull.Value ? 0 : Convert.ToInt32(dr["SNo"]);
+                        Model.Id = dr["Id"] == DBNull.Value ? 0 : Convert.ToInt32(dr["Id"]);
+                        Model.QuoteType = dr["QuoteType"] == DBNull.Value ? string.Empty : Convert.ToString(dr["QuoteType"]);
+                        Model.QuoteNo = dr["QuoteNoView"] == DBNull.Value ? string.Empty : Convert.ToString(dr["QuoteNoView"]);
+                        Model.MainProdGrp = dr["MainProdGrp"] == DBNull.Value ? string.Empty : Convert.ToString(dr["MainProdGrp"]);
+                        Model.SubProdGrp = dr["SubProdGrp"] == DBNull.Value ? string.Empty : Convert.ToString(dr["SubProdGrp"]);
+                        Model.ItemNo = dr["ItemNo"] == DBNull.Value ? string.Empty : Convert.ToString(dr["ItemNo"]);
+                        Model.ProductName = dr["ProductName"] == DBNull.Value ? string.Empty : Convert.ToString(dr["ProductName"]);
+                        Model.ProductNo = dr["ProductNo"] == DBNull.Value ? string.Empty : Convert.ToString(dr["ProductNo"]);
+                        Model.CasingSize = dr["CasingSize"] == DBNull.Value ? string.Empty : Convert.ToString(dr["CasingSize"]);
+                        Model.CasingPpf = dr["CasingPpf"] == DBNull.Value ? string.Empty : Convert.ToString(dr["CasingPpf"]);
+                        Model.MaterialGrade = dr["MaterialGrade"] == DBNull.Value ? string.Empty : Convert.ToString(dr["MaterialGrade"]);
+                        Model.Connection = dr["Connection"] == DBNull.Value ? string.Empty : Convert.ToString(dr["Connection"]);
+                        Model.Qty = dr["Qty"] == DBNull.Value ? string.Empty : Convert.ToString(dr["Qty"]);
+                        Model.Uom = dr["Uom"] == DBNull.Value ? string.Empty : Convert.ToString(dr["Uom"]);
+                        Model.UnitPrice = dr["UnitPrice"] == DBNull.Value ? 0 : Convert.ToInt32(dr["UnitPrice"]);
+                        Model.OpenHoleSize = dr["OpenHoleSize"] == DBNull.Value ? 0 : Convert.ToInt32(dr["OpenHoleSize"]);
+                        Model.BallSize = dr["BallSize"] == DBNull.Value ? 0 : Convert.ToInt32(dr["BallSize"]);
+                        Model.WallThickness = dr["WallThickness"] == DBNull.Value ? string.Empty : Convert.ToString(dr["WallThickness"]);
+                        Model.ViewProductDetails = dr["ViewProductDetails"] == DBNull.Value ? string.Empty : Convert.ToString(dr["ViewProductDetails"]);
+                        Model.ODSize = dr["ODSize"] == DBNull.Value ? string.Empty : Convert.ToString(dr["ODSize"]);
+                        Model.TotalBows = dr["TotalBows"] == DBNull.Value ? string.Empty : Convert.ToString(dr["TotalBows"]);
+                        Model.PDCDrillable = dr["PDCDrillable"] == DBNull.Value ? string.Empty : Convert.ToString(dr["PDCDrillable"]);
+
+                        Model.TotalRecords = dr["TotalRecords"] == DBNull.Value ? 0 : Convert.ToInt32(dr["TotalRecords"]);
+
+                        lstDrpDwn.Add(Model);
+                        
+                    }
+                }
+
+                return lstDrpDwn;
+            }
+            catch (Exception Ex)
+            {
+                NtierMvc.DataAccess.ExceptionLogging.SendExcepToDB(Ex);
+                throw Ex;
+            }
+        }
+
+
+
+
+
+
+
+
     }
 }

@@ -376,5 +376,19 @@ namespace NtierMvc.API.Controllers.Application
             return Ok(_repository.GetWorkAuthReport(SoNo, FromDate, ToDate, ReportType));
         }
 
+        [HttpGet]
+        [Route("api/TechnicalDetails/LoadMasterPLlist")]
+        public IHttpActionResult LoadMasterPLlist(int skip, int pageSize, string sortColumn, string sortColumnDir, string search)
+        {
+            return Ok(_repository.LoadMasterPLlist(skip, pageSize, sortColumn, sortColumnDir, search));
+        }
+
+        [HttpGet]
+        [Route("api/TechnicalDetails/LoadQuotePrepListDetails")]
+        public IHttpActionResult LoadQuotePrepListDetails(int skip, int pageSize, string sortColumn, string sortColumnDir, string search, string quoteType = null, string quoteNo = null, string itemNo = null)
+        {
+            return Ok(_repository.LoadQuotePrepListDetails(skip, pageSize, sortColumn, sortColumnDir, search, quoteType, quoteNo, itemNo));
+        }
+
     }
 }

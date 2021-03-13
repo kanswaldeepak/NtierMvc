@@ -242,6 +242,33 @@ namespace NtierMvc.DataAccess.Pool
             return msgCode;
         }
 
+        public DataTable LoadMasterPLlist(int skip, int pageSize, string sortColumn, string sortColumnDir, string search)
+        {
+            var parms = new Dictionary<string, object>();
+            parms.Add("@skip", skip);
+            parms.Add("@PageSize", pageSize);
+            parms.Add("@sortColumn", sortColumn);
+            parms.Add("@sortColumnDir", sortColumnDir);
+            parms.Add("@search", search);
+            string spName = ConfigurationManager.AppSettings["LoadMasterPLlist"];
+            return _dbAccess.GetDataTable(spName, parms);
+        }
+
+        public DataTable LoadQuotePrepListDetails(int skip, int pageSize, string sortColumn, string sortColumnDir, string search, string quoteType = null, string quoteNo = null, string itemNo = null)
+        {
+            var parms = new Dictionary<string, object>();
+            parms.Add("@skip", skip);
+            parms.Add("@PageSize", pageSize);
+            parms.Add("@sortColumn", sortColumn);
+            parms.Add("@sortColumnDir", sortColumnDir);
+            parms.Add("@search", search);
+            parms.Add("@quoteType", quoteType);
+            parms.Add("@quoteNo", quoteNo);
+            parms.Add("@itemNo", itemNo);
+            string spName = ConfigurationManager.AppSettings["QuotePrepListDetail"];
+            return _dbAccess.GetDataTable(spName, parms);
+        }
+
 
         #endregion
     }

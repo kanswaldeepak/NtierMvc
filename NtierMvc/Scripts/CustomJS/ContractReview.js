@@ -175,13 +175,13 @@ function getContractReviewDetails() {
         data: JSON.stringify({ customerId: Customer, enqNo: ENQNo, fileName: FileName }),
         contentType: "application/json; charset=utf-8",
         success: function (data) {
-            if (data == 'No Records Found For Selected Item') {
+            if (data.fileName == 'No Records Found For Selected Item') {
                 HideLoadder();
-                alert(data);
+                alert(data.fileName);
             }
             else if (data != "") {
                 //use window.location.href for redirect to download action for download the file
-                window.location.href = window.DownloadDoc + '?fileName=' + data;
+                window.location.href = window.DownloadDoc + '?fileName=' + data.fileName;
                 HideLoadder();
             }
             else {

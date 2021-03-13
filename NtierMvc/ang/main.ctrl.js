@@ -632,7 +632,7 @@ angular.module('App').controller("MainController", function ($scope, $http, $tim
     //Quotation Preparation Starts
     $scope.BindQuotePrepPopup = function () {
         //$(".btn-Add-QuotationDetails").on("click", function (e) {
-
+        ShowLoadder();
         var _actionType = "ADD"
         //var _QuotationDetailsId = $(this).parents("tr:first").find("#QuotationDetailsId").val();
         //var _staffProfileName = $(this).parents("tr:first").find("#StaffFirstName").val();
@@ -645,6 +645,7 @@ angular.module('App').controller("MainController", function ($scope, $http, $tim
                 html = $compile(html)($scope);
                 SetModalPanelBody(html);
                 $('.ShowHideFields').hide();
+                LoadQuotePrepListDetail();
                 HideLoadder();
             },
             error: function (r) {
@@ -1455,7 +1456,7 @@ angular.module('App').controller("MainController", function ($scope, $http, $tim
                     show: true
                 });
 
-                LoadDescDetails();
+                LoadMasterPLAndSubPL();
 
                 HideLoadder();
 

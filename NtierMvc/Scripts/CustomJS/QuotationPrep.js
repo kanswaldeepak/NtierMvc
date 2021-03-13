@@ -153,6 +153,51 @@ function QPGetQuoteNos() {
     })
 }
 
+function QPGetQuoteNosFromType() {
+    var QuoteType = $("#SearchQuoteTypeQuotePrep").val();
+
+    $.ajax({
+        type: 'POST',
+        url: window.GetPrepQuoteNo,
+        data: JSON.stringify({ quotetypeId: QuoteType }),
+        contentType: "application/json; charset=utf-8",
+        success: function (data) {
+            $("#SearchQuoteNoQuotePrep").empty();
+            if (data.length > 0) {
+                $.each(data, function (i, item) {
+                    $("#SearchQuoteNoQuotePrep").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
+                })
+            }
+        },
+        error: function (x, e) {
+            $alert('Some error is occurred, Please try after some time.');
+        }
+    })
+}
+
+
+function GetItemNosForQuoteNo() {
+    var QuoteNo = $("#SearchQuoteNoQuotePrep").val();
+
+    $.ajax({
+        type: 'POST',
+        url: window.GetItemNosForQuoteNos,
+        data: JSON.stringify({ quoteNo: QuoteNo }),
+        contentType: "application/json; charset=utf-8",
+        success: function (data) {
+            $("#SearchItemNoQuotePrep").empty();
+            if (data.length > 0) {
+                $.each(data, function (i, item) {
+                    $("#SearchItemNoQuotePrep").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
+                })
+            }
+        },
+        error: function (x, e) {
+            $alert('Some error is occurred, Please try after some time.');
+        }
+    })
+}
+
 function GetProductTypes() {
     var QuoteType = $("#QuotePrepFormType").val();
     $.ajax({
@@ -432,4 +477,267 @@ function CheckSupplyTermsAndLeadTime() {
             alert('Some error is occurred, Please try after some time.');
         }
     })
+}
+
+
+
+function LoadDescDetails() {
+
+    $("#tblDescDetails").DataTable().destroy();
+    var req = {
+        "processing": true,
+        "language": {
+            processing: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span> '
+        },
+        "serverSide": true,
+        "paging": true,
+        "lengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
+        "pageLength": 5,
+        "searching": true,
+        "filter": true,
+        "language": {
+            "paginate": {
+                "next": '&#8594;',
+                "previous": '&#8592;'
+            }
+        },
+        "ajax": {
+            "url": "/Technical/LoadDescDetail",
+            "type": "POST",
+            "datatype": "json",
+            "data": {}
+        },
+        'order': [[1, "asc"]],
+        columns: [
+            { title: "SN", "data": "SNo", "name": "SNo", "autoWidth": true, "visible": true },
+            { title: "Product Line", "data": "MainPL", "name": "MainPL", "autoWidth": true, "visible": true },
+            { title: "Sub Product Line", "data": "SubPL", "name": "SubPL", "autoWidth": true, "visible": true },
+            { title: "Product Name", "data": "ProductName", "name": "ProductName", "autoWidth": true },
+            { title: "Product No", "data": "ProductNo", "name": "ProductNo", "autoWidth": true },
+            { title: "Description", "data": "DESQuery", "name": "DESQuery", "autoWidth": true },
+            {
+                title: "Action", "data": "", orderable: false, width: "auto",
+                "render": function (data, type, full, meta) {
+                    var columnVal = "";
+                    columnVal = '<div><button type = "button" onclick=DeleteUsingId("' + full.Id + '") class="btn btn-primary btn-sm"> Delete </button></div>';
+                    return columnVal;
+                }
+            }
+        ],
+        "fnCreatedRow": function (nRow, aData, iDataIndex) {
+        },
+        "drawCallback": function (settings) {
+        },
+        "footerCallback": function (row, data, start, end, display) {
+
+        }
+    }
+
+    $("#tblDescDetails").DataTable(req);
+    $("#tblDescDetails tbody").show();
+
+}
+
+
+function DeleteUsingId(Id) {
+
+    DeleteUsingIdFromTable("Master.Product", "Id", Id);
+    LoadDescDetails();
+
+}
+
+function LoadMasterPLAndSubPL() {
+
+    $("#tblMainAndSubPL").DataTable().destroy();
+    var req = {
+        "processing": true,
+        "language": {
+            processing: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span> '
+        },
+        "serverSide": true,
+        "paging": true,
+        "lengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
+        "pageLength": 5,
+        "searching": true,
+        "filter": true,
+        "language": {
+            "paginate": {
+                "next": '&#8594;',
+                "previous": '&#8592;'
+            }
+        },
+        "ajax": {
+            "url": "/Technical/LoadMasterPLlist",
+            "type": "POST",
+            "datatype": "json",
+            "data": {}
+        },
+        'order': [[1, "asc"]],
+        columns: [
+            { title: "SN", "data": "SNo", "name": "SNo", "autoWidth": true, "visible": true },
+            { title: "Id", "data": "Id", "name": "Id", "autoWidth": true, "visible": false },
+            { title: "Main PL", "data": "MainPL", "name": "MainPL", "autoWidth": true, "visible": true },
+            { title: "Main PL Name", "data": "MainPLName", "name": "MainPLName", "autoWidth": true, "visible": true },
+            { title: "Sub PL", "data": "SubPL", "name": "SubPL", "autoWidth": true, "visible": true }
+
+        ],
+        "fnCreatedRow": function (nRow, aData, iDataIndex) {
+        },
+        "drawCallback": function (settings) {
+        },
+        "footerCallback": function (row, data, start, end, display) {
+
+        }
+    }
+
+    $("#tblMainAndSubPL").DataTable(req);
+    $("#tblMainAndSubPL tbody").show();
+
+}
+
+//function LoadMasterPLAndSubPL() {
+
+//    $("#tblMainAndSubPL").DataTable().destroy();
+//    var req = {
+//        "processing": true,
+//        "language": {
+//            processing: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span> '
+//        },
+//        "serverSide": true,
+//        "paging": true,
+//        "lengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
+//        "pageLength": 5,
+//        "searching": true,
+//        "filter": true,
+//        "language": {
+//            "paginate": {
+//                "next": '&#8594;',
+//                "previous": '&#8592;'
+//            }
+//        },
+//        "ajax": {
+//            "url": "/Technical/LoadMasterPLlist",
+//            "type": "POST",
+//            "datatype": "json",
+//            "data": {}
+//        },
+//        'order': [[1, "asc"]],
+//        columns: [
+//            { title: "SN", "data": "SNo", "name": "SNo", "autoWidth": true, "visible": true },
+//            { title: "Id", "data": "Id", "name": "Id", "autoWidth": true, "visible": false },
+//            { title: "Main PL", "data": "MainPL", "name": "MainPL", "autoWidth": true, "visible": true },
+//            { title: "Main PL Name", "data": "MainPLName", "name": "MainPLName", "autoWidth": true, "visible": true },
+//            { title: "Sub PL", "data": "SubPL", "name": "SubPL", "autoWidth": true, "visible": true }
+
+//        ],
+//        "fnCreatedRow": function (nRow, aData, iDataIndex) {
+//        },
+//        "drawCallback": function (settings) {
+//        },
+//        "footerCallback": function (row, data, start, end, display) {
+
+//        }
+//    }
+
+//    $("#tblMainAndSubPL").DataTable(req);
+//    $("#tblMainAndSubPL tbody").show();
+
+//}
+
+
+function LoadQuotePrepListDetail() {
+
+    $("#tblQuotePrep").DataTable().destroy();
+    let QuoteType = $('#SearchQuoteTypeQuotePrep').val();
+    let QuoteNo = $('#SearchQuoteNoQuotePrep').val();
+    let ItemNo = $('#SearchItemNoQuotePrep').val();
+
+    var req = {
+        "processing": true,
+        "language": {
+            processing: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span> '
+        },
+        "serverSide": true,
+        "paging": true,
+        "lengthMenu": [[5, 10, 25, 50, 100, -1], [5, 10, 25, 50, 100, "All"]],
+        "pageLength": 5,
+        "searching": true,
+        "filter": true,
+        "language": {
+            "paginate": {
+                "next": '&#8594;',
+                "previous": '&#8592;'
+            }
+        },
+        "ajax": {
+            "url": "/Technical/LoadQuotePrepListDetails",
+            "type": "POST",
+            "datatype": "json",
+            "data": { quoteType: QuoteType, quoteNo: QuoteNo, itemNo: ItemNo }
+        },
+        'order': [[0, "desc"]],
+        columns: [
+            { title: "SN", "data": "SNo", "name": "SNo", "autoWidth": true, "visible": true },
+            { title: "QuoteType", "data": "QuoteType", "name": "QuoteType", "autoWidth": true, "visible": true },
+            { title: "QuoteNo", "data": "QuoteNo", "name": "QuoteNo", "autoWidth": true, "visible": true },
+            { title: "MainProdGrp", "data": "MainProdGrp", "name": "MainProdGrp", "autoWidth": true, "visible": true },
+            { title: "SubProdGrp", "data": "SubProdGrp", "name": "SubProdGrp", "autoWidth": true, "visible": true },
+            { title: "ItemNo", "data": "ItemNo", "name": "ItemNo", "autoWidth": true, "visible": true },
+            { title: "ProductName", "data": "ProductName", "name": "ProductName", "autoWidth": true, "visible": true },
+            { title: "ProductNo", "data": "ProductNo", "name": "ProductNo", "autoWidth": true, "visible": true },
+            { title: "CasingSize", "data": "CasingSize", "name": "CasingSize", "autoWidth": true, "visible": false },
+            { title: "CasingPpf", "data": "CasingPpf", "name": "CasingPpf", "autoWidth": true, "visible": false },
+            { title: "MaterialGrade", "data": "MaterialGrade", "name": "MaterialGrade", "autoWidth": true, "visible": false },
+            { title: "Connection", "data": "Connection", "name": "Connection", "autoWidth": true, "visible": false },
+            { title: "Qty", "data": "Qty", "name": "Qty", "autoWidth": true, "visible": true },
+            { title: "Uom", "data": "Uom", "name": "Uom", "autoWidth": true, "visible": true },
+            { title: "UnitPrice", "data": "UnitPrice", "name": "UnitPrice", "autoWidth": true, "visible": false },
+            { title: "OpenHoleSize", "data": "OpenHoleSize", "name": "OpenHoleSize", "autoWidth": true, "visible": false },
+            { title: "BallSize", "data": "BallSize", "name": "BallSize", "autoWidth": true, "visible": false },
+            { title: "WallThickness", "data": "WallThickness", "name": "WallThickness", "autoWidth": true, "visible": false },
+            { title: "ViewProductDetails", "data": "ViewProductDetails", "name": "ViewProductDetails", "autoWidth": true, "visible": true },
+            { title: "ODSize", "data": "ODSize", "name": "ODSize", "autoWidth": true, "visible": false },
+            { title: "TotalBows", "data": "TotalBows", "name": "TotalBows", "autoWidth": true, "visible": false },
+            { title: "PDCDrillable", "data": "PDCDrillable", "name": "PDCDrillable", "autoWidth": true, "visible": false },
+            { title: "Id", "data": "Id", "name": "Id", "autoWidth": true, "visible": false },
+            {
+                title: "Action", "data": "", orderable: false, width: "auto",
+                "render": function (data, type, full, meta) {
+                    var columnVal = "";
+                    columnVal = '<div><button type = "button" onclick=EditQuotePrep("' + full.Id + '") class="btn btn-info btn-sm"> Edit </button><button type = "button" onclick=DeleteQuotePrep("' + full.Id + '") class="btn btn-danger btn-sm"> Delete </button></div>';
+                    return columnVal;
+                }
+            }
+
+
+        ],
+        "fnCreatedRow": function (nRow, aData, iDataIndex) {
+        },
+        "drawCallback": function (settings) {
+        },
+        "footerCallback": function (row, data, start, end, display) {
+
+        }
+    }
+
+    $("#tblQuotePrep").DataTable(req);
+    $("#tblQuotePrep tbody").show();
+
+}
+
+
+function DeleteQuotePrep(Id) {    
+    DeleteUsingIdFromTable("QuotePreparationTbl", "Id", Id);
+    LoadQuotePrepListDetail();
+
+}
+
+function ClearQuotePrepSearch() {
+    $('#SearchQuoteTypeQuotePrep').val('');
+    $('#SearchQuoteNoQuotePrep').val('');
+    $('#SearchItemNoQuotePrep').val('');
+}
+
+function EditQuotePrep() {
+
 }

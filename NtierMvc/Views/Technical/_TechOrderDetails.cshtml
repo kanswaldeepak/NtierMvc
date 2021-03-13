@@ -428,14 +428,13 @@
                 <div class="col-md-2">
                     <div class="form-group">
                         <label class="control-label">
-                            Revised PO No <span class="required">*</span>
+                            Revised PO No 
                         </label>
                         @Html.TextBoxFor(m => m.RevisedPoNo, new
                    {
-                       @class = "form-control requiredValidation",
+                       @class = "form-control",
                        @id = "RORevisedPoNoOrder",
-                       @placeholder = " Enter PO No",
-                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                       @placeholder = " Enter PO No"
                    })
                         <span class="HideValidMsg"> Enter PO No</span>
                     </div>
@@ -443,16 +442,15 @@
                 <div class="col-md-2">
                     <div class="form-group">
                         <label class="control-label">
-                            Revised PO Date <span class="required">*</span>
+                            Revised PO Date
                         </label>
                         @Html.TextBoxFor(m => m.RevisedPoDate, new
                    {
-                       @class = "form-control requiredValidation CurrentEndDate",
+                       @class = "form-control CurrentEndDate",
                        autocomplete = "off",
                        @id = "RORevisedPoDateOrder",
                        @placeholder = "dd/MM/yyyy",
-                       @style = "disabled :disabled",
-                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                       @style = "disabled :disabled"
                    })
                         <span class="HideValidMsg"> Select PO Date</span>
                     </div>

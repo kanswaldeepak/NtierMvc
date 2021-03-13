@@ -52,7 +52,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group text-left">
                                             <label class="control-label">
-                                                Sub Product Line
+                                                Select Master Product for Sub Product
                                             </label>
 
                                             @Html.DropDownListFor(m => m.MainPL, new SelectList(ViewBag.ListMainPL, "DataStringValueField", "DataTextField", Model.MainPL), new
@@ -64,6 +64,10 @@
                                            ng_model = "PLDMainPLDdl"
                                        })
                                             <span class="HideValidMsg"> Select Main PL</span>
+
+                                            <label class="control-label">
+                                                Enter Sub Product Line
+                                            </label>
 
                                             @Html.TextBoxFor(m => m.SubPL, new
                                        {
@@ -83,7 +87,26 @@
                                 </div>
                             </td>
                         </tr>
+                        <tr>
+                            <td colspan="2">
+                                <table id="tblMainAndSubPL" class="table table-hover table-bordered table-striped mt-5">
+                                    <thead class="table-success">
+                                        <tr>
+                                            <td>SN</td>
+                                            <td>Id</td>
+                                            <td>Main PL</td>
+                                            <td>Main PL Name</td>
+                                            <td>Sub PL Name</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="table-primary"></tbody>
+                                </table>
+                            </td>
+                        </tr>
                     </table>
+                </div>
+                <div class="col-md-12 text-center">
+                    <button style="font-size:18px" type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>

@@ -157,6 +157,7 @@ namespace NtierMvc.Controllers
             ViewBag.ListProdName = model.GetMasterTableStringList("Master.Product", "Id", "ProductName", "", "", GeneralConstants.ListTypeN);
             ViewBag.ListSupplyTerms = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "SupplyTerms", "Property", GeneralConstants.ListTypeN);
             ViewBag.ListLeadTimeDuration = model.GetTaxonomyDropDownItems("", "Time");
+            ViewBag.ListItemNo = "";
 
             return PartialView("~/Views/Technical/_TechQuotePrepDetails.cshtml", qPEntity);
         }
@@ -2311,6 +2312,79 @@ namespace NtierMvc.Controllers
 
             return new JsonResult { Data = data, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
+
+        [HttpPost]
+        public ActionResult LoadMasterPLlist()
+        {
+            var draw = Request.Form.GetValues("draw").FirstOrDefault();
+            var start = Request.Form.GetValues("start").FirstOrDefault();
+            var length = Request.Form.GetValues("length").FirstOrDefault();
+            var totalRecords = 0;
+            var objList = new List<PLEntity>();
+
+            try
+            {
+                var sortColumn = Request.Form.GetValues("columns[" + Request.Form.GetValues("order[0][column]").FirstOrDefault() + "][name]").FirstOrDefault();
+                var sortColumnDir = Request.Form.GetValues("order[0][dir]").FirstOrDefault();
+                var pageSize = length != null ? Convert.ToInt32(length) : 0;
+                var skip = start != null ? Convert.ToInt32(start) : 0;
+                var search = Request.Form.GetValues("search[value]")[0];
+                //int InstructorId = ((UserModel)Session["UserModel"]).ObjectId;
+                //int UserId = ((UserModel)Session["UserModel"]).UserId;
+                objList = objManager.LoadMasterPLlist(skip, pageSize, sortColumn, sortColumnDir, search);
+                var v = (from a in objList select a);
+                objList = v.ToList();
+                totalRecords = Convert.ToInt32(objList[0].TotalRecords);
+            }
+            catch (Exception ex)
+            {
+                Logger.Error("TechnicalController/LoadMasterPLlist", ex);
+            }
+            return Json(new { draw = draw, recordsFiltered = totalRecords, recordsTotal = totalRecords, data = objList }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public ActionResult LoadQuotePrepListDetails(string quoteType = null, string quoteNo = null, string itemNo = null)
+        {
+            var draw = Request.Form.GetValues("draw").FirstOrDefault();
+            var start = Request.Form.GetValues("start").FirstOrDefault();
+            var length = Request.Form.GetValues("length").FirstOrDefault();
+            var totalRecords = 0;
+            var objList = new List<QuotationPreparationEntity>();
+
+            try
+            {
+                var sortColumn = Request.Form.GetValues("columns[" + Request.Form.GetValues("order[0][column]").FirstOrDefault() + "][name]").FirstOrDefault();
+                var sortColumnDir = Request.Form.GetValues("order[0][dir]").FirstOrDefault();
+                var pageSize = length != null ? Convert.ToInt32(length) : 0;
+                var skip = start != null ? Convert.ToInt32(start) : 0;
+                var search = Request.Form.GetValues("search[value]")[0];
+                //int InstructorId = ((UserModel)Session["UserModel"]).ObjectId;
+                //int UserId = ((UserModel)Session["UserModel"]).UserId;
+                objList = objManager.LoadQuotePrepListDetails(skip, pageSize, sortColumn, sortColumnDir, search, quoteType, quoteNo, itemNo);
+                var v = (from a in objList select a);
+                objList = v.ToList();
+                if(objList.Count>0)
+                totalRecords = Convert.ToInt32(objList[0].TotalRecords);
+            }
+            catch (Exception ex)
+            {
+                Logger.Error("TechnicalController/LoadQuotePrepListDetails", ex);
+            }
+            return Json(new { draw = draw, recordsFiltered = totalRecords, recordsTotal = totalRecords, data = objList }, JsonRequestBehavior.AllowGet);
+        }
+
+
+        [HttpPost]
+        public ActionResult GetItemNosForQuoteNos(string quoteNo) 
+        {
+            List<DropDownEntity> ddE = new List<DropDownEntity>();
+            ddE = model.GetDropDownList(TableNames.QuotePreparationTbl, GeneralConstants.ListTypeD, ColumnNames.ItemNo, ColumnNames.ItemNo, quoteNo, ColumnNames.QuoteNo);
+
+            return new JsonResult { Data = ddE, JsonRequestBehavior = JsonRequestBehavior.AllowGet};
+        }
+
+
 
 
 
