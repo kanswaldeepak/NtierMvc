@@ -346,6 +346,7 @@ angular.module('App').controller("ModalController", function ($scope, $http, $ti
                 function (res) {
                     if (res == 'Saved Successfully!') {
                         alert(res);
+                        LoadMasterPLAndSubPL();
                     }
                     else {
                         alert(res)

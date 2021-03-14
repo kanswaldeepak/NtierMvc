@@ -49,6 +49,7 @@ namespace NtierMvc.Model
         public string Subject { get; set; }
         public string SupplyTerms { get; set; }
         public string TotalRecords { get; set; }
+        public string FinancialYear { get; set; }
 
     }
 

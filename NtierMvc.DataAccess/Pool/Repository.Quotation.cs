@@ -79,6 +79,8 @@ namespace NtierMvc.DataAccess.Pool
             Params.Add("@Subject", Model.Subject);
             Params.Add("@SupplyTerms", Model.SupplyTerms);
             Params.Add("@RevisedQuoteNo", Model.RevisedQuoteNo);
+            Params.Add("@QuoteDate", Model.QuoteDate);
+            Params.Add("@FinancialYear", Model.FinancialYear);
 
             var SPName = ConfigurationManager.AppSettings["SaveQuotationDetails"];
             _dbAccess.ExecuteNonQuery(SPName, Params, "@o_MsgCode", out msgCode);

@@ -140,15 +140,11 @@ function QPGetQuoteNos() {
             if (data.length > 0) {
                 $.each(data, function (i, item) {
                     $("#QuotePrepFormNo").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
-                    //$("#VendorName").append($('<option></option>').val(item.DataStringValueField).html(item.DataAltValueField));
-                    //$("#QuotePrepVendorName").val(item.DataStringValueField);
                 })
             }
         },
         error: function (x, e) {
-            $('#spn-Sucess-Failure').text('Some error is occurred, Please try after some time.');
-            $('#spn-Sucess-Failure').addClass("important red");
-            $('#Sucess-Failure').modal('show');
+            alert('Some Error Occurred. Please try again later.');
         }
     })
 }
@@ -572,7 +568,7 @@ function LoadMasterPLAndSubPL() {
             "datatype": "json",
             "data": {}
         },
-        'order': [[1, "asc"]],
+        'order': [[2, "desc"]],
         columns: [
             { title: "SN", "data": "SNo", "name": "SNo", "autoWidth": true, "visible": true },
             { title: "Id", "data": "Id", "name": "Id", "autoWidth": true, "visible": false },
@@ -736,6 +732,8 @@ function ClearQuotePrepSearch() {
     $('#SearchQuoteTypeQuotePrep').val('');
     $('#SearchQuoteNoQuotePrep').val('');
     $('#SearchItemNoQuotePrep').val('');
+
+    LoadQuotePrepListDetail();
 }
 
 function EditQuotePrep(QuoteId) {
@@ -772,4 +770,28 @@ function EditQuotePrep(QuoteId) {
         }
     })
 
+}
+
+function GetQuoteNoFromFinYearAndQuote() {
+    var FinYear = $("#QuotePrepFinancialYear").val();
+    var QuoteType = $("#QuotePrepFormType").val();
+
+    $.ajax({
+        type: 'POST',
+        url: window.QPGetQuoteNoFromFinYears,
+        data: JSON.stringify({ finYear: FinYear, quoteType: QuoteType }),
+        contentType: "application/json; charset=utf-8",
+        success: function (data) {
+            $("#QuotePrepFormNo").empty();
+            $("#QuotePrepVendorName").empty();
+            if (data.length > 0) {
+                $.each(data, function (i, item) {
+                    $("#QuotePrepFormNo").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
+                })
+            }
+        },
+        error: function (x, e) {
+            alert('Some Error Occurred. Please try again later.');
+        }
+    })
 }

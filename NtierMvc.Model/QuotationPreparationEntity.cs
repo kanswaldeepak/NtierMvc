@@ -65,6 +65,7 @@ namespace NtierMvc.Model
         public string LeadTimeDuration { get; set; }
         public string PDCDrillable { get; set; }
         public int TotalRecords { get; set; }
+        public int FinancialYear { get; set; }
 
 
     }

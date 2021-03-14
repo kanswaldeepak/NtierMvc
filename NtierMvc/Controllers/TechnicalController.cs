@@ -158,6 +158,7 @@ namespace NtierMvc.Controllers
             ViewBag.ListSupplyTerms = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "SupplyTerms", "Property", GeneralConstants.ListTypeN);
             ViewBag.ListLeadTimeDuration = model.GetTaxonomyDropDownItems("", "Time");
             ViewBag.ListItemNo = "";
+            ViewBag.ListFinancialYear = model.GetDropDownList(TableNames.FinancialYear, GeneralConstants.ListTypeN, ColumnNames.id, ColumnNames.FinYear, "", "", true);
 
             return PartialView("~/Views/Technical/_TechQuotePrepDetails.cshtml", qPEntity);
         }
@@ -249,6 +250,7 @@ namespace NtierMvc.Controllers
             ViewBag.ListModeOfDespatch = model.GetDropDownList("Master.Taxonomy", GeneralConstants.ListTypeD, "dropdownId", "dropdownvalue", "Transport", "Property");
             ViewBag.ListSupplyTerms = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "SupplyTerms", "Property", GeneralConstants.ListTypeN);
             ViewBag.ListDeliveryTerms = model.GetDropDownList(TableNames.Master_Taxonomy, GeneralConstants.ListTypeD, ColumnNames.DropDownID, ColumnNames.DropDownValue, "DeliveryTerms", ColumnNames.ObjectName);
+            ViewBag.ListFinYear = model.GetDropDownList(TableNames.FinancialYear, GeneralConstants.ListTypeN, ColumnNames.id, ColumnNames.FinYear, "", "", true);
 
             quotE.UnitNo = Session["UserId"].ToString();
 
@@ -1105,7 +1107,7 @@ namespace NtierMvc.Controllers
         public ActionResult CheckDuplicateItemNo(int itemNoId, int quoteType, int quoteNo)
         {
             QuotationPreparationEntity qPEntity = new QuotationPreparationEntity();
-            qPEntity = objManager.GetQuotePrepDetails(itemNoId, quoteType, quoteNo,0);
+            qPEntity = objManager.GetQuotePrepDetails(itemNoId, quoteType, quoteNo, 0);
             return new JsonResult { Data = qPEntity, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
             //List<DropDownEntity> ddl = new List<DropDownEntity>();
             //ddl = model.GetMasterTableList("QuotePreparationTbl", "Id", "ItemNo", itemNoId, "ItemNo");
@@ -2364,8 +2366,8 @@ namespace NtierMvc.Controllers
                 objList = objManager.LoadQuotePrepListDetails(skip, pageSize, sortColumn, sortColumnDir, search, quoteType, quoteNo, itemNo);
                 var v = (from a in objList select a);
                 objList = v.ToList();
-                if(objList.Count>0)
-                totalRecords = Convert.ToInt32(objList[0].TotalRecords);
+                if (objList.Count > 0)
+                    totalRecords = Convert.ToInt32(objList[0].TotalRecords);
             }
             catch (Exception ex)
             {
@@ -2376,12 +2378,12 @@ namespace NtierMvc.Controllers
 
 
         [HttpPost]
-        public ActionResult GetItemNosForQuoteNos(string quoteNo) 
+        public ActionResult GetItemNosForQuoteNos(string quoteNo)
         {
             List<DropDownEntity> ddE = new List<DropDownEntity>();
             ddE = model.GetDropDownList(TableNames.QuotePreparationTbl, GeneralConstants.ListTypeD, ColumnNames.ItemNo, ColumnNames.ItemNo, quoteNo, ColumnNames.QuoteNo);
 
-            return new JsonResult { Data = ddE, JsonRequestBehavior = JsonRequestBehavior.AllowGet};
+            return new JsonResult { Data = ddE, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 
 
@@ -2389,11 +2391,18 @@ namespace NtierMvc.Controllers
         public ActionResult EditQuotePrep(string Id)
         {
             QuotationPreparationEntity en = new QuotationPreparationEntity();
-            en = objManager.GetQuotePrepDetails(0,0,0,Convert.ToInt32(Id));
+            en = objManager.GetQuotePrepDetails(0, 0, 0, Convert.ToInt32(Id));
 
             return new JsonResult { Data = en, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 
+        public ActionResult QPGetQuoteNoFromFinYears(string finYear, string quoteType)
+        {
+            List<DropDownEntity> lstQuoteNo = new List<DropDownEntity>();
+            lstQuoteNo = model.GetDropDownList(TableNames.QuotationRegister, GeneralConstants.ListTypeN, ColumnNames.QuoteNo, ColumnNames.QuoteNoView, finYear, ColumnNames.FinancialYear, false, "", "", quoteType, ColumnNames.QuoteType);
+
+            return new JsonResult { Data = lstQuoteNo, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+        }
 
 
 

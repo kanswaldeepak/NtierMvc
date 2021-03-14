@@ -129,20 +129,20 @@
                     </div>
                 </div>
                 @*<div class="col-md-4">
-                <div class="form-group">
-                    <label class="control-label">
-                        File Number
-                    </label>
+            <div class="form-group">
+                <label class="control-label">
+                    File Number
+                </label>
 
-                    @Html.TextBoxFor(m => m.FileNo, new
-               {
-                   @class = "form-control",
-                   @id = "FileNo",
-                   @placeholder = "File Number"
-               })
+                @Html.TextBoxFor(m => m.FileNo, new
+           {
+               @class = "form-control",
+               @id = "FileNo",
+               @placeholder = "File Number"
+           })
 
-                </div>
-            </div>*@
+            </div>
+        </div>*@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label class="control-label">
@@ -157,33 +157,33 @@
                            })
 
                         @*<select id="EnqNo" name="EnqNo" class="form-control ng-pristine ng-untouched ng-valid ng-empty clearField" onfocusout="return ValidateRequiredFieldsOnFocusOut(this)">
-                        <option value="">Select</option>
-                    </select>*@
+                    <option value="">Select</option>
+                </select>*@
                         @*@Html.TextBoxFor(m => m.EnqNo, new
-                    {
-                        @class = "form-control requiredValidation",
-                        //@hidden = "hidden",
-                        @id = "EnqNoModel",
-                        @placeholder = "Enq No Model"
-                    })*@
+                {
+                    @class = "form-control requiredValidation",
+                    //@hidden = "hidden",
+                    @id = "EnqNoModel",
+                    @placeholder = "Enq No Model"
+                })*@
                     </div>
                 </div>
                 @*<div class="col-md-4">
-                <div class="form-group">
-                    <label class="control-label">
-                        Enquiry Reference
-                    </label>
-                    @Html.TextBoxFor(m => m.EnqRef, new
-               {
-                   @class = "form-control requiredValidation",
-                   @id = "EnqRef",
-                   @placeholder = "Enquiry Reference",
-                   @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
-                   ng_model = "EnqRef"
-               })
-                    <span class="HideValidMsg">Please Select Enquiry Reference</span>
-                </div>
-            </div>*@
+            <div class="form-group">
+                <label class="control-label">
+                    Enquiry Reference
+                </label>
+                @Html.TextBoxFor(m => m.EnqRef, new
+           {
+               @class = "form-control requiredValidation",
+               @id = "EnqRef",
+               @placeholder = "Enquiry Reference",
+               @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+               ng_model = "EnqRef"
+           })
+                <span class="HideValidMsg">Please Select Enquiry Reference</span>
+            </div>
+        </div>*@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label class="control-label">
@@ -217,55 +217,90 @@
                     </div>
                 </div>
                 @*<div class="col-md-4">
-                <div class="form-group">
-                    <label class="control-label">
-                        Main Product Group
-                    </label>
-                    @Html.DropDownListFor(m => m.MainProdGrp, new SelectList(ViewBag.ListMainProdGrp, "DataStringValueField", "DataTextField", Model.MainProdGrp),
-                       new
-                       {
-                           @class = "form-control requiredValidation",
-                           @id = "MainProdGrp",
-                           @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
-                       })
-                    <span class="HideValidMsg">Please Select Main Product Group</span>
-                </div>
+            <div class="form-group">
+                <label class="control-label">
+                    Main Product Group
+                </label>
+                @Html.DropDownListFor(m => m.MainProdGrp, new SelectList(ViewBag.ListMainProdGrp, "DataStringValueField", "DataTextField", Model.MainProdGrp),
+                   new
+                   {
+                       @class = "form-control requiredValidation",
+                       @id = "MainProdGrp",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                   })
+                <span class="HideValidMsg">Please Select Main Product Group</span>
             </div>
-            <div class="col-md-4">
-                <div class="form-group">
-                    <label class="control-label">
-                        Sub Product Group
-                    </label>
-                    @Html.DropDownListFor(m => m.SubProdGrp, new SelectList(ViewBag.ListSubProdGrp, "DataStringValueField", "DataTextField", Model.SubProdGrp),
-                       new
-                       {
-                           @class = "form-control requiredValidation",
-                           @id = "SubProdGrp",
-                           @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
-                       })
-                    <span class="HideValidMsg">Please Select Sub Product Group</span>
-                </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label class="control-label">
+                    Sub Product Group
+                </label>
+                @Html.DropDownListFor(m => m.SubProdGrp, new SelectList(ViewBag.ListSubProdGrp, "DataStringValueField", "DataTextField", Model.SubProdGrp),
+                   new
+                   {
+                       @class = "form-control requiredValidation",
+                       @id = "SubProdGrp",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                   })
+                <span class="HideValidMsg">Please Select Sub Product Group</span>
             </div>
-            <div class="col-md-4">
-                <div class="form-group">
-                    <label class="control-label">
-                        Product Name
-                    </label>
-                    @Html.DropDownListFor(m => m.ProdName, new SelectList(ViewBag.ListProdName, "DataStringValueField", "DataTextField", Model.ProdName),
-                       new
-                       {
-                           @class = "form-control requiredValidation",
-                           @id = "ProdName",
-                           @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
-                       })
-                    <span class="HideValidMsg">Please Select Product Name</span>
-                </div>
-            </div>*@
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label class="control-label">
+                    Product Name
+                </label>
+                @Html.DropDownListFor(m => m.ProdName, new SelectList(ViewBag.ListProdName, "DataStringValueField", "DataTextField", Model.ProdName),
+                   new
+                   {
+                       @class = "form-control requiredValidation",
+                       @id = "ProdName",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                   })
+                <span class="HideValidMsg">Please Select Product Name</span>
+            </div>
+        </div>*@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label class="control-label">
-                            Quote Sent on 
+                            Quote Date
                         </label>
+                        @Html.TextBoxFor(m => m.QuoteDate, new
+                   {
+                       @class = "form-control ApprovalDate",
+                       autocomplete = "off",
+                       @id = "QuoteDate",
+                       @placeholder = "dd/MM/yyyy",
+                       @style = "disabled :disabled",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                   })
+                        <span class="HideValidMsg">
+                            Please Select Quote Sent on
+                        </span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="control-label">
+                            Financial Year <span class="required">*</span>
+                        </label>
+                        @Html.DropDownListFor(m => m.FinancialYear, new SelectList(ViewBag.ListFinYear, "DataStringValueField", "DataTextField", Model.FinancialYear), new
+                   {
+                       @id = "FinancialYear",
+                       @class = "form-control requiredValidation",
+                       data_id = "QRFinancialYear",
+                       data_select = "Inspection",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                   })
+                    <span class="HideValidMsg">Please Enter Financial Year</span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="control-label">
+                            Quote Sent on
+                        </label><span class="required">*</span>
                         @Html.TextBoxFor(m => m.QuoteSentOn, new
                    {
                        @class = "form-control ApprovalQuoteDate",
@@ -284,7 +319,7 @@
                     <div class="form-group">
                         <label class="control-label">
                             Quote Validity
-                        </label>
+                        </label><span class="required">*</span>
                         @Html.TextBoxFor(m => m.QuoteValidity, new
                    {
                        @class = "form-control requiredValidation AfterCurrentDateOnly",
@@ -299,25 +334,25 @@
                 </div>
 
                 @*<div class="col-md-4" hidden>
-                <div class="form-group">
-                    <label class="control-label">
-                        BG Request
-                    </label>
-                    <div class="row">
-                        <div class="col-md-12">
-                            @Html.TextBoxFor(m => m.BgReq, new
-                       {
-                           @class = "form-control requiredValidation",
-                           @id = "BgReq",
-                           @placeholder = "BG Req",
-                           @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
-                           ng_model = "BgReq"
-                       })
-                        </div>
+            <div class="form-group">
+                <label class="control-label">
+                    BG Request
+                </label>
+                <div class="row">
+                    <div class="col-md-12">
+                        @Html.TextBoxFor(m => m.BgReq, new
+                   {
+                       @class = "form-control requiredValidation",
+                       @id = "BgReq",
+                       @placeholder = "BG Req",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                       ng_model = "BgReq"
+                   })
                     </div>
-                    <span class="HideValidMsg">Please Select Letter Date</span>
                 </div>
-            </div>*@
+                <span class="HideValidMsg">Please Select Letter Date</span>
+            </div>
+        </div>*@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label class="control-label">
@@ -393,7 +428,7 @@
                     <div class="form-group">
                         <label class="control-label">
                             Mode Of Despatch
-                        </label>
+                        </label><span class="required">*</span>
                         @Html.DropDownListFor(m => m.ModeOfDespatch, new SelectList(ViewBag.ListModeOfDespatch, "DataStringValueField", "DataTextField", Model.ModeOfDespatch), new
                    {
                        @id = "ModeOfDespatch",
@@ -409,7 +444,7 @@
                     <div class="form-group">
                         <label class="control-label">
                             Delivery Terms
-                        </label>
+                        </label><span class="required">*</span>
                         @Html.DropDownListFor(m => m.DeliveryTerms, new SelectList(ViewBag.ListDeliveryTerms, "DataStringValueField", "DataTextField", Model.DeliveryTerms), new
                    {
                        @id = "DeliveryTerms",
@@ -440,7 +475,7 @@
                     <div class="form-group">
                         <label class="control-label">
                             Currency
-                        </label>
+                        </label><span class="required">*</span>
                         @Html.DropDownListFor(m => m.Currency, new SelectList(ViewBag.ListCurrency, "DataStringValueField", "DataTextField", "Select"),
                         new
                         {
@@ -549,7 +584,7 @@
 
     $('.ApprovalDate').datepicker({
 
-        format: 'dd/mm/yyyy',
+        format: 'dd-mm-yyyy',
         autoclose: true,
         changeMonth: true,
         changeYear: true,
