@@ -645,7 +645,6 @@ angular.module('App').controller("MainController", function ($scope, $http, $tim
                 html = $compile(html)($scope);
                 SetModalPanelBody(html);
                 $('.ShowHideFields').hide();
-                LoadQuotePrepListDetail();
                 HideLoadder();
             },
             error: function (r) {

@@ -36,7 +36,7 @@ function DeleteUsingIdFromTable(TableName, ColumnName, Id) {
 
     $.ajax({
         type: 'POST',
-        url: '/Account/DeleteUsingIdFromTable',
+        url: window.DeleteUsingIdFromTables,
         data: JSON.stringify({ tableName: TableName, columnName: ColumnName, id: Id }),
         contentType: "application/json; charset=utf-8",
         success: function (data) {

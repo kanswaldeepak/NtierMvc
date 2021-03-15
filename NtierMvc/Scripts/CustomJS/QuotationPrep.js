@@ -498,7 +498,7 @@ function LoadDescDetails() {
             }
         },
         "ajax": {
-            "url": "/Technical/LoadDescDetail",
+            "url": window.LoadDescDetail,
             "type": "POST",
             "datatype": "json",
             "data": {}
@@ -563,7 +563,7 @@ function LoadMasterPLAndSubPL() {
             }
         },
         "ajax": {
-            "url": "/Technical/LoadMasterPLlist",
+            "url": window.LoadMasterPLlist,
             "type": "POST",
             "datatype": "json",
             "data": {}
@@ -666,7 +666,7 @@ function LoadQuotePrepListDetail() {
             }
         },
         "ajax": {
-            "url": "/Technical/LoadQuotePrepListDetails",
+            "url": window.LoadQuotePrepListDetails,
             "type": "POST",
             "datatype": "json",
             "data": { quoteType: QuoteType, quoteNo: QuoteNo, itemNo: ItemNo }
