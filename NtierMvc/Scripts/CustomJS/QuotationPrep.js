@@ -394,6 +394,18 @@ function ValidateItemNo() {
                 GetDisplayFieldsForQuotePrep();
                 GetProductDetails();
 
+                if (data.ViewProductDetails != '')
+                    $("#ViewProductDetails").val(data.ViewProductDetails);
+
+                if (data.OpenHoleSize != '')
+                    $("#QuotePrepOpenHoleSize").val(data.OpenHoleSize);
+
+                if (data.ViewBallSize != '')
+                    $("#QuotePrepBallSize").val(data.BallSize);
+
+                if (data.ViewWallThickness != '')
+                    $("#QuotePrepWallThickness").val(data.WallThickness);
+
             }
             else
                 alert("Item No not Found in Records");
@@ -687,7 +699,7 @@ function LoadQuotePrepListDetail() {
             { title: "Connection", "data": "Connection", "name": "Connection", "autoWidth": true, "visible": false },
             { title: "Qty", "data": "Qty", "name": "Qty", "autoWidth": true, "visible": true },
             { title: "Uom", "data": "Uom", "name": "Uom", "autoWidth": true, "visible": true },
-            { title: "UnitPrice", "data": "UnitPrice", "name": "UnitPrice", "autoWidth": true, "visible": false },
+            { title: "UnitPrice", "data": "UnitPrice", "name": "UnitPrice", "autoWidth": true, "visible": true },
             { title: "OpenHoleSize", "data": "OpenHoleSize", "name": "OpenHoleSize", "autoWidth": true, "visible": false },
             { title: "BallSize", "data": "BallSize", "name": "BallSize", "autoWidth": true, "visible": false },
             { title: "WallThickness", "data": "WallThickness", "name": "WallThickness", "autoWidth": true, "visible": false },
@@ -739,7 +751,6 @@ function ClearQuotePrepSearch() {
 function EditQuotePrep(QuoteId) {
 
     let id = QuoteId;
-    debugger;
 
     $.ajax({
         type: 'POST',
@@ -748,7 +759,6 @@ function EditQuotePrep(QuoteId) {
         contentType: "application/json; charset=utf-8",
         success: function (data) {
             if (data.QuoteType != null) {
-                debugger;
                 $('#QuotePrepFormType').val(data.QuoteType);
                 $('#QuotePrepFormNo').val(data.QuoteNo);
                 $('#QuotePrepSupplyTerms').val(data.SupplyTerms);
@@ -759,6 +769,7 @@ function EditQuotePrep(QuoteId) {
                 $('#QuotePrepProductName').val(data.ProductName);
                 $('#QuotePrepProductNo').val(data.ProductNo);
                 $('#QuotePrepItemNo').val(data.ItemNo);
+                $('#QuotePrepFinancialYear').val(data.FinancialYear);
 
                 ValidateItemNo();
             }

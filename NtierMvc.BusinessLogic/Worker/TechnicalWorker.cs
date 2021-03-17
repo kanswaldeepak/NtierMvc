@@ -1311,6 +1311,9 @@ namespace NtierMvc.BusinessLogic.Worker
 
                             if (dt.Columns.Contains("ItemNo"))
                                 quoteEntity.ItemNo = dr["ItemNo"]?.ToString() ?? "";
+
+                            if (dt.Columns.Contains("FinancialYear"))
+                                quoteEntity.FinancialYear = Convert.ToInt32(dr["FinancialYear"]?? 0);
                         }
                     else
                         foreach (DataRow dr in dt.Rows)
@@ -1349,10 +1352,23 @@ namespace NtierMvc.BusinessLogic.Worker
                                 quoteEntity.MaterialGrade = dr["MaterialGrade"]?.ToString() ?? "";
 
                             if (dt.Columns.Contains("UnitPrice"))
-                                quoteEntity.UnitPrice = dr["UnitPrice"] == DBNull.Value ? 0 : Convert.ToInt32(dr["UnitPrice"]);
+                                quoteEntity.UnitPrice = dr["UnitPrice"] == DBNull.Value ? 0 : Convert.ToDecimal(dr["UnitPrice"]);
 
                             if (dt.Columns.Contains("RecordCount"))
                                 quoteEntity.RecordCount = Convert.ToInt32(dr["RecordCount"]);
+
+                            if (dt.Columns.Contains("ViewProductDetails"))
+                                quoteEntity.ViewProductDetails = Convert.ToString(dr["ViewProductDetails"]);
+
+                            if (dt.Columns.Contains("OpenHoleSize"))
+                                quoteEntity.OpenHoleSize = Convert.ToInt32(dr["OpenHoleSize"]);
+
+                            if (dt.Columns.Contains("BallSize"))
+                                quoteEntity.BallSize = Convert.ToInt32(dr["BallSize"]);
+
+                            if (dt.Columns.Contains("WallThickness"))
+                                quoteEntity.WallThickness = Convert.ToString(dr["WallThickness"]);
+
                         }
                 }
 
@@ -1742,7 +1758,7 @@ namespace NtierMvc.BusinessLogic.Worker
                         Model.Connection = dr["Connection"] == DBNull.Value ? string.Empty : Convert.ToString(dr["Connection"]);
                         Model.Qty = dr["Qty"] == DBNull.Value ? string.Empty : Convert.ToString(dr["Qty"]);
                         Model.Uom = dr["Uom"] == DBNull.Value ? string.Empty : Convert.ToString(dr["Uom"]);
-                        Model.UnitPrice = dr["UnitPrice"] == DBNull.Value ? 0 : Convert.ToInt32(dr["UnitPrice"]);
+                        Model.UnitPrice = dr["UnitPrice"] == DBNull.Value ? 0 : Convert.ToDecimal(dr["UnitPrice"]);
                         Model.OpenHoleSize = dr["OpenHoleSize"] == DBNull.Value ? 0 : Convert.ToInt32(dr["OpenHoleSize"]);
                         Model.BallSize = dr["BallSize"] == DBNull.Value ? 0 : Convert.ToInt32(dr["BallSize"]);
                         Model.WallThickness = dr["WallThickness"] == DBNull.Value ? string.Empty : Convert.ToString(dr["WallThickness"]);

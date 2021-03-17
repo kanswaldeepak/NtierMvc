@@ -31,7 +31,7 @@ namespace NtierMvc.Model
         public string CustomerName { get; set; }
         public int OpenHoleSize { get; set; }        
         public int BallSize { get; set; }
-        public int UnitPrice { get; set; }
+        public decimal UnitPrice { get; set; }
         public int Currency { get; set; }
         public int CasingWeight { get; set; }
         public int RecordCount { get; set; }
