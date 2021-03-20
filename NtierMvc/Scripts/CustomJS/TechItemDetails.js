@@ -244,7 +244,7 @@ function GetQuoteNoDetails() {
 
     $.ajax({
         type: 'POST',
-        url: '/Technical/GetOrderQuoteNo',
+        url: window.GetOrderQuoteNo,
         data: JSON.stringify({ quotetypeId: QuoteType }),
         contentType: "application/json; charset=utf-8",
         success: function (data) {
@@ -309,4 +309,63 @@ function GetSONoDetails() {
             alert('Some error is occurred, Please try after some time.');
         }
     })
+}
+
+
+function LoadtblItemWiseOrder() {
+
+    $("#tblItemWiseOrder").DataTable().destroy();
+    var req = {
+        "processing": true,
+        "language": {
+            processing: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span> '
+        },
+        "serverSide": true,
+        "paging": true,
+        "lengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
+        "pageLength": 5,
+        "searching": true,
+        "filter": true,
+        "language": {
+            "paginate": {
+                "next": '&#8594;',
+                "previous": '&#8592;'
+            }
+        },
+        "ajax": {
+            "url": window.LoadItemWiseOrders,
+            "type": "POST",
+            "datatype": "json",
+            "data": {}
+        },
+        'order': [[0, "asc"]],
+        columns: [
+            { title: "SNo", "data": "SNo", "name": "SNo", "autoWidth": true, "visible": true },
+            { title: "Id", "data": "Id", "name": "Id", "autoWidth": true, "visible": false },
+            { title: "WA No", "data": "SoNoView", "name": "SoNoView", "autoWidth": true, "visible": true },
+            { title: "Customer Id", "data": "CustomerId", "name": "CustomerId", "autoWidth": true, "visible": true },
+            { title: "Customer Name", "data": "CustomerName", "name": "CustomerName", "autoWidth": true, "visible": true },
+            { title: "PO No", "data": "PoNo", "name": "PONo", "autoWidth": true, "visible": true },
+            { title: "PO Date", "data": "PoDate", "name": "PODate", "autoWidth": true, "visible": true },
+            { title: "PO Delivery Date", "data": "PoDeliveryDate", "name": "PODeliveryDate", "autoWidth": true, "visible": false },
+            { title: "Supply Terms", "data": "SupplyTerms", "name": "SupplyTerms", "autoWidth": true, "visible": true },
+            { title: "Quote No", "data": "QuoteNo", "name": "QuoteNo", "autoWidth": true, "visible": true },
+            { title: "Quote Item Sl No", "data": "QuoteItemSlNo", "name": "QuoteItemSlNo", "autoWidth": true, "visible": false },
+            { title: "PO Sl No", "data": "PoSLNo", "name": "PoSLNo", "autoWidth": true, "visible": false },
+            { title: "PO Qty", "data": "PoQty", "name": "PoQty", "autoWidth": true, "visible": false },
+            { title: "Unit Price", "data": "UnitPrice", "name": "UnitPrice", "autoWidth": true, "visible": true },
+
+        ],
+        "fnCreatedRow": function (nRow, aData, iDataIndex) {
+        },
+        "drawCallback": function (settings) {
+        },
+        "footerCallback": function (row, data, start, end, display) {
+
+        }
+    }
+
+    $("#tblItemWiseOrder").DataTable(req);
+    $("#tblItemWiseOrder tbody").show();
+
 }

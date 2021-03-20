@@ -1062,7 +1062,7 @@ namespace NtierMvc.Controllers
                         newObj.QuoteNo = item.QuoteNo;
                         newObj.QuoteType = item.QuoteType;
                         newObj.SoNo = item.SoNo;
-                        newObj.QuotePrepId = item.QuotePrepId;
+                        newObj.QuoteItemSlNo = item.QuoteItemSlNo;
                         newObj.PoSLNo = item.PoSLNo;
                         newObj.PoQty = item.PoQty;
                         newObj.UnitPrice = item.UnitPrice;
@@ -2404,6 +2404,36 @@ namespace NtierMvc.Controllers
             return new JsonResult { Data = lstQuoteNo, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 
+        [HttpPost]
+        public ActionResult LoadItemWiseOrders()
+        {
+            var draw = Request.Form.GetValues("draw").FirstOrDefault();
+            var start = Request.Form.GetValues("start").FirstOrDefault();
+            var length = Request.Form.GetValues("length").FirstOrDefault();
+            var totalRecords = 0;
+            var objList = new List<ItemEntity>();
+
+            try
+            {
+                var sortColumn = Request.Form.GetValues("columns[" + Request.Form.GetValues("order[0][column]").FirstOrDefault() + "][name]").FirstOrDefault();
+                var sortColumnDir = Request.Form.GetValues("order[0][dir]").FirstOrDefault();
+                var pageSize = length != null ? Convert.ToInt32(length) : 0;
+                var skip = start != null ? Convert.ToInt32(start) : 0;
+                var search = Request.Form.GetValues("search[value]")[0];
+                //int InstructorId = ((UserModel)Session["UserModel"]).ObjectId;
+                //int UserId = ((UserModel)Session["UserModel"]).UserId;
+                objList = objManager.LoadItemWiseOrders(skip, pageSize, sortColumn, sortColumnDir, search);
+                var v = (from a in objList select a);
+                objList = v.ToList();
+                if (objList.Count > 0)
+                    totalRecords = Convert.ToInt32(objList[0].TotalRecords);
+            }
+            catch (Exception ex)
+            {
+                Logger.Error("TechnicalController/LoadItemWiseOrders", ex);
+            }
+            return Json(new { draw = draw, recordsFiltered = totalRecords, recordsTotal = totalRecords, data = objList }, JsonRequestBehavior.AllowGet);
+        }
 
 
     }

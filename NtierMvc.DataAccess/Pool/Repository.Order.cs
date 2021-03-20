@@ -162,7 +162,7 @@ namespace NtierMvc.DataAccess.Pool
             Params.Add("@QuoteNo", Model.QuoteNo);
             Params.Add("@QuoteType", Model.QuoteType);
             Params.Add("@SoNo", Model.SoNo);
-            Params.Add("@QuotePrepId", Model.QuotePrepId);
+            Params.Add("@QuotePrepId", Model.QuoteItemSlNo);
 
             //Params.Add("@PoNo", Model.PoNo);
             //Params.Add("@PoDate", Model.PoDate);

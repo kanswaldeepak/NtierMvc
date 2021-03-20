@@ -171,7 +171,7 @@
                         <label class="control-label ">
                             Quote Item Sl. No
                         </label>
-                        @Html.DropDownListFor(m => m.QuotePrepId, new SelectList(ViewBag.ListItems, "DataStringValueField", "DataTextField", "Select"), new
+                        @Html.DropDownListFor(m => m.QuoteItemSlNo, new SelectList(ViewBag.ListItems, "DataStringValueField", "DataTextField", "Select"), new
                    {
                        @class = "form-control requiredValidation clearField",
                        @id = "QuotePrepId",
@@ -352,6 +352,32 @@
 
                 </div>
             </div>
+            <div class="row mt-4">
+                <div class="col-md-12">
+                    <table id="tblItemWiseOrder" class="table table-striped table-info">
+                        <thead>
+                            <tr>
+                                <td>SNo</td>
+                                <td>Id</td>
+                                <td>Order Type</td>
+                                <td>WA No</td>
+                                <td>Customer Id</td>
+                                <td>Customer Name</td>
+                                <td>PO No</td>
+                                <td>PO Date</td>
+                                <td>PO Delivery Date</td>
+                                <td>Supply Terms</td>
+                                <td>Quote No</td>
+                                <td>Quote Item Sl No</td>
+                                <td>PO Sl No</td>
+                                <td>PO Qty</td>
+                                @*<td>Unit Price</td>*@
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </form>
 </div>
@@ -365,8 +391,11 @@
         window.GetItemQuoteDetails = '@Url.Action("GetItemQuoteDetails", "Technical")';
         window.GetQuoteItemPODetails = '@Url.Action("GetQuoteItemPODetails", "Technical")';
         window.GetQuoteItemSlNos = '@Url.Action("GetQuoteItemSlNos", "Technical")';
+        window.GetOrderQuoteNo = '@Url.Action("GetOrderQuoteNo", "Technical")';
+        window.LoadItemWiseOrders = '@Url.Action("LoadItemWiseOrders", "Technical")';
 
         $('#divQuoteDetails').hide();
+        LoadtblItemWiseOrder();
 
         //1. Add new row
     $("#addNew").click(function (e) {

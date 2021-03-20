@@ -849,6 +849,22 @@ namespace NtierMvc.Model
             return newDdl;
         }
 
+        public List<ItemEntity> LoadItemWiseOrders(int skip, int pageSize, string sortColumn, string sortColumnDir, string search)
+        {
+            List<ItemEntity> objList = new List<ItemEntity>();
+            var baseAddress = "TechnicalDetails";
+            using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
+            {
+                HttpResponseMessage response = client.GetAsync(baseAddress + "/LoadItemWiseOrders?skip=" + skip + "&pageSize=" + pageSize + "&sortColumn=" + sortColumn + "&sortColumnDir=" + sortColumnDir + "&search=" + search).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    var data = response.Content.ReadAsStringAsync().Result;
+                    objList = JsonConvert.DeserializeObject<List<ItemEntity>>(data);
+                }
+            }
+
+            return objList;
+        }
 
 
     }

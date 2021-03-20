@@ -1783,7 +1783,50 @@ namespace NtierMvc.BusinessLogic.Worker
             }
         }
 
+        public List<ItemEntity> LoadItemWiseOrders(int skip, int pageSize, string sortColumn, string sortColumnDir, string search)
+        {
+            try
+            {
+                List<ItemEntity> lstDrpDwn = new List<ItemEntity>();
+                DataTable dt = _repository.LoadItemWiseOrders(skip, pageSize, sortColumn, sortColumnDir, search);
+                ItemEntity Model;
 
+                if (dt.Rows.Count > 0)
+                {
+                    foreach (DataRow dr in dt.Rows)
+                    {
+                        Model = new ItemEntity();
+                        Model.SNo = dr["SNo"] == DBNull.Value ? 0 : Convert.ToInt32(dr["SNo"]);
+                        Model.Id = dr["Id"] == DBNull.Value ? 0 : Convert.ToInt32(dr["Id"]);
+                        Model.SoNo = dr["SoNo"] == DBNull.Value ? 0 : Convert.ToInt32(dr["SoNo"]);
+                        Model.SoNoView = dr["SoNoView"] == DBNull.Value ? string.Empty : Convert.ToString(dr["SoNoView"]);
+                        Model.CustomerId = dr["CustomerId"] == DBNull.Value ? string.Empty : Convert.ToString(dr["CustomerId"]);
+                        Model.CustomerName = dr["CustomerName"] == DBNull.Value ? string.Empty : Convert.ToString(dr["CustomerName"]);
+                        Model.PoNo = dr["PONo"] == DBNull.Value ? string.Empty : Convert.ToString(dr["PONo"]);
+                        Model.PoDate = dr["PODate"] == DBNull.Value ? string.Empty : Convert.ToString(dr["PODate"]);
+                        Model.PoDeliveryDate = dr["PODeliveryDate"] == DBNull.Value ? string.Empty : Convert.ToString(dr["PODeliveryDate"]);
+                        Model.SupplyTerms = dr["SupplyTerms"] == DBNull.Value ? string.Empty : Convert.ToString(dr["SupplyTerms"]);
+                        Model.QuoteNo = dr["QuoteNoView"] == DBNull.Value ? string.Empty : Convert.ToString(dr["QuoteNoView"]);
+                        Model.PoSLNo = dr["PoSLNo"] == DBNull.Value ? string.Empty : Convert.ToString(dr["PoSLNo"]);
+                        Model.PoQty = dr["POQty"] == DBNull.Value ? string.Empty : Convert.ToString(dr["POQty"]);
+                        Model.UnitPrice = dr["UnitPrice"] == DBNull.Value ? 0 : Convert.ToInt32(dr["UnitPrice"]);
+
+
+
+                        Model.TotalRecords = dr["TotalRecords"] == DBNull.Value ? 0 : Convert.ToInt32(dr["TotalRecords"]);
+
+                        lstDrpDwn.Add(Model);
+                    }
+                }
+
+                return lstDrpDwn;
+            }
+            catch (Exception Ex)
+            {
+                NtierMvc.DataAccess.ExceptionLogging.SendExcepToDB(Ex);
+                throw Ex;
+            }
+        }
 
 
 

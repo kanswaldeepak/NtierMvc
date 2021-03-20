@@ -390,5 +390,12 @@ namespace NtierMvc.API.Controllers.Application
             return Ok(_repository.LoadQuotePrepListDetails(skip, pageSize, sortColumn, sortColumnDir, search, quoteType, quoteNo, itemNo));
         }
 
+        [HttpGet]
+        [Route("api/TechnicalDetails/LoadItemWiseOrders")]
+        public IHttpActionResult LoadItemWiseOrders(int skip, int pageSize, string sortColumn, string sortColumnDir, string search)
+        {
+            return Ok(_repository.LoadItemWiseOrders(skip, pageSize, sortColumn, sortColumnDir, search));
+        }
+
     }
 }

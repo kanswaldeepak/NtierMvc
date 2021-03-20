@@ -268,7 +268,8 @@ namespace NtierMvc.BusinessLogic.Worker
                     Model.SalesPerson = dt1.Rows[0]["SalesPerson"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["SalesPerson"]);
                     Model.Subject = dt1.Rows[0]["Subject"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["Subject"]);
                     Model.QuoteSentOn = dt1.Rows[0]["QuoteSentOn"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["QuoteSentOn"]);
-
+                    Model.FinancialYear = dt1.Rows[0]["FinancialYear"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["FinancialYear"]);
+                    Model.SupplyTerms = dt1.Rows[0]["SupplyTerms"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["SupplyTerms"]);
 
 
                     //if (dt1.Rows[0]["DomesticQuoteNo"] != DBNull.Value)

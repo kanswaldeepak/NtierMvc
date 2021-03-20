@@ -31,6 +31,7 @@
     <script src="~/Scripts/CustomJS/GetIPAddress.js"></script>
     <script src="~/MasterFiles/JS/bootstrap-multiselect.js"></script>
     <script src="~/MasterFiles/JS/chosen.jquery.min.js"></script>
+    <script src="~/Scripts/jquery.Datatable.js"></script>
 
     @*<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
@@ -93,7 +94,7 @@
     @RenderSection("scripts", required: false)
     @RenderSection("PageCustomStyles", required: false)
 
-<script type="text/javascript">
+    <script type="text/javascript">
 
         $(document).ready(function () {
             window.FetchCustomerList = '@Url.Action("FetchCustomerList", "CRM")';
@@ -110,7 +111,7 @@
                 //  location.reload();
             }
         });
-</script>
+    </script>
 
     @*@RenderSection("PageScripts", required: false)*@
 </head>

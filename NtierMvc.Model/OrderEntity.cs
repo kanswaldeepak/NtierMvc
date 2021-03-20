@@ -64,6 +64,7 @@ namespace NtierMvc.Model
 
     public class ItemEntity
     {
+        public int SNo { get; set; }
         public int Id { get; set; }
         public string UnitNo { get; set; }
         public string CustomerId { get; set; }
@@ -71,8 +72,9 @@ namespace NtierMvc.Model
         public string QuoteNo { get; set; }
 
         public string QuoteType { get; set; }
-        public string SoNo { get; set; }
-        public string QuotePrepId { get; set; }
+        public int SoNo { get; set; }
+        public string SoNoView { get; set; }
+        public string QuoteItemSlNo { get; set; }
         public string PoNo { get; set; }
         public string PoDate { get; set; }
         public string PoDeliveryDate { get; set; }
@@ -83,7 +85,7 @@ namespace NtierMvc.Model
         public string ExWorkValue { get; set; }
         public string SupplyTerms { get; set; }
         public string SupplyTermsText { get; set; }
-        public string UnitPrice { get; set; }
+        public decimal UnitPrice { get; set; }
         public string LotName { get; set; }
         public string LotWiseQty { get; set; }
         public string LotWiseDate { get; set; }
@@ -93,6 +95,7 @@ namespace NtierMvc.Model
         public string ProductGroup { get; set; }
         public string ipAddress { get; set; }
         public string IsActive { get; set; }
+        public int TotalRecords { get; set; }
 
     }
 
@@ -105,17 +108,18 @@ namespace NtierMvc.Model
         public string QuoteNo { get; set; }
 
         public string QuoteType { get; set; }
-        public string SoNo { get; set; }
-        public string QuotePrepId { get; set; }
+        public int SoNo { get; set; }
+        public string QuoteItemSlNo { get; set; }
         public string PoSLNo { get; set; }
         public string PoQty { get; set; }
-        public string UnitPrice { get; set; }
+        public decimal UnitPrice { get; set; }
         public string LotName { get; set; }
         public string LotWiseQty { get; set; }
         public string LotWiseDate { get; set; }
         public string PoRequirements { get; set; }
         public string ipAddress { get; set; }
         public string IsActive { get; set; }
+        public string TotalRecords { get; set; }
 
     }
 

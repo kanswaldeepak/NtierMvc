@@ -1086,6 +1086,7 @@ angular.module('App').controller("MainController", function ($scope, $http, $tim
                 $('.modal-dialog').draggable({
                     handle: ".modal-body"
                 });
+
             },
             error: function (r) {
                 HideLoadder();
