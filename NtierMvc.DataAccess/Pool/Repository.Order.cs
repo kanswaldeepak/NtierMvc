@@ -132,7 +132,7 @@ namespace NtierMvc.DataAccess.Pool
             Params.Add("@SoNo", entity.DataRecordTable.Rows[0]["SoNo"].ToString());
             Params.Add("@PoQty", entity.DataRecordTable.Rows[0]["PoQty"].ToString());
             Params.Add("@UnitPrice", entity.DataRecordTable.Rows[0]["UnitPrice"].ToString());
-            Params.Add("@QuotePrepId", entity.DataRecordTable.Rows[0]["QuotePrepId"].ToString());
+            Params.Add("@QuotePrepId", entity.DataRecordTable.Rows[0]["QuoteItemSlNo"].ToString());
             var spName = ConfigurationManager.AppSettings["GetExWorkValue"];
             i = _dbAccess.ExecuteNonQuery(spName, Params, "@o_MsgCode", out msgCode);
 

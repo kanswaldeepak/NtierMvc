@@ -119,7 +119,6 @@ namespace NtierMvc.Model
         public string PoRequirements { get; set; }
         public string ipAddress { get; set; }
         public string IsActive { get; set; }
-        public string TotalRecords { get; set; }
 
     }
 
