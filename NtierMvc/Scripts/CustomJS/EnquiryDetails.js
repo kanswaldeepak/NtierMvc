@@ -228,7 +228,7 @@ function GetVendorDetailsForEnquiry() {
 
 }
 
-function GetQuoteNumbers() {
+function GetQuoteNumberForEnquiry() {
     var QuoteType = $("#EDEnquiryType").val();
 
     $.ajax({

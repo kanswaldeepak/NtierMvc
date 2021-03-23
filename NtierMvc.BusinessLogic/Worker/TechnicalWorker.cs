@@ -1745,6 +1745,7 @@ namespace NtierMvc.BusinessLogic.Worker
                         Model = new QuotationPreparationEntity();
                         Model.SNo = dr["SNo"] == DBNull.Value ? 0 : Convert.ToInt32(dr["SNo"]);
                         Model.Id = dr["Id"] == DBNull.Value ? 0 : Convert.ToInt32(dr["Id"]);
+                        Model.CustomerName = dr["CustomerName"] == DBNull.Value ? string.Empty : Convert.ToString(dr["CustomerName"]);
                         Model.QuoteType = dr["QuoteType"] == DBNull.Value ? string.Empty : Convert.ToString(dr["QuoteType"]);
                         Model.QuoteNo = dr["QuoteNoView"] == DBNull.Value ? string.Empty : Convert.ToString(dr["QuoteNoView"]);
                         Model.MainProdGrp = dr["MainProdGrp"] == DBNull.Value ? string.Empty : Convert.ToString(dr["MainProdGrp"]);
@@ -1806,12 +1807,15 @@ namespace NtierMvc.BusinessLogic.Worker
                         Model.PoDate = dr["PODate"] == DBNull.Value ? string.Empty : Convert.ToString(dr["PODate"]);
                         Model.PoDeliveryDate = dr["PODeliveryDate"] == DBNull.Value ? string.Empty : Convert.ToString(dr["PODeliveryDate"]);
                         Model.SupplyTerms = dr["SupplyTerms"] == DBNull.Value ? string.Empty : Convert.ToString(dr["SupplyTerms"]);
-                        Model.QuoteNo = dr["QuoteNoView"] == DBNull.Value ? string.Empty : Convert.ToString(dr["QuoteNoView"]);
+                        Model.SupplyTermsText = dr["SupplyTermsText"] == DBNull.Value ? string.Empty : Convert.ToString(dr["SupplyTermsText"]);
+                        Model.QuoteNo = dr["QuoteNo"] == DBNull.Value ? string.Empty : Convert.ToString(dr["QuoteNo"]);
+                        Model.QuoteNoView = dr["QuoteNoView"] == DBNull.Value ? string.Empty : Convert.ToString(dr["QuoteNoView"]);
+                        Model.QuoteItemSlNo = dr["QuoteItemSlNo"] == DBNull.Value ? string.Empty : Convert.ToString(dr["QuoteItemSlNo"]);
+                        Model.QuoteItemSlNoText = dr["QuoteItemSlNoText"] == DBNull.Value ? string.Empty : Convert.ToString(dr["QuoteItemSlNoText"]);
                         Model.PoSLNo = dr["PoSLNo"] == DBNull.Value ? string.Empty : Convert.ToString(dr["PoSLNo"]);
                         Model.PoQty = dr["POQty"] == DBNull.Value ? string.Empty : Convert.ToString(dr["POQty"]);
                         Model.UnitPrice = dr["UnitPrice"] == DBNull.Value ? 0 : Convert.ToInt32(dr["UnitPrice"]);
-
-
+                        Model.ViewProductDetails = dr["ViewProductDetails"] == DBNull.Value ? "" : Convert.ToString(dr["ViewProductDetails"]);
 
                         Model.TotalRecords = dr["TotalRecords"] == DBNull.Value ? 0 : Convert.ToInt32(dr["TotalRecords"]);
 

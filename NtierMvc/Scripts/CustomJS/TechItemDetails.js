@@ -21,7 +21,7 @@ function saveButton(data) {
                 contentType: "application/json; charset=utf-8",
                 success: function (data) {
                     $('.OrderPercentClass').html('Order Percentage ' + data.iEntity.POPercent + ' %');
-
+                    LoadtblItemWiseOrder();
                 },
                 error: function (x, e) {
                     alert('Some error is occurred, Please try after some time. Please check SoNo Selected is Correct or Not ');
@@ -131,10 +131,10 @@ function GetItemOrderDetailsFromSO() {
                 })
             }
 
-            $('#QuotePrepId').empty();
+            $('#QuoteItemSlNo').empty();
             if (data.lstQuoteItemSlNo.length > 0) {
                 $.each(data.lstQuoteItemSlNo, function (i, item) {
-                    $("#QuotePrepId").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
+                    $("#QuoteItemSlNo").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
                 })
             }
 
@@ -150,7 +150,7 @@ function GetItemOrderDetailsFromSO() {
 
 
 function GetQuoteItemDetails() {
-    var ItemNo = $("#QuotePrepId").val();
+    var ItemNo = $("#QuoteItemSlNo").val();
     var itemString = "";
     $.ajax({
         type: 'POST',
@@ -158,7 +158,7 @@ function GetQuoteItemDetails() {
         data: JSON.stringify({ itemNo: ItemNo }),
         contentType: "application/json; charset=utf-8",
         success: function (data) {
-            $('#POSlNo').val($('#QuotePrepId option:selected').text());
+            $('#POSlNo').val($('#QuoteItemSlNo option:selected').text());
             $("#ItemDescription").val(data.DataValueField1);
             $('#itemPOQty').val(data.DataValueField2);
             $('#itemUnitPrice').val(data.DataValueField3);
@@ -218,14 +218,14 @@ function GetQuoteOrderItemSlNos() {
 
     $.ajax({
         type: 'POST',
-        url: window.GetQuoteItemSlNos ,
+        url: window.GetQuoteItemSlNos,
         data: JSON.stringify({ quoteType: QuoteType, quoteNo: QuoteNo }),
         contentType: "application/json; charset=utf-8",
         success: function (data) {
-            $('#QuotePrepId').empty();
+            $('#QuoteItemSlNo').empty();
             if (data.length > 0) {
                 $.each(data, function (i, item) {
-                    $("#QuotePrepId").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
+                    $("#QuoteItemSlNo").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
                 })
             }
         },
@@ -311,7 +311,7 @@ function GetSONoDetails() {
     })
 }
 
-
+var myData = [];
 function LoadtblItemWiseOrder() {
 
     $("#tblItemWiseOrder").DataTable().destroy();
@@ -336,7 +336,11 @@ function LoadtblItemWiseOrder() {
             "url": window.LoadItemWiseOrders,
             "type": "POST",
             "datatype": "json",
-            "data": {}
+            "data": {},
+            "dataSrc": function (json) {
+                myData = json.data;
+                return json.data;
+            }
         },
         'order': [[0, "asc"]],
         columns: [
@@ -348,13 +352,29 @@ function LoadtblItemWiseOrder() {
             { title: "PO No", "data": "PoNo", "name": "PONo", "autoWidth": true, "visible": true },
             { title: "PO Date", "data": "PoDate", "name": "PODate", "autoWidth": true, "visible": true },
             { title: "PO Delivery Date", "data": "PoDeliveryDate", "name": "PODeliveryDate", "autoWidth": true, "visible": false },
-            { title: "Supply Terms", "data": "SupplyTerms", "name": "SupplyTerms", "autoWidth": true, "visible": true },
-            { title: "Quote No", "data": "QuoteNo", "name": "QuoteNo", "autoWidth": true, "visible": true },
-            { title: "Quote Item Sl No", "data": "QuoteItemSlNo", "name": "QuoteItemSlNo", "autoWidth": true, "visible": false },
-            { title: "PO Sl No", "data": "PoSLNo", "name": "PoSLNo", "autoWidth": true, "visible": false },
+            { title: "Supply", "data": "SupplyTerms", "name": "SupplyTerms", "autoWidth": true, "visible": false },
+            { title: "Supply Terms", "data": "SupplyTermsText", "name": "SupplyTermsText", "autoWidth": true, "visible": false },
+            { title: "QuoteNos", "data": "QuoteNo", "name": "QuoteNo", "autoWidth": true, "visible": false },
+            { title: "QuoteItems", "data": "QuoteItemSlNo", "name": "QuoteItemSlNo", "autoWidth": true, "visible": false },
+            { title: "Quote No", "data": "QuoteNoView", "name": "QuoteNoView", "autoWidth": true, "visible": false },
+            { title: "Quote Item Sl No", "data": "QuoteItemSlNoText", "name": "QuoteItemSlNoText", "autoWidth": true, "visible": false },
+            { title: "PO Sl No", "data": "PoSLNo", "name": "PoSLNo", "autoWidth": true, "visible": true },
             { title: "PO Qty", "data": "PoQty", "name": "PoQty", "autoWidth": true, "visible": false },
             { title: "Unit Price", "data": "UnitPrice", "name": "UnitPrice", "autoWidth": true, "visible": true },
-
+            { title: "Product Details", "data": "ViewProductDetails", "name": "ViewProductDetails", "autoWidth": true, "visible": true },
+            {
+                title: "Action", "data": "", orderable: false, width: "auto",
+                "render": function (data, type, full, meta) {
+                    var columnVal = "";
+                    columnVal = '<div><button type = "button" onclick=DeleteUsingItemId("' + full.Id + '") class="btn btn-danger btn-sm"> Delete </button></div>';
+                    return columnVal;
+                }
+            },
+            //{
+            //    data: 'id',
+            //    title: "Action", "data": "", orderable: false, width: "auto",
+            //    render: value => `<div><button type="button" class="btn btn-info btn-sm editItemBtn" data-id="${value}">Edit</button> <button type="button" class="btn btn-danger btn-sm deleteItemBtn" data-id="${value}">Delete</button></div>`
+            //}
         ],
         "fnCreatedRow": function (nRow, aData, iDataIndex) {
         },
@@ -367,5 +387,37 @@ function LoadtblItemWiseOrder() {
 
     $("#tblItemWiseOrder").DataTable(req);
     $("#tblItemWiseOrder tbody").show();
+}
+
+
+
+function DeleteUsingItemId(Id) {
+
+    DeleteUsingIdFromTable("Items", "Id", Id);
+    LoadtblItemWiseOrder();
 
 }
+
+function  EditOrderItems(thisObj) {
+
+    thisObj.parent().parent().children().each(function () {
+        alert("childs");
+    });
+
+}
+
+//var table = $("#tblItemWiseOrder").DataTable(req);
+
+//table.on('click', '.editItemBtn', function () {
+//    debugger;
+//    const id = this.getAttribute('data-id');
+//    const data = myData.find(d => d.id == Id);
+//    const data1 = myData.find(d => d.id == SoNoView);
+//    console.log(data+' '+data1);
+
+//})
+
+//table.on('click', '.deleteItemBtn', function () {
+//    const id = this.getAttribute('data-id');
+//    const data = myData.find(d => d.id == id);
+//})

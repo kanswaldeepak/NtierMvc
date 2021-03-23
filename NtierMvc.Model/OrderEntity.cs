@@ -70,11 +70,12 @@ namespace NtierMvc.Model
         public string CustomerId { get; set; }
         public string CustomerName { get; set; }
         public string QuoteNo { get; set; }
-
+        public string QuoteNoView { get; set; }
         public string QuoteType { get; set; }
         public int SoNo { get; set; }
         public string SoNoView { get; set; }
         public string QuoteItemSlNo { get; set; }
+        public string QuoteItemSlNoText { get; set; }
         public string PoNo { get; set; }
         public string PoDate { get; set; }
         public string PoDeliveryDate { get; set; }
@@ -95,6 +96,7 @@ namespace NtierMvc.Model
         public string ProductGroup { get; set; }
         public string ipAddress { get; set; }
         public string IsActive { get; set; }
+        public string ViewProductDetails { get; set; }
         public int TotalRecords { get; set; }
 
     }

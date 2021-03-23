@@ -174,7 +174,7 @@
                         @Html.DropDownListFor(m => m.QuoteItemSlNo, new SelectList(ViewBag.ListItems, "DataStringValueField", "DataTextField", "Select"), new
                    {
                        @class = "form-control requiredValidation clearField",
-                       @id = "QuotePrepId",
+                       @id = "QuoteItemSlNo",
                        @data_inneraction = "validationCall",
                        @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
                        @onchange = "GetQuoteItemDetails()"
@@ -366,12 +366,17 @@
                                 <td>PO No</td>
                                 <td>PO Date</td>
                                 <td>PO Delivery Date</td>
+                                <td>Supply</td>
                                 <td>Supply Terms</td>
+                                <td>QuoteNos</td>
                                 <td>Quote No</td>
+                                <td>Quote Items</td>
                                 <td>Quote Item Sl No</td>
                                 <td>PO Sl No</td>
                                 <td>PO Qty</td>
                                 @*<td>Unit Price</td>*@
+                                <td>Product Details</td>
+                                <td>Action</td>
                             </tr>
                         </thead>
                         <tbody></tbody>
@@ -505,7 +510,7 @@ $("#saveItemButton").click(function (e) {
                 QuoteNo: $("#QuoteItemFormNo").val(),
                 QuoteType: $("#OrderFormQuoteType").val(),
                 SoNo: $("#ItemSoNo").val(),
-                QuotePrepId: $("#QuotePrepId").val(),
+                QuoteItemSlNo: $("#QuoteItemSlNo").val(),
                 SupplyTerms: $("#SupplyTerms").val(),
                 PoSLNo: $("#POSlNo").val(),
                 PoQty: $("#itemPOQty").val(),

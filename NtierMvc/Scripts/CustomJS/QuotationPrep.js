@@ -411,9 +411,7 @@ function ValidateItemNo() {
                 alert("Item No not Found in Records");
         },
         error: function (x, e) {
-            $('#spn-Sucess-Failure').text('Some error is occurred, Please try after some time.');
-            $('#spn-Sucess-Failure').addClass("important red");
-            $('#Sucess-Failure').modal('show');
+            alert('Some error is occurred, Please try after some time.');
         }
     })
 }
@@ -686,27 +684,28 @@ function LoadQuotePrepListDetail() {
         'order': [[0, "desc"]],
         columns: [
             { title: "SN", "data": "SNo", "name": "SNo", "autoWidth": true, "visible": true },
-            { title: "QuoteType", "data": "QuoteType", "name": "QuoteType", "autoWidth": true, "visible": true },
-            { title: "QuoteNo", "data": "QuoteNo", "name": "QuoteNo", "autoWidth": true, "visible": true },
-            { title: "MainProdGrp", "data": "MainProdGrp", "name": "MainProdGrp", "autoWidth": true, "visible": true },
-            { title: "SubProdGrp", "data": "SubProdGrp", "name": "SubProdGrp", "autoWidth": true, "visible": true },
-            { title: "ItemNo", "data": "ItemNo", "name": "ItemNo", "autoWidth": true, "visible": true },
-            { title: "ProductName", "data": "ProductName", "name": "ProductName", "autoWidth": true, "visible": true },
-            { title: "ProductNo", "data": "ProductNo", "name": "ProductNo", "autoWidth": true, "visible": true },
-            { title: "CasingSize", "data": "CasingSize", "name": "CasingSize", "autoWidth": true, "visible": false },
-            { title: "CasingPpf", "data": "CasingPpf", "name": "CasingPpf", "autoWidth": true, "visible": false },
-            { title: "MaterialGrade", "data": "MaterialGrade", "name": "MaterialGrade", "autoWidth": true, "visible": false },
+            { title: "Customer Name", "data": "CustomerName", "name": "CustomerName", "autoWidth": true, "visible": true },
+            { title: "Quote Type", "data": "QuoteType", "name": "QuoteType", "autoWidth": true, "visible": true },
+            { title: "Quote No", "data": "QuoteNo", "name": "QuoteNo", "autoWidth": true, "visible": true },
+            { title: "Main Prod Grp", "data": "MainProdGrp", "name": "MainProdGrp", "autoWidth": true, "visible": true },
+            { title: "Sub Prod Grp", "data": "SubProdGrp", "name": "SubProdGrp", "autoWidth": true, "visible": true },
+            { title: "Item No", "data": "ItemNo", "name": "ItemNo", "autoWidth": true, "visible": true },
+            { title: "Product Name", "data": "ProductName", "name": "ProductName", "autoWidth": true, "visible": true },
+            { title: "Product No", "data": "ProductNo", "name": "ProductNo", "autoWidth": true, "visible": true },
+            { title: "Casing Size", "data": "CasingSize", "name": "CasingSize", "autoWidth": true, "visible": false },
+            { title: "Casing Ppf", "data": "CasingPpf", "name": "CasingPpf", "autoWidth": true, "visible": false },
+            { title: "Material Grade", "data": "MaterialGrade", "name": "MaterialGrade", "autoWidth": true, "visible": false },
             { title: "Connection", "data": "Connection", "name": "Connection", "autoWidth": true, "visible": false },
             { title: "Qty", "data": "Qty", "name": "Qty", "autoWidth": true, "visible": true },
             { title: "Uom", "data": "Uom", "name": "Uom", "autoWidth": true, "visible": true },
-            { title: "UnitPrice", "data": "UnitPrice", "name": "UnitPrice", "autoWidth": true, "visible": true },
-            { title: "OpenHoleSize", "data": "OpenHoleSize", "name": "OpenHoleSize", "autoWidth": true, "visible": false },
-            { title: "BallSize", "data": "BallSize", "name": "BallSize", "autoWidth": true, "visible": false },
-            { title: "WallThickness", "data": "WallThickness", "name": "WallThickness", "autoWidth": true, "visible": false },
-            { title: "ViewProductDetails", "data": "ViewProductDetails", "name": "ViewProductDetails", "autoWidth": true, "visible": true },
-            { title: "ODSize", "data": "ODSize", "name": "ODSize", "autoWidth": true, "visible": false },
-            { title: "TotalBows", "data": "TotalBows", "name": "TotalBows", "autoWidth": true, "visible": false },
-            { title: "PDCDrillable", "data": "PDCDrillable", "name": "PDCDrillable", "autoWidth": true, "visible": false },
+            { title: "Unit Price", "data": "UnitPrice", "name": "UnitPrice", "autoWidth": true, "visible": true },
+            { title: "Open Hole Size", "data": "OpenHoleSize", "name": "OpenHoleSize", "autoWidth": true, "visible": false },
+            { title: "Ball Size", "data": "BallSize", "name": "BallSize", "autoWidth": true, "visible": false },
+            { title: "Wall Thickness", "data": "WallThickness", "name": "WallThickness", "autoWidth": true, "visible": false },
+            { title: "View Product Details", "data": "ViewProductDetails", "name": "ViewProductDetails", "autoWidth": true, "visible": true },
+            { title: "OD Size", "data": "ODSize", "name": "ODSize", "autoWidth": true, "visible": false },
+            { title: "Total Bows", "data": "TotalBows", "name": "TotalBows", "autoWidth": true, "visible": false },
+            { title: "PDC Drillable", "data": "PDCDrillable", "name": "PDCDrillable", "autoWidth": true, "visible": false },
             { title: "Id", "data": "Id", "name": "Id", "autoWidth": true, "visible": false },
             {
                 title: "Action", "data": "", orderable: false, width: "auto",
