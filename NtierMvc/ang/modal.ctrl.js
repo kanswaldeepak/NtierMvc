@@ -139,8 +139,20 @@ angular.module('App').controller("ModalController", function ($scope, $http, $ti
         var Status = false;
         Status = GetFormValidationStatus("#formSaveOrderDetails");
 
+        let finyr = $('#FinancialYearOrder').find("option:selected").text().split("-");
+        let startYr = finyr[0];
+        let EndYr = '20' + finyr[1];
+        let finalYr = startYr+ '-' + EndYr;
+
+        let dateOf = convertDateFormat($('#PoDorOrder').val(),"dd-MM-yyyy","MM/dd/yyyy");
+        let dateOfFiscalYr = getCurrentFiscalYear(dateOf);
+
+
         if (!Status) {
             alert("Kindly Fill all mandatory fields");
+        }
+        else if (finalYr != dateOfFiscalYr.financial_Year) {
+            alert("Date Date of Receipt of PO must be in the Finanacial Year Selected");
         }
         else {
             $http({ url: window.SaveOrder, method: 'POST', data: formData, headers: { 'Content-Type': undefined } }).success(

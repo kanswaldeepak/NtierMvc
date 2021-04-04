@@ -6,6 +6,8 @@
 
 <div ng-controller="ModalController" class="row">
     <form id="formSaveItemDetails">
+        @Html.HiddenFor(m=>m.QuoteNoView, new { @id= "ItemQuoteNoView" })
+        @Html.HiddenFor(m=>m.SoNoView, new { @id= "ItemSoNoView" })
         <div class="col-md-12">
             @Html.HiddenFor(m => m.Id)
             @Html.HiddenFor(m => m.ExWorkValue)
@@ -24,6 +26,22 @@
                        @onchange = "GetQuoteNoDetails()"
                    })
                         <span class="HideValidMsg"> Select Order Type</span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group text-left">
+                        <label class="control-label ">
+                            Financial Year
+                        </label>
+                        @Html.DropDownListFor(m => m.FinancialYear, new SelectList(ViewBag.ListFinancialYear, "DataStringValueField", "DataTextField", Model.FinancialYear), new
+                   {
+                       @class = "form-control requiredValidation",
+                       @id = "ItemFinancialYear",
+                       @data_inneraction = "validationCall",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                       @onchange = "GetSoNosForFinancialYear();"
+                   })
+                        <span class="HideValidMsg">Please Select Financial Year</span>
                     </div>
                 </div>
                 <div class="col-md-2">
@@ -134,8 +152,6 @@
                         <span class="HideValidMsg"> Enter Supply Terms</span>
                     </div>
                 </div>
-                <div class="col-md-2"></div>
-                <div class="col-md-2"></div>
                 <div class="col-md-4">
                     <div class="form-group">
                         <blink>
@@ -360,6 +376,7 @@
                                 <td>SNo</td>
                                 <td>Id</td>
                                 <td>Order Type</td>
+                                <td>Financial Year</td>
                                 <td>WA No</td>
                                 <td>Customer Id</td>
                                 <td>Customer Name</td>
@@ -398,6 +415,7 @@
         window.GetQuoteItemSlNos = '@Url.Action("GetQuoteItemSlNos", "Technical")';
         window.GetOrderQuoteNo = '@Url.Action("GetOrderQuoteNo", "Technical")';
         window.LoadItemWiseOrders = '@Url.Action("LoadItemWiseOrders", "Technical")';
+        window.GetSoNosForFinancialYears = '@Url.Action("GetSoNosForFinancialYears", "Technical")';
 
         $('#divQuoteDetails').hide();
         LoadtblItemWiseOrder();
@@ -505,11 +523,14 @@ $("#saveItemButton").click(function (e) {
 
             arr.push({
                 Id: $("#Id").val(),
-                VendorId: $("#VendorFormId").val(),
-                VendorName: $("#VendorFormName").val(),
+                CustomerId: $("#ItemCustomerId").val(),
+                CustomerName: $("#ItemCustomerName").val(),
+                FinancialYear: $("#ItemFinancialYear").val(),
                 QuoteNo: $("#QuoteItemFormNo").val(),
+                QuoteNoView: $("#QuoteItemFormNo option:selected").text(),
                 QuoteType: $("#OrderFormQuoteType").val(),
                 SoNo: $("#ItemSoNo").val(),
+                SoNoView: $("#ItemSoNo option:selected").text(),
                 QuoteItemSlNo: $("#QuoteItemSlNo").val(),
                 SupplyTerms: $("#SupplyTerms").val(),
                 PoSLNo: $("#POSlNo").val(),
@@ -536,7 +557,7 @@ $("#saveItemButton").click(function (e) {
 
 
     $('.NoEndDate').datepicker({
-        format: 'dd/mm/yyyy',
+        format: 'dd-mm-yyyy',
         autoclose: true,
         changeMonth: true,
         changeYear: true,
@@ -544,7 +565,7 @@ $("#saveItemButton").click(function (e) {
     });
     $('.CurrentEndDate').datepicker({
 
-        format: 'dd/mm/yyyy',
+        format: 'dd-mm-yyyy',
         autoclose: true,
         changeMonth: true,
         changeYear: true,

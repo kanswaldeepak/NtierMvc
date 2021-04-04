@@ -26,6 +26,21 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label class="control-label">
+                            Financial Year <span class="required">*</span>
+                        </label>
+                        @Html.DropDownListFor(m => m.FinancialYear, new SelectList(ViewBag.ListFinancialYear, "DataStringValueField", "DataTextField", Model.FinancialYear), new
+                   {
+                       @id = "FinancialYearRevised",
+                       @class = "form-control requiredValidation",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                       @onchange = "GetQuoteNumbersForRevised()"
+                   })
+                        <span class="HideValidMsg">Please Enter Financial Year</span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="control-label">
                             Quote Type <span class="required">*</span>
                         </label>
                         @Html.DropDownListFor(m => m.QuoteType, new SelectList(@ViewBag.ListQuoteType, "DataStringValueField", "DataTextField", "Export"),
@@ -81,7 +96,7 @@
                         @Html.TextBoxFor(m => m.Country, new
                {
                    @class = "form-control requiredValidation",
-                   @id= "Country",
+                   @id = "Country",
                    @placeholder = "Select Customer ID",
                    @readonly = "readonly",
                    @style = "width = '50%'"
@@ -115,7 +130,7 @@
                         </label>
                         @Html.TextBoxFor(m => m.QuoteDate, new
                    {
-                       @class = "form-control requiredValidation ApprovalQuoteDate",
+                       @class = "form-control requiredValidation ApprovalDate",
                        autocomplete = "off",
                        @id = "QuoteDateRevised",
                        @placeholder = "dd/MM/yyyy",
@@ -170,7 +185,7 @@
                        @id = "RevisedQuoteNo",
                        @placeholder = "RevisedQuoteNo",
                        @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
-                   })   
+                   })
                     </div>
                 </div>
             </div>
@@ -281,7 +296,7 @@
 
     $('.ApprovalDate').datepicker({
 
-        format: 'dd/mm/yyyy',
+        format: 'dd-mm-yyyy',
         autoclose: true,
         changeMonth: true,
         changeYear: true,
@@ -289,11 +304,10 @@
     });
     $('.ApprovalQuoteDate').datepicker({
 
-        format: 'dd/mm/yyyy',
+        format: 'dd-mm-yyyy',
         autoclose: true,
         changeMonth: true,
         changeYear: true,
         endDate: 'today',
     });
 </script>
-<script src="~/Scripts/CustomJS/common.js"></script>

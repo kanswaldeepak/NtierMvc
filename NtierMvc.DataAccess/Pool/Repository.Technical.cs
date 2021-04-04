@@ -61,11 +61,12 @@ namespace NtierMvc.DataAccess.Pool
             return dt;
         }
 
-        public string GetQuoteNo(string quotetypeId = null)
+        public string GetQuoteNo(string quotetypeId = null, string finYear = null)
         {
             DataTable dt = new DataTable();
             var parms = new Dictionary<string, object>();
             parms.Add("@quotetypeId", quotetypeId);
+            parms.Add("@finYear", finYear);
             var spName = ConfigurationManager.AppSettings["GetQuoteNo"];
             dt = _dbAccess.GetDataTable(spName, parms);
             return Convert.ToString(dt.Rows[0]["QuoteNo"]);
@@ -145,11 +146,11 @@ namespace NtierMvc.DataAccess.Pool
             return dt;
         }
 
-        public DataTable GetOrderDetailsFromSO(int SoNo)
+        public DataTable GetOrderDetailsFromSO(string SoNoView)
         {
             DataTable dt = new DataTable();
             var parms = new Dictionary<string, object>();            
-            parms.Add("@SoNo", SoNo);
+            parms.Add("@SoNoView", SoNoView);
             var spName = ConfigurationManager.AppSettings["GetOrderDetailsFromSO"];
             dt = _dbAccess.GetDataTable(spName, parms);
             return dt;

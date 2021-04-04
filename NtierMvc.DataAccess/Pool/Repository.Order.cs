@@ -52,6 +52,7 @@ namespace NtierMvc.DataAccess.Pool
             Params.Add("@QuoteQtyType", Model.QuoteQtyType);
             //Params.Add("@FileNo", Model.FileNo);
             Params.Add("@QuoteNo", Model.QuoteNo);
+            Params.Add("@QuoteNoView", Model.QuoteNoView);
             Params.Add("@QuoteDate", Model.QuoteDate);
             Params.Add("@SoNo", Model.SoNo);
             Params.Add("@PoEntity", Model.PoEntity);
@@ -84,6 +85,7 @@ namespace NtierMvc.DataAccess.Pool
             Params.Add("@MultiQuoteNos", Model.MultiQuoteNos);
             Params.Add("@RevisedPoNo", Model.RevisedPoNo);
             Params.Add("@RevisedPoDate", Model.RevisedPoDate);
+            Params.Add("@FinancialYear", Model.FinancialYear);
             //Params.Add("@UploadedFile", Model.UploadedFile);
 
 
@@ -129,7 +131,7 @@ namespace NtierMvc.DataAccess.Pool
             DataTable dt = new DataTable();
             string msgCode = ""; int i = 0;
             var Params = new Dictionary<string, object>();
-            Params.Add("@SoNo", entity.DataRecordTable.Rows[0]["SoNo"].ToString());
+            Params.Add("@SoNo", entity.DataRecordTable.Rows[0]["SoNoView"].ToString());
             Params.Add("@PoQty", entity.DataRecordTable.Rows[0]["PoQty"].ToString());
             Params.Add("@UnitPrice", entity.DataRecordTable.Rows[0]["UnitPrice"].ToString());
             Params.Add("@QuotePrepId", entity.DataRecordTable.Rows[0]["QuoteItemSlNo"].ToString());

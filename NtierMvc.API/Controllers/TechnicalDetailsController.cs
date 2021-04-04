@@ -114,9 +114,9 @@ namespace NtierMvc.API.Controllers.Application
 
         [HttpGet]
         [Route("api/TechnicalDetails/GetQuoteNo")]
-        public IHttpActionResult GetQuoteNo(string quotetypeId = null)
+        public IHttpActionResult GetQuoteNo(string quotetypeId = null, string finYear = null)
         {
-            return Ok(_repository.GetQuoteNo(quotetypeId));
+            return Ok(_repository.GetQuoteNo(quotetypeId, finYear));
         }
 
         [HttpGet]
@@ -211,9 +211,9 @@ namespace NtierMvc.API.Controllers.Application
 
         [HttpGet]
         [Route("api/TechnicalDetails/GetOrderDetailsFromSO")]
-        public IHttpActionResult GetOrderDetailsFromSO(int SoNo)
+        public IHttpActionResult GetOrderDetailsFromSO(string SoNoView)
         {
-            return Ok(_repository.GetOrderDetailsFromSO(SoNo));
+            return Ok(_repository.GetOrderDetailsFromSO(SoNoView));
         }
 
         [HttpPost]

@@ -479,12 +479,12 @@ namespace NtierMvc.BusinessLogic.Worker
             }
         }
 
-        public string GetQuoteNo(string quotetypeId = null)
+        public string GetQuoteNo(string quotetypeId = null, string finYear = null)
         {
             string quoteCode = "";
             try
             {
-                quoteCode = _repository.GetQuoteNo(quotetypeId);
+                quoteCode = _repository.GetQuoteNo(quotetypeId, finYear);
             }
             catch (Exception ex)
             {
@@ -1128,12 +1128,12 @@ namespace NtierMvc.BusinessLogic.Worker
             }
         }
 
-        public ItemEntity GetOrderDetailsFromSO(int SoNo)
+        public ItemEntity GetOrderDetailsFromSO(string SoNoView)
         {
             try
             {
                 ItemEntity itemEntity = new ItemEntity();
-                DataTable dt = _repository.GetOrderDetailsFromSO(SoNo);
+                DataTable dt = _repository.GetOrderDetailsFromSO(SoNoView);
 
                 if (dt.Rows.Count > 0)
                 {
@@ -1800,6 +1800,7 @@ namespace NtierMvc.BusinessLogic.Worker
                         Model.SNo = dr["SNo"] == DBNull.Value ? 0 : Convert.ToInt32(dr["SNo"]);
                         Model.Id = dr["Id"] == DBNull.Value ? 0 : Convert.ToInt32(dr["Id"]);
                         Model.SoNo = dr["SoNo"] == DBNull.Value ? 0 : Convert.ToInt32(dr["SoNo"]);
+                        Model.FinancialYearText = dr["FinancialYear"] == DBNull.Value ? string.Empty : Convert.ToString(dr["FinancialYear"]);
                         Model.SoNoView = dr["SoNoView"] == DBNull.Value ? string.Empty : Convert.ToString(dr["SoNoView"]);
                         Model.CustomerId = dr["CustomerId"] == DBNull.Value ? string.Empty : Convert.ToString(dr["CustomerId"]);
                         Model.CustomerName = dr["CustomerName"] == DBNull.Value ? string.Empty : Convert.ToString(dr["CustomerName"]);

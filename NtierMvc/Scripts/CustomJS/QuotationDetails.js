@@ -1,4 +1,6 @@
-﻿
+﻿function SetQuoteNoView() {
+    $('#QuoteNoViewOrder').val($('#QuoteNoOrder option:selected').text());
+}
 
 function ShowHideStatus() {
     var InspectionValue = $('#Inspection option:selected').text();
@@ -35,9 +37,7 @@ function GetQuoteNoForQuoteType() {
             }
         },
         error: function (x, e) {
-            $('#spn-Sucess-Failure').text('Some error is occurred, Please try after some time.');
-            $('#spn-Sucess-Failure').addClass("important red");
-            $('#Sucess-Failure').modal('show');
+            alert('Some error is occurred, Please try after some time.');
         }
     })
 }
@@ -65,9 +65,7 @@ function GetVendorAndEnquiryDetails() {
             GetEnquiryDetails();
         },
         error: function (x, e) {
-            $('#spn-Sucess-Failure').text('Some error is occurred, Please try after some time.');
-            $('#spn-Sucess-Failure').addClass("important red");
-            $('#Sucess-Failure').modal('show');
+            alert('Some error is occurred, Please try after some time.');
         }
     })
 }
@@ -92,12 +90,13 @@ function GetEnquiryDetails() {
 }
 
 function GetQuoteNumbersForRevised() {
-    var QuoteType = $("#QuoteTypeRevised").val();
+    let QuoteType = $("#QuoteTypeRevised").val();
+    let finYear = $("#FinancialYearRevised").val();
 
     $.ajax({
         type: 'POST',
         url: window.GetPrepQuoteNo,
-        data: JSON.stringify({ quotetypeId: QuoteType }),
+        data: JSON.stringify({ quotetypeId: QuoteType, financialYr: finYear }),
         contentType: "application/json; charset=utf-8",
         success: function (data) {
             $("#RevisedFormQuoteNo").empty();
@@ -111,9 +110,10 @@ function GetQuoteNumbersForRevised() {
             }
         },
         error: function (x, e) {
-            $('#spn-Sucess-Failure').text('Some error is occurred, Please try after some time.');
-            $('#spn-Sucess-Failure').addClass("important red");
-            $('#Sucess-Failure').modal('show');
+            alert('Some error is occurred, Please try after some time.');
+            //$('#spn-Sucess-Failure').text('Some error is occurred, Please try after some time.');
+            //$('#spn-Sucess-Failure').addClass("important red");
+            //$('#Sucess-Failure').modal('show');
         }
     })
 }
@@ -122,11 +122,17 @@ function GetQuoteNumbers() {
     //var QuoteType = $("#QuoteFormType option:selected").text();
     var QuoteType = $("#QuoteFormType").val();
     var QuoteTypeText = $("#QuoteFormType option:selected").text();
+    var FinancialYear = $("#QRFinancialYear").val();
+
+    if (QuoteType == undefined || QuoteType == '') {
+        //alert('Please Select Quote Type');
+        return;
+    }
 
     $.ajax({
         type: 'POST',
         url: window.GetDeliveryItems,
-        data: JSON.stringify({ quotetypeId: QuoteType }),
+        data: JSON.stringify({ quotetypeId: QuoteType, finYear: FinancialYear }),
         contentType: "application/json; charset=utf-8",
         success: function (res) {
             $("#DeliveryTerms").empty();
@@ -141,11 +147,14 @@ function GetQuoteNumbers() {
             }
             $('#QuoteFormNo').val(res.QuoteNo);
 
-            var currentDate = new Date();
-            if (currentDate.getMonth() >= 3)
-                $('#QuoteTypeNo').val('QTMOT' + (currentDate.getFullYear()).toString().substr(currentDate.getFullYear().toString().length - 2) + (currentDate.getFullYear() + 1).toString().substr((currentDate.getFullYear() + 1).toString().length - 2) + res.QuoteNo);
-            else
-                $('#QuoteTypeNo').val('QTMOT' + (currentDate.getFullYear() - 1).toString().substr((currentDate.getFullYear() + 1).toString().length - 2) + currentDate.getFullYear().toString().substr(currentDate.getFullYear().toString().length - 2) + res.QuoteNo);
+            var finyr = $('#QRFinancialYear option:selected').text().split('-');
+            $('#QuoteTypeNo').val('QTMOT' + finyr[0].substr(finyr[0].length - 2) + finyr[1] + res.QuoteNo);
+
+            //var currentDate = new Date();
+            //if (currentDate.getMonth() >= 3)
+            //    $('#QuoteTypeNo').val('QTMOT' + (currentDate.getFullYear()).toString().substr(currentDate.getFullYear().toString().length - 2) + (currentDate.getFullYear() + 1).toString().substr((currentDate.getFullYear() + 1).toString().length - 2) + res.QuoteNo);
+            //else
+            //    $('#QuoteTypeNo').val('QTMOT' + (currentDate.getFullYear() - 1).toString().substr((currentDate.getFullYear() + 1).toString().length - 2) + currentDate.getFullYear().toString().substr(currentDate.getFullYear().toString().length - 2) + res.QuoteNo);
 
 
             //$('#QuoteTypeNo').val('QTMOT-' + res.QuoteNo);
@@ -166,9 +175,9 @@ function GetQuoteNumbers() {
 
         },
         error: function (x, e) {
-            $('#spn-Sucess-Failure').text('Some error is occurred, Please try after some time.');
-            $('#spn-Sucess-Failure').addClass("important red");
-            $('#Sucess-Failure').modal('show');
+            alert('Some error is occurred, Please try after some time.');
+            //$('#spn-Sucess-Failure').addClass("important red");
+            //$('#Sucess-Failure').modal('show');
         }
     })
 }

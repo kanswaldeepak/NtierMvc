@@ -189,7 +189,7 @@
                     </label>
                     @Html.TextBoxFor(m => m.EnqReceiptDate, new
                {
-                   @class = "form-control requiredValidation ApprovalDate",
+                   @class = "form-control requiredValidation ApprovalEnqDate",
                    @id = "DueDate",
                    @placeholder = "dd/MM/yyyy",
                    @style = "disabled :disabled",
@@ -456,7 +456,7 @@
 
     //LEASE DATE AND EXP LEASE DATE VALIDATION
     $('.ApprovalDate').datepicker({
-        format: 'dd/mm/yyyy',
+        format: 'dd-mm-yyyy',
         autoclose: true,
         changeMonth: true,
         changeYear: true,
@@ -465,7 +465,7 @@
 
     $('.ApprovalEnqDate').datepicker({
 
-        format: 'dd/mm/yyyy',
+        format: 'dd-mm-yyyy',
         autoclose: true,
         changeMonth: true,
         changeYear: true,
@@ -475,7 +475,7 @@
     var date = new Date();
     $('.CalenderDisablePastDate').datepicker({
 
-        format: 'dd/mm/yyyy',
+        format: 'dd-mm-yyyy',
         startDate: date,
         autoclose: true,
         changeMonth: true,

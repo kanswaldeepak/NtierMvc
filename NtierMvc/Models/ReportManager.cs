@@ -78,6 +78,12 @@ namespace NtierMvc.Models
                     return DocumentName;
                 }
 
+                if (dt1.Rows.Count <= 0)
+                {
+                    DocumentName = "No Records Found For Selected Item";
+                    return DocumentName;
+                }
+
                 Microsoft.Office.Interop.Excel.Range c1 = (Microsoft.Office.Interop.Excel.Range)ws.Cells[7, 1];
                 Microsoft.Office.Interop.Excel.Range c2 = (Microsoft.Office.Interop.Excel.Range)ws.Cells[(dt1.Rows.Count - 1) + 7, dt1.Columns.Count];
                 //Microsoft.Office.Interop.Excel.Range c2 = (Microsoft.Office.Interop.Excel.Range)ws.Cells[1, 1];
@@ -238,6 +244,12 @@ namespace NtierMvc.Models
                     return DocumentName;
                 }
 
+                if (dt1.Rows.Count <= 0)
+                {
+                    DocumentName = "No Records Found For Selected Item";
+                    return DocumentName;
+                }
+
                 //Getting Single Fields
                 xlWorkbook.Worksheets[1].Cells.Replace("#FileNo", dt1.Rows[0]["FileNo"]);
                 xlWorkbook.Worksheets[1].Cells.Replace("#WAuthNo", dt1.Rows[0]["SoNoView"]);
@@ -260,7 +272,10 @@ namespace NtierMvc.Models
                 //Microsoft.Office.Interop.Excel.Range c2 = (Microsoft.Office.Interop.Excel.Range)ws.Cells[1, 1];
                 Microsoft.Office.Interop.Excel.Range range = ws.get_Range(c1, c2);
                 range.Insert(Microsoft.Office.Interop.Excel.XlInsertShiftDirection.xlShiftDown);
-
+               
+                //ActiveCell.EntireRow.Select
+                //Selection.Copy
+                //Selection.Insert Shift:= xlDown
 
                 object[,] arr = new object[Dt2.Rows.Count, Dt2.Columns.Count];
                 for (int r = 0; r <= Dt2.Rows.Count - 1; r++)

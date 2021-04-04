@@ -36,7 +36,7 @@
                     <div class="col-md-3" ng-show="ISTure">
                         <label class="control-label"> WA:<span class="required">*</span></label>
 
-                        <select ng-model="SoNo" class="form-control control-color">
+                        <select id="SoNoCRM" ng-model="SoNo" class="form-control control-color">
                             <option value=''>Select</option>
                             <option ng-repeat="x in SonoList" value="{{x.DataStringValueField}}">{{x.DataTextField}}</option>
                         </select>
@@ -45,9 +45,9 @@
                         <label class="control-label"> Fin Year<span class="required">*</span></label>
                         <label for="from">From</label>
                         @*<input type="text" id="from" name="from" ng-model="date">*@
-                        @Html.TextBox("from", "", new { @class = "form-control CalenderAllDate", ng_model = "date", autocomplete = "off" })
+                        @Html.TextBox("from", "", new { @class = "form-control CalenderAllDateBottom", ng_model = "date", autocomplete = "off" })
                         <label for="to">to</label>
-                        @Html.TextBox("to", "", new { @class = "form-control CalenderAllDate", ng_model = "date1", autocomplete = "off" })
+                        @Html.TextBox("to", "", new { @class = "form-control CalenderAllDateBottom", ng_model = "date1", autocomplete = "off" })
                         @*<input type="text" id="to" name="to" ng-model="date1">*@
                         @*<input type="text" id="datepicker1" class="form-control control-color" name="daterange" ng-model="date" />*@
                         <div>
@@ -195,9 +195,9 @@
                 <div class="col-md-4">
                     <label class="control-label"> Fin Year<span class="required">*</span></label>
                     <label for="from">From</label>
-                    @Html.TextBox("from", "", new { @class = "form-control CalenderAllDate", ng_model = "ConsolidateDateFrom", autocomplete = "off" })
+                    @Html.TextBox("from", "", new { @class = "form-control CalenderAllDateTop", ng_model = "ConsolidateDateFrom", autocomplete = "off" })
                     <label for="to">to</label>
-                    @Html.TextBox("to", "", new { @class = "form-control CalenderAllDate", ng_model = "ConsolidateDateTo", autocomplete = "off" })
+                    @Html.TextBox("to", "", new { @class = "form-control CalenderAllDateTop", ng_model = "ConsolidateDateTo", autocomplete = "off" })
                 </div>
                 <div class="col-md-2">
                     <button class="btn btn-success btn-sm" style="font-size:18px" ng-click="CreateConsolidateReport();">Download</button>
@@ -314,12 +314,20 @@
         }
     )
 
-    $('.CalenderAllDate').datepicker({
+    $('.CalenderAllDateTop').datepicker({
+        autoclose: true,
+        changeMonth: true,
+        changeYear: true,
+        orientation: "Top"
+    });
+
+    $('.CalenderAllDateBottom').datepicker({
         autoclose: true,
         changeMonth: true,
         changeYear: true,
         orientation: "Bottom"
     });
+
 
     var date = new Date();
     $('.CalenderDisablePastDate').datepicker({

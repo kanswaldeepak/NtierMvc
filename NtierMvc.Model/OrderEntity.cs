@@ -20,6 +20,7 @@ namespace NtierMvc.Model
         public string QuoteType { get; set; }
         public string FileNo { get; set; }
         public string QuoteNo { get; set; }
+        public string QuoteNoView { get; set; }
         public string QuoteDate { get; set; }
         public string SoNo { get; set; }
         public string SoNoView { get; set; }
@@ -28,6 +29,7 @@ namespace NtierMvc.Model
         public string PoDeliveryDate { get; set; }
         public string PoNo { get; set; }
         public string PoLocation { get; set; }
+        public string FinancialYear { get; set; }
         public string PoDor { get; set; }
         public string PoQty { get; set; }
         public string POPercent { get; set; }
@@ -72,6 +74,8 @@ namespace NtierMvc.Model
         public string QuoteNo { get; set; }
         public string QuoteNoView { get; set; }
         public string QuoteType { get; set; }
+        public int FinancialYear { get; set; }
+        public string FinancialYearText { get; set; }
         public int SoNo { get; set; }
         public string SoNoView { get; set; }
         public string QuoteItemSlNo { get; set; }
@@ -108,9 +112,11 @@ namespace NtierMvc.Model
         public string CustomerId { get; set; }
         public string CustomerName { get; set; }
         public string QuoteNo { get; set; }
-
+        public string QuoteNoView { get; set; }
         public string QuoteType { get; set; }
         public int SoNo { get; set; }
+        public int FinancialYear { get; set; }
+        public string SoNoView { get; set; }
         public string QuoteItemSlNo { get; set; }
         public string PoSLNo { get; set; }
         public string PoQty { get; set; }

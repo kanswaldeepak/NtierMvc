@@ -1,5 +1,27 @@
 ﻿
 
+function GetSoNosForFinancialYear() {
+    let finYear = $('#ItemFinancialYear').val();
+
+    $.ajax({
+        type: 'POST',
+        url: window.GetSoNosForFinancialYears,
+        data: JSON.stringify({ FinYear: finYear}),
+        contentType: "application/json; charset=utf-8",
+        success: function (data) {
+            $("#ItemSoNo").empty();
+            if (data.length > 0) {
+                $.each(data, function (i, item) {
+                    $("#ItemSoNo").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
+                })
+            }
+        },
+        error: function (x, e) {
+            alert('Some error is occurred, Please try after some time.');
+        }
+    })
+}
+
 //After Click Save Button Pass All Data View To Controller For Save Database
 function saveButton(data) {
     return $.ajax({
@@ -11,13 +33,13 @@ function saveButton(data) {
         success: function (result) {
             alert(result);
 
-            var SoNoItem = $("#ItemSoNo").val();
+            var SoNoItem = $("#ItemSoNo option:selected").text();
             var quoteTypeId = $("#OrderFormQuoteType").val();
 
             $.ajax({
                 type: 'POST',
                 url: window.GetOrderDetailsFromSO,
-                data: JSON.stringify({ SoNo: SoNoItem, quoteTypeId: quoteTypeId }),
+                data: JSON.stringify({ SoNoView: SoNoItem, quoteTypeId: quoteTypeId }),
                 contentType: "application/json; charset=utf-8",
                 success: function (data) {
                     $('.OrderPercentClass').html('Order Percentage ' + data.iEntity.POPercent + ' %');
@@ -68,7 +90,6 @@ function GetVendorDetails() {
 
 function GetQuoteNos() {
     var QuoteType = $("#OrderFormQuoteType").val();
-    debugger;
     $.ajax({
         type: 'POST',
         url: window.GetPrepQuoteNo,
@@ -89,8 +110,9 @@ function GetQuoteNos() {
 }
 
 function GetItemOrderDetailsFromSO() {
-    var SoNoItem = $("#ItemSoNo").val();
+    var SoNoItem = $("#ItemSoNo option:selected").text();
     var quoteTypeId = $("#OrderFormQuoteType").val();
+    $('#ItemSoNoView').val(SoNoItem);
 
     if (quoteTypeId == undefined || quoteTypeId == '') {
         alert('Kindly Select Order Type.');
@@ -100,7 +122,7 @@ function GetItemOrderDetailsFromSO() {
     $.ajax({
         type: 'POST',
         url: window.GetOrderDetailsFromSO,
-        data: JSON.stringify({ SoNo: SoNoItem, quoteTypeId: quoteTypeId }),
+        data: JSON.stringify({ SoNoView: SoNoItem, quoteTypeId: quoteTypeId }),
         contentType: "application/json; charset=utf-8",
         success: function (data) {
             $('#ItemCustomerName').val(data.iEntity.CustomerName);
@@ -210,16 +232,19 @@ function GetQuoteDetails() {
 function GetQuoteOrderItemSlNos() {
     var QuoteType = $("#OrderFormQuoteType").val();
     var QuoteNo = $("#QuoteItemFormNo").val();
+    var FinYear = $("#ItemFinancialYear").val();
 
-    if ((QuoteType == undefined || QuoteType == '') && (QuoteNo == undefined || QuoteNo == '')) {
-        alert('Please Select Order Type and Quote No');
+    $('#ItemQuoteNoView').val($("#QuoteItemFormNo option:selected").text());
+
+    if ((QuoteType == undefined || QuoteType == '') || (QuoteNo == undefined || QuoteNo == '') || (FinYear == undefined || FinYear == '')) {
+        alert('Please Select Order Type, Quote No and Financial Year');
         return;
     }
 
     $.ajax({
         type: 'POST',
         url: window.GetQuoteItemSlNos,
-        data: JSON.stringify({ quoteType: QuoteType, quoteNo: QuoteNo }),
+        data: JSON.stringify({ quoteType: QuoteType, quoteNo: QuoteNo, finYear: FinYear }),
         contentType: "application/json; charset=utf-8",
         success: function (data) {
             $('#QuoteItemSlNo').empty();
@@ -269,7 +294,7 @@ function GetQuoteNoDetails() {
 }
 
 function GetSONoDetails() {
-    var SoNo = $("#SoNoOrder").val();
+    var SoNo = $("#SoNoOrder option:selected").val();
     if (SoNo == undefined || SoNo == '') {
         alert('Please Select So No');
         return;
@@ -277,7 +302,7 @@ function GetSONoDetails() {
 
     $.ajax({
         type: 'POST',
-        url: '/Technical/GetSoNoDetails',
+        url: window.GetSoNoDetails,
         data: JSON.stringify({ soNo: SoNo }),
         contentType: "application/json; charset=utf-8",
         success: function (data) {
@@ -330,7 +355,8 @@ function LoadtblItemWiseOrder() {
             "paginate": {
                 "next": '&#8594;',
                 "previous": '&#8592;'
-            }
+            },
+            "search": "Common Search:"
         },
         "ajax": {
             "url": window.LoadItemWiseOrders,
@@ -346,6 +372,7 @@ function LoadtblItemWiseOrder() {
         columns: [
             { title: "SNo", "data": "SNo", "name": "SNo", "autoWidth": true, "visible": true },
             { title: "Id", "data": "Id", "name": "Id", "autoWidth": true, "visible": false },
+            { title: "Financial Year", "data": "FinancialYearText", "name": "FinancialYearText", "autoWidth": true, "visible": true },
             { title: "WA No", "data": "SoNoView", "name": "SoNoView", "autoWidth": true, "visible": true },
             { title: "Customer Id", "data": "CustomerId", "name": "CustomerId", "autoWidth": true, "visible": true },
             { title: "Customer Name", "data": "CustomerName", "name": "CustomerName", "autoWidth": true, "visible": true },
@@ -359,7 +386,7 @@ function LoadtblItemWiseOrder() {
             { title: "Quote No", "data": "QuoteNoView", "name": "QuoteNoView", "autoWidth": true, "visible": false },
             { title: "Quote Item Sl No", "data": "QuoteItemSlNoText", "name": "QuoteItemSlNoText", "autoWidth": true, "visible": false },
             { title: "PO Sl No", "data": "PoSLNo", "name": "PoSLNo", "autoWidth": true, "visible": true },
-            { title: "PO Qty", "data": "PoQty", "name": "PoQty", "autoWidth": true, "visible": false },
+            { title: "PO Qty", "data": "PoQty", "name": "PoQty", "autoWidth": true, "visible": true },
             { title: "Unit Price", "data": "UnitPrice", "name": "UnitPrice", "autoWidth": true, "visible": true },
             { title: "Product Details", "data": "ViewProductDetails", "name": "ViewProductDetails", "autoWidth": true, "visible": true },
             {
@@ -370,6 +397,14 @@ function LoadtblItemWiseOrder() {
                     return columnVal;
                 }
             },
+            //{
+            //    title: "Action", "data": "", orderable: false, width: "auto",
+            //    "render": function (data, type, full, meta) {
+            //        var columnVal = "";
+            //        columnVal = '<div><button type = "button" onclick=EditUsingItemId("' + full.Id + '") class="btn btn-info btn-sm"> Edit </button></div>';
+            //        return columnVal;
+            //    }
+            //}
             //{
             //    data: 'id',
             //    title: "Action", "data": "", orderable: false, width: "auto",
@@ -398,13 +433,20 @@ function DeleteUsingItemId(Id) {
 
 }
 
-function  EditOrderItems(thisObj) {
-
-    thisObj.parent().parent().children().each(function () {
-        alert("childs");
-    });
-
+function EditUsingItemId(Id) {
+        
+   current_row= myData.filter((row) => {
+        if (row.abc = Id) return row;
+    })
 }
+
+//function  EditOrderItems(thisObj) {
+
+//    thisObj.parent().parent().children().each(function () {
+//        alert("childs");
+//    });
+
+//}
 
 //var table = $("#tblItemWiseOrder").DataTable(req);
 

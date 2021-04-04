@@ -24,7 +24,7 @@ namespace NtierMvc.BusinessLogic.Interface
         List<DropDownEntity> GetCityName(string VendorName);
         List<DropDownEntity> GetProductLineList(string productLine);
         string GetProductNumber(string productNameId, int productType);
-        string GetQuoteNo(string quotetypeId=null);
+        string GetQuoteNo(string quotetypeId=null, string finYear = null);
         List<DropDownEntity> GetQuoteNoList(string quotetypeId="", string SoNo = null);
         List<DropDownEntity> GetQuoteItemSlNoList(string quotetypeId="", string SoNo = null);
         List<DropDownEntity> GetEnqNoList(string vendorId = null);
@@ -42,7 +42,7 @@ namespace NtierMvc.BusinessLogic.Interface
         OrderEntity OrderDetailsPopup(OrderEntity Model);
         List<DropDownEntity> GetOrderQuoteDetails(string quoteType, string quotetypeId);
         OrderEntity GetQuoteOrderDetails(string quoteType, string quotetypeId);
-        ItemEntity GetOrderDetailsFromSO(int SoNo);
+        ItemEntity GetOrderDetailsFromSO(string SoNoView);
         string SaveItemDetail(ItemEntity itemEntity);
         string SaveItemDetailList(BulkUploadEntity bEntity);
         

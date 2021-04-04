@@ -151,11 +151,12 @@ function QPGetQuoteNos() {
 
 function QPGetQuoteNosFromType() {
     var QuoteType = $("#SearchQuoteTypeQuotePrep").val();
+    var finYear = $("#SearchQuoteTypeFinancialYear").val();
 
     $.ajax({
         type: 'POST',
         url: window.GetPrepQuoteNo,
-        data: JSON.stringify({ quotetypeId: QuoteType }),
+        data: JSON.stringify({ quotetypeId: QuoteType, financialYr: finYear }),
         contentType: "application/json; charset=utf-8",
         success: function (data) {
             $("#SearchQuoteNoQuotePrep").empty();
@@ -440,15 +441,16 @@ function GetProductNameForProductType(ProductType) {
 
 function GetVendorDetailsForQuote() {
     var QuoteType = $("#QuotePrepFormType").val();
-    var QuoteNo = $("#QuotePrepFormNo").val();
+    var QuoteNo = $("#QuotePrepFormNo option:selected").text();
     $.ajax({
         type: 'POST',
         url: window.VendorDetailsForQuote,
         data: JSON.stringify({ quoteNo: QuoteNo, quoteType: QuoteType }),
         contentType: "application/json; charset=utf-8",
         success: function (res) {
-            $("#QuotePrepVendorName").val(res.DataValueField1);
-            $("#QuotePrepCurrency").val(res.DataValueField2);
+            //$("#QuotePrepVendorName").val(res.DataValueField1);
+            //$("#QuotePrepCurrency").val(res.DataValueField2);
+            $("#QuotePrepCustomerName").val(res.DataValueField1);
         },
         error: function (x, e) {
             alert('Some error is occurred, Please try after some time.');
@@ -785,6 +787,9 @@ function EditQuotePrep(QuoteId) {
 function GetQuoteNoFromFinYearAndQuote() {
     var FinYear = $("#QuotePrepFinancialYear").val();
     var QuoteType = $("#QuotePrepFormType").val();
+
+    if (FinYear == '' || FinYear == undefined)
+        return;
 
     $.ajax({
         type: 'POST',

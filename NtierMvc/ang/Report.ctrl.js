@@ -98,10 +98,11 @@ angular.module('App').controller("ReportController", function ($scope, $http, $t
         }
         else {
             if ($scope.SoNo != null || $scope.SoNo != '') {
+                let SoNoView = $('#SoNoCRM option:selected').text();
                 $.ajax({
                     type: "Post",
-                    url: window.GenerateWAAuthReport,
-                    data: JSON.stringify({ SoNo: $scope.SoNo, FromDate: fromdate, ToDate: Todate, ReportType: $scope.ReportType }),
+                    url: window.CreateWAAuthReport,
+                    data: JSON.stringify({ SoNo: SoNoView, FromDate: fromdate, ToDate: Todate, ReportType: $scope.ReportType }),
                     contentType: "application/json; charset=utf-8",
                     success: function (data) {
                         //alert("Dowloaded Successfully" + data);

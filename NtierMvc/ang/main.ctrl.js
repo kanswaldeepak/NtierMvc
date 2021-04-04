@@ -1028,6 +1028,7 @@ angular.module('App').controller("MainController", function ($scope, $http, $tim
                 html = $compile(html)($scope);
                 SetModalTitle("Add New Revised Order")
                 SetModalBody(html);
+                SetModalWidth("1200px");
                 HideLoadder();
                 ShowModal();
 

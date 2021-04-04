@@ -1,7 +1,38 @@
-﻿
-function GetStatesForCountry(CountryId, StateId) {
+﻿function SetFinancialYear(element, classVal) {
+    var finyr = $(element).find("option:selected").text().split('-');
+    var startYr = finyr[0];
+    var EndYr = '20' + finyr[1];
 
-    debugger;
+    let startDate = "01/04/" + startYr;
+    let endDate = "31/03/" + EndYr;
+
+    $('.' + classVal).val('');
+    $('.' + classVal).datepicker('setStartDate', startDate);
+    $('.' + classVal).datepicker('setEndDate', endDate);
+}
+
+function getCurrentFiscalYear(date) {
+    var dates = {};
+
+    var docDate = new Date(date);
+    var month = docDate.getMonth()+1;
+    let financial_Year = "";
+
+    if (month > 3) {
+        dates.sDate = new Date(docDate.getFullYear(), 3, 1);
+        dates.eDate = new Date(dates.sDate.getFullYear() + 1, dates.sDate.getMonth() - 1, 31);
+        dates.financial_Year = docDate.getFullYear() + "-" + (docDate.getFullYear() + 1);
+    }
+    else {
+        dates.sDate = new Date(docDate.getFullYear() - 1, 3, 1);
+        dates.eDate = new Date(docDate.getFullYear(), dates.sDate.getMonth() - 1, 31);
+        dates.financial_Year = (docDate.getFullYear() - 1) + "-" + docDate.getFullYear();
+    }
+
+    return dates;
+}
+
+function GetStatesForCountry(CountryId, StateId) {
     $.ajax({
         type: 'POST',
         url: window.GetStateForCountry,
@@ -201,6 +232,9 @@ function convertDateFormat(dateObject, convertFrom, convertTo) {
             break;
         case 'MM-dd-yyyy':
             date = month + "-" + day + "-" + year;
+            break;
+        case 'MM/dd/yyyy':
+            date = month + "/" + day + "/" + year;
             break;
         default:
             date = day + "/" + month + "/" + year;

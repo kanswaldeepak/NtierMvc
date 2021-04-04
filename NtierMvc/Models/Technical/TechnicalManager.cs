@@ -208,13 +208,13 @@ namespace NtierMvc.Model
             }
             return ListEnquiryNo;
         }
-        public string GetQuoteNo(string quotetypeId = null)
+        public string GetQuoteNo(string quotetypeId = null, string finYear = null)
         {
             var baseAddress = "TechnicalDetails";
             string Number = "0";
             using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
             {
-                HttpResponseMessage response = client.GetAsync(baseAddress + "/GetQuoteNo?quotetypeId=" + quotetypeId).Result;
+                HttpResponseMessage response = client.GetAsync(baseAddress + "/GetQuoteNo?quotetypeId=" + quotetypeId+ "&finYear=" + finYear).Result;
                 if (response.IsSuccessStatusCode)
                 {
                     var data = response.Content.ReadAsStringAsync().Result;
@@ -224,13 +224,13 @@ namespace NtierMvc.Model
             return Number;
         }
 
-        public List<DropDownEntity> GetQuoteNoList(string quotetypeId = "", string SoNoId = null)
+        public List<DropDownEntity> GetQuoteNoList(string quotetypeId = "", string SoNoView = null)
         {
             var baseAddress = "TechnicalDetails";
             List<DropDownEntity> QuoteNoList = new List<DropDownEntity>();
             using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
             {
-                HttpResponseMessage response = client.GetAsync(baseAddress + "/GetQuoteNoList?quotetypeId=" + quotetypeId + "&SoNo=" + SoNoId).Result;
+                HttpResponseMessage response = client.GetAsync(baseAddress + "/GetQuoteNoList?quotetypeId=" + quotetypeId + "&SoNo=" + SoNoView).Result;
                 if (response.IsSuccessStatusCode)
                 {
                     var data = response.Content.ReadAsStringAsync().Result;
@@ -426,13 +426,13 @@ namespace NtierMvc.Model
             return orderEntity;
         }
 
-        public ItemEntity GetOrderDetailsFromSO(int SoNo)
+        public ItemEntity GetOrderDetailsFromSO(string SoNoView)
         {
             var baseAddress = "TechnicalDetails";
             ItemEntity itemEntity = new ItemEntity();
             using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
             {
-                HttpResponseMessage response = client.GetAsync(baseAddress + "/GetOrderDetailsFromSO?SoNo=" + SoNo).Result;
+                HttpResponseMessage response = client.GetAsync(baseAddress + "/GetOrderDetailsFromSO?SoNoView=" + SoNoView).Result;
                 if (response.IsSuccessStatusCode)
                 {
                     var data = response.Content.ReadAsStringAsync().Result;

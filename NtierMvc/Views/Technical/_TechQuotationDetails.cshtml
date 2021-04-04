@@ -26,6 +26,22 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label class="control-label">
+                            Financial Year <span class="required">*</span>
+                        </label>
+                        @Html.DropDownListFor(m => m.FinancialYear, new SelectList(ViewBag.ListFinYear, "DataStringValueField", "DataTextField", Model.FinancialYear), new
+                   {
+                       @id = "QRFinancialYear",
+                       @class = "form-control requiredValidation",
+                       data_id = "QRFinancialYear",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                       @onchange = "GetQuoteNumbers(); SetFinancialYear(this,'QRFinancialYearDate');"
+                   })
+                        <span class="HideValidMsg">Please Enter Financial Year</span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="control-label">
                             Quote Type <span class="required">*</span>
                         </label>
                         @Html.DropDownListFor(m => m.QuoteType, new SelectList(@ViewBag.ListQuoteType, "DataStringValueField", "DataTextField", "Export"),
@@ -60,6 +76,25 @@
                        @hidden = "hidden"
                    })
                         <span class="HideValidMsg">Please Select Quote No</span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="control-label">
+                            Quote Date
+                        </label>
+                        @Html.TextBoxFor(m => m.QuoteDate, new
+                   {
+                       @class = "form-control QRFinancialYearDate",
+                       autocomplete = "off",
+                       @id = "QuoteDate",
+                       @placeholder = "dd/MM/yyyy",
+                       @style = "disabled :disabled",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                   })
+                        <span class="HideValidMsg">
+                            Please Select Quote Date
+                        </span>
                     </div>
                 </div>
                 <div class="col-md-4">
@@ -264,41 +299,6 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label class="control-label">
-                            Quote Date
-                        </label>
-                        @Html.TextBoxFor(m => m.QuoteDate, new
-                   {
-                       @class = "form-control ApprovalDate",
-                       autocomplete = "off",
-                       @id = "QuoteDate",
-                       @placeholder = "dd/MM/yyyy",
-                       @style = "disabled :disabled",
-                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
-                   })
-                        <span class="HideValidMsg">
-                            Please Select Quote Date
-                        </span>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label class="control-label">
-                            Financial Year <span class="required">*</span>
-                        </label>
-                        @Html.DropDownListFor(m => m.FinancialYear, new SelectList(ViewBag.ListFinYear, "DataStringValueField", "DataTextField", Model.FinancialYear), new
-                   {
-                       @id = "FinancialYear",
-                       @class = "form-control requiredValidation",
-                       data_id = "QRFinancialYear",
-                       data_select = "Inspection",
-                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
-                   })
-                    <span class="HideValidMsg">Please Enter Financial Year</span>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label class="control-label">
                             Quote Sent on
                         </label><span class="required">*</span>
                         @Html.TextBoxFor(m => m.QuoteSentOn, new
@@ -403,22 +403,24 @@
                     <div class="form-group">
                         <label class="control-label">
                             Lead Time
-                        </label>
+                        </label><span class="required">*</span>
                         <div class="row">
                             <div class="col-md-4">
                                 @Html.TextBoxFor(m => m.LeadTime, new
                            {
-                               @class = "form-control",
+                               @class = "form-control requiredValidation",
                                @id = "LeadTime",
-                               @placeholder = "Lead Time"
+                               @placeholder = "Lead Time",
+                               @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
                            })
                             </div>
                             <div class="col-md-4">
                                 @Html.DropDownListFor(m => m.LeadTimeDuration, new SelectList(@ViewBag.ListLeadTimeDuration, "DataValueField", "DataTextField", Model.LeadTimeDuration),
                         new
                         {
-                            @class = "form-control",
-                            @id = "LeadTimeDuration"
+                            @class = "form-control requiredValidation",
+                            @id = "LeadTimeDuration",
+                            @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
                         })
                             </div>
                         </div>
@@ -592,7 +594,7 @@
     });
     $('.ApprovalQuoteDate').datepicker({
 
-        format: 'dd/mm/yyyy',
+        format: 'dd-mm-yyyy',
         autoclose: true,
         changeMonth: true,
         changeYear: true,
@@ -602,11 +604,18 @@
     var date = new Date();
     $('.AfterCurrentDateOnly').datepicker({
 
-        format: 'dd/mm/yyyy',
+        format: 'dd-mm-yyyy',
         startDate: date,
         autoclose: true,
         changeMonth: true,
         changeYear: true,
         endDate: ''
+    });
+
+    $('.QRFinancialYearDate').datepicker({
+        format: 'dd-mm-yyyy',
+        autoclose: true,
+        changeMonth: true,
+        changeYear: true
     });
 </script>

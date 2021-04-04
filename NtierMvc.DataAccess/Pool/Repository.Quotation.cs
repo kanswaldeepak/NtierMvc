@@ -97,7 +97,7 @@ namespace NtierMvc.DataAccess.Pool
             Params.Add("@QuoteNo", Model.QuoteNo);
             Params.Add("@ItemNo", Model.ItemNo);
             Params.Add("@EnqSrNo", Model.EnqSrNo);
-            Params.Add("@VendorName", Model.CustomerName);
+            Params.Add("@VendorName", "");
             Params.Add("@MainProdGrp", Model.MainProdGrp);
             Params.Add("@SubProdGrp", Model.SubProdGrp);
             Params.Add("@ProductName", Model.ProductName);
@@ -113,6 +113,9 @@ namespace NtierMvc.DataAccess.Pool
             Params.Add("@Currency", Model.Currency);
             Params.Add("@BallSize", Model.BallSize);
             Params.Add("@WallThickness", Model.WallThickness);
+
+            Params.Add("@ODSize", Model.ODSize);
+            Params.Add("@TotalBows", Model.TotalBows);
 
             //For Product Table
             Params.Add("@ViewProductId", Model.ViewProductId);
@@ -133,6 +136,7 @@ namespace NtierMvc.DataAccess.Pool
             Params.Add("@ViewDES", Model.ViewDES);
             Params.Add("@ViewProductDetails", Model.ViewProductDetails);
             Params.Add("@PDCDrillable", Model.PDCFeatures);
+            Params.Add("@FinancialYear", Model.FinancialYear);
 
             var SPName = ConfigurationManager.AppSettings["SaveQuotePreparation"];
             _dbAccess.ExecuteNonQuery(SPName, Params, "@o_MsgCode", out msgCode);
@@ -317,28 +321,28 @@ namespace NtierMvc.DataAccess.Pool
             switch(ReportType)
             {
                 case "WAuthReport":
-                    SPName = ConfigurationManager.AppSettings["WAReport"]; ;
+                    SPName = ConfigurationManager.AppSettings["WAReport"];
                     break;
                 case "ProductPerformance":
-                    SPName = ConfigurationManager.AppSettings["ProductReport"]; ;
+                    SPName = ConfigurationManager.AppSettings["ProductReport"];
                     break;
                 case "EnquiryReport":
-                    SPName = ConfigurationManager.AppSettings["EQAndQRReport"]; ;
+                    SPName = ConfigurationManager.AppSettings["EQAndQRReport"];
                     break;
                 case "CUSTOMERFEEDBACK":
-                    SPName = ConfigurationManager.AppSettings["CustomerFeedback"]; ;
+                    SPName = ConfigurationManager.AppSettings["CustomerFeedback"];
                     break;
                 case "ConEnquiryReport":
-                    SPName = ConfigurationManager.AppSettings["ConsolidatedEnquiryReport"]; ;
+                    SPName = ConfigurationManager.AppSettings["ConsolidatedEnquiryReport"];
                     break;
                 case "ConQuotationReport":
-                    SPName = ConfigurationManager.AppSettings["ConsolidatedQuotationReport"]; ;
+                    SPName = ConfigurationManager.AppSettings["ConsolidatedQuotationReport"];
                     break;
                 case "ConMasterOrderReport":
-                    SPName = ConfigurationManager.AppSettings["ConsolidatedOrderReport"]; ;
+                    SPName = ConfigurationManager.AppSettings["ConsolidatedOrderReport"];
                     break;
                 case "ConOrderItemwiseReport":
-                    SPName = ConfigurationManager.AppSettings["ConsolidatedOrderItemwiseReport"]; ;
+                    SPName = ConfigurationManager.AppSettings["ConsolidatedOrderItemwiseReport"];
                     break;
             }
                 
