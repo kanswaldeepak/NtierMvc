@@ -479,8 +479,10 @@ namespace NtierMvc.Models
                 int count = 1;
                 if (CustDetails != null)
                 {
+                    var Custdetails= CustDetails.LstCusEnt.OrderBy(n => n.CustomerId).ToList();
 
-                    foreach (var cust in CustDetails.LstCusEnt)
+
+                    foreach (var cust in Custdetails)
                     {
                         CustomerReport CustReportDetails = new CustomerReport();
                         CustReportDetails.Id = Convert.ToString(count);
