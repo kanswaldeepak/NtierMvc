@@ -1137,7 +1137,7 @@ namespace NtierMvc.Areas.MRM.Controllers
                 }
 
                 xlWorkbook.Worksheets[1].Cells.Replace("#TotalValue", CubMtr);
-                string TotalWords = model.NumberToWords(CubMtr.ToString());
+                string TotalWords = model.AmountToWordINR(CubMtr);
                 xlWorkbook.Worksheets[1].Cells.Replace("#ValueInWords", TotalWords);
 
                 Microsoft.Office.Interop.Excel.Range c3 = (Microsoft.Office.Interop.Excel.Range)ws.Cells[12, 1];

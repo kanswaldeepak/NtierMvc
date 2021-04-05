@@ -531,26 +531,6 @@ namespace NtierMvc.Controllers
                 xlWorkbook.Worksheets[1].Cells.Replace("#CustomerEmail", resultData.Rows[0]["CustomerEmail"]);
                 xlWorkbook.Worksheets[1].Cells.Replace("#Subject", resultData.Rows[0]["Subject"]);
 
-                //xlWorkbook.Worksheets[1].Cells.Replace("#EnqNo", resultData.Rows[0]["enqno"]);
-                //xlWorkbook.Worksheets[1].Cells.Replace("#EnqDt", resultData.Rows[0]["enqDt"]);
-                //xlWorkbook.Worksheets[1].Cells.Replace("#CompanyName", resultData.Rows[0]["CompanyName"]);
-                ////xlWorkbook.Worksheets[1].Cells.Replace("#Year", result.Rows[0]["Year"]);
-                //xlWorkbook.Worksheets[1].Cells.Replace("#CompanyInitial", resultData.Rows[0]["CompanyInitial"]);
-                //xlWorkbook.Worksheets[1].Cells.Replace("#UserInitial", resultData.Rows[0]["UserInitial"]);
-
-                //Removing for Table in Excel
-                //result.Columns.Remove("vendorname");
-                //result.Columns.Remove("VendorAddress");
-                //result.Columns.Remove("enqno");
-                //result.Columns.Remove("enqDt");
-                //result.Columns.Remove("CompanyName");
-                //result.Columns.Remove("QuotationNo");
-                //result.Columns.Remove("Year");
-                //result.Columns.Remove("CompanyInitial");
-                //result.Columns.Remove("UserInitial");
-                //result.Columns.Remove("FILENO");
-                //result.Columns.Remove("ENQFOR");
-
                 ////////////////For Image////////////////////
                 #region Image
                 Microsoft.Office.Interop.Excel.Range cells = xlWorkbook.Worksheets[1].Cells;
@@ -581,7 +561,8 @@ namespace NtierMvc.Controllers
                 range.Insert(Microsoft.Office.Interop.Excel.XlInsertShiftDirection.xlShiftDown);
 
                 //Adding Table values in Excel
-                decimal sum = 0, NetWt = 0, GrWt = 0;
+                double sum = 0;
+                decimal NetWt = 0, GrWt = 0;
                 double CubMtr = 0;
                 object[,] arr = new object[resultList.Rows.Count, resultList.Columns.Count];
                 for (int r = 0; r <= resultList.Rows.Count - 1; r++)
@@ -591,14 +572,15 @@ namespace NtierMvc.Controllers
                     {
                         arr[r, c] = dr[c];
                     }
-                    sum = sum + Convert.ToDecimal(dr[6]);
+                    sum = sum + Convert.ToDouble(dr[6]);
                     NetWt = NetWt + Convert.ToDecimal(dr[8]);
                     GrWt = GrWt + Convert.ToDecimal(dr[9]);
                     CubMtr = CubMtr + Convert.ToDouble(dr[10]);
                 }
 
                 xlWorkbook.Worksheets[1].Cells.Replace("#TotalPrice", sum.ToString());
-                xlWorkbook.Worksheets[1].Cells.Replace("#AmountInWords", model.NumberToWords(sum.ToString()));
+
+                xlWorkbook.Worksheets[1].Cells.Replace("#AmountInWords", resultData.Rows[0]["Currency"].ToString() == "INR" ? model.AmountToWordINR(sum) : model.AmountToWordsUSD(sum.ToString()));
                 xlWorkbook.Worksheets[1].Cells.Replace("#NetWeight", NetWt.ToString());
                 xlWorkbook.Worksheets[1].Cells.Replace("#GrossWeight", GrWt.ToString());
                 xlWorkbook.Worksheets[1].Cells.Replace("#CubicMeter", CubMtr.ToString());
