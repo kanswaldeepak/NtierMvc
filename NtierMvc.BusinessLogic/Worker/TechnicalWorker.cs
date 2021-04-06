@@ -1815,7 +1815,7 @@ namespace NtierMvc.BusinessLogic.Worker
                         Model.QuoteItemSlNoText = dr["QuoteItemSlNoText"] == DBNull.Value ? string.Empty : Convert.ToString(dr["QuoteItemSlNoText"]);
                         Model.PoSLNo = dr["PoSLNo"] == DBNull.Value ? string.Empty : Convert.ToString(dr["PoSLNo"]);
                         Model.PoQty = dr["POQty"] == DBNull.Value ? string.Empty : Convert.ToString(dr["POQty"]);
-                        Model.UnitPrice = dr["UnitPrice"] == DBNull.Value ? 0 : Convert.ToInt32(dr["UnitPrice"]);
+                        Model.UnitPrice = dr["UnitPrice"] == DBNull.Value ? 0 : Convert.ToDecimal(dr["UnitPrice"]);
                         Model.ViewProductDetails = dr["ViewProductDetails"] == DBNull.Value ? "" : Convert.ToString(dr["ViewProductDetails"]);
 
                         Model.TotalRecords = dr["TotalRecords"] == DBNull.Value ? 0 : Convert.ToInt32(dr["TotalRecords"]);

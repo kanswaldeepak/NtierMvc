@@ -2,11 +2,12 @@
 
 function GetSoNosForFinancialYear() {
     let finYear = $('#ItemFinancialYear').val();
+    let QuoteType = $('#OrderFormQuoteType').val();
 
     $.ajax({
         type: 'POST',
         url: window.GetSoNosForFinancialYears,
-        data: JSON.stringify({ FinYear: finYear}),
+        data: JSON.stringify({ FinYear: finYear, quoteType: QuoteType}),
         contentType: "application/json; charset=utf-8",
         success: function (data) {
             $("#ItemSoNo").empty();

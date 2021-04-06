@@ -2435,10 +2435,10 @@ namespace NtierMvc.Controllers
             return Json(new { draw = draw, recordsFiltered = totalRecords, recordsTotal = totalRecords, data = objList }, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult GetSoNosForFinancialYears(string FinYear)
+        public ActionResult GetSoNosForFinancialYears(string FinYear, string quoteType = null)
         {
             List<DropDownEntity> lstOrder = new List<DropDownEntity>();
-            lstOrder = model.GetDropDownList(TableNames.Orders, GeneralConstants.ListTypeN, ColumnNames.SoNo, ColumnNames.SoNoView, FinYear, ColumnNames.FinancialYear, false, "", "");
+            lstOrder = model.GetDropDownList(TableNames.Orders, GeneralConstants.ListTypeN, ColumnNames.SoNo, ColumnNames.SoNoView, FinYear, ColumnNames.FinancialYear, false, "", "", quoteType, ColumnNames.QuoteType);
 
             return new JsonResult { Data = lstOrder, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }

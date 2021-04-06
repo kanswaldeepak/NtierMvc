@@ -710,7 +710,7 @@ function LoadQuotePrepListDetail() {
             { title: "PDC Drillable", "data": "PDCDrillable", "name": "PDCDrillable", "autoWidth": true, "visible": false },
             { title: "Id", "data": "Id", "name": "Id", "autoWidth": true, "visible": false },
             {
-                title: "Action", "data": "", orderable: false, width: "auto",
+                title: "Action", "data": "", orderable: false, width: "1%",
                 "render": function (data, type, full, meta) {
                     var columnVal = "";
                     columnVal = '<div><button type = "button" onclick=EditQuotePrep("' + full.Id + '") class="btn btn-info btn-sm"> Edit </button><button type = "button" onclick=DeleteQuotePrep("' + full.Id + '") class="btn btn-danger btn-sm"> Delete </button></div>';

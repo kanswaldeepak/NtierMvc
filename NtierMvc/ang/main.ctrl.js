@@ -1070,7 +1070,7 @@ angular.module('App').controller("MainController", function ($scope, $http, $tim
                 SetModalTitle("Add Item Wise Entry")
                 SetModalBody(html);
                 HideLoadder();
-                SetModalWidth("1200px");
+                SetModalWidth("1400px");
                 ShowModal();
 
                 if (!($('.modal.in').length)) {
