@@ -164,11 +164,19 @@ namespace NtierMvc.Models
                 //Microsoft.Office.Interop.Excel.Range c2 = (Microsoft.Office.Interop.Excel.Range)ws.Cells[1, 1];
                 Microsoft.Office.Interop.Excel.Range range = ws.get_Range(c1, c2);
                 range.Insert(Microsoft.Office.Interop.Excel.XlInsertShiftDirection.xlShiftDown);
-
+                FinancialYear fy;
                 //FinancialYear fy = new FinancialYear(DateTime.Now);
-                FinancialYear fy = new FinancialYear(Convert.ToDateTime(FromDate));
+                if (FromDate != "")
+                {
+                    fy = new FinancialYear(Convert.ToDateTime(FromDate));
+                    string s = Convert.ToInt32(fy.ToString().Split('-')[0]) + 1 + "-" + (Convert.ToInt32(fy.ToString().Split('-')[1]) + 1);
 
-                string s= Convert.ToInt32(fy.ToString().Split('-')[0]) + 1 + "-" + (Convert.ToInt32(fy.ToString().Split('-')[1]) + 1);
+                }
+                else
+                {
+                    fy = new FinancialYear(DateTime.Now);
+                }
+
 
 
                 xlWorkbook.Worksheets[1].Cells.Replace("#FinYear", fy.ToString());
