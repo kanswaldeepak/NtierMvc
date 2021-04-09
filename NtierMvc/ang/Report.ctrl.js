@@ -93,7 +93,7 @@ angular.module('App').controller("ReportController", function ($scope, $http, $t
             }
 
             else
-                alert("Select Financial Year between 1st Aprail to 31st March.")
+                alert("Select Financial Year between 1st April to 31st March.")
             HideLoadder();
         }
         else {
