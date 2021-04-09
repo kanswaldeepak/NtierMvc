@@ -165,11 +165,12 @@ namespace NtierMvc.Models
                 Microsoft.Office.Interop.Excel.Range range = ws.get_Range(c1, c2);
                 range.Insert(Microsoft.Office.Interop.Excel.XlInsertShiftDirection.xlShiftDown);
                 FinancialYear fy;
+                string FInYear="";
                 //FinancialYear fy = new FinancialYear(DateTime.Now);
                 if (FromDate != "")
                 {
                     fy = new FinancialYear(Convert.ToDateTime(FromDate));
-                    string s = Convert.ToInt32(fy.ToString().Split('-')[0]) + 1 + "-" + (Convert.ToInt32(fy.ToString().Split('-')[1]) + 1);
+                     FInYear = Convert.ToInt32(fy.ToString().Split('-')[0]) + 1 + "-" + (Convert.ToInt32(fy.ToString().Split('-')[1]) + 1);
 
                 }
                 else
@@ -179,7 +180,7 @@ namespace NtierMvc.Models
 
 
 
-                xlWorkbook.Worksheets[1].Cells.Replace("#FinYear", fy.ToString());
+                xlWorkbook.Worksheets[1].Cells.Replace("#FinYear", FInYear);
 
                 xlWorkbook.Worksheets[1].Cells.Replace("#TotalEnquiryRecv", dt1.Rows.Count);
                 xlWorkbook.Worksheets[1].Cells.Replace("#TotalQuoteSent", dt1.Rows.Count);
