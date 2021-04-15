@@ -1467,18 +1467,20 @@ namespace NtierMvc.BusinessLogic.Worker
                         if (dt.Columns.Contains("Id"))
                             quoteEntity.Id = Convert.ToInt32(dr["Id"] ?? 0);
 
-                        if (dt.Columns.Contains("VendorId"))
-                            quoteEntity.CustomerId = dr["VendorId"]?.ToString() ?? "";
+                        if (dt.Columns.Contains("CustomerID"))
+                            quoteEntity.CustomerId = dr["CustomerID"]?.ToString() ?? "";
 
-                        if (dt.Columns.Contains("VENDORNAME"))
-                            quoteEntity.CustomerName = dr["VENDORNAME"]?.ToString() ?? "";
+                        if (dt.Columns.Contains("CustomerName"))
+                            quoteEntity.CustomerName = dr["CustomerName"]?.ToString() ?? "";
 
                         if (dt.Columns.Contains("QuoteNo"))
                             quoteEntity.QuoteNo = dr["QuoteNo"]?.ToString() ?? "";
 
+                        if (dt.Columns.Contains("QuoteNoView"))
+                            quoteEntity.QuoteNoView = dr["QuoteNoView"]?.ToString() ?? "";
 
-                        if (dt.Columns.Contains("VendorName"))
-                            quoteEntity.CustomerName = dr["VendorName"]?.ToString() ?? "";
+                        //if (dt.Columns.Contains("VendorName"))
+                        //    quoteEntity.CustomerName = dr["VendorName"]?.ToString() ?? "";
 
                         if (dt.Columns.Contains("FileNo"))
                             quoteEntity.FileNo = dr["FileNo"]?.ToString() ?? "";
@@ -1833,7 +1835,40 @@ namespace NtierMvc.BusinessLogic.Worker
             }
         }
 
+        public List<DropDownEntity> GetContractReviews(string customerId = null)
+        {
+            try
+            {
+                List<DropDownEntity> lstCityName = new List<DropDownEntity>();
+                DataTable dt = _repository.GetContractReviews(customerId);
+                DropDownEntity entity;
 
+                if (dt.Rows.Count > 0)
+                {
+                    foreach (DataRow dr in dt.Rows)
+                    {
+                        entity = new DropDownEntity();
+                        if (dt.Columns.Contains("ENQNo"))
+                            entity.DataStringValueField = Convert.ToString(dr["ENQNo"] ?? "");
+
+                        if (dt.Columns.Contains("FileName"))
+                            entity.DataTextField = dr["FileName"]?.ToString() ?? "";
+
+                        //if (dt.Columns.Contains("CourseCode"))
+                        //    entity.DataCodeField = dr["CourseCode"]?.ToString() ?? "";
+
+                        lstCityName.Add(entity);
+                    }
+                }
+
+                return lstCityName;
+            }
+            catch (Exception Ex)
+            {
+                NtierMvc.DataAccess.ExceptionLogging.SendExcepToDB(Ex);
+                throw Ex;
+            }
+        }
 
 
 

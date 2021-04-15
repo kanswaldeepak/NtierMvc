@@ -51,7 +51,7 @@
                             @id = "QuoteFormType",
                             @name = "QuoteType",
                             @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
-                            @onchange = "GetQuoteNumbers(); ChangeTransport();"
+                            @onchange = "ChangeTransport();"
                         })
                         <span class="HideValidMsg">Please Enter QuoteType</span>
                     </div>
@@ -59,21 +59,30 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label class="control-label">
-                            Quote Number
+                            Quote Number View
                         </label>
-                        @Html.TextBoxFor(m => m.QuoteTypeNo, new
+                        @Html.TextBoxFor(m => m.QuoteNoView, new
                    {
                        @class = "form-control requiredValidation",
-                       @id = "QuoteTypeNo",
-                       @placeholder = "QuoteTypeNo",
-                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
-                       @readonly = "readonly"
+                       @id = "QDQuoteNoView",
+                       @placeholder = "Quote No View",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
                    })
+                        <span class="HideValidMsg">Please Select Quote No View</span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="control-label">
+                            Quote No
+                        </label>
+
                         @Html.TextBoxFor(m => m.QuoteNo, new
                    {
-                       @id = "QuoteFormNo",
-                       @name = "QuoteNo",
-                       @hidden = "hidden"
+                       @class = "form-control requiredValidation",
+                       @id = "QDQuoteNo",
+                       @placeholder = "Quote No",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
                    })
                         <span class="HideValidMsg">Please Select Quote No</span>
                     </div>
@@ -163,21 +172,21 @@
                         <span class="HideValidMsg">Please Select Vendor ID</span>
                     </div>
                 </div>
-                @*<div class="col-md-4">
-            <div class="form-group">
-                <label class="control-label">
-                    File Number
-                </label>
-
-                @Html.TextBoxFor(m => m.FileNo, new
-           {
-               @class = "form-control",
-               @id = "FileNo",
-               @placeholder = "File Number"
-           })
-
-            </div>
-        </div>*@
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="control-label">
+                            File Number <span class="required">*</span>
+                        </label>
+                        @Html.TextBoxFor(m => m.FileNo, new
+                   {
+                       @class = "form-control requiredValidation",
+                       @id = "FileNo",
+                       @placeholder = "File Number",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                   })
+                        <span class="HideValidMsg">Please Enter File No</span>
+                    </div>
+                </div>
                 <div class="col-md-4">
                     <div class="form-group">
                         <label class="control-label">

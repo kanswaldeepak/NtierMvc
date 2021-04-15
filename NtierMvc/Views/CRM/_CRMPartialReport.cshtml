@@ -15,7 +15,6 @@
                         <label class="control-label"> Report Name<span class="required">*</span></label>
 
                         <div ng-click="GetSONoDetails()">
-
                             <select id="DdlReportType" class="form-control control-color"
                                     ng-model="ReportType">
                                 <option value=''>Select Report Type</option>
@@ -131,6 +130,7 @@
                                 })
                                      <span class="HideValidMsg">Select Item No</span>
                                  </div>*@
+                            @Html.HiddenFor(M=>M.ENQNo, new { @id = "CREnqNoHidden"})
                             <button type="button" id="btnContractReview" class="btn btn-sm btn-primary" onclick="getContractReviewDetails()">Get Report</button>
                         </div>
                     </div>
@@ -148,6 +148,7 @@
                         <input class="btn btn-info" type="button" id="btnCRUpload" value="Upload" onclick="CRUpload()" />
                     </div>
                     <div class="col-md-6">
+                        <input class="btn btn-sm btn-info" type="button" id="btnShowReviews" value="Show Contract Reviews" onclick="GetContractReview()" />
                         <input class="btn btn-sm btn-danger" type="button" id="btnDeleteReviews" value="Remove Contract Reviews" onclick="DeleteContReviews()" />
                     </div>
                     <div class="col-md-12">
@@ -226,7 +227,6 @@
         window.GetContractReviews = '@Url.Action("GetContractReviews", "Technical")';
         window.DeleteContractReviews = '@Url.Action("DeleteContractReviews", "Technical")';
 
-        GetContractReview();
     });
 
 

@@ -397,5 +397,12 @@ namespace NtierMvc.API.Controllers.Application
             return Ok(_repository.LoadItemWiseOrders(skip, pageSize, sortColumn, sortColumnDir, search));
         }
 
+        [HttpGet]
+        [Route("api/TechnicalDetails/GetContractReviews")]
+        public IHttpActionResult GetContractReviews(string customerId = null)
+        {
+            return Ok(_repository.GetContractReviews(customerId));
+        }
+
     }
 }

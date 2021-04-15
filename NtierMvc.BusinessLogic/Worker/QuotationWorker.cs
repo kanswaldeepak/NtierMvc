@@ -247,7 +247,7 @@ namespace NtierMvc.BusinessLogic.Worker
                     Model.EnqNo = dt1.Rows[0]["EnqNo"] == DBNull.Value ? "" : Convert.ToString(dt1.Rows[0]["EnqNo"]);
 
                     Model.QuoteNo = dt1.Rows[0]["QuoteNo"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["QuoteNo"]);
-                    Model.QuoteTypeNo = dt1.Rows[0]["QuoteTypeNo"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["QuoteTypeNo"]);
+                    Model.QuoteNoView = dt1.Rows[0]["QuoteNoView"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["QuoteNoView"]);
 
                     Model.QuoteDate = dt1.Rows[0]["QuoteDate"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["QuoteDate"]);
                     Model.QuoteValidity = dt1.Rows[0]["QuoteValidity"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["QuoteValidity"]);

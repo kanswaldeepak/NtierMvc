@@ -80,6 +80,7 @@
                         <input class="btn btn-info" type="button" id="btnCRUpload" value="Upload" onclick="CRUpload()" />
                     </div>
                     <div class="col-md-6">
+                        <input class="btn btn-sm btn-info" type="button" id="btnShowReviews" value="Show Contract Reviews" onclick="GetContractReview()" />
                         <input class="btn btn-sm btn-danger" type="button" id="btnDeleteReviews" value="Remove Contract Reviews" onclick="DeleteContReviews()" />
                     </div>
                     <div class="col-md-12">
@@ -117,7 +118,6 @@
         window.GetContractReviews = '@Url.Action("GetContractReviews", "Technical")';
         window.DeleteContractReviews = '@Url.Action("DeleteContractReviews", "Technical")';
 
-        GetContractReview();
     });
 
 

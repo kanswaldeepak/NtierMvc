@@ -282,6 +282,16 @@ namespace NtierMvc.DataAccess.Pool
             return _dbAccess.GetDataTable(spName, parms);
         }
 
+        public DataTable GetContractReviews(string customerId = null)
+        {
+            DataTable dt = new DataTable();
+            var parms = new Dictionary<string, object>();
+            parms.Add("@customerId", customerId);
+            var spName = ConfigurationManager.AppSettings["GetContractReviews"];
+            dt = _dbAccess.GetDataTable(spName, parms);
+            return dt;
+        }
+
         #endregion
     }
 }

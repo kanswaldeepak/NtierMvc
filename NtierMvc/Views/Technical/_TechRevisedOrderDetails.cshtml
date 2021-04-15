@@ -9,7 +9,21 @@
         <div class="col-md-12">
             @Html.HiddenFor(m => m.Id)
             <div class="row">
-
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label">
+                            Financial Year <span class="required">*</span>
+                        </label>
+                        @Html.DropDownListFor(m => m.FinancialYear, new SelectList(ViewBag.ListFinancialYear, "DataStringValueField", "DataTextField", Model.FinancialYear), new
+                   {
+                       @id = "ROFinancialYearDate",
+                       @class = "form-control requiredValidation",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                       @onchange = "GetSoNumberForFinancialYear(); SetFinancialYear(this,'ROFinancialYearDate');"
+                   })
+                        <span class="HideValidMsg">Please Enter Financial Year</span>
+                    </div>
+                </div>
                 <div class="col-md-2">
                     <div class="form-group">
                         <label class="control-label">
@@ -20,19 +34,19 @@
                        @class = "form-control clearField",
                        @id = "ROSoNoOrder",
                        @data_inneraction = "validationCall",
-                       @onchange = "GetSONoDetails()"
+                       @onchange = "GetSONoDetailsForRO()"
                    })
                         <span class="HideValidMsg">Please Select SoNo</span>
                     </div>
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-2" hidden>
                     <div class="form-group">
                         <label class="control-label ">
                             PO Supply Nature <span class="required">*</span>
                         </label>
                         @Html.DropDownListFor(m => m.QuoteQtyType, new SelectList(ViewBag.ListQuoteQtyType, "DataStringValueField", "DataTextField", Model.QuoteQtyType), new
                    {
-                       @class = "form-control requiredValidation clearField",
+                       @class = "form-control clearField",
                        @id = "ROQuoteTypeNatureOrder",
                        @data_inneraction = "validationCall",
                        @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
@@ -51,8 +65,7 @@
                        @class = "form-control requiredValidation clearField",
                        @id = "ROQuoteNoOrder",
                        @data_inneraction = "validationCall",
-                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this);",
-                       @onchange = "GetQuoteDetails()"
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this);"
                    })
                         <span class="HideValidMsg"> Select Quote Number</span>
                     </div>
@@ -73,7 +86,7 @@
                         <span class="HideValidMsg"> Select Multi Quote Nos</span>
                     </div>
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-2" hidden>
                     <div class="form-group">
                         <label class="control-label">
                             Customer Id <span class="required">*</span>
@@ -81,7 +94,7 @@
                         @Html.DropDownListFor(m => m.CustomerId, new SelectList(@ViewBag.ListCustomerId, "DataStringValueField", "DataTextField", Model.CustomerId),
                            new
                            {
-                               @class = "form-control requiredValidation",
+                               @class = "form-control",
                                @id = "ROCustomerIdOrder",
                                @data_inneraction = "validationCall",
                                @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
@@ -305,7 +318,7 @@
                        @placeholder = " Enter PaymentTerms",
                        @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
                    })
-                        <span class="HideValidMsg"> Enter PaymentTerms</span>
+                        <span class="HideValidMsg"> Enter Payment Terms</span>
                     </div>
                 </div>
                 <div class="col-md-2">
@@ -339,49 +352,119 @@
         window.SaveRevisedOrderDetails = '@Url.Action("SaveRevisedOrderDetails", "Technical")';
         window.GetQuoteNumbers = '@Url.Action("GetQuoteNumbers", "Technical")';
         window.GetRevisedQuoteNo = '@Url.Action("GetRevisedQuoteNo", "Technical")';
+        window.GetSoNoDetails = '@Url.Action("GetSoNoDetails", "Technical")';
+        window.GetSoNosForFinancialYears = '@Url.Action("GetSoNosForFinancialYears", "Technical")';
     });
 
-    function GetCustomerDetails() {
-        var CustomerId = $("#CustomerIdRevised").val();
+
+    function GetSoNumberForFinancialYear() {
+        let finYear = $('#ROFinancialYearDate').val();
+
         $.ajax({
             type: 'POST',
-            url: window.CustomerDetail,
-            data: JSON.stringify({ vendorId: CustomerId }),
+            url: window.GetSoNosForFinancialYears,
+            data: JSON.stringify({ FinYear: finYear }),
             contentType: "application/json; charset=utf-8",
-            success: function (res) {
-                $("#CustomerNameRevised").val(res.quoteEntity.CustomerName);
-                $("#Country").val(res.quoteEntity.Country);
-                $("#CountryId").val(res.quoteEntity.CountryId);
+            success: function (data) {
+                $("#ROSoNoOrder").empty();
+                if (data.length > 0) {
+                    $.each(data, function (i, item) {
+                        $("#ROSoNoOrder").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
+                    })
+                }
             },
             error: function (x, e) {
-                $('#spn-Sucess-Failure').text('Some error is occurred, Please try after some time.');
-                $('#spn-Sucess-Failure').addClass("important red");
-                $('#Sucess-Failure').modal('show');
+                alert('Some error is occurred, Please try after some time.');
             }
         })
     }
 
-    function GetRevisedQuoteNos() {
-        var QuoteTypeId = $("#QuoteTypeRevised").val();
-        var QuoteNo = $("#RevisedFormQuoteNo").val();
+
+    function GetSONoDetailsForRO() {
+        var SoNo = $("#ROSoNoOrder option:selected").text();
+        if (SoNo == undefined || SoNo == '') {
+            alert('Please Select So No');
+            return;
+        }
+
         $.ajax({
             type: 'POST',
-            url: window.GetRevisedQuoteNo,
-            data: JSON.stringify({ quoteTypeId: QuoteTypeId, quoteNumberId: QuoteNo }),
+            url: window.GetSoNoDetails,
+            data: JSON.stringify({ soNo: SoNo }),
             contentType: "application/json; charset=utf-8",
-            success: function (res) {
-                $("#RevisedQuoteNo").val(res.DataValueField1);
-                $("#QuoteDateRevised").val(res.DataValueField2);
-                $("#QuoteValidityRevised").val(res.DataValueField4);
+            success: function (data) {
+
+                //$('#ROQuoteNoOrder').val(data.QuoteNo);
+                //$('#ROQuoteNoOrder').val(data.QuoteNoView);
+
+                $("#ROQuoteNoOrder").append($('<option></option>').val(data.QuoteNo).html(data.QuoteNoView));
+
+                //$('#ROCustomerIdOrder').val(data.VendorId);
+                $('#ROCustomerNameOrder').val(data.CustomerName);
+                $('#ROPoNoOrder').val(data.PoNo);
+                $('#ROPoDateOrder').val(data.PoDate);
+                $('#ROPoDorOrder').val(data.PoDor);
+                $('#ROCurrencyOrder').val(data.Curr);
+                $('#ExWorkValueOrder').val(data.ExWorkValue);
+                $('#ROPODeliveryDateOrder').val(data.PoDeliveryDate);
+                $('#RODeliveryTermsOrder').val(data.DeliveryTerms);
+                $('#SupplyTerms').val(data.SupplyTerms);
+                $('#ROConsigneeNameOrder').val(data.ConsigneeName);
+                $('#ROConsigneeLocationOrder').val(data.ConsigneeLocation);
+                $('#ROModeOfShipment').val(data.ModeOfShipment);
+                $('#ROPaymentTermsOrder').val(data.PaymentTerms);
+                $('#ROInspectionOrder').val(data.Inspection);
+
             },
             error: function (x, e) {
-                $("#RevisedQuoteNo").val('');
-                //$('#spn-Sucess-Failure').text('Some error is occurred, Please try after some time.');
-                //$('#spn-Sucess-Failure').addClass("important red");
-                //$('#Sucess-Failure').modal('show');
+                alert('Some error is occurred, Please try after some time.');
             }
         })
     }
+
+
+
+    //function GetCustomerDetails() {
+    //    var CustomerId = $("#CustomerIdRevised").val();
+    //    $.ajax({
+    //        type: 'POST',
+    //        url: window.CustomerDetail,
+    //        data: JSON.stringify({ vendorId: CustomerId }),
+    //        contentType: "application/json; charset=utf-8",
+    //        success: function (res) {
+    //            $("#CustomerNameRevised").val(res.quoteEntity.CustomerName);
+    //            $("#Country").val(res.quoteEntity.Country);
+    //            $("#CountryId").val(res.quoteEntity.CountryId);
+    //        },
+    //        error: function (x, e) {
+    //            $('#spn-Sucess-Failure').text('Some error is occurred, Please try after some time.');
+    //            $('#spn-Sucess-Failure').addClass("important red");
+    //            $('#Sucess-Failure').modal('show');
+    //        }
+    //    })
+    //}
+
+    //function GetRevisedQuoteNos() {
+    //    var QuoteTypeId = $("#QuoteTypeRevised").val();
+    //    var QuoteNo = $("#RevisedFormQuoteNo").val();
+    //    $.ajax({
+    //        type: 'POST',
+    //        url: window.GetRevisedQuoteNo,
+    //        data: JSON.stringify({ quoteTypeId: QuoteTypeId, quoteNumberId: QuoteNo }),
+    //        contentType: "application/json; charset=utf-8",
+    //        success: function (res) {
+    //            $("#RevisedQuoteNo").val(res.DataValueField1);
+    //            $("#QuoteDateRevised").val(res.DataValueField2);
+    //            $("#QuoteValidityRevised").val(res.DataValueField4);
+    //        },
+    //        error: function (x, e) {
+    //            $("#RevisedQuoteNo").val('');
+    //            //$('#spn-Sucess-Failure').text('Some error is occurred, Please try after some time.');
+    //            //$('#spn-Sucess-Failure').addClass("important red");
+    //            //$('#Sucess-Failure').modal('show');
+    //        }
+    //    })
+    //}
 
     $('.ApprovalDate').datepicker({
 
@@ -391,7 +474,7 @@
         changeYear: true,
         endDate: '',
     });
-    $('.ApprovalQuoteDate').datepicker({
+    $('.CurrentEndDate').datepicker({
 
         format: 'dd/mm/yyyy',
         autoclose: true,

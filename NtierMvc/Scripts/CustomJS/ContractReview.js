@@ -1,10 +1,16 @@
 ﻿
 function GetContractReview() {
 
+    let cust = $('#CRCustomer').val();
+    if (cust == undefined || cust == '') {
+        alert('Please Select Customer');
+        return;
+    }
+
     $.ajax({
         type: 'POST',
         url: window.GetContractReviews,
-        data: JSON.stringify({ }),
+        data: JSON.stringify({ customerId: cust }),
         contentType: "application/json; charset=utf-8",
         success: function (data) {
             $("#ContractReviewList").empty();
@@ -12,7 +18,7 @@ function GetContractReview() {
                 $('#noCRRecord').text('');
                 $.each(data, function (i, item) {
                     if (item.RequiredColumn1 != "")
-                        $("#ContractReviewList").append("<li><input type='checkbox' value='" + item.RequiredColumn3 + "'> <a target='_blank' href='/Documents/ContractReviewUploads/" + item.RequiredColumn3 + "'><img height='25px' src='/Images/excel.png' /><label>" + item.RequiredColumn2 + "</label></a></li>");
+                        $("#ContractReviewList").append("<li><input type='checkbox' value='" + item.DataStringValueField + "'> <a target='_blank' href='/Documents/ContractReviewUploads/" + item.DataTextField + "'><img height='25px' src='~/Images/excel.png' /><label>" + item.DataTextField + "</label></a></li>");
                 })
             }
             else {
@@ -25,6 +31,35 @@ function GetContractReview() {
     })
 
 }
+
+//function ShowContReviews() {
+
+//    let cust = $('#CRCustomer').val();
+//    $.ajax({
+//        type: 'POST',
+//        url: window.GetContractReviews,
+//        data: JSON.stringify({ customerId: cust }),
+//        contentType: "application/json; charset=utf-8",
+//        dataType: "json",
+//        success: function (data) {
+//            $("#ContractReviewList").empty();
+//            if (data.length > 0) {
+//                $('#noCRRecord').text('');
+//                $.each(data, function (i, item) {
+//                    if (item.RequiredColumn1 != "")
+//                        $("#ContractReviewList").append("<li><input type='checkbox' value='" + item.RequiredColumn3 + "'> <a target='_blank' href='/Documents/ContractReviewUploads/" + item.RequiredColumn3 + "'><img height='25px' src='~/Images/excel.png' /><label>" + item.RequiredColumn2 + "</label></a></li>");
+//                })
+//            }
+//            else {
+//                $('#noCRRecord').text('No Records Found For Contract Review');
+//            }
+//        },
+//        error: function (x, e) {
+//            alert('Some error is occurred, Please try after some time.');
+//        }
+//    })
+
+//}
 
 function DeleteContReviews() {
 
@@ -56,6 +91,13 @@ function DeleteContReviews() {
 
 function CRUpload() {
 
+    let custId = $('#CRCustomer').val();
+    let EnqNo = $('#CRENQNo').val();
+    if (custId == undefined || custId == '' || EnqNo == undefined || EnqNo == '') {
+        alert('Please Select Customer and Enquiry No');
+        return;
+    }
+
     if (window.FormData !== undefined) {
 
         var fileUpload = $("#CRFileUpload").get(0);
@@ -84,8 +126,9 @@ function CRUpload() {
                 fileData.append(files[i].name, files[i]);
             }
 
+            let EnquiryId = $('#CRENQNo option:selected').text();
             // Adding one more key to FormData object
-            //fileData.append('quoteType', QuoteType);
+                fileData.append('enquiryNo', EnquiryId);
             //fileData.append('quoteNo', QuoteNo);
 
 
@@ -154,7 +197,7 @@ function getContractReviewDetails() {
     let Customer = $("#CRCustomer").val();
     let ENQNo = $("#CRENQNo").val();
     let ItemNo = $("#CRItemNo").val();
-    let FileName = $("#CRENQNo").val(); //$("#CRENQNo option:selected").text();
+    let FileName = $("#CRENQNo option:selected").text(); //$("#CRENQNo option:selected").text();
 
     //let itemNo = '';
     //let y = document.getElementById("CRItemNo");

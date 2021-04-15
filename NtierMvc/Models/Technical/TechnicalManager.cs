@@ -866,6 +866,22 @@ namespace NtierMvc.Model
             return objList;
         }
 
+        public List<DropDownEntity> GetContractReviews(string customerId = null)
+        {
+            List<DropDownEntity> prodList = new List<DropDownEntity>();
+            var baseAddress = "TechnicalDetails";
+            using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
+            {
+                HttpResponseMessage response = client.GetAsync(baseAddress + "/GetContractReviews?customerId=" + customerId).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    var data = response.Content.ReadAsStringAsync().Result;
+                    prodList = JsonConvert.DeserializeObject<List<DropDownEntity>>(data);
+                }
+            }
+            return prodList;
+        }
+
 
     }
 }

@@ -73,6 +73,7 @@ namespace NtierMvc.BusinessLogic.Interface
         DataTable GetDataForContractReview(string EnqNo, string ItemNo, string type);
         string SaveContractReviewData(ContractReview entity);
         List<ItemEntity> LoadItemWiseOrders(int skip, int pageSize, string sortColumn, string sortColumnDir, string search);
+        List<DropDownEntity> GetContractReviews(string customerId = null);
 
     }
 }

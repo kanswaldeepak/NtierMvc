@@ -1,5 +1,4 @@
 ﻿
-
 function GetSoNosForFinancialYear() {
     let finYear = $('#ItemFinancialYear').val();
     let QuoteType = $('#OrderFormQuoteType').val();
@@ -295,7 +294,7 @@ function GetQuoteNoDetails() {
 }
 
 function GetSONoDetails() {
-    var SoNo = $("#SoNoOrder option:selected").val();
+    var SoNo = $("#SoNoOrder option:selected").text();
     if (SoNo == undefined || SoNo == '') {
         alert('Please Select So No');
         return;

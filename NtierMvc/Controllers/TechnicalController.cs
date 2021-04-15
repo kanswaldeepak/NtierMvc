@@ -194,7 +194,7 @@ namespace NtierMvc.Controllers
             }
             else
             {
-                data = GeneralConstants.NotSavedError;
+                data = GeneralConstants.NotSavedError+ " .Reason:" + result;
             }
 
             return new JsonResult { Data = data, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
@@ -605,7 +605,7 @@ namespace NtierMvc.Controllers
                 range1.Rows.AutoFit();
                 range1.Value = arr;
 
-                
+
                 fileName = quoteNoForFileName;
                 return fileName;
             }
@@ -616,11 +616,11 @@ namespace NtierMvc.Controllers
             }
             finally
             {
-                
+
                 xlWorkbook.SaveAs(fullPath);
                 xlWorkbook.Close();
                 excelApp.Quit();
-                
+
             }
 
 
@@ -1560,6 +1560,7 @@ namespace NtierMvc.Controllers
             ViewBag.ListSoNo = model.GetMasterTableStringList(TableNames.Orders, ColumnNames.SoNo, ColumnNames.SoNoView, "", "", GeneralConstants.ListTypeD);
             ViewBag.ListSoNo.RemoveAt(0);
             ViewBag.ListModeOfDespatch = model.GetDropDownList(TableNames.Master_Taxonomy, GeneralConstants.ListTypeD, ColumnNames.DropDownID, ColumnNames.DropDownValue, "Transport", ColumnNames.Property);
+            ViewBag.ListFinancialYear = model.GetDropDownList(TableNames.FinancialYear, GeneralConstants.ListTypeN, ColumnNames.id, ColumnNames.FinYear, "", "", true);
 
             model = new BaseModel();
 
@@ -2211,7 +2212,7 @@ namespace NtierMvc.Controllers
                             string extension = System.IO.Path.GetExtension(file.FileName);
                             Name = file.FileName.Substring(0, file.FileName.Length - extension.Length);
 
-                            fname = Guid.NewGuid() + extension;
+                            fname = file.FileName;
                         }
 
                         //strB = strB.Append(fname + ",");
@@ -2219,7 +2220,7 @@ namespace NtierMvc.Controllers
 
                         string result = string.Empty;
                         ContractReview conRev = new ContractReview();
-                        conRev.ENQNo = Name;
+                        conRev.ENQNo = Request.Form["enquiryNo"];
                         conRev.FileName = fname;
                         //cObj.MailId = cObj.MailId.Remove(cObj.MailId.Length - 1, 1);
                         result = objManager.SaveContractReviewData(conRev);
@@ -2250,11 +2251,15 @@ namespace NtierMvc.Controllers
         }
 
 
-        public JsonResult GetContractReviews()
+        public JsonResult GetContractReviews(string customerId = null)
         {
-            List<TableRecordsEntity> NewStr = new List<TableRecordsEntity>();
-            NewStr = model.GetTableDataList(GeneralConstants.ListTypeD, TableNames.ContractReviewDetails, "", "", "", "", "", "", "", "", "", "", ColumnNames.id, ColumnNames.EnqNo, ColumnNames.filename);
-            return Json(NewStr);
+            List<DropDownEntity> newLst = new List<DropDownEntity>();
+            newLst = objManager.GetContractReviews(customerId);
+            //List<TableRecordsEntity> NewStr = new List<TableRecordsEntity>();
+            //newLst = model.GetTableDataList(GeneralConstants.ListTypeD, TableNames.ContractReviewDetails, ColumnNames.CustomerID, customerId, "", "", "", "", "", "", "", "", ColumnNames.id, ColumnNames.EnqNo, ColumnNames.filename);
+
+            //return Json(NewStr);
+            return new JsonResult { Data = newLst, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 
         public ActionResult DeleteContractReviews(List<string> EnqNoExcels)
@@ -2438,7 +2443,10 @@ namespace NtierMvc.Controllers
         public ActionResult GetSoNosForFinancialYears(string FinYear, string quoteType = null)
         {
             List<DropDownEntity> lstOrder = new List<DropDownEntity>();
-            lstOrder = model.GetDropDownList(TableNames.Orders, GeneralConstants.ListTypeN, ColumnNames.SoNo, ColumnNames.SoNoView, FinYear, ColumnNames.FinancialYear, false, "", "", quoteType, ColumnNames.QuoteType);
+            if (string.IsNullOrEmpty(quoteType))
+                lstOrder = model.GetDropDownList(TableNames.Orders, GeneralConstants.ListTypeN, ColumnNames.SoNo, ColumnNames.SoNoView, FinYear, ColumnNames.FinancialYear, false, "", "");
+            else
+                lstOrder = model.GetDropDownList(TableNames.Orders, GeneralConstants.ListTypeN, ColumnNames.SoNo, ColumnNames.SoNoView, FinYear, ColumnNames.FinancialYear, false, "", "", quoteType, ColumnNames.QuoteType);
 
             return new JsonResult { Data = lstOrder, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }

@@ -56,6 +56,7 @@ namespace NtierMvc.DataAccess.Pool
             Params.Add("@MainProdGrp", Model.MainProdGrp);
             Params.Add("@SubProdGrp", Model.SubProdGrp);
             Params.Add("@ProdName", Model.ProdName);
+            Params.Add("@QuoteNoView", Model.QuoteNoView);
             Params.Add("@QuoteNo", Model.QuoteNo);
             Params.Add("@GeoCode", Model.GeoCode);
             Params.Add("@QuoteSentOn", Model.QuoteSentOn);
@@ -181,6 +182,7 @@ namespace NtierMvc.DataAccess.Pool
             var Params = new Dictionary<string, object>();
             Params.Add("@UserInitial", Model.UserInitial);
             Params.Add("@UnitNo", Model.UnitNo);
+            Params.Add("@FinancialYear", Model.FinancialYear);
             Params.Add("@QuoteType", Model.QuoteType);
             Params.Add("@VendorId", Model.CustomerId);
             Params.Add("@VendorName", Model.CustomerName);

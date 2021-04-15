@@ -407,7 +407,7 @@
                             @Html.DropDownListFor(m => m.EnqBGreq, new SelectList(@ViewBag.YesNo, "DataValueField", "DataTextField", Model.EnqBGreq),
                             new
                             {
-                                @class = "form-control requiredValidation",
+                                @class = "form-control",
                                 @id = "EnqBGreq",
                                 @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
                             })
