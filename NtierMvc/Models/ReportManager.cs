@@ -164,9 +164,23 @@ namespace NtierMvc.Models
                 //Microsoft.Office.Interop.Excel.Range c2 = (Microsoft.Office.Interop.Excel.Range)ws.Cells[1, 1];
                 Microsoft.Office.Interop.Excel.Range range = ws.get_Range(c1, c2);
                 range.Insert(Microsoft.Office.Interop.Excel.XlInsertShiftDirection.xlShiftDown);
+                FinancialYear fy;
+                string FInYear="";
+                //FinancialYear fy = new FinancialYear(DateTime.Now);
+                if (FromDate != "")
+                {
+                    fy = new FinancialYear(Convert.ToDateTime(FromDate));
+                     FInYear = Convert.ToInt32(fy.ToString().Split('-')[0]) + 1 + "-" + (Convert.ToInt32(fy.ToString().Split('-')[1]) + 1);
 
-                FinancialYear fy = new FinancialYear(DateTime.Now);
-                xlWorkbook.Worksheets[1].Cells.Replace("#FinYear", fy.ToString());
+                }
+                else
+                {
+                    fy = new FinancialYear(DateTime.Now);
+                }
+
+
+
+                xlWorkbook.Worksheets[1].Cells.Replace("#FinYear", FInYear);
 
                 xlWorkbook.Worksheets[1].Cells.Replace("#TotalEnquiryRecv", dt1.Rows.Count);
                 xlWorkbook.Worksheets[1].Cells.Replace("#TotalQuoteSent", dt1.Rows.Count);
@@ -330,9 +344,13 @@ namespace NtierMvc.Models
 
                 int count = 1;
                 if (OrderDetails != null)
+                { 
 
-                    foreach (var order in OrderDetails.lstOrderEntity)
+                    var OrderDetail = OrderDetails.lstOrderEntity.OrderBy(n => n.SoNoView).ToList();
+
+                foreach (var order in OrderDetail)
                     {
+
                         POReportDetails poReportDetails = new POReportDetails();
                         poReportDetails.Id = Convert.ToString(count);
                         poReportDetails.PoEntity = order.PoEntity;
@@ -353,7 +371,8 @@ namespace NtierMvc.Models
 
 
                     }
-                //}
+                    
+                }
 
                 ExtensionMethods em = new ExtensionMethods();
                 System.Data.DataTable resultData = em.ToDataTable(POrderList);
