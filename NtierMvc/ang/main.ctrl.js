@@ -1390,6 +1390,7 @@ angular.module('App').controller("MainController", function ($scope, $http, $tim
             datatype: "JSON",
             url: window.BindDescDetail,
             success: function (html) {
+                event.preventDefault();
                 html = $compile(html)($scope);
                 SetModalTitle("Add Master Item")
                 SetModalBody(html);

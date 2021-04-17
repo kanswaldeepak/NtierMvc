@@ -1473,7 +1473,7 @@ namespace NtierMvc.Controllers
         public ActionResult GetQuoteItemSlNos(string quoteType, string quoteNo, string finYear)
         {
             List<DropDownEntity> QuoteItemSlNoList = new List<DropDownEntity>();
-            QuoteItemSlNoList = model.GetDropDownList(TableNames.QuotePreparationTbl, GeneralConstants.ListTypeD, ColumnNames.id, ColumnNames.ItemNo, quoteNo, ColumnNames.QuoteNo, false, "", "", quoteType, ColumnNames.QuoteType, finYear, ColumnNames.FinancialYear);
+            QuoteItemSlNoList = model.GetDropDownList(TableNames.QuotePreparationTbl, GeneralConstants.ListTypeD, ColumnNames.id, ColumnNames.ItemNo, quoteNo, ColumnNames.QuoteNoView);
 
             return new JsonResult { Data = QuoteItemSlNoList, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }

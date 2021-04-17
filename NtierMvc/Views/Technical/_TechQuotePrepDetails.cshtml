@@ -8,6 +8,7 @@
 <div ng-controller="ModalController">
     <form id="formSaveQuotationPrepDetail">
 
+        @Html.HiddenFor(m => m.QuoteNoView, new { @id = "QPQuoteNoView" })
         @Html.HiddenFor(m => m.ViewPos1)
         @Html.HiddenFor(m => m.ViewPos2)
         @Html.HiddenFor(m => m.ViewPos3)
@@ -22,7 +23,7 @@
         <div class="row m--padding-10">
             <div class="col-md-6">
                 <input style="font-size:18px" type="button" class="btn btn-success btn-sm" id="QPAddPL" value="Add PL" ng-click="BindPLDetail()" />
-                <input style="font-size:18px" type="button" class="btn btn-success btn-sm" id="QPAddMasterItem" value="Add Master Item" ng-click="BindDescDetails()" />
+                <input style="font-size:18px" type="button" class="btn btn-success btn-sm" id="QPAddMasterItem" value="Add Master Item" ng-click="BindDescDetails($event)" />
             </div>
         </div>
         <div class="row m--padding-10">

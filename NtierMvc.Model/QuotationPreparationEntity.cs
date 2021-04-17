@@ -66,6 +66,7 @@ namespace NtierMvc.Model
         public string PDCDrillable { get; set; }
         public int TotalRecords { get; set; }
         public int FinancialYear { get; set; }
+        public string QuoteNoView { get; set; }
 
 
     }

@@ -231,7 +231,7 @@ function GetQuoteDetails() {
 
 function GetQuoteOrderItemSlNos() {
     var QuoteType = $("#OrderFormQuoteType").val();
-    var QuoteNo = $("#QuoteItemFormNo").val();
+    var QuoteNo = $("#QuoteItemFormNo option:selected").val();
     var FinYear = $("#ItemFinancialYear").val();
 
     $('#ItemQuoteNoView').val($("#QuoteItemFormNo option:selected").text());

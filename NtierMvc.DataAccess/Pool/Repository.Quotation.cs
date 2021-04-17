@@ -138,6 +138,7 @@ namespace NtierMvc.DataAccess.Pool
             Params.Add("@ViewProductDetails", Model.ViewProductDetails);
             Params.Add("@PDCDrillable", Model.PDCFeatures);
             Params.Add("@FinancialYear", Model.FinancialYear);
+            Params.Add("@QuoteNoView", Model.QuoteNoView);
 
             var SPName = ConfigurationManager.AppSettings["SaveQuotePreparation"];
             _dbAccess.ExecuteNonQuery(SPName, Params, "@o_MsgCode", out msgCode);

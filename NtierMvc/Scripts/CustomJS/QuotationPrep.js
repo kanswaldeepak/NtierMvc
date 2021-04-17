@@ -442,6 +442,8 @@ function GetProductNameForProductType(ProductType) {
 function GetVendorDetailsForQuote() {
     var QuoteType = $("#QuotePrepFormType").val();
     var QuoteNo = $("#QuotePrepFormNo option:selected").text();
+    $('#QPQuoteNoView').val($('#QuotePrepFormNo option:selected').text());
+
     $.ajax({
         type: 'POST',
         url: window.VendorDetailsForQuote,
