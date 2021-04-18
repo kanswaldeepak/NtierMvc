@@ -75,6 +75,7 @@ namespace NtierMvc.Model
         public string QuoteNoView { get; set; }
         public string QuoteType { get; set; }
         public int FinancialYear { get; set; }
+        public int QPFinancialYear { get; set; }
         public string FinancialYearText { get; set; }
         public int SoNo { get; set; }
         public string SoNoView { get; set; }

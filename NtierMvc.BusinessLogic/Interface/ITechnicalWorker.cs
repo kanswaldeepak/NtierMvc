@@ -51,7 +51,7 @@ namespace NtierMvc.BusinessLogic.Interface
 
         string SaveRevisedQuotationDetails(QuotationEntity entity);
         List<DropDownEntity> GetVendorDetails(string quotetypeId);
-        QuotationPreparationEntity GetQuotePrepDetails(int itemNoId, int quoteType, int quoteNo, int QuotePrepId);
+        QuotationPreparationEntity GetQuotePrepDetails(int itemNoId, int quoteType, int quoteNo, int QuotePrepId, int financialYear);
         string SaveClarificationData(ClarificationEntity cObj);
         string SaveOrderClarificationData(ClarificationEntity cEntity);
         string SaveQuoteNotes(ClarificationEntity cObj);
@@ -66,7 +66,7 @@ namespace NtierMvc.BusinessLogic.Interface
 
         List<DescEntity> LoadDescDetail(int skip, int pageSize, string sortColumn, string sortColumnDir, string search);
         List<PLEntity> LoadMasterPLlist(int skip, int pageSize, string sortColumn, string sortColumnDir, string search);
-        List<QuotationPreparationEntity> LoadQuotePrepListDetails(int skip, int pageSize, string sortColumn, string sortColumnDir, string search, string quoteType = null, string quoteNo = null, string itemNo = null);
+        List<QuotationPreparationEntity> LoadQuotePrepListDetails(int skip, int pageSize, string sortColumn, string sortColumnDir, string search, string quoteType = null, string quoteNo = null, string itemNo = null, string financialYear = null);
         string SaveRevisedOrderDetails(OrderEntity cEntity);
         string GetWorkAuthReport(string SoNo, string FromDate, string ToDate, string ReportType);
         List<DropDownEntity> GetItemNosForEnqs(string EnqNo);
@@ -74,6 +74,7 @@ namespace NtierMvc.BusinessLogic.Interface
         string SaveContractReviewData(ContractReview entity);
         List<ItemEntity> LoadItemWiseOrders(int skip, int pageSize, string sortColumn, string sortColumnDir, string search);
         List<DropDownEntity> GetContractReviews(string customerId = null);
+        List<DropDownEntity> GetQuoteItemSlNos(string quoteType, string quoteNo, string finYear);
 
     }
 }

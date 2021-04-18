@@ -264,9 +264,9 @@ namespace NtierMvc.API.Controllers.Application
 
         [HttpGet]
         [Route("api/TechnicalDetails/GetQuotePrepDetails")]
-        public IHttpActionResult GetQuotePrepDetails(int itemNoId, int quoteType, int quoteNo, int QuotePrepId)
+        public IHttpActionResult GetQuotePrepDetails(int itemNoId, int quoteType, int quoteNo, int QuotePrepId, int financialYear)
         {
-            return Ok(_repository.GetQuotePrepDetails(itemNoId, quoteType, quoteNo, QuotePrepId));
+            return Ok(_repository.GetQuotePrepDetails(itemNoId, quoteType, quoteNo, QuotePrepId, financialYear));
         }
 
         [HttpPost]
@@ -385,9 +385,9 @@ namespace NtierMvc.API.Controllers.Application
 
         [HttpGet]
         [Route("api/TechnicalDetails/LoadQuotePrepListDetails")]
-        public IHttpActionResult LoadQuotePrepListDetails(int skip, int pageSize, string sortColumn, string sortColumnDir, string search, string quoteType = null, string quoteNo = null, string itemNo = null)
+        public IHttpActionResult LoadQuotePrepListDetails(int skip, int pageSize, string sortColumn, string sortColumnDir, string search, string quoteType = null, string quoteNo = null, string itemNo = null, string financialYear = null)
         {
-            return Ok(_repository.LoadQuotePrepListDetails(skip, pageSize, sortColumn, sortColumnDir, search, quoteType, quoteNo, itemNo));
+            return Ok(_repository.LoadQuotePrepListDetails(skip, pageSize, sortColumn, sortColumnDir, search, quoteType, quoteNo, itemNo, financialYear));
         }
 
         [HttpGet]
@@ -402,6 +402,13 @@ namespace NtierMvc.API.Controllers.Application
         public IHttpActionResult GetContractReviews(string customerId = null)
         {
             return Ok(_repository.GetContractReviews(customerId));
+        }
+
+        [HttpGet]
+        [Route("api/TechnicalDetails/GetQuoteItemSlNos")]
+        public IHttpActionResult GetQuoteItemSlNos(string quoteType, string quoteNo, string finYear)
+        {
+            return Ok(_repository.GetQuoteItemSlNos(quoteType, quoteNo, finYear));
         }
 
     }

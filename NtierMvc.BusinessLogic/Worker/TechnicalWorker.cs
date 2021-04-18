@@ -1181,6 +1181,9 @@ namespace NtierMvc.BusinessLogic.Worker
                         if (dt.Columns.Contains("PoItemDescription"))
                             itemEntity.PoItemDescription = dr["PoItemDescription"]?.ToString() ?? "";
 
+                        if (dt.Columns.Contains("QPFinancialYear"))
+                            itemEntity.QPFinancialYear = Convert.ToInt32(dr["QPFinancialYear"] ?? 0);
+
                         //if (dt.Columns.Contains("PoSLNo"))
                         //    itemEntity.PoSLNo = dr["PoSLNo"]?.ToString() ?? "";
 
@@ -1267,12 +1270,12 @@ namespace NtierMvc.BusinessLogic.Worker
             }
         }
 
-        public QuotationPreparationEntity GetQuotePrepDetails(int itemNoId, int quoteType, int quoteNo, int QuotePrepId)
+        public QuotationPreparationEntity GetQuotePrepDetails(int itemNoId, int quoteType, int quoteNo, int QuotePrepId, int financialYear)
         {
             try
             {
                 QuotationPreparationEntity quoteEntity = new QuotationPreparationEntity();
-                DataTable dt = _repository.GetQuotePrepDetails(itemNoId, quoteType, quoteNo, QuotePrepId);
+                DataTable dt = _repository.GetQuotePrepDetails(itemNoId, quoteType, quoteNo, QuotePrepId, financialYear);
 
                 if (dt.Rows.Count > 0)
                 {
@@ -1732,12 +1735,12 @@ namespace NtierMvc.BusinessLogic.Worker
         }
 
 
-        public List<QuotationPreparationEntity> LoadQuotePrepListDetails(int skip, int pageSize, string sortColumn, string sortColumnDir, string search, string quoteType = null, string quoteNo = null, string itemNo = null)
+        public List<QuotationPreparationEntity> LoadQuotePrepListDetails(int skip, int pageSize, string sortColumn, string sortColumnDir, string search, string quoteType = null, string quoteNo = null, string itemNo = null, string financialYear = null)
         {
             try
             {
                 List<QuotationPreparationEntity> lstDrpDwn = new List<QuotationPreparationEntity>();
-                DataTable dt = _repository.LoadQuotePrepListDetails(skip, pageSize, sortColumn, sortColumnDir, search, quoteType, quoteNo, itemNo);
+                DataTable dt = _repository.LoadQuotePrepListDetails(skip, pageSize, sortColumn, sortColumnDir, search, quoteType, quoteNo, itemNo, financialYear);
                 QuotationPreparationEntity Model;
 
                 if (dt.Rows.Count > 0)
@@ -1862,6 +1865,41 @@ namespace NtierMvc.BusinessLogic.Worker
                 }
 
                 return lstCityName;
+            }
+            catch (Exception Ex)
+            {
+                NtierMvc.DataAccess.ExceptionLogging.SendExcepToDB(Ex);
+                throw Ex;
+            }
+        }
+
+        public List<DropDownEntity> GetQuoteItemSlNos(string quoteType, string quoteNo, string finYear)
+        {
+            try
+            {
+                List<DropDownEntity> lstItem = new List<DropDownEntity>();
+                DataTable dt = _repository.GetQuoteItemSlNos(quoteType, quoteNo, finYear);
+                DropDownEntity entity;
+
+                if (dt.Rows.Count > 0)
+                {
+                    foreach (DataRow dr in dt.Rows)
+                    {
+                        entity = new DropDownEntity();
+                        if (dt.Columns.Contains("Id"))
+                            entity.DataStringValueField = Convert.ToString(dr["Id"] ?? "");
+
+                        if (dt.Columns.Contains("ItemNo"))
+                            entity.DataTextField = dr["ItemNo"]?.ToString() ?? "";
+
+                        //if (dt.Columns.Contains("CourseCode"))
+                        //    entity.DataCodeField = dr["CourseCode"]?.ToString() ?? "";
+
+                        lstItem.Add(entity);
+                    }
+                }
+
+                return lstItem;
             }
             catch (Exception Ex)
             {

@@ -133,6 +133,7 @@ function GetItemOrderDetailsFromSO() {
             $('#SupplyTerms').val(data.iEntity.SupplyTerms);
             $('#QuoteItemFormNo').val(data.iEntity.QuoteNo);
             $('#ExWorkValue').val(data.iEntity.ExWorkValue);
+            $('#ItemQPFinancialYear').val(data.iEntity.QPFinancialYear);
             $('.OrderPercentClass').html('Order Percentage ' + data.iEntity.POPercent + ' %');
 
             //$("#SupplyTerms").attr('disabled', true);
@@ -232,7 +233,7 @@ function GetQuoteDetails() {
 function GetQuoteOrderItemSlNos() {
     var QuoteType = $("#OrderFormQuoteType").val();
     var QuoteNo = $("#QuoteItemFormNo option:selected").val();
-    var FinYear = $("#ItemFinancialYear").val();
+    var FinYear = $("#ItemQPFinancialYear").val();
 
     $('#ItemQuoteNoView').val($("#QuoteItemFormNo option:selected").text());
 

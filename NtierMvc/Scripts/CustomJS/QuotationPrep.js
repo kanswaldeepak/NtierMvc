@@ -359,6 +359,7 @@ function CreateDocument(dwnldtype) {
 }
 
 function ValidateItemNo() {
+    var FinancialYear = $("#QuotePrepFinancialYear").val();
     var QuoteType = $("#QuotePrepFormType").val();
     var QuoteNo = $("#QuotePrepFormNo").val();
     var ItemNo = $("#QuotePrepItemNo").val();
@@ -367,10 +368,11 @@ function ValidateItemNo() {
         alert('Please Enter Item No');
         return;
     }
+
     $.ajax({
         type: 'POST',
         url: window.CheckDuplicateItemNo,
-        data: JSON.stringify({ itemNoId: ItemNo, quoteType: QuoteType, quoteNo: QuoteNo }),
+        data: JSON.stringify({ itemNoId: ItemNo, quoteType: QuoteType, quoteNo: QuoteNo, financialYear: FinancialYear }),
         contentType: "application/json; charset=utf-8",
         success: function (data) {
             if (data.RecordCount > 0) {
@@ -658,6 +660,7 @@ function LoadMasterPLAndSubPL() {
 function LoadQuotePrepListDetail() {
 
     $("#tblQuotePrep").DataTable().destroy();
+    let FinancialYear = $('#SearchQuoteTypeFinancialYear').val();
     let QuoteType = $('#SearchQuoteTypeQuotePrep').val();
     let QuoteNo = $('#SearchQuoteNoQuotePrep').val();
     let ItemNo = $('#SearchItemNoQuotePrep').val();
@@ -683,7 +686,7 @@ function LoadQuotePrepListDetail() {
             "url": window.LoadQuotePrepListDetails,
             "type": "POST",
             "datatype": "json",
-            "data": { quoteType: QuoteType, quoteNo: QuoteNo, itemNo: ItemNo }
+            "data": { quoteType: QuoteType, quoteNo: QuoteNo, itemNo: ItemNo, financialYear: FinancialYear }
         },
         'order': [[0, "desc"]],
         columns: [

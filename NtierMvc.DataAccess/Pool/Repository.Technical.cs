@@ -255,7 +255,7 @@ namespace NtierMvc.DataAccess.Pool
             return _dbAccess.GetDataTable(spName, parms);
         }
 
-        public DataTable LoadQuotePrepListDetails(int skip, int pageSize, string sortColumn, string sortColumnDir, string search, string quoteType = null, string quoteNo = null, string itemNo = null)
+        public DataTable LoadQuotePrepListDetails(int skip, int pageSize, string sortColumn, string sortColumnDir, string search, string quoteType = null, string quoteNo = null, string itemNo = null, string financialYear = null)
         {
             var parms = new Dictionary<string, object>();
             parms.Add("@skip", skip);
@@ -266,6 +266,7 @@ namespace NtierMvc.DataAccess.Pool
             parms.Add("@quoteType", quoteType);
             parms.Add("@quoteNo", quoteNo);
             parms.Add("@itemNo", itemNo);
+            parms.Add("@financialYear", financialYear);
             string spName = ConfigurationManager.AppSettings["QuotePrepListDetail"];
             return _dbAccess.GetDataTable(spName, parms);
         }
@@ -291,6 +292,19 @@ namespace NtierMvc.DataAccess.Pool
             dt = _dbAccess.GetDataTable(spName, parms);
             return dt;
         }
+
+        public DataTable GetQuoteItemSlNos(string quoteType, string quoteNo, string finYear)
+        {
+            DataTable dt = new DataTable();
+            var parms = new Dictionary<string, object>();
+            parms.Add("@quoteType", quoteType);
+            parms.Add("@quoteNo", quoteNo);
+            parms.Add("@finYear", finYear);
+            var spName = ConfigurationManager.AppSettings["GetQuoteItemSlNos"];
+            dt = _dbAccess.GetDataTable(spName, parms);
+            return dt;
+        }
+
 
         #endregion
     }

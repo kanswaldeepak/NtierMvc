@@ -756,7 +756,7 @@ namespace NtierMvc.Controllers
             //lstQuoteNo.Insert(0, objTbl);
 
             List<DropDownEntity> lstQuoteNo = new List<DropDownEntity>();
-            lstQuoteNo = model.GetMasterTableStringList("QuotationRegister", "CustomerId", "CustomerName", "", "", GeneralConstants.ListTypeD);
+            lstQuoteNo = model.GetMasterTableStringList(TableNames.QuotationRegister, ColumnNames.CustomerId, ColumnNames.CustomerName, "", "", GeneralConstants.ListTypeD);
 
             return new JsonResult { Data = lstQuoteNo, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
@@ -1103,10 +1103,10 @@ namespace NtierMvc.Controllers
             }
         }
 
-        public ActionResult CheckDuplicateItemNo(int itemNoId, int quoteType, int quoteNo)
+        public ActionResult CheckDuplicateItemNo(int itemNoId, int quoteType, int quoteNo, int financialYear)
         {
             QuotationPreparationEntity qPEntity = new QuotationPreparationEntity();
-            qPEntity = objManager.GetQuotePrepDetails(itemNoId, quoteType, quoteNo, 0);
+            qPEntity = objManager.GetQuotePrepDetails(itemNoId, quoteType, quoteNo, 0, financialYear);
             return new JsonResult { Data = qPEntity, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
             //List<DropDownEntity> ddl = new List<DropDownEntity>();
             //ddl = model.GetMasterTableList("QuotePreparationTbl", "Id", "ItemNo", itemNoId, "ItemNo");
@@ -1473,8 +1473,8 @@ namespace NtierMvc.Controllers
         public ActionResult GetQuoteItemSlNos(string quoteType, string quoteNo, string finYear)
         {
             List<DropDownEntity> QuoteItemSlNoList = new List<DropDownEntity>();
-            QuoteItemSlNoList = model.GetDropDownList(TableNames.QuotePreparationTbl, GeneralConstants.ListTypeD, ColumnNames.id, ColumnNames.ItemNo, quoteNo, ColumnNames.QuoteNoView);
-
+            QuoteItemSlNoList = objManager.GetQuoteItemSlNos(quoteType, quoteNo, finYear);
+            //QuoteItemSlNoList =  = model.GetDropDownList(TableNames.QuotePreparationTbl, GeneralConstants.ListTypeD, ColumnNames.id, ColumnNames.ItemNo, quoteNo, ColumnNames.QuoteNoView);
             return new JsonResult { Data = QuoteItemSlNoList, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 
@@ -2351,7 +2351,7 @@ namespace NtierMvc.Controllers
         }
 
         [HttpPost]
-        public ActionResult LoadQuotePrepListDetails(string quoteType = null, string quoteNo = null, string itemNo = null)
+        public ActionResult LoadQuotePrepListDetails(string quoteType = null, string quoteNo = null, string itemNo = null, string financialYear = null)
         {
             var draw = Request.Form.GetValues("draw").FirstOrDefault();
             var start = Request.Form.GetValues("start").FirstOrDefault();
@@ -2368,7 +2368,7 @@ namespace NtierMvc.Controllers
                 var search = Request.Form.GetValues("search[value]")[0];
                 //int InstructorId = ((UserModel)Session["UserModel"]).ObjectId;
                 //int UserId = ((UserModel)Session["UserModel"]).UserId;
-                objList = objManager.LoadQuotePrepListDetails(skip, pageSize, sortColumn, sortColumnDir, search, quoteType, quoteNo, itemNo);
+                objList = objManager.LoadQuotePrepListDetails(skip, pageSize, sortColumn, sortColumnDir, search, quoteType, quoteNo, itemNo, financialYear);
                 var v = (from a in objList select a);
                 objList = v.ToList();
                 if (objList.Count > 0)
@@ -2396,7 +2396,7 @@ namespace NtierMvc.Controllers
         public ActionResult EditQuotePrep(string Id)
         {
             QuotationPreparationEntity en = new QuotationPreparationEntity();
-            en = objManager.GetQuotePrepDetails(0, 0, 0, Convert.ToInt32(Id));
+            en = objManager.GetQuotePrepDetails(0, 0, 0, Convert.ToInt32(Id),0);
 
             return new JsonResult { Data = en, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }

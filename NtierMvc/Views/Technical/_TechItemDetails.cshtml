@@ -8,13 +8,14 @@
     <form id="formSaveItemDetails">
         @Html.HiddenFor(m=>m.QuoteNoView, new { @id= "ItemQuoteNoView" })
         @Html.HiddenFor(m=>m.SoNoView, new { @id= "ItemSoNoView" })
+        @Html.HiddenFor(m=>m.QPFinancialYear, new { @id= "ItemQPFinancialYear" })
         <div class="col-md-12">
             @Html.HiddenFor(m => m.Id)
             @Html.HiddenFor(m => m.ExWorkValue)
             <div class="row">
                 <div class="col-md-2">
                     <div class="form-group">
-                        <label class="control-label ">
+                        <label class="control-label">
                             Order Type
                         </label>
                         @Html.DropDownListFor(m => m.QuoteType, new SelectList(ViewBag.ListQuoteType, "DataStringValueField", "DataTextField", Model.QuoteType), new

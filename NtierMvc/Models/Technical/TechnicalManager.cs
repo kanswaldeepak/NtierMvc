@@ -214,7 +214,7 @@ namespace NtierMvc.Model
             string Number = "0";
             using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
             {
-                HttpResponseMessage response = client.GetAsync(baseAddress + "/GetQuoteNo?quotetypeId=" + quotetypeId+ "&finYear=" + finYear).Result;
+                HttpResponseMessage response = client.GetAsync(baseAddress + "/GetQuoteNo?quotetypeId=" + quotetypeId + "&finYear=" + finYear).Result;
                 if (response.IsSuccessStatusCode)
                 {
                     var data = response.Content.ReadAsStringAsync().Result;
@@ -814,13 +814,13 @@ namespace NtierMvc.Model
         }
 
 
-        public List<QuotationPreparationEntity> LoadQuotePrepListDetails(int skip, int pageSize, string sortColumn, string sortColumnDir, string search, string quoteType = null, string quoteNo = null, string itemNo = null)
+        public List<QuotationPreparationEntity> LoadQuotePrepListDetails(int skip, int pageSize, string sortColumn, string sortColumnDir, string search, string quoteType = null, string quoteNo = null, string itemNo = null, string financialYear = null)
         {
             List<QuotationPreparationEntity> objList = new List<QuotationPreparationEntity>();
             var baseAddress = "TechnicalDetails";
             using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
             {
-                HttpResponseMessage response = client.GetAsync(baseAddress + "/LoadQuotePrepListDetails?skip=" + skip + "&pageSize=" + pageSize + "&sortColumn=" + sortColumn + "&sortColumnDir=" + sortColumnDir + "&search=" + search + "&quoteType=" + quoteType + "&quoteNo=" + quoteNo + "&itemNo=" + itemNo).Result;
+                HttpResponseMessage response = client.GetAsync(baseAddress + "/LoadQuotePrepListDetails?skip=" + skip + "&pageSize=" + pageSize + "&sortColumn=" + sortColumn + "&sortColumnDir=" + sortColumnDir + "&search=" + search + "&quoteType=" + quoteType + "&quoteNo=" + quoteNo + "&itemNo=" + itemNo + "&financialYear=" + financialYear).Result;
                 if (response.IsSuccessStatusCode)
                 {
                     var data = response.Content.ReadAsStringAsync().Result;
@@ -832,14 +832,14 @@ namespace NtierMvc.Model
         }
 
 
-        public QuotationPreparationEntity GetQuotePrepDetails(int itemNoId, int quoteType, int quoteNo, int QuotePrepId)
+        public QuotationPreparationEntity GetQuotePrepDetails(int itemNoId, int quoteType, int quoteNo, int QuotePrepId, int financialYear)
         {
             var baseAddress = "TechnicalDetails";
             QuotationPreparationEntity newDdl = new QuotationPreparationEntity();
 
             using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
             {
-                HttpResponseMessage response = client.GetAsync(baseAddress + "/GetQuotePrepDetails?itemNoId=" + itemNoId + "&quoteType=" + quoteType + "&quoteNo=" + quoteNo + "&QuotePrepId=" + QuotePrepId).Result;
+                HttpResponseMessage response = client.GetAsync(baseAddress + "/GetQuotePrepDetails?itemNoId=" + itemNoId + "&quoteType=" + quoteType + "&quoteNo=" + quoteNo + "&QuotePrepId=" + QuotePrepId + "&FinancialYear=" + financialYear).Result;
                 if (response.IsSuccessStatusCode)
                 {
                     var data = response.Content.ReadAsStringAsync().Result;
@@ -873,6 +873,22 @@ namespace NtierMvc.Model
             using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
             {
                 HttpResponseMessage response = client.GetAsync(baseAddress + "/GetContractReviews?customerId=" + customerId).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    var data = response.Content.ReadAsStringAsync().Result;
+                    prodList = JsonConvert.DeserializeObject<List<DropDownEntity>>(data);
+                }
+            }
+            return prodList;
+        }
+
+        public List<DropDownEntity> GetQuoteItemSlNos(string quoteType, string quoteNo, string finYear)
+        {
+            List<DropDownEntity> prodList = new List<DropDownEntity>();
+            var baseAddress = "TechnicalDetails";
+            using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
+            {
+                HttpResponseMessage response = client.GetAsync(baseAddress + "/GetQuoteItemSlNos?quoteType=" + quoteType + "&quoteNo=" + quoteNo + "&finYear=" + finYear).Result;
                 if (response.IsSuccessStatusCode)
                 {
                     var data = response.Content.ReadAsStringAsync().Result;
