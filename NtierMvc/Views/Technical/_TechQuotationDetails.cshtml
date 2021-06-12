@@ -34,7 +34,7 @@
                        @class = "form-control requiredValidation",
                        data_id = "QRFinancialYear",
                        @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
-                       @onchange = "GetQuoteNumbers(); SetFinancialYear(this,'QRFinancialYearDate');"
+                       @onchange = "SetFinancialYear(this,'QRFinancialYearDate');"
                    })
                         <span class="HideValidMsg">Please Enter Financial Year</span>
                     </div>
@@ -51,7 +51,7 @@
                             @id = "QuoteFormType",
                             @name = "QuoteType",
                             @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
-                            @onchange = "ChangeTransport();"
+                            @onchange = "GetQuoteNumbers(); ChangeTransport();"
                         })
                         <span class="HideValidMsg">Please Enter QuoteType</span>
                     </div>
@@ -544,7 +544,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-4" hidden>
                 <div class="form-group">
                     <label class="control-label">
                         Revised Quote Number <span class="required">*</span>

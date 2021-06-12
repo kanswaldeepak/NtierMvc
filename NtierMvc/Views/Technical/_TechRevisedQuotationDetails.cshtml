@@ -8,6 +8,8 @@
     <form id="formSaveRevisedQuotationDetail">
         <div class="col-md-12">
             @Html.HiddenFor(m => m.Id)
+            @Html.HiddenFor(m => m.EnqNos, new {@id = "RQDEnqNo" })
+            @Html.HiddenFor(m => m.QuoteNoView, new { @id = "RQDQuoteNoView" })
             <div class="row">
                 <div class="col-md-4" hidden>
                     <div class="form-group">
@@ -16,8 +18,8 @@
                         </label>
                         @Html.TextBoxFor(m => m.UserInitial, new
                    {
-                       @class = "form-control requiredValidation",
-                       @id = "UserInitial",
+                       @class = "form-control requiredValidation clearFields",
+                       @id = "RQDUserInitial",
                        @readonly = "readonly"
                    })
                         @Html.HiddenFor(m => m.UnitNo)
@@ -28,12 +30,12 @@
                         <label class="control-label">
                             Financial Year <span class="required">*</span>
                         </label>
-                        @Html.DropDownListFor(m => m.FinancialYear, new SelectList(ViewBag.ListFinancialYear, "DataStringValueField", "DataTextField", Model.FinancialYear), new
+                        @Html.DropDownListFor(m => m.FinancialYear, new SelectList(ViewBag.ListFinYear, "DataStringValueField", "DataTextField", Model.FinancialYear), new
                    {
-                       @id = "FinancialYearRevised",
+                       @id = "RQDFinancialYear",
                        @class = "form-control requiredValidation",
                        @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
-                       @onchange = "GetQuoteNumbersForRevised()"
+                       @onchange = "SetFinancialYear(this,'RQDFinancialYearDate');"
                    })
                         <span class="HideValidMsg">Please Enter Financial Year</span>
                     </div>
@@ -47,10 +49,9 @@
                         new
                         {
                             @class = "form-control requiredValidation",
-                            @id = "QuoteTypeRevised",
-                            @name = "QuoteType",
+                            @id = "RQDQuoteFormType",
                             @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
-                            @onchange = "GetQuoteNumbersForRevised()"
+                            @onchange = "RQDGetQuoteNumbers(); RQDChangeTransport();"
                         })
                         <span class="HideValidMsg">Please Enter QuoteType</span>
                     </div>
@@ -58,19 +59,73 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label class="control-label">
-                            CustomerId
+                            Quote Number
+                        </label>
+                        @Html.DropDownListFor(m => m.QuoteNo, new SelectList(@ViewBag.ListQuoteNo, "DataStringValueField", "DataTextField", Model.QuoteNo),
+                           new
+                           {
+                               @class = "form-control requiredValidation",
+                               @id = "RQDQuoteNo",
+                               @data_inneraction = "validationCall",
+                               @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                               @onchange = "RQGetQuoteNoDetails()"
+
+                           })
+                        <span class="HideValidMsg">Please Select Quote No View</span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="control-label">
+                            Quote Revision No
+                        </label>
+                        @Html.DropDownListFor(m => m.RevisedQuoteNo, new SelectList(@ViewBag.ListRevisedQuoteNo, "DataStringValueField", "DataTextField", Model.RevisedQuoteNo),
+                           new
+                           {
+                               @class = "form-control requiredValidation clearFields",
+                               @id = "RQDRevisedQuoteNo",
+                               @data_inneraction = "validationCall",
+                               @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+
+                           })
+                        <span class="HideValidMsg">Please Select Revised Quote No View</span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="control-label">
+                            Quote Date
+                        </label>
+                        @Html.TextBoxFor(m => m.QuoteDate, new
+                   {
+                       @class = "form-control ApprovalQuoteDate clearFields",
+                       autocomplete = "off",
+                       @id = "RQDQuoteDate",
+                       @placeholder = "dd/MM/yyyy",
+                       @style = "disabled :disabled",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                   })
+                        <span class="HideValidMsg">
+                            Please Select Quote Date
+                        </span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="control-label">
+                            Customer Id
                         </label>
                         @Html.DropDownListFor(m => m.CustomerId, new SelectList(@ViewBag.ListCustomerId, "DataStringValueField", "DataTextField", Model.CustomerId),
                            new
                            {
-                               @class = "form-control requiredValidation",
-                               @id = "CustomerIdRevised",
+                               @class = "form-control requiredValidation clearFields",
+                               @id = "RQDCustomerId",
                                @data_inneraction = "validationCall",
                                @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
-                               @onchange = "GetCustomerDetails()"
+                               @onchange = "GetVendorAndEnquiryDetails()"
 
                            })
-                        <span class="HideValidMsg">Please Select CustomerId</span>
+                        <span class="HideValidMsg">Please Select Customer Id</span>
                     </div>
                 </div>
                 <div class="col-md-4">
@@ -80,8 +135,8 @@
                         </label>
                         @Html.TextBoxFor(m => m.CustomerName, new
                    {
-                       @class = "form-control requiredValidation",
-                       @id = "CustomerNameRevised",
+                       @class = "form-control requiredValidation clearFields",
+                       @id = "RQDCustomerName",
                        @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
                        @readonly = "readonly"
                    })
@@ -95,50 +150,112 @@
                         </label>
                         @Html.TextBoxFor(m => m.Country, new
                {
-                   @class = "form-control requiredValidation",
-                   @id = "Country",
-                   @placeholder = "Select Customer ID",
+                   @class = "form-control requiredValidation clearFields",
+                   @id = "RQDCountry",
+                   @placeholder = "Select Vendor ID",
                    @readonly = "readonly",
                    @style = "width = '50%'"
                })
-                        @Html.TextBoxFor(m => m.CountryId, new { id = "CountryId", @hidden = "hidden" })
-                        <span class="HideValidMsg">Please Select CustomerId</span>
+                        @Html.TextBoxFor(m => m.CountryId, new { id = "RQDCountryId", @hidden = "hidden" })
+                        <span class="HideValidMsg">Please Select VendorId</span>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
                         <label class="control-label">
-                            Quote Number
+                            Geo Area <span class="required">*</span>
                         </label>
-                        @Html.DropDownListFor(m => m.QuoteNo, new SelectList(@ViewBag.ListQuoteNo, "DataStringValueField", "DataTextField", Model.QuoteNo),
-                           new
-                           {
-                               @class = "form-control requiredValidation",
-                               @id = "RevisedFormQuoteNo",
-                               @data_inneraction = "validationCall",
-                               @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
-                               @onchange = "GetRevisedQuoteNos()"
-
-                           })
-                        <span class="HideValidMsg">Please Select Quote Number</span>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label class="control-label">
-                            Quote Date <span class="required">*</span>
-                        </label>
-                        @Html.TextBoxFor(m => m.QuoteDate, new
+                        @Html.TextBoxFor(m => m.GeoArea, new
                    {
-                       @class = "form-control requiredValidation ApprovalDate",
+                       @class = "form-control requiredValidation clearFields",
+                       @id = "RQDGeoArea",
+                       @placeholder = "Select Vendor ID",
+                       @readonly = "readonly"
+                   })
+                        @Html.TextBoxFor(m => m.GeoCode, new { id = "RGDGeoCode", @hidden = "hidden" })
+                        <span class="HideValidMsg">Please Select Vendor ID</span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="control-label">
+                            File Number <span class="required">*</span>
+                        </label>
+                        @Html.TextBoxFor(m => m.FileNo, new
+                   {
+                       @class = "form-control requiredValidation clearFields",
+                       @id = "RQDFileNo",
+                       @placeholder = "File Number",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                   })
+                        <span class="HideValidMsg">Please Enter File No</span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="control-label">
+                            Enquiry No
+                        </label>
+                        @Html.TextBoxFor(m => m.EnqRef, new
+                   {
+                       @class = "form-control requiredValidation clearFields",
+                       @id = "RQDEnqRef",
+                       @placeholder = "Enquiry Number",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                       @readonly = "readonly"
+                   })
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="control-label">
+                            Enquiry Date
+                        </label>
+                        @Html.TextBoxFor(m => m.EnqDt, new
+                   {
+                       @class = "form-control requiredValidation clearFields",
                        autocomplete = "off",
-                       @id = "QuoteDateRevised",
+                       @id = "RQDQuoteEnqDt",
+                       @placeholder = "dd/MM/yyyy",
+                       @readonly = "readonly"
+                   })
+                        <span class="HideValidMsg">Please Select Enquiry Date</span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="control-label">
+                            Enquiry For
+                        </label>
+                        @Html.TextBoxFor(m => m.EnqFor, new
+                   {
+                       @class = "form-control requiredValidation clearFields",
+                       @id = "RQDQuoteEnqFor",
+                       @placeholder = "Enquiry For",
+                       @readonly = "readonly"
+                       //@onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                   })
+                        <span class="HideValidMsg">Please Enter Enquiry For</span>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="control-label">
+                            Quote Sent on
+                        </label><span class="required">*</span>
+                        @Html.TextBoxFor(m => m.QuoteSentOn, new
+                   {
+                       @class = "form-control ApprovalQuoteDate clearFields",
+                       autocomplete = "off",
+                       @id = "RQDQuoteSentOn",
                        @placeholder = "dd/MM/yyyy",
                        @style = "disabled :disabled",
                        @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
                    })
                         <span class="HideValidMsg">
-                            Please Select Quote Date
+                            Please Select Quote Sent on
                         </span>
                     </div>
                 </div>
@@ -146,12 +263,12 @@
                     <div class="form-group">
                         <label class="control-label">
                             Quote Validity
-                        </label>
+                        </label><span class="required">*</span>
                         @Html.TextBoxFor(m => m.QuoteValidity, new
                    {
-                       @class = "form-control requiredValidation ApprovalDate",
+                       @class = "form-control requiredValidation clearFields AfterCurrentDateOnly",
                        autocomplete = "off",
-                       @id = "QuoteValidityRevised",
+                       @id = "RQDQuoteValidity",
                        @placeholder = "dd/MM/yyyy",
                        @style = "disabled :disabled",
                        @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
@@ -159,31 +276,195 @@
                         <span class="HideValidMsg">Please Select Quotation Validity</span>
                     </div>
                 </div>
+
                 <div class="col-md-4">
                     <div class="form-group">
                         <label class="control-label">
                             Inspection <span class="required">*</span>
                         </label>
-                        @Html.TextBoxFor(m => m.Inspection, new
+                        @Html.DropDownListFor(m => m.Inspection, new SelectList(ViewBag.ListInspection, "DataStringValueField", "DataTextField", Model.Inspection), new
                    {
-                       @class = "form-control requiredValidation",
-                       @id = "Inspection",
-                       @placeholder = "Inspection",
-                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                       @id = "RQDInspection",
+                       @class = "form-control requiredValidation clearFields",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                       @onchange = "RQDShowHideStatus()"
                    })
                         <span class="HideValidMsg">Please Enter Inspection</span>
+                    </div>
+                </div>
+                <div id="RQDdivStatus" class="col-md-4">
+                    <div class="form-group">
+                        <label class="control-label">
+                            Status
+                        </label>
+                        @Html.TextBoxFor(m => m.Status, new
+                   {
+                       @class = "form-control clearFields",
+                       @id = "RQDStatus",
+                       @placeholder = "Status",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                   })
+                        <span class="HideValidMsg">Please Enter Status</span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group text-left">
+                        <label class="control-label">
+                            Supply Terms
+                        </label>
+                        @Html.DropDownListFor(m => m.SupplyTerms, new SelectList(@ViewBag.ListSupplyTerms, "DataStringValueField", "DataTextField", Model.SupplyTerms), new
+                   {
+                       @class = "form-control clearFields",
+                       @id = "RQDQuoteSupplyTerms",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                   })
+                        <span class="HideValidMsg">Please Select Supply Terms</span>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
                         <label class="control-label">
-                            Revised Quote Number <span class="required">*</span>
-                        </label>
-                        @Html.TextBoxFor(m => m.RevisedQuoteNo, new
+                            Lead Time
+                        </label><span class="required">*</span>
+                        <div class="row">
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(m => m.LeadTime, new
+                           {
+                               @class = "form-control requiredValidation clearFields",
+                               @id = "RQDLeadTime",
+                               @placeholder = "Lead Time",
+                               @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                           })
+                            </div>
+                            <div class="col-md-4">
+                                @Html.DropDownListFor(m => m.LeadTimeDuration, new SelectList(@ViewBag.ListLeadTimeDuration, "DataValueField", "DataTextField", Model.LeadTimeDuration),
+                        new
+                        {
+                            @class = "form-control requiredValidation clearFields",
+                            @id = "RQDLeadTimeDuration",
+                            @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                        })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="control-label">
+                            Mode Of Despatch
+                        </label><span class="required">*</span>
+                        @Html.DropDownListFor(m => m.ModeOfDespatch, new SelectList(ViewBag.ListModeOfDespatch, "DataStringValueField", "DataTextField", Model.ModeOfDespatch), new
                    {
-                       @class = "form-control requiredValidation",
-                       @id = "RevisedQuoteNo",
-                       @placeholder = "RevisedQuoteNo",
+                       @id = "RQDModeOfDespatch",
+                       @class = "form-control requiredValidation clearFields",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                   })
+                        <span class="HideValidMsg">Please Enter Mode Of Despatch</span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="control-label">
+                            Delivery Terms
+                        </label><span class="required">*</span>
+                        @Html.DropDownListFor(m => m.DeliveryTerms, new SelectList(ViewBag.ListDeliveryTerms, "DataStringValueField", "DataTextField", Model.DeliveryTerms), new
+                   {
+                       @id = "RQDDeliveryTerms",
+                       @class = "form-control requiredValidation clearFields",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                   })
+                        <span class="HideValidMsg">Please Enter Delivery Terms</span>
+                    </div>
+                </div>
+                <div id="RQDdivPortOfDischarge" class="col-md-4">
+                    <div class="form-group">
+                        <label class="control-label">
+                            Port Of Discharge
+                        </label>
+                        @Html.TextBoxFor(m => m.PortOfDischarge, new
+                   {
+                       @class = "form-control clearFields",
+                       @id = "RQDPortOfDischarge",
+                       @placeholder = "Enter Port Of Discharge",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                   })
+                        <span class="HideValidMsg">Please Enter PortOfDischarge</span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="control-label">
+                            Currency
+                        </label><span class="required">*</span>
+                        @Html.DropDownListFor(m => m.Currency, new SelectList(ViewBag.ListCurrency, "DataStringValueField", "DataTextField", "Select"),
+                        new
+                        {
+                            @class = "form-control requiredValidation clearFields",
+                            @id = "RQDQuoteFormCurrency",
+                            @name = "Currency",
+                            @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                        })
+                        <span class="HideValidMsg">Please Select Currency</span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="control-label">
+                            Payment Terms
+                        </label>
+                        @Html.TextBoxFor(m => m.PaymentTerms, new
+                   {
+                       @class = "form-control clearFields",
+                       @id = "RQDPaymentTerms",
+                       @placeholder = "Enter Payment Terms",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                   })
+                        <span class="HideValidMsg">Please Enter Payment Terms</span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="control-label">
+                            Sales Person
+                        </label>
+                        @Html.TextBoxFor(m => m.SalesPerson, new
+                   {
+                       @class = "form-control clearFields",
+                       @id = "RQDSalesPerson",
+                       @placeholder = "Enter Sales Person",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                   })
+                        <span class="HideValidMsg">Please Enter Sales Person</span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="control-label">
+                            Subject
+                        </label>
+                        @Html.TextBoxFor(m => m.Subject, new
+                   {
+                       @class = "form-control clearFields",
+                       @id = "RQDSubject ",
+                       @placeholder = "Enter Subject",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                   })
+                        <span class="HideValidMsg">Please Enter Subject </span>
+                    </div>
+                </div>
+            </div>            
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="control-label">
+                            Remarks
+                        </label>
+                        @Html.TextAreaFor(m => m.Remarks, new
+                   {
+                       @class = "form-control col-md-12 clearFields",
+                       @id = "RQDRemarks",
+                       @width = "100%",
+                       @placeholder = "Remarks",
                        @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
                    })
                     </div>
@@ -191,8 +472,8 @@
             </div>
             <div class="row">
                 <div class="col-md-12 pt-4 text-center">
-                    <button style="font-size:18px" type="button" class="btn btn-success btn-sm" ng-click="SaveRevisedQuotation()">Save</button>
-                    <button style="font-size:18px" type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
+                    <button style="font-size:18px" type="button" class="btn btn-success btn-sm" id="save_results" ng-click="SaveRevisedQuotation()">Save</button>
+                    <button style="font-size:18px" type="button" class="btn btn-secondary btn-sm" id="cancel_results" data-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
@@ -204,99 +485,14 @@
         window.SaveRevisedQuotation = '@Url.Action("SaveRevisedQuotationDetails", "Technical")';
         window.GetQuoteNumbers = '@Url.Action("GetQuoteNumbers", "Technical")';
         window.GetRevisedQuoteNo = '@Url.Action("GetRevisedQuoteNo", "Technical")';
+        window.GetQuoteNoDetailsforRevisedQuote = '@Url.Action("GetQuoteNoDetailsforRevisedQuote", "Technical")';
+        window.GetRevAndOriginalQuotes = '@Url.Action("GetRevAndOriginalQuotes", "Technical")';
     });
 
-    function GetCustomerDetails() {
-        var CustomerId = $("#CustomerIdRevised").val();
-        $.ajax({
-            type: 'POST',
-            url: window.CustomerDetail,
-            data: JSON.stringify({ vendorId: CustomerId }),
-            contentType: "application/json; charset=utf-8",
-            success: function (res) {
-                $("#CustomerNameRevised").val(res.quoteEntity.CustomerName);
-                $("#Country").val(res.quoteEntity.Country);
-                $("#CountryId").val(res.quoteEntity.CountryId);
-            },
-            error: function (x, e) {
-                $('#spn-Sucess-Failure').text('Some error is occurred, Please try after some time.');
-                $('#spn-Sucess-Failure').addClass("important red");
-                $('#Sucess-Failure').modal('show');
-            }
-        })
-    }
-
-    //function GetQuoteNumbers() {
-    //    var QuoteType = $("#QuoteFormType").val();
-    //    var QuoteTypeText = $('#QuoteFormType option:selected').text();
-    //    $.ajax({
-    //        type: 'POST',
-    //        url: window.GetQuoteNumbers,
-    //        data: JSON.stringify({ quotetypeId: QuoteType }),
-    //        contentType: "application/json; charset=utf-8",
-    //        success: function (res) {
-    //            $("#RevisedFormQuoteNo").empty();
-    //            if (res.lstQuoteNos.length > 0) {
-    //                if (QuoteTypeText == 'Domestic') {
-    //                    $.each(res.lstQuoteNos, function (i, item) {
-    //                        $("#RevisedFormQuoteNo").append($('<option></option>').val(item.DataStringValueField).html('DQ-'+item.DataTextField));
-    //                    })
-    //                }
-    //                else if (QuoteTypeText == 'Export')
-    //                    $.each(res.lstQuoteNos, function (i, item) {
-    //                        $("#RevisedFormQuoteNo").append($('<option></option>').val(item.DataStringValueField).html('EQ-' + item.DataTextField));
-    //                    })
-    //                else if (QuoteTypeText == 'Service')
-    //                    $.each(res.lstQuoteNos, function (i, item) {
-    //                        $("#RevisedFormQuoteNo").append($('<option></option>').val(item.DataStringValueField).html('SE-' + item.DataTextField));
-    //                    })
-
-    //                if ($('#RevisedFormQuoteNo option:selected').text() != '') {
-    //                    GetRevisedQuoteNo();
-    //                }
-
-    //            }    
-
-    //            $("#CustomerFormId").empty();
-    //            if (res.lstVendors.length > 0) {
-    //                $.each(res.lstVendors, function (i, item) {
-    //                    $("#CustomerFormId").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
-    //                })
-    //            }
-    //        },
-    //        error: function (x, e) {
-    //            $('#spn-Sucess-Failure').text('Some error is occurred, Please try after some time.');
-    //            $('#spn-Sucess-Failure').addClass("important red");
-    //            $('#Sucess-Failure').modal('show');
-    //        }
-    //    })
-    //}
-
-    function GetRevisedQuoteNos() {
-        var QuoteTypeId = $("#QuoteTypeRevised").val();
-        var QuoteNo = $("#RevisedFormQuoteNo").val();
-        $.ajax({
-            type: 'POST',
-            url: window.GetRevisedQuoteNo,
-            data: JSON.stringify({ quoteTypeId: QuoteTypeId, quoteNumberId: QuoteNo }),
-            contentType: "application/json; charset=utf-8",
-            success: function (res) {
-                $("#RevisedQuoteNo").val(res.DataValueField1);
-                $("#QuoteDateRevised").val(res.DataValueField2);
-                $("#QuoteValidityRevised").val(res.DataValueField4);
-            },
-            error: function (x, e) {
-                $("#RevisedQuoteNo").val('');
-                //$('#spn-Sucess-Failure').text('Some error is occurred, Please try after some time.');
-                //$('#spn-Sucess-Failure').addClass("important red");
-                //$('#Sucess-Failure').modal('show');
-            }
-        })
-    }
 
     $('.ApprovalDate').datepicker({
 
-        format: 'dd-mm-yyyy',
+        format: 'dd-MM-yyyy',
         autoclose: true,
         changeMonth: true,
         changeYear: true,
@@ -304,10 +500,18 @@
     });
     $('.ApprovalQuoteDate').datepicker({
 
-        format: 'dd-mm-yyyy',
+        format: 'dd-MM-yyyy',
         autoclose: true,
         changeMonth: true,
         changeYear: true,
         endDate: 'today',
+    });
+    $('.AfterCurrentDateOnly').datepicker({
+
+        format: 'dd-MM-yyyy',
+        autoclose: true,
+        changeMonth: true,
+        changeYear: true,
+        startDate: 'today',
     });
 </script>

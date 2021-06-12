@@ -1228,6 +1228,7 @@
     <Content Include="Scripts\CustomJS\Inbound.js" />
     <Content Include="Scripts\CustomJS\MyCustomJS.js" />
     <Content Include="Scripts\CustomJS\ContractReview.js" />
+    <Content Include="Scripts\CustomJS\RevQuotationDetails.js" />
     <Content Include="Scripts\CustomJS\QuotationPrep.js" />
     <Content Include="Scripts\CustomJS\QuotationDetails.js" />
     <Content Include="Scripts\CustomJS\EnquiryDetails.js" />

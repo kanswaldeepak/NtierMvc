@@ -75,6 +75,8 @@ namespace NtierMvc.BusinessLogic.Interface
         List<ItemEntity> LoadItemWiseOrders(int skip, int pageSize, string sortColumn, string sortColumnDir, string search);
         List<DropDownEntity> GetContractReviews(string customerId = null);
         List<DropDownEntity> GetQuoteItemSlNos(string quoteType, string quoteNo, string finYear);
+        QuotationEntity GetQuoteNoDetailsforRevisedQuote(string quoteNoId, string quotetypeId, string financialYr);
+        List<DropDownEntity> GetRevAndOriginalQuotes(string quotetypeId, string financialYr);
 
     }
 }

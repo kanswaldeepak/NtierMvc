@@ -194,7 +194,7 @@ namespace NtierMvc.Controllers
             }
             else
             {
-                data = GeneralConstants.NotSavedError+ " .Reason:" + result;
+                data = GeneralConstants.NotSavedError + " .Reason:" + result;
             }
 
             return new JsonResult { Data = data, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
@@ -709,6 +709,7 @@ namespace NtierMvc.Controllers
                 lstQuoteNo = model.GetDropDownList(TableNames.QuotationRegister, GeneralConstants.ListTypeD, ColumnNames.QuoteNo, ColumnNames.QuoteNoView, financialYr, ColumnNames.FinancialYear, false, "", "", quotetypeId, ColumnNames.QuoteType);
             return new JsonResult { Data = lstQuoteNo, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
+
         [HttpGet]
         public ActionResult GetSoNoList(string quotetypeId)
         {
@@ -1122,31 +1123,51 @@ namespace NtierMvc.Controllers
             model = new BaseModel();
             string countryId = "0";
             ViewBag.ListState = model.GetStateDetail(countryId); //Given wrong CountryId to not get any value
+            ViewBag.ListCustomerId = model.GetMasterTableStringList(TableNames.Customer, ColumnNames.id, ColumnNames.CustomerId, "", "", GeneralConstants.ListTypeN);
+            ViewBag.ListVENDORTYPE = model.GetMasterTableList(TableNames.Master_Vendor, ColumnNames.id, ColumnNames.VendorType);
+            ViewBag.ListVENDOR_NATURE = model.GetMasterTableList(TableNames.Master_Vendor, ColumnNames.id, ColumnNames.VendorNature);
+            ViewBag.ListFUNCTION_AREA = model.GetMasterTableList(TableNames.Master_FunctionalArea, ColumnNames.id, ColumnNames.FunctionArea);
+            ViewBag.ListCountry = model.GetMasterTableList(TableNames.Master_Country, ColumnNames.id, ColumnNames.Country);
+            ViewBag.ListProdType = model.GetMasterTableStringList(TableNames.ProductType, ColumnNames.id, ColumnNames.TypeName, "", "", GeneralConstants.ListTypeN);
+            ViewBag.ListQuoteType = model.GetMasterTableStringList(TableNames.Master_Taxonomy, "dropdownId", "dropdownvalue", ColumnNames.QuoteType, ColumnNames.Property, GeneralConstants.ListTypeN);
+            ViewBag.ListCurrency = model.GetDropDownList(TableNames.Master_Taxonomy, GeneralConstants.ListTypeD, "dropdownId", "dropdownvalue", "Currency", ColumnNames.Property);
+            ViewBag.ListInspection = model.GetDropDownList(TableNames.Master_Taxonomy, GeneralConstants.ListTypeD, "dropdownId", "dropdownvalue", "Inspection", ColumnNames.Property);
+            ViewBag.ListLeadTimeDuration = model.GetTaxonomyDropDownItems("", "Time");
+            ViewBag.ListModeOfDespatch = model.GetDropDownList(TableNames.Master_Taxonomy, GeneralConstants.ListTypeD, "dropdownId", "dropdownvalue", "Transport", ColumnNames.Property);
+            ViewBag.ListSupplyTerms = model.GetMasterTableStringList(TableNames.Master_Taxonomy, "dropdownId", "dropdownvalue", "SupplyTerms", "Property", GeneralConstants.ListTypeN);
+            ViewBag.ListDeliveryTerms = model.GetDropDownList(TableNames.Master_Taxonomy, GeneralConstants.ListTypeD, ColumnNames.DropDownID, ColumnNames.DropDownValue, "DeliveryTerms", ColumnNames.ObjectName);
+            ViewBag.ListFinYear = model.GetDropDownList(TableNames.FinancialYear, GeneralConstants.ListTypeN, ColumnNames.id, ColumnNames.FinYear, "", "", true);
+            ViewBag.ListQuoteNo = "";
+            ViewBag.ListRevisedQuoteNo = model.GetDropDownList(TableNames.RevisedNoTbl, GeneralConstants.ListTypeN, ColumnNames.id, ColumnNames.RevNo, "", "", true);
 
-            ViewBag.ListCustomerId = model.GetMasterTableStringList("Customer", "Id", "CustomerId", "", "", GeneralConstants.ListTypeN);
-            ViewBag.ListVENDORTYPE = model.GetMasterTableList("Master.Vendor", "Id", "VendorType");
-            ViewBag.ListVENDOR_NATURE = model.GetMasterTableList("Master.Vendor", "Id", "VendorNature");
-            ViewBag.ListFUNCTION_AREA = model.GetMasterTableList("Master.FunctionalArea", "Id", "FunctionArea");
-            ViewBag.ListCountry = model.GetMasterTableList("Master.Country", "Id", "Country");
-            ViewBag.ListMainProdGrp = model.GetMasterTableStringList("Master.ProductLine", "Id", "MainPLName", "", "", GeneralConstants.ListTypeN);
-            ViewBag.ListSubProdGrp = model.GetMasterTableStringList("SubProductLine", "Id", "SubPLName", "", "", GeneralConstants.ListTypeN);
-            ViewBag.ListProdName = model.GetMasterTableStringList("Master.Product", "Id", "ProductName", "", "", GeneralConstants.ListTypeN);
-            ViewBag.ListQuoteType = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "QuoteType", "Property", GeneralConstants.ListTypeN);
-            ViewBag.ListFinancialYear = model.GetDropDownList(TableNames.FinancialYear, GeneralConstants.ListTypeN, ColumnNames.id, ColumnNames.FinYear, "", "", true);
+            //model = new BaseModel();
+            //string countryId = "0";
+            //ViewBag.ListState = model.GetStateDetail(countryId); //Given wrong CountryId to not get any value
+
+            //ViewBag.ListCustomerId = model.GetMasterTableStringList("Customer", "Id", "CustomerId", "", "", GeneralConstants.ListTypeN);
+            //ViewBag.ListVENDORTYPE = model.GetMasterTableList("Master.Vendor", "Id", "VendorType");
+            //ViewBag.ListVENDOR_NATURE = model.GetMasterTableList("Master.Vendor", "Id", "VendorNature");
+            //ViewBag.ListFUNCTION_AREA = model.GetMasterTableList("Master.FunctionalArea", "Id", "FunctionArea");
+            //ViewBag.ListCountry = model.GetMasterTableList("Master.Country", "Id", "Country");
+            //ViewBag.ListMainProdGrp = model.GetMasterTableStringList("Master.ProductLine", "Id", "MainPLName", "", "", GeneralConstants.ListTypeN);
+            //ViewBag.ListSubProdGrp = model.GetMasterTableStringList("SubProductLine", "Id", "SubPLName", "", "", GeneralConstants.ListTypeN);
+            //ViewBag.ListProdName = model.GetMasterTableStringList("Master.Product", "Id", "ProductName", "", "", GeneralConstants.ListTypeN);
+            //ViewBag.ListQuoteType = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "QuoteType", "Property", GeneralConstants.ListTypeN);
+            //ViewBag.ListFinancialYear = model.GetDropDownList(TableNames.FinancialYear, GeneralConstants.ListTypeN, ColumnNames.id, ColumnNames.FinYear, "", "", true);
 
             quotE.UnitNo = Session["UserId"].ToString();
             quotE.UserInitial = Session["UserName"].ToString();
+            List<DropDownEntity> SelectList = new List<DropDownEntity>();
+            DropDownEntity objSelect = new DropDownEntity();
+            objSelect.DataStringValueField = "";
+            objSelect.DataTextField = "Select";
+            SelectList.Add(objSelect);
+
+            ViewBag.ListEnqNo = SelectList;
 
             if (actionType == "ADD")
             {
-                List<DropDownEntity> SelectList = new List<DropDownEntity>();
-                DropDownEntity objSelect = new DropDownEntity();
-                objSelect.DataStringValueField = "";
-                objSelect.DataTextField = "Select";
-                SelectList.Add(objSelect);
-
                 ViewBag.ListQuoteNo = SelectList;
-
             }
 
             return base.PartialView("~/Views/Technical/_TechRevisedQuotationDetails.cshtml", quotE);
@@ -1399,17 +1420,18 @@ namespace NtierMvc.Controllers
             return new JsonResult { Data = data, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 
-        public ActionResult GetVendorDetailsForQuote(string quoteNo, string quoteType)
+        public ActionResult GetVendorDetailsForQuote(string quoteNo, string quoteType, string financialYr)
         {
             //List<DropDownEntity> newList = new List<DropDownEntity>();
             //newList = model.GetMasterTableStringList("QuotationRegister", "Id", "VendorName", quoteNo, "QuoteNo", GeneralConstants.ListTypeN);
-
             //return new JsonResult { Data = newList, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
 
-            SingleColumnEntity objSingle = new SingleColumnEntity();
-            objSingle = model.GetSingleColumnValues(TableNames.QuotationRegister, ColumnNames.CustomerName, ColumnNames.CustomerName, ColumnNames.QuoteType, quoteType, "Currency", ColumnNames.QuoteNoView, quoteNo);
+            //SingleColumnEntity objSingle = new SingleColumnEntity();
+            //objSingle = model.GetSingleColumnValues(TableNames.QuotationRegister, ColumnNames.CustomerName, ColumnNames.CustomerName, ColumnNames.QuoteType, quoteType, "Currency", ColumnNames.QuoteNoView, quoteNo);
+            //return new JsonResult { Data = objSingle, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
 
-            return new JsonResult { Data = objSingle, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+            QuotationEntity quotE = GetQuoteDetials(quoteNo, quoteType, financialYr);
+            return new JsonResult { Data = quotE, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 
         public ActionResult DeleteClarificationMails(List<int> Id)
@@ -2396,15 +2418,14 @@ namespace NtierMvc.Controllers
         public ActionResult EditQuotePrep(string Id)
         {
             QuotationPreparationEntity en = new QuotationPreparationEntity();
-            en = objManager.GetQuotePrepDetails(0, 0, 0, Convert.ToInt32(Id),0);
+            en = objManager.GetQuotePrepDetails(0, 0, 0, Convert.ToInt32(Id), 0);
 
             return new JsonResult { Data = en, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 
         public ActionResult QPGetQuoteNoFromFinYears(string finYear, string quoteType)
         {
-            List<DropDownEntity> lstQuoteNo = new List<DropDownEntity>();
-            lstQuoteNo = model.GetDropDownList(TableNames.QuotationRegister, GeneralConstants.ListTypeN, ColumnNames.QuoteNo, ColumnNames.QuoteNoView, finYear, ColumnNames.FinancialYear, false, "", "", quoteType, ColumnNames.QuoteType);
+            List<DropDownEntity> lstQuoteNo = GetRevisedAndOriginalQuotes(quoteType, finYear);
 
             return new JsonResult { Data = lstQuoteNo, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
@@ -2451,7 +2472,32 @@ namespace NtierMvc.Controllers
             return new JsonResult { Data = lstOrder, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 
+        public ActionResult GetQuoteNoDetailsforRevisedQuote(string quoteNoId, string quotetypeId, string financialYr)
+        {
+            QuotationEntity quotE = GetQuoteDetials(quoteNoId, quotetypeId, financialYr);
+            return new JsonResult { Data = quotE, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+        }
 
+        private QuotationEntity GetQuoteDetials(string quoteNoId, string quotetypeId, string financialYr)
+        {
+            quotE = new QuotationEntity();
+            quotE = objManager.GetQuoteNoDetailsforRevisedQuote(quoteNoId, quotetypeId, financialYr);
+            return quotE;
+        }
+
+        public ActionResult GetRevAndOriginalQuotes(string quotetypeId, string financialYr = null)
+        {
+            List<DropDownEntity> lstQuoteNo = GetRevisedAndOriginalQuotes(quotetypeId, financialYr);
+
+            return new JsonResult { Data = lstQuoteNo, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+        }
+
+        private List<DropDownEntity> GetRevisedAndOriginalQuotes(string quotetypeId, string financialYr)
+        {
+            List<DropDownEntity> lstQuoteNo = new List<DropDownEntity>();
+            lstQuoteNo = objManager.GetRevAndOriginalQuotes(quotetypeId, financialYr);
+            return lstQuoteNo;
+        }
     }
 
 }

@@ -898,6 +898,37 @@ namespace NtierMvc.Model
             return prodList;
         }
 
+        public QuotationEntity GetQuoteNoDetailsforRevisedQuote(string quoteNoId, string quotetypeId, string financialYr)
+        {
+            QuotationEntity quotE = new QuotationEntity();
+            var baseAddress = "TechnicalDetails";
+            using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
+            {
+                HttpResponseMessage response = client.GetAsync(baseAddress + "/GetQuoteNoDetailsforRevisedQuote?quoteNoId=" + quoteNoId + "&quotetypeId=" + quotetypeId + "&financialYr=" + financialYr).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    var data = response.Content.ReadAsStringAsync().Result;
+                    quotE = JsonConvert.DeserializeObject<QuotationEntity>(data);
+                }
+            }
+            return quotE;
+        }
+
+        public List<DropDownEntity> GetRevAndOriginalQuotes(string quotetypeId, string financialYr)
+        {
+            List<DropDownEntity> prodList = new List<DropDownEntity>();
+            var baseAddress = "TechnicalDetails";
+            using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
+            {
+                HttpResponseMessage response = client.GetAsync(baseAddress + "/GetRevAndOriginalQuotes?quoteTypeId=" + quotetypeId + "&financialYr=" + financialYr).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    var data = response.Content.ReadAsStringAsync().Result;
+                    prodList = JsonConvert.DeserializeObject<List<DropDownEntity>>(data);
+                }
+            }
+            return prodList;
+        }
 
     }
 }

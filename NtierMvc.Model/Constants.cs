@@ -10,6 +10,7 @@ namespace NtierMvc.Model
 {
     public static class TableNames
     {
+        public const string RevisedNoTbl = "RevisedNoTbl";
         public const string FinancialYear = "FinancialYear";
         public const string ContractReviewDetails = "ContractReviewDetails";
         public const string Listing1 = "Listing1";
@@ -99,6 +100,7 @@ namespace NtierMvc.Model
 
     public static class ColumnNames
     {
+        public const string RevNo = "RevNo";
         public const string FinancialYear = "FinancialYear";
         public const string FinYear = "FinYear";
         public const string CustomerId = "CustomerId";

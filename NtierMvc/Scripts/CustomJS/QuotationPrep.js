@@ -442,6 +442,7 @@ function GetProductNameForProductType(ProductType) {
 }
 
 function GetVendorDetailsForQuote() {
+    var financialYr = $("#QuotePrepFinancialYear").val();
     var QuoteType = $("#QuotePrepFormType").val();
     var QuoteNo = $("#QuotePrepFormNo option:selected").text();
     $('#QPQuoteNoView').val($('#QuotePrepFormNo option:selected').text());
@@ -449,12 +450,12 @@ function GetVendorDetailsForQuote() {
     $.ajax({
         type: 'POST',
         url: window.VendorDetailsForQuote,
-        data: JSON.stringify({ quoteNo: QuoteNo, quoteType: QuoteType }),
+        data: JSON.stringify({ quoteNoId: QuoteNo, quotetypeId: QuoteType, financialYr: financialYr }),
         contentType: "application/json; charset=utf-8",
         success: function (res) {
             //$("#QuotePrepVendorName").val(res.DataValueField1);
             //$("#QuotePrepCurrency").val(res.DataValueField2);
-            $("#QuotePrepCustomerName").val(res.DataValueField1);
+            $("#QuotePrepCustomerName").val(res.CustomerName);
         },
         error: function (x, e) {
             alert('Some error is occurred, Please try after some time.');

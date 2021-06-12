@@ -411,5 +411,20 @@ namespace NtierMvc.API.Controllers.Application
             return Ok(_repository.GetQuoteItemSlNos(quoteType, quoteNo, finYear));
         }
 
+        [HttpGet]
+        [Route("api/TechnicalDetails/GetQuoteNoDetailsforRevisedQuote")]
+        public IHttpActionResult GetQuoteNoDetailsforRevisedQuote(string quoteNoId, string quotetypeId, string financialYr)
+        {
+            return Ok(_repository.GetQuoteNoDetailsforRevisedQuote(quoteNoId, quotetypeId, financialYr));
+        }
+
+        [HttpGet]
+        [Route("api/TechnicalDetails/GetRevAndOriginalQuotes")]
+        public IHttpActionResult GetRevAndOriginalQuotes(string quotetypeId, string financialYr)
+        {
+            return Ok(_repository.GetRevAndOriginalQuotes(quotetypeId, financialYr));
+        }
+
+
     }
 }

@@ -1110,6 +1110,7 @@ angular.module('App').controller("MainController", function ($scope, $http, $tim
                 html = $compile(html)($scope);
                 SetModalTitle("Add New Revised Quotation")
                 SetModalBody(html);
+                SetModalWidth("1400px");
                 HideLoadder();
                 ShowModal();
 

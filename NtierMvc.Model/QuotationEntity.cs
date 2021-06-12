@@ -17,6 +17,7 @@ namespace NtierMvc.Model
         public string EnqDt { get; set; }
         public string EnqFor { get; set; }
         public string EnqNo { get; set; }
+        public int EnqNos { get; set; }
         public string MainProdGrp { get; set; }
         public string SubProdGrp { get; set; }
         public string ProdName { get; set; }
