@@ -523,7 +523,7 @@ namespace NtierMvc.Model
             return lstQuotePrep;
         }
 
-        public string SaveRevisedTechnicalQuoteDetails(QuotationEntity viewModel)
+        public string SaveRevisedQuotationDetails(QuotationEntity viewModel)
         {
             string result = "0";
             var baseAddress = "TechnicalDetails";

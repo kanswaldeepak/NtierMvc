@@ -1185,7 +1185,7 @@ namespace NtierMvc.Controllers
             cusE.ipAddress = ERPContext.UserContext.IpAddress;
             cusE.UnitNo = Session["UserId"].ToString();
 
-            string result = objManager.SaveRevisedTechnicalQuoteDetails(cusE);
+            string result = objManager.SaveRevisedQuotationDetails(cusE);
 
             TempData["VendorName"] = cusE.CustomerName;
             TempData["UserName"] = cusE.UserInitial;

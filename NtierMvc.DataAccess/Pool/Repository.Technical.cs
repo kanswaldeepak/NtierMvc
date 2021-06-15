@@ -47,7 +47,7 @@ namespace NtierMvc.DataAccess.Pool
             parms.Add("@SearchSubject", SearchSubject);
             parms.Add("@SearchQuoteCustomerID", SearchQuoteCustomerID);
             parms.Add("@SearchQuoteType", SearchQuoteType);
-            string spName = ConfigurationManager.AppSettings["GetQuoteReg"];
+            string spName = ConfigurationManager.AppSettings["GetQuoteRegistration"];
             return _dbAccess.GetDataSet(spName, parms);
         }
 
