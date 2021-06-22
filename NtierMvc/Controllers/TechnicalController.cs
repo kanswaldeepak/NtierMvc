@@ -707,6 +707,7 @@ namespace NtierMvc.Controllers
                 lstQuoteNo = model.GetDropDownList(TableNames.QuotationRegister, GeneralConstants.ListTypeD, ColumnNames.QuoteNo, ColumnNames.QuoteNoView, quotetypeId, ColumnNames.QuoteType);
             else
                 lstQuoteNo = model.GetDropDownList(TableNames.QuotationRegister, GeneralConstants.ListTypeD, ColumnNames.QuoteNo, ColumnNames.QuoteNoView, financialYr, ColumnNames.FinancialYear, false, "", "", quotetypeId, ColumnNames.QuoteType);
+
             return new JsonResult { Data = lstQuoteNo, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 
@@ -1579,10 +1580,12 @@ namespace NtierMvc.Controllers
             ViewBag.ListMainProdGrp = model.GetMasterTableStringList(TableNames.Master_ProductLine, ColumnNames.id, ColumnNames.MainPLName, "", "", GeneralConstants.ListTypeN);
             ViewBag.ListSubProdGrp = model.GetMasterTableStringList(TableNames.SubProductLine, ColumnNames.id, ColumnNames.SubPLName, "", "", GeneralConstants.ListTypeN);
             ViewBag.ListProdName = model.GetMasterTableStringList(TableNames.Master_Product, ColumnNames.id, ColumnNames.ProductName, "", "", GeneralConstants.ListTypeN);
-            ViewBag.ListSoNo = model.GetMasterTableStringList(TableNames.Orders, ColumnNames.SoNo, ColumnNames.SoNoView, "", "", GeneralConstants.ListTypeD);
-            ViewBag.ListSoNo.RemoveAt(0);
+            ViewBag.ListSoNo = "";
+            //    model.GetMasterTableStringList(TableNames.Orders, ColumnNames.SoNo, ColumnNames.SoNoView, "", "", GeneralConstants.ListTypeD);
+            //ViewBag.ListSoNo.RemoveAt(0);
             ViewBag.ListModeOfDespatch = model.GetDropDownList(TableNames.Master_Taxonomy, GeneralConstants.ListTypeD, ColumnNames.DropDownID, ColumnNames.DropDownValue, "Transport", ColumnNames.Property);
             ViewBag.ListFinancialYear = model.GetDropDownList(TableNames.FinancialYear, GeneralConstants.ListTypeN, ColumnNames.id, ColumnNames.FinYear, "", "", true);
+            ViewBag.ListRevisedQuoteNo = model.GetDropDownList(TableNames.RevisedNoTbl, GeneralConstants.ListTypeN, ColumnNames.id, ColumnNames.RevNo, "", "", true);
 
             model = new BaseModel();
 

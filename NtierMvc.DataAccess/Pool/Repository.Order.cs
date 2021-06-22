@@ -86,6 +86,7 @@ namespace NtierMvc.DataAccess.Pool
             Params.Add("@RevisedPoNo", Model.RevisedPoNo);
             Params.Add("@RevisedPoDate", Model.RevisedPoDate);
             Params.Add("@FinancialYear", Model.FinancialYear);
+            Params.Add("@QuoteFinYear", Model.QuoteFinYear);
             //Params.Add("@UploadedFile", Model.UploadedFile);
 
 

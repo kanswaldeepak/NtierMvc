@@ -61,7 +61,7 @@
                         <label class="control-label ">
                             Quote in the FY
                         </label>
-                        @Html.DropDownList("FinancialYears", new SelectList(ViewBag.ListFinancialYear, "DataStringValueField", "DataTextField", Model.FinancialYear), new
+                        @Html.DropDownListFor(m=>m.QuoteFinYear, new SelectList(ViewBag.ListFinancialYear, "DataStringValueField", "DataTextField", Model.QuoteFinYear), new
                    {
                        @class = "form-control ",
                        @id = "QuoteInTheFYOrder",
@@ -457,7 +457,7 @@
                         <span class="HideValidMsg"> Enter End User</span>
                     </div>
                 </div>
-                <div class="col-md-2">
+                @*<div class="col-md-2">
                     <div class="form-group">
                         <label class="control-label">
                             Revised PO No
@@ -486,7 +486,7 @@
                    })
                         <span class="HideValidMsg"> Select PO Date</span>
                     </div>
-                </div>
+                </div>*@
                 <div class="col-md-2" hidden>
                     <div class="form-group">
                         <label class="control-label">

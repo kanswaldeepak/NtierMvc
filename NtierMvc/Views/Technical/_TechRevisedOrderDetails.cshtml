@@ -39,6 +39,23 @@
                         <span class="HideValidMsg">Please Select SoNo</span>
                     </div>
                 </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label">
+                            Revision No
+                        </label>
+                        @Html.DropDownListFor(m => m.RevisedOrderNo, new SelectList(@ViewBag.ListRevisedQuoteNo, "DataStringValueField", "DataTextField", Model.RevisedOrderNo),
+                           new
+                           {
+                               @class = "form-control requiredValidation clearFields",
+                               @id = "RORevisedQuoteNo",
+                               @data_inneraction = "validationCall",
+                               @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+
+                           })
+                        <span class="HideValidMsg">Please Select Revised Order No</span>
+                    </div>
+                </div>
                 <div class="col-md-2" hidden>
                     <div class="form-group">
                         <label class="control-label ">
@@ -152,7 +169,7 @@
                         <span class="HideValidMsg"> Select PO Date</span>
                     </div>
                 </div>
-                <div class="col-md-2">
+                @*<div class="col-md-2">
                     <div class="form-group">
                         <label class="control-label">
                             Revised PO No <span class="required">*</span>
@@ -183,7 +200,7 @@
                    })
                         <span class="HideValidMsg"> Select PO Date</span>
                     </div>
-                </div>
+                </div>*@
                 <div class="col-md-2">
                     <div class="form-group">
                         <label class="control-label">
