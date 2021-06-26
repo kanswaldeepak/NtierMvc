@@ -1472,20 +1472,26 @@ namespace NtierMvc.BusinessLogic.Worker
                         if (dt.Columns.Contains("Id"))
                             quoteEntity.Id = Convert.ToInt32(dr["Id"] ?? 0);
 
-                        if (dt.Columns.Contains("CustomerID"))
-                            quoteEntity.CustomerId = dr["CustomerID"]?.ToString() ?? "";
+                        if (dt.Columns.Contains("CustomerId"))
+                            quoteEntity.CustomerId = dr["CustomerId"]?.ToString() ?? "";
 
                         if (dt.Columns.Contains("CustomerName"))
                             quoteEntity.CustomerName = dr["CustomerName"]?.ToString() ?? "";
 
+                        if (dt.Columns.Contains("QuoteType"))
+                            quoteEntity.QuoteType = dr["QuoteType"]?.ToString() ?? "";
+
+                        if (dt.Columns.Contains("QuoteFinYear"))
+                            quoteEntity.QuoteFinYear = dr["QuoteFinYear"]?.ToString() ?? "";
+
                         if (dt.Columns.Contains("QuoteNo"))
                             quoteEntity.QuoteNo = dr["QuoteNo"]?.ToString() ?? "";
 
+                        if (dt.Columns.Contains("MultiQuoteNos"))
+                            quoteEntity.MultiQuoteNos = dr["MultiQuoteNos"]?.ToString() ?? "";
+
                         if (dt.Columns.Contains("QuoteNoView"))
                             quoteEntity.QuoteNoView = dr["QuoteNoView"]?.ToString() ?? "";
-
-                        //if (dt.Columns.Contains("VendorName"))
-                        //    quoteEntity.CustomerName = dr["VendorName"]?.ToString() ?? "";
 
                         if (dt.Columns.Contains("FileNo"))
                             quoteEntity.FileNo = dr["FileNo"]?.ToString() ?? "";

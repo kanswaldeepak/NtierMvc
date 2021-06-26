@@ -105,7 +105,7 @@
                         <span class="HideValidMsg">Please Select SoNo</span>
                     </div>
                 </div>
-                <div class="col-md-2" hidden>
+                <div class="col-md-2">
                     <div class="form-group">
                         <label class="control-label">
                             Quote Nos. <span class="required">*</span>
@@ -654,17 +654,17 @@
         var QuoteType = $("#QuoteTypeOrder").val();
         var QuoteNo = $("#QuoteNoOrder").val();
 
-        //var MultiQuoteNos = $('#MultiQuoteNos').val();
-        //count = count + 1;
-        //if (count > 1 && $('#MultiQuoteNos').val()!='') {
-        //    MultiQuoteNos = MultiQuoteNos + '/' + $("#QuoteNoOrder option:selected").text();
-        //}
-        //else {
-        //    MultiQuoteNos = $("#QuoteNoOrder option:selected").text();
-        //}
+        var MultiQuoteNos = $('#MultiQuoteNos').val();
+        count = count + 1;
+        if (count > 1 && $('#MultiQuoteNos').val()!='') {
+            MultiQuoteNos = MultiQuoteNos + '/' + $("#QuoteNoOrder option:selected").text();
+        }
+        else {
+            MultiQuoteNos = $("#QuoteNoOrder option:selected").text();
+        }
 
-        //if ($("#QuoteNoOrder option:selected").val() != '')
-        //$('#MultiQuoteNos').val(MultiQuoteNos);
+        if ($("#QuoteNoOrder option:selected").val() != '')
+        $('#MultiQuoteNos').val(MultiQuoteNos);
 
         $.ajax({
             type: 'POST',

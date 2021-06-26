@@ -1319,12 +1319,13 @@
     <Content Include="Views\Technical\EnquiryView.cshtml" />
     <Content Include="Views\Technical\PartialQuoteRegView.cshtml" />
     <Content Include="Views\Technical\_TechDescDetails.cshtml" />
-    <Content Include="Views\Technical\_TechRevisedOrderDetails.cshtml" />
+    <Content Include="Views\Technical\_TechRevisedOrderDetailsOld.cshtml" />
     <Content Include="Views\CRM\PartialReportView.cshtml" />
     <Content Include="Views\Technical\PartialContractReview.cshtml" />
     <Content Include="Views\Technical\_TechContractReview.cshtml" />
     <Content Include="Views\CRM\_CRMPartialReport.cshtml" />
     <Content Include="Views\Technical\_TechPLDetails.cshtml" />
+    <Content Include="Views\Technical\_TechRevisedOrderDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\Documents\temp\" />
