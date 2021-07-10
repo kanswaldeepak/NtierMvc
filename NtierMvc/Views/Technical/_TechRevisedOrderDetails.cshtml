@@ -8,7 +8,7 @@
     <form id="formSaveRevisedOrderDetails">
         
         @Html.HiddenFor(m => m.QuoteNoView, new { @id = "ROQuoteNoView" })
-        @Html.TextBoxFor(m => m.SoNoView, new { @id = "ROSoNoView" })
+        @Html.HiddenFor(m => m.SoNoView, new { @id = "ROSoNoView" })
 
         <div class="col-md-12">
             <div class="row">
@@ -608,6 +608,7 @@
                 $('#ROPaymentTermsOrder').val(data.PaymentTerms);
                 $('#ROInspectionOrder').val(data.Inspection);
                 $('#ROEndUserOrder').val(data.EndUser);
+                $('#ROSupplyTermsOrder').val(data.SupplyTerms);
 
             },
             error: function (x, e) {

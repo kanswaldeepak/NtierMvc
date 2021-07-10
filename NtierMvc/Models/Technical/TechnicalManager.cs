@@ -832,7 +832,7 @@ namespace NtierMvc.Model
         }
 
 
-        public QuotationPreparationEntity GetQuotePrepDetails(int itemNoId, int quoteType, int quoteNo, int QuotePrepId, int financialYear)
+        public QuotationPreparationEntity GetQuotePrepDetails(string itemNoId, string quoteType, string quoteNo, string QuotePrepId, string financialYear)
         {
             var baseAddress = "TechnicalDetails";
             QuotationPreparationEntity newDdl = new QuotationPreparationEntity();

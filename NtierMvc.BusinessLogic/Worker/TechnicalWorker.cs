@@ -1272,7 +1272,7 @@ namespace NtierMvc.BusinessLogic.Worker
             }
         }
 
-        public QuotationPreparationEntity GetQuotePrepDetails(int itemNoId, int quoteType, int quoteNo, int QuotePrepId, int financialYear)
+        public QuotationPreparationEntity GetQuotePrepDetails(string itemNoId, string quoteType, string quoteNo, string QuotePrepId, string financialYear)
         {
             try
             {
@@ -1281,7 +1281,7 @@ namespace NtierMvc.BusinessLogic.Worker
 
                 if (dt.Rows.Count > 0)
                 {
-                    if (QuotePrepId != 0)
+                    if (QuotePrepId != "")
                         foreach (DataRow dr in dt.Rows)
                         {
                             //if (dt.Columns.Contains("QuoteType"))
@@ -1292,6 +1292,9 @@ namespace NtierMvc.BusinessLogic.Worker
 
                             if (dt.Columns.Contains("QuoteNo"))
                                 quoteEntity.QuoteNo = dr["QuoteNo"]?.ToString() ?? "";
+
+                            if (dt.Columns.Contains("CustomerName"))
+                                quoteEntity.QuoteNo = dr["CustomerName"]?.ToString() ?? "";
 
                             if (dt.Columns.Contains("SupplyTerms"))
                                 quoteEntity.SupplyTerms = dr["SupplyTerms"]?.ToString() ?? "";
@@ -1319,6 +1322,9 @@ namespace NtierMvc.BusinessLogic.Worker
 
                             if (dt.Columns.Contains("FinancialYear"))
                                 quoteEntity.FinancialYear = Convert.ToInt32(dr["FinancialYear"] ?? 0);
+
+                            if (dt.Columns.Contains("QuoteNoView"))
+                                quoteEntity.QuoteNoView = Convert.ToString(dr["QuoteNoView"]) ?? "";
                         }
                     else
                         foreach (DataRow dr in dt.Rows)

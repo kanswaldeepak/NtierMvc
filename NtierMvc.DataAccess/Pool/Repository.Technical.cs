@@ -85,7 +85,7 @@ namespace NtierMvc.DataAccess.Pool
             return dt;
         }
 
-        public DataTable GetQuoteNoList(string quotetypeId = "", string SoNo=null)
+        public DataTable GetQuoteNoList(string quotetypeId = "", string SoNo = null)
         {
             DataTable dt = new DataTable();
             var parms = new Dictionary<string, object>();
@@ -149,7 +149,7 @@ namespace NtierMvc.DataAccess.Pool
         public DataTable GetOrderDetailsFromSO(string SoNoView)
         {
             DataTable dt = new DataTable();
-            var parms = new Dictionary<string, object>();            
+            var parms = new Dictionary<string, object>();
             parms.Add("@SoNoView", SoNoView);
             var spName = ConfigurationManager.AppSettings["GetOrderDetailsFromSO"];
             dt = _dbAccess.GetDataTable(spName, parms);
@@ -184,7 +184,7 @@ namespace NtierMvc.DataAccess.Pool
             Params.Add("@QuoteType", Model.QuoteType);
             Params.Add("@QuoteNo", Model.QuoteNo);
             Params.Add("@MailId", Model.MailId);
-            
+
             var SPName = ConfigurationManager.AppSettings["SaveClarificationData"];
             _dbAccess.ExecuteNonQuery(SPName, Params, "@o_MsgCode", out msgCode);
 
@@ -264,7 +264,7 @@ namespace NtierMvc.DataAccess.Pool
             parms.Add("@sortColumnDir", sortColumnDir);
             parms.Add("@search", search);
             parms.Add("@quoteType", quoteType);
-            parms.Add("@quoteNo", quoteNo);
+            parms.Add("@quoteNo", quoteNo == "Select" ? null : quoteNo);
             parms.Add("@itemNo", itemNo);
             parms.Add("@financialYear", financialYear);
             string spName = ConfigurationManager.AppSettings["QuotePrepListDetail"];
@@ -477,7 +477,7 @@ namespace NtierMvc.DataAccess.Pool
             Params.Add("@EnqRef", Model.EnqRef);
             Params.Add("@EnqNo", Model.EnqNos);
             Params.Add("@EnqDt", Model.EnqDt);
-            Params.Add("@EnqFor", Model.EnqFor);            
+            Params.Add("@EnqFor", Model.EnqFor);
             Params.Add("@ProdName", Model.ProdName);
             Params.Add("@QuoteNoView", Model.QuoteNoView);
             Params.Add("@QuoteNo", Model.QuoteNo);

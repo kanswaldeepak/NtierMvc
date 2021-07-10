@@ -174,7 +174,7 @@ function QPGetQuoteNosFromType() {
 
 
 function GetItemNosForQuoteNo() {
-    var QuoteNo = $("#SearchQuoteNoQuotePrep").val();
+    var QuoteNo = $("#SearchQuoteNoQuotePrep option:selected").text();
 
     $.ajax({
         type: 'POST',
@@ -319,7 +319,7 @@ function GetProductDetails() {
 function CreateDocument(dwnldtype) {
     var DownloadType = dwnldtype;
     var QuoteType = $("#QuotePrepFormType").val();
-    var QuoteNumber = $("#QuotePrepFormNo").val();
+    var QuoteNumber = $("#QuotePrepFormNo option:selected").text();
     var QuoteTypeText = $("#QuotePrepFormType option:selected").text();
     var QuoteNoForFileName = $("#QuotePrepFormNo option:selected").text();
 
@@ -361,7 +361,7 @@ function CreateDocument(dwnldtype) {
 function ValidateItemNo() {
     var FinancialYear = $("#QuotePrepFinancialYear").val();
     var QuoteType = $("#QuotePrepFormType").val();
-    var QuoteNo = $("#QuotePrepFormNo").val();
+    var QuoteNo = $("#QuotePrepFormNo option:selected").text();
     var ItemNo = $("#QuotePrepItemNo").val();
 
     if (ItemNo == '' || ItemNo == undefined) {
@@ -467,7 +467,7 @@ function CheckSupplyTermsAndLeadTime() {
     //let st = $('#QuotePrepSupplyTerms option:selected').text();
 
     var QuoteType = $("#QuotePrepFormType").val();
-    var QuoteNo = $("#QuotePrepFormNo").val();
+    var QuoteNo = $("#QuotePrepFormNo option:selected").text();
 
     $.ajax({
         type: 'POST',
@@ -663,7 +663,7 @@ function LoadQuotePrepListDetail() {
     $("#tblQuotePrep").DataTable().destroy();
     let FinancialYear = $('#SearchQuoteTypeFinancialYear').val();
     let QuoteType = $('#SearchQuoteTypeQuotePrep').val();
-    let QuoteNo = $('#SearchQuoteNoQuotePrep').val();
+    let QuoteNo = $('#SearchQuoteNoQuotePrep option:selected').text();
     let ItemNo = $('#SearchItemNoQuotePrep').val();
 
     var req = {
@@ -767,7 +767,13 @@ function EditQuotePrep(QuoteId) {
         success: function (data) {
             if (data.QuoteType != null) {
                 $('#QuotePrepFormType').val(data.QuoteType);
-                $('#QuotePrepFormNo').val(data.QuoteNo);
+                //$('#QuotePrepFormNo option:selected').text(data.QuoteNoView);
+                $("#QuotePrepFormNo option").each(function () {
+                    if ($(this).text() == data.QuoteNoView) {
+                        $(this).attr('selected', 'selected');
+                    }
+                });
+                $('#QuotePrepCustomerName').val(data.CustomerName);
                 $('#QuotePrepSupplyTerms').val(data.SupplyTerms);
                 $('#QuotePrepLeadTime').val(data.LeadTime);
                 $('#QuotePrepLeadTimeDuration').val(data.LeadTimeDuration);

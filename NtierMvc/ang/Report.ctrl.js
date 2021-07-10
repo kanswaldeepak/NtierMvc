@@ -137,7 +137,7 @@ angular.module('App').controller("ReportController", function ($scope, $http, $t
     $scope.GetSONoDetails = function () {
 
         $scope.HideFileds();
-        $http.get(window.TecnicalMaster).success(function (response) {
+        $http.get(window.GetSoNoList).success(function (response) {
             $scope.SonoList = "";
             if (response.length > 0) {
                 $scope.SonoList = response;

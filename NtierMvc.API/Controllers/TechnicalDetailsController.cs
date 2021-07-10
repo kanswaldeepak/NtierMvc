@@ -264,7 +264,7 @@ namespace NtierMvc.API.Controllers.Application
 
         [HttpGet]
         [Route("api/TechnicalDetails/GetQuotePrepDetails")]
-        public IHttpActionResult GetQuotePrepDetails(int itemNoId, int quoteType, int quoteNo, int QuotePrepId, int financialYear)
+        public IHttpActionResult GetQuotePrepDetails(string itemNoId, string quoteType, string quoteNo, string QuotePrepId, string financialYear)
         {
             return Ok(_repository.GetQuotePrepDetails(itemNoId, quoteType, quoteNo, QuotePrepId, financialYear));
         }

@@ -32,7 +32,7 @@
                     </div>
 
 
-                    <div class="col-md-3" ng-show="ISTure">
+                    <div class="col-md-3" ng-show="ISTrue">
                         <label class="control-label"> WA:<span class="required">*</span></label>
 
                         <select id="SoNoCRM" ng-model="SoNo" class="form-control control-color">
@@ -214,7 +214,7 @@
 
         window.GenerateReport = '@Url.Action("CreateReport", "CRM")';
         window.DownloadDoc = '@Url.Action("Download", "CRM")';
-        window.TecnicalMaster = '@Url.Action("GetSoNoList", "Technical")';
+        window.GetSoNoList = '@Url.Action("GetSoNoList", "Technical")';
         window.CreateWAAuthReport = '@Url.Action("CreateWAAuthReport", "CRM")';
 
         window.GetOrderNote = '@Url.Action("GetOrderNote", "Technical")';

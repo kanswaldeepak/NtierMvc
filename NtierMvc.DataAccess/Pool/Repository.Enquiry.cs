@@ -114,7 +114,7 @@ namespace NtierMvc.DataAccess.Pool
             return _dbAccess.GetDataTable(spName, parms);
         }
 
-        public DataTable GetQuotePrepDetails(int itemNoId, int quoteType, int quoteNo, int QuotePrepId, int financialYear)
+        public DataTable GetQuotePrepDetails(string itemNoId, string quoteType, string quoteNo, string QuotePrepId, string financialYear)
         {
             var parms = new Dictionary<string, object>();
             parms.Add("@itemNo", itemNoId);

@@ -1105,10 +1105,10 @@ namespace NtierMvc.Controllers
             }
         }
 
-        public ActionResult CheckDuplicateItemNo(int itemNoId, int quoteType, int quoteNo, int financialYear)
+        public ActionResult CheckDuplicateItemNo(string itemNoId, string quoteType, string quoteNo, string financialYear)
         {
             QuotationPreparationEntity qPEntity = new QuotationPreparationEntity();
-            qPEntity = objManager.GetQuotePrepDetails(itemNoId, quoteType, quoteNo, 0, financialYear);
+            qPEntity = objManager.GetQuotePrepDetails(itemNoId, quoteType, quoteNo, "", financialYear);
             return new JsonResult { Data = qPEntity, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
             //List<DropDownEntity> ddl = new List<DropDownEntity>();
             //ddl = model.GetMasterTableList("QuotePreparationTbl", "Id", "ItemNo", itemNoId, "ItemNo");
@@ -1978,7 +1978,7 @@ namespace NtierMvc.Controllers
         public ActionResult LeadDetailsForQuote(string quoteNo, string quoteType)
         {
             List<TableRecordsEntity> ddE = new List<TableRecordsEntity>();
-            ddE = model.GetTableDataList(GeneralConstants.ListTypeD, TableNames.QuotationRegister, ColumnNames.QuoteNo, quoteNo, ColumnNames.QuoteType, quoteType, "", "", "", "", "", "", ColumnNames.LeadTime, ColumnNames.LeadTimeDuration, ColumnNames.SupplyTerms);
+            ddE = model.GetTableDataList(GeneralConstants.ListTypeD, TableNames.QuotationRegister, ColumnNames.QuoteNoView, quoteNo, ColumnNames.QuoteType, quoteType, "", "", "", "", "", "", ColumnNames.LeadTime, ColumnNames.LeadTimeDuration, ColumnNames.SupplyTerms);
 
             return new JsonResult { Data = ddE, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
@@ -2411,7 +2411,7 @@ namespace NtierMvc.Controllers
         public ActionResult GetItemNosForQuoteNos(string quoteNo)
         {
             List<DropDownEntity> ddE = new List<DropDownEntity>();
-            ddE = model.GetDropDownList(TableNames.QuotePreparationTbl, GeneralConstants.ListTypeD, ColumnNames.ItemNo, ColumnNames.ItemNo, quoteNo, ColumnNames.QuoteNo);
+            ddE = model.GetDropDownList(TableNames.QuotePreparationTbl, GeneralConstants.ListTypeD, ColumnNames.ItemNo, ColumnNames.ItemNo, quoteNo, ColumnNames.QuoteNoView);
 
             return new JsonResult { Data = ddE, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
@@ -2421,7 +2421,7 @@ namespace NtierMvc.Controllers
         public ActionResult EditQuotePrep(string Id)
         {
             QuotationPreparationEntity en = new QuotationPreparationEntity();
-            en = objManager.GetQuotePrepDetails(0, 0, 0, Convert.ToInt32(Id), 0);
+            en = objManager.GetQuotePrepDetails("", "", "", Id, "");
 
             return new JsonResult { Data = en, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
@@ -2468,9 +2468,9 @@ namespace NtierMvc.Controllers
         {
             List<DropDownEntity> lstOrder = new List<DropDownEntity>();
             if (string.IsNullOrEmpty(quoteType))
-                lstOrder = model.GetDropDownList(TableNames.Orders, GeneralConstants.ListTypeN, ColumnNames.SoNo, ColumnNames.SoNoView, FinYear, ColumnNames.FinancialYear, false, "", "");
+                lstOrder = model.GetDropDownList(TableNames.Orders, GeneralConstants.ListTypeD, ColumnNames.SoNo, ColumnNames.SoNoView, FinYear, ColumnNames.FinancialYear, false, "", "");
             else
-                lstOrder = model.GetDropDownList(TableNames.Orders, GeneralConstants.ListTypeN, ColumnNames.SoNo, ColumnNames.SoNoView, FinYear, ColumnNames.FinancialYear, false, "", "", quoteType, ColumnNames.QuoteType);
+                lstOrder = model.GetDropDownList(TableNames.Orders, GeneralConstants.ListTypeD, ColumnNames.SoNo, ColumnNames.SoNoView, FinYear, ColumnNames.FinancialYear, false, "", "", quoteType, ColumnNames.QuoteType);
 
             return new JsonResult { Data = lstOrder, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
