@@ -1281,7 +1281,7 @@ namespace NtierMvc.BusinessLogic.Worker
 
                 if (dt.Rows.Count > 0)
                 {
-                    if (QuotePrepId != "")
+                    if (!string.IsNullOrEmpty(QuotePrepId))
                         foreach (DataRow dr in dt.Rows)
                         {
                             //if (dt.Columns.Contains("QuoteType"))
@@ -1294,7 +1294,7 @@ namespace NtierMvc.BusinessLogic.Worker
                                 quoteEntity.QuoteNo = dr["QuoteNo"]?.ToString() ?? "";
 
                             if (dt.Columns.Contains("CustomerName"))
-                                quoteEntity.QuoteNo = dr["CustomerName"]?.ToString() ?? "";
+                                quoteEntity.CustomerName = dr["CustomerName"]?.ToString() ?? "";
 
                             if (dt.Columns.Contains("SupplyTerms"))
                                 quoteEntity.SupplyTerms = dr["SupplyTerms"]?.ToString() ?? "";
@@ -1331,9 +1331,6 @@ namespace NtierMvc.BusinessLogic.Worker
                         {
                             if (dt.Columns.Contains("Id"))
                                 quoteEntity.Id = Convert.ToInt32(dr["Id"] ?? 0);
-
-                            if (dt.Columns.Contains("VENDORNAME"))
-                                quoteEntity.CustomerName = dr["VENDORNAME"]?.ToString() ?? "";
 
                             if (dt.Columns.Contains("EnqSrNo"))
                                 quoteEntity.EnqSrNo = dr["EnqSrNo"]?.ToString() ?? "";

@@ -223,6 +223,8 @@ function GetProductTypes() {
 function GetDisplayFieldsForQuotePrep() {
     var ProductNameID = $("#QuotePrepProductName").val();
     var CasingSize = $("#QuotePrepCasingSize").val();
+    $('.ShowHideFields').css('display', 'none');
+
     $.ajax({
         type: 'POST',
         url: window.GetDisplayFieldsForQuoteP,
