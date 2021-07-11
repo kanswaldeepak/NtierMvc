@@ -1012,6 +1012,35 @@ namespace NtierMvc.DataAccess.Pool
                 return DataTableToStringListWithOther(_dbAccess.GetDataTable(spName, parms));
         }
 
+        public List<DropDownEntity> GetDateDropDownList(string TableName, string ListType, string DataValueField, string DataTextField, string Param, string ColumnName, bool Others = false, string orderBy = null, string orderByColumn = null, string Param1 = null, string ColumnName1 = null, string Param2 = null, string ColumnName2 = null, string Param3 = null, string ColumnName3 = null, string Param4 = null, string ColumnName4 = null)
+        {
+            var parms = new Dictionary<string, object>();
+            var spName = "";
+            spName = ConfigurationManager.AppSettings["GetDateDropDownList"];
+
+            parms.Add("@TableName", TableName);
+            parms.Add("@DataValueField", DataValueField);
+            parms.Add("@DataTextField", DataTextField);
+            parms.Add("@Param", Param);
+            parms.Add("@ColumnName", ColumnName);
+            parms.Add("@Param1", Param1);
+            parms.Add("@ColumnName1", ColumnName1);
+            parms.Add("@Param2", Param2);
+            parms.Add("@ColumnName2", ColumnName2);
+            parms.Add("@Param3", Param3);
+            parms.Add("@ColumnName3", ColumnName3);
+            parms.Add("@Param4", Param4);
+            parms.Add("@ColumnName4", ColumnName4);
+            parms.Add("@ListType", ListType);
+            parms.Add("@orderBy", orderBy);
+            parms.Add("@orderByColumn", orderByColumn);
+
+            if (!Others)
+                return DataTableToStringList(_dbAccess.GetDataTable(spName, parms));
+            else
+                return DataTableToStringListWithOther(_dbAccess.GetDataTable(spName, parms));
+        }
+
         public List<DropDownEntity> GetMasterTableList(string TableName, string DataValueField, string DataTextField, string property)
         {
             var parms = new Dictionary<string, object>();
@@ -1119,7 +1148,7 @@ namespace NtierMvc.DataAccess.Pool
             return dt;
         }
 
-        public List<SingleColumnEntity> GetSingleColumnValues(string TableName, string DataValueField1, string ColumnName1, string Param1, string DataValueField2 = null, string ColumnName2 = null, string Param2 = null, string DataValueField3 = null, string ColumnName3 = null, string Param3 = null, string DataValueField4 = null, string ColumnName4 = null, string Param4 = null, string DataValueField5 = null, string DataValueField6 = null, string DataValueField7 = null, string DataValueField8 = null)
+        public List<SingleColumnEntity> GetSingleColumnValues(string TableName, string DataValueField1, string ColumnName1, string Param1, string DataValueField2 = null, string ColumnName2 = null, string Param2 = null, string DataValueField3 = null, string ColumnName3 = null, string Param3 = null, string DataValueField4 = null, string ColumnName4 = null, string Param4 = null, string DataValueField5 = null, string DataValueField6 = null, string DataValueField7 = null, string DataValueField8 = null, string DataValueField9 = null, string DataValueField10 = null)
         {
             var parms = new Dictionary<string, object>();
             var spName = ConfigurationManager.AppSettings["GetSingleColumnList"];
@@ -1150,6 +1179,8 @@ namespace NtierMvc.DataAccess.Pool
             parms.Add("@DataValueField6", DataValueField6);
             parms.Add("@DataValueField7", DataValueField7);
             parms.Add("@DataValueField8", DataValueField8);
+            parms.Add("@DataValueField9", DataValueField9);
+            parms.Add("@DataValueField10", DataValueField10);
 
             return DataTableToSingleColumnList(_dbAccess.GetDataTable(spName, parms));
         }
@@ -1336,7 +1367,7 @@ namespace NtierMvc.DataAccess.Pool
         //    return DataTableToTableList(_dbAccess.GetDataTable(spName, parms));
         //}
 
-        public string DeleteFormTable(string TableName, string ColumnName1, string Param1, string ColumnName2 = null, string Param2 = null, string ColumnName3 = null, string Param3 = null)
+        public string DeleteFromTable(string TableName, string ColumnName1, string Param1, string ColumnName2 = null, string Param2 = null, string ColumnName3 = null, string Param3 = null)
         {
             string msgCode = "";
             var ParamDict = new Dictionary<string, object>();
@@ -1508,6 +1539,40 @@ namespace NtierMvc.DataAccess.Pool
             }
 
             return list;
+        }
+
+        public string SaveTableData(InsertTableData entity)
+        {
+            string spName = ConfigurationManager.AppSettings["SaveTableData"];
+            string msgCode = "";
+
+            var parms = new Dictionary<string, object>();
+            parms.Add("@tbl", entity.TableName);
+            
+            parms.Add("@column1", entity.Column1);
+            parms.Add("@value1", entity.Value1);
+
+            parms.Add("@column2", entity.Column2);
+            parms.Add("@value2", entity.Value2);
+            parms.Add("@column3", entity.Column3);
+            parms.Add("@value3", entity.Value3);
+            parms.Add("@column4", entity.Column4);
+            parms.Add("@value4", entity.Value4);
+            parms.Add("@column5", entity.Column5);
+            parms.Add("@value5", entity.Value5);
+            parms.Add("@column6", entity.Column6);
+            parms.Add("@value6", entity.Value6);
+            parms.Add("@column7", entity.Column7);
+            parms.Add("@value7", entity.Value7);
+            parms.Add("@column8", entity.Column8);
+            parms.Add("@value8", entity.Value8);
+            parms.Add("@column9", entity.Column9);
+            parms.Add("@value9", entity.Value9);
+            parms.Add("@column10", entity.Column10);
+            parms.Add("@value10", entity.Value10);
+
+            _dbAccess.ExecuteNonQuery(spName, parms, "@o_MsgCode", out msgCode);
+            return msgCode;
         }
 
     }

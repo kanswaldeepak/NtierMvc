@@ -10,6 +10,7 @@ namespace NtierMvc.Model
 {
     public class QuotationPreparationEntity
     {
+        public int SNo { get; set; }
         public int Id { get; set; }
         public string UserInitial { get; set; }
         public string UnitNo { get; set; }
@@ -30,7 +31,7 @@ namespace NtierMvc.Model
         public string CustomerName { get; set; }
         public int OpenHoleSize { get; set; }        
         public int BallSize { get; set; }
-        public int UnitPrice { get; set; }
+        public decimal UnitPrice { get; set; }
         public int Currency { get; set; }
         public int CasingWeight { get; set; }
         public int RecordCount { get; set; }
@@ -62,6 +63,10 @@ namespace NtierMvc.Model
         public string SupplyTerms { get; set; }
         public string LeadTime { get; set; }
         public string LeadTimeDuration { get; set; }
+        public string PDCDrillable { get; set; }
+        public int TotalRecords { get; set; }
+        public int FinancialYear { get; set; }
+        public string QuoteNoView { get; set; }
 
 
     }

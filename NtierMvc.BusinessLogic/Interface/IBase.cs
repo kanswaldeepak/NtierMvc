@@ -117,11 +117,11 @@ namespace NtierMvc.BusinessLogic.Interface
         List<TableRecordsEntity> GetTableDataList(string ListType, string TableName, string Column1 = null, string Param1 = null, string Column2 = null, string Param2 = null, string Column3 = null, string Param3 = null, string Column4 = null, string Param4 = null, string Column5 = null, string Param5 = null, string RequiredColumn1 = null, string RequiredColumn2 = null, string RequiredColumn3 = null, string RequiredColumn4 = null, string RequiredColumn5 = null, string RequiredColumn6 = null, string RequiredColumn7 = null, string RequiredColumn8 = null, string RequiredColumn9 = null, string RequiredColumn10 = null);
 
         List<TableRecordsEntity> GetTableDataList(TableRecordsEntity objTbl);
-        SingleColumnEntity GetSingleColumnValues(string TableName, string DataValueField1, string ColumnName1, string Param1, string DataValueField2 = null, string ColumnName2 = null, string Param2 = null, string DataValueField3 = null, string ColumnName3 = null, string Param3 = null, string DataValueField4 = null, string ColumnName4 = null, string Param4 = null, string DataValueField5 = null, string DataValueField6 = null, string DataValueField7 = null, string DataValueField8 = null);
+        SingleColumnEntity GetSingleColumnValues(string TableName, string DataValueField1, string ColumnName1, string Param1, string DataValueField2 = null, string ColumnName2 = null, string Param2 = null, string DataValueField3 = null, string ColumnName3 = null, string Param3 = null, string DataValueField4 = null, string ColumnName4 = null, string Param4 = null, string DataValueField5 = null, string DataValueField6 = null, string DataValueField7 = null, string DataValueField8 = null, string DataValueField9 = null, string DataValueField10 = null);
 
         //List<TableRecordsEntity> GetTableRecordsList(string ListType, string TableName, string DataParamField1, string DataParamValueField1, string DataColumnTextField1, string DataColumnValueField1, string DataParamField2 = null, string DataParamValueField2 = null, string DataColumnTextField2 = null, string DataColumnValueField2 = null, string DataParamField3 = null, string DataParamValueField3 = null, string DataColumnTextField3 = null, string DataColumnValueField3 = null, string DataParamField4 = null, string DataParamValueField4 = null, string DataColumnTextField4 = null, string DataColumnValueField4 = null, string DataParamField5 = null, string DataParamValueField5 = null, string DataColumnTextField5 = null, string DataColumnValueField5 = null);
 
-        string DeleteFormTable(string TableName, string ColumnName1, string Param1, string ColumnName2 = null, string Param2 = null, string ColumnName3 = null, string Param3 = null);
+        string DeleteFromTable(string TableName, string ColumnName1, string Param1, string ColumnName2 = null, string Param2 = null, string ColumnName3 = null, string Param3 = null);
 
         CommonDetailsEntity GetCommonSettings();
 
@@ -131,6 +131,10 @@ namespace NtierMvc.BusinessLogic.Interface
 
         string SaveBulkEntryDetails(BulkUploadEntity bEntity);
         List<DropDownEntity> SaveNewItemInDdl(AddDdlEntity bEntity);
+        string SaveTableData(InsertTableData iData);
+
+        List<DropDownEntity> GetDateDropDownList(string TableName, string ListType, string DataValueField, string DataTextField, string Param, string ColumnName, bool Others = false, string orderBy = null, string orderByColumn = null, string Param1 = null, string ColumnName1 = null, string Param2 = null, string ColumnName2 = null, string Param3 = null, string ColumnName3 = null, string Param4 = null, string ColumnName4 = null);
+
 
     }
 }

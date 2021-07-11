@@ -1433,13 +1433,13 @@ namespace NtierMvc.BusinessLogic.Worker
             return dataList;
         }
 
-        public SingleColumnEntity GetSingleColumnValues(string TableName, string DataValueField1, string ColumnName1, string Param1, string DataValueField2 = null, string ColumnName2 = null, string Param2 = null, string DataValueField3 = null, string ColumnName3 = null, string Param3 = null, string DataValueField4 = null, string ColumnName4 = null, string Param4 = null, string DataValueField5 = null, string DataValueField6 = null, string DataValueField7 = null, string DataValueField8 = null)
+        public SingleColumnEntity GetSingleColumnValues(string TableName, string DataValueField1, string ColumnName1, string Param1, string DataValueField2 = null, string ColumnName2 = null, string Param2 = null, string DataValueField3 = null, string ColumnName3 = null, string Param3 = null, string DataValueField4 = null, string ColumnName4 = null, string Param4 = null, string DataValueField5 = null, string DataValueField6 = null, string DataValueField7 = null, string DataValueField8 = null, string DataValueField9 = null, string DataValueField10 = null)
         {
             List<SingleColumnEntity> dataList = new List<SingleColumnEntity>();
             SingleColumnEntity objSingle = new SingleColumnEntity();
             try
             {
-                dataList = objData.GetSingleColumnValues(TableName, DataValueField1, ColumnName1, Param1, DataValueField2, ColumnName2, Param2, DataValueField3, ColumnName3, Param3, DataValueField4, ColumnName4, Param4, DataValueField5, DataValueField6, DataValueField7, DataValueField8);
+                dataList = objData.GetSingleColumnValues(TableName, DataValueField1, ColumnName1, Param1, DataValueField2, ColumnName2, Param2, DataValueField3, ColumnName3, Param3, DataValueField4, ColumnName4, Param4, DataValueField5, DataValueField6, DataValueField7, DataValueField8, DataValueField9, DataValueField10);
 
                 if (dataList.Count > 0)
                     objSingle = dataList[0];
@@ -1472,12 +1472,12 @@ namespace NtierMvc.BusinessLogic.Worker
         //    return dataList;
         //}
 
-        public string DeleteFormTable(string TableName, string ColumnName1, string Param1, string ColumnName2 = null, string Param2 = null, string ColumnName3 = null, string Param3 = null)
+        public string DeleteFromTable(string TableName, string ColumnName1, string Param1, string ColumnName2 = null, string Param2 = null, string ColumnName3 = null, string Param3 = null)
         {
             string result = string.Empty;
             try
             {
-                result = objData.DeleteFormTable(TableName, ColumnName1, Param1, ColumnName2, Param2, ColumnName3, Param3);
+                result = objData.DeleteFromTable(TableName, ColumnName1, Param1, ColumnName2, Param2, ColumnName3, Param3);
             }
             catch (Exception Ex)
             {
@@ -1582,6 +1582,36 @@ namespace NtierMvc.BusinessLogic.Worker
             }
             return ddl;
         }
+
+        public string SaveTableData(InsertTableData iData)
+        {
+            string result = "";
+            try
+            {
+                result = objData.SaveTableData(iData);
+            }
+            catch (Exception Ex)
+            {
+                NtierMvc.DataAccess.ExceptionLogging.SendExcepToDB(Ex);
+            }
+            return result;
+        }
+
+        public List<DropDownEntity> GetDateDropDownList(string TableName, string ListType, string DataValueField, string DataTextField, string Param, string ColumnName, bool Others = false, string orderBy = null, string orderByColumn = null, string Param1 = null, string ColumnName1 = null, string Param2 = null, string ColumnName2 = null, string Param3 = null, string ColumnName3 = null, string Param4 = null, string ColumnName4 = null)
+        {
+            List<DropDownEntity> objList = new List<DropDownEntity>();
+            try
+            {
+                objList = objData.GetDateDropDownList(TableName, ListType, DataValueField, DataTextField, Param, ColumnName, Others, orderBy, orderByColumn, Param1, ColumnName1, Param2, ColumnName2, Param3, ColumnName3, Param4, ColumnName4);
+                return objList;
+            }
+            catch (Exception Ex)
+            {
+                NtierMvc.DataAccess.ExceptionLogging.SendExcepToDB(Ex);
+            }
+            return objList;
+        }
+
 
     }
 }

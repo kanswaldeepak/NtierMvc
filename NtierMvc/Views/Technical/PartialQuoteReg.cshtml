@@ -16,7 +16,7 @@
                 <label>Quote Type</label>
             </td>
             <td>
-                <label>Customer</label>
+                <label>Customer Id</label>
             </td>
             <td>
                 <label>Supply of</label>
@@ -83,7 +83,7 @@
         <table id="tblQuoteReg">
             <thead class="tblhead">
                 <tr>
-                    <th>
+                    <th style="width: 10%">
                         <div class="c3">
                             Action
                         </div>
@@ -185,9 +185,9 @@
                     @*<td>
                         {{L.Currency}}
                     </td>*@
-                    <td>
-                        {{L.EnqNo}}
-                    </td>
+                <td>
+                    {{L.EnqRef}}
+                </td>
                     <td>
                         {{L.EnqDt}}
                     </td>
@@ -235,8 +235,6 @@
         </table>
     </div>
 </div>
-
-<script src="~/Scripts/CustomJS/QuotationDetails.js"></script>
 
 
 <script type="text/javascript">
@@ -432,4 +430,5 @@
 </script>
 
 
-<script src="~/Scripts/CustomJS/QuotationDetails.js"></script>
+<script src="~/Scripts/CustomJS/QuotationDetails.js?@ViewBag.ReleaseVersion"></script>
+<script src="~/Scripts/CustomJS/RevQuotationDetails.js?@ViewBag.ReleaseVersion"></script>

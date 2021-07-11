@@ -17,11 +17,12 @@ namespace NtierMvc.Model
         public string EnqDt { get; set; }
         public string EnqFor { get; set; }
         public string EnqNo { get; set; }
+        public int EnqNos { get; set; }
         public string MainProdGrp { get; set; }
         public string SubProdGrp { get; set; }
         public string ProdName { get; set; }
         public string QuoteNo { get; set; }
-        public string QuoteTypeNo { get; set; }
+        public string QuoteNoView { get; set; }
         public string GeoArea { get; set; }
         public string GeoCode { get; set; }
         public string QuoteDate { get; set; }
@@ -48,6 +49,8 @@ namespace NtierMvc.Model
         public string SalesPerson { get; set; }
         public string Subject { get; set; }
         public string SupplyTerms { get; set; }
+        public string TotalRecords { get; set; }
+        public string FinancialYear { get; set; }
 
     }
 

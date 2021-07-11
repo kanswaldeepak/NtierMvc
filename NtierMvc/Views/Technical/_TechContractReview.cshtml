@@ -1,0 +1,212 @@
+﻿@using NtierMvc.Model
+@model NtierMvc.Model.ContractReview
+
+<div ng-controller="ModalController">
+
+    <form id="formSaveContractReview">
+
+        <div class="row m--padding-10 ">
+            <div class="col-md-6">
+                <div class="row m--padding-10">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-3">
+                                Customer Name
+                            </div>
+                            <div class="col-md-3">
+                                Country
+                            </div>
+                            <div class="col-md-3">
+                                ENQ No
+                            </div>
+                            <div class="col-md-3">
+                                Item No
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                @Html.DropDownListFor(m => m.Customer, new SelectList(ViewBag.ListCustomer, "DataStringValueField", "DataTextField", Model.Customer), new
+                           {
+                               @class = "form-control requiredValidation clearField",
+                               @id = "CRCustomer",
+                               @data_inneraction = "validationCall",
+                               @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                           })
+                                <span class="HideValidMsg"> Select Customer</span>
+                            </div>
+                            <div class="col-md-3">
+                                @Html.TextBoxFor(m => m.Country, new
+                           {
+                               @class = "form-control requiredValidation",
+                               @id = "CRCountry",
+                               @readonly = "readonly"
+                           })
+                                <span class="HideValidMsg">Select Customer</span>
+                            </div>
+                            <div class="col-md-3">
+                                @Html.DropDownListFor(m => m.ENQNo, new SelectList(ViewBag.ListENQNo, "DataStringValueField", "DataTextField", Model.ENQNo), new
+                           {
+                               @class = "form-control requiredValidation clearField",
+                               @id = "CRENQNo",
+                               @data_inneraction = "validationCall",
+                               @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                           })
+                                <span class="HideValidMsg">Select ENQ No</span>
+                            </div>
+                            <div class="col-md-3">
+                                @Html.DropDownListFor(m => m.ItemNo, new SelectList(ViewBag.ListItemNo, "DataStringValueField", "DataTextField", Model.ItemNo), new
+                           {
+                               @class = "form-control requiredValidation clearField",
+                               @id = "CRItemNo",
+                               @data_inneraction = "validationCall",
+                               @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                               @multiple = "true"
+                           })
+                                <span class="HideValidMsg">Select Item No</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="col-md-3">
+                            <button type="button" id="btnContractReview" class="btn btn-sm btn-primary" onclick="getContractReviewDetails()">Get Report</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-md-6">
+                        <input class="form-control" type="file" id="CRFileUpload" data-file_types="xlsx" />
+                        <input class="btn btn-info" type="button" id="btnCRUpload" value="Upload" onclick="CRUpload()" />
+                    </div>
+                    <div class="col-md-6">
+                        <input class="btn btn-sm btn-info" type="button" id="btnShowReviews" value="Show Contract Reviews" onclick="GetContractReview()" />
+                        <input class="btn btn-sm btn-danger" type="button" id="btnDeleteReviews" value="Remove Contract Reviews" onclick="DeleteContReviews()" />
+                    </div>
+                    <div class="col-md-12">
+                        Allowed files:
+                        <div id="alert"></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                    </div>
+                    <div class="col-md-6" style="background-color:white; border: 1px solid darksalmon; min-height: 100px;">
+                        <ul id="ContractReviewList" style="list-style-type:none; padding-left: 0px;"></ul>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </form>
+
+</div>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+    window.GetOrderNote = '@Url.Action("GetOrderNote", "Technical")';
+        window.SaveContractReviewDetails = '@Url.Action("SaveContractReviewDetails", "Technical")';
+        window.GetEnqNo = '@Url.Action("GetEnqNo", "Technical")';
+        window.GetCountry = '@Url.Action("GetCountry", "Technical")';
+        window.GetItemNosForEnqs = '@Url.Action("GetItemNosForEnqs", "Technical")';
+        window.GetExcelForContractReview = '@Url.Action("GetExcelForContractReview", "Technical")';
+        window.DownloadDoc = '@Url.Action("Download", "Technical")';
+        window.CRFilesUpload = '@Url.Action("CRFilesUpload", "Technical")';
+        window.GetContractReviews = '@Url.Action("GetContractReviews", "Technical")';
+        window.DeleteContractReviews = '@Url.Action("DeleteContractReviews", "Technical")';
+
+    });
+
+
+
+</script>
+
+
+ $('#CRCustomer').chosen({
+        width: "100%",
+        placeholder_text_single: "Select Customer"
+    });
+
+    $('#CRENQNo').chosen({
+        width: "100%",
+        placeholder_text_single: "Select Enq No"
+    });
+
+    $('#CRItemNo').chosen({
+        width: "100%",
+        placeholder_text_single: "Select Item No",
+        placeholder_text_multiple: "Select Item No"
+    });
+
+    $('#CRCustomer').chosen().change(
+        function GetCountryAndEnqNo(element) {
+
+            let Val = $('#CRCustomer').val();
+
+            $.ajax({
+                type: 'POST',
+                url: window.GetEnqNo,
+                data: JSON.stringify({ val: Val }),
+                contentType: "application/json; charset=utf-8",
+                success: function (res) {
+                    $("#CRENQNo").empty();
+                    if (res.length > 0) {
+                        $.each(res, function (i, item) {
+                            $("#CRENQNo").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
+                            $("#CRENQNo").trigger("chosen:updated");
+                        })
+                    }
+                },
+                error: function (x, e) {
+                    alert('Some error is occurred, Please try after some time.');
+                }
+            })
+
+
+            $.ajax({
+                type: 'POST',
+                url: window.GetCountry,
+                data: JSON.stringify({ val: Val }),
+                contentType: "application/json; charset=utf-8",
+                success: function (res) {
+                    $("#CRCountry").val(res);
+                },
+                error: function (x, e) {
+                    alert('Some error is occurred, Please try after some time.');
+                }
+            })
+
+        }
+    )
+
+    $('#CRENQNo').chosen().change(
+        function GetItemNosForEnq() {
+
+            let Val = $('#CRENQNo').val();
+
+            $.ajax({
+                type: 'POST',
+                url: window.GetItemNosForEnqs,
+                data: JSON.stringify({ EnqNo: Val }),
+                contentType: "application/json; charset=utf-8",
+                success: function (res) {
+                    $("#CRItemNo").empty();
+                    if (res.length > 0) {
+                        $.each(res, function (i, item) {
+                            $("#CRItemNo").append($('<option></option>').val(item.DataTextField).html(item.DataTextField));
+                            $("#CRItemNo").trigger("chosen:updated");
+                        })
+                    }
+                },
+                error: function (x, e) {
+                    alert('Some error is occurred, Please try after some time.');
+                }
+            })
+
+        }
+    )
+
+

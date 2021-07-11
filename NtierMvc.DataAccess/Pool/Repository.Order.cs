@@ -17,13 +17,13 @@ namespace NtierMvc.DataAccess.Pool
 
         #region Class Methods
 
-        public DataSet GetOrderDetails(int pageIndex, int pageSize, string SearchQuoteType = null, string SearchVendorID = null, string SearchProductGroup = null, string SearchDeliveryTerms = null, string SearchPODeliveryDate = null)
+        public DataSet GetOrderDetails(int pageIndex, int pageSize, string SearchQuoteType = null, string SearchCustomerID = null, string SearchProductGroup = null, string SearchDeliveryTerms = null, string SearchPODeliveryDate = null)
         {
             var parms = new Dictionary<string, object>();
             parms.Add("@pageIndex", pageIndex);
             parms.Add("@pageSize", pageSize);
             parms.Add("@SearchQuoteType", SearchQuoteType);
-            parms.Add("@SearchCustomerID", SearchVendorID);
+            parms.Add("@SearchCustomerID", SearchCustomerID);
             parms.Add("@SearchProductGroup", SearchProductGroup);
             parms.Add("@SearchDeliveryTerms", SearchDeliveryTerms);
             parms.Add("@SearchPODeliveryDate", SearchPODeliveryDate);
@@ -52,6 +52,7 @@ namespace NtierMvc.DataAccess.Pool
             Params.Add("@QuoteQtyType", Model.QuoteQtyType);
             //Params.Add("@FileNo", Model.FileNo);
             Params.Add("@QuoteNo", Model.QuoteNo);
+            Params.Add("@QuoteNoView", Model.QuoteNoView);
             Params.Add("@QuoteDate", Model.QuoteDate);
             Params.Add("@SoNo", Model.SoNo);
             Params.Add("@PoEntity", Model.PoEntity);
@@ -82,6 +83,10 @@ namespace NtierMvc.DataAccess.Pool
             Params.Add("@EndUser", Model.EndUser);
             Params.Add("@ProductGroup", Model.MainProdGrp);
             Params.Add("@MultiQuoteNos", Model.MultiQuoteNos);
+            Params.Add("@RevisedPoNo", Model.RevisedPoNo);
+            Params.Add("@RevisedPoDate", Model.RevisedPoDate);
+            Params.Add("@FinancialYear", Model.FinancialYear);
+            Params.Add("@QuoteFinYear", Model.QuoteFinYear);
             //Params.Add("@UploadedFile", Model.UploadedFile);
 
 
@@ -127,10 +132,10 @@ namespace NtierMvc.DataAccess.Pool
             DataTable dt = new DataTable();
             string msgCode = ""; int i = 0;
             var Params = new Dictionary<string, object>();
-            Params.Add("@SoNo", entity.DataRecordTable.Rows[0]["SoNo"].ToString());
+            Params.Add("@SoNo", entity.DataRecordTable.Rows[0]["SoNoView"].ToString());
             Params.Add("@PoQty", entity.DataRecordTable.Rows[0]["PoQty"].ToString());
             Params.Add("@UnitPrice", entity.DataRecordTable.Rows[0]["UnitPrice"].ToString());
-            Params.Add("@QuotePrepId", entity.DataRecordTable.Rows[0]["QuotePrepId"].ToString());
+            Params.Add("@QuotePrepId", entity.DataRecordTable.Rows[0]["QuoteItemSlNo"].ToString());
             var spName = ConfigurationManager.AppSettings["GetExWorkValue"];
             i = _dbAccess.ExecuteNonQuery(spName, Params, "@o_MsgCode", out msgCode);
 
@@ -160,7 +165,7 @@ namespace NtierMvc.DataAccess.Pool
             Params.Add("@QuoteNo", Model.QuoteNo);
             Params.Add("@QuoteType", Model.QuoteType);
             Params.Add("@SoNo", Model.SoNo);
-            Params.Add("@QuotePrepId", Model.QuotePrepId);
+            Params.Add("@QuotePrepId", Model.QuoteItemSlNo);
 
             //Params.Add("@PoNo", Model.PoNo);
             //Params.Add("@PoDate", Model.PoDate);

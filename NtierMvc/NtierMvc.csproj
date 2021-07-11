@@ -190,6 +190,9 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Areas\Common\CommonAreaRegistration.cs" />
+    <Compile Include="Areas\Common\Controllers\CommonController.cs" />
+    <Compile Include="Areas\Common\Models\CommonManager.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\AdminController.cs" />
     <Compile Include="Areas\Admin\Models\AdminManager.cs" />
@@ -214,6 +217,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\GateEntryController.cs" />
+    <Compile Include="ExcelProperty\ExcelInteropProperties.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -236,6 +240,7 @@
     <Compile Include="Models\Infrastructure\HostUtility.cs" />
     <Compile Include="Models\OnActionModel.cs" />
     <Compile Include="Models\GateEntryManager.cs" />
+    <Compile Include="Models\ReportManager.cs" />
     <Compile Include="Models\Technical\TechnicalManager.cs" />
     <Compile Include="Models\Technical\TechnicalVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -261,6 +266,8 @@
     <Content Include="ang\app.js" />
     <Content Include="ang\config.js" />
     <Content Include="ang\Admin.ctrl.js" />
+    <Content Include="ang\Common.ctrl.js" />
+    <Content Include="ang\Report.ctrl.js" />
     <Content Include="ang\Stores.ctrl.js" />
     <Content Include="ang\Design.ctrl.js" />
     <Content Include="ang\hr.ctrl.js" />
@@ -270,7 +277,7 @@
     <Content Include="ang\MRM.ctrl.js" />
     <Content Include="ang\PdfFile\pdfmake.js" />
     <Content Include="ang\PdfFile\vfs_fonts.js" />
-    <Content Include="Areas\Admin\Scripts\Admin.js" />
+    <Content Include="Areas\Common\Scripts\Admin.js" />
     <Content Include="Areas\DesignEng\Scripts\BOMDetails.js" />
     <Content Include="Areas\DesignEng\Scripts\PRP.js" />
     <Content Include="Areas\HRDepartment\Scripts\HREmpDetails.js" />
@@ -1202,6 +1209,17 @@
     <Content Include="MasterFiles\JS\ui-bootstrap-tpls.min.js" />
     <Content Include="Areas\MRM\Views\MRM\VendorDetails.cshtml" />
     <Content Include="Areas\MRM\Views\MRM\PartialVendor.cshtml" />
+    <Content Include="App_Data\Documents\Excel\Report2.xlsx" />
+    <Content Include="App_Data\Documents\Excel\POWorkAuth.xlsx" />
+    <Content Include="App_Data\Documents\Excel\ProductPerformance.xlsx" />
+    <Content Include="App_Data\Documents\Excel\QuotePreparation.xlsx" />
+    <Content Include="App_Data\Documents\Excel\EnquiryandQutoeRegister.xlsx" />
+    <Content Include="Areas\Common\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Common\Views\Common\CommonMaster.cshtml" />
+    <Content Include="Areas\Common\Views\Common\PartialCommonDashboard.cshtml" />
+    <Content Include="Areas\Common\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Common\Views\web.config" />
+    <Content Include="Areas\Common\Views\Common\PartialAddState.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\CustomJS\common.js" />
@@ -1209,6 +1227,8 @@
     <Content Include="Scripts\CustomJS\CustomerDetails.js" />
     <Content Include="Scripts\CustomJS\Inbound.js" />
     <Content Include="Scripts\CustomJS\MyCustomJS.js" />
+    <Content Include="Scripts\CustomJS\ContractReview.js" />
+    <Content Include="Scripts\CustomJS\RevQuotationDetails.js" />
     <Content Include="Scripts\CustomJS\QuotationPrep.js" />
     <Content Include="Scripts\CustomJS\QuotationDetails.js" />
     <Content Include="Scripts\CustomJS\EnquiryDetails.js" />
@@ -1299,10 +1319,20 @@
     <Content Include="Views\Technical\EnquiryView.cshtml" />
     <Content Include="Views\Technical\PartialQuoteRegView.cshtml" />
     <Content Include="Views\Technical\_TechDescDetails.cshtml" />
+    <Content Include="Views\Technical\_TechRevisedOrderDetailsOld.cshtml" />
+    <Content Include="Views\CRM\PartialReportView.cshtml" />
+    <Content Include="Views\Technical\PartialContractReview.cshtml" />
+    <Content Include="Views\Technical\_TechContractReview.cshtml" />
+    <Content Include="Views\CRM\_CRMPartialReport.cshtml" />
+    <Content Include="Views\Technical\_TechPLDetails.cshtml" />
+    <Content Include="Views\Technical\_TechRevisedOrderDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="App_Data\Documents\temp\" />
     <Folder Include="App_Data\Reports\Excel\PRReports\" />
     <Folder Include="Areas\Admin\Data\" />
+    <Folder Include="Areas\Admin\Scripts\" />
+    <Folder Include="Areas\Common\Data\" />
     <Folder Include="Areas\DesignEng\Views\Shared\" />
     <Folder Include="Areas\HRDepartment\EmployeeImage\" />
     <Folder Include="Areas\HRDepartment\Views\Shared\" />

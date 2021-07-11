@@ -549,9 +549,9 @@ namespace NtierMvc.API.Controllers
 
         [Route("api/Base/GetSingleColumnValues")]
         [ResponseType(typeof(string))]
-        public IHttpActionResult GetSingleColumnValues(string TableName, string DataValueField1, string ColumnName1, string Param1, string DataValueField2 = null, string ColumnName2 = null, string Param2 = null, string DataValueField3 = null,  string ColumnName3 = null, string Param3 = null, string DataValueField4 = null, string ColumnName4 = null, string Param4 = null, string DataValueField5 = null, string DataValueField6 = null, string DataValueField7 = null, string DataValueField8 = null)
+        public IHttpActionResult GetSingleColumnValues(string TableName, string DataValueField1, string ColumnName1, string Param1, string DataValueField2 = null, string ColumnName2 = null, string Param2 = null, string DataValueField3 = null,  string ColumnName3 = null, string Param3 = null, string DataValueField4 = null, string ColumnName4 = null, string Param4 = null, string DataValueField5 = null, string DataValueField6 = null, string DataValueField7 = null, string DataValueField8 = null, string DataValueField9 = null, string DataValueField10 = null)
         {
-            return Ok(_repository.GetSingleColumnValues(TableName, DataValueField1, ColumnName1, Param1, DataValueField2 ,    ColumnName2 ,  Param2 ,  DataValueField3 ,  ColumnName3 ,  Param3 ,  DataValueField4 , ColumnName4 ,  Param4, DataValueField5, DataValueField6 , DataValueField7 , DataValueField8 ));
+            return Ok(_repository.GetSingleColumnValues(TableName, DataValueField1, ColumnName1, Param1, DataValueField2 ,    ColumnName2 ,  Param2 ,  DataValueField3 ,  ColumnName3 ,  Param3 ,  DataValueField4 , ColumnName4 ,  Param4, DataValueField5, DataValueField6 , DataValueField7, DataValueField8, DataValueField9, DataValueField10));
         }
 
         //[Route("api/Base/GetTableRecordsList")]
@@ -563,10 +563,10 @@ namespace NtierMvc.API.Controllers
 
         [HttpGet]
         [ResponseType(typeof(string))]
-        [Route("api/Base/DeleteFormTable")]
-        public IHttpActionResult DeleteFormTable(string TableName, string ColumnName1, string Param1, string ColumnName2 = null, string Param2 = null, string ColumnName3 = null, string Param3 = null)
+        [Route("api/Base/DeleteFromTable")]
+        public IHttpActionResult DeleteFromTable(string TableName, string ColumnName1, string Param1, string ColumnName2 = null, string Param2 = null, string ColumnName3 = null, string Param3 = null)
         {
-            return Ok(_repository.DeleteFormTable(TableName, ColumnName1, Param1, ColumnName2, Param2, ColumnName3, Param3));
+            return Ok(_repository.DeleteFromTable(TableName, ColumnName1, Param1, ColumnName2, Param2, ColumnName3, Param3));
         }
 
         [HttpGet]
@@ -606,6 +606,20 @@ namespace NtierMvc.API.Controllers
             return Ok(_repository.SaveNewItemInDdl(dEntity));
         }
 
+        [HttpPost]
+        [ResponseType(typeof(string))]
+        [Route("api/Base/SaveTableData")]
+        public IHttpActionResult SaveTableData(InsertTableData iData)
+        {
+            return Ok(_repository.SaveTableData(iData));
+        }
+
+        [Route("api/Base/GetDateDropDownList")]
+        [ResponseType(typeof(IEnumerable<DropDownEntity>))]
+        public IHttpActionResult GetDateDropDownList(string TableName, string ListType, string DataValueField, string DataTextField, string Param, string ColumnName, bool Others = false, string orderBy = null, string orderByColumn = null, string Param1 = null, string ColumnName1 = null, string Param2 = null, string ColumnName2 = null, string Param3 = null, string ColumnName3 = null, string Param4 = null, string ColumnName4 = null)
+        {
+            return Ok(_repository.GetDateDropDownList(TableName, ListType, DataValueField, DataTextField, Param, ColumnName, Others, orderBy, orderByColumn, Param1, ColumnName1, Param2, ColumnName2, Param3, ColumnName3, Param4, ColumnName4));
+        }
 
     }
 }

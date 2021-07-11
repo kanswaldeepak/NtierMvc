@@ -77,7 +77,7 @@ function Upload() {
     }
 }
 
-function GetQuoteNos() {
+function GetQuoteNosForClarification() {
     var QuoteType = $("#QuoteClarificationFormType").val();
     $.ajax({
         type: 'POST',
@@ -129,6 +129,7 @@ function GetSoNoDetialsForClarification() {
 }
 
 function GetClarificationMail() {
+
     var QuoteNo = $("#QuoteClarificationFormNo").val();
     var QuoteType = $("#QuoteClarificationFormType").val();
 
@@ -147,7 +148,7 @@ function GetClarificationMail() {
                 $("#MailList").empty();
                 $.each(data, function (i, item) {
                     if (item.RequiredColumn1 != "")
-                        $("#MailList").append("<li><input type='checkbox' value='" + item.RequiredColumn1 + "'> <a target='_blank' href='/Documents/MailUploads/" + item.RequiredColumn2 + "'><img height='25px' src='/Images/pdfIcon.png' /><label>" + item.RequiredColumn2 + "</label></a></li>");
+                        $("#MailList").append("<li><input type='checkbox' value='" + item.RequiredColumn1 + "'> <a target='_blank' href='/Documents/MailUploads/" + item.RequiredColumn2 + "'><img height='25px' src='~/Images/pdfIcon.png' /><label>" + item.RequiredColumn2 + "</label></a></li>");
                 })
             }
             else {
@@ -347,7 +348,7 @@ function GetOrderClarification() {
                 $("#OrderList").empty();
                 $.each(data, function (i, item) {
                     if (item.RequiredColumn1 != "")
-                        $("#OrderList").append("<li><input type='checkbox' value='" + item.RequiredColumn1 + "'> <a target='_blank' href='/Documents/OrderUpload/" + item.RequiredColumn2 + "'><img height='25px' src='/Images/pdfIcon.png' /><label>" + item.RequiredColumn2 + "</label></a></li>");
+                        $("#OrderList").append("<li><input type='checkbox' value='" + item.RequiredColumn1 + "'> <a target='_blank' href='/Documents/OrderUpload/" + item.RequiredColumn2 + "'><img height='25px' src='~/Images/pdfIcon.png' /><label>" + item.RequiredColumn2 + "</label></a></li>");
                 })
             }
             else {

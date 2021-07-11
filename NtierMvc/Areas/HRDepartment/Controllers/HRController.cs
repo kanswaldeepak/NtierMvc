@@ -66,9 +66,9 @@ namespace NtierMvc.Areas.HRDepartment.Controllers
         public ActionResult HRDepartmentMaster()
         {
             //HRDepartment
-            ViewBag.ListEmployeeName = model.GetMasterTableStringList("Master.Employee", "Id", "EmpName", "", "", GeneralConstants.ListTypeD);
-            ViewBag.ListDesignation = model.GetMasterTableStringList("Master.Designation", "Id", "DesignationName", "", "", GeneralConstants.ListTypeD);
-            ViewBag.ListDepartment = model.GetMasterTableStringList("Master.Department", "Id", "DeptName", "", "", GeneralConstants.ListTypeD);
+            ViewBag.ListEmployeeName = model.GetMasterTableStringList(TableNames.Master_Employee, ColumnNames.id, ColumnNames.EMPNAME, "", "", GeneralConstants.ListTypeD);
+            ViewBag.ListDesignation = model.GetMasterTableStringList(TableNames.Master_Designation, ColumnNames.id, ColumnNames.DesignationName , "", "", GeneralConstants.ListTypeD);
+            ViewBag.ListDepartment = model.GetDropDownList(TableNames.Master_Department, GeneralConstants.ListTypeD, ColumnNames.id, ColumnNames.DeptName, "", "", true);
             ViewBag.ListEmployeeStatus = model.GetDropDownList(TableNames.Master_Taxonomy, GeneralConstants.ListTypeN, ColumnNames.DropDownID, ColumnNames.DropDownValue, "EmployeeStatus", ColumnNames.Property);
             return View();
         }
@@ -512,7 +512,7 @@ namespace NtierMvc.Areas.HRDepartment.Controllers
                     if (System.IO.File.Exists(path + scE.DataValueField1))
                         System.IO.File.Delete(path + scE.DataValueField1);
 
-                    result = model.DeleteFormTable("EmpCertificate", "Id", CertId);
+                    result = model.DeleteFromTable("EmpCertificate", "Id", CertId);
                 }
 
 

@@ -268,7 +268,7 @@ namespace NtierMvc.Areas.MRM.Controllers
             if (ModelState.IsValid)
             {
                 //string msgCode = objManager.DeleteVendorDetail(id);
-                string msgCode = model.DeleteFormTable("Vendor", "VendorId", VendorId);
+                string msgCode = model.DeleteFromTable("Vendor", "VendorId", VendorId);
 
                 if (msgCode == GeneralConstants.DeleteSuccess)
                 {
@@ -1137,7 +1137,7 @@ namespace NtierMvc.Areas.MRM.Controllers
                 }
 
                 xlWorkbook.Worksheets[1].Cells.Replace("#TotalValue", CubMtr);
-                string TotalWords = model.NumberToWords(CubMtr.ToString());
+                string TotalWords = model.AmountToWordINR(CubMtr);
                 xlWorkbook.Worksheets[1].Cells.Replace("#ValueInWords", TotalWords);
 
                 Microsoft.Office.Interop.Excel.Range c3 = (Microsoft.Office.Interop.Excel.Range)ws.Cells[12, 1];
@@ -1173,7 +1173,7 @@ namespace NtierMvc.Areas.MRM.Controllers
         {
             if (ModelState.IsValid)
             {
-                string msgCode = model.DeleteFormTable("RMPO", "POSetNo", id);
+                string msgCode = model.DeleteFromTable("RMPO", "POSetNo", id);
                 if (msgCode != "")
                 {
                     //return RedirectToAction("Technical");

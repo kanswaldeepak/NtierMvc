@@ -60,6 +60,9 @@
     <Compile Include="Application\UserGrievanceEntity.cs" />
     <Compile Include="Base\AddDdlEntity.cs" />
     <Compile Include="BulkUploadEntity.cs" />
+    <Compile Include="PLEntity.cs" />
+    <Compile Include="ContractReview.cs" />
+    <Compile Include="Common\InsertTableData.cs" />
     <Compile Include="DescEntity.cs" />
     <Compile Include="HR\HRCertificatesEntity.cs" />
     <Compile Include="Vendor\VendorEntity.cs" />

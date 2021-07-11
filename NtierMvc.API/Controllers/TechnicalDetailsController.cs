@@ -114,14 +114,14 @@ namespace NtierMvc.API.Controllers.Application
 
         [HttpGet]
         [Route("api/TechnicalDetails/GetQuoteNo")]
-        public IHttpActionResult GetQuoteNo(string quotetypeId = null)
+        public IHttpActionResult GetQuoteNo(string quotetypeId = null, string finYear = null)
         {
-            return Ok(_repository.GetQuoteNo(quotetypeId));
+            return Ok(_repository.GetQuoteNo(quotetypeId, finYear));
         }
 
         [HttpGet]
         [Route("api/TechnicalDetails/GetQuoteNoList")]
-        public IHttpActionResult GetQuoteNoList(string quotetypeId = "", string SoNo=null)
+        public IHttpActionResult GetQuoteNoList(string quotetypeId = "", string SoNo = null)
         {
             return Ok(_repository.GetQuoteNoList(quotetypeId, SoNo));
         }
@@ -142,7 +142,7 @@ namespace NtierMvc.API.Controllers.Application
 
         [HttpGet]
         [Route("api/TechnicalDetails/GetPrepProductNames")]
-        public IHttpActionResult GetPrepProductNames(string productId,  string casingSize, string type=null)
+        public IHttpActionResult GetPrepProductNames(string productId, string casingSize, string type = null)
         {
             return Ok(_repository.GetPrepProductNames(productId, casingSize, type));
         }
@@ -179,9 +179,9 @@ namespace NtierMvc.API.Controllers.Application
 
         [ResponseType(typeof(int))]
         [Route("api/TechnicalDetails/GetOrderDetails")]
-        public IHttpActionResult GetOrderDetails(int pageIndex, int pageSize, string SearchQuoteType = null, string SearchVendorID = null, string SearchProductGroup = null, string SearchDeliveryTerms = null)
+        public IHttpActionResult GetOrderDetails(int pageIndex, int pageSize, string SearchQuoteType = null, string SearchCustomerID = null, string SearchProductGroup = null, string SearchDeliveryTerms = null, string SearchPODeliveryDate = null)
         {
-            return Ok(_repository.GetOrderDetails(pageIndex, pageSize, SearchQuoteType, SearchVendorID, SearchProductGroup, SearchDeliveryTerms));
+            return Ok(_repository.GetOrderDetails(pageIndex, pageSize, SearchQuoteType, SearchCustomerID, SearchProductGroup, SearchDeliveryTerms, SearchPODeliveryDate));
         }
 
 
@@ -211,9 +211,9 @@ namespace NtierMvc.API.Controllers.Application
 
         [HttpGet]
         [Route("api/TechnicalDetails/GetOrderDetailsFromSO")]
-        public IHttpActionResult GetOrderDetailsFromSO(int SoNo)
+        public IHttpActionResult GetOrderDetailsFromSO(string SoNoView)
         {
-            return Ok(_repository.GetOrderDetailsFromSO(SoNo));
+            return Ok(_repository.GetOrderDetailsFromSO(SoNoView));
         }
 
         [HttpPost]
@@ -264,9 +264,9 @@ namespace NtierMvc.API.Controllers.Application
 
         [HttpGet]
         [Route("api/TechnicalDetails/GetQuotePrepDetails")]
-        public IHttpActionResult GetQuotePrepDetails(int itemNoId, int quoteType, int quoteNo)
+        public IHttpActionResult GetQuotePrepDetails(string itemNoId, string quoteType, string quoteNo, string QuotePrepId, string financialYear)
         {
-            return Ok(_repository.GetQuotePrepDetails(itemNoId, quoteType, quoteNo));
+            return Ok(_repository.GetQuotePrepDetails(itemNoId, quoteType, quoteNo, QuotePrepId, financialYear));
         }
 
         [HttpPost]
@@ -338,6 +338,93 @@ namespace NtierMvc.API.Controllers.Application
         {
             return Ok(_repository.LoadDescDetail(skip, pageSize, sortColumn, sortColumnDir, search));
         }
+
+        [HttpPost]
+        [ResponseType(typeof(string))]
+        [Route("api/TechnicalDetails/SaveRevisedOrderDetails")]
+        public IHttpActionResult SaveRevisedOrderDetails(OrderEntity oEntity)
+        {
+            return Ok(_repository.SaveRevisedOrderDetails(oEntity));
+        }
+
+
+        [HttpGet]
+        [Route("api/TechnicalDetails/GetItemNosForEnqs")]
+        public IHttpActionResult GetItemNosForEnqs(string EnqNo)
+        {
+            return Ok(_repository.GetItemNosForEnqs(EnqNo));
+        }
+
+        [HttpGet]
+        [Route("api/TechnicalDetails/GetDataForContractReview")]
+        public IHttpActionResult GetDataForContractReview(string EnqNo, string ItemNo, string type)
+        {
+            return Ok(_repository.GetDataForContractReview(EnqNo, ItemNo, type));
+        }
+
+        [HttpPost]
+        [ResponseType(typeof(string))]
+        [Route("api/TechnicalDetails/SaveContractReviewData")]
+        public IHttpActionResult SaveContractReviewData(ContractReview viewModel)
+        {
+            return Ok(_repository.SaveContractReviewData(viewModel));
+        }
+
+        [HttpGet]
+        public IHttpActionResult GetWorkAuthReport(string SoNo, string FromDate = null, string ToDate = null, string ReportType=null)
+        {
+            return Ok(_repository.GetWorkAuthReport(SoNo, FromDate, ToDate, ReportType));
+        }
+
+        [HttpGet]
+        [Route("api/TechnicalDetails/LoadMasterPLlist")]
+        public IHttpActionResult LoadMasterPLlist(int skip, int pageSize, string sortColumn, string sortColumnDir, string search)
+        {
+            return Ok(_repository.LoadMasterPLlist(skip, pageSize, sortColumn, sortColumnDir, search));
+        }
+
+        [HttpGet]
+        [Route("api/TechnicalDetails/LoadQuotePrepListDetails")]
+        public IHttpActionResult LoadQuotePrepListDetails(int skip, int pageSize, string sortColumn, string sortColumnDir, string search, string quoteType = null, string quoteNo = null, string itemNo = null, string financialYear = null)
+        {
+            return Ok(_repository.LoadQuotePrepListDetails(skip, pageSize, sortColumn, sortColumnDir, search, quoteType, quoteNo, itemNo, financialYear));
+        }
+
+        [HttpGet]
+        [Route("api/TechnicalDetails/LoadItemWiseOrders")]
+        public IHttpActionResult LoadItemWiseOrders(int skip, int pageSize, string sortColumn, string sortColumnDir, string search)
+        {
+            return Ok(_repository.LoadItemWiseOrders(skip, pageSize, sortColumn, sortColumnDir, search));
+        }
+
+        [HttpGet]
+        [Route("api/TechnicalDetails/GetContractReviews")]
+        public IHttpActionResult GetContractReviews(string customerId = null)
+        {
+            return Ok(_repository.GetContractReviews(customerId));
+        }
+
+        [HttpGet]
+        [Route("api/TechnicalDetails/GetQuoteItemSlNos")]
+        public IHttpActionResult GetQuoteItemSlNos(string quoteType, string quoteNo, string finYear)
+        {
+            return Ok(_repository.GetQuoteItemSlNos(quoteType, quoteNo, finYear));
+        }
+
+        [HttpGet]
+        [Route("api/TechnicalDetails/GetQuoteNoDetailsforRevisedQuote")]
+        public IHttpActionResult GetQuoteNoDetailsforRevisedQuote(string quoteNoId, string quotetypeId, string financialYr)
+        {
+            return Ok(_repository.GetQuoteNoDetailsforRevisedQuote(quoteNoId, quotetypeId, financialYr));
+        }
+
+        [HttpGet]
+        [Route("api/TechnicalDetails/GetRevAndOriginalQuotes")]
+        public IHttpActionResult GetRevAndOriginalQuotes(string quotetypeId, string financialYr)
+        {
+            return Ok(_repository.GetRevAndOriginalQuotes(quotetypeId, financialYr));
+        }
+
 
     }
 }

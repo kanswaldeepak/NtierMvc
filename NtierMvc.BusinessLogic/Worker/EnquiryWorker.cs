@@ -78,8 +78,6 @@ namespace NtierMvc.BusinessLogic.Worker
             return result;
         }
 
-
-
         public EnquiryEntity DT2Cust(DataTable dtRecord)
         {
             EnquiryEntity oCust = new EnquiryEntity();
@@ -219,13 +217,15 @@ namespace NtierMvc.BusinessLogic.Worker
                     Model.EndUser = dt1.Rows[0]["EndUser"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["EndUser"]);
                     Model.ApiMonogramRequirement = dt1.Rows[0]["ApiMonogramRequirement"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["ApiMonogramRequirement"]);
                     Model.ReasonForRegret = dt1.Rows[0]["ReasonForRegret"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["ReasonForRegret"]);
-                    Model.DateOfReceipt = dt1.Rows[0]["DateOfReceipt"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["DateOfReceipt"]);
+                    //Model.DateOfReceipt = dt1.Rows[0]["DateOfReceipt"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["DateOfReceipt"]);
                     Model.Remarks = dt1.Rows[0]["Remarks"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["Remarks"]);
                     Model.EnqMode = dt1.Rows[0]["EnqMode"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["EnqMode"]);
                     Model.EnqThru = dt1.Rows[0]["EnqThru"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["EnqThru"]);
                     Model.EnqBGreq = dt1.Rows[0]["EnqBGreq"] == DBNull.Value ? 0 : Convert.ToInt32(dt1.Rows[0]["EnqBGreq"]);
                     Model.AgentName = dt1.Rows[0]["AgentName"] == DBNull.Value ? "" : Convert.ToString(dt1.Rows[0]["AgentName"]);
-                    Model.EnqReceiptDate = dt1.Rows[0]["EnqReceiptDate"] == DBNull.Value ? "" : Convert.ToString(dt1.Rows[0]["EnqReceiptDate"]);
+                    Model.EnqReceiptDate = dt1.Rows[0]["DateOfReceipt"] == DBNull.Value ? "" : Convert.ToString(dt1.Rows[0]["DateOfReceipt"]);
+
+
                 }
             }
 

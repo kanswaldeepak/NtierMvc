@@ -6,13 +6,16 @@
 
 <div ng-controller="ModalController" class="row">
     <form id="formSaveItemDetails">
+        @Html.HiddenFor(m=>m.QuoteNoView, new { @id= "ItemQuoteNoView" })
+        @Html.HiddenFor(m=>m.SoNoView, new { @id= "ItemSoNoView" })
+        @Html.HiddenFor(m=>m.QPFinancialYear, new { @id= "ItemQPFinancialYear" })
         <div class="col-md-12">
             @Html.HiddenFor(m => m.Id)
             @Html.HiddenFor(m => m.ExWorkValue)
             <div class="row">
                 <div class="col-md-2">
                     <div class="form-group">
-                        <label class="control-label ">
+                        <label class="control-label">
                             Order Type
                         </label>
                         @Html.DropDownListFor(m => m.QuoteType, new SelectList(ViewBag.ListQuoteType, "DataStringValueField", "DataTextField", Model.QuoteType), new
@@ -24,6 +27,22 @@
                        @onchange = "GetQuoteNoDetails()"
                    })
                         <span class="HideValidMsg"> Select Order Type</span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group text-left">
+                        <label class="control-label ">
+                            Financial Year
+                        </label>
+                        @Html.DropDownListFor(m => m.FinancialYear, new SelectList(ViewBag.ListFinancialYear, "DataStringValueField", "DataTextField", Model.FinancialYear), new
+                   {
+                       @class = "form-control requiredValidation",
+                       @id = "ItemFinancialYear",
+                       @data_inneraction = "validationCall",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                       @onchange = "GetSoNosForFinancialYear();"
+                   })
+                        <span class="HideValidMsg">Please Select Financial Year</span>
                     </div>
                 </div>
                 <div class="col-md-2">
@@ -134,8 +153,6 @@
                         <span class="HideValidMsg"> Enter Supply Terms</span>
                     </div>
                 </div>
-                <div class="col-md-2"></div>
-                <div class="col-md-2"></div>
                 <div class="col-md-4">
                     <div class="form-group">
                         <blink>
@@ -171,10 +188,10 @@
                         <label class="control-label ">
                             Quote Item Sl. No
                         </label>
-                        @Html.DropDownListFor(m => m.QuotePrepId, new SelectList(ViewBag.ListItems, "DataStringValueField", "DataTextField", "Select"), new
+                        @Html.DropDownListFor(m => m.QuoteItemSlNo, new SelectList(ViewBag.ListItems, "DataStringValueField", "DataTextField", "Select"), new
                    {
                        @class = "form-control requiredValidation clearField",
-                       @id = "QuotePrepId",
+                       @id = "QuoteItemSlNo",
                        @data_inneraction = "validationCall",
                        @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
                        @onchange = "GetQuoteItemDetails()"
@@ -352,6 +369,38 @@
 
                 </div>
             </div>
+            <div class="row mt-4">
+                <div class="col-md-12">
+                    <table id="tblItemWiseOrder" class="table table-striped table-info">
+                        <thead>
+                            <tr>
+                                <td>SNo</td>
+                                <td>Id</td>
+                                <td>Order Type</td>
+                                <td>Financial Year</td>
+                                <td>WA No</td>
+                                <td>Customer Id</td>
+                                <td>Customer Name</td>
+                                <td>PO No</td>
+                                <td>PO Date</td>
+                                <td>PO Delivery Date</td>
+                                <td>Supply</td>
+                                <td>Supply Terms</td>
+                                <td>QuoteNos</td>
+                                <td>Quote No</td>
+                                <td>Quote Items</td>
+                                <td>Quote Item Sl No</td>
+                                <td>PO Sl No</td>
+                                <td>PO Qty</td>
+                                @*<td>Unit Price</td>*@
+                                <td>Product Details</td>
+                                <td>Action</td>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </form>
 </div>
@@ -365,8 +414,12 @@
         window.GetItemQuoteDetails = '@Url.Action("GetItemQuoteDetails", "Technical")';
         window.GetQuoteItemPODetails = '@Url.Action("GetQuoteItemPODetails", "Technical")';
         window.GetQuoteItemSlNos = '@Url.Action("GetQuoteItemSlNos", "Technical")';
+        window.GetOrderQuoteNo = '@Url.Action("GetOrderQuoteNo", "Technical")';
+        window.LoadItemWiseOrders = '@Url.Action("LoadItemWiseOrders", "Technical")';
+        window.GetSoNosForFinancialYears = '@Url.Action("GetSoNosForFinancialYears", "Technical")';
 
         $('#divQuoteDetails').hide();
+        LoadtblItemWiseOrder();
 
         //1. Add new row
     $("#addNew").click(function (e) {
@@ -471,12 +524,15 @@ $("#saveItemButton").click(function (e) {
 
             arr.push({
                 Id: $("#Id").val(),
-                VendorId: $("#VendorFormId").val(),
-                VendorName: $("#VendorFormName").val(),
+                CustomerId: $("#ItemCustomerId").val(),
+                CustomerName: $("#ItemCustomerName").val(),
+                FinancialYear: $("#ItemFinancialYear").val(),
                 QuoteNo: $("#QuoteItemFormNo").val(),
+                QuoteNoView: $("#QuoteItemFormNo option:selected").text(),
                 QuoteType: $("#OrderFormQuoteType").val(),
                 SoNo: $("#ItemSoNo").val(),
-                QuotePrepId: $("#QuotePrepId").val(),
+                SoNoView: $("#ItemSoNo option:selected").text(),
+                QuoteItemSlNo: $("#QuoteItemSlNo").val(),
                 SupplyTerms: $("#SupplyTerms").val(),
                 PoSLNo: $("#POSlNo").val(),
                 PoQty: $("#itemPOQty").val(),
@@ -502,7 +558,7 @@ $("#saveItemButton").click(function (e) {
 
 
     $('.NoEndDate').datepicker({
-        format: 'dd/mm/yyyy',
+        format: 'dd-mm-yyyy',
         autoclose: true,
         changeMonth: true,
         changeYear: true,
@@ -510,7 +566,7 @@ $("#saveItemButton").click(function (e) {
     });
     $('.CurrentEndDate').datepicker({
 
-        format: 'dd/mm/yyyy',
+        format: 'dd-mm-yyyy',
         autoclose: true,
         changeMonth: true,
         changeYear: true,

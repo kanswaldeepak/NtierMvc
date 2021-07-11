@@ -1,5 +1,60 @@
-﻿
-function DeleteUsingIdFromTable (TableName, ColumnName, Id) {
+﻿function SetFinancialYear(element, classVal) {
+    var finyr = $(element).find("option:selected").text().split('-');
+    var startYr = finyr[0];
+    var EndYr = '20' + finyr[1];
+
+    let startDate = "01/04/" + startYr;
+    let endDate = "31/03/" + EndYr;
+
+    $('.' + classVal).val('');
+    $('.' + classVal).datepicker('setStartDate', startDate);
+    $('.' + classVal).datepicker('setEndDate', endDate);
+}
+
+function getCurrentFiscalYear(date) {
+    var dates = {};
+
+    var docDate = new Date(date);
+    var month = docDate.getMonth()+1;
+    let financial_Year = "";
+
+    if (month > 3) {
+        dates.sDate = new Date(docDate.getFullYear(), 3, 1);
+        dates.eDate = new Date(dates.sDate.getFullYear() + 1, dates.sDate.getMonth() - 1, 31);
+        dates.financial_Year = docDate.getFullYear() + "-" + (docDate.getFullYear() + 1);
+    }
+    else {
+        dates.sDate = new Date(docDate.getFullYear() - 1, 3, 1);
+        dates.eDate = new Date(docDate.getFullYear(), dates.sDate.getMonth() - 1, 31);
+        dates.financial_Year = (docDate.getFullYear() - 1) + "-" + docDate.getFullYear();
+    }
+
+    return dates;
+}
+
+function GetStatesForCountry(CountryId, StateId) {
+    $.ajax({
+        type: 'POST',
+        url: window.GetStateForCountry,
+        data: JSON.stringify({ countryId: CountryId }),
+        contentType: "application/json; charset=utf-8",
+        success: function (data) {
+            if (data.length > 0) {
+                $("#" + StateId).empty();
+                if (data.length > 0) {
+                    $.each(data, function (i, item) {
+                        $("#" + StateId).append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
+                    })
+                }
+            }
+        },
+        error: function (x, e) {
+            alert('Some error is occurred, Please try after some time.');
+        }
+    })
+}
+
+function DeleteUsingIdFromTable(TableName, ColumnName, Id) {
     if (!confirm("Are you sure to delete?")) {
         return;
     }
@@ -12,14 +67,14 @@ function DeleteUsingIdFromTable (TableName, ColumnName, Id) {
 
     $.ajax({
         type: 'POST',
-        url: '/Account/DeleteUsingIdFromTable',
+        url: window.DeleteUsingIdFromTables,
         data: JSON.stringify({ tableName: TableName, columnName: ColumnName, id: Id }),
         contentType: "application/json; charset=utf-8",
         success: function (data) {
             if (data == 'Deleted Successfully!') {
-                alert(res);
+                alert(data);
             } else {
-                alert(res, 'E');
+                alert(data, 'E');
             }
         },
         error: function (x, e) {
@@ -119,6 +174,77 @@ function AllowNumbers(evt) {
     return true;
 }
 
+function convertDateFormat(dateObject, convertFrom, convertTo) {
+
+    var d = "";
+    var dte = "";
+
+    switch (convertFrom) {
+        case 'dd-MM-yyyy HH:mm:ss':
+            d = dateObject.split(" ")[0].split("-");
+            dte = new Date(parseInt(d[2], 10),
+                parseInt(d[1], 10) - 1,
+                parseInt(d[0], 10));
+            break;
+        case 'MM-dd-yyyy HH:mm:ss':
+            d = dateObject.split(" ")[0].split("-");
+            dte = new Date(parseInt(d[1], 10) - 1,
+                parseInt(d[2], 10),
+                parseInt(d[0], 10));
+            break;
+        case 'dd/MM/yyyy HH:mm:ss':
+            d = dateObject.split(" ")[0].split("/");
+            dte = new Date(parseInt(d[2], 10),
+                parseInt(d[1], 10) - 1,
+                parseInt(d[0], 10));
+        case 'dd-MM-yyyy':
+            d = dateObject.split("-");
+            dte = new Date(parseInt(d[2], 10),
+                parseInt(d[1], 10) - 1,
+                parseInt(d[0], 10));
+            break;
+        default:
+            dte = new Date(dateObject.split("/").reverse().join("-"));
+            break;
+    }
+
+    var day = dte.getDate();
+    var month = dte.getMonth() + 1;
+    var year = dte.getFullYear();
+    if (day < 10) {
+        day = "0" + day;
+    }
+    if (month < 10) {
+        month = "0" + month;
+    }
+
+    var date = '';
+
+    switch (convertTo) {
+        case 'dd/MM/yyyy':
+            date = day + "/" + month + "/" + year;
+            break;
+        case 'dd-MM-yyyy':
+            date = day + "-" + month + "-" + year;
+            break;
+        case 'yyyy-MM-dd':
+            date = year + "-" + month + "-" + day;
+            break;
+        case 'MM-dd-yyyy':
+            date = month + "-" + day + "-" + year;
+            break;
+        case 'MM/dd/yyyy':
+            date = month + "/" + day + "/" + year;
+            break;
+        default:
+            date = day + "/" + month + "/" + year;
+            break;
+    }
+
+
+    return date;
+}
+
 function formatDate(dateObject, convertTo) {
     //var d = new Date(dateObject);
     var d = new Date(dateObject.split("/").reverse().join("-"));
@@ -144,6 +270,9 @@ function formatDate(dateObject, convertTo) {
             break;
         case 'yyyy-MM-dd':
             date = year + "-" + month + "-" + day;
+            break;
+        case 'MM-dd-yyyy':
+            date = month + "-" + day + "-" + year;
             break;
         default:
             date = day + "/" + month + "/" + year;
@@ -1298,4 +1427,3 @@ $(document).ready(function () {
         }
     });
 });
-

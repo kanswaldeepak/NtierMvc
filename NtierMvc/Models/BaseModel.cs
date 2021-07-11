@@ -1182,14 +1182,13 @@ namespace NtierMvc.Models
             return lstTableRecordsEntity;
         }
 
-        public SingleColumnEntity GetSingleColumnValues(string TableName, string DataValueField1, string DataTextField1, string ColumnName1, string Param1, string DataValueField2 = null, string ColumnName2 = null, string Param2 = null, string DataValueField3 = null, string ColumnName3 = null, string Param3 = null, string DataValueField4 = null, string ColumnName4 = null, string Param4 = null, string DataValueField5 = null, string DataValueField6 = null, string DataValueField7 = null, string DataValueField8 = null)
+        public SingleColumnEntity GetSingleColumnValues(string TableName, string DataValueField1, string DataTextField1, string ColumnName1, string Param1, string DataValueField2 = null, string ColumnName2 = null, string Param2 = null, string DataValueField3 = null, string ColumnName3 = null, string Param3 = null, string DataValueField4 = null, string ColumnName4 = null, string Param4 = null, string DataValueField5 = null, string DataValueField6 = null, string DataValueField7 = null, string DataValueField8 = null, string DataValueField9 = null, string DataValueField10 = null)
         {
             SingleColumnEntity ObjSingleEntity = new SingleColumnEntity();
             var baseAddress = "Base";
             using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
             {
-                HttpResponseMessage response = client.GetAsync(baseAddress + "/GetSingleColumnValues?TableName=" + TableName + "&DataValueField1=" + DataValueField1 + "&DataTextField1=" + DataTextField1 + "&Param1=" + Param1 + "&ColumnName1=" + ColumnName1 + "&DataValueField2=" + DataValueField2 + "&Param2=" + Param2 + "&ColumnName2=" + ColumnName2 + "&DataValueField3=" + DataValueField3 + "&Param3=" + Param3 + "&ColumnName3=" + ColumnName3 + "&DataValueField4=" + DataValueField4 + "&Param4=" + Param4 + "&ColumnName4=" + ColumnName4 + "&DataValueField5=" + DataValueField5 + "&DataValueField6=" + DataValueField6 + "&DataValueField7=" + DataValueField7 + "&DataValueField8="
-                    + DataValueField8).Result;
+                HttpResponseMessage response = client.GetAsync(baseAddress + "/GetSingleColumnValues?TableName=" + TableName + "&DataValueField1=" + DataValueField1 + "&DataTextField1=" + DataTextField1 + "&Param1=" + Param1 + "&ColumnName1=" + ColumnName1 + "&DataValueField2=" + DataValueField2 + "&Param2=" + Param2 + "&ColumnName2=" + ColumnName2 + "&DataValueField3=" + DataValueField3 + "&Param3=" + Param3 + "&ColumnName3=" + ColumnName3 + "&DataValueField4=" + DataValueField4 + "&Param4=" + Param4 + "&ColumnName4=" + ColumnName4 + "&DataValueField5=" + DataValueField5 + "&DataValueField6=" + DataValueField6 + "&DataValueField7=" + DataValueField7 + "&DataValueField8=" + DataValueField8 + "&DataValueField9=" + DataValueField9 + "&DataValueField10=" + DataValueField10).Result;
                 if (response.IsSuccessStatusCode)
                 {
                     var data = response.Content.ReadAsStringAsync().Result;
@@ -1215,14 +1214,14 @@ namespace NtierMvc.Models
         //    return tblRecordList;
         //}
 
-        public string DeleteFormTable(string TableName, string ColumnName1, string Param1, string ColumnName2 = null, string Param2 = null, string ColumnName3 = null, string Param3 = null)
+        public string DeleteFromTable(string TableName, string ColumnName1, string Param1, string ColumnName2 = null, string Param2 = null, string ColumnName3 = null, string Param3 = null)
         {
             string result = "0";
             var baseAddress = "Base";
 
             using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
             {
-                HttpResponseMessage response = client.GetAsync(baseAddress + "/DeleteFormTable?TableName=" + TableName + "&ColumnName1=" + ColumnName1 + "&Param1=" + Param1 + "&ColumnName2=" + ColumnName2 + "&Param2=" + Param2 + "&ColumnName3=" + ColumnName3 + "&Param3=" + Param3).Result;
+                HttpResponseMessage response = client.GetAsync(baseAddress + "/DeleteFromTable?TableName=" + TableName + "&ColumnName1=" + ColumnName1 + "&Param1=" + Param1 + "&ColumnName2=" + ColumnName2 + "&Param2=" + Param2 + "&ColumnName3=" + ColumnName3 + "&Param3=" + Param3).Result;
                 if (response.IsSuccessStatusCode)
                 {
                     var data = response.Content.ReadAsStringAsync().Result;
@@ -1304,7 +1303,7 @@ namespace NtierMvc.Models
             return lstTable;
         }
 
-        public string NumberToWords(string rawnumber)
+        public string AmountToWordsUSD(string rawnumber)
         {
             int inputNum = 0;
             int dig1, dig2, dig3, level = 0, lasttwo, threeDigits;
@@ -1343,7 +1342,7 @@ namespace NtierMvc.Models
             }
             if (inputNum == 0)
             {
-                return "Zero and Cents " + cents;
+                return "Zero and Cents " + cents + " only";
             }
 
             string cent = cents.ToString();
@@ -1351,10 +1350,14 @@ namespace NtierMvc.Models
             {
                 threeDigits = int.Parse(cent);
                 lasttwo = threeDigits % 100;
-                dig1 = threeDigits / 100;
+                //dig1 = threeDigits / 100;
+                dig1 = threeDigits % 10;
                 dig2 = lasttwo / 10;
+
+
                 cents = tens[dig2] + " " + ones[dig1];
                 cent = cent.Substring(0, cent.Length - 2);
+
             }
 
             string s = inputNum.ToString();
@@ -1396,7 +1399,7 @@ namespace NtierMvc.Models
                         if (isNegative) { dollars = "Negative " + dollars; }
                         //return dollars + " and " + cents + "/100";
                         if (!string.IsNullOrEmpty(cents.Trim()))
-                            return dollars + " and Cents " + cents;
+                            return dollars + " and Cents " + cents + " only";
                         else
                             return dollars;
                         //return dollars + " and Cents " + cents;
@@ -1460,9 +1463,134 @@ namespace NtierMvc.Models
             return lstDropDownEntity;
         }
 
+        public string SaveTableData(string TableName, string Column1, string Value1, string Column2 = null, string Value2 = null, string Column3 = null, string Value3 = null, string Column4 = null, string Value4 = null, string Column5 = null, string Value5 = null, string Column6 = null, string Value6 = null, string Column7 = null, string Value7 = null, string Column8 = null, string Value8 = null, string Column9 = null, string Value9 = null, string Column10 = null, string Value10 = null)
+        {
+            string result = "0";
+            var baseAddress = "Base";
+            
+            InsertTableData iData = new InsertTableData();
+            iData.TableName = TableName;
+            iData.Column1 = Column1;
+            iData.Column2 = Column2;
+            iData.Column3 = Column3;
+            iData.Column4 = Column4;
+            iData.Column5 = Column5;
+            iData.Column6 = Column6;
+            iData.Column7 = Column7;
+            iData.Column8 = Column8;
+            iData.Column9 = Column9;
+            iData.Column10 = Column10;
 
+            iData.Value1 = Value1;
+            iData.Value2 = Value2;
+            iData.Value3 = Value3;
+            iData.Value4 = Value4;
+            iData.Value5 = Value5;
+            iData.Value6 = Value6;
+            iData.Value7 = Value7;
+            iData.Value8 = Value8;
+            iData.Value9 = Value9;
+            iData.Value10 = Value10;
 
+            using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
+            {
+                HttpResponseMessage response = client.PostAsJsonAsync(baseAddress + "/SaveTableData", iData).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    var data = response.Content.ReadAsStringAsync().Result;
+                    result = JsonConvert.DeserializeObject<string>(data);
+                }
+            }
+            return result;
+        }
 
+        public List<DropDownEntity> GetDateDropDownList(string TableName, string ListType, string DataValueField, string DataTextField, string Param, string ColumnName, bool Others = false, string orderBy = null, string orderByColumn = null, bool isDate = false, string Param1 = null, string ColumnName1 = null, string Param2 = null, string ColumnName2 = null, string Param3 = null, string ColumnName3 = null, string Param4 = null, string ColumnName4 = null)
+        {
+            List<DropDownEntity> lstDropDownEntity = new List<DropDownEntity>();
+            var baseAddress = "Base";
+            using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
+            {
+                HttpResponseMessage response = client.GetAsync(baseAddress + "/GetDateDropDownList?TableName=" + TableName + "&ListType=" + ListType + "&DataValueField=" + DataValueField + "&DataTextField=" + DataTextField + "&Param=" + Param + "&ColumnName=" + ColumnName + "&Others=" + Others + "&orderBy=" + orderBy + "&orderByColumn=" + orderByColumn + "&bool=" + isDate + "&Param1=" + Param1 + "&ColumnName1=" + ColumnName1 + "&Param2=" + Param2 + "&ColumnName2=" + ColumnName2 + "&Param3=" + Param3 + "&ColumnName3=" + ColumnName3 + "&Param4=" + Param4 + "&ColumnName4=" + ColumnName4).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    var data = response.Content.ReadAsStringAsync().Result;
+                    lstDropDownEntity = JsonConvert.DeserializeObject<List<DropDownEntity>>(data);
+                }
+            }
+            return lstDropDownEntity;
+
+        }
+
+        public string AmountToWordINR(double? numbers, Boolean paisaconversion = false)
+        {
+            var pointindex = numbers.ToString().IndexOf(".");
+            var paisaamt = 0;
+            if (pointindex > 0)
+                paisaamt = Convert.ToInt32(numbers.ToString().Substring(pointindex + 1, 2));
+
+            int number = Convert.ToInt32(numbers);
+
+            if (number == 0) return "Zero";
+            if (number == -2147483648) return "Minus Two Hundred and Fourteen Crore Seventy Four Lakh Eighty Three Thousand Six Hundred and Forty Eight";
+            int[] num = new int[4];
+            int first = 0;
+            int u, h, t;
+            System.Text.StringBuilder sb = new System.Text.StringBuilder();
+            if (number < 0)
+            {
+                sb.Append("Minus ");
+                number = -number;
+            }
+            string[] words0 = { "", "One ", "Two ", "Three ", "Four ", "Five ", "Six ", "Seven ", "Eight ", "Nine " };
+            string[] words1 = { "Ten ", "Eleven ", "Twelve ", "Thirteen ", "Fourteen ", "Fifteen ", "Sixteen ", "Seventeen ", "Eighteen ", "Nineteen " };
+            string[] words2 = { "Twenty ", "Thirty ", "Forty ", "Fifty ", "Sixty ", "Seventy ", "Eighty ", "Ninety " };
+            string[] words3 = { "Thousand ", "Lakh ", "Crore " };
+            num[0] = number % 1000; // units
+            num[1] = number / 1000;
+            num[2] = number / 100000;
+            num[1] = num[1] - 100 * num[2]; // thousands
+            num[3] = number / 10000000; // crores
+            num[2] = num[2] - 100 * num[3]; // lakhs
+            for (int i = 3; i > 0; i--)
+            {
+                if (num[i] != 0)
+                {
+                    first = i;
+                    break;
+                }
+            }
+            for (int i = first; i >= 0; i--)
+            {
+                if (num[i] == 0) continue;
+                u = num[i] % 10; // ones
+                t = num[i] / 10;
+                h = num[i] / 100; // hundreds
+                t = t - 10 * h; // tens
+                if (h > 0) sb.Append(words0[h] + "Hundred ");
+                if (u > 0 || t > 0)
+                {
+                    if (h > 0 || i == 0) sb.Append("and ");
+                    if (t == 0)
+                        sb.Append(words0[u]);
+                    else if (t == 1)
+                        sb.Append(words1[u]);
+                    else
+                        sb.Append(words2[t - 2] + words0[u]);
+                }
+                if (i != 0) sb.Append(words3[i - 1]);
+            }
+
+            if (paisaamt == 0 && paisaconversion == false)
+            {
+                sb.Append(" only");
+            }
+            else if (paisaamt > 0)
+            {
+                var paisatext = AmountToWordINR(paisaamt, true);
+                sb.AppendFormat(" {0} paise only", paisatext);
+            }
+            return sb.ToString().TrimEnd();
+        }
 
 
     }

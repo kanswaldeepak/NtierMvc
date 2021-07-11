@@ -196,6 +196,5 @@ namespace NtierMvc.Model
         }
 
 
-
     }
 }

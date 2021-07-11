@@ -8,7 +8,7 @@ angular.module('App').controller("MainController", function ($scope, $http, $tim
     $scope.maxsize = 5;
     $scope.custTotalCount = 0;
     $scope.custPageIndex = 1;
-    $scope.custPageSize = "50";
+    $scope.custPageSize = "1000";
 
     //Customer Starts
     $scope.DefaultCustomerList = function () {
@@ -19,7 +19,7 @@ angular.module('App').controller("MainController", function ($scope, $http, $tim
     }
 
     $scope.FetchCustomerList = function () {
-        $http.get(window.FetchCustomerList + "?pageindex=" + $scope.custPageIndex + "&pagesize=" + $scope.custPageSize + "&SearchCustomerName=" + $scope.SearchCustomerName + "&SearchCustomerID=" + $scope.SearchCustomerID + "&SearchCustomerIsActive=" + $scope.SearchCustomerIsActive).success(function (response) {
+        $http.get(window.FetchCustomerList + "?pageindex=" + $scope.custPageIndex + "&pagesize=" + $scope.custPageSize + "&SearchCountry=" + $scope.SearchCountry + "&SearchCustomerID=" + $scope.SearchCustomerID + "&SearchCustomerIsActive=" + $scope.SearchCustomerIsActive).success(function (response) {
             $scope.AvailableCustomerList = response.LstCusEnt;
             $scope.custTotalCount = response.totalcount;
         }, function (error) {
@@ -171,9 +171,79 @@ angular.module('App').controller("MainController", function ($scope, $http, $tim
         ).error(function (res) { showHttpErr(res); });
     }
 
+    $scope.GenerateReport = function (Type) {
+        //var DownloadType = dwnldtype;
+        ShowLoadder();
+
+        $http.get(window.GenerateReport + "?ReportType=" + Type + "&pageindex=" + $scope.custPageIndex + "&pagesize=" + $scope.custPageSize + "&SearchCountry=" + $scope.SearchCountry + "&SearchCustomerID=" + $scope.SearchCustomerID + "&SearchCustomerIsActive=" + $scope.SearchCustomerIsActive).success(function (data) {
+                if (data != "") {
+                    //use window.location.href for redirect to download action for download the file
+                    window.location.href = window.DownloadDoc + '?fileName=' + data;
+                    HideLoadder();
+                }
+                else {
+                    alert(data.errorMessage);
+                    HideLoadder();
+                }
+            }, function (error) {
+                alert('failed');
+            });
+
+        //$.ajax({
+        //    type: "Post",
+        //    url: window.GenerateReport,
+        //    data: JSON.stringify({ ReportType: Type, pageindex: $scope.custPageIndex, pagesize: $scope.custPageSize, SearchCountry: $scope.SearchCountry, SearchCustomerID: $scope.SearchCustomerID, SearchCustomerIsActive:$scope.SearchCustomerIsActive}),
+        //    contentType: "application/json; charset=utf-8",
+        //    success: function (data) {
+        //        //alert("Dowloaded Successfully" + data);
+        //        if (data != "") {
+        //            //use window.location.href for redirect to download action for download the file
+        //            window.location.href = window.DownloadDoc + '?fileName=' + data;
+        //            HideLoadder();
+        //        }
+        //        else {
+        //            alert(data.errorMessage);
+        //            HideLoadder();
+        //        }
+        //    },
+        //    error: function (x, e) {
+        //        alert('Some error is occurred, Please try after some time.');
+        //        HideLoadder();
+        //    }
+        //})
+    }
+    $scope.GenerateCustReport = function (Type) {
+        //var DownloadType = dwnldtype;
+        ShowLoadder();
+
+        $.ajax({
+            type: "POST",
+            url: window.GenerateReport,
+            data: json.stringify({ ReportType: Type}),
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                //alert("Dowloaded Successfully" + data);
+                if (data != "") {
+                    //use window.location.href for redirect to download action for download the file
+                    window.location.href = window.DownloadDoc + '?fileName=' + data;
+                    HideLoadder();
+                }
+                else {
+                    alert(data.errorMessage);
+                    HideLoadder();
+                }
+            },
+            error: function (x, e) {
+                alert('Some error is occurred, Please try after some time.');
+                HideLoadder();
+            }
+        })
+    }
+
+
     $scope.enqTotalCount = 0;
     $scope.enqPageIndex = 1;
-    $scope.enqPageSize = "50";
+    $scope.enqPageSize = "1000";
 
     //Enquiry Starts
     $scope.DefaultEnquiryList = function () {
@@ -355,7 +425,7 @@ angular.module('App').controller("MainController", function ($scope, $http, $tim
 
     $scope.quotTotalCount = 0;
     $scope.quotPageIndex = 1;
-    $scope.quotPageSize = "50";
+    $scope.quotPageSize = "1000";
 
     //Quotation Starts
     $scope.DefaultQuotationList = function () {
@@ -534,7 +604,7 @@ angular.module('App').controller("MainController", function ($scope, $http, $tim
     //Quotation Registration Starts
     $scope.quotRegTotalCount = 0;
     $scope.quotRegPageIndex = 1;
-    $scope.quotRegPageSize = "50";
+    $scope.quotRegPageSize = "1000";
     $scope.SearchQuotRegVendorID = "";
     $scope.SearchQuotRegVendorName = "";
     $scope.SearchQuotRegQuoteNo = "";
@@ -562,7 +632,7 @@ angular.module('App').controller("MainController", function ($scope, $http, $tim
     //Quotation Preparation Starts
     $scope.BindQuotePrepPopup = function () {
         //$(".btn-Add-QuotationDetails").on("click", function (e) {
-
+        ShowLoadder();
         var _actionType = "ADD"
         //var _QuotationDetailsId = $(this).parents("tr:first").find("#QuotationDetailsId").val();
         //var _staffProfileName = $(this).parents("tr:first").find("#StaffFirstName").val();
@@ -711,25 +781,106 @@ angular.module('App').controller("MainController", function ($scope, $http, $tim
 
     $scope.orderTotalCount = 0;
     $scope.orderPageIndex = 1;
-    $scope.orderPageSize = "50";
+    $scope.orderPageSize = "1000";
 
     //Order Starts
     $scope.DefaultOrdersList = function () {
-        $scope.SearchOrderVendorID = "";
-        $scope.SearchOrderVendorName = "";
+        $scope.SearchOrderQuoteType = "";
+        $scope.SearchOrderCustomerId = "";
         $scope.SearchOrderProductGroup = "";
         $scope.SearchOrderDeliveryTerms = "";
-        $scope.SearchOrderQuoteType = "";
+        $scope.SearchPODeliveryDate = "";
     }
 
-
     $scope.FetchOrdersList = function () {
-        $http.get(window.FetchOrdersList + "?pageindex=" + $scope.orderPageIndex + "&pagesize=" + $scope.orderPageSize + "&SearchQuoteType=" + $scope.SearchOrderQuoteType + "&SearchVendorID=" + $scope.SearchOrderVendorID + "&SearchProductGroup=" + $scope.SearchOrderProductGroup + "&SearchDeliveryTerms=" + $scope.SearchOrderDeliveryTerms + "&SearchPODeliveryDate=" + $scope.SearchPODeliveryDate).success(function (response) {
+
+        var PODeliveryDate = '';
+        var x = document.getElementById("ORPODeliveryDate");
+
+        if (x.length > 0) {
+            for (var i = 0; i < x.options.length; i++) {
+                if (x.options[i].selected == true) {
+                    PODeliveryDate = PODeliveryDate + convertDateFormat(x.options[i].value,'dd-MM-yyyy', 'MM-dd-yyyy') + ',';
+                }
+            }
+        }
+
+        PODeliveryDate = PODeliveryDate.substring(0, PODeliveryDate.length - 1);
+
+        $http.get(window.FetchOrdersList + "?pageindex=" + $scope.orderPageIndex + "&pagesize=" + $scope.orderPageSize + "&SearchQuoteType=" + $scope.SearchOrderQuoteType + "&SearchCustomerID=" + $scope.SearchOrderCustomerId + "&SearchProductGroup=" + $scope.SearchOrderProductGroup + "&SearchDeliveryTerms=" + $scope.SearchOrderDeliveryTerms + "&SearchPODeliveryDate=" + PODeliveryDate).success(function (response) {
             $scope.AvailableOrdersList = response.lstOrderEntity;
             $scope.orderTotalCount = response.totalcount;
         }, function (error) {
             alert('failed');
         });
+    }
+    $scope.GeneratePOReport = function (Type) {
+        //var DownloadType = dwnldtype;
+        ShowLoadder();
+
+        var PODeliveryDate = '';
+        var x = document.getElementById("ORPODeliveryDate");
+
+        if (x.length > 0) {
+            for (var i = 0; i < x.options.length; i++) {
+                if (x.options[i].selected == true) {
+                    PODeliveryDate = PODeliveryDate + convertDateFormat(x.options[i].value, 'dd-MM-yyyy', 'MM-dd-yyyy') + ',';
+                }
+            }
+        }
+
+        PODeliveryDate = PODeliveryDate.substring(0, PODeliveryDate.length - 1);
+
+        $http.get(window.GeneratePOReport + "?ReportType=" + Type+"&pageindex=" + $scope.orderPageIndex + "&pagesize=" + $scope.orderPageSize + "&SearchQuoteType=" + $scope.SearchOrderQuoteType + "&SearchCustomerID=" + $scope.SearchOrderCustomerId + "&SearchProductGroup=" + $scope.SearchOrderProductGroup + "&SearchDeliveryTerms=" + $scope.SearchOrderDeliveryTerms + "&SearchPODeliveryDate=" + PODeliveryDate).success(function (data) {
+            if (data != "") {
+                //use window.location.href for redirect to download action for download the file
+                window.location.href = window.DownloadDoc + '?fileName=' + data;
+                HideLoadder();
+            }
+            else {
+                alert(data.errorMessage);
+                HideLoadder();
+            }
+        }, function (error) {
+            alert('failed');
+        });
+
+        //$http.get(window.GeneratePOReport + "?ReportType=" + Type + "&pageindex=" + $scope.custPageIndex + "&pagesize=" + $scope.custPageSize + "&SearchCountry=" + $scope.SearchCountry + "&SearchCustomerID=" + $scope.SearchCustomerID + "&SearchCustomerIsActive=" + $scope.SearchCustomerIsActive).success(function (data) {
+        //    if (data != "") {
+        //        //use window.location.href for redirect to download action for download the file
+        //        window.location.href = window.DownloadDoc + '?fileName=' + data;
+        //        HideLoadder();
+        //    }
+        //    else {
+        //        alert(data.errorMessage);
+        //        HideLoadder();
+        //    }
+        //}, function (error) {
+        //    alert('failed');
+        //});
+
+        //$.ajax({
+        //    type: "Post",
+        //    url: window.GeneratePOReport,
+        //    data: JSON.stringify({ ReportType: Type, pageindex: $scope.orderPageIndex, pagesize: $scope.orderPageSize, SearchOrderQuoteType: $scope.SearchOrderQuoteType, SearchVendorID: $scope.SearchOrderVendorID, SearchProductGroup: $scope.SearchOrderProductGroup, SearchDeliveryTerms: $scope.SearchOrderDeliveryTerms, SearchPODeliveryDate: $scope.SearchPODeliveryDate }),
+        //    contentType: "application/json; charset=utf-8",
+        //    success: function (data) {
+        //        //alert("Dowloaded Successfully" + data);
+        //        if (data != "") {
+        //            //use window.location.href for redirect to download action for download the file
+        //            window.location.href = window.DownloadDoc + '?fileName=' + data;
+        //            HideLoadder();
+        //        }
+        //        else {
+        //            alert(data.errorMessage);
+        //            HideLoadder();
+        //        }
+        //    },
+        //    error: function (x, e) {
+        //        alert('Some error is occurred, Please try after some time.');
+        //        HideLoadder();
+        //    }
+        //})
     }
 
     $scope.BindOrderPopup = function () {
@@ -746,7 +897,6 @@ angular.module('App').controller("MainController", function ($scope, $http, $tim
                 HideLoadder();
                 SetModalWidth("1200px");
                 ShowModal();
-
                 if (!($('.modal.in').length)) {
                     $('.modal-dialog').css({
                         top: '15%',
@@ -866,6 +1016,47 @@ angular.module('App').controller("MainController", function ($scope, $http, $tim
         ).error(function (res) { showHttpErr(res); });
     }
 
+    $scope.BindRevisedOrderPopup = function () {
+
+        var _actionType = "ADD"
+        $.ajax({
+            type: "POST",
+            data: { actionType: _actionType },
+            datatype: "JSON",
+            url: window.RevisedOrderDetailsPopup,
+            success: function (html) {
+                html = $compile(html)($scope);
+                SetModalTitle("Add New Revised Order")
+                SetModalBody(html);
+                SetModalWidth("1200px");
+                HideLoadder();
+                ShowModal();
+
+
+                if (!($('.modal.in').length)) {
+                    $('.modal-dialog').css({
+                        top: '5%',
+                        left: '5%'
+                    });
+                }
+                $('#ModalPopup').modal({
+                    backdrop: false,
+                    show: true
+                });
+
+                $('.modal-dialog').draggable({
+                    handle: ".modal-body"
+                });
+
+            },
+            error: function (r) {
+                HideLoadder();
+                alert(window.ErrorMsg);
+            }
+        })
+        //});
+    }
+
     //For Item
     $scope.BindItemPopup = function () {
         var _actionType = "ADD"
@@ -879,7 +1070,7 @@ angular.module('App').controller("MainController", function ($scope, $http, $tim
                 SetModalTitle("Add Item Wise Entry")
                 SetModalBody(html);
                 HideLoadder();
-                SetModalWidth("1200px");
+                SetModalWidth("1400px");
                 ShowModal();
 
                 if (!($('.modal.in').length)) {
@@ -896,6 +1087,7 @@ angular.module('App').controller("MainController", function ($scope, $http, $tim
                 $('.modal-dialog').draggable({
                     handle: ".modal-body"
                 });
+
             },
             error: function (r) {
                 HideLoadder();
@@ -918,6 +1110,7 @@ angular.module('App').controller("MainController", function ($scope, $http, $tim
                 html = $compile(html)($scope);
                 SetModalTitle("Add New Revised Quotation")
                 SetModalBody(html);
+                SetModalWidth("1400px");
                 HideLoadder();
                 ShowModal();
 
@@ -945,7 +1138,7 @@ angular.module('App').controller("MainController", function ($scope, $http, $tim
         })
         //});
     }
-
+    
     //Clarification Starts
     $scope.BindClarificationPopup = function () {
 
@@ -1011,7 +1204,7 @@ angular.module('App').controller("MainController", function ($scope, $http, $tim
     //Gate Entry List Starts
     $scope.INBTotalCount = 0;
     $scope.INBPageIndex = 1;
-    $scope.INBPageSize = "50";
+    $scope.INBPageSize = "1000";
     $scope.SearchType = "";
     $scope.SearchVendorNature = "";
     $scope.SearchVendorName = "";
@@ -1198,6 +1391,7 @@ angular.module('App').controller("MainController", function ($scope, $http, $tim
             datatype: "JSON",
             url: window.BindDescDetail,
             success: function (html) {
+                event.preventDefault();
                 html = $compile(html)($scope);
                 SetModalTitle("Add Master Item")
                 SetModalBody(html);
@@ -1238,6 +1432,45 @@ angular.module('App').controller("MainController", function ($scope, $http, $tim
         //});
     }
 
+    $scope.BindPLDetail = function () {
+        var _actionType = "ADD"
+        $.ajax({
+            type: "GET",
+            data: ({ actionType: _actionType }),
+            datatype: "JSON",
+            url: window.BindPLDetails,
+            success: function (html) {
+                html = $compile(html)($scope);
+                SetModalTitle("Add PL")
+                SetModalBody(html);
+                SetModalWidth("1200px");
+                ShowModal();
+                $scope.PosNo = 1;
+
+                if (!($('.modal.in').length)) {
+                    $('.modal-dialog').css({
+                        top: '5%',
+                        left: '3%'
+                    });
+                }
+
+                $('#ModalPopup').modal({
+                    backdrop: false,
+                    show: true
+                });
+
+                LoadMasterPLAndSubPL();
+
+                HideLoadder();
+
+            },
+            error: function (r) {
+                HideLoadder();
+                alert(window.ErrorMsg);
+            }
+        })
+    }
+
     $scope.PosNo = 1;
     $scope.addDescElement = function () {
         $scope.PosNo = parseInt($scope.PosNo) + 1;
@@ -1273,6 +1506,26 @@ angular.module('App').controller("MainController", function ($scope, $http, $tim
                 }
             }
         ).error(function (res) { showHttpErr(res); });
+    }
+
+    $scope.BindReportPopup = function () {
+
+        $.ajax({
+            type: "GET",
+            data: {  },
+            datatype: "JSON",
+            url: window.ReportsPopUp,
+            success: function (html) {
+                html = $compile(html)($scope);
+                SetParamModalPanelBody('ReportsPanelBody', html);
+                HideLoadder();
+            },
+            error: function (r) {
+                HideLoadder();
+                alert(window.ErrorMsg);
+            }
+        })
+        //});
     }
 
 

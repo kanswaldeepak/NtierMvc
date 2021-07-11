@@ -246,15 +246,8 @@ namespace NtierMvc.BusinessLogic.Worker
                     Model.EnqDt = dt1.Rows[0]["EnqDt"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["EnqDt"]);
                     Model.EnqNo = dt1.Rows[0]["EnqNo"] == DBNull.Value ? "" : Convert.ToString(dt1.Rows[0]["EnqNo"]);
 
-                    //if (dt1.Rows[0]["DomesticQuoteNo"] != DBNull.Value)
-                    //    Model.QuoteNo = Convert.ToString(dt1.Rows[0]["DomesticQuoteNo"]);
-                    //else if (dt1.Rows[0]["ExportQuoteNo"] != DBNull.Value)
-                    //    Model.QuoteNo = Convert.ToString(dt1.Rows[0]["ExportQuoteNo"]);
-                    //else if (dt1.Rows[0]["ServiceQuoteNo"] != DBNull.Value)
-                    //    Model.QuoteNo = Convert.ToString(dt1.Rows[0]["ServiceQuoteNo"]);
-                    //else
                     Model.QuoteNo = dt1.Rows[0]["QuoteNo"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["QuoteNo"]);
-                    Model.QuoteTypeNo = dt1.Rows[0]["QuoteTypeNo"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["QuoteTypeNo"]);
+                    Model.QuoteNoView = dt1.Rows[0]["QuoteNoView"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["QuoteNoView"]);
 
                     Model.QuoteDate = dt1.Rows[0]["QuoteDate"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["QuoteDate"]);
                     Model.QuoteValidity = dt1.Rows[0]["QuoteValidity"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["QuoteValidity"]);
@@ -274,6 +267,18 @@ namespace NtierMvc.BusinessLogic.Worker
                     Model.PaymentTerms = dt1.Rows[0]["PaymentTerms"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["PaymentTerms"]);
                     Model.SalesPerson = dt1.Rows[0]["SalesPerson"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["SalesPerson"]);
                     Model.Subject = dt1.Rows[0]["Subject"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["Subject"]);
+                    Model.QuoteSentOn = dt1.Rows[0]["QuoteSentOn"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["QuoteSentOn"]);
+                    Model.FinancialYear = dt1.Rows[0]["FinancialYear"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["FinancialYear"]);
+                    Model.SupplyTerms = dt1.Rows[0]["SupplyTerms"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["SupplyTerms"]);
+
+
+                    //if (dt1.Rows[0]["DomesticQuoteNo"] != DBNull.Value)
+                    //    Model.QuoteNo = Convert.ToString(dt1.Rows[0]["DomesticQuoteNo"]);
+                    //else if (dt1.Rows[0]["ExportQuoteNo"] != DBNull.Value)
+                    //    Model.QuoteNo = Convert.ToString(dt1.Rows[0]["ExportQuoteNo"]);
+                    //else if (dt1.Rows[0]["ServiceQuoteNo"] != DBNull.Value)
+                    //    Model.QuoteNo = Convert.ToString(dt1.Rows[0]["ServiceQuoteNo"]);
+                    //else
                 }
             }
 

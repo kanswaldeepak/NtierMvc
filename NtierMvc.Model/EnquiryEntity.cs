@@ -41,6 +41,7 @@ namespace NtierMvc.Model
         public string CityId { get; set; }
         public string StateId { get; set; }
         public string CountryId { get; set; }
+        public string FinancialYear { get; set; }
         public string EnqTypeId { get; set; }
         public string AgentName { get; set; }
         public string EnqReceiptDate { get; set; }

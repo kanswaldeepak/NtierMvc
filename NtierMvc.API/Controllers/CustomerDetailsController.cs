@@ -1,18 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Web.Http;
-using System.Web.Http.Description;
-using System.Threading.Tasks;
-using System.Threading;
-using Newtonsoft.Json;
-using System.Collections;
-using NtierMvc.BusinessLogic.Interface;
-using NtierMvc.Model.Account;
+﻿using NtierMvc.BusinessLogic.Interface;
 using NtierMvc.BusinessLogic.Worker;
 using NtierMvc.Model.Customer;
+using System.Web.Http;
+using System.Web.Http.Description;
 
 namespace NtierMvc.API.Controllers.Application
 {
@@ -45,9 +35,9 @@ namespace NtierMvc.API.Controllers.Application
         }
 
         [Route("api/CustomerDetails/GetCustomerDetails")]
-        public IHttpActionResult GetCustomerDetails(int pageIndex, int pageSize, string SearchCustomerName = null, string SearchCustomerID = null, string SearchCustomerIsActive = null)
+        public IHttpActionResult GetCustomerDetails(int pageIndex, int pageSize, string SearchCountry = null, string SearchCustomerID = null, string SearchCustomerIsActive = null)
         {
-            return Ok(_repository.GetCustomerDetails(pageIndex, pageSize, SearchCustomerName, SearchCustomerID, SearchCustomerIsActive));
+            return Ok(_repository.GetCustomerDetails(pageIndex, pageSize, SearchCountry, SearchCustomerID, SearchCustomerIsActive));
         }
 
         [HttpPost]

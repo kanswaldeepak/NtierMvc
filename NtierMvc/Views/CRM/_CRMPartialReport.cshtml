@@ -1,0 +1,342 @@
+﻿@using NtierMvc.Model
+@using NtierMvc.Infrastructure
+@model NtierMvc.Model.ContractReview
+
+@{
+    ViewBag.Title = "Report Document";
+}
+
+<div ng-controller="ReportController">
+    <div id="DocumentPanel">
+        <div id="DocumentPanelContainer">
+            <div id="DocumentPanelBody">
+                <div class="row">
+                    <div class="col-md-3">
+                        <label class="control-label"> Report Name<span class="required">*</span></label>
+
+                        <div ng-click="GetSONoDetails()">
+                            <select id="DdlReportType" class="form-control control-color"
+                                    ng-model="ReportType">
+                                <option value=''>Select Report Type</option>
+
+                                <option value="CUSTOMERFEEDBACK">Customer Feedback</option>
+                                <option value="WAuthReport">Work Authorization</option>
+                                <option value="ProductPerformance">Product Performance</option>
+                                <option value="EnquiryReport">Enquiry and Quote Master</option>
+                                @*<option value="10">10</option>
+                                    <option value="25">25</op tion>
+                                    <option value="50">50</option>
+                                    <option value="100">100</option>*@
+                            </select>
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-3" ng-show="ISTrue">
+                        <label class="control-label"> WA:<span class="required">*</span></label>
+
+                        <select id="SoNoCRM" ng-model="SoNo" class="form-control control-color">
+                            <option value=''>Select</option>
+                            <option ng-repeat="x in SonoList" value="{{x.DataStringValueField}}">{{x.DataTextField}}</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4" ng-hide="ISTure">
+                        <label class="control-label"> Fin Year<span class="required">*</span></label>
+                        <label for="from">From</label>
+                        @*<input type="text" id="from" name="from" ng-model="date">*@
+                        @Html.TextBox("from", "", new { @class = "form-control CalenderAllDateBottom", ng_model = "date", autocomplete = "off" })
+                        <label for="to">to</label>
+                        @Html.TextBox("to", "", new { @class = "form-control CalenderAllDateBottom", ng_model = "date1", autocomplete = "off" })
+                        @*<input type="text" id="to" name="to" ng-model="date1">*@
+                        @*<input type="text" id="datepicker1" class="form-control control-color" name="daterange" ng-model="date" />*@
+                        <div>
+
+
+                        </div>
+
+                    </div>
+                    <div class="col-md-2">
+                        <button class="btn btn-success btn-sm" style="font-size:18px" ng-click="CreateWAAuthReport();">Download</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <hr style="width:100%" />
+        <h4 class="control-label" style="margin-left:10px; font-size: 20px">Contract Review</h4>
+        <hr style="width:100%" />
+    </div>
+
+    <div id="divContractReview">
+
+        <div class="row m--padding-10 ">
+            <div class="col-md-6">
+                <div class="row m--padding-10">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-3">
+                                Customer Name
+                            </div>
+                            <div class="col-md-3">
+                                Country
+                            </div>
+                            <div class="col-md-3">
+                                ENQ No
+                            </div>
+                            <div class="col-md-3">
+                                @*Item No*@
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                @Html.DropDownListFor(m => m.Customer, new SelectList(ViewBag.ListCustomer, "DataStringValueField", "DataTextField", Model.Customer), new
+                           {
+                               @class = "form-control requiredValidation clearField",
+                               @id = "CRCustomer",
+                               @data_inneraction = "validationCall",
+                               @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                           })
+                                <span class="HideValidMsg"> Select Customer</span>
+                            </div>
+                            <div class="col-md-3">
+                                @Html.TextBoxFor(m => m.Country, new
+                           {
+                               @class = "form-control requiredValidation",
+                               @id = "CRCountry",
+                               @readonly = "readonly"
+                           })
+                                <span class="HideValidMsg">Select Customer</span>
+                            </div>
+                            <div class="col-md-3">
+                                @Html.DropDownListFor(m => m.ENQNo, new SelectList(ViewBag.ListENQNo, "DataStringValueField", "DataTextField", Model.ENQNo), new
+                           {
+                               @class = "form-control requiredValidation clearField",
+                               @id = "CRENQNo",
+                               @data_inneraction = "validationCall",
+                               @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                           })
+                                <span class="HideValidMsg">Select ENQ No</span>
+                            </div>
+                            @*<div class="col-md-3">
+                                     @Html.DropDownListFor(m => m.ItemNo, new SelectList(ViewBag.ListItemNo, "DataStringValueField", "DataTextField", Model.ItemNo), new
+                                {
+                                    @class = "form-control requiredValidation clearField",
+                                    @id = "CRItemNo",
+                                    @data_inneraction = "validationCall",
+                                    @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                                    @multiple = "true"
+                                })
+                                     <span class="HideValidMsg">Select Item No</span>
+                                 </div>*@
+                            @Html.HiddenFor(M=>M.ENQNo, new { @id = "CREnqNoHidden"})
+                            <button type="button" id="btnContractReview" class="btn btn-sm btn-primary" onclick="getContractReviewDetails()">Get Report</button>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="col-md-3">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-md-6">
+                        <input class="form-control" type="file" id="CRFileUpload" data-file_types="xlsx" />
+                        <input class="btn btn-info" type="button" id="btnCRUpload" value="Upload" onclick="CRUpload()" />
+                    </div>
+                    <div class="col-md-6">
+                        <input class="btn btn-sm btn-info" type="button" id="btnShowReviews" value="Show Contract Reviews" onclick="GetContractReview()" />
+                        <input class="btn btn-sm btn-danger" type="button" id="btnDeleteReviews" value="Remove Contract Reviews" onclick="DeleteContReviews()" />
+                    </div>
+                    <div class="col-md-12">
+                        Allowed files:
+                        <div id="alert"></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                    </div>
+                    <div class="col-md-6" style="background-color:white; border: 1px solid darksalmon; min-height: 100px;">
+                        <ul id="ContractReviewList" style="list-style-type:none; padding-left: 0px;"></ul>
+                        <label id="noCRRecord"></label>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+
+    <div class="row">
+        <hr style="width:100%" />
+        <h4 class="control-label" style="margin-left:10px; font-size: 20px">Consolidated Reports</h4>
+        <hr style="width:100%" />
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-3">
+                    <label class="control-label"> Report Name<span class="required">*</span></label>
+                    <div>
+                        <select id="DdlConsolidatedReportType" class="form-control control-color" ng-model="ConReportType">
+                            <option value=''>Select Report Type</option>
+                            <option value="ConEnquiryReport">Consolidated Enquiry Report</option>
+                            <option value="ConQuotationReport">Consolidated Quotation Report</option>
+                            <option value="ConMasterOrderReport">Consolidated Master Order Report</option>
+                            <option value="ConOrderItemwiseReport">Consolidated Order Itemwise Report</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <label class="control-label"> Fin Year<span class="required">*</span></label>
+                    <label for="from">From</label>
+                    @Html.TextBox("from", "", new { @class = "form-control CalenderAllDateTop", ng_model = "ConsolidateDateFrom", autocomplete = "off" })
+                    <label for="to">to</label>
+                    @Html.TextBox("to", "", new { @class = "form-control CalenderAllDateTop", ng_model = "ConsolidateDateTo", autocomplete = "off" })
+                </div>
+                <div class="col-md-2">
+                    <button class="btn btn-success btn-sm" style="font-size:18px" ng-click="CreateConsolidateReport();">Download</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        window.GenerateReport = '@Url.Action("CreateReport", "CRM")';
+        window.DownloadDoc = '@Url.Action("Download", "CRM")';
+        window.GetSoNoList = '@Url.Action("GetSoNoList", "Technical")';
+        window.CreateWAAuthReport = '@Url.Action("CreateWAAuthReport", "CRM")';
+
+        window.GetOrderNote = '@Url.Action("GetOrderNote", "Technical")';
+        window.SaveContractReviewDetails = '@Url.Action("SaveContractReviewDetails", "Technical")';
+        window.GetEnqNo = '@Url.Action("GetEnqNo", "Technical")';
+        window.GetCountry = '@Url.Action("GetCountry", "Technical")';
+        window.GetItemNosForEnqs = '@Url.Action("GetItemNosForEnqs", "Technical")';
+        window.GetExcelForContractReview = '@Url.Action("GetExcelForContractReview", "Technical")';
+        window.CRFilesUpload = '@Url.Action("CRFilesUpload", "Technical")';
+        window.GetContractReviews = '@Url.Action("GetContractReviews", "Technical")';
+        window.DeleteContractReviews = '@Url.Action("DeleteContractReviews", "Technical")';
+
+    });
+
+
+    $('#CRCustomer').chosen({
+        width: "100%",
+        placeholder_text_single: "Select Customer"
+    });
+
+    $('#CRENQNo').chosen({
+        width: "100%",
+        placeholder_text_single: "Select Enq No"
+    });
+
+    //$('#CRItemNo').chosen({
+    //    width: "100%",
+    //    placeholder_text_single: "Select Item No",
+    //    placeholder_text_multiple: "Select Item No"
+    //});
+
+    $('#CRCustomer').chosen().change(
+        function GetCountryAndEnqNo(element) {
+
+            let Val = $('#CRCustomer').val();
+
+            $.ajax({
+                type: 'POST',
+                url: window.GetEnqNo,
+                data: JSON.stringify({ val: Val }),
+                contentType: "application/json; charset=utf-8",
+                success: function (res) {
+                    $("#CRENQNo").empty();
+                    if (res.length > 0) {
+                        $.each(res, function (i, item) {
+                            $("#CRENQNo").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
+                            $("#CRENQNo").trigger("chosen:updated");
+                        })
+                    }
+                },
+                error: function (x, e) {
+                    alert('Some error is occurred, Please try after some time.');
+                }
+            })
+
+
+            $.ajax({
+                type: 'POST',
+                url: window.GetCountry,
+                data: JSON.stringify({ val: Val }),
+                contentType: "application/json; charset=utf-8",
+                success: function (res) {
+                    $("#CRCountry").val(res);
+                },
+                error: function (x, e) {
+                    alert('Some error is occurred, Please try after some time.');
+                }
+            })
+
+        }
+    )
+
+    $('#CRENQNo').chosen().change(
+        function GetItemNosForEnq() {
+
+            let Val = $('#CRENQNo').val();
+
+            $.ajax({
+                type: 'POST',
+                url: window.GetItemNosForEnqs,
+                data: JSON.stringify({ EnqNo: Val }),
+                contentType: "application/json; charset=utf-8",
+                success: function (res) {
+                    $("#CRItemNo").empty();
+                    if (res.length > 0) {
+                        $.each(res, function (i, item) {
+                            $("#CRItemNo").append($('<option></option>').val(item.DataTextField).html(item.DataTextField));
+                            $("#CRItemNo").trigger("chosen:updated");
+                        })
+                    }
+                },
+                error: function (x, e) {
+                    alert('Some error is occurred, Please try after some time.');
+                }
+            })
+
+        }
+    )
+
+    $('.CalenderAllDateTop').datepicker({
+        autoclose: true,
+        changeMonth: true,
+        changeYear: true,
+        orientation: "Top"
+    });
+
+    $('.CalenderAllDateBottom').datepicker({
+        autoclose: true,
+        changeMonth: true,
+        changeYear: true,
+        orientation: "Bottom"
+    });
+
+
+    var date = new Date();
+    $('.CalenderDisablePastDate').datepicker({
+        startDate: date,
+        autoclose: true,
+        changeMonth: true,
+        changeYear: true,
+        endDate: '',
+        orientation: "Bottom"
+    });
+
+</script>

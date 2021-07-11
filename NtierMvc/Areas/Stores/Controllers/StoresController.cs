@@ -276,7 +276,7 @@ namespace NtierMvc.Areas.Stores.Controllers
         {
             if (ModelState.IsValid)
             {
-                string msgCode = model.DeleteFormTable("GoodsReciept", "GRno", id);
+                string msgCode = model.DeleteFromTable("GoodsReciept", "GRno", id);
                 if (msgCode != "")
                 {
                     //return RedirectToAction("Technical");

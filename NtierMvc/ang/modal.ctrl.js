@@ -119,7 +119,7 @@ angular.module('App').controller("ModalController", function ($scope, $http, $ti
                         ClearAllFields("#formSaveQuotationPrepDetail");
                         $('#divProductDetails').hide();
                         $('.ShowHideFields').hide();
-                        
+                        LoadQuotePrepListDetail();
                     }
                     else {
                         alert(res)
@@ -139,8 +139,20 @@ angular.module('App').controller("ModalController", function ($scope, $http, $ti
         var Status = false;
         Status = GetFormValidationStatus("#formSaveOrderDetails");
 
+        let finyr = $('#FinancialYearOrder').find("option:selected").text().split("-");
+        let startYr = finyr[0];
+        let EndYr = '20' + finyr[1];
+        let finalYr = startYr+ '-' + EndYr;
+
+        let dateOf = convertDateFormat($('#PoDorOrder').val(),"dd-MM-yyyy","MM/dd/yyyy");
+        let dateOfFiscalYr = getCurrentFiscalYear(dateOf);
+
+
         if (!Status) {
             alert("Kindly Fill all mandatory fields");
+        }
+        else if (finalYr != dateOfFiscalYr.financial_Year) {
+            alert("Date Date of Receipt of PO must be in the Finanacial Year Selected");
         }
         else {
             $http({ url: window.SaveOrder, method: 'POST', data: formData, headers: { 'Content-Type': undefined } }).success(
@@ -272,6 +284,81 @@ angular.module('App').controller("ModalController", function ($scope, $http, $ti
                     if (res == 'Saved Successfully!') {
                         alert(res);
                         $scope.PosNo = 1;
+                    }
+                    else {
+                        alert(res)
+                    }
+                }
+            ).error(function (res) { showHttpErr(res); });
+
+        }
+
+    }
+
+
+    $scope.SaveRevisedOrderDetail = function () {
+        var frm = $("#formSaveRevisedOrderDetails");
+        var formData = new FormData(frm[0]);
+
+        var Status = false;
+        Status = GetFormValidationStatus("#formSaveRevisedOrderDetails");
+
+        if (!Status) {
+            alert("Kindly Fill all mandatory fields");
+        }
+        else {
+            $http({ url: window.SaveRevisedOrderDetails, method: 'POST', data: formData, headers: { 'Content-Type': undefined } }).success(
+                function (res) {
+                    if (res == 'Saved Successfully!') {
+                        alert(res);
+                    }
+                    else {
+                        alert(res)
+                    }
+                }
+            ).error(function (res) { showHttpErr(res); });
+
+        }
+
+    }
+
+    $scope.SaveCRListings = function () {
+        var frm = $("#formSaveContractReview");
+        var formData = new FormData(frm[0]);
+
+        var Status = false;
+        Status = GetFormValidationStatus("#formSaveContractReview");
+
+        if (!Status) {
+            alert("Kindly Fill all mandatory fields");
+        }
+        else {
+            $http({ url: window.SaveContractReviewDetails, method: 'POST', data: formData, headers: { 'Content-Type': undefined } }).success(
+                function (res) {
+                    if (res == 'Saved Successfully!') {
+                        alert(res);
+                    }
+                    else {
+                        alert(res)
+                    }
+                }
+            ).error(function (res) { showHttpErr(res); });
+
+        }
+
+    }
+
+    $scope.SavePLDetail = function (Type) {
+
+        if ($scope.PLDMainPLText == '') {
+            alert("Kindly Fill Main PL");
+        }
+        else {
+            $http({ url: window.SavePLDetails, method: 'POST', data: JSON.stringify({ type: Type, mainPLName: $scope.PLDMainPLNameText, mainPLNo: $scope.PLDMainPLNoText, mainPLDdl: $scope.PLDMainPLDdl, subPLtext: $scope.PLDSubPLText }), headers: { 'Content-Type': "application/json; charset=utf-8" } }).success(
+                function (res) {
+                    if (res == 'Saved Successfully!') {
+                        alert(res);
+                        LoadMasterPLAndSubPL();
                     }
                     else {
                         alert(res)

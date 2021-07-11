@@ -113,13 +113,13 @@ namespace NtierMvc.BusinessLogic.Worker
         }
 
 
-        public CustomerEntityDetails GetCustomerDetails(int pageIndex, int pageSize, string SearchCustomerName = null, string SearchCustomerID = null, string SearchCustomerIsActive = null)
+        public CustomerEntityDetails GetCustomerDetails(int pageIndex, int pageSize, string SearchCountry = null, string SearchCustomerID = null, string SearchCustomerIsActive = null)
         {
             try
             {
                 CustomerEntityDetails cED = new CustomerEntityDetails();
                 cED.LstCusEnt = new List<CustomerEntity>();
-                DataSet ds = _repository.GetCustomerDetails(pageIndex, pageSize, SearchCustomerName, SearchCustomerID, SearchCustomerIsActive);
+                DataSet ds = _repository.GetCustomerDetails(pageIndex, pageSize, SearchCountry, SearchCustomerID, SearchCustomerIsActive);
 
                 if (ds.Tables.Count > 0)
                 {
@@ -139,11 +139,10 @@ namespace NtierMvc.BusinessLogic.Worker
                                 obj.UnitNo = dr1.IsNull("UnitNo") ? string.Empty : Convert.ToString(dr1["UnitNo"]);
                                 obj.CustomerId = dr1.IsNull("CustomerId") ? string.Empty : Convert.ToString(dr1["CustomerId"]);
                                 //obj.VendorTypeId = dr1.IsNull("VendorTypeId") ? string.Empty : Convert.ToString(dr1["VendorTypeId"]);
-                                //obj.VendorType = dr1.IsNull("VendorType") ? string.Empty : Convert.ToString(dr1["VendorType"]);
-                                //obj.VendorNatureId = dr1.IsNull("VendorNatureId") ? string.Empty : Convert.ToString(dr1["VendorNatureId"]);
-                                //obj.VendorNature = dr1.IsNull("VendorNature") ? string.Empty : Convert.ToString(dr1["VendorNature"]);
-                                //obj.FunctionAreaId = dr1.IsNull("FunctionAreaId") ? string.Empty : Convert.ToString(dr1["FunctionAreaId"]);
-                                //obj.FunctionArea = dr1.IsNull("FunctionArea") ? string.Empty : Convert.ToString(dr1["FunctionArea"]);
+                                obj.DateOfAssociation = dr1.IsNull("DateOfAssociation") ? string.Empty : Convert.ToString(dr1["DateOfAssociation"]);
+                                obj.Address2 = dr1.IsNull("Address2") ? string.Empty : Convert.ToString(dr1["Address2"]);
+                               obj.Address1 = dr1.IsNull("Address1") ? string.Empty : Convert.ToString(dr1["Address1"]);
+                             // obj.FunctionArea = dr1.IsNull("FunctionArea") ? string.Empty : Convert.ToString(dr1["FunctionArea"]);
                                 obj.CustomerName = dr1.IsNull("CustomerName") ? string.Empty : Convert.ToString(dr1["CustomerName"]);
                                 obj.City = dr1.IsNull("City") ? string.Empty : Convert.ToString(dr1["City"]);
                                 obj.State = dr1.IsNull("State") ? string.Empty : Convert.ToString(dr1["State"]);
@@ -203,7 +202,7 @@ namespace NtierMvc.BusinessLogic.Worker
                     Model.Address2 = dt1.Rows[0]["Address2"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["Address2"]);
                     Model.Address3 = dt1.Rows[0]["Address3"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["Address3"]);
                     Model.City = dt1.Rows[0]["City"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["City"]);
-                    Model.State = dt1.Rows[0]["State"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["State"]);
+                    Model.State = dt1.Rows[0]["StateId"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["StateId"]);
                     Model.Country = dt1.Rows[0]["Country"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["Country"]);
                     Model.CountryId = dt1.Rows[0]["CountryId"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["CountryId"]);
 

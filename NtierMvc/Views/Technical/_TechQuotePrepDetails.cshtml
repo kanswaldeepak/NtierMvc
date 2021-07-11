@@ -3,10 +3,12 @@
 
 @*<script src="~/ang/PdfFile/pdfmake.js"></script>
     <script src="~/ang/PdfFile/vfs_fonts.js"></script>*@
+@*<script src="~/Scripts/jquery.Datatable.js"></script>*@
 
 <div ng-controller="ModalController">
     <form id="formSaveQuotationPrepDetail">
 
+        @Html.HiddenFor(m => m.QuoteNoView, new { @id = "QPQuoteNoView" })
         @Html.HiddenFor(m => m.ViewPos1)
         @Html.HiddenFor(m => m.ViewPos2)
         @Html.HiddenFor(m => m.ViewPos3)
@@ -20,6 +22,7 @@
 
         <div class="row m--padding-10">
             <div class="col-md-6">
+                <input style="font-size:18px" type="button" class="btn btn-success btn-sm" id="QPAddPL" value="Add PL" ng-click="BindPLDetail()" />
                 <input style="font-size:18px" type="button" class="btn btn-success btn-sm" id="QPAddMasterItem" value="Add Master Item" ng-click="BindDescDetails()" />
             </div>
         </div>
@@ -29,16 +32,31 @@
                     <div class="col-md-6">
                         <div class="form-group text-left">
                             <label class="control-label ">
+                                Financial Year
+                            </label>
+                            @Html.DropDownListFor(m => m.FinancialYear, new SelectList(ViewBag.ListFinancialYear, "DataStringValueField", "DataTextField", Model.FinancialYear), new
+                       {
+                           @class = "form-control requiredValidation",
+                           @id = "QuotePrepFinancialYear",
+                           @data_inneraction = "validationCall",
+                           @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                       })
+                            <span class="HideValidMsg">Please Select Financial Year</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group text-left">
+                            <label class="control-label ">
                                 Quote Type
                             </label>
                             @Html.DropDownListFor(m => m.QuoteType, new SelectList(ViewBag.ListQuoteType, "DataStringValueField", "DataTextField", Model.QuoteType), new
-                                {
-                                    @class = "form-control requiredValidation",
-                                    @id = "QuotePrepFormType",
-                                    @data_inneraction = "validationCall",
-                                    @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
-                                    @onchange = "QPGetQuoteNos();"
-                                })
+                       {
+                           @class = "form-control requiredValidation",
+                           @id = "QuotePrepFormType",
+                           @data_inneraction = "validationCall",
+                           @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                           @onchange = "GetQuoteNoFromFinYearAndQuote();"
+                       })
                             <span class="HideValidMsg">Please Select Quote Type</span>
                         </div>
                     </div>
@@ -55,7 +73,23 @@
                            @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
                            @onchange = "GetVendorDetailsForQuote(); CheckSupplyTermsAndLeadTime();"
                        })
-                            <span class="HideValidMsg">Please Select QuoteType</span>
+                            <span class="HideValidMsg">Please Select Quote No</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group text-left">
+                            <label class="control-label">
+                                Customer Name
+                            </label>
+                            @Html.TextBoxFor(m => m.CustomerName, new
+                           {
+                               @class = "form-control",
+                               @id = "QuotePrepCustomerName",
+                               @readonly = "readonly",
+                               @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                           })
+
+                            @*<span class="HideValidMsg">Please Select Customer Name</span>*@
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -166,22 +200,6 @@
                             <span class="HideValidMsg">Please Select Product Name</span>
                         </div>
                     </div>
-                    @*<div class="col-md-6">
-            <div class="form-group text-left">
-                <label class="control-label">
-                    Customer Name
-                </label>
-                @Html.TextBoxFor(m => m.CustomerName, new
-               {
-                   @class = "form-control requiredValidation",
-                   @id = "QuotePrepVendorName",
-                   @readonly = "readonly",
-                   @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
-               })
-
-                <span class="HideValidMsg">Please Select Customer Name</span>
-            </div>
-        </div>*@
 
                     <div class="col-md-6">
                         <label class="control-label">
@@ -197,7 +215,7 @@
                                @id = "QuotePrepItemNo",
                                @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
                            })
-                                <span class="HideValidMsg">Please Select ItemNo</span>
+                                <span class="HideValidMsg">Please Select Item No</span>
                             </div>
                             <input type="button" class="btn btn-default" value="Validate" onclick="ValidateItemNo()" />
 
@@ -274,7 +292,7 @@
                        {
                            @class = "form-control clearField",
                            @id = "QuotePrepMaterialGrade",
-                           @onchange = "DisplayNewItemInDdl(this, 'Master.Taxonomy', 'MaterialGrade', 'DropDownValue')"
+                           @onchange = "DisplayNewItemInDdl(this, 'Master.Taxonomy', 'MatGrade', 'DropDownValue')"
 
                        })
                             <span class="HideValidMsg">Please Select Material Grade</span>
@@ -523,52 +541,6 @@
                         </div>
                     </div>
 
-
-                    <!--
-                                        <label class="form-control " type="text" id="ViewProductName" name="ViewProductName" value="" style="width:100px;" />
-
-
-                    <label class="form-control " type="text" id="ViewProductCode" name="ViewProductCode" value="" style="width:100px;" />
-
-
-                    <label class="form-control " type="text" id="ViewPL" name="ViewPL" value="" style="width:100px;" />
-
-
-                                        <label id="ViewPos1" name="ViewPos1" value="" />
-                                        <label id="ViewProductNo" name="ViewProductNo" value="" />,
-
-                                        <label id="ViewPos2" name="ViewPos2" value="" />
-                                        <label id="ViewCasingSize" name="ViewCasingSize" class="ViewCasingSize" value="" />,
-
-                                        <label id="ViewPos3" name="ViewPos3" value="" />
-                                        <label id="ViewCasingSize1" name="ViewCasingSize1" class="ViewCasingSize" value="" />,
-                                        <label id="ViewCasingPpf" name="ViewCasingPpf" value="" />,
-
-                                        <label id="ViewPos4" name="ViewPos4" value="" />
-                                        <label id="ViewMaterialGrade" name="ViewMaterialGrade" value="" />,
-
-                                        <label id="ViewConnection" name="ViewConnection" value="" />
-                                        <label id="ViewPos5" name="ViewPos5" value="" />
-
-
-                                        <label class="form-control " type="text" id="ViewPos6" name="ViewPos6" value="" style="width:100px;" />
-
-
-                    <label class="form-control " type="text" id="ViewPos7" name="ViewPos7" value="" style="width:100px;" />
-
-
-                    <label class="form-control " type="text" id="ViewPos8" name="ViewPos8" value="" style="width:100px;" />
-
-
-                    <label class="form-control " type="text" id="ViewPos9" name="ViewPos9" value="" style="width:100px;" />
-
-
-                    <label class="form-control " type="text" id="ViewPos10" name="ViewPos10" value="" style="width:100px;" />
-
-
-                    <label class="form-control " type="text" id="ViewDES" name="ViewDES" value="" style="width:100px;" />  -->
-
-
                 </div>
             </div>
         </div>
@@ -577,10 +549,124 @@
             <div class="col-md-12 pt-4 text-center">
                 <input style="font-size:18px" type="button" class="btn btn-success btn-sm" id="saveQuotePreparation" value="Save" ng-click="SaveQuotePreparation()" />
                 <input style="font-size:18px" type="button" class="btn btn-default btn-sm" id="viewProducts" value="Display Description" onclick="GetProductDetails()" />
-                <input style="font-size:18px" type="button" class="btn btn-danger btn-sm" id="deleteQuotePreparation" value="Delete Item" ng-click="DeleteQuotePrepItem()" />
+                @*<input style="font-size:18px" type="button" class="btn btn-danger btn-sm" id="deleteQuotePreparation" value="Delete Item" ng-click="DeleteQuotePrepItem()" />*@
             </div>
         </div>
+
     </form>
+
+    <div class="row">
+        <hr style="width:100%" />
+        <h4 class="control-label" style="margin-left:10px; font-size: 20px">Quote Preparation Details</h4>
+        <hr style="width:100%" />
+    </div>
+
+    <div class="row">
+        <div class="col-md-2">
+            <div class="form-group text-left">
+                <label class="control-label ">
+                    Select Financial Year
+                </label>
+                @Html.DropDownListFor(m => m.FinancialYear, new SelectList(ViewBag.ListFinancialYear, "DataStringValueField", "DataTextField", Model.FinancialYear), new
+           {
+               @class = "form-control requiredValidation",
+               @id = "SearchQuoteTypeFinancialYear",
+               @data_inneraction = "validationCall",
+               @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+               @onchange = "QPGetQuoteNosFromType();"
+           })
+                <span class="HideValidMsg">Please Select Quote Type</span>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group text-left">
+                <label class="control-label ">
+                    Select Quote Type
+                </label>
+                @Html.DropDownListFor(m => m.QuoteType, new SelectList(ViewBag.ListQuoteType, "DataStringValueField", "DataTextField", Model.QuoteType), new
+           {
+               @class = "form-control requiredValidation",
+               @id = "SearchQuoteTypeQuotePrep",
+               @data_inneraction = "validationCall",
+               @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+               @onchange = "QPGetQuoteNosFromType();"
+           })
+                <span class="HideValidMsg">Please Select Quote Type</span>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group text-left">
+                <label class="control-label ">
+                    Select Quote Number
+                </label>
+                @Html.DropDownListFor(m => m.QuoteNo, new SelectList(ViewBag.ListQuoteNo, "DataStringValueField", "DataTextField", "Select"), new
+           {
+               @class = "form-control",
+               @id = "SearchQuoteNoQuotePrep",
+               @data_inneraction = "validationCall",
+               @onchange = "GetItemNosForQuoteNo()"
+           })
+                <span class="HideValidMsg">Please Select Quote No</span>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group text-left">
+                <label class="control-label ">
+                    Select Item
+                </label>
+                @Html.DropDownListFor(m => m.ItemNo, new SelectList(ViewBag.ListItemNo, "DataStringValueField", "DataTextField", "Select"),
+               new
+           {
+               @class = "form-control",
+               @id = "SearchItemNoQuotePrep",
+               @data_inneraction = "validationCall"
+           })
+                <span class="HideValidMsg">Please Select Item No</span>
+            </div>
+            <button class="btn btn-sm btn-success" type="button" id="btnSearch" onclick="LoadQuotePrepListDetail()">
+                Search
+            </button>
+            <button class="btn btn-sm btn-info" type="button" id="btnClear" onclick="ClearQuotePrepSearch()">
+                Clear
+            </button>
+        </div>
+        <div class="col-md-12">
+            <table id="tblQuotePrep" class="table table-hover table-bordered table-striped mt-5">
+                <thead class="table-success">
+                    <tr>
+                        <td>SN</td>
+                        <td>Customer Name</td>
+                        <td>Quote Type</td>
+                        <td>Quote No</td>
+                        <td>Main Prod Grp</td>
+                        <td>Sub Prod Grp</td>
+                        <td>Item No</td>
+                        <td>Product Name</td>
+                        <td>Product No</td>
+                        <td>Casing Size</td>
+                        <td>Casing Ppf</td>
+                        <td>Material Grade</td>
+                        <td>Connection</td>
+                        <td>Qty</td>
+                        <td>Uom</td>
+                        <td>Unit Price</td>
+                        <td>Open Hole Size</td>
+                        <td>Ball Size</td>
+                        <td>Wall Thickness</td>
+                        <td>View Product Details</td>
+                        <td>OD Size</td>
+                        <td>Total Bows</td>
+                        <td>PDC Drillable</td>
+                        <td>Id</td>
+                        <td>Action</td>
+                    </tr>
+                </thead>
+                <tbody class="table-primary"></tbody>
+            </table>
+        </div>
+    </div>
+
+
 </div>
 
 <script type="text/javascript">
@@ -590,7 +676,7 @@
         window.GetProductLineList = '@Url.Action("GetProductLineList", "Technical")';
         window.GetProductNumber = '@Url.Action("GetProductNumber", "Technical")';
         window.GenerateQuoteReport = '@Url.Action("GenerateQuoteReport", "Technical")';
-        window.VendorDetailsForQuote = '@Url.Action("GetVendorDetailsForQuote", "Technical")';
+        window.VendorDetailsForQuote = '@Url.Action("GetQuoteNoDetailsforRevisedQuote", "Technical")';
         window.GetProductNumber = '@Url.Action("GetProductNumber", "Technical")';
         window.GetPrepQuoteNo = '@Url.Action("GetPrepQuoteNo", "Technical")';
         window.GetProductTypes = '@Url.Action("GetProductTypes", "Technical")';
@@ -605,8 +691,16 @@
         window.LeadDetailsForQuote = '@Url.Action("LeadDetailsForQuote", "Technical")';
         window.DeleteQuotationPrepDetail = '@Url.Action("DeleteQuotationPrepDetail", "Technical")';
         window.DownloadDoc = '@Url.Action("Download", "Technical")';
+        window.BindPLDetails = '@Url.Action("BindPLDetails", "Technical")';
+        window.GetItemNosForQuoteNos = '@Url.Action("GetItemNosForQuoteNos", "Technical")';
+        window.EditQuotePreps = '@Url.Action("EditQuotePrep", "Technical")';
+        window.QPGetQuoteNoFromFinYears = '@Url.Action("QPGetQuoteNoFromFinYears", "Technical")';
+        window.LoadDescDetail = '@Url.Action("LoadDescDetail", "Technical")';
+        window.LoadMasterPLlist = '@Url.Action("LoadMasterPLlist", "Technical")';
+        window.LoadQuotePrepListDetails = '@Url.Action("LoadQuotePrepListDetails", "Technical")';
 
         $('#divProductDetails').hide();
+        LoadQuotePrepListDetail();
     });
 
 </script>

@@ -1,0 +1,122 @@
+﻿@model NtierMvc.Model.PLEntity
+
+@{
+    ViewBag.Title = "PL Details";
+}
+
+<div ng-controller="ModalController" class="row">
+    <form id="formNewSavePLDetails" class="col-md-12">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-12">
+                    <table class="col-md-12">
+                        <tr>
+                            <td>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label class="control-label ">
+                                            Master Product Line Number
+                                        </label>
+                                        @Html.TextBoxFor(m => m.MainPL, new
+                                   {
+                                       @class = "form-control requiredValidation clearField",
+                                       @id = "PLDMainPLNoText",
+                                       @data_inneraction = "validationCall",
+                                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                                       @placeholder = "Enter Master Product No",
+                                       ng_model = "PLDMainPLNoText"
+                                   })
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label ">
+                                            Master Product Line Name
+                                        </label>
+
+                                        @Html.TextBoxFor(m => m.MainPLName, new
+                                   {
+                                       @class = "form-control requiredValidation clearField",
+                                       @id = "PLDMainPLNameText",
+                                       @data_inneraction = "validationCall",
+                                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                                       @placeholder = "Enter Master Product Name",
+                                       ng_model = "PLDMainPLNameText"
+                                   })
+                                    </div>
+                                    <div>
+                                        <button id="saveMainPL" style="font-size:18px" type="button" class="btn btn-success btn-sm" ng-click="SavePLDetail('MainPL')">Save</button>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="col-md-12">
+                                    <div class="col-md-6">
+                                        <div class="form-group text-left">
+                                            <label class="control-label">
+                                                Select Master Product for Sub Product
+                                            </label>
+
+                                            @Html.DropDownListFor(m => m.MainPL, new SelectList(ViewBag.ListMainPL, "DataStringValueField", "DataTextField", Model.MainPL), new
+                                       {
+                                           @class = "form-control requiredValidation clearField",
+                                           @id = "PLDMainPLDdl",
+                                           @data_inneraction = "validationCall",
+                                           @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                                           ng_model = "PLDMainPLDdl"
+                                       })
+                                            <span class="HideValidMsg"> Select Main PL</span>
+
+                                            <label class="control-label">
+                                                Enter Sub Product Line
+                                            </label>
+
+                                            @Html.TextBoxFor(m => m.SubPL, new
+                                       {
+                                           @class = "form-control requiredValidation clearField",
+                                           @id = "PLDSubPLText",
+                                           @data_inneraction = "validationCall",
+                                           @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                                           @placeholder = "Enter Sub Product Line",
+                                           ng_model = "PLDSubPLText"
+                                       })
+                                            <span class="HideValidMsg"> Select Sub PL</span>
+                                        </div>
+                                        <div>
+                                            <button id="saveSubPL" style="font-size:18px" type="button" class="btn btn-success btn-sm" ng-click="SavePLDetail()">Save</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <table id="tblMainAndSubPL" class="table table-hover table-bordered table-striped mt-5">
+                                    <thead class="table-success">
+                                        <tr>
+                                            <td>SN</td>
+                                            <td>Id</td>
+                                            <td>Main PL</td>
+                                            <td>Main PL Name</td>
+                                            <td>Sub PL Name</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="table-primary"></tbody>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="col-md-12 text-center">
+                    <button style="font-size:18px" type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script>
+    $(document).ready(function () {
+        window.SavePLDetails = '@Url.Action("SavePLDetails", "Technical")';
+
+    });
+
+</script>

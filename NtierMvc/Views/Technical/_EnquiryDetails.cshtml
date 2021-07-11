@@ -34,7 +34,7 @@
                         @id = "EDEnquiryType",
                         @name = "EDEnquiryType",
                         @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
-                        @onchange = "GetQuoteNumbers()"
+                        @onchange = "GetQuoteNumberForEnquiry()"
                     })
                     <span class="HideValidMsg">Please Enter QuoteType</span>
                 </div>
@@ -189,7 +189,7 @@
                     </label>
                     @Html.TextBoxFor(m => m.EnqReceiptDate, new
                {
-                   @class = "form-control requiredValidation ApprovalDate",
+                   @class = "form-control requiredValidation ApprovalEnqDate",
                    @id = "DueDate",
                    @placeholder = "dd/MM/yyyy",
                    @style = "disabled :disabled",
@@ -338,7 +338,7 @@
                     <label class="control-label">
                         Api Monogram Requirement
                     </label>
-                    @Html.DropDownListFor(m => m.ApiMonogramRequirement, new SelectList(@ViewBag.YesNo, "DataValueField", "DataTextField", Model.ApiMonogramRequirement),
+                    @Html.DropDownListFor(m => m.ApiMonogramRequirement, new SelectList(@ViewBag.API, "DataValueField", "DataTextField", Model.ApiMonogramRequirement),
                    new
                    {
                        @class = "form-control requiredValidation",
@@ -407,7 +407,7 @@
                             @Html.DropDownListFor(m => m.EnqBGreq, new SelectList(@ViewBag.YesNo, "DataValueField", "DataTextField", Model.EnqBGreq),
                             new
                             {
-                                @class = "form-control requiredValidation",
+                                @class = "form-control",
                                 @id = "EnqBGreq",
                                 @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
                             })
@@ -456,7 +456,7 @@
 
     //LEASE DATE AND EXP LEASE DATE VALIDATION
     $('.ApprovalDate').datepicker({
-        format: 'dd/mm/yyyy',
+        format: 'dd-mm-yyyy',
         autoclose: true,
         changeMonth: true,
         changeYear: true,
@@ -465,7 +465,7 @@
 
     $('.ApprovalEnqDate').datepicker({
 
-        format: 'dd/mm/yyyy',
+        format: 'dd-mm-yyyy',
         autoclose: true,
         changeMonth: true,
         changeYear: true,
@@ -475,7 +475,7 @@
     var date = new Date();
     $('.CalenderDisablePastDate').datepicker({
 
-        format: 'dd/mm/yyyy',
+        format: 'dd-mm-yyyy',
         startDate: date,
         autoclose: true,
         changeMonth: true,

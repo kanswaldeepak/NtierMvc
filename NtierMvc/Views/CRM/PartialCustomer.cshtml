@@ -58,6 +58,7 @@
                                @class = "form-control",
                                ng_model = "SearchCountry",
                                @id = "CUCountryId",
+                               autocomplete = "off",
                                @multiple = "true"
                            })
             </td>
@@ -68,6 +69,7 @@
                                @class = "form-control",
                                ng_model = "SearchCustomerID",
                                @id = "CUCustomerId",
+                               autocomplete = "off",
                                @multiple = "true"
                            })
             </td>
@@ -78,12 +80,16 @@
                               @class = "form-control",
                               ng_model = "SearchCustomerName",
                               @id = "CUCustomerName",
+                              autocomplete = "off",
                               @multiple = "true"
                           })
                 <button class="btn btn-sm btn-success" type="button" id="btnSearchCustomer" ng-click="FetchCustomerList()">
                     Search
                 </button>
-                <button class="btn btn-sm btn-info" type="button" id="btnClearSearchCustomer" ng-click="DefaultCustomerList();">Clear</button>
+                <button class="btn btn-sm btn-info" type="button" id="btnClearSearchCustomer" ng-click="DefaultCustomerList(); FetchCustomerList();">Clear</button>
+                <button class="btn btn-sm btn-info" type="button" id="btnDownloadReport" ng-click="GenerateReport('CUSTOMER');">Customer Master<i class="fa fa-download" style="font-size:16px" aria-hidden="true"></i></button>
+
+              
             </td>
             @*<td>
                         @Html.DropDownList("CountryId", new SelectList(@ViewBag.ListCountry, "DataStringValueField", "DataTextField", "Select"),
@@ -226,64 +232,6 @@
     </div>
 </div>
 
-
-<div class="modal fade" id="add_details" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-</div>
-
-@*<div class="modal fade" id="registor-Sucess-Failure" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h6 class="modal-title">Notification</h6>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    &nbsp;&nbsp;<span id="spn-registor-Sucess-Failure"></span><span id="spnUserName" style="font-weight:bold"></span>&nbsp;&nbsp;<span id="spnUserNameMore"></span>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" data-dismiss="modal" class="btn btn-primary">OK</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-    <div class="modal fade" id="Sucess-Failure" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h6 class="modal-title">Notification</h6>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group row">
-                                    &nbsp;&nbsp;<span id="spn-Sucess-Failure"></span>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" data-dismiss="modal" class="btn btn-primary">OK</button>
-                </div>
-            </div>
-        </div>
-    </div>*@
 <script type="text/javascript">
 
     $(document).ready(function () {
@@ -295,6 +243,8 @@
 
         window.GetCustomerListForCusts = '@Url.Action("GetCustomerListForCust","CRM")';
         window.GetDdlValueForCustomer = '@Url.Action("GetDdlValueForCustomer", "CRM")';
+        window.GenerateReport = '@Url.Action("CreateReport", "CRM")';
+         window.DownloadDoc = '@Url.Action("Download", "CRM")';
 
         $('#CUCustStatus').chosen({
             width: "150px",

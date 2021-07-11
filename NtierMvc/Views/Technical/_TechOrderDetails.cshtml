@@ -10,6 +10,37 @@
             @Html.HiddenFor(m => m.Id)
             <div class="row">
                 <div class="col-md-2">
+                    <div class="form-group text-left">
+                        <label class="control-label ">
+                            Financial Year
+                        </label>
+                        @Html.DropDownListFor(m => m.FinancialYear, new SelectList(ViewBag.ListFinancialYear, "DataStringValueField", "DataTextField", Model.FinancialYear), new
+                   {
+                       @class = "form-control requiredValidation",
+                       @id = "FinancialYearOrder",
+                       @data_inneraction = "validationCall",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
+                   })
+                        <span class="HideValidMsg">Please Select Financial Year</span>
+                    </div>
+                </div>
+                <div class="col-md-2" hidden>
+                    <div class="form-group">
+                        <label class="control-label ">
+                            PO Supply Nature <span class="required">*</span>
+                        </label>
+                        @Html.DropDownListFor(m => m.QuoteQtyType, new SelectList(ViewBag.ListQuoteQtyType, "DataStringValueField", "DataTextField", Model.QuoteQtyType), new
+                   {
+                       @class = "form-control clearField",
+                       @id = "QuoteTypeNatureOrder",
+                       @data_inneraction = "validationCall",
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                       @onchange = "GetSODetails()"
+                   })
+                        <span class="HideValidMsg"> Select Quote Quantity Type</span>
+                    </div>
+                </div>
+                <div class="col-md-2">
                     <div class="form-group">
                         <label class="control-label ">
                             Quote Type <span class="required">*</span>
@@ -26,19 +57,19 @@
                     </div>
                 </div>
                 <div class="col-md-2">
-                    <div class="form-group">
+                    <div class="form-group text-left">
                         <label class="control-label ">
-                            PO Supply Nature <span class="required">*</span>
+                            Quote in the FY
                         </label>
-                        @Html.DropDownListFor(m => m.QuoteQtyType, new SelectList(ViewBag.ListQuoteQtyType, "DataStringValueField", "DataTextField", Model.QuoteQtyType), new
+                        @Html.DropDownListFor(m=>m.QuoteFinYear, new SelectList(ViewBag.ListFinancialYear, "DataStringValueField", "DataTextField", Model.QuoteFinYear), new
                    {
-                       @class = "form-control requiredValidation clearField",
-                       @id = "QuoteTypeNatureOrder",
+                       @class = "form-control ",
+                       @id = "QuoteInTheFYOrder",
                        @data_inneraction = "validationCall",
                        @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
-                       @onchange = "GetSODetails()"
+                       @onchange = "GetQuoteNos();"
                    })
-                        <span class="HideValidMsg"> Select Quote Quantity Type</span>
+                        <span class="HideValidMsg">Please Select Financial Year</span>
                     </div>
                 </div>
                 <div class="col-md-2">
@@ -52,12 +83,14 @@
                        @id = "QuoteNoOrder",
                        @data_inneraction = "validationCall",
                        @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this);",
-                       @onchange = "GetQuoteDetails()"
+                       @onchange = "GetQuoteDetails(); SetQuoteNoView();"
                    })
+                        @Html.HiddenFor(m => m.QuoteNoView, new { @id = "QuoteNoViewOrder" })
+
                         <span class="HideValidMsg"> Select Quote Number</span>
                     </div>
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-2" hidden>
                     <div class="form-group">
                         <label class="control-label">
                             WA No. <span class="required">*</span>
@@ -72,7 +105,7 @@
                         <span class="HideValidMsg">Please Select SoNo</span>
                     </div>
                 </div>
-                <div class="col-md-2" hidden>
+                <div class="col-md-2">
                     <div class="form-group">
                         <label class="control-label">
                             Quote Nos. <span class="required">*</span>
@@ -286,8 +319,7 @@
                        @class = "form-control requiredValidation",
                        @id = "ExWorkValueOrder",
                        @placeholder = "Enter Ex Work Value",
-                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
-                       @onkeypress = "return AllowNumbers(event)"
+                       @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)"
                    })
                         <span class="HideValidMsg"> Select Ex Work Value</span>
                     </div>
@@ -370,7 +402,7 @@
                 <div class="col-md-2">
                     <div class="form-group">
                         <label class="control-label">
-                            Mode Of Shipment
+                            Mode Of Shipment <span class="required">*</span>
                         </label>
                         @Html.DropDownListFor(m => m.ModeOfShipment, new SelectList(ViewBag.ListModeOfDespatch, "DataStringValueField", "DataTextField", Model.ModeOfShipment), new
                    {
@@ -425,6 +457,36 @@
                         <span class="HideValidMsg"> Enter End User</span>
                     </div>
                 </div>
+                @*<div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label">
+                            Revised PO No
+                        </label>
+                        @Html.TextBoxFor(m => m.RevisedPoNo, new
+                   {
+                       @class = "form-control",
+                       @id = "RORevisedPoNoOrder",
+                       @placeholder = " Enter PO No"
+                   })
+                        <span class="HideValidMsg"> Enter PO No</span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label">
+                            Revised PO Date
+                        </label>
+                        @Html.TextBoxFor(m => m.RevisedPoDate, new
+                   {
+                       @class = "form-control CurrentEndDate",
+                       autocomplete = "off",
+                       @id = "RORevisedPoDateOrder",
+                       @placeholder = "dd/MM/yyyy",
+                       @style = "disabled :disabled"
+                   })
+                        <span class="HideValidMsg"> Select PO Date</span>
+                    </div>
+                </div>*@
                 <div class="col-md-2" hidden>
                     <div class="form-group">
                         <label class="control-label">
@@ -451,6 +513,7 @@
         window.GetPrepQuoteNo = '@Url.Action("GetPrepQuoteNo", "Technical")';
         window.GetSONos = '@Url.Action("GetSONos", "Technical")';
         window.GetOrderDetailsForQuote = '@Url.Action("GetOrderDetailsForQuote", "Technical")';
+        window.GetSoNoDetails = '@Url.Action("GetSoNoDetails", "Technical")';
 
         $('#divQuoteDetails').hide();
     });
@@ -544,10 +607,12 @@
 
     function GetQuoteNos() {
         var QuoteType = $("#QuoteTypeOrder").val();
+        let FinancialYr = $("#QuoteInTheFYOrder").val();
+
         $.ajax({
             type: 'POST',
             url: window.GetPrepQuoteNo,
-            data: JSON.stringify({ quotetypeId: QuoteType }),
+            data: JSON.stringify({ quotetypeId: QuoteType, financialYr: FinancialYr }),
             contentType: "application/json; charset=utf-8",
             success: function (data) {
                 $("#QuoteNoOrder").empty();
@@ -589,17 +654,17 @@
         var QuoteType = $("#QuoteTypeOrder").val();
         var QuoteNo = $("#QuoteNoOrder").val();
 
-        //var MultiQuoteNos = $('#MultiQuoteNos').val();
-        //count = count + 1;
-        //if (count > 1 && $('#MultiQuoteNos').val()!='') {
-        //    MultiQuoteNos = MultiQuoteNos + '/' + $("#QuoteNoOrder option:selected").text();
-        //}
-        //else {
-        //    MultiQuoteNos = $("#QuoteNoOrder option:selected").text();
-        //}
+        var MultiQuoteNos = $('#MultiQuoteNos').val();
+        count = count + 1;
+        if (count > 1 && $('#MultiQuoteNos').val()!='') {
+            MultiQuoteNos = MultiQuoteNos + '/' + $("#QuoteNoOrder option:selected").text();
+        }
+        else {
+            MultiQuoteNos = $("#QuoteNoOrder option:selected").text();
+        }
 
-        //if ($("#QuoteNoOrder option:selected").val() != '')
-        //$('#MultiQuoteNos').val(MultiQuoteNos);
+        if ($("#QuoteNoOrder option:selected").val() != '')
+        $('#MultiQuoteNos').val(MultiQuoteNos);
 
         $.ajax({
             type: 'POST',
@@ -654,7 +719,7 @@
     }
 
     $('.NoEndDate').datepicker({
-        format: 'dd/mm/yyyy',
+        format: 'dd-mm-yyyy',
         autoclose: true,
         changeMonth: true,
         changeYear: true,
@@ -662,10 +727,19 @@
     });
     $('.CurrentEndDate').datepicker({
 
-        format: 'dd/mm/yyyy',
+        format: 'dd-mm-yyyy',
         autoclose: true,
         changeMonth: true,
         changeYear: true,
         endDate: 'today',
     });
+
+
+    $('.ODFinancialYearDate').datepicker({
+        format: 'dd-mm-yyyy',
+        autoclose: true,
+        changeMonth: true,
+        changeYear: true
+    });
+
 </script>

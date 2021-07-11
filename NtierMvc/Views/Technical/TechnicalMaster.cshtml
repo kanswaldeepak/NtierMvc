@@ -16,6 +16,9 @@
         <button id="QuotePrepPartialViewLink" class="tablinks" onclick="openCity(event, 'QuotePrepPartialView')" ng-click="BindQuotePrepPopup()">Quote Preparation</button>
         <button id="OrdersPartialViewLink" class="tablinks" onclick="openCity(event, 'OrdersPartialView')" ng-click="DefaultOrdersList(); FetchOrdersList();">Orders</button>
         <button id="ClarificationPartialViewLink" class="tablinks" onclick="openCity(event, 'ClarificationPartialView')" ng-click="BindClarificationPopup()">Clarification</button>
+        @*<button id="ReportPartialViewLink" class="tablinks" onclick="openCity(event, 'ReportPartialView')" ng-click="OpenReport()">Documents</button>*@
+
+        @*<button id="ContractReviewPartialViewLink" class="tablinks" onclick="openCity(event, 'ContractReviewPartialView')" ng-click="BindContractReviewPopup()">Contract Review</button>*@
     </div>
 
     <div id="EnquiryView" class="tabcontent">
@@ -36,6 +39,9 @@
     <div id="ClarificationPartialView" class="tabcontent">
         @Html.Partial("PartialClarification")
     </div>
+    @*<div id="ContractReviewPartialView" class="tabcontent">
+        @Html.Partial("PartialContractReview")
+    </div>*@
 </div>
 
 <script>
@@ -44,7 +50,9 @@
     $(document).ready(function () {
         window.QuotePrepPopup = '@Url.Action("PartialQuotePrep", "Technical")';
         window.Clarification = '@Url.Action("PartialClarification", "Technical")';
+        window.ContractReview = '@Url.Action("PartialContractReview", "Technical")';
         window.FetchQuotationList = '@Url.Action("FetchQuotationList", "Technical")';
+        window.Report= '@Url.Action("PartialReportView", "Technical")';
         window.FetchOrdersList = '@Url.Action("FetchOrdersList", "Technical")';
         window.FetchEnquiryList = '@Url.Action("FetchEnquiryList", "Technical")';
 

@@ -26,6 +26,9 @@
         {
             <button id="OrdersViewLink" class="tablinks" onclick="openCity(event, 'OrdersPartialView')" ng-click="DefaultOrdersList(); FetchOrdersList();">Order</button>
         }
+        
+            <button id="ReportPartialViewLink" class="tablinks" onclick="openCity(event, 'ReportPartialView')" ng-click="BindReportPopup()" > Other API Reports</button>
+        
     </div>
 
     <div id="CustomerPartialView" class="tabcontent">
@@ -44,15 +47,15 @@
     <div id="OrdersPartialView" class="tabcontent">
         @Html.Partial("../Technical/PartialOrderViewOnly")
     </div>
+    <div id="ReportPartialView" class="tabcontent">
+        @Html.Partial("PartialReportView")
+    </div>
 </div>
 
 <script>
         document.getElementById("defaultOpen").click();
 
     $(document).ready(function () {
-
-        window.OtherDetailsPopup = '@Url.Action("CustomerPopup", "CRM")';
-        window.CustomerWithSearch = '@Url.Action("CustomerWithSearch", "CRM")';
 
         window.SaveCustomer = '@Url.Action("SaveCustomerDetails", "CRM")';
         window.StateDetail = '@Url.Action("GetStateDetail", "CRM")';
@@ -72,7 +75,7 @@
         window.FetchQuotationList = '@Url.Action("FetchQuotationList", "Technical")';
         window.FetchOrdersList = '@Url.Action("FetchOrdersList", "Technical")';
 
-
+        window.ReportsPopUp = '@Url.Action("PartialReportView", "CRM")';
     })
 
 </script>

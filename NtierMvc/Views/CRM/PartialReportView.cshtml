@@ -1,0 +1,34 @@
+﻿@using NtierMvc.Model
+@using NtierMvc.Infrastructure
+
+@{
+    ViewBag.Title = "Technical";
+}
+
+<div class="row mt-1">
+    <div class="col-md-12">
+
+    </div>
+</div>
+
+
+<!--Modal Panel-->
+<div id="ReportsPanel">
+    <div id="ReportsPanelContainer">
+        <div id="ReportsPanelBody">
+        </div>
+    </div>
+</div>
+<!--Modal Panel End-->
+
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $('.redBG').removeClass('redBG').addClass('black');
+
+    });
+
+</script>
+<script src="~/Scripts/CustomJS/ContractReview.js?@ViewBag.ReleaseVersion"></script>
+

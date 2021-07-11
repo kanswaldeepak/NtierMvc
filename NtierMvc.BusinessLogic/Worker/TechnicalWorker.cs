@@ -12,6 +12,7 @@ using NtierMvc.BusinessLogic.Interface;
 using NtierMvc.Common;
 using NtierMvc.Model;
 using System.Web;
+using Newtonsoft.Json;
 
 namespace NtierMvc.BusinessLogic.Worker
 {
@@ -478,12 +479,12 @@ namespace NtierMvc.BusinessLogic.Worker
             }
         }
 
-        public string GetQuoteNo(string quotetypeId=null)
+        public string GetQuoteNo(string quotetypeId = null, string finYear = null)
         {
             string quoteCode = "";
             try
             {
-                quoteCode = _repository.GetQuoteNo(quotetypeId);
+                quoteCode = _repository.GetQuoteNo(quotetypeId, finYear);
             }
             catch (Exception ex)
             {
@@ -627,7 +628,7 @@ namespace NtierMvc.BusinessLogic.Worker
                     entity = new ProductEntity();
 
                     //Start
-                    
+
                     if (dt.Columns.Contains("CasingSize"))
                         entity.CasingSize = dt.Rows[0]["CasingSize"]?.ToString() ?? "";
                     if (dt.Columns.Contains("Connection"))
@@ -852,13 +853,13 @@ namespace NtierMvc.BusinessLogic.Worker
         }
 
 
-        public OrderEntityDetails GetOrderDetails(int pageIndex, int pageSize, string SearchQuoteType = null, string SearchVendorID = null, string SearchProductGroup = null, string SearchDeliveryTerms = null, string SearchPODeliveryDate = null)
+        public OrderEntityDetails GetOrderDetails(int pageIndex, int pageSize, string SearchQuoteType = null, string SearchCustomerID = null, string SearchProductGroup = null, string SearchDeliveryTerms = null, string SearchPODeliveryDate = null)
         {
             try
             {
                 OrderEntityDetails qED = new OrderEntityDetails();
                 qED.lstOrderEntity = new List<OrderEntity>();
-                DataSet ds = _repository.GetOrderDetails(pageIndex, pageSize, SearchQuoteType, SearchVendorID, SearchProductGroup, SearchDeliveryTerms, SearchPODeliveryDate);
+                DataSet ds = _repository.GetOrderDetails(pageIndex, pageSize, SearchQuoteType, SearchCustomerID, SearchProductGroup, SearchDeliveryTerms, SearchPODeliveryDate);
                 //DataTable dt = _repository.GetOrderDetails();
 
                 if (ds.Tables.Count > 0)
@@ -880,8 +881,8 @@ namespace NtierMvc.BusinessLogic.Worker
                                 //obj.VendorId = dr1.IsNull("VendorId") ? string.Empty : Convert.ToString(dr1["VendorId"]);
                                 //obj.VendorName = dr1.IsNull("VendorName") ? string.Empty : Convert.ToString(dr1["VendorName"]);
                                 //obj.QuoteType = dr1.IsNull("QuoteType") ? string.Empty : Convert.ToString(dr1["QuoteType"]);
-                                //obj.FileNo = dr1.IsNull("FileNo") ? string.Empty : Convert.ToString(dr1["FileNo"]);
-                                //obj.QuoteNo = dr1.IsNull("QuoteNo") ? string.Empty : Convert.ToString(dr1["QuoteNo"]);
+                                obj.FileNo = dr1.IsNull("FILENO") ? string.Empty : Convert.ToString(dr1["FILENO"]);
+                                obj.QuoteNo = dr1.IsNull("QuoteNo") ? string.Empty : Convert.ToString(dr1["QUOTENO"]);
                                 //obj.QuoteDate = dr1.IsNull("QuoteDate") ? string.Empty : Convert.ToString(dr1["QuoteDate"]);
                                 obj.SoNo = dr1.IsNull("SoNo") ? string.Empty : Convert.ToString(dr1["SoNo"]);
                                 obj.SoNoView = dr1.IsNull("SoNoView") ? string.Empty : Convert.ToString(dr1["SoNoView"]);
@@ -907,8 +908,10 @@ namespace NtierMvc.BusinessLogic.Worker
                                 //obj.InspectionAgency = dr1.IsNull("InspectionAgency") ? string.Empty : Convert.ToString(dr1["InspectionAgency"]);
                                 //obj.ModeOfShipment = dr1.IsNull("ModeOfShipment") ? string.Empty : Convert.ToString(dr1["ModeOfShipment"]);
                                 //obj.PaymentTerms = dr1.IsNull("PaymentTerms") ? string.Empty : Convert.ToString(dr1["PaymentTerms"]);
-                                //obj.PoRequirements = dr1.IsNull("PoRequirements") ? string.Empty : Convert.ToString(dr1["PoRequirements"]);
-
+                                obj.IsActive = dr1.IsNull("IsActive") ? string.Empty : Convert.ToString(dr1["IsActive"]);
+                                obj.Remarks = dr1.IsNull("REMARKS") ? string.Empty : Convert.ToString(dr1["REMARKS"]);
+                                obj.WADate = dr1.IsNull("WADate") ? string.Empty : Convert.ToString(dr1["WADate"]);
+                                obj.Subject = dr1.IsNull("Subject") ? string.Empty : Convert.ToString(dr1["Subject"]);
                                 qED.lstOrderEntity.Add(obj);
                             }
                         }
@@ -978,6 +981,8 @@ namespace NtierMvc.BusinessLogic.Worker
                     Model.EndUser = dt1.Rows[0]["EndUser"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["EndUser"]);
                     Model.MainProdGrp = dt1.Rows[0]["ProductGroup"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["ProductGroup"]);
                     Model.MultiQuoteNos = dt1.Rows[0]["MultiQuoteNos"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["MultiQuoteNos"]);
+                    Model.FinancialYear = dt1.Rows[0]["FinancialYear"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["FinancialYear"]);
+                    Model.QuoteFinYear = dt1.Rows[0]["QuoteFinYear"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["QuoteFinYear"]);
                 }
             }
 
@@ -1125,12 +1130,12 @@ namespace NtierMvc.BusinessLogic.Worker
             }
         }
 
-        public ItemEntity GetOrderDetailsFromSO(int SoNo)
+        public ItemEntity GetOrderDetailsFromSO(string SoNoView)
         {
             try
             {
                 ItemEntity itemEntity = new ItemEntity();
-                DataTable dt = _repository.GetOrderDetailsFromSO(SoNo);
+                DataTable dt = _repository.GetOrderDetailsFromSO(SoNoView);
 
                 if (dt.Rows.Count > 0)
                 {
@@ -1177,6 +1182,9 @@ namespace NtierMvc.BusinessLogic.Worker
 
                         if (dt.Columns.Contains("PoItemDescription"))
                             itemEntity.PoItemDescription = dr["PoItemDescription"]?.ToString() ?? "";
+
+                        if (dt.Columns.Contains("QPFinancialYear"))
+                            itemEntity.QPFinancialYear = Convert.ToInt32(dr["QPFinancialYear"] ?? 0);
 
                         //if (dt.Columns.Contains("PoSLNo"))
                         //    itemEntity.PoSLNo = dr["PoSLNo"]?.ToString() ?? "";
@@ -1264,56 +1272,112 @@ namespace NtierMvc.BusinessLogic.Worker
             }
         }
 
-        public QuotationPreparationEntity GetQuotePrepDetails(int itemNoId, int quoteType, int quoteNo)
+        public QuotationPreparationEntity GetQuotePrepDetails(string itemNoId, string quoteType, string quoteNo, string QuotePrepId, string financialYear)
         {
             try
             {
                 QuotationPreparationEntity quoteEntity = new QuotationPreparationEntity();
-                DataTable dt = _repository.GetQuotePrepDetails(itemNoId, quoteType, quoteNo);
+                DataTable dt = _repository.GetQuotePrepDetails(itemNoId, quoteType, quoteNo, QuotePrepId, financialYear);
 
                 if (dt.Rows.Count > 0)
                 {
-                    foreach (DataRow dr in dt.Rows)
-                    {
-                        if (dt.Columns.Contains("Id"))
-                            quoteEntity.Id = Convert.ToInt32(dr["Id"] ?? 0);
+                    if (!string.IsNullOrEmpty(QuotePrepId))
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            //if (dt.Columns.Contains("QuoteType"))
+                            //    quoteEntity.QuoteType = Convert.ToInt32(dr["QuoteType"] ?? 0);
 
-                        if (dt.Columns.Contains("VENDORNAME"))
-                            quoteEntity.CustomerName = dr["VENDORNAME"]?.ToString() ?? "";
+                            if (dt.Columns.Contains("QuoteType"))
+                                quoteEntity.QuoteType = dr["QuoteType"]?.ToString() ?? "";
 
-                        if (dt.Columns.Contains("EnqSrNo"))
-                            quoteEntity.EnqSrNo = dr["EnqSrNo"]?.ToString() ?? "";
+                            if (dt.Columns.Contains("QuoteNo"))
+                                quoteEntity.QuoteNo = dr["QuoteNo"]?.ToString() ?? "";
 
-                        if (dt.Columns.Contains("ProductName"))
-                            quoteEntity.ProductName = dr["ProductName"]?.ToString() ?? "";
+                            if (dt.Columns.Contains("CustomerName"))
+                                quoteEntity.CustomerName = dr["CustomerName"]?.ToString() ?? "";
 
-                        if (dt.Columns.Contains("ProductNo"))
-                            quoteEntity.ProductNo = dr["ProductNo"]?.ToString() ?? "";
+                            if (dt.Columns.Contains("SupplyTerms"))
+                                quoteEntity.SupplyTerms = dr["SupplyTerms"]?.ToString() ?? "";
 
-                        if (dt.Columns.Contains("CasingPpf"))
-                            quoteEntity.CasingPpf = dr["CasingPpf"]?.ToString() ?? "";
+                            if (dt.Columns.Contains("LeadTime"))
+                                quoteEntity.LeadTime = dr["LeadTime"]?.ToString() ?? "";
 
-                        if (dt.Columns.Contains("CasingSize"))
-                            quoteEntity.CasingSize = dr["CasingSize"]?.ToString() ?? "";
+                            if (dt.Columns.Contains("LeadTimeDuration"))
+                                quoteEntity.LeadTimeDuration = dr["LeadTimeDuration"]?.ToString() ?? "";
 
-                        if (dt.Columns.Contains("Connection"))
-                            quoteEntity.Connection = dr["Connection"]?.ToString() ?? "";
+                            if (dt.Columns.Contains("MainProdGrp"))
+                                quoteEntity.MainProdGrp = dr["MainProdGrp"]?.ToString() ?? "";
 
-                        if (dt.Columns.Contains("Qty"))
-                            quoteEntity.Qty = dr["Qty"]?.ToString() ?? "";
+                            if (dt.Columns.Contains("SubProdGrp"))
+                                quoteEntity.SubProdGrp = dr["SubProdGrp"]?.ToString() ?? "";
 
-                        if (dt.Columns.Contains("Uom"))
-                            quoteEntity.Uom = dr["Uom"]?.ToString() ?? "";
+                            if (dt.Columns.Contains("ProductName"))
+                                quoteEntity.ProductName = dr["ProductName"]?.ToString() ?? "";
 
-                        if (dt.Columns.Contains("MaterialGrade"))
-                            quoteEntity.MaterialGrade = dr["MaterialGrade"]?.ToString() ?? "";
+                            if (dt.Columns.Contains("ProductNo"))
+                                quoteEntity.ProductNo = dr["ProductNo"]?.ToString() ?? "";
 
-                        if (dt.Columns.Contains("UnitPrice"))
-                            quoteEntity.UnitPrice = dr["UnitPrice"] == DBNull.Value ? 0 : Convert.ToInt32(dr["UnitPrice"]);
+                            if (dt.Columns.Contains("ItemNo"))
+                                quoteEntity.ItemNo = dr["ItemNo"]?.ToString() ?? "";
 
-                        if (dt.Columns.Contains("RecordCount"))
-                            quoteEntity.RecordCount = Convert.ToInt32(dr["RecordCount"]);
-                    }
+                            if (dt.Columns.Contains("FinancialYear"))
+                                quoteEntity.FinancialYear = Convert.ToInt32(dr["FinancialYear"] ?? 0);
+
+                            if (dt.Columns.Contains("QuoteNoView"))
+                                quoteEntity.QuoteNoView = Convert.ToString(dr["QuoteNoView"]) ?? "";
+                        }
+                    else
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            if (dt.Columns.Contains("Id"))
+                                quoteEntity.Id = Convert.ToInt32(dr["Id"] ?? 0);
+
+                            if (dt.Columns.Contains("EnqSrNo"))
+                                quoteEntity.EnqSrNo = dr["EnqSrNo"]?.ToString() ?? "";
+
+                            if (dt.Columns.Contains("ProductName"))
+                                quoteEntity.ProductName = dr["ProductName"]?.ToString() ?? "";
+
+                            if (dt.Columns.Contains("ProductNo"))
+                                quoteEntity.ProductNo = dr["ProductNo"]?.ToString() ?? "";
+
+                            if (dt.Columns.Contains("CasingPpf"))
+                                quoteEntity.CasingPpf = dr["CasingPpf"]?.ToString() ?? "";
+
+                            if (dt.Columns.Contains("CasingSize"))
+                                quoteEntity.CasingSize = dr["CasingSize"]?.ToString() ?? "";
+
+                            if (dt.Columns.Contains("Connection"))
+                                quoteEntity.Connection = dr["Connection"]?.ToString() ?? "";
+
+                            if (dt.Columns.Contains("Qty"))
+                                quoteEntity.Qty = dr["Qty"]?.ToString() ?? "";
+
+                            if (dt.Columns.Contains("Uom"))
+                                quoteEntity.Uom = dr["Uom"]?.ToString() ?? "";
+
+                            if (dt.Columns.Contains("MaterialGrade"))
+                                quoteEntity.MaterialGrade = dr["MaterialGrade"]?.ToString() ?? "";
+
+                            if (dt.Columns.Contains("UnitPrice"))
+                                quoteEntity.UnitPrice = dr["UnitPrice"] == DBNull.Value ? 0 : Convert.ToDecimal(dr["UnitPrice"]);
+
+                            if (dt.Columns.Contains("RecordCount"))
+                                quoteEntity.RecordCount = Convert.ToInt32(dr["RecordCount"]);
+
+                            if (dt.Columns.Contains("ViewProductDetails"))
+                                quoteEntity.ViewProductDetails = Convert.ToString(dr["ViewProductDetails"]);
+
+                            if (dt.Columns.Contains("OpenHoleSize"))
+                                quoteEntity.OpenHoleSize = Convert.ToInt32(dr["OpenHoleSize"]);
+
+                            if (dt.Columns.Contains("BallSize"))
+                                quoteEntity.BallSize = Convert.ToInt32(dr["BallSize"]);
+
+                            if (dt.Columns.Contains("WallThickness"))
+                                quoteEntity.WallThickness = Convert.ToString(dr["WallThickness"]);
+
+                        }
                 }
 
                 return quoteEntity;
@@ -1411,18 +1475,26 @@ namespace NtierMvc.BusinessLogic.Worker
                         if (dt.Columns.Contains("Id"))
                             quoteEntity.Id = Convert.ToInt32(dr["Id"] ?? 0);
 
-                        if (dt.Columns.Contains("VendorId"))
-                            quoteEntity.CustomerId = dr["VendorId"]?.ToString() ?? "";
+                        if (dt.Columns.Contains("CustomerId"))
+                            quoteEntity.CustomerId = dr["CustomerId"]?.ToString() ?? "";
 
-                        if (dt.Columns.Contains("VENDORNAME"))
-                            quoteEntity.CustomerName = dr["VENDORNAME"]?.ToString() ?? "";
+                        if (dt.Columns.Contains("CustomerName"))
+                            quoteEntity.CustomerName = dr["CustomerName"]?.ToString() ?? "";
+
+                        if (dt.Columns.Contains("QuoteType"))
+                            quoteEntity.QuoteType = dr["QuoteType"]?.ToString() ?? "";
+
+                        if (dt.Columns.Contains("QuoteFinYear"))
+                            quoteEntity.QuoteFinYear = dr["QuoteFinYear"]?.ToString() ?? "";
 
                         if (dt.Columns.Contains("QuoteNo"))
                             quoteEntity.QuoteNo = dr["QuoteNo"]?.ToString() ?? "";
 
+                        if (dt.Columns.Contains("MultiQuoteNos"))
+                            quoteEntity.MultiQuoteNos = dr["MultiQuoteNos"]?.ToString() ?? "";
 
-                        if (dt.Columns.Contains("VendorName"))
-                            quoteEntity.CustomerName = dr["VendorName"]?.ToString() ?? "";
+                        if (dt.Columns.Contains("QuoteNoView"))
+                            quoteEntity.QuoteNoView = dr["QuoteNoView"]?.ToString() ?? "";
 
                         if (dt.Columns.Contains("FileNo"))
                             quoteEntity.FileNo = dr["FileNo"]?.ToString() ?? "";
@@ -1550,6 +1622,398 @@ namespace NtierMvc.BusinessLogic.Worker
                 }
 
                 return lstDrpDwn;
+            }
+            catch (Exception Ex)
+            {
+                NtierMvc.DataAccess.ExceptionLogging.SendExcepToDB(Ex);
+                throw Ex;
+            }
+        }
+
+        public string GetWorkAuthReport(string SoNo, string FromDate, string ToDate, string ReportType)
+        {
+
+            DataSet result = new DataSet();
+            string jdon = "";
+            try
+            {
+                result = _repository.GetWorkAuthReport(SoNo, FromDate, ToDate, ReportType);
+                jdon = JsonConvert.SerializeObject(result, Formatting.Indented);
+            }
+            catch (Exception Ex)
+            {
+                NtierMvc.DataAccess.ExceptionLogging.SendExcepToDB(Ex);
+            }
+            return jdon;
+        }
+
+        public string SaveRevisedOrderDetails(OrderEntity entity)
+        {
+            string result = string.Empty;
+            try
+            {
+                result = _repository.SaveRevisedOrderDetails(entity);
+            }
+            catch (Exception Ex)
+            {
+                NtierMvc.DataAccess.ExceptionLogging.SendExcepToDB(Ex);
+            }
+            return result;
+        }
+
+        public List<DropDownEntity> GetItemNosForEnqs(string EnqNo)
+        {
+            try
+            {
+                List<DropDownEntity> lstDrpDwn = new List<DropDownEntity>();
+                DataTable dt = _repository.GetItemNosForEnqs(EnqNo);
+                DropDownEntity Model;
+
+                if (dt.Rows.Count > 0)
+                {
+                    BindDefault(lstDrpDwn);
+                    foreach (DataRow dr in dt.Rows)
+                    {
+                        Model = new DropDownEntity();
+                        Model.DataStringValueField = dr["Id"] == DBNull.Value ? string.Empty : Convert.ToString(dr["Id"]);
+                        Model.DataTextField = dr["ItemNo"] == DBNull.Value ? string.Empty : Convert.ToString(dr["ItemNo"]);
+
+                        lstDrpDwn.Add(Model);
+                    }
+                }
+
+                return lstDrpDwn;
+            }
+            catch (Exception Ex)
+            {
+                NtierMvc.DataAccess.ExceptionLogging.SendExcepToDB(Ex);
+                throw Ex;
+            }
+        }
+
+        public DataTable GetDataForContractReview(string EnqNo, string ItemNo, string type)
+        {
+            DataTable dt = _repository.GetDataForContractReview(EnqNo, ItemNo, type);
+            return dt;
+        }
+
+        public string SaveContractReviewData(ContractReview entity)
+        {
+            string result = string.Empty;
+            try
+            {
+                result = _repository.SaveContractReviewData(entity);
+            }
+            catch (Exception Ex)
+            {
+                NtierMvc.DataAccess.ExceptionLogging.SendExcepToDB(Ex);
+            }
+            return result;
+
+        }
+
+        public List<PLEntity> LoadMasterPLlist(int skip, int pageSize, string sortColumn, string sortColumnDir, string search)
+        {
+            try
+            {
+                List<PLEntity> lstDrpDwn = new List<PLEntity>();
+                DataTable dt = _repository.LoadMasterPLlist(skip, pageSize, sortColumn, sortColumnDir, search);
+                PLEntity Model;
+
+                if (dt.Rows.Count > 0)
+                {
+                    foreach (DataRow dr in dt.Rows)
+                    {
+                        Model = new PLEntity();
+                        Model.SNo = dr["SNo"] == DBNull.Value ? 0 : Convert.ToInt32(dr["SNo"]);
+                        Model.Id = dr["Id"] == DBNull.Value ? 0 : Convert.ToInt32(dr["Id"]);
+                        Model.MainPL = dr["MainPL"] == DBNull.Value ? string.Empty : Convert.ToString(dr["MainPL"]);
+                        Model.MainPLName = dr["MainPLName"] == DBNull.Value ? string.Empty : Convert.ToString(dr["MainPLName"]);
+                        Model.SubPL = dr["SubPL"] == DBNull.Value ? string.Empty : Convert.ToString(dr["SubPL"]);
+                        Model.TotalRecords = dr["TotalRecords"] == DBNull.Value ? 0 : Convert.ToInt32(dr["TotalRecords"]);
+
+                        lstDrpDwn.Add(Model);
+                    }
+                }
+
+                return lstDrpDwn;
+            }
+            catch (Exception Ex)
+            {
+                NtierMvc.DataAccess.ExceptionLogging.SendExcepToDB(Ex);
+                throw Ex;
+            }
+        }
+
+
+        public List<QuotationPreparationEntity> LoadQuotePrepListDetails(int skip, int pageSize, string sortColumn, string sortColumnDir, string search, string quoteType = null, string quoteNo = null, string itemNo = null, string financialYear = null)
+        {
+            try
+            {
+                List<QuotationPreparationEntity> lstDrpDwn = new List<QuotationPreparationEntity>();
+                DataTable dt = _repository.LoadQuotePrepListDetails(skip, pageSize, sortColumn, sortColumnDir, search, quoteType, quoteNo, itemNo, financialYear);
+                QuotationPreparationEntity Model;
+
+                if (dt.Rows.Count > 0)
+                {
+                    foreach (DataRow dr in dt.Rows)
+                    {
+                        Model = new QuotationPreparationEntity();
+                        Model.SNo = dr["SNo"] == DBNull.Value ? 0 : Convert.ToInt32(dr["SNo"]);
+                        Model.Id = dr["Id"] == DBNull.Value ? 0 : Convert.ToInt32(dr["Id"]);
+                        Model.CustomerName = dr["CustomerName"] == DBNull.Value ? string.Empty : Convert.ToString(dr["CustomerName"]);
+                        Model.QuoteType = dr["QuoteType"] == DBNull.Value ? string.Empty : Convert.ToString(dr["QuoteType"]);
+                        Model.QuoteNo = dr["QuoteNoView"] == DBNull.Value ? string.Empty : Convert.ToString(dr["QuoteNoView"]);
+                        Model.MainProdGrp = dr["MainProdGrp"] == DBNull.Value ? string.Empty : Convert.ToString(dr["MainProdGrp"]);
+                        Model.SubProdGrp = dr["SubProdGrp"] == DBNull.Value ? string.Empty : Convert.ToString(dr["SubProdGrp"]);
+                        Model.ItemNo = dr["ItemNo"] == DBNull.Value ? string.Empty : Convert.ToString(dr["ItemNo"]);
+                        Model.ProductName = dr["ProductName"] == DBNull.Value ? string.Empty : Convert.ToString(dr["ProductName"]);
+                        Model.ProductNo = dr["ProductNo"] == DBNull.Value ? string.Empty : Convert.ToString(dr["ProductNo"]);
+                        Model.CasingSize = dr["CasingSize"] == DBNull.Value ? string.Empty : Convert.ToString(dr["CasingSize"]);
+                        Model.CasingPpf = dr["CasingPpf"] == DBNull.Value ? string.Empty : Convert.ToString(dr["CasingPpf"]);
+                        Model.MaterialGrade = dr["MaterialGrade"] == DBNull.Value ? string.Empty : Convert.ToString(dr["MaterialGrade"]);
+                        Model.Connection = dr["Connection"] == DBNull.Value ? string.Empty : Convert.ToString(dr["Connection"]);
+                        Model.Qty = dr["Qty"] == DBNull.Value ? string.Empty : Convert.ToString(dr["Qty"]);
+                        Model.Uom = dr["Uom"] == DBNull.Value ? string.Empty : Convert.ToString(dr["Uom"]);
+                        Model.UnitPrice = dr["UnitPrice"] == DBNull.Value ? 0 : Convert.ToDecimal(dr["UnitPrice"]);
+                        Model.OpenHoleSize = dr["OpenHoleSize"] == DBNull.Value ? 0 : Convert.ToInt32(dr["OpenHoleSize"]);
+                        Model.BallSize = dr["BallSize"] == DBNull.Value ? 0 : Convert.ToInt32(dr["BallSize"]);
+                        Model.WallThickness = dr["WallThickness"] == DBNull.Value ? string.Empty : Convert.ToString(dr["WallThickness"]);
+                        Model.ViewProductDetails = dr["ViewProductDetails"] == DBNull.Value ? string.Empty : Convert.ToString(dr["ViewProductDetails"]);
+                        Model.ODSize = dr["ODSize"] == DBNull.Value ? string.Empty : Convert.ToString(dr["ODSize"]);
+                        Model.TotalBows = dr["TotalBows"] == DBNull.Value ? string.Empty : Convert.ToString(dr["TotalBows"]);
+                        Model.PDCDrillable = dr["PDCDrillable"] == DBNull.Value ? string.Empty : Convert.ToString(dr["PDCDrillable"]);
+
+                        Model.TotalRecords = dr["TotalRecords"] == DBNull.Value ? 0 : Convert.ToInt32(dr["TotalRecords"]);
+
+                        lstDrpDwn.Add(Model);
+
+                    }
+                }
+
+                return lstDrpDwn;
+            }
+            catch (Exception Ex)
+            {
+                NtierMvc.DataAccess.ExceptionLogging.SendExcepToDB(Ex);
+                throw Ex;
+            }
+        }
+
+        public List<ItemEntity> LoadItemWiseOrders(int skip, int pageSize, string sortColumn, string sortColumnDir, string search)
+        {
+            try
+            {
+                List<ItemEntity> lstDrpDwn = new List<ItemEntity>();
+                DataTable dt = _repository.LoadItemWiseOrders(skip, pageSize, sortColumn, sortColumnDir, search);
+                ItemEntity Model;
+
+                if (dt.Rows.Count > 0)
+                {
+                    foreach (DataRow dr in dt.Rows)
+                    {
+                        Model = new ItemEntity();
+                        Model.SNo = dr["SNo"] == DBNull.Value ? 0 : Convert.ToInt32(dr["SNo"]);
+                        Model.Id = dr["Id"] == DBNull.Value ? 0 : Convert.ToInt32(dr["Id"]);
+                        Model.SoNo = dr["SoNo"] == DBNull.Value ? 0 : Convert.ToInt32(dr["SoNo"]);
+                        Model.FinancialYearText = dr["FinancialYear"] == DBNull.Value ? string.Empty : Convert.ToString(dr["FinancialYear"]);
+                        Model.SoNoView = dr["SoNoView"] == DBNull.Value ? string.Empty : Convert.ToString(dr["SoNoView"]);
+                        Model.CustomerId = dr["CustomerId"] == DBNull.Value ? string.Empty : Convert.ToString(dr["CustomerId"]);
+                        Model.CustomerName = dr["CustomerName"] == DBNull.Value ? string.Empty : Convert.ToString(dr["CustomerName"]);
+                        Model.PoNo = dr["PONo"] == DBNull.Value ? string.Empty : Convert.ToString(dr["PONo"]);
+                        Model.PoDate = dr["PODate"] == DBNull.Value ? string.Empty : Convert.ToString(dr["PODate"]);
+                        Model.PoDeliveryDate = dr["PODeliveryDate"] == DBNull.Value ? string.Empty : Convert.ToString(dr["PODeliveryDate"]);
+                        Model.SupplyTerms = dr["SupplyTerms"] == DBNull.Value ? string.Empty : Convert.ToString(dr["SupplyTerms"]);
+                        Model.SupplyTermsText = dr["SupplyTermsText"] == DBNull.Value ? string.Empty : Convert.ToString(dr["SupplyTermsText"]);
+                        Model.QuoteNo = dr["QuoteNo"] == DBNull.Value ? string.Empty : Convert.ToString(dr["QuoteNo"]);
+                        Model.QuoteNoView = dr["QuoteNoView"] == DBNull.Value ? string.Empty : Convert.ToString(dr["QuoteNoView"]);
+                        Model.QuoteItemSlNo = dr["QuoteItemSlNo"] == DBNull.Value ? string.Empty : Convert.ToString(dr["QuoteItemSlNo"]);
+                        Model.QuoteItemSlNoText = dr["QuoteItemSlNoText"] == DBNull.Value ? string.Empty : Convert.ToString(dr["QuoteItemSlNoText"]);
+                        Model.PoSLNo = dr["PoSLNo"] == DBNull.Value ? string.Empty : Convert.ToString(dr["PoSLNo"]);
+                        Model.PoQty = dr["POQty"] == DBNull.Value ? string.Empty : Convert.ToString(dr["POQty"]);
+                        Model.UnitPrice = dr["UnitPrice"] == DBNull.Value ? 0 : Convert.ToDecimal(dr["UnitPrice"]);
+                        Model.ViewProductDetails = dr["ViewProductDetails"] == DBNull.Value ? "" : Convert.ToString(dr["ViewProductDetails"]);
+
+                        Model.TotalRecords = dr["TotalRecords"] == DBNull.Value ? 0 : Convert.ToInt32(dr["TotalRecords"]);
+
+                        lstDrpDwn.Add(Model);
+                    }
+                }
+
+                return lstDrpDwn;
+            }
+            catch (Exception Ex)
+            {
+                NtierMvc.DataAccess.ExceptionLogging.SendExcepToDB(Ex);
+                throw Ex;
+            }
+        }
+
+        public List<DropDownEntity> GetContractReviews(string customerId = null)
+        {
+            try
+            {
+                List<DropDownEntity> lstCityName = new List<DropDownEntity>();
+                DataTable dt = _repository.GetContractReviews(customerId);
+                DropDownEntity entity;
+
+                if (dt.Rows.Count > 0)
+                {
+                    foreach (DataRow dr in dt.Rows)
+                    {
+                        entity = new DropDownEntity();
+                        if (dt.Columns.Contains("ENQNo"))
+                            entity.DataStringValueField = Convert.ToString(dr["ENQNo"] ?? "");
+
+                        if (dt.Columns.Contains("FileName"))
+                            entity.DataTextField = dr["FileName"]?.ToString() ?? "";
+
+                        //if (dt.Columns.Contains("CourseCode"))
+                        //    entity.DataCodeField = dr["CourseCode"]?.ToString() ?? "";
+
+                        lstCityName.Add(entity);
+                    }
+                }
+
+                return lstCityName;
+            }
+            catch (Exception Ex)
+            {
+                NtierMvc.DataAccess.ExceptionLogging.SendExcepToDB(Ex);
+                throw Ex;
+            }
+        }
+
+        public List<DropDownEntity> GetQuoteItemSlNos(string quoteType, string quoteNo, string finYear)
+        {
+            try
+            {
+                List<DropDownEntity> lstItem = new List<DropDownEntity>();
+                DataTable dt = _repository.GetQuoteItemSlNos(quoteType, quoteNo, finYear);
+                DropDownEntity entity;
+
+                if (dt.Rows.Count > 0)
+                {
+                    foreach (DataRow dr in dt.Rows)
+                    {
+                        entity = new DropDownEntity();
+                        if (dt.Columns.Contains("Id"))
+                            entity.DataStringValueField = Convert.ToString(dr["Id"] ?? "");
+
+                        if (dt.Columns.Contains("ItemNo"))
+                            entity.DataTextField = dr["ItemNo"]?.ToString() ?? "";
+
+                        //if (dt.Columns.Contains("CourseCode"))
+                        //    entity.DataCodeField = dr["CourseCode"]?.ToString() ?? "";
+
+                        lstItem.Add(entity);
+                    }
+                }
+
+                return lstItem;
+            }
+            catch (Exception Ex)
+            {
+                NtierMvc.DataAccess.ExceptionLogging.SendExcepToDB(Ex);
+                throw Ex;
+            }
+        }
+
+        public QuotationEntity GetQuoteNoDetailsforRevisedQuote(string quoteNoId, string quotetypeId, string financialYr)
+        {
+            try
+            {
+                QuotationEntity obj = new QuotationEntity();
+                DataTable dt1 = _repository.GetQuoteNoDetailsforRevisedQuote(quoteNoId, quotetypeId, financialYr);
+
+                if (dt1 != null && dt1.Rows.Count > 0)
+                {
+                    foreach (DataRow dr1 in dt1.Rows)
+                    {
+                        obj.Id = dr1.IsNull("Id") ? 0 : Convert.ToInt32(dr1["Id"]);
+                        obj.UserInitial = dr1.IsNull("UserInitial") ? string.Empty : Convert.ToString(dr1["UserInitial"]);
+                        obj.UnitNo = dr1.IsNull("UnitNo") ? string.Empty : Convert.ToString(dr1["UnitNo"]);
+                        obj.CustomerId = dr1.IsNull("CustomerId") ? string.Empty : Convert.ToString(dr1["CustomerId"]);
+                        obj.CustomerName = dr1.IsNull("CustomerName") ? string.Empty : Convert.ToString(dr1["CustomerName"]);
+                        obj.QuoteType = dr1.IsNull("QuoteType") ? string.Empty : Convert.ToString(dr1["QuoteType"]);
+                        obj.FileNo = dr1.IsNull("FileNo") ? string.Empty : Convert.ToString(dr1["FileNo"]);
+                        obj.EnqRef = dr1.IsNull("EnqRef") ? string.Empty : Convert.ToString(dr1["EnqRef"]);
+                        obj.QuoteNo = dr1.IsNull("QuoteNo") ? string.Empty : Convert.ToString(dr1["QuoteNo"]);
+                        obj.QuoteNoView = dr1.IsNull("QuoteNoView") ? string.Empty : Convert.ToString(dr1["QuoteNoView"]);
+                        obj.QuoteDate = dr1.IsNull("QuoteDate") ? string.Empty : Convert.ToString(dr1["QuoteDate"]);
+                        obj.BgReq = dr1.IsNull("BgReq") ? string.Empty : Convert.ToString(dr1["BgReq"]);
+                        obj.Inspection = dr1.IsNull("Inspection") ? string.Empty : Convert.ToString(dr1["Inspection"]);
+                        obj.Remarks = dr1.IsNull("Remarks") ? string.Empty : Convert.ToString(dr1["Remarks"]);
+                        obj.Country = dr1.IsNull("Country") ? string.Empty : Convert.ToString(dr1["Country"]);
+                        obj.EnqFor = dr1.IsNull("EnqFor") ? string.Empty : Convert.ToString(dr1["EnqFor"]);
+                        obj.GeoArea = dr1.IsNull("GeoArea") ? string.Empty : Convert.ToString(dr1["GeoArea"]);
+                        obj.Status = dr1.IsNull("Status") ? string.Empty : Convert.ToString(dr1["Status"]);
+                        obj.Currency = dr1.IsNull("Currency") ? string.Empty : Convert.ToString(dr1["Currency"]);
+                        obj.EnqDt = dr1.IsNull("EnqDt") ? string.Empty : Convert.ToString(dr1["EnqDt"]);
+                        obj.EnqNo = dr1.IsNull("EnqNo") ? string.Empty : Convert.ToString(dr1["EnqNo"]);
+                        obj.DeliveryTerms = dr1.IsNull("DeliveryTerms") ? string.Empty : Convert.ToString(dr1["DeliveryTerms"]);
+
+                        obj.QuoteValidity = dr1.IsNull("QuoteValidity") ? string.Empty : Convert.ToString(dr1["QuoteValidity"]);
+                        obj.ProductType = dr1.IsNull("ProductType") ? string.Empty : Convert.ToString(dr1["ProductType"]);
+                        obj.ModeOfDespatch = dr1.IsNull("ModeOfDespatch") ? string.Empty : Convert.ToString(dr1["ModeOfDespatch"]);
+                        obj.PortOfDischarge = dr1.IsNull("PortOfDischarge") ? string.Empty : Convert.ToString(dr1["PortOfDischarge"]);
+                        obj.LeadTimeDuration = dr1.IsNull("LeadTimeDuration") ? string.Empty : Convert.ToString(dr1["LeadTimeDuration"]);
+                        obj.LeadTime = dr1.IsNull("LeadTime") ? string.Empty : Convert.ToString(dr1["LeadTime"]);
+                        obj.BgReq = dr1.IsNull("BgReq") ? string.Empty : Convert.ToString(dr1["BgReq"]);
+                        //obj.DeliveryTime = dr1.IsNull("DeliveryTime") ? string.Empty : Convert.ToString(dr1["DeliveryTime"]);
+                        obj.PaymentTerms = dr1.IsNull("PaymentTerms") ? string.Empty : Convert.ToString(dr1["PaymentTerms"]);
+                        obj.SalesPerson = dr1.IsNull("SalesPerson") ? string.Empty : Convert.ToString(dr1["SalesPerson"]);
+                        obj.Subject = dr1.IsNull("Subject") ? string.Empty : Convert.ToString(dr1["Subject"]);
+                        //obj.MainProdGrp = dr1.IsNull("MainProdGrp") ? string.Empty : Convert.ToString(dr1["MainProdGrp"]);
+                        //obj.SubProdGrp = dr1.IsNull("SubProdGrp") ? string.Empty : Convert.ToString(dr1["SubProdGrp"]);
+                        //obj.ProdName = dr1.IsNull("ProdName") ? string.Empty : Convert.ToString(dr1["ProdName"]);
+                        obj.SupplyTerms = dr1.IsNull("SupplyTerms") ? string.Empty : Convert.ToString(dr1["SupplyTerms"]);
+                        obj.QuoteSentOn = dr1.IsNull("QuoteSentOn") ? string.Empty : Convert.ToString(dr1["QuoteSentOn"]);
+                        obj.FinancialYear = dr1.IsNull("FinancialYear") ? string.Empty : Convert.ToString(dr1["FinancialYear"]);
+                        obj.CountryId = dr1.IsNull("CountryId") ? string.Empty : Convert.ToString(dr1["CountryId"]);
+                        obj.GeoCode = dr1.IsNull("GeoCode") ? string.Empty : Convert.ToString(dr1["GeoCode"]);
+
+                    }
+                }
+
+                return obj;
+            }
+            catch (Exception Ex)
+            {
+                NtierMvc.DataAccess.ExceptionLogging.SendExcepToDB(Ex);
+                throw Ex;
+            }
+        }
+
+        public List<DropDownEntity> GetRevAndOriginalQuotes(string quotetypeId, string financialYr)
+        {
+            try
+            {
+                List<DropDownEntity> lstItem = new List<DropDownEntity>();
+                DataTable dt = _repository.GetRevAndOriginalQuotes(quotetypeId, financialYr);
+                DropDownEntity entity;
+
+                BindDefault(lstItem);
+
+                if (dt.Rows.Count > 0)
+                {
+                    foreach (DataRow dr in dt.Rows)
+                    {
+                        entity = new DropDownEntity();
+                        if (dt.Columns.Contains("Id"))
+                            entity.DataStringValueField = Convert.ToString(dr["Id"] ?? "");
+
+                        //if (dt.Columns.Contains("QuoteNoView"))
+                        //    entity.DataStringValueField = dr["QuoteNoView"]?.ToString() ?? "";
+
+                        if (dt.Columns.Contains("QuoteNoView"))
+                            entity.DataTextField = dr["QuoteNoView"]?.ToString() ?? "";
+
+                        lstItem.Add(entity);
+                    }
+                }
+
+                return lstItem;
             }
             catch (Exception Ex)
             {

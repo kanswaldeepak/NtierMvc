@@ -208,13 +208,13 @@ namespace NtierMvc.Model
             }
             return ListEnquiryNo;
         }
-        public string GetQuoteNo(string quotetypeId = null)
+        public string GetQuoteNo(string quotetypeId = null, string finYear = null)
         {
             var baseAddress = "TechnicalDetails";
             string Number = "0";
             using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
             {
-                HttpResponseMessage response = client.GetAsync(baseAddress + "/GetQuoteNo?quotetypeId=" + quotetypeId).Result;
+                HttpResponseMessage response = client.GetAsync(baseAddress + "/GetQuoteNo?quotetypeId=" + quotetypeId + "&finYear=" + finYear).Result;
                 if (response.IsSuccessStatusCode)
                 {
                     var data = response.Content.ReadAsStringAsync().Result;
@@ -224,13 +224,13 @@ namespace NtierMvc.Model
             return Number;
         }
 
-        public List<DropDownEntity> GetQuoteNoList(string quotetypeId = "", string SoNoId = null)
+        public List<DropDownEntity> GetQuoteNoList(string quotetypeId = "", string SoNoView = null)
         {
             var baseAddress = "TechnicalDetails";
             List<DropDownEntity> QuoteNoList = new List<DropDownEntity>();
             using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
             {
-                HttpResponseMessage response = client.GetAsync(baseAddress + "/GetQuoteNoList?quotetypeId=" + quotetypeId + "&SoNo=" + SoNoId).Result;
+                HttpResponseMessage response = client.GetAsync(baseAddress + "/GetQuoteNoList?quotetypeId=" + quotetypeId + "&SoNo=" + SoNoView).Result;
                 if (response.IsSuccessStatusCode)
                 {
                     var data = response.Content.ReadAsStringAsync().Result;
@@ -306,13 +306,13 @@ namespace NtierMvc.Model
             return result;
         }
 
-        public OrderEntityDetails GetOrderDetails(int pageIndex, int pageSize, string SearchQuoteType = null, string SearchVendorID = null, string SearchProductGroup = null, string SearchDeliveryTerms = null, string SearchPODeliveryDate = null)
+        public OrderEntityDetails GetOrderDetails(int pageIndex, int pageSize, string SearchQuoteType = null, string SearchCustomerID = null, string SearchProductGroup = null, string SearchDeliveryTerms = null, string SearchPODeliveryDate = null)
         {
             var baseAddress = "TechnicalDetails";
             OrderEntityDetails Order = new OrderEntityDetails();
             using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
             {
-                HttpResponseMessage response = client.GetAsync(baseAddress + "/GetOrderDetails?pageIndex=" + pageIndex + "&pageSize=" + pageSize + "&SearchQuoteType=" + SearchQuoteType + "&SearchVendorID=" + SearchVendorID + "&SearchProductGroup=" + SearchProductGroup + "&SearchDeliveryTerms=" + SearchDeliveryTerms + "&SearchPODeliveryDate=" + SearchPODeliveryDate).Result;
+                HttpResponseMessage response = client.GetAsync(baseAddress + "/GetOrderDetails?pageIndex=" + pageIndex + "&pageSize=" + pageSize + "&SearchQuoteType=" + SearchQuoteType + "&SearchCustomerID=" + SearchCustomerID + "&SearchProductGroup=" + SearchProductGroup + "&SearchDeliveryTerms=" + SearchDeliveryTerms + "&SearchPODeliveryDate=" + SearchPODeliveryDate).Result;
                 if (response.IsSuccessStatusCode)
                 {
                     var data = response.Content.ReadAsStringAsync().Result;
@@ -426,13 +426,13 @@ namespace NtierMvc.Model
             return orderEntity;
         }
 
-        public ItemEntity GetOrderDetailsFromSO(int SoNo)
+        public ItemEntity GetOrderDetailsFromSO(string SoNoView)
         {
             var baseAddress = "TechnicalDetails";
             ItemEntity itemEntity = new ItemEntity();
             using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
             {
-                HttpResponseMessage response = client.GetAsync(baseAddress + "/GetOrderDetailsFromSO?SoNo=" + SoNo).Result;
+                HttpResponseMessage response = client.GetAsync(baseAddress + "/GetOrderDetailsFromSO?SoNoView=" + SoNoView).Result;
                 if (response.IsSuccessStatusCode)
                 {
                     var data = response.Content.ReadAsStringAsync().Result;
@@ -523,7 +523,7 @@ namespace NtierMvc.Model
             return lstQuotePrep;
         }
 
-        public string SaveRevisedTechnicalQuoteDetails(QuotationEntity viewModel)
+        public string SaveRevisedQuotationDetails(QuotationEntity viewModel)
         {
             string result = "0";
             var baseAddress = "TechnicalDetails";
@@ -556,22 +556,22 @@ namespace NtierMvc.Model
             return VendorList;
         }
 
-        public QuotationPreparationEntity GetQuotePrepDetails(int itemNoId, int quoteType, int quoteNo)
-        {
-            var baseAddress = "TechnicalDetails";
-            QuotationPreparationEntity itemEntity = new QuotationPreparationEntity();
-            using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
-            {
-                HttpResponseMessage response = client.GetAsync(baseAddress + "/GetQuotePrepDetails?itemNoId=" + itemNoId + "&quoteType=" + quoteType + "&quoteNo=" + quoteNo).Result;
-                if (response.IsSuccessStatusCode)
-                {
-                    var data = response.Content.ReadAsStringAsync().Result;
-                    itemEntity = JsonConvert.DeserializeObject<QuotationPreparationEntity>(data);
-                }
-            }
+        //public QuotationPreparationEntity GetQuotePrepDetails(int itemNoId, int quoteType, int quoteNo)
+        //{
+        //    var baseAddress = "TechnicalDetails";
+        //    QuotationPreparationEntity itemEntity = new QuotationPreparationEntity();
+        //    using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
+        //    {
+        //        HttpResponseMessage response = client.GetAsync(baseAddress + "/GetQuotePrepDetails?itemNoId=" + itemNoId + "&quoteType=" + quoteType + "&quoteNo=" + quoteNo).Result;
+        //        if (response.IsSuccessStatusCode)
+        //        {
+        //            var data = response.Content.ReadAsStringAsync().Result;
+        //            itemEntity = JsonConvert.DeserializeObject<QuotationPreparationEntity>(data);
+        //        }
+        //    }
 
-            return itemEntity;
-        }
+        //    return itemEntity;
+        //}
 
         public string SaveClarificationData(ClarificationEntity cObj)
         {
@@ -731,9 +731,204 @@ namespace NtierMvc.Model
             return objList;
         }
 
+        public string SaveRevisedOrderDetails(OrderEntity viewModel)
+        {
+            string result = "0";
+            var baseAddress = "TechnicalDetails";
+            using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
+            {
+                HttpResponseMessage response = client.PostAsJsonAsync(baseAddress + "/SaveRevisedOrderDetails", viewModel).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    var data = response.Content.ReadAsStringAsync().Result;
+                    result = JsonConvert.DeserializeObject<string>(data);
+                }
+            }
+            return result;
+        }
+
+        public List<DropDownEntity> GetItemNosForEnqs(string EnqNo)
+        {
+            List<DropDownEntity> objList = new List<DropDownEntity>();
+            var baseAddress = "TechnicalDetails";
+            using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
+            {
+                HttpResponseMessage response = client.GetAsync(baseAddress + "/GetItemNosForEnqs?EnqNo=" + EnqNo).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    var data = response.Content.ReadAsStringAsync().Result;
+                    objList = JsonConvert.DeserializeObject<List<DropDownEntity>>(data);
+                }
+            }
+
+            return objList;
+        }
+
+        public DataTable GetDataForContractReview(string EnqNo, string ItemNo, string type)
+        {
+            DataTable lstQuotePrep = new DataTable();
+            var baseAddress = "TechnicalDetails";
+            using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
+            {
+                HttpResponseMessage response = client.GetAsync(baseAddress + "/GetDataForContractReview?EnqNo=" + EnqNo + "&ItemNo=" + ItemNo + "&type=" + type).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    var data = response.Content.ReadAsStringAsync().Result;
+                    lstQuotePrep = JsonConvert.DeserializeObject<DataTable>(data);
+                }
+            }
+            return lstQuotePrep;
+        }
+
+        public string SaveContractReviewData(ContractReview viewModel)
+        {
+            string result = "0";
+            var baseAddress = "TechnicalDetails";
+            using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
+            {
+                HttpResponseMessage response = client.PostAsJsonAsync(baseAddress + "/SaveContractReviewData", viewModel).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    var data = response.Content.ReadAsStringAsync().Result;
+                    result = JsonConvert.DeserializeObject<string>(data);
+                }
+            }
+            return result;
+        }
+
+        public List<PLEntity> LoadMasterPLlist(int skip, int pageSize, string sortColumn, string sortColumnDir, string search)
+        {
+            List<PLEntity> objList = new List<PLEntity>();
+            var baseAddress = "TechnicalDetails";
+            using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
+            {
+                HttpResponseMessage response = client.GetAsync(baseAddress + "/LoadMasterPLlist?skip=" + skip + "&pageSize=" + pageSize + "&sortColumn=" + sortColumn + "&sortColumnDir=" + sortColumnDir + "&search=" + search).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    var data = response.Content.ReadAsStringAsync().Result;
+                    objList = JsonConvert.DeserializeObject<List<PLEntity>>(data);
+                }
+            }
+
+            return objList;
+        }
 
 
+        public List<QuotationPreparationEntity> LoadQuotePrepListDetails(int skip, int pageSize, string sortColumn, string sortColumnDir, string search, string quoteType = null, string quoteNo = null, string itemNo = null, string financialYear = null)
+        {
+            List<QuotationPreparationEntity> objList = new List<QuotationPreparationEntity>();
+            var baseAddress = "TechnicalDetails";
+            using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
+            {
+                HttpResponseMessage response = client.GetAsync(baseAddress + "/LoadQuotePrepListDetails?skip=" + skip + "&pageSize=" + pageSize + "&sortColumn=" + sortColumn + "&sortColumnDir=" + sortColumnDir + "&search=" + search + "&quoteType=" + quoteType + "&quoteNo=" + quoteNo + "&itemNo=" + itemNo + "&financialYear=" + financialYear).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    var data = response.Content.ReadAsStringAsync().Result;
+                    objList = JsonConvert.DeserializeObject<List<QuotationPreparationEntity>>(data);
+                }
+            }
 
+            return objList;
+        }
+
+
+        public QuotationPreparationEntity GetQuotePrepDetails(string itemNoId, string quoteType, string quoteNo, string QuotePrepId, string financialYear)
+        {
+            var baseAddress = "TechnicalDetails";
+            QuotationPreparationEntity newDdl = new QuotationPreparationEntity();
+
+            using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
+            {
+                HttpResponseMessage response = client.GetAsync(baseAddress + "/GetQuotePrepDetails?itemNoId=" + itemNoId + "&quoteType=" + quoteType + "&quoteNo=" + quoteNo + "&QuotePrepId=" + QuotePrepId + "&FinancialYear=" + financialYear).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    var data = response.Content.ReadAsStringAsync().Result;
+                    newDdl = JsonConvert.DeserializeObject<QuotationPreparationEntity>(data);
+                }
+            }
+            return newDdl;
+        }
+
+        public List<ItemEntity> LoadItemWiseOrders(int skip, int pageSize, string sortColumn, string sortColumnDir, string search)
+        {
+            List<ItemEntity> objList = new List<ItemEntity>();
+            var baseAddress = "TechnicalDetails";
+            using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
+            {
+                HttpResponseMessage response = client.GetAsync(baseAddress + "/LoadItemWiseOrders?skip=" + skip + "&pageSize=" + pageSize + "&sortColumn=" + sortColumn + "&sortColumnDir=" + sortColumnDir + "&search=" + search).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    var data = response.Content.ReadAsStringAsync().Result;
+                    objList = JsonConvert.DeserializeObject<List<ItemEntity>>(data);
+                }
+            }
+
+            return objList;
+        }
+
+        public List<DropDownEntity> GetContractReviews(string customerId = null)
+        {
+            List<DropDownEntity> prodList = new List<DropDownEntity>();
+            var baseAddress = "TechnicalDetails";
+            using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
+            {
+                HttpResponseMessage response = client.GetAsync(baseAddress + "/GetContractReviews?customerId=" + customerId).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    var data = response.Content.ReadAsStringAsync().Result;
+                    prodList = JsonConvert.DeserializeObject<List<DropDownEntity>>(data);
+                }
+            }
+            return prodList;
+        }
+
+        public List<DropDownEntity> GetQuoteItemSlNos(string quoteType, string quoteNo, string finYear)
+        {
+            List<DropDownEntity> prodList = new List<DropDownEntity>();
+            var baseAddress = "TechnicalDetails";
+            using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
+            {
+                HttpResponseMessage response = client.GetAsync(baseAddress + "/GetQuoteItemSlNos?quoteType=" + quoteType + "&quoteNo=" + quoteNo + "&finYear=" + finYear).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    var data = response.Content.ReadAsStringAsync().Result;
+                    prodList = JsonConvert.DeserializeObject<List<DropDownEntity>>(data);
+                }
+            }
+            return prodList;
+        }
+
+        public QuotationEntity GetQuoteNoDetailsforRevisedQuote(string quoteNoId, string quotetypeId, string financialYr)
+        {
+            QuotationEntity quotE = new QuotationEntity();
+            var baseAddress = "TechnicalDetails";
+            using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
+            {
+                HttpResponseMessage response = client.GetAsync(baseAddress + "/GetQuoteNoDetailsforRevisedQuote?quoteNoId=" + quoteNoId + "&quotetypeId=" + quotetypeId + "&financialYr=" + financialYr).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    var data = response.Content.ReadAsStringAsync().Result;
+                    quotE = JsonConvert.DeserializeObject<QuotationEntity>(data);
+                }
+            }
+            return quotE;
+        }
+
+        public List<DropDownEntity> GetRevAndOriginalQuotes(string quotetypeId, string financialYr)
+        {
+            List<DropDownEntity> prodList = new List<DropDownEntity>();
+            var baseAddress = "TechnicalDetails";
+            using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
+            {
+                HttpResponseMessage response = client.GetAsync(baseAddress + "/GetRevAndOriginalQuotes?quoteTypeId=" + quotetypeId + "&financialYr=" + financialYr).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    var data = response.Content.ReadAsStringAsync().Result;
+                    prodList = JsonConvert.DeserializeObject<List<DropDownEntity>>(data);
+                }
+            }
+            return prodList;
+        }
 
     }
 }

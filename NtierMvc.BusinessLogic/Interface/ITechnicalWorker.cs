@@ -24,7 +24,7 @@ namespace NtierMvc.BusinessLogic.Interface
         List<DropDownEntity> GetCityName(string VendorName);
         List<DropDownEntity> GetProductLineList(string productLine);
         string GetProductNumber(string productNameId, int productType);
-        string GetQuoteNo(string quotetypeId=null);
+        string GetQuoteNo(string quotetypeId=null, string finYear = null);
         List<DropDownEntity> GetQuoteNoList(string quotetypeId="", string SoNo = null);
         List<DropDownEntity> GetQuoteItemSlNoList(string quotetypeId="", string SoNo = null);
         List<DropDownEntity> GetEnqNoList(string vendorId = null);
@@ -37,12 +37,12 @@ namespace NtierMvc.BusinessLogic.Interface
         OrderEntity GetVendorOrderDetails(string vendorId);
         string DeleteOrderDetail(int Id);
 
-        OrderEntityDetails GetOrderDetails(int pageIndex, int pageSize, string SearchQuoteType = null, string SearchVendorID = null, string SearchProductGroup = null, string SearchDeliveryTerms = null, string SearchPODeliveryDate = null);
+        OrderEntityDetails GetOrderDetails(int pageIndex, int pageSize, string SearchQuoteType = null, string SearchCustomerID = null, string SearchProductGroup = null, string SearchDeliveryTerms = null, string SearchPODeliveryDate = null);
 
         OrderEntity OrderDetailsPopup(OrderEntity Model);
         List<DropDownEntity> GetOrderQuoteDetails(string quoteType, string quotetypeId);
         OrderEntity GetQuoteOrderDetails(string quoteType, string quotetypeId);
-        ItemEntity GetOrderDetailsFromSO(int SoNo);
+        ItemEntity GetOrderDetailsFromSO(string SoNoView);
         string SaveItemDetail(ItemEntity itemEntity);
         string SaveItemDetailList(BulkUploadEntity bEntity);
         
@@ -51,7 +51,7 @@ namespace NtierMvc.BusinessLogic.Interface
 
         string SaveRevisedQuotationDetails(QuotationEntity entity);
         List<DropDownEntity> GetVendorDetails(string quotetypeId);
-        QuotationPreparationEntity GetQuotePrepDetails(int itemNoId, int quoteType, int quoteNo);
+        QuotationPreparationEntity GetQuotePrepDetails(string itemNoId, string quoteType, string quoteNo, string QuotePrepId, string financialYear);
         string SaveClarificationData(ClarificationEntity cObj);
         string SaveOrderClarificationData(ClarificationEntity cEntity);
         string SaveQuoteNotes(ClarificationEntity cObj);
@@ -65,6 +65,18 @@ namespace NtierMvc.BusinessLogic.Interface
         string SaveOrderNote(OrderEntity cEntity);
 
         List<DescEntity> LoadDescDetail(int skip, int pageSize, string sortColumn, string sortColumnDir, string search);
+        List<PLEntity> LoadMasterPLlist(int skip, int pageSize, string sortColumn, string sortColumnDir, string search);
+        List<QuotationPreparationEntity> LoadQuotePrepListDetails(int skip, int pageSize, string sortColumn, string sortColumnDir, string search, string quoteType = null, string quoteNo = null, string itemNo = null, string financialYear = null);
+        string SaveRevisedOrderDetails(OrderEntity cEntity);
+        string GetWorkAuthReport(string SoNo, string FromDate, string ToDate, string ReportType);
+        List<DropDownEntity> GetItemNosForEnqs(string EnqNo);
+        DataTable GetDataForContractReview(string EnqNo, string ItemNo, string type);
+        string SaveContractReviewData(ContractReview entity);
+        List<ItemEntity> LoadItemWiseOrders(int skip, int pageSize, string sortColumn, string sortColumnDir, string search);
+        List<DropDownEntity> GetContractReviews(string customerId = null);
+        List<DropDownEntity> GetQuoteItemSlNos(string quoteType, string quoteNo, string finYear);
+        QuotationEntity GetQuoteNoDetailsforRevisedQuote(string quoteNoId, string quotetypeId, string financialYr);
+        List<DropDownEntity> GetRevAndOriginalQuotes(string quotetypeId, string financialYr);
 
     }
 }
