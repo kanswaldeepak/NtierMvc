@@ -768,6 +768,7 @@ function EditQuotePrep(QuoteId) {
         contentType: "application/json; charset=utf-8",
         success: function (data) {
             if (data.QuoteType != null) {
+                $('#QuotePrepId').val(QuoteId);
                 $('#QuotePrepFormType').val(data.QuoteType);
                 //$('#QuotePrepFormNo option:selected').text(data.QuoteNoView);
                 $("#QuotePrepFormNo option").each(function () {
@@ -775,6 +776,7 @@ function EditQuotePrep(QuoteId) {
                         $(this).attr('selected', 'selected');
                     }
                 });
+                $('#QPQuoteNoView').val(data.QuoteNoView);
                 $('#QuotePrepCustomerName').val(data.CustomerName);
                 $('#QuotePrepSupplyTerms').val(data.SupplyTerms);
                 $('#QuotePrepLeadTime').val(data.LeadTime);
