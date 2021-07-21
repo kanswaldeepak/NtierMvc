@@ -1,5 +1,7 @@
 ﻿@model NtierMvc.Model.QuotationEntity
 
+<script src="~/Scripts/jquery.Datatable.js"></script>
+
 @{
     ViewBag.Title = "QuotationDetails";
 }
@@ -68,7 +70,7 @@
                                @id = "RQDQuoteNo",
                                @data_inneraction = "validationCall",
                                @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
-                               @onchange = "RQGetQuoteNoDetails()"
+                               @onchange = "RQGetQuoteNoDetails(); RQGetQuoteNoItemDetail();"
 
                            })
                         <span class="HideValidMsg">Please Select Quote No View</span>
@@ -471,6 +473,37 @@
                 </div>
             </div>
             <div class="row">
+                <div class="col-md-12">
+                    <table id="RQtblQuoteItemDetails" class="table table-hover table-bordered table-striped mt-5">
+                        <thead class="table-success">
+                            <tr>
+                                <td>SN</td>      
+                                <td>Item No</td>
+                                <td>Product Name</td>
+                                <td>Product No</td>
+                                <td>Casing Size</td>
+                                <td>Casing Ppf</td>
+                                <td>Material Grade</td>
+                                <td>Connection</td>
+                                <td>Qty</td>
+                                <td>Uom</td>
+                                <td>Unit Price</td>
+                                <td>Open Hole Size</td>
+                                <td>Ball Size</td>
+                                <td>Wall Thickness</td>
+                                <td>View Product Details</td>
+                                <td>OD Size</td>
+                                <td>Total Bows</td>
+                                <td>PDC Drillable</td>
+                                <td>Id</td>
+                                <td>Select</td>
+                            </tr>
+                        </thead>
+                        <tbody class="table-primary"></tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="row">
                 <div class="col-md-12 pt-4 text-center">
                     <button style="font-size:18px" type="button" class="btn btn-success btn-sm" id="save_results" ng-click="SaveRevisedQuotation()">Save</button>
                     <button style="font-size:18px" type="button" class="btn btn-secondary btn-sm" id="cancel_results" data-dismiss="modal">Close</button>
@@ -487,6 +520,8 @@
         window.GetRevisedQuoteNo = '@Url.Action("GetRevisedQuoteNo", "Technical")';
         window.GetQuoteNoDetailsforRevisedQuote = '@Url.Action("GetQuoteNoDetailsforRevisedQuote", "Technical")';
         window.GetRevAndOriginalQuotes = '@Url.Action("GetRevAndOriginalQuotes", "Technical")';
+        window.GetQuoteNoItemDetails = '@Url.Action("GetQuoteNoItemDetails", "Technical")';
+        window.LoadQuotePrepListDetails = '@Url.Action("LoadQuotePrepListDetails", "Technical")';
     });
 
 

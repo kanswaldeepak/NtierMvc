@@ -505,6 +505,7 @@ namespace NtierMvc.DataAccess.Pool
             Params.Add("@RevisedQuoteNo", Model.RevisedQuoteNo);
             Params.Add("@QuoteDate", Model.QuoteDate);
             Params.Add("@FinancialYear", Model.FinancialYear);
+            Params.Add("@Ids", Model.ids);
 
 
             var SPName = ConfigurationManager.AppSettings["SaveRevisedQuotationDetails"];

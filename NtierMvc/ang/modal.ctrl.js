@@ -33,7 +33,7 @@ angular.module('App').controller("ModalController", function ($scope, $http, $ti
             ).error(function (res) { showHttpErr(res); });
 
         }
-        
+
     }
 
     $scope.IsValid = function () {
@@ -91,7 +91,7 @@ angular.module('App').controller("ModalController", function ($scope, $http, $ti
                 }
             ).error(function (res) { showHttpErr(res); });
         }
-        
+
     }
 
     //QuotePreparation Modal Starts
@@ -107,7 +107,7 @@ angular.module('App').controller("ModalController", function ($scope, $http, $ti
         Status = GetFormValidationStatus("#formSaveQuotationPrepDetail");
 
         if (!Status) {
-            alert("Kindly Fill all mandatory fields");            
+            alert("Kindly Fill all mandatory fields");
         }
         else {
             $http({
@@ -127,7 +127,7 @@ angular.module('App').controller("ModalController", function ($scope, $http, $ti
                 }
             ).error(function (res) { showHttpErr(res); });
         }
-        
+
     }
 
     //Order Modal Starts
@@ -142,9 +142,9 @@ angular.module('App').controller("ModalController", function ($scope, $http, $ti
         let finyr = $('#FinancialYearOrder').find("option:selected").text().split("-");
         let startYr = finyr[0];
         let EndYr = '20' + finyr[1];
-        let finalYr = startYr+ '-' + EndYr;
+        let finalYr = startYr + '-' + EndYr;
 
-        let dateOf = convertDateFormat($('#PoDorOrder').val(),"dd-MM-yyyy","MM/dd/yyyy");
+        let dateOf = convertDateFormat($('#PoDorOrder').val(), "dd-MM-yyyy", "MM/dd/yyyy");
         let dateOfFiscalYr = getCurrentFiscalYear(dateOf);
 
 
@@ -211,6 +211,20 @@ angular.module('App').controller("ModalController", function ($scope, $http, $ti
             //alert("Kindly Fill all mandatory fields");
         }
         else {
+
+            let ids = "";
+            let oTable = $("#RQtblQuoteItemDetails").dataTable();
+
+            $(".check_quality:checked", oTable.fnGetNodes()).each(function () {
+                if (ids != "") {
+                    ids = ids + "," + this.id;
+                } else {
+                    ids = this.id;
+                }
+            });
+
+            formData.append("ids", ids);
+
             $http({ url: window.SaveRevisedQuotation, method: 'POST', data: formData, headers: { 'Content-Type': undefined } }).success(
                 function (res) {
                     if (res == 'Saved Successfully!') {
@@ -272,7 +286,7 @@ angular.module('App').controller("ModalController", function ($scope, $http, $ti
         var ProductNo = $('#DescProductNo').val();
         var MainPL = $('#DescMainPL').val();
 
-        if (MainPL != ProductNo.slice(0,1)) {
+        if (MainPL != ProductNo.slice(0, 1)) {
             alert("Product No is not valid");
         }
         else if (!Status) {

@@ -216,3 +216,81 @@ function RQGetQuoteNoDetails() {
         }
     })
 }
+
+function RQGetQuoteNoItemDetail() {
+    
+    $("#RQtblQuoteItemDetails").DataTable().destroy();
+    let FinancialYear = $("#RQDFinancialYear").val();
+    let QuoteType = $("#RQDQuoteFormType").val();
+    let QuoteNo = $("#RQDQuoteNo option:selected").text();
+    let ItemNo = '';
+
+    var req = {
+        "processing": true,
+        "language": {
+            processing: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span> '
+        },
+        "serverSide": true,
+        "paging": true,
+        "lengthMenu": [[5, 10, 25, 50, 100, -1], [5, 10, 25, 50, 100, "All"]],
+        "pageLength": 5,
+        "searching": true,
+        "filter": true,
+        "language": {
+            "paginate": {
+                "next": '&#8594;',
+                "previous": '&#8592;'
+            }
+        },
+        "ajax": {
+            "url": window.LoadQuotePrepListDetails,
+            "type": "POST",
+            "datatype": "json",
+            "data": { quoteType: QuoteType, quoteNo: QuoteNo, itemNo: ItemNo, financialYear: FinancialYear }
+        },
+        'order': [[0, "desc"]],
+        columns: [
+            { title: "SN", "data": "SNo", "name": "SNo", "autoWidth": true, "visible": true },
+            { title: "Item No", "data": "ItemNo", "name": "ItemNo", "autoWidth": true, "visible": true },
+            { title: "Product Name", "data": "ProductName", "name": "ProductName", "autoWidth": true, "visible": true },
+            { title: "Product No", "data": "ProductNo", "name": "ProductNo", "autoWidth": true, "visible": true },
+            { title: "Casing Size", "data": "CasingSize", "name": "CasingSize", "autoWidth": true, "visible": false },
+            { title: "Casing Ppf", "data": "CasingPpf", "name": "CasingPpf", "autoWidth": true, "visible": false },
+            { title: "Material Grade", "data": "MaterialGrade", "name": "MaterialGrade", "autoWidth": true, "visible": false },
+            { title: "Connection", "data": "Connection", "name": "Connection", "autoWidth": true, "visible": false },
+            { title: "Qty", "data": "Qty", "name": "Qty", "autoWidth": true, "visible": true },
+            { title: "Uom", "data": "Uom", "name": "Uom", "autoWidth": true, "visible": true },
+            { title: "Unit Price", "data": "UnitPrice", "name": "UnitPrice", "autoWidth": true, "visible": true },
+            { title: "Open Hole Size", "data": "OpenHoleSize", "name": "OpenHoleSize", "autoWidth": true, "visible": false },
+            { title: "Ball Size", "data": "BallSize", "name": "BallSize", "autoWidth": true, "visible": false },
+            { title: "Wall Thickness", "data": "WallThickness", "name": "WallThickness", "autoWidth": true, "visible": false },
+            { title: "View Product Details", "data": "ViewProductDetails", "name": "ViewProductDetails", "autoWidth": true, "visible": true },
+            { title: "OD Size", "data": "ODSize", "name": "ODSize", "autoWidth": true, "visible": false },
+            { title: "Total Bows", "data": "TotalBows", "name": "TotalBows", "autoWidth": true, "visible": false },
+            { title: "PDC Drillable", "data": "PDCDrillable", "name": "PDCDrillable", "autoWidth": true, "visible": false },
+            { title: "Id", "data": "Id", "name": "Id", "autoWidth": true, "visible": false },
+            {
+                title: "Select", "data": "", orderable: false, width: "1%",
+                "render": function (data, type, full, meta) {
+                    var columnVal = "";
+                    columnVal = '<div><input type="checkbox" class="form-control check_quality" id="' + full.Id + '" name="RQItemCheckBox' + full.Id + '"></div > ';
+                    return columnVal;
+                }
+            }
+
+
+        ],
+        "fnCreatedRow": function (nRow, aData, iDataIndex) {
+        },
+        "drawCallback": function (settings) {
+        },
+        "footerCallback": function (row, data, start, end, display) {
+
+        }
+    }
+
+    $("#RQtblQuoteItemDetails").DataTable(req);
+    $("#RQtblQuoteItemDetails tbody").show();
+
+
+}

@@ -7,6 +7,7 @@ namespace NtierMvc.Model
     public class QuotationEntity
     {
         public int Id { get; set; }
+        public string ids { get; set; }
         public string UserInitial { get; set; }
         public string UnitNo { get; set; }
         public string CustomerId { get; set; }
