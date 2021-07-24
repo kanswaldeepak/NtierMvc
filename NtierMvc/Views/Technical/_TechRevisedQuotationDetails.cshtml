@@ -474,10 +474,12 @@
             </div>
             <div class="row">
                 <div class="col-md-12">
+                    <input type="checkbox" class="selectAll pull-right" name="selectAll" value="all" style="height: 30px; width: 50px;"> 
+                    <label class="pull-right">Select All</label> 
                     <table id="RQtblQuoteItemDetails" class="table table-hover table-bordered table-striped mt-5">
                         <thead class="table-success">
                             <tr>
-                                <td>SN</td>      
+                                <td>SN</td>
                                 <td>Item No</td>
                                 <td>Product Name</td>
                                 <td>Product No</td>
@@ -522,6 +524,17 @@
         window.GetRevAndOriginalQuotes = '@Url.Action("GetRevAndOriginalQuotes", "Technical")';
         window.GetQuoteNoItemDetails = '@Url.Action("GetQuoteNoItemDetails", "Technical")';
         window.LoadQuotePrepListDetails = '@Url.Action("LoadQuotePrepListDetails", "Technical")';
+
+        $(".selectAll").on("click", function (e) {
+            //debugger;
+            if ($(this).is(":checked")) {
+                $('.check_quality').prop('checked', true)
+            } else {
+                $('.check_quality').prop('checked', false)
+            }
+
+        });
+
     });
 
 

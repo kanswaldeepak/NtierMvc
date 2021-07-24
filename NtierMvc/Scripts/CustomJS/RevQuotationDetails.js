@@ -292,5 +292,7 @@ function RQGetQuoteNoItemDetail() {
     $("#RQtblQuoteItemDetails").DataTable(req);
     $("#RQtblQuoteItemDetails tbody").show();
 
-
 }
+
+
+
