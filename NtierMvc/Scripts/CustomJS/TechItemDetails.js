@@ -232,7 +232,7 @@ function GetQuoteDetails() {
 
 function GetQuoteOrderItemSlNos() {
     var QuoteType = $("#OrderFormQuoteType").val();
-    var QuoteNo = $("#QuoteItemFormNo option:selected").val();
+    var QuoteNo = $("#QuoteItemFormNo option:selected").text();
     var FinYear = $("#ItemQPFinancialYear").val();
 
     $('#ItemQuoteNoView').val($("#QuoteItemFormNo option:selected").text());

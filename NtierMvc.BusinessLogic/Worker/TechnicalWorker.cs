@@ -957,6 +957,7 @@ namespace NtierMvc.BusinessLogic.Worker
                     Model.QuoteType = dt1.Rows[0]["QuoteType"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["QuoteType"]);
                     Model.FileNo = dt1.Rows[0]["FileNo"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["FileNo"]);
                     Model.QuoteNo = dt1.Rows[0]["QuoteNo"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["QuoteNo"]);
+                    Model.QuoteNoView = dt1.Rows[0]["QuoteNoView"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["QuoteNoView"]);
                     Model.QuoteDate = dt1.Rows[0]["QuoteDate"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["QuoteDate"]);
                     Model.SoNo = dt1.Rows[0]["SoNo"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["SoNo"]);
                     Model.SoNoView = dt1.Rows[0]["SoNoView"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["SoNoView"]);
@@ -1889,6 +1890,7 @@ namespace NtierMvc.BusinessLogic.Worker
             try
             {
                 List<DropDownEntity> lstItem = new List<DropDownEntity>();
+                BindDefault(lstItem);
                 DataTable dt = _repository.GetQuoteItemSlNos(quoteType, quoteNo, finYear);
                 DropDownEntity entity;
 
