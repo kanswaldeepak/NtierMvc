@@ -2501,6 +2501,35 @@ namespace NtierMvc.Controllers
             lstQuoteNo = objManager.GetRevAndOriginalQuotes(quotetypeId, financialYr);
             return lstQuoteNo;
         }
-    }
 
+        public ActionResult DeleteOrderDetail(int id)
+        {
+            if (ModelState.IsValid)
+            {
+                string msgCode = objManager.DeleteOrderDetail(id);
+                if (msgCode == GeneralConstants.DeleteSuccess)
+                {
+                    return new JsonResult { Data = msgCode, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                }
+                else
+                {
+                    return new JsonResult { Data = GeneralConstants.NotDeletedError, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                }
+
+            }
+            else
+            {
+                Response.StatusCode = 444;
+                Response.Status = "Not Saved";
+                return null;
+            }
+
+        }
+
+
+
+
+
+
+    }
 }
