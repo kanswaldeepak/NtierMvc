@@ -10,9 +10,13 @@ angular.module('App').controller("ReportController", function ($scope, $http, $t
     $scope.HideFileds = function () {
 
         if ($scope.ReportType == "EnquiryReport") {
+            $scope.ISTrue = false;
             $scope.ISTure = false;
-        } else
+        } 
+        else {
+            $scope.ISTrue = true;
             $scope.ISTure = true;
+        }
     }
 
 
