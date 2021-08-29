@@ -233,7 +233,7 @@ function RQGetQuoteNoItemDetail() {
         "serverSide": true,
         "paging": true,
         "lengthMenu": [[5, 10, 25, 50, 100, -1], [5, 10, 25, 50, 100, "All"]],
-        "pageLength": 5,
+        "pageLength": 1000,
         "searching": true,
         "filter": true,
         "language": {

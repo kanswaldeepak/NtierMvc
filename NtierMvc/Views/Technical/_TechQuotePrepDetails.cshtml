@@ -176,7 +176,7 @@
                            @class = "form-control requiredValidation",
                            @id = "QuotePrepProductName",
                            @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
-                           @onchange = "GetProductNumberByName('QuotePrep');"
+                           @onchange = "GetProductNumberByName('QuotePrep'); GetDisplayFieldsForQuotePrep();"
 
                        })
                             @*<select id="ProductName" name="ProductName" ng-model="ProductName" class="form-control requiredValidation clearField ng-pristine ng-untouched ng-valid ng-empty" onfocusout="return ValidateRequiredFieldsOnFocusOut(this)" ng-change="GetProductNumber(ProductName)">
@@ -245,7 +245,7 @@
                        {
                            @class = "form-control clearField",
                            @id = "QuotePrepCasingSize",
-                           @onchange = "DisplayNewItemInDdl(this, 'Master.Taxonomy', 'CasingSize', 'DropDownValue'); GetDisplayFieldsForQuotePrep();"
+                           @onchange = "DisplayNewItemInDdl(this, 'Master.Taxonomy', 'CasingSize', 'DropDownValue');"
 
                        })
                             <span class="HideValidMsg">Please Select Casing Size</span>

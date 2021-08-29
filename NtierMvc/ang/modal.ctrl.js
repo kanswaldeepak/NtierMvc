@@ -96,6 +96,9 @@ angular.module('App').controller("ModalController", function ($scope, $http, $ti
 
     //QuotePreparation Modal Starts
     $scope.SaveQuotePreparation = function () {
+
+        GetProductDetails();
+
         if (!confirm("Are you sure you want to Save?")) {
             return;
         }
