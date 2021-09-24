@@ -1131,6 +1131,7 @@ namespace NtierMvc.Controllers
             ViewBag.ListCountry = model.GetMasterTableList(TableNames.Master_Country, ColumnNames.id, ColumnNames.Country);
             ViewBag.ListProdType = model.GetMasterTableStringList(TableNames.ProductType, ColumnNames.id, ColumnNames.TypeName, "", "", GeneralConstants.ListTypeN);
             ViewBag.ListQuoteType = model.GetMasterTableStringList(TableNames.Master_Taxonomy, "dropdownId", "dropdownvalue", ColumnNames.QuoteType, ColumnNames.Property, GeneralConstants.ListTypeN);
+            ViewBag.ListQuoteAddOnType = model.GetMasterTableStringList(TableNames.Master_Taxonomy, "dropdownId", "dropdownvalue", ColumnNames.QuoteAddOnType, ColumnNames.Property, GeneralConstants.ListTypeN);
             ViewBag.ListCurrency = model.GetDropDownList(TableNames.Master_Taxonomy, GeneralConstants.ListTypeD, "dropdownId", "dropdownvalue", "Currency", ColumnNames.Property);
             ViewBag.ListInspection = model.GetDropDownList(TableNames.Master_Taxonomy, GeneralConstants.ListTypeD, "dropdownId", "dropdownvalue", "Inspection", ColumnNames.Property);
             ViewBag.ListLeadTimeDuration = model.GetTaxonomyDropDownItems("", "Time");
@@ -1138,8 +1139,7 @@ namespace NtierMvc.Controllers
             ViewBag.ListSupplyTerms = model.GetMasterTableStringList(TableNames.Master_Taxonomy, "dropdownId", "dropdownvalue", "SupplyTerms", "Property", GeneralConstants.ListTypeN);
             ViewBag.ListDeliveryTerms = model.GetDropDownList(TableNames.Master_Taxonomy, GeneralConstants.ListTypeD, ColumnNames.DropDownID, ColumnNames.DropDownValue, "DeliveryTerms", ColumnNames.ObjectName);
             ViewBag.ListFinYear = model.GetDropDownList(TableNames.FinancialYear, GeneralConstants.ListTypeN, ColumnNames.id, ColumnNames.FinYear, "", "", true);
-            ViewBag.ListQuoteNo = "";
-            ViewBag.ListRevisedQuoteNo = model.GetDropDownList(TableNames.RevisedNoTbl, GeneralConstants.ListTypeN, ColumnNames.id, ColumnNames.RevNo, "", "", true);
+            ViewBag.ListRevisedQuoteNo = model.GetDropDownList(TableNames.RevisedNoTbl, GeneralConstants.ListTypeN, ColumnNames.id, ColumnNames.RevNo, "", "", false);
 
             //model = new BaseModel();
             //string countryId = "0";
@@ -1166,7 +1166,34 @@ namespace NtierMvc.Controllers
 
             ViewBag.ListEnqNo = SelectList;
 
-            if (actionType == "ADD")
+            if (actionType == "VIEW" || actionType == "EDIT")
+            {
+                if (!string.IsNullOrEmpty(QuotationId))
+                    quotE.Id = Convert.ToInt32(QuotationId);
+                //quotE = objManager.TechnicalDetailsPopup(quotE);
+
+                ViewBag.ListEnqNo = objManager.GetQuoteEnqNoList(quotE);
+                quotE = objQuoteManager.QuotationDetailsPopup(quotE);
+
+                List<DropDownEntity> QNoList = new List<DropDownEntity>();
+                DropDownEntity objQNo = new DropDownEntity();
+                objQNo.DataStringValueField = quotE.QuoteNoView;
+                objQNo.DataTextField = quotE.QuoteNoView;
+                QNoList.Add(objQNo);
+
+                ViewBag.ListQuoteNo = QNoList;
+
+                List<DropDownEntity> RevNoList = new List<DropDownEntity>();
+                DropDownEntity RevNo = new DropDownEntity();
+                RevNo.DataStringValueField = quotE.RevisedQuoteNo;
+                RevNo.DataTextField = quotE.RevisedQuoteNo;
+                RevNoList.Add(RevNo);
+
+                ViewBag.ListRevisedQuoteNo = RevNoList;
+
+                //ViewBag.ListRevisedQuoteNo = model.GetDropDownList(TableNames.RevisedNoTbl, GeneralConstants.ListTypeN, ColumnNames.id, ColumnNames.RevNo, quotE.QuoteAddOnType, ColumnNames.type, false);
+            }
+            else
             {
                 ViewBag.ListQuoteNo = SelectList;
             }
@@ -2488,17 +2515,21 @@ namespace NtierMvc.Controllers
             return quotE;
         }
 
-        public ActionResult GetRevAndOriginalQuotes(string quotetypeId, string financialYr = null)
+        public ActionResult GetRevAndOriginalQuotes(string quotetypeId, string financialYr = null, string quoteAddOn = null)
         {
-            List<DropDownEntity> lstQuoteNo = GetRevisedAndOriginalQuotes(quotetypeId, financialYr);
+            List<DropDownEntity> lstQuoteNo;
+            if (quoteAddOn == null)
+                lstQuoteNo = GetRevisedAndOriginalQuotes(quotetypeId, financialYr);
+            else
+                lstQuoteNo = GetRevisedAndOriginalQuotes(quotetypeId, financialYr, quoteAddOn);
 
             return new JsonResult { Data = lstQuoteNo, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 
-        private List<DropDownEntity> GetRevisedAndOriginalQuotes(string quotetypeId, string financialYr)
+        private List<DropDownEntity> GetRevisedAndOriginalQuotes(string quotetypeId, string financialYr, string quoteAddOn = null)
         {
             List<DropDownEntity> lstQuoteNo = new List<DropDownEntity>();
-            lstQuoteNo = objManager.GetRevAndOriginalQuotes(quotetypeId, financialYr);
+            lstQuoteNo = objManager.GetRevAndOriginalQuotes(quotetypeId, financialYr, quoteAddOn);
             return lstQuoteNo;
         }
 
@@ -2526,7 +2557,13 @@ namespace NtierMvc.Controllers
 
         }
 
+        public ActionResult FetchQuoteReviseNos(string selectedText)
+        {
+            List<DropDownEntity> lstQuoteNo = new List<DropDownEntity>();
+            lstQuoteNo = model.GetDropDownList(TableNames.RevisedNoTbl, GeneralConstants.ListTypeN, ColumnNames.RevNo, ColumnNames.RevNo, selectedText, ColumnNames.type);
 
+            return new JsonResult { Data = lstQuoteNo, JsonRequestBehavior = JsonRequestBehavior.AllowGet }; ;
+        }
 
 
 

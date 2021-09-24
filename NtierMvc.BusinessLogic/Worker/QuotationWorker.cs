@@ -245,6 +245,7 @@ namespace NtierMvc.BusinessLogic.Worker
                     Model.EnqFor = dt1.Rows[0]["EnqFor"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["EnqFor"]);
                     Model.EnqDt = dt1.Rows[0]["EnqDt"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["EnqDt"]);
                     Model.EnqNo = dt1.Rows[0]["EnqNo"] == DBNull.Value ? "" : Convert.ToString(dt1.Rows[0]["EnqNo"]);
+                    Model.EnqNos = dt1.Rows[0]["EnqNo"] == DBNull.Value ? 0 : Convert.ToInt32(dt1.Rows[0]["EnqNo"]);
 
                     Model.QuoteNo = dt1.Rows[0]["QuoteNo"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["QuoteNo"]);
                     Model.QuoteNoView = dt1.Rows[0]["QuoteNoView"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["QuoteNoView"]);
@@ -270,6 +271,8 @@ namespace NtierMvc.BusinessLogic.Worker
                     Model.QuoteSentOn = dt1.Rows[0]["QuoteSentOn"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["QuoteSentOn"]);
                     Model.FinancialYear = dt1.Rows[0]["FinancialYear"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["FinancialYear"]);
                     Model.SupplyTerms = dt1.Rows[0]["SupplyTerms"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["SupplyTerms"]);
+                    Model.QuoteAddOnType= dt1.Rows[0]["QuoteAddOnType"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["QuoteAddOnType"]);
+                    Model.RevisedQuoteNo= dt1.Rows[0]["RevisedQuoteNo"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["RevisedQuoteNo"]);
 
 
                     //if (dt1.Rows[0]["DomesticQuoteNo"] != DBNull.Value)

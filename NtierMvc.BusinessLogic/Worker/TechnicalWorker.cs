@@ -1987,12 +1987,12 @@ namespace NtierMvc.BusinessLogic.Worker
             }
         }
 
-        public List<DropDownEntity> GetRevAndOriginalQuotes(string quotetypeId, string financialYr)
+        public List<DropDownEntity> GetRevAndOriginalQuotes(string quotetypeId, string financialYr, string quoteAddOn = null)
         {
             try
             {
                 List<DropDownEntity> lstItem = new List<DropDownEntity>();
-                DataTable dt = _repository.GetRevAndOriginalQuotes(quotetypeId, financialYr);
+                DataTable dt = _repository.GetRevAndOriginalQuotes(quotetypeId, financialYr, quoteAddOn);
                 DropDownEntity entity;
 
                 BindDefault(lstItem);

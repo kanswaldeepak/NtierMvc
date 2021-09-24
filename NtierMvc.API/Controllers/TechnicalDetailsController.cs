@@ -420,9 +420,9 @@ namespace NtierMvc.API.Controllers.Application
 
         [HttpGet]
         [Route("api/TechnicalDetails/GetRevAndOriginalQuotes")]
-        public IHttpActionResult GetRevAndOriginalQuotes(string quotetypeId, string financialYr)
+        public IHttpActionResult GetRevAndOriginalQuotes(string quotetypeId, string financialYr, string quoteAddOn = null)
         {
-            return Ok(_repository.GetRevAndOriginalQuotes(quotetypeId, financialYr));
+            return Ok(_repository.GetRevAndOriginalQuotes(quotetypeId, financialYr, quoteAddOn));
         }
 
 

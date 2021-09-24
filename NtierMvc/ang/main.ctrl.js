@@ -546,14 +546,21 @@ angular.module('App').controller("MainController", function ($scope, $http, $tim
         })
     }
 
-    $scope.LoadQuotationEditPopup = function (_QuotationDetailsId) {
-        var _actionType = "EDIT"
+    $scope.LoadQuotationEditPopup = function (_QuotationDetailsId, _QuoteNoView) {
+        var _actionType = "EDIT";
+        let _QuotationUrl = "";
+
+        if (_QuoteNoView.indexOf('Rev') != -1 || _QuoteNoView.indexOf('FRPO') != -1)
+            _QuotationUrl = window.RevisedQuotationDetailsPopup;
+        else
+            _QuotationUrl = window.QuotationDetailsPopup;
+
         //var ID = e.target.id;
         $.ajax({
             type: "POST",
-            data: { actionType: _actionType, QuotationId: _QuotationDetailsId },
+            data: { actionType: _actionType, QuotationId: _QuotationDetailsId},
             datatype: "JSON",
-            url: window.QuotationDetailsPopup,
+            url: _QuotationUrl,
             success: function (res) {
                 var html = $compile(res)($scope);
                 SetModalTitle("Edit Quotation Details")
@@ -562,6 +569,7 @@ angular.module('App').controller("MainController", function ($scope, $http, $tim
                 $('.bs-tooltip-top').css('display', 'none');
                 ShowModal();
                 SetModalWidth("1400px");
+                RQGetQuoteNoItemDetail();
 
                 if (!($('.modal.in').length)) {
                     $('.modal-dialog').css({
@@ -1108,7 +1116,7 @@ angular.module('App').controller("MainController", function ($scope, $http, $tim
             url: window.RevisedQuotationDetailsPopup,
             success: function (html) {
                 html = $compile(html)($scope);
-                SetModalTitle("Add New Revised Quotation")
+                SetModalTitle("Quote Add-ON")
                 SetModalBody(html);
                 SetModalWidth("1400px");
                 HideLoadder();

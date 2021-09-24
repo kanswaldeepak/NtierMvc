@@ -914,13 +914,13 @@ namespace NtierMvc.Model
             return quotE;
         }
 
-        public List<DropDownEntity> GetRevAndOriginalQuotes(string quotetypeId, string financialYr)
+        public List<DropDownEntity> GetRevAndOriginalQuotes(string quotetypeId, string financialYr, string quoteAddOn = null)
         {
             List<DropDownEntity> prodList = new List<DropDownEntity>();
             var baseAddress = "TechnicalDetails";
             using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
             {
-                HttpResponseMessage response = client.GetAsync(baseAddress + "/GetRevAndOriginalQuotes?quoteTypeId=" + quotetypeId + "&financialYr=" + financialYr).Result;
+                HttpResponseMessage response = client.GetAsync(baseAddress + "/GetRevAndOriginalQuotes?quoteTypeId=" + quotetypeId + "&financialYr=" + financialYr + "&quoteAddOn=" + quoteAddOn).Result;
                 if (response.IsSuccessStatusCode)
                 {
                     var data = response.Content.ReadAsStringAsync().Result;

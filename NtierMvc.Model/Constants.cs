@@ -100,6 +100,7 @@ namespace NtierMvc.Model
 
     public static class ColumnNames
     {
+        public const string QuoteAddOnType = "QuoteAddOnType";
         public const string RevNo = "RevNo";
         public const string FinancialYear = "FinancialYear";
         public const string FinYear = "FinYear";

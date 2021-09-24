@@ -263,6 +263,11 @@ namespace NtierMvc.Models
                     DocumentName = "No Records Found For Selected Item";
                     return DocumentName;
                 }
+                else if (Dt2.Rows.Count <= 0)
+                {
+                    DocumentName = "No Records Found For Selected Item";
+                    return DocumentName;
+                }
 
                 //Getting Single Fields
                 xlWorkbook.Worksheets[1].Cells.Replace("#FileNo", dt1.Rows[0]["FileNo"]);

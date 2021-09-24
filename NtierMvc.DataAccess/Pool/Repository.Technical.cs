@@ -468,6 +468,7 @@ namespace NtierMvc.DataAccess.Pool
         {
             string msgCode = "";
             var Params = new Dictionary<string, object>();
+            Params.Add("@Id", Model.Id);
             Params.Add("@UserInitial", Model.UserInitial);
             Params.Add("@UnitNo", Model.UnitNo);
             Params.Add("@CustomerId", Model.CustomerId);
@@ -506,6 +507,7 @@ namespace NtierMvc.DataAccess.Pool
             Params.Add("@QuoteDate", Model.QuoteDate);
             Params.Add("@FinancialYear", Model.FinancialYear);
             Params.Add("@Ids", Model.ids);
+            Params.Add("@QuoteAddOnType", Model.QuoteAddOnType);
 
 
             var SPName = ConfigurationManager.AppSettings["SaveRevisedQuotationDetails"];
@@ -729,12 +731,13 @@ namespace NtierMvc.DataAccess.Pool
             return _dbAccess.GetDataTable(spName, parms);
         }
 
-        public DataTable GetRevAndOriginalQuotes(string quotetypeId, string financialYr)
+        public DataTable GetRevAndOriginalQuotes(string quotetypeId, string financialYr, string quoteAddOn = null)
         {
             DataTable dt = new DataTable();
             var parms = new Dictionary<string, object>();
             parms.Add("@quoteType", quotetypeId);
             parms.Add("@finYear", financialYr);
+            parms.Add("@quoteAddOn", quoteAddOn);
             var spName = ConfigurationManager.AppSettings["GetRevAndOriginalQuotes"];
             dt = _dbAccess.GetDataTable(spName, parms);
             return dt;

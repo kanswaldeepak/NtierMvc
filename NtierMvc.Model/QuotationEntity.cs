@@ -12,6 +12,7 @@ namespace NtierMvc.Model
         public string UnitNo { get; set; }
         public string CustomerId { get; set; }
         public string CustomerName { get; set; }
+        public string QuoteAddOnType { get; set; }
         public string QuoteType { get; set; }
         public string FileNo { get; set; }
         public string EnqRef { get; set; }

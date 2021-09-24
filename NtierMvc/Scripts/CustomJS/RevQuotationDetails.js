@@ -84,11 +84,12 @@ function GetEnquiryDetails() {
 function RQDGetQuoteNumbers() {
     let QuoteType = $("#RQDQuoteFormType").val();
     let finYear = $("#RQDFinancialYear").val();
+    let QuoteAddOn = ''; //$("#RQDQuoteAddOnType option:selected").val();
 
     $.ajax({
         type: 'POST',
         url: window.GetRevAndOriginalQuotes,
-        data: JSON.stringify({ quotetypeId: QuoteType, financialYr: finYear }),
+        data: JSON.stringify({ quotetypeId: QuoteType, financialYr: finYear, quoteAddOn : QuoteAddOn }),
         contentType: "application/json; charset=utf-8",
         success: function (data) {
             $("#RQDQuoteNo").empty();
@@ -218,7 +219,7 @@ function RQGetQuoteNoDetails() {
 }
 
 function RQGetQuoteNoItemDetail() {
-    
+
     $("#RQtblQuoteItemDetails").DataTable().destroy();
     let FinancialYear = $("#RQDFinancialYear").val();
     let QuoteType = $("#RQDQuoteFormType").val();
@@ -294,5 +295,26 @@ function RQGetQuoteNoItemDetail() {
 
 }
 
+function FetchQuoteReviseNo() {
 
+    let selectedTxt = $('#RQDQuoteAddOnType option:selected').val();
+
+    $.ajax({
+        type: 'POST',
+        url: window.FetchQuoteReviseNos,
+        data: JSON.stringify({ selectedText: selectedTxt}),
+        contentType: "application/json; charset=utf-8",
+        success: function (data) {
+            $("#RQDRevisedQuoteNo").empty();
+            if (data.length > 0) {
+                $.each(data, function (i, item) {
+                    $("#RQDRevisedQuoteNo").append($('<option></option>').val(item.DataStringValueField).html(item.DataTextField));
+                })
+            }
+        },
+        error: function (x, e) {
+            alert('Some error is occurred, Please try after some time.');
+        }
+    })
+}
 

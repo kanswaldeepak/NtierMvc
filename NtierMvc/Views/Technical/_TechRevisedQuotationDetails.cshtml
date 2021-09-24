@@ -53,9 +53,24 @@
                             @class = "form-control requiredValidation",
                             @id = "RQDQuoteFormType",
                             @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
-                            @onchange = "RQDGetQuoteNumbers(); RQDChangeTransport();"
+                            @onchange = " RQDChangeTransport();"
                         })
                         <span class="HideValidMsg">Please Enter QuoteType</span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="control-label">
+                            ADD-ON Option for
+                        </label>
+                        @Html.DropDownListFor(m => m.QuoteAddOnType, new SelectList(@ViewBag.ListQuoteAddOnType, "DataStringValueField", "DataTextField", "Revised"),
+                        new
+                        {
+                            @class = "form-control requiredValidation",
+                            @id = "RQDQuoteAddOnType",
+                            @onfocusout = "return ValidateRequiredFieldsOnFocusOut(this)",
+                            @onchange = "FetchQuoteReviseNo(); RQDGetQuoteNumbers();"
+                        })
                     </div>
                 </div>
                 <div class="col-md-4">
@@ -81,7 +96,7 @@
                         <label class="control-label">
                             Quote Revision No
                         </label>
-                        @Html.DropDownListFor(m => m.RevisedQuoteNo, new SelectList(@ViewBag.ListRevisedQuoteNo, "DataStringValueField", "DataTextField", Model.RevisedQuoteNo),
+                        @Html.DropDownListFor(m => m.RevisedQuoteNo, new SelectList(@ViewBag.ListRevisedQuoteNo, "DataTextField", "DataTextField", Model.RevisedQuoteNo),
                            new
                            {
                                @class = "form-control requiredValidation clearFields",
@@ -208,7 +223,7 @@
                    })
                     </div>
                 </div>
-
+                <span class="HideValidMsg">Please Enter Enquiry No</span>
                 <div class="col-md-4">
                     <div class="form-group">
                         <label class="control-label">
@@ -524,6 +539,7 @@
         window.GetRevAndOriginalQuotes = '@Url.Action("GetRevAndOriginalQuotes", "Technical")';
         window.GetQuoteNoItemDetails = '@Url.Action("GetQuoteNoItemDetails", "Technical")';
         window.LoadQuotePrepListDetails = '@Url.Action("LoadQuotePrepListDetails", "Technical")';
+        window.FetchQuoteReviseNos = '@Url.Action("FetchQuoteReviseNos", "Technical")';
 
         $(".selectAll").on("click", function (e) {
             //debugger;
