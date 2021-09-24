@@ -1324,8 +1324,42 @@ namespace NtierMvc.BusinessLogic.Worker
                             if (dt.Columns.Contains("FinancialYear"))
                                 quoteEntity.FinancialYear = Convert.ToInt32(dr["FinancialYear"] ?? 0);
 
-                            if (dt.Columns.Contains("QuoteNoView"))
-                                quoteEntity.QuoteNoView = Convert.ToString(dr["QuoteNoView"]) ?? "";
+                            if (dt.Columns.Contains("EnqSrNo"))
+                                quoteEntity.EnqSrNo = Convert.ToString(dr["EnqSrNo"]) ?? "";
+
+                            if (dt.Columns.Contains("CasingSize"))
+                                quoteEntity.CasingSize = Convert.ToString(dr["CasingSize"]) ?? "";
+
+                            if (dt.Columns.Contains("CasingPpf"))
+                                quoteEntity.CasingPpf = Convert.ToString(dr["CasingPpf"]) ?? "";
+
+                            if (dt.Columns.Contains("MaterialGrade"))
+                                quoteEntity.MaterialGrade = Convert.ToString(dr["MaterialGrade"]) ?? "";
+
+                            if (dt.Columns.Contains("Connection"))
+                                quoteEntity.Connection = Convert.ToString(dr["Connection"]) ?? "";
+
+                            if (dt.Columns.Contains("Qty"))
+                                quoteEntity.Qty = Convert.ToString(dr["Qty"]) ?? "";
+
+                            if (dt.Columns.Contains("Uom"))
+                                quoteEntity.Uom = Convert.ToString(dr["Uom"]) ?? "";
+
+                            if (dt.Columns.Contains("UnitPrice"))
+                                quoteEntity.UnitPrice = Convert.ToInt32(dr["UnitPrice"]);
+
+                            if (dt.Columns.Contains("ViewProductDetails"))
+                                quoteEntity.ViewProductDetails = Convert.ToString(dr["ViewProductDetails"]) ?? "";
+
+                            if (dt.Columns.Contains("OpenHoleSize"))
+                                quoteEntity.OpenHoleSize = Convert.ToInt32(dr["OpenHoleSize"]);
+
+                            if (dt.Columns.Contains("BallSize"))
+                                quoteEntity.BallSize = Convert.ToInt32(dr["BallSize"]);
+
+                            if (dt.Columns.Contains("WallThickness"))
+                                quoteEntity.WallThickness = Convert.ToString(dr["WallThickness"]) ?? "";
+
                         }
                     else
                         foreach (DataRow dr in dt.Rows)

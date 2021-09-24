@@ -788,7 +788,38 @@ function EditQuotePrep(QuoteId) {
                 $('#QuotePrepItemNo').val(data.ItemNo);
                 $('#QuotePrepFinancialYear').val(data.FinancialYear);
 
-                ValidateItemNo();
+                if (data.EnqSrNo != '')
+                    $("#QuotePrepEnqSrNo").val(data.EnqSrNo);
+                if (data.CasingSize != '')
+                    $("#QuotePrepCasingSize").val(data.CasingSize);
+                if (data.CasingPpf != '')
+                    $("#QuotePrepCasingPpf").val(data.CasingPpf);
+                if (data.MaterialGrade != '')
+                    $("#QuotePrepMaterialGrade").val(data.MaterialGrade);
+                if (data.Connection != '')
+                    $("#QuotePrepConnection").val(data.Connection);
+                if (data.Qty != '')
+                    $("#QuotePrepQty").val(data.Qty);
+                if (data.Uom != '')
+                    $("#QuotePrepUom").val(data.Uom);
+                if (data.UnitPrice != '')
+                    $("#QuotePrepUnitPrice").val(data.UnitPrice);
+
+                GetDisplayFieldsForQuotePrep();
+                $('#divProductDetails').show();
+
+                if (data.ViewProductDetails != '')
+                    $("#ViewProductDetails").val(data.ViewProductDetails);
+
+                if (data.OpenHoleSize != '')
+                    $("#QuotePrepOpenHoleSize").val(data.OpenHoleSize);
+
+                if (data.ViewBallSize != '')
+                    $("#QuotePrepBallSize").val(data.BallSize);
+
+                if (data.ViewWallThickness != '')
+                    $("#QuotePrepWallThickness").val(data.WallThickness);
+
             }
             else
                 alert("Item No not Found in Records");
