@@ -984,6 +984,9 @@ namespace NtierMvc.BusinessLogic.Worker
                     Model.MultiQuoteNos = dt1.Rows[0]["MultiQuoteNos"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["MultiQuoteNos"]);
                     Model.FinancialYear = dt1.Rows[0]["FinancialYear"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["FinancialYear"]);
                     Model.QuoteFinYear = dt1.Rows[0]["QuoteFinYear"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["QuoteFinYear"]);
+                    Model.FinancialYearText = dt1.Rows[0]["FinancialYearText"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["FinancialYearText"]);
+                    Model.QuoteTypeText = dt1.Rows[0]["QuoteTypeText"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["QuoteTypeText"]);
+                    Model.RevisedOrderNo = dt1.Rows[0]["RevisedOrderNo"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["RevisedOrderNo"]);
                 }
             }
 

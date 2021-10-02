@@ -274,6 +274,11 @@ namespace NtierMvc.BusinessLogic.Worker
                     Model.QuoteAddOnType= dt1.Rows[0]["QuoteAddOnType"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["QuoteAddOnType"]);
                     Model.RevisedQuoteNo= dt1.Rows[0]["RevisedQuoteNo"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["RevisedQuoteNo"]);
 
+                    Model.QuoteAddOnTypeText = dt1.Rows[0]["QuoteAddOnTypeText"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["QuoteAddOnTypeText"]);
+                    Model.QuoteTypeText = dt1.Rows[0]["QuoteTypeText"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["QuoteTypeText"]);
+                    Model.FinancialYearText = dt1.Rows[0]["FinancialYearText"] == DBNull.Value ? string.Empty : Convert.ToString(dt1.Rows[0]["FinancialYearText"]);
+
+
 
                     //if (dt1.Rows[0]["DomesticQuoteNo"] != DBNull.Value)
                     //    Model.QuoteNo = Convert.ToString(dt1.Rows[0]["DomesticQuoteNo"]);

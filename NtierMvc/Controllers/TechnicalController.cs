@@ -1129,17 +1129,13 @@ namespace NtierMvc.Controllers
             ViewBag.ListVENDOR_NATURE = model.GetMasterTableList(TableNames.Master_Vendor, ColumnNames.id, ColumnNames.VendorNature);
             ViewBag.ListFUNCTION_AREA = model.GetMasterTableList(TableNames.Master_FunctionalArea, ColumnNames.id, ColumnNames.FunctionArea);
             ViewBag.ListCountry = model.GetMasterTableList(TableNames.Master_Country, ColumnNames.id, ColumnNames.Country);
-            ViewBag.ListProdType = model.GetMasterTableStringList(TableNames.ProductType, ColumnNames.id, ColumnNames.TypeName, "", "", GeneralConstants.ListTypeN);
-            ViewBag.ListQuoteType = model.GetMasterTableStringList(TableNames.Master_Taxonomy, "dropdownId", "dropdownvalue", ColumnNames.QuoteType, ColumnNames.Property, GeneralConstants.ListTypeN);
-            ViewBag.ListQuoteAddOnType = model.GetMasterTableStringList(TableNames.Master_Taxonomy, "dropdownId", "dropdownvalue", ColumnNames.QuoteAddOnType, ColumnNames.Property, GeneralConstants.ListTypeN);
+            ViewBag.ListProdType = model.GetMasterTableStringList(TableNames.ProductType, ColumnNames.id, ColumnNames.TypeName, "", "", GeneralConstants.ListTypeN);            
             ViewBag.ListCurrency = model.GetDropDownList(TableNames.Master_Taxonomy, GeneralConstants.ListTypeD, "dropdownId", "dropdownvalue", "Currency", ColumnNames.Property);
             ViewBag.ListInspection = model.GetDropDownList(TableNames.Master_Taxonomy, GeneralConstants.ListTypeD, "dropdownId", "dropdownvalue", "Inspection", ColumnNames.Property);
             ViewBag.ListLeadTimeDuration = model.GetTaxonomyDropDownItems("", "Time");
             ViewBag.ListModeOfDespatch = model.GetDropDownList(TableNames.Master_Taxonomy, GeneralConstants.ListTypeD, "dropdownId", "dropdownvalue", "Transport", ColumnNames.Property);
             ViewBag.ListSupplyTerms = model.GetMasterTableStringList(TableNames.Master_Taxonomy, "dropdownId", "dropdownvalue", "SupplyTerms", "Property", GeneralConstants.ListTypeN);
             ViewBag.ListDeliveryTerms = model.GetDropDownList(TableNames.Master_Taxonomy, GeneralConstants.ListTypeD, ColumnNames.DropDownID, ColumnNames.DropDownValue, "DeliveryTerms", ColumnNames.ObjectName);
-            ViewBag.ListFinYear = model.GetDropDownList(TableNames.FinancialYear, GeneralConstants.ListTypeN, ColumnNames.id, ColumnNames.FinYear, "", "", true);
-            ViewBag.ListRevisedQuoteNo = model.GetDropDownList(TableNames.RevisedNoTbl, GeneralConstants.ListTypeN, ColumnNames.id, ColumnNames.RevNo, "", "", false);
 
             //model = new BaseModel();
             //string countryId = "0";
@@ -1191,11 +1187,35 @@ namespace NtierMvc.Controllers
 
                 ViewBag.ListRevisedQuoteNo = RevNoList;
 
+                List<DropDownEntity> QuoteTypeList = new List<DropDownEntity>();
+                DropDownEntity QuoteType = new DropDownEntity();
+                QuoteType.DataStringValueField = quotE.QuoteType;
+                QuoteType.DataTextField = quotE.QuoteTypeText;
+                QuoteTypeList.Add(QuoteType);
+                ViewBag.ListQuoteType = QuoteTypeList;
+
+                List <DropDownEntity> AddOnTypeList = new List<DropDownEntity>();
+                DropDownEntity AddOnType = new DropDownEntity();
+                AddOnType.DataStringValueField = quotE.QuoteAddOnType;
+                AddOnType.DataTextField = quotE.QuoteAddOnTypeText;
+                AddOnTypeList.Add(AddOnType);
+                ViewBag.ListQuoteAddOnType = AddOnTypeList;
                 //ViewBag.ListRevisedQuoteNo = model.GetDropDownList(TableNames.RevisedNoTbl, GeneralConstants.ListTypeN, ColumnNames.id, ColumnNames.RevNo, quotE.QuoteAddOnType, ColumnNames.type, false);
+
+                List<DropDownEntity> FinYearList = new List<DropDownEntity>();
+                DropDownEntity FinYear = new DropDownEntity();
+                FinYear.DataStringValueField = quotE.FinancialYear;
+                FinYear.DataTextField = quotE.FinancialYearText;
+                FinYearList.Add(FinYear);
+                ViewBag.ListFinYear = FinYearList;
             }
             else
             {
                 ViewBag.ListQuoteNo = SelectList;
+                ViewBag.ListQuoteType = model.GetMasterTableStringList(TableNames.Master_Taxonomy, "dropdownId", "dropdownvalue", ColumnNames.QuoteType, ColumnNames.Property, GeneralConstants.ListTypeN);
+                ViewBag.ListQuoteAddOnType = model.GetMasterTableStringList(TableNames.Master_Taxonomy, "dropdownId", "dropdownvalue", ColumnNames.QuoteAddOnType, ColumnNames.Property, GeneralConstants.ListTypeN);
+                ViewBag.ListRevisedQuoteNo = model.GetDropDownList(TableNames.RevisedNoTbl, GeneralConstants.ListTypeN, ColumnNames.id, ColumnNames.RevNo, "", "", false);
+                ViewBag.ListFinYear = model.GetDropDownList(TableNames.FinancialYear, GeneralConstants.ListTypeN, ColumnNames.id, ColumnNames.FinYear, "", "", true);
             }
 
             return base.PartialView("~/Views/Technical/_TechRevisedQuotationDetails.cshtml", quotE);
@@ -1593,7 +1613,7 @@ namespace NtierMvc.Controllers
             //return new JsonResult { Data = msgCode, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 
-        public ActionResult RevisedOrderDetailsPopup(string actionType, string OrderId)
+        public ActionResult RevisedOrderDetailsPopup(string actionType, string Id)
         {
             ViewBag.ListQuoteNo = model.GetMasterTableStringList(TableNames.QuotationRegister, ColumnNames.id, ColumnNames.QuoteNo, "", "", GeneralConstants.ListTypeN);
             ViewBag.ListItemNo = DdlList();
@@ -1630,6 +1650,74 @@ namespace NtierMvc.Controllers
 
                 ViewBag.ListQuoteNo = SelectList;
 
+            }
+            else
+            {
+
+                //List<DropDownEntity> DT = new List<DropDownEntity>();
+                //DT = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "ExportorderE", "Property", GeneralConstants.ListTypeN);
+                //List<DropDownEntity> DT1 = new List<DropDownEntity>();
+                //DT1 = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "DomesticorderE", "Property", GeneralConstants.ListTypeN);
+
+                //foreach (var item in DT1)
+                //{
+                //    if (!item.DataTextField.Equals("All"))
+                //        DT.Add(item);
+                //}
+                ViewBag.ListDeliveryTerms = model.GetDropDownList(TableNames.Master_Taxonomy, GeneralConstants.ListTypeD, ColumnNames.DropDownID, ColumnNames.DropDownValue, "DeliveryTerms", ColumnNames.ObjectName);
+
+                if (!string.IsNullOrEmpty(Id))
+                    orderE.Id = Convert.ToInt32(Id);
+
+                orderE = objManager.OrderDetailsPopup(orderE);
+
+                //ViewBag.ListQuoteNo = objManager.GetQuoteNoList(orderE.QuoteType);
+                ViewBag.ListEnqNo = "";
+
+                List<DropDownEntity> QNoList = new List<DropDownEntity>();
+                DropDownEntity objQNo = new DropDownEntity();
+                objQNo.DataStringValueField = orderE.QuoteNoView;
+                objQNo.DataTextField = orderE.QuoteNoView;
+                QNoList.Add(objQNo);
+
+                ViewBag.ListQuoteNo = QNoList;
+
+                List<DropDownEntity> RevNoList = new List<DropDownEntity>();
+                DropDownEntity RevNo = new DropDownEntity();
+                RevNo.DataStringValueField = orderE.RevisedOrderNo;
+                RevNo.DataTextField = orderE.RevisedOrderNo;
+                RevNoList.Add(RevNo);
+
+                ViewBag.ListRevisedQuoteNo = RevNoList;
+
+                List<DropDownEntity> QuoteTypeList = new List<DropDownEntity>();
+                DropDownEntity QuoteType = new DropDownEntity();
+                QuoteType.DataStringValueField = orderE.QuoteType;
+                QuoteType.DataTextField = orderE.QuoteTypeText;
+                QuoteTypeList.Add(QuoteType);
+                ViewBag.ListQuoteType = QuoteTypeList;
+
+                List<DropDownEntity> AddOnTypeList = new List<DropDownEntity>();
+                DropDownEntity AddOnType = new DropDownEntity();
+                AddOnType.DataStringValueField = orderE.QuoteAddOnType;
+                AddOnType.DataTextField = orderE.QuoteAddOnTypeText;
+                AddOnTypeList.Add(AddOnType);
+                ViewBag.ListQuoteAddOnType = AddOnTypeList;
+                //ViewBag.ListRevisedQuoteNo = model.GetDropDownList(TableNames.RevisedNoTbl, GeneralConstants.ListTypeN, ColumnNames.id, ColumnNames.RevNo, quotE.QuoteAddOnType, ColumnNames.type, false);
+
+                List<DropDownEntity> FinYearList = new List<DropDownEntity>();
+                DropDownEntity FinYear = new DropDownEntity();
+                FinYear.DataStringValueField = orderE.FinancialYear;
+                FinYear.DataTextField = orderE.FinancialYearText;
+                FinYearList.Add(FinYear);
+                ViewBag.ListFinancialYear = FinYearList;
+
+                List<DropDownEntity> SoNoList = new List<DropDownEntity>();
+                DropDownEntity SoNo = new DropDownEntity();
+                SoNo.DataStringValueField = orderE.SoNo;
+                SoNo.DataTextField = orderE.SoNoView;
+                SoNoList.Add(SoNo);
+                ViewBag.ListSoNo = SoNoList;
             }
 
             return base.PartialView("~/Views/Technical/_TechRevisedOrderDetails.cshtml", orderE);

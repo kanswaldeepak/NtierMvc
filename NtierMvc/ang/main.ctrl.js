@@ -969,14 +969,21 @@ angular.module('App').controller("MainController", function ($scope, $http, $tim
         })
     }
 
-    $scope.LoadOrderEditPopup = function (_OrderId) {
-        var _actionType = "EDIT"
+    $scope.LoadOrderEditPopup = function (_OrderId, _WANoView) {
+        var _actionType = "EDIT";
+        let _OrderUrl = "";
         //var ID = e.target.id;
+
+        if (_WANoView.indexOf('Rev') != -1 || _WANoView.indexOf('FRPO') != -1)
+            _OrderUrl = window.RevisedOrderDetailsPopup;
+        else
+            _OrderUrl = window.OrderDetailsPopup;
+
         $.ajax({
             type: "POST",
             data: { actionType: _actionType, Id: _OrderId },
             datatype: "JSON",
-            url: window.OrderDetailsPopup,
+            url: _OrderUrl,
             success: function (res) {
                 var html = $compile(res)($scope);
                 SetModalTitle("Edit Order Details")

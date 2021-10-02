@@ -53,6 +53,9 @@ namespace NtierMvc.Model
         public string SupplyTerms { get; set; }
         public string TotalRecords { get; set; }
         public string FinancialYear { get; set; }
+        public string QuoteAddOnTypeText { get; set; }
+        public string QuoteTypeText { get; set; }
+        public string FinancialYearText { get; set; }
 
     }
 

@@ -18,6 +18,7 @@ namespace NtierMvc.Model
         public string QuoteTypeValue { get; set; }
         public string QuoteQtyType { get; set; }
         public string QuoteType { get; set; }
+        public string QuoteTypeText { get; set; }
         public string FileNo { get; set; }
         public string QuoteNo { get; set; }
         public string QuoteNoView { get; set; }
@@ -30,6 +31,7 @@ namespace NtierMvc.Model
         public string PoNo { get; set; }
         public string PoLocation { get; set; }
         public string FinancialYear { get; set; }
+        public string FinancialYearText { get; set; }
         public string QuoteFinYear { get; set; }
         public string PoDor { get; set; }
         public string PoQty { get; set; }
@@ -62,6 +64,8 @@ namespace NtierMvc.Model
         public string Remarks { get; set; }
         public string WADate { get; set; }
         public string Subject { get; set; }
+        public string QuoteAddOnType { get; set; }
+        public string QuoteAddOnTypeText { get; set; }
 
     }
 
