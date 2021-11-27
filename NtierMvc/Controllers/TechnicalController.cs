@@ -580,7 +580,7 @@ namespace NtierMvc.Controllers
 
                 xlWorkbook.Worksheets[1].Cells.Replace("#TotalPrice", sum.ToString());
 
-                xlWorkbook.Worksheets[1].Cells.Replace("#AmountInWords", resultData.Rows[0]["Currency"].ToString() == "INR" ? model.AmountToWordINR(sum) : model.AmountToWordsUSD(sum.ToString()));
+                xlWorkbook.Worksheets[1].Cells.Replace("#AmountInWords", resultData.Rows[0]["Currency"].ToString() == "INR" ? "INR "+ model.AmountToWordINR(sum) : "USD " + model.AmountToWordsUSD(sum.ToString()));
                 xlWorkbook.Worksheets[1].Cells.Replace("#NetWeight", NetWt.ToString());
                 xlWorkbook.Worksheets[1].Cells.Replace("#GrossWeight", GrWt.ToString());
                 xlWorkbook.Worksheets[1].Cells.Replace("#CubicMeter", CubMtr.ToString());
@@ -1413,9 +1413,10 @@ namespace NtierMvc.Controllers
         {
             ClarificationEntity cEntity = new ClarificationEntity();
             ViewBag.ListQuoteNo = DdlList(); //objManager.GetQuoteNoList(string.Empty);             
-            ViewBag.ListVendorName = model.GetMasterTableStringList("QuotationRegister", "CustomerId", "CustomerName", "", "", GeneralConstants.ListTypeD);
-            ViewBag.ListQuoteType = model.GetMasterTableStringList("Master.Taxonomy", "dropdownId", "dropdownvalue", "QuoteType", "Property", GeneralConstants.ListTypeN);
-            ViewBag.ListSoNo = model.GetMasterTableStringList("Orders", "SoNo", "SoNo", "", "", GeneralConstants.ListTypeD);
+            ViewBag.ListVendorName = model.GetMasterTableStringList(TableNames.QuotationRegister, ColumnNames.CustomerId, ColumnNames.CustomerName, "", "", GeneralConstants.ListTypeD);
+            ViewBag.ListQuoteType = model.GetMasterTableStringList(TableNames.Master_Taxonomy, ColumnNames.DropDownID, ColumnNames.DropDownValue, "QuoteType", ColumnNames.Property, GeneralConstants.ListTypeN);
+            ViewBag.ListSoNo = model.GetMasterTableStringList(TableNames.Orders, ColumnNames.SoNo, ColumnNames.SoNoView, "", "", GeneralConstants.ListTypeD);
+            ViewBag.ListFinancialYear = model.GetDropDownList(TableNames.FinancialYear, GeneralConstants.ListTypeN, ColumnNames.id, ColumnNames.FinYear, "", "", false);
             //qPEntity = new QuotationPreparationEntity();
             return PartialView("~/Views/Technical/_TechClarification.cshtml", cEntity);
         }
@@ -1497,14 +1498,14 @@ namespace NtierMvc.Controllers
         public ActionResult GetQuoteItemPODetails(string quoteType, string quoteNo)
         {
             SingleColumnEntity singleCol = new SingleColumnEntity();
-            singleCol = model.GetSingleColumnValues("QuotePreparationTbl", "UnitPrice", "UnitPrice", "QuoteType", quoteType, "Qty", "QuoteNo", quoteNo);
+            singleCol = model.GetSingleColumnValues(TableNames.QuotePreparationTbl, ColumnNames.UnitPrice, ColumnNames.UnitPrice, ColumnNames.QuoteType, quoteType, "Qty", ColumnNames.QuoteNo, quoteNo);
             return new JsonResult { Data = singleCol, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 
         public ActionResult GetSONoForOrder()
         {
             List<DropDownEntity> SONoList = new List<DropDownEntity>();
-            SONoList = model.GetMasterTableStringList("Orders", "ID", "SoNo", "", "", GeneralConstants.ListTypeN);
+            SONoList = model.GetMasterTableStringList(TableNames.Orders, ColumnNames.id, ColumnNames.SoNo, "", "", GeneralConstants.ListTypeN);
             DropDownEntity obj = new DropDownEntity();
             obj.DataStringValueField = "";
             obj.DataTextField = "New";
@@ -1573,7 +1574,7 @@ namespace NtierMvc.Controllers
         {
             List<DropDownEntity> lstSoNos = new List<DropDownEntity>();
 
-            lstSoNos = model.GetDropDownList("Orders", GeneralConstants.ListTypeD, "SoNo", "SoNo", quotetypeId, "QuoteType", false, "", "", quoteNoId, "QuoteNo");
+            lstSoNos = model.GetDropDownList("Orders", GeneralConstants.ListTypeD, ColumnNames.SoNo, ColumnNames.SoNoView, quotetypeId, "QuoteType", false, "", "", quoteNoId, "QuoteNo");
             return new JsonResult { Data = lstSoNos, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
 
         }
@@ -2310,7 +2311,23 @@ namespace NtierMvc.Controllers
                 xlWorkbook.Worksheets[1].Cells.Replace("#PaymentTerms", PaymentTerms);
                 xlWorkbook.Worksheets[1].Cells.Replace("#BgReq", BgReq);
                 xlWorkbook.Worksheets[1].Cells.Replace("#ModeOfDespatch", ModeOfDespatch);
-                xlWorkbook.Worksheets[1].Cells.Replace("#RawMatSpec", RawMatSpec);
+
+                try
+                {
+                    //model.AssignValuesToExcelCell("#RawMatSpec",RawMatSpec,path, "Contract Review Sheet");
+                    Microsoft.Office.Interop.Excel.Range matchReqBy = xlWorkbook.Worksheets[1].Cells.Find("#RawMatSpec", LookAt: Microsoft.Office.Interop.Excel.XlLookAt.xlPart) as Microsoft.Office.Interop.Excel.Range;
+                    if (matchReqBy != null)
+                    {
+                        matchReqBy.Value = RawMatSpec;
+
+                    }
+                    //xlWorkbook.Worksheets[1].Cells.Replace("#RawMatSpec",  RawMatSpec);
+                }
+                catch(Exception ex)
+                {
+                    //do nothing
+                }
+                
 
                 xlWorkbook.SaveAs(fullPath);
                 xlWorkbook.Close();

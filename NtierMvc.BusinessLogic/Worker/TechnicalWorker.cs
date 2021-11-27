@@ -1297,6 +1297,9 @@ namespace NtierMvc.BusinessLogic.Worker
                             if (dt.Columns.Contains("QuoteNo"))
                                 quoteEntity.QuoteNo = dr["QuoteNo"]?.ToString() ?? "";
 
+                            if (dt.Columns.Contains("QuoteNoView"))
+                                quoteEntity.QuoteNoView = dr["QuoteNoView"]?.ToString() ?? "";
+
                             if (dt.Columns.Contains("CustomerName"))
                                 quoteEntity.CustomerName = dr["CustomerName"]?.ToString() ?? "";
 

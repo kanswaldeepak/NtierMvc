@@ -20,6 +20,7 @@ namespace NtierMvc.Model
         public string ENQNo { get; set; }
         public string ItemNo { get; set; }
         public string FileName { get; set; }
+        public int FinancialYear { get; set; }
 
     }
 

@@ -78,11 +78,13 @@ function Upload() {
 }
 
 function GetQuoteNosForClarification() {
-    var QuoteType = $("#QuoteClarificationFormType").val();
+    let QuoteType = $("#QuoteClarificationFormType").val();
+    let financialYr = $("#QuoteClarificationFormYear").val();
+
     $.ajax({
         type: 'POST',
         url: window.GetPrepQuoteNo,
-        data: JSON.stringify({ quotetypeId: QuoteType }),
+        data: JSON.stringify({ quotetypeId: QuoteType, financialYr: financialYr }),
         contentType: "application/json; charset=utf-8",
         success: function (data) {
             $("#QuoteClarificationFormNo").empty();
@@ -148,7 +150,7 @@ function GetClarificationMail() {
                 $("#MailList").empty();
                 $.each(data, function (i, item) {
                     if (item.RequiredColumn1 != "")
-                        $("#MailList").append("<li><input type='checkbox' value='" + item.RequiredColumn1 + "'> <a target='_blank' href='/Documents/MailUploads/" + item.RequiredColumn2 + "'><img height='25px' src='~/Images/pdfIcon.png' /><label>" + item.RequiredColumn2 + "</label></a></li>");
+                        $("#MailList").append("<li><input type='checkbox' value='" + item.RequiredColumn1 + "'> <a target='_blank' href='/Documents/MailUploads/" + item.RequiredColumn2 + "'><img height='25px' src='/Images/pdfIcon.png' /><label>" + item.RequiredColumn2 + "</label></a></li>");
                 })
             }
             else {
@@ -348,7 +350,7 @@ function GetOrderClarification() {
                 $("#OrderList").empty();
                 $.each(data, function (i, item) {
                     if (item.RequiredColumn1 != "")
-                        $("#OrderList").append("<li><input type='checkbox' value='" + item.RequiredColumn1 + "'> <a target='_blank' href='/Documents/OrderUpload/" + item.RequiredColumn2 + "'><img height='25px' src='~/Images/pdfIcon.png' /><label>" + item.RequiredColumn2 + "</label></a></li>");
+                        $("#OrderList").append("<li><input type='checkbox' value='" + item.RequiredColumn1 + "'> <a target='_blank' href='/Documents/OrderUpload/" + item.RequiredColumn2 + "'><img height='25px' src='/Images/pdfIcon.png' /><label>" + item.RequiredColumn2 + "</label></a></li>");
                 })
             }
             else {

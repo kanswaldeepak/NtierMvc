@@ -73,7 +73,7 @@
                })
             </td>
             <td>
-                @Html.DropDownList("PODeliveryDate", new SelectList(@ViewBag.ListPODeliveryDate, "DataTextField", "DataTextField", "Select"),
+                @Html.DropDownList("PODeliveryDate", new SelectList(@ViewBag.ListPODeliveryDate, "DataTextField", "DataTextField", ""),
                new
                {
                    @class = "form-control",
@@ -91,7 +91,7 @@
         </tr>
         <tr>
             <td>
-                <button id="btnRevisedOrder" type="button" class="btn btn-outline-info btn-sm" style="float: left;" ng-click="BindRevisedOrderPopup()"><i class="fa fa-plus"></i><b> Add New Revised Order</b></button>
+                <button id="btnRevisedOrder" type="button" class="btn btn-outline-info btn-sm" style="float: left;" ng-click="BindRevisedOrderPopup()"><i class="fa fa-plus"></i><b> Order Add-ON</b></button>
             </td>
             <td></td>
             <td></td>
@@ -156,15 +156,15 @@
                         </div>
                     </th>
                     <th>
-                        Ex Work Value
+                        EXW Value
                         <div class="c3">
-                            Ex Work Value
+                            EXW Value
                         </div>
                     </th>
                     <th>
-                        PO Delivery Date
+                        PO Due Date
                         <div class="c3">
-                            PO Delivery Date
+                            PO Due Date
                         </div>
                     </th>
                     <th>
@@ -372,8 +372,8 @@
 
         $('#ORPODeliveryDate').chosen({
             width: "210px",
-            placeholder_text_single: "Select PODeliveryDate",
-            placeholder_text_multiple: "Select PODeliveryDates"
+            placeholder_text_single: "Select PODelivery Date",
+            placeholder_text_multiple: "Select PODelivery Dates"
         });
 
         $('#ORQuoteType').chosen({
@@ -399,6 +399,7 @@
             placeholder_text_single: "Select Delivery Terms",
             placeholder_text_multiple: "Select Delivery Terms"
         });
+
 
         $("#ORQuoteType").chosen().change(
             function GetQuoteType() {

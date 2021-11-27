@@ -1271,22 +1271,6 @@ namespace NtierMvc.Models
             return objEntity;
         }
 
-        public List<DropDownEntity> GetSONoQuoteNoList(string EndUse, string quoteType)
-        {
-            List<DropDownEntity> lstDropDownEntity = new List<DropDownEntity>();
-            var baseAddress = "Base";
-            using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
-            {
-                HttpResponseMessage response = client.GetAsync(baseAddress + "/GetSONoQuoteNoList?EndUse=" + EndUse + "&quoteType=" + quoteType).Result;
-                if (response.IsSuccessStatusCode)
-                {
-                    var data = response.Content.ReadAsStringAsync().Result;
-                    lstDropDownEntity = JsonConvert.DeserializeObject<List<DropDownEntity>>(data);
-                }
-            }
-            return lstDropDownEntity;
-        }
-
         public DataTable GetDataTableForDocument(string ListType, string TableName, string[] DataColumn, string[] DataParam, string[] RequiredColumn)
         {
             DataTable lstTable = new DataTable();
@@ -1592,6 +1576,19 @@ namespace NtierMvc.Models
             return sb.ToString().TrimEnd();
         }
 
+        public void AssignValuesToExcelCell(string TextToReplace, string ValueToAssign, string excelPath, string excelSheetName)
+        {
+            Microsoft.Office.Interop.Excel.Application excelApp = new Microsoft.Office.Interop.Excel.Application();
+            Microsoft.Office.Interop.Excel.Workbook xlWorkbook = excelApp.Workbooks.Open(Filename: @excelPath, Editable: true);
+            Microsoft.Office.Interop.Excel.Worksheet ws = (Microsoft.Office.Interop.Excel.Worksheet)xlWorkbook.Sheets[excelSheetName];
+
+            Microsoft.Office.Interop.Excel.Range matchReqBy = xlWorkbook.Worksheets[1].Cells.Find(TextToReplace, LookAt: Microsoft.Office.Interop.Excel.XlLookAt.xlPart) as Microsoft.Office.Interop.Excel.Range;
+            if (matchReqBy != null)
+            {
+                matchReqBy.Value = ValueToAssign;
+
+            }
+        }
 
     }
 }

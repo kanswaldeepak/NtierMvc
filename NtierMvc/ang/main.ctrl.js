@@ -822,7 +822,7 @@ angular.module('App').controller("MainController", function ($scope, $http, $tim
             alert('failed');
         });
     }
-    $scope.GeneratePOReport = function (Type) {
+    $scope.CreatePOReport = function (Type) {
         //var DownloadType = dwnldtype;
         ShowLoadder();
 
@@ -839,7 +839,7 @@ angular.module('App').controller("MainController", function ($scope, $http, $tim
 
         PODeliveryDate = PODeliveryDate.substring(0, PODeliveryDate.length - 1);
 
-        $http.get(window.GeneratePOReport + "?ReportType=" + Type+"&pageindex=" + $scope.orderPageIndex + "&pagesize=" + $scope.orderPageSize + "&SearchQuoteType=" + $scope.SearchOrderQuoteType + "&SearchCustomerID=" + $scope.SearchOrderCustomerId + "&SearchProductGroup=" + $scope.SearchOrderProductGroup + "&SearchDeliveryTerms=" + $scope.SearchOrderDeliveryTerms + "&SearchPODeliveryDate=" + PODeliveryDate).success(function (data) {
+        $http.get(window.CreatePOReport + "?ReportType=" + Type+"&pageindex=" + $scope.orderPageIndex + "&pagesize=" + $scope.orderPageSize + "&SearchQuoteType=" + $scope.SearchOrderQuoteType + "&SearchCustomerID=" + $scope.SearchOrderCustomerId + "&SearchProductGroup=" + $scope.SearchOrderProductGroup + "&SearchDeliveryTerms=" + $scope.SearchOrderDeliveryTerms + "&SearchPODeliveryDate=" + PODeliveryDate).success(function (data) {
             if (data != "") {
                 //use window.location.href for redirect to download action for download the file
                 window.location.href = window.DownloadDoc + '?fileName=' + data;

@@ -111,6 +111,7 @@ namespace NtierMvc.Controllers
             ViewBag.ListCountry = model.GetDropDownList(TableNames.Master_Country, GeneralConstants.ListTypeN, ColumnNames.id, ColumnNames.Country, "", "");
             ViewBag.ListENQNo = model.GetDropDownList(TableNames.EnquiryRegister, GeneralConstants.ListTypeN, ColumnNames.EnquiryId, ColumnNames.ENQREF, "", "");
             ViewBag.ListItemNo = model.GetDropDownList(TableNames.Items, GeneralConstants.ListTypeN, ColumnNames.id, ColumnNames.PoSLNo, "", "");
+            ViewBag.ListFinancialYear = model.GetDropDownList(TableNames.FinancialYear, GeneralConstants.ListTypeN, ColumnNames.id, ColumnNames.FinYear, "", "", false);
 
             ContractReview CR = new ContractReview();
             return PartialView("~/Views/CRM/_CRMPartialReport.cshtml", CR);
@@ -361,6 +362,17 @@ namespace NtierMvc.Controllers
             //}
             //else
             //    return Json(new { data = "", errorMessage = "Error While Generating Excel. Contact Support." }, JsonRequestBehavior.AllowGet);
+
+        }
+
+        public ActionResult APICallGetSONos(string financialYear)
+        {
+            List<DropDownEntity> lstSoNos = new List<DropDownEntity>();
+
+            lstSoNos = model.GetMasterTableStringList(TableNames.Orders, ColumnNames.SoNo, ColumnNames.SoNoView, financialYear, "FinancialYear", GeneralConstants.ListTypeD);
+            return new JsonResult { Data = lstSoNos, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+
+
 
         }
 

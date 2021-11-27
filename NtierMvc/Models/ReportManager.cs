@@ -165,12 +165,12 @@ namespace NtierMvc.Models
                 Microsoft.Office.Interop.Excel.Range range = ws.get_Range(c1, c2);
                 range.Insert(Microsoft.Office.Interop.Excel.XlInsertShiftDirection.xlShiftDown);
                 FinancialYear fy;
-                string FInYear="";
+                string FInYear = "";
                 //FinancialYear fy = new FinancialYear(DateTime.Now);
                 if (FromDate != "")
                 {
                     fy = new FinancialYear(Convert.ToDateTime(FromDate));
-                     FInYear = Convert.ToInt32(fy.ToString().Split('-')[0]) + 1 + "-" + (Convert.ToInt32(fy.ToString().Split('-')[1]) + 1);
+                    FInYear = Convert.ToInt32(fy.ToString().Split('-')[0]) + 1 + "-" + (Convert.ToInt32(fy.ToString().Split('-')[1]) + 1);
 
                 }
                 else
@@ -291,7 +291,7 @@ namespace NtierMvc.Models
                 //Microsoft.Office.Interop.Excel.Range c2 = (Microsoft.Office.Interop.Excel.Range)ws.Cells[1, 1];
                 Microsoft.Office.Interop.Excel.Range range = ws.get_Range(c1, c2);
                 range.Insert(Microsoft.Office.Interop.Excel.XlInsertShiftDirection.xlShiftDown);
-               
+
                 //ActiveCell.EntireRow.Select
                 //Selection.Copy
                 //Selection.Insert Shift:= xlDown
@@ -351,11 +351,12 @@ namespace NtierMvc.Models
 
                 int count = 1;
                 if (OrderDetails != null)
-                { 
+                {
 
-                    var OrderDetail = OrderDetails.lstOrderEntity.OrderBy(n => n.SoNoView).ToList();
+                    //var OrderDetail = OrderDetails.lstOrderEntity.OrderBy(n => n.PoDor).ThenBy(n => n.SoNoView).ToList();
+                    var OrderDetail = OrderDetails.lstOrderEntity.ToList();
 
-                foreach (var order in OrderDetail)
+                    foreach (var order in OrderDetail)
                     {
 
                         POReportDetails poReportDetails = new POReportDetails();
@@ -378,7 +379,7 @@ namespace NtierMvc.Models
 
 
                     }
-                    
+
                 }
 
                 ExtensionMethods em = new ExtensionMethods();
@@ -505,7 +506,7 @@ namespace NtierMvc.Models
                 int count = 1;
                 if (CustDetails != null)
                 {
-                    var Custdetails= CustDetails.LstCusEnt.OrderBy(n => n.CustomerId).ToList();
+                    var Custdetails = CustDetails.LstCusEnt.OrderBy(n => n.CustomerId).ToList();
 
 
                     foreach (var cust in Custdetails)

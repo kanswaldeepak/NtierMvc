@@ -501,7 +501,8 @@ $("#saveItemButton").click(function (e) {
 
     var $tableBody = $("#lotTable");
     var $tr = $tableBody.find("tr");
-    var LotQtySum = '0';
+    debugger;
+    var LotQtySum = 0;
     $.each($tr.find('#LotWiseQty'), function (i, val) {
         LotQtySum = parseInt(LotQtySum) + parseInt($(this).val());
     });
@@ -548,11 +549,11 @@ $("#saveItemButton").click(function (e) {
             ItemDetails: arr
         });
 
-        $.when(saveButton(data)).then(function (response) {
-            console.log(response);
-        }).fail(function (err) {
-            console.log(err);
-        });
+        //$.when(saveButton(data)).then(function (response) {
+        //    console.log(response);
+        //}).fail(function (err) {
+        //    console.log(err);
+        //});
     }
 });
 

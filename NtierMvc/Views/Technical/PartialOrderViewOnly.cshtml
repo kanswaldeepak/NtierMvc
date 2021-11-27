@@ -88,7 +88,7 @@
                     Search
                 </button>
                 <button class="btn btn-sm btn-info" type="button" id="btnClearSearchOrders" ng-click="DefaultOrdersList(); FetchOrdersList();">Clear</button>
-                <button class="btn btn-sm btn-info" type="button" id="btnDownloadReport" ng-click="GeneratePOReport('PO_WORK_AUHTORIZATION');">Master Order<i class="fa fa-download" style="font-size:16px" aria-hidden="true"></i></button>
+                <button class="btn btn-sm btn-info" type="button" id="btnDownloadReport" ng-click="CreatePOReport('PO_WORK_AUHTORIZATION');">Master Order<i class="fa fa-download" style="font-size:16px" aria-hidden="true"></i></button>
             </td>
         </tr>
     </table>
@@ -343,7 +343,7 @@
         window.DeleteOrderDetail = '@Url.Action("DeleteOrderDetail", "Technical")';
         window.ItemDetailsPopup = '@Url.Action("ItemPopup", "Technical")';
         window.GetPrepQuoteNo = '@Url.Action("GetPrepQuoteNo", "Technical")';
-        window.GeneratePOReport = '@Url.Action("CreatePOReport", "Technical")';
+        window.CreatePOReport = '@Url.Action("CreatePOReport", "Technical")';
 
         $('#ORPODeliveryDate').chosen({
             width: "210px",

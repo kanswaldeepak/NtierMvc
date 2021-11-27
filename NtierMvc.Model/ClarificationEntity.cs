@@ -10,6 +10,7 @@ namespace NtierMvc.Model
     public class ClarificationEntity
     {
         public int Id { get; set; }        
+        public int FinancialYear { get; set; }        
         public string QuoteType { get; set; }
         public string QuoteNo { get; set; }
         public string MailId { get; set; }

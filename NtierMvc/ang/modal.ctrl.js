@@ -328,6 +328,7 @@ angular.module('App').controller("ModalController", function ($scope, $http, $ti
                 function (res) {
                     if (res == 'Saved Successfully!') {
                         alert(res);
+                        $scope.FetchOrdersList();
                     }
                     else {
                         alert(res)

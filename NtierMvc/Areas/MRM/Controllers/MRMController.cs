@@ -448,7 +448,7 @@ namespace NtierMvc.Areas.MRM.Controllers
         public JsonResult ChangeEndUseNoForQuoteOrSoNo(string EndUse, string quoteType = null)
         {
             List<DropDownEntity> lstEndUseNo = new List<DropDownEntity>();
-            lstEndUseNo = model.GetSONoQuoteNoList(EndUse, quoteType);
+            lstEndUseNo = objManager.GetSONoQuoteNoList(EndUse, quoteType);
 
             return new JsonResult { Data = lstEndUseNo, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }

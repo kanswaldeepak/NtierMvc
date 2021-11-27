@@ -477,6 +477,21 @@ namespace NtierMvc.Areas.MRM.Models
 
 
 
+        public List<DropDownEntity> GetSONoQuoteNoList(string EndUse, string quoteType)
+        {
+            List<DropDownEntity> lstDropDownEntity = new List<DropDownEntity>();
+            var baseAddress = "Base";
+            using (HttpClient client = LocalUtility.InitializeHttpClient(baseAddress))
+            {
+                HttpResponseMessage response = client.GetAsync(baseAddress + "/GetSONoQuoteNoList?EndUse=" + EndUse + "&quoteType=" + quoteType).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    var data = response.Content.ReadAsStringAsync().Result;
+                    lstDropDownEntity = JsonConvert.DeserializeObject<List<DropDownEntity>>(data);
+                }
+            }
+            return lstDropDownEntity;
+        }
 
 
     }
