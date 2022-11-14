@@ -59,7 +59,7 @@ namespace NtierMvc.Areas.HRDepartment.Controllers
         //}
         #endregion
 
-        private static readonly log4net.ILog Logger = log4net.LogManager.GetLogger(typeof(AccountController));
+        //private static readonly log4net.ILog Logger = log4net.LogManager.GetLogger(typeof(AccountController));
         // GET: Login
 
         [HttpGet]
